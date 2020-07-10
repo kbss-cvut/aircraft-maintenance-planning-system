@@ -1,0 +1,11 @@
+<solver>
+    <scanAnnotatedClasses/>
+
+    <scoreDirectorFactory>
+        <easyScoreCalculatorClass>cz.cvut.kbss.amaplas.exp.optaplanner.model.MyHardSoftScoreCalculator</easyScoreCalculatorClass>
+    </scoreDirectorFactory>
+
+    <termination>
+        <secondsSpentLimit>2</secondsSpentLimit>
+    </termination>
+</solver>
