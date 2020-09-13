@@ -35,7 +35,7 @@ public class OptaPlannerExperiment1 {
         // construct the problem
         MaintenanceJob unsolvedCourseSchedule = new MaintenanceJob();
 
-        List<Integer> indices = IntStream.range(0, 10).boxed()
+        List<Integer> indices = IntStream.range(0, 1000).boxed()
                 .collect(Collectors.toList());
         List<MaintenanceTask> tasks = indices.stream().map(i -> new MaintenanceTask("task-" + i, i))
                 .collect(Collectors.toList());

@@ -1,0 +1,17 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+PREFIX gr: <http://onto.fel.cvut.cz/ontologies/graph#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+CONSTRUCT{
+    ?el a owl:ObjectProperty;
+        rdfs:label ?l;
+        rdfs:domain ?sn;
+        rdfs:range ?tn.
+}WHERE {
+    ?el a gr:edge;
+        gr:label ?l;
+        gr:targetArrow "standard";
+        gr:source ?sn;
+        gr:target ?tn.
+}

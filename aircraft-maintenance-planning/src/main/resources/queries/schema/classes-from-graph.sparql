@@ -1,0 +1,33 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+PREFIX gr: <http://onto.fel.cvut.cz/ontologies/graph#>
+
+CONSTRUCT{
+    ufo:has-stereotype a owl:AnnotationProperty.
+
+    ?el a owl:Class;
+        rdfs:label ?label.
+
+    ?stereotype a owl:Class.
+    ?el ufo:has-stereotype ?stereotype.
+} WHERE {
+    ?el rdfs:label ?l;
+        a gr:node.
+
+    ?el gr:fillColor ?color. # colorless nodes are not used as classes, they are used as refereces or cardinalities.
+
+    BIND(regex(?l, "<<.*>>.*") as ?hasStereotype)
+    #        FILTER(contains(?l, "<<"))
+
+    # extract class name
+    BIND(replace(
+            IF(regex(?l, "<<.*>>.*"), replace(?l, "^<<.*>>\\s*(.*)\\s*$", "$1"), ?l),
+            "^\\s*(.+)\\s*", "$1")
+        as ?label)
+    # extract stereotype if present, assuming it's a ufo stereotype
+    BIND(IF(regex(?l, "<<.*>>.*"),
+            iri(concat(str(ufo:), replace(lcase(replace(?l, "<<\\s*(.*)\\s*>>\\s*.*$", "$1")),"\\s+", "-"))),
+            ?a
+        ) as ?stereotype)
+}

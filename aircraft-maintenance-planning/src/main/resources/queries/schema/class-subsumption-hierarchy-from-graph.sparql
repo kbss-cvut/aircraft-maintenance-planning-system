@@ -1,0 +1,15 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+PREFIX gr: <http://onto.fel.cvut.cz/ontologies/graph#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+CONSTRUCT{
+    ?sn rdfs:subClassOf ?tn.
+} WHERE {
+    ?el a gr:edge;
+        gr:targetArrow "white_delta";
+        gr:source ?sn;
+        gr:target ?tn.
+#    ?sn gr:fillColor ?sc.
+#    ?tn gr:fillColor ?tc.
+}

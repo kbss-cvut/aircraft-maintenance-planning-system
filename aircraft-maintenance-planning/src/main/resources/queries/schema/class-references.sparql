@@ -1,0 +1,19 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+PREFIX gr: <http://onto.fel.cvut.cz/ontologies/graph#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?el1 ?el2 {
+    ?el1 a gr:node;
+         gr:label ?label1;
+         gr:fillColor ?fillColor.
+
+    ?el2 a gr:node;
+         gr:label ?label2.
+
+    FILTER NOT EXISTS{
+        ?el2 gr:fillColor ?c.
+    }
+
+    FILTER(replace(?label1, "\\s+", " ") = replace(?label2, "\\s+", " "))
+}
