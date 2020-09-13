@@ -1,0 +1,34 @@
+Graphml to OWL converter documentation
+This takes a graphml file and extracts:
+- type hierarchy
+- stereotypes from types
+- relationships including their domain and range
+
+Additionally, the converter uses the idea of reference nodes
+
+
+Implementation
+	Graphml2Owl is the main class that performs the transformation by orchestrating to Graphml2JenaModel to read the xml into a jena model and Graphml2JenaModel to transform the jena model into an OWL model using SPARQL construct queries. 
+	
+	Graphml2JenaModel
+		Input - a path to a graphml file
+		output - Jena model according to the graph vocabulary found in cz.cvut.kbss.amaplas.exp.graphml.Vocabulary. 
+		Description
+			The xml read into a java model cz.cvut.kbss.amaplas.exp.graphml.model using JAXB + MOXY mappings. The java nodes and edges from the graph model are then transformed into a Jena model according to the graph vocabulary found in cz.cvut.kbss.amaplas.exp.graphml.Vocabulary.
+			See also:	
+				details/extracting node and edge labels:
+			
+	Graphml2JenaModel
+		input - Jena model according to the graph vocabulary found in cz.cvut.kbss.amaplas.exp.graphml.Vocabulary.
+		output - Jena model containing the owl schema represented by the input
+		
+		
+	Feature implementations
+		Class References
+			the class references are implemented by the Jena API org.apache.jena.util.ResourceUtils.renameResource where the resources. The URIs to be replaced the URIs to be replaced and the ones to replace them with are retrieved from the jena model representing the diagram using a select SPARQL query.
+	Details
+		extracting node and edge labels:
+			Before the graphml is unmarshaled into the JAXB-MOXY model in cz.cvut.kbss.amaplas.exp.graphml.model is
+
+Feature proposals
+	property references
