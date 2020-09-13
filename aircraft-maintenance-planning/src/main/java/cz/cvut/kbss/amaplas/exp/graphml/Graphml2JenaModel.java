@@ -18,7 +18,7 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ToModel {
+public class Graphml2JenaModel {
 
     protected String namespace;
 
@@ -135,6 +135,6 @@ public class ToModel {
         String input = "c:\\Users\\kostobog\\Documents\\skola\\projects\\2019-CSAT-doprava-2020\\code\\aircraft-maintenance-planning-system\\aircraft-maintenance-planning-model\\drafts\\maintenance-planning-model-B.graphml";
 
         String output = input.substring(0, input.lastIndexOf(".")) + ".ttl";
-        new ToModel().execute(input, output, CSAT.PLANNING_NS, CSAT.PLANNING_PREF);
+        new Graphml2JenaModel().execute(input, output, CSAT.PLANNING_NS, CSAT.PLANNING_PREF);
     }
 }

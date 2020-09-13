@@ -12,7 +12,7 @@ public class Graphml2Owl {
     public void execute(String input, String ns) throws IOException {
         String outputGraph = input.substring(0, input.lastIndexOf(".")) + "-graph.ttl";
         String outputSchema = input.substring(0, input.lastIndexOf(".")) + "-schema.ttl";
-        Model graph = new ToModel().execute(input, ns, "csat-s1");
+        Model graph = new Graphml2JenaModel().execute(input, ns, "csat-s1");
         write(graph, outputGraph);
 
         Model schema = new GraphToSchema().constructSchemaFromGraph(graph);
