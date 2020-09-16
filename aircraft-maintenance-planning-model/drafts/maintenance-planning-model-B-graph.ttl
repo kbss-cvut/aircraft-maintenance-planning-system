@@ -1,0 +1,1137 @@
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix csat-s1: <http://csat.cz/ontologies/planning-schema/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix gr:    <http://onto.fel.cvut.cz/ontologies/graph#> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+
+csat-s1:e39  a          gr:edge ;
+        rdfs:label      "has damage type" ;
+        gr:id           "e39" ;
+        gr:label        "has damage type" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n31 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n66 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:n52  a        gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n52" ;
+        gr:label      "Reusable plan" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Reusable plan" ;
+        gr:width      "84.705078125" .
+
+csat-s1:n24  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n24" ;
+        gr:label      "0..*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "0..*" ;
+        gr:width      "15.0" .
+
+csat-s1:n65  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n65" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:n37  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n37" ;
+        gr:label      "1" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "1" ;
+        gr:width      "15.0" .
+
+csat-s1:e20  a          gr:edge ;
+        rdfs:label      "creates plan" ;
+        gr:id           "e20" ;
+        gr:label        "creates plan" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n40 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n9 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:e3  a           gr:edge ;
+        gr:id           "e3" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n4 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n1 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:e33  a          gr:edge ;
+        gr:id           "e33" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n55 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n53 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:e18  a          gr:edge ;
+        rdfs:label      "instance of ::" ;
+        gr:id           "e18" ;
+        gr:label        "instance of ::" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n17 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n34 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:n31  a        gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n31" ;
+        gr:label      "Worksession Damage finding" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Worksession\nDamage finding" ;
+        gr:width      "84.705078125" .
+
+csat-s1:n8  a         gr:node ;
+        gr:fillColor  "#FFFF99" ;
+        gr:height     "30.0" ;
+        gr:id         "n8" ;
+        gr:label      "Client Extra Order task" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Client Extra \nOrder task" ;
+        gr:width      "98.34464062500001" .
+
+csat-s1:n44  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n44" ;
+        gr:label      "1" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "1" ;
+        gr:width      "15.0" .
+
+csat-s1:n16  a        gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "49.0" ;
+        gr:id         "n16" ;
+        gr:label      "work session" ;
+        gr:property   <http://csat.cz/ontologies/planning-schema/n16-http://csat.cz/ontologies/planning-schema/n16-start-time> , <http://csat.cz/ontologies/planning-schema/n16-http://csat.cz/ontologies/planning-schema/n16-end-time> ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "work session\n-start time\n-end time" ;
+        gr:width      "78.0" .
+
+csat-s1:n57  a        gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n57" ;
+        gr:label      "Maintenance Manual" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Maintenance Manual" ;
+        gr:width      "118.50507812500018" .
+
+csat-s1:e40  a          gr:edge ;
+        rdfs:label      "refers" ;
+        gr:id           "e40" ;
+        gr:label        "refers" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n59 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n58 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:n29  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n29" ;
+        gr:label      "1" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "1" ;
+        gr:width      "15.0" .
+
+csat-s1:e12  a          gr:edge ;
+        rdfs:label      "performs" ;
+        gr:id           "e12" ;
+        gr:label        "performs" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n17 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n16 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:n2  a         gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n2" ;
+        gr:label      "non-planned tasks" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "non-planned tasks" ;
+        gr:width      "114.0546875" .
+
+csat-s1:e25  a          gr:edge ;
+        rdfs:label      "task for" ;
+        gr:id           "e25" ;
+        gr:label        "task for" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n0 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n46 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:e8  a           gr:edge ;
+        gr:id           "e8" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "dashed" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n6 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n9 ;
+        gr:targetArrow  "white_diamond" .
+
+csat-s1:n10  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n10" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:e38  a          gr:edge ;
+        rdfs:label      "describes" ;
+        gr:id           "e38" ;
+        gr:label        "describes" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n58 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n59 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:n51  a        gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n51" ;
+        gr:label      "Adhoc plan" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Adhoc plan" ;
+        gr:width      "63.5" .
+
+csat-s1:n23  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n23" ;
+        gr:label      "1" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "1" ;
+        gr:width      "15.0" .
+
+csat-s1:n64  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n64" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:n36  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n36" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:e2  a           gr:edge ;
+        gr:id           "e2" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n7 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n2 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:n49  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n49" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:e32  a          gr:edge ;
+        gr:id           "e32" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n56 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n51 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:e45  a          gr:edge ;
+        gr:id           "e45" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n67 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n5 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:e17  a          gr:edge ;
+        rdfs:label      "has skill type" ;
+        gr:id           "e17" ;
+        gr:label        "has skill type" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n34 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n33 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:n30  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n30" ;
+        gr:label      "1" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "1" ;
+        gr:width      "15.0" .
+
+csat-s1:n7  a         gr:node ;
+        gr:fillColor  "#FFFF99" ;
+        gr:height     "30.0" ;
+        gr:id         "n7" ;
+        gr:label      "Non-Planned Client Extra Order task" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Non-Planned\nClient Extra Order task" ;
+        gr:width      "131.0" .
+
+csat-s1:n43  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n43" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:n15  a         gr:node ;
+        gr:fillColor   "#FFCC00" ;
+        gr:height      "30.0" ;
+        gr:id          "n15" ;
+        gr:label       "Workpackage" ;
+        gr:shapeType   "rectangle" ;
+        gr:stereotype  "event" ;
+        gr:text        "<<Event>>\nWorkpackage" ;
+        gr:width       "84.705078125" .
+
+<http://csat.cz/ontologies/planning-schema/n16-http://csat.cz/ontologies/planning-schema/n16-start-time>
+        gr:label  "start time" .
+
+csat-s1:n56  a        gr:node ;
+        gr:height     "30.0" ;
+        gr:id         "n56" ;
+        gr:label      "Client Extra Order task" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Client Extra Order task" ;
+        gr:width      "121.895426428843" .
+
+csat-s1:n28  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n28" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:e11  a          gr:edge ;
+        rdfs:label      "instance of ::" ;
+        gr:id           "e11" ;
+        gr:label        "instance of ::" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n15 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n9 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:n69  a        gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n69" ;
+        gr:label      "Finding" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Finding " ;
+        gr:width      "48.29400334195293" .
+
+csat-s1:n1  a         gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n1" ;
+        gr:label      "planned tasks" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "planned tasks" ;
+        gr:width      "106.056640625" .
+
+csat-s1:e24  a          gr:edge ;
+        rdfs:label      "component of" ;
+        gr:id           "e24" ;
+        gr:label        "component of" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n32 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n45 ;
+        gr:targetArrow  "white_diamond" ;
+        gr:textColor    "#000000" .
+
+csat-s1:e7  a           gr:edge ;
+        rdfs:label      "\n          " ;
+        gr:id           "e7" ;
+        gr:label        "\n          " ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n0 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n9 ;
+        gr:targetArrow  "white_diamond" ;
+        gr:textColor    "#000000" .
+
+csat-s1:e37  a          gr:edge ;
+        rdfs:label      "requires exection of" ;
+        gr:id           "e37" ;
+        gr:label        "requires exection of" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n0 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n0 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:n50  a        gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n50" ;
+        gr:label      "Plan" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Plan" ;
+        gr:width      "36.705078125" .
+
+csat-s1:n22  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n22" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:n63  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n63" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:n35  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n35" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:e1  a           gr:edge ;
+        gr:id           "e1" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n2 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n0 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:n48  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n48" ;
+        gr:label      "1" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "1" ;
+        gr:width      "15.0" .
+
+csat-s1:e31  a          gr:edge ;
+        gr:id           "e31" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n55 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n51 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:e44  a          gr:edge ;
+        gr:id           "e44" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n8 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n0 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:e16  a          gr:edge ;
+        rdfs:label      "damage of " ;
+        gr:id           "e16" ;
+        gr:label        "damage of " ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n31 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n32 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:n6  a         gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n6" ;
+        gr:label      "Finding based Task Type" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Finding based \nTask Type" ;
+        gr:width      "78.0" .
+
+csat-s1:  a         "http://onto.fel.cvut.cz/ontologies/graph#graph" ;
+        gr:hasEdge  csat-s1:e43 , csat-s1:e21 , csat-s1:e3 , csat-s1:e24 , csat-s1:e1 , csat-s1:e28 , csat-s1:e6 , csat-s1:e45 , csat-s1:e11 , csat-s1:e27 , csat-s1:e32 , csat-s1:e9 , csat-s1:e14 , csat-s1:e30 , csat-s1:e18 , csat-s1:e35 , csat-s1:e38 , csat-s1:e41 , csat-s1:e22 , csat-s1:e4 , csat-s1:e2 , csat-s1:e25 , csat-s1:e29 , csat-s1:e7 , csat-s1:e12 , csat-s1:e16 , csat-s1:e33 , csat-s1:e15 , csat-s1:e31 , csat-s1:e19 , csat-s1:e36 , csat-s1:e39 , csat-s1:e42 , csat-s1:e20 , csat-s1:e0 , csat-s1:e23 , csat-s1:e5 , csat-s1:e44 , csat-s1:e10 , csat-s1:e26 , csat-s1:e8 , csat-s1:e13 , csat-s1:e17 , csat-s1:e34 , csat-s1:e37 , csat-s1:e40 ;
+        gr:hasNode  csat-s1:n40 , csat-s1:n26 , csat-s1:n24 , csat-s1:n23 , csat-s1:n53 , csat-s1:n52 , csat-s1:n4 , csat-s1:n3 , csat-s1:n36 , csat-s1:n6 , csat-s1:n37 , csat-s1:n5 , csat-s1:n12 , csat-s1:n31 , csat-s1:n30 , csat-s1:n49 , csat-s1:n47 , csat-s1:n66 , csat-s1:n65 , csat-s1:n15 , csat-s1:n42 , csat-s1:n41 , csat-s1:n28 , csat-s1:n60 , csat-s1:n27 , csat-s1:n55 , csat-s1:n54 , csat-s1:n59 , csat-s1:n20 , csat-s1:n8 , csat-s1:n39 , csat-s1:n7 , csat-s1:n38 , csat-s1:n0 , csat-s1:n33 , csat-s1:n32 , csat-s1:n13 , csat-s1:n68 , csat-s1:n67 , csat-s1:n25 , csat-s1:n17 , csat-s1:n16 , csat-s1:n44 , csat-s1:n43 , csat-s1:n62 , csat-s1:n29 , csat-s1:n61 , csat-s1:n57 , csat-s1:n56 , csat-s1:n48 , csat-s1:n22 , csat-s1:n21 , csat-s1:n9 , csat-s1:n51 , csat-s1:n50 , csat-s1:n2 , csat-s1:n1 , csat-s1:n35 , csat-s1:n34 , csat-s1:n14 , csat-s1:n69 , csat-s1:n11 , csat-s1:n10 , csat-s1:n19 , csat-s1:n18 , csat-s1:n46 , csat-s1:n45 , csat-s1:n64 , csat-s1:n63 , csat-s1:n58 .
+
+csat-s1:e29  a          gr:edge ;
+        gr:id           "e29" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n52 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n50 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:n42  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n42" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:n14  a        gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n14" ;
+        gr:label      "maintenance task" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "maintenance task" ;
+        gr:width      "98.34464062500001" .
+
+csat-s1:n55  a        gr:node ;
+        gr:height     "30.0" ;
+        gr:id         "n55" ;
+        gr:label      "Finding based Task Type" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Finding based \nTask Type" ;
+        gr:width      "78.0" .
+
+csat-s1:n27  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n27" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:e10  a          gr:edge ;
+        rdfs:label      "instance of ::" ;
+        gr:id           "e10" ;
+        gr:label        "instance of ::" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n14 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n0 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:n68  a        gr:node ;
+        gr:fillColor  "#FF99CC" ;
+        gr:height     "30.0" ;
+        gr:id         "n68" ;
+        gr:label      "Maintenance Work Order" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Maintenance Work Order\n" ;
+        gr:width      "140.95423255813952" .
+
+csat-s1:n0  a         gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n0" ;
+        gr:label      "maintenance task Type" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "maintenance task\nType" ;
+        gr:width      "114.0546875" .
+
+csat-s1:e23  a          gr:edge ;
+        rdfs:label      "created based on" ;
+        gr:id           "e23" ;
+        gr:label        "created based on" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n6 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n18 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:e6  a           gr:edge ;
+        gr:id           "e6" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n5 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n8 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:e36  a          gr:edge ;
+        gr:id           "e36" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n3 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n58 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:n21  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n21" ;
+        gr:label      "1" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "1" ;
+        gr:width      "15.0" .
+
+csat-s1:n62  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n62" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:n34  a        gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n34" ;
+        gr:label      "agent type" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "agent type" ;
+        gr:width      "65.0" .
+
+csat-s1:e0  a           gr:edge ;
+        gr:id           "e0" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n1 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n0 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:n47  a         gr:node ;
+        gr:fillColor   "#FFFFFF" ;
+        gr:height      "30.0" ;
+        gr:id          "n47" ;
+        gr:label       "Component Type" ;
+        gr:shapeType   "rectangle" ;
+        gr:stereotype  "object-type" ;
+        gr:text        "<<Object Type>>\nComponent Type" ;
+        gr:width       "98.34464062500001" .
+
+csat-s1:e30  a          gr:edge ;
+        gr:id           "e30" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n54 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n52 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:n19  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n19" ;
+        gr:label      "1" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "1" ;
+        gr:width      "15.0" .
+
+csat-s1:e43  a          gr:edge ;
+        gr:id           "e43" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n6 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n2 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:e15  a          gr:edge ;
+        gr:id           "e15" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n31 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n18 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:n5  a         gr:node ;
+        gr:fillColor  "#FFFF99" ;
+        gr:height     "30.0" ;
+        gr:id         "n5" ;
+        gr:label      "Planned Client Extra Order task" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Planned Client\nExtra Order task" ;
+        gr:width      "98.34464062500001" .
+
+csat-s1:e28  a          gr:edge ;
+        gr:id           "e28" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n53 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n50 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:n41  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n41" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:n13  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n13" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:n54  a        gr:node ;
+        gr:height     "30.0" ;
+        gr:id         "n54" ;
+        gr:label      "task card" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "task card" ;
+        gr:width      "63.5" .
+
+csat-s1:n26  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n26" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:n67  a        gr:node ;
+        gr:fillColor  "#FF99CC" ;
+        gr:height     "30.0" ;
+        gr:id         "n67" ;
+        gr:label      "Scheduled Work Order" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Scheduled Work Order" ;
+        gr:width      "131.0" .
+
+csat-s1:n39  a         gr:node ;
+        gr:fillColor   "#FFCC00" ;
+        gr:height      "30.0" ;
+        gr:id          "n39" ;
+        gr:label       "Client" ;
+        gr:shapeType   "rectangle" ;
+        gr:stereotype  "agent" ;
+        gr:text        "<<Agent>>\nClient" ;
+        gr:width       "58.5" .
+
+csat-s1:e22  a          gr:edge ;
+        gr:id           "e22" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n6 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n0 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:e5  a           gr:edge ;
+        gr:id           "e5" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n7 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n8 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:e35  a          gr:edge ;
+        gr:id           "e35" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n57 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n58 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:n20  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n20" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:n61  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n61" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:n33  a         gr:node ;
+        gr:fillColor   "#FFFF99" ;
+        gr:height      "30.0" ;
+        gr:id          "n33" ;
+        gr:label       "skill type" ;
+        gr:shapeType   "rectangle" ;
+        gr:stereotype  "disposition-type" ;
+        gr:text        "<<Disposition Type>>\nskill type" ;
+        gr:width       "131.0" .
+
+csat-s1:n46  a         gr:node ;
+        gr:fillColor   "#FFCC00" ;
+        gr:height      "30.0" ;
+        gr:id          "n46" ;
+        gr:label       "Component Type" ;
+        gr:shapeType   "rectangle" ;
+        gr:stereotype  "object-type" ;
+        gr:text        "<<Object Type>>\nComponent Type" ;
+        gr:width       "98.34464062500001" .
+
+csat-s1:n18  a        gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n18" ;
+        gr:label      "Worksession Finding" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Worksession \nFinding " ;
+        gr:width      "73.1723203125" .
+
+csat-s1:n59  a        gr:node ;
+        gr:height     "30.0" ;
+        gr:id         "n59" ;
+        gr:label      "maintenance task Type" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "maintenance task\nType" ;
+        gr:width      "106.056640625" .
+
+csat-s1:e42  a          gr:edge ;
+        gr:id           "e42" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n68 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n6 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:e14  a          gr:edge ;
+        gr:id           "e14" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n18 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n16 ;
+        gr:targetArrow  "white_diamond" .
+
+csat-s1:n4  a         gr:node ;
+        gr:fillColor  "#FF99CC" ;
+        gr:height     "30.0" ;
+        gr:id         "n4" ;
+        gr:label      "task card" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "task card" ;
+        gr:width      "58.5" .
+
+csat-s1:e27  a          gr:edge ;
+        gr:id           "e27" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n51 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n50 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:n40  a         gr:node ;
+        gr:fillColor   "#FFCC00" ;
+        gr:height      "30.0" ;
+        gr:id          "n40" ;
+        gr:label       "Planner" ;
+        gr:shapeType   "rectangle" ;
+        gr:stereotype  "agent" ;
+        gr:text        "<<Agent>>\nPlanner" ;
+        gr:width       "58.5" .
+
+csat-s1:n12  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n12" ;
+        gr:label      "1 or 2" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "1 or 2" ;
+        gr:width      "15.0" .
+
+csat-s1:n53  a        gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n53" ;
+        gr:label      "Non-reusable plan" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Non-reusable plan" ;
+        gr:width      "106.056640625" .
+
+csat-s1:n25  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n25" ;
+        gr:label      "1" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "1" ;
+        gr:width      "15.0" .
+
+<http://csat.cz/ontologies/planning-schema/n16-http://csat.cz/ontologies/planning-schema/n16-end-time>
+        gr:label  "end time" .
+
+csat-s1:n66  a        gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n66" ;
+        gr:label      "damage" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "damage" ;
+        gr:width      "58.5" .
+
+csat-s1:n38  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n38" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:e21  a          gr:edge ;
+        rdfs:label      "requires" ;
+        gr:id           "e21" ;
+        gr:label        "requires" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n39 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n8 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:e4  a           gr:edge ;
+        gr:id           "e4" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n5 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n1 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:e34  a          gr:edge ;
+        gr:id           "e34" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n56 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n53 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:n60  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n60" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
+
+csat-s1:e19  a          gr:edge ;
+        rdfs:label      "performs task type" ;
+        gr:id           "e19" ;
+        gr:label        "performs task type" ;
+        gr:lineColor    "#999999" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "2.0" ;
+        gr:source       csat-s1:n34 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n59 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:n32  a        gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n32" ;
+        gr:label      "Component" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Component" ;
+        gr:width      "78.0" .
+
+csat-s1:n9  a          gr:node ;
+        gr:fillColor   "#FFCC00" ;
+        gr:height      "30.0" ;
+        gr:id          "n9" ;
+        gr:label       "Workpackage Plan" ;
+        gr:shapeType   "rectangle" ;
+        gr:stereotype  "event-type" ;
+        gr:text        "<<Event Type>>\nWorkpackage Plan" ;
+        gr:width       "106.056640625" .
+
+csat-s1:n45  a        gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n45" ;
+        gr:label      "Aircraft" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Aircraft" ;
+        gr:width      "78.0" .
+
+csat-s1:n17  a         gr:node ;
+        gr:fillColor   "#FFCC00" ;
+        gr:height      "30.0" ;
+        gr:id          "n17" ;
+        gr:label       "mechanic" ;
+        gr:shapeType   "rectangle" ;
+        gr:stereotype  "agent" ;
+        gr:text        "<<Agent>>\nmechanic" ;
+        gr:width       "58.5" .
+
+csat-s1:n58  a        gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n58" ;
+        gr:label      "Document" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Document" ;
+        gr:width      "78.0" .
+
+csat-s1:e41  a          gr:edge ;
+        gr:id           "e41" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n67 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n1 ;
+        gr:targetArrow  "white_delta" .
+
+csat-s1:e13  a          gr:edge ;
+        gr:id           "e13" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n16 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n14 ;
+        gr:targetArrow  "white_diamond" .
+
+csat-s1:n3  a         gr:node ;
+        gr:fillColor  "#FFCC00" ;
+        gr:height     "30.0" ;
+        gr:id         "n3" ;
+        gr:label      "Service bulletin" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "Service bulletin" ;
+        gr:width      "90.50507812500018" .
+
+csat-s1:e26  a          gr:edge ;
+        rdfs:label      "instance of ::" ;
+        gr:id           "e26" ;
+        gr:label        "instance of ::" ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n32 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n47 ;
+        gr:targetArrow  "standard" ;
+        gr:textColor    "#000000" .
+
+csat-s1:e9  a           gr:edge ;
+        rdfs:label      "\n          " ;
+        gr:id           "e9" ;
+        gr:label        "\n          " ;
+        gr:lineColor    "#000000" ;
+        gr:linetype     "line" ;
+        gr:linewidth    "1.0" ;
+        gr:source       csat-s1:n14 ;
+        gr:sourceArrow  "none" ;
+        gr:target       csat-s1:n15 ;
+        gr:targetArrow  "white_diamond" ;
+        gr:textColor    "#000000" .
+
+csat-s1:n11  a        gr:node ;
+        gr:height     "15.0" ;
+        gr:id         "n11" ;
+        gr:label      "*" ;
+        gr:shapeType  "rectangle" ;
+        gr:text       "*" ;
+        gr:width      "15.0" .
