@@ -12,7 +12,7 @@ public class Node {
 
 
     @XmlPath("data/y:ShapeNode/y:NodeLabel/y:tmptxt/text()")
-    public String label;
+    public String text;
     @XmlPath("data/y:ShapeNode/y:Fill/@color")
     public String fill;
     @XmlPath("data/y:ShapeNode/y:Geometry/@width")

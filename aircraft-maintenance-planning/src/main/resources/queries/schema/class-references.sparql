@@ -11,9 +11,9 @@ SELECT ?el1 ?el2 {
     ?el2 a gr:node;
          gr:label ?label2.
 
-    FILTER NOT EXISTS{
-        ?el2 gr:fillColor ?c.
-    }
+    OPTIONAL{?el2 gr:fillColor ?c.}
 
+    FILTER(?el1 != ?el2)
+    FILTER((!BOUND(?c)) || ?c = "#FFFFFF")
     FILTER(replace(?label1, "\\s+", " ") = replace(?label2, "\\s+", " "))
 }

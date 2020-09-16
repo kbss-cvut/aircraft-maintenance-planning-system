@@ -14,7 +14,10 @@ public class Vocabulary {
     public final static String	dp_fillColor = "http://onto.fel.cvut.cz/ontologies/graph#fillColor";
     public final static String	dp_height = "http://onto.fel.cvut.cz/ontologies/graph#height";
     public final static String	dp_id = "http://onto.fel.cvut.cz/ontologies/graph#id";
+    public final static String	dp_text = "http://onto.fel.cvut.cz/ontologies/graph#text";
     public final static String	dp_label = "http://onto.fel.cvut.cz/ontologies/graph#label";
+    public final static String	dp_stereotype = "http://onto.fel.cvut.cz/ontologies/graph#stereotype";
+    public final static String	dp_property = "http://onto.fel.cvut.cz/ontologies/graph#property";
     public final static String	dp_linetype = "http://onto.fel.cvut.cz/ontologies/graph#linetype";
     public final static String	dp_linewidth = "http://onto.fel.cvut.cz/ontologies/graph#linewidth";
     public final static String	dp_shapeType = "http://onto.fel.cvut.cz/ontologies/graph#shapeType";
@@ -35,7 +38,10 @@ public class Vocabulary {
     public final static Property p_dp_fillColor = ResourceFactory.createProperty(dp_fillColor);
     public final static Property p_dp_height = ResourceFactory.createProperty(dp_height);
     public final static Property p_dp_id = ResourceFactory.createProperty(dp_id);
+    public final static Property p_dp_text = ResourceFactory.createProperty(dp_text);
     public final static Property p_dp_label = ResourceFactory.createProperty(dp_label);
+    public final static Property p_dp_stereotype = ResourceFactory.createProperty(dp_stereotype);
+    public final static Property p_dp_property= ResourceFactory.createProperty(dp_property);
     public final static Property p_dp_linetype = ResourceFactory.createProperty(dp_linetype);
     public final static Property p_dp_linewidth = ResourceFactory.createProperty(dp_linewidth);
     public final static Property p_dp_shapeType = ResourceFactory.createProperty(dp_shapeType);

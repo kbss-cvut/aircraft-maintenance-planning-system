@@ -1,0 +1,14 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+
+CONSTRUCT{
+    ?cls ufo:has-stereotype ?stereotype.
+}WHERE{
+    ?el ufo:has-stereotype ?stereotype.
+    {
+        ?cls rdfs:subClassOf+ ?el.
+    }UNION{
+        ?el rdfs:subClassOf+ ?cls.
+    }
+#    FILTER NOT EXISTS {?cls ufo:has-stereotype ?stereotype}
+}

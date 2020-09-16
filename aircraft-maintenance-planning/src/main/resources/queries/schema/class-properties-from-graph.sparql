@@ -1,0 +1,16 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+PREFIX gr: <http://onto.fel.cvut.cz/ontologies/graph#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+CONSTRUCT{
+  ?prop a owl:DatatypeProperty;
+    rdfs:label ?l;
+    rdfs:domain ?el.
+}WHERE{
+    ?el a gr:node;
+         gr:property ?prop.
+    ?prop gr:label ?l.
+
+}

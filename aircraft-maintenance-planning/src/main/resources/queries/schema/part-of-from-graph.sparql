@@ -1,0 +1,24 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+PREFIX gr: <http://onto.fel.cvut.cz/ontologies/graph#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+
+CONSTRUCT{
+    ?el a owl:ObjectProperty;
+        rdfs:label ?label;
+        rdfs:domain ?sn;
+        rdfs:range ?tn.
+
+    ?el ufo:has-stereotype ufo:has-part.
+}WHERE{
+    ?el a gr:edge;
+        gr:targetArrow "white_diamond";
+        gr:source ?sn;
+        gr:target ?tn.
+
+    ?sn gr:label ?snl.
+    ?tn gr:label ?tnl.
+
+    BIND(concat( ?tnl, " has part ", ?snl) as ?label)
+}

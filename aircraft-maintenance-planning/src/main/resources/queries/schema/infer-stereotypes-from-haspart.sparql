@@ -1,0 +1,17 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+CONSTRUCT{
+    ?el2 ufo:has-stereotype ?stereotype.
+}WHERE{
+    ?p ufo:has-stereotype ufo:has-part.
+    {
+       ?p rdfs:domain ?el2;
+       rdfs:range ?el.
+    }UNION{
+       ?p rdfs:domain ?el;
+          rdfs:range ?el2.
+    }
+
+    ?el ufo:has-stereotype ?stereotype. # this will not be suitable for stereotypes such as kind, i.e. non propagating stereotypes
+#    FILTER NOT EXISTS {?part ufo:has-stereotype ?stereotype}
+}
