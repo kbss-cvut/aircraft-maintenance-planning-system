@@ -1,10 +1,13 @@
 package cz.cvut.kbss.amaplas.exp.graphml;
 
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Date;
 
 public class Graphml2Owl {
 
@@ -16,10 +19,16 @@ public class Graphml2Owl {
         write(graph, outputGraph);
 
         Model schema = new GraphToSchema().constructSchemaFromGraph(graph);
+        Resource onto = schema.createResource(ns);
+        onto
+                .addProperty(RDF.type, OWL2.Ontology)
+                .addLiteral(DCTerms.created, new Date())
+                .addLiteral(DCTerms.creator, Graphml2Owl.class.getCanonicalName());
+
         write(schema, outputSchema);
     }
 
-    public void write(Model m, String out) throws IOException {
+    public static void write(Model m, String out) throws IOException {
         try (Writer w = new FileWriter(out)) {
             m.write(w, "ttl");
         }
