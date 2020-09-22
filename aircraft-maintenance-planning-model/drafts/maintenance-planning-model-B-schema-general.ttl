@@ -1,0 +1,398 @@
+@prefix : <http://csat.cz/ontologies/planning-schema/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix gr: <http://onto.fel.cvut.cz/ontologies/graph#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix csat-s1: <http://csat.cz/ontologies/planning-schema/> .
+@base <http://csat.cz/ontologies/planning-schema/> .
+
+<http://csat.cz/ontologies/planning-schema/> rdf:type owl:Ontology ;
+                                              <http://purl.org/dc/terms/created> "Wed Sep 16 12:39:07 CEST 2020"^^<java:java.util.Date> ;
+                                              <http://purl.org/dc/terms/creator> "cz.cvut.kbss.amaplas.exp.graphml.Graphml2Owl" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/has-stereotype
+ufo:has-stereotype rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/created
+<http://purl.org/dc/terms/created> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+<http://purl.org/dc/terms/creator> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://csat.cz/ontologies/planning-schema/e10
+csat-s1:e10 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n14 ;
+            rdfs:range csat-s1:n0 ;
+            rdfs:label "instance of ::" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e11
+csat-s1:e11 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n15 ;
+            rdfs:range csat-s1:n9 ;
+            rdfs:label "instance of ::" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e12
+csat-s1:e12 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n17 ;
+            rdfs:range csat-s1:n16 ;
+            rdfs:label "performs" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e13
+csat-s1:e13 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n16 ;
+            rdfs:range csat-s1:n14 ;
+            ufo:has-stereotype ufo:has-part ;
+            rdfs:label "maintenance task has part work session" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e14
+csat-s1:e14 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n18 ;
+            rdfs:range csat-s1:n16 ;
+            ufo:has-stereotype ufo:has-part ;
+            rdfs:label "work session has part Worksession Finding" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e16
+csat-s1:e16 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n31 ;
+            rdfs:range csat-s1:n32 ;
+            rdfs:label "damage of " .
+
+
+###  http://csat.cz/ontologies/planning-schema/e17
+csat-s1:e17 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n34 ;
+            rdfs:range csat-s1:n33 ;
+            rdfs:label "has skill type" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e18
+csat-s1:e18 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n17 ;
+            rdfs:range csat-s1:n34 ;
+            rdfs:label "instance of ::" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e19
+csat-s1:e19 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n34 ;
+            rdfs:range csat-s1:n0 ;
+            rdfs:label "performs task type" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e20
+csat-s1:e20 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n40 ;
+            rdfs:range csat-s1:n9 ;
+            rdfs:label "creates plan" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e21
+csat-s1:e21 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n39 ;
+            rdfs:label "requires" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e23
+csat-s1:e23 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n6 ;
+            rdfs:range csat-s1:n18 ;
+            rdfs:label "created based on" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e24
+csat-s1:e24 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n32 ;
+            rdfs:range csat-s1:n45 ;
+            ufo:has-stereotype ufo:has-part ;
+            rdfs:label "Aircraft has part Component" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e25
+csat-s1:e25 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n0 ;
+            rdfs:range csat-s1:n46 ;
+            rdfs:label "task for" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e26
+csat-s1:e26 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n32 ;
+            rdfs:range csat-s1:n46 ;
+            rdfs:label "instance of ::" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e37
+csat-s1:e37 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n0 ;
+            rdfs:range csat-s1:n0 ;
+            rdfs:label "requires exection of" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e38
+csat-s1:e38 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n58 ;
+            rdfs:range csat-s1:n0 ;
+            rdfs:label "describes" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e39
+csat-s1:e39 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n31 ;
+            rdfs:range csat-s1:n66 ;
+            rdfs:label "has damage type" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e40
+csat-s1:e40 rdf:type owl:ObjectProperty ;
+            rdfs:domain csat-s1:n0 ;
+            rdfs:range csat-s1:n58 ;
+            rdfs:label "refers" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e7
+csat-s1:e7 rdf:type owl:ObjectProperty ;
+           rdfs:domain csat-s1:n0 ;
+           rdfs:range csat-s1:n9 ;
+           ufo:has-stereotype ufo:has-part ;
+           rdfs:label "Workpackage Plan has part maintenance task Type" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e8
+csat-s1:e8 rdf:type owl:ObjectProperty ;
+           rdfs:domain csat-s1:n6 ;
+           rdfs:range csat-s1:n9 ;
+           ufo:has-stereotype ufo:has-part ;
+           rdfs:label "Workpackage Plan has part Finding based Task Type" .
+
+
+###  http://csat.cz/ontologies/planning-schema/e9
+csat-s1:e9 rdf:type owl:ObjectProperty ;
+           rdfs:domain csat-s1:n14 ;
+           rdfs:range csat-s1:n15 ;
+           ufo:has-stereotype ufo:has-part ;
+           rdfs:label "Workpackage has part maintenance task" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://csat.cz/ontologies/planning-schema/n16-http://csat.cz/ontologies/planning-schema/n16-end-time
+<http://csat.cz/ontologies/planning-schema/n16-http://csat.cz/ontologies/planning-schema/n16-end-time> rdf:type owl:DatatypeProperty ;
+                                                                                                       rdfs:domain csat-s1:n16 ;
+                                                                                                       rdfs:label "end time" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n16-http://csat.cz/ontologies/planning-schema/n16-start-time
+<http://csat.cz/ontologies/planning-schema/n16-http://csat.cz/ontologies/planning-schema/n16-start-time> rdf:type owl:DatatypeProperty ;
+                                                                                                         rdfs:domain csat-s1:n16 ;
+                                                                                                         rdfs:label "start time" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://csat.cz/ontologies/planning-schema/n0
+csat-s1:n0 rdf:type owl:Class ;
+           ufo:has-stereotype ufo:event-type ;
+           rdfs:label "maintenance task Type" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n1
+csat-s1:n1 rdf:type owl:Class ;
+           rdfs:subClassOf csat-s1:n0 ;
+           ufo:has-stereotype ufo:event-type ;
+           rdfs:label "planned tasks" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n14
+csat-s1:n14 rdf:type owl:Class ;
+            ufo:has-stereotype ufo:event ;
+            rdfs:label "maintenance task" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n15
+csat-s1:n15 rdf:type owl:Class ;
+            ufo:has-stereotype ufo:event ;
+            rdfs:label "Workpackage" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n16
+csat-s1:n16 rdf:type owl:Class ;
+            ufo:has-stereotype ufo:event ;
+            rdfs:label "work session" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n17
+csat-s1:n17 rdf:type owl:Class ;
+            ufo:has-stereotype ufo:agent ;
+            rdfs:label "mechanic" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n18
+csat-s1:n18 rdf:type owl:Class ;
+            ufo:has-stereotype ufo:event ;
+            rdfs:label "Worksession Finding" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n2
+csat-s1:n2 rdf:type owl:Class ;
+           rdfs:subClassOf csat-s1:n0 ;
+           ufo:has-stereotype ufo:event-type ;
+           rdfs:label "non-planned tasks" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n3
+csat-s1:n3 rdf:type owl:Class ;
+           rdfs:subClassOf csat-s1:n58 ;
+           rdfs:label "Service bulletin" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n31
+csat-s1:n31 rdf:type owl:Class ;
+            rdfs:subClassOf csat-s1:n18 ;
+            ufo:has-stereotype ufo:event ;
+            rdfs:label "Worksession Damage finding" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n32
+csat-s1:n32 rdf:type owl:Class ;
+            rdfs:label "Component" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n33
+csat-s1:n33 rdf:type owl:Class ;
+            ufo:has-stereotype ufo:disposition-type ;
+            rdfs:label "skill type" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n34
+csat-s1:n34 rdf:type owl:Class ;
+            rdfs:label "agent type" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n39
+csat-s1:n39 rdf:type owl:Class ;
+            ufo:has-stereotype ufo:agent ;
+            rdfs:label "Client" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n40
+csat-s1:n40 rdf:type owl:Class ;
+            ufo:has-stereotype ufo:agent ;
+            rdfs:label "Planner" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n45
+csat-s1:n45 rdf:type owl:Class ;
+            rdfs:label "Aircraft" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n46
+csat-s1:n46 rdf:type owl:Class ;
+            ufo:has-stereotype ufo:object-type ;
+            rdfs:label "Component Type" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n50
+csat-s1:n50 rdf:type owl:Class ;
+            rdfs:label "Plan" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n51
+csat-s1:n51 rdf:type owl:Class ;
+            rdfs:subClassOf csat-s1:n50 ;
+            rdfs:label "Adhoc plan" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n52
+csat-s1:n52 rdf:type owl:Class ;
+            rdfs:subClassOf csat-s1:n50 ;
+            rdfs:label "Reusable plan" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n53
+csat-s1:n53 rdf:type owl:Class ;
+            rdfs:subClassOf csat-s1:n50 ;
+            rdfs:label "Non-reusable plan" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n57
+csat-s1:n57 rdf:type owl:Class ;
+            rdfs:subClassOf csat-s1:n58 ;
+            rdfs:label "Maintenance Manual" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n58
+csat-s1:n58 rdf:type owl:Class ;
+            rdfs:label "Document" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n6
+csat-s1:n6 rdf:type owl:Class ;
+           rdfs:subClassOf csat-s1:n0 ,
+                           csat-s1:n2 ,
+                           csat-s1:n51 ,
+                           csat-s1:n53 ;
+           ufo:has-stereotype ufo:event-type ;
+           rdfs:label "Finding based Task Type" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n66
+csat-s1:n66 rdf:type owl:Class ;
+            rdfs:label "damage" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n69
+csat-s1:n69 rdf:type owl:Class ;
+            rdfs:label "Finding" .
+
+
+###  http://csat.cz/ontologies/planning-schema/n9
+csat-s1:n9 rdf:type owl:Class ;
+           ufo:has-stereotype ufo:event-type ;
+           rdfs:label "Workpackage Plan" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/agent
+ufo:agent rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/disposition-type
+ufo:disposition-type rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/event
+ufo:event rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/event-type
+ufo:event-type rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/object-type
+ufo:object-type rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
