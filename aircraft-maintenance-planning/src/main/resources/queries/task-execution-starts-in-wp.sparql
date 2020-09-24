@@ -1,0 +1,15 @@
+PREFIX mp: <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ds: <http://onto.fel.cvut.cz/dop2020-csat/example-schema/>
+
+
+SELECT ?wp ?task ?start {
+    ?t1 mp:part_of_workpackage ?wp;
+
+        a ?task;
+        mp:start_time1 ?start.
+    FILTER(contains(str(?task), str(ds:)))
+}ORDER BY ?start

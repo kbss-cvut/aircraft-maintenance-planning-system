@@ -1,0 +1,22 @@
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  mp:   <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/>
+PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX  ds:   <http://onto.fel.cvut.cz/dop2020-csat/example-schema/>
+PREFIX d: <http://onto.fel.cvut.cz/dop2020-csat/example-instance-data/>
+
+SELECT ?wp ?pid ?index ?type ?description (str(?startTime) as ?start) (str(?endTime) as ?end)
+WHERE
+  {
+    BIND(iri(concat(str(d:), ?wp)) as ?wpuri)
+
+    ?te     rdf:type              ?taskType ;
+            rdfs:label            ?description ;
+            mp:part_of_workpackage  ?wpuri ;
+            mp:has_task_execution_part  ?tep .
+
+    ?tep    mp:start_time         ?startTime ;
+            mp:end_time           ?endTime .
+
+    ?wpuri mp:has_id ?wp.
+    FILTER (contains(str(?taskType), str(ds:)) && strends(str(?taskType), ?type))
+  } ORDER BY ?wp ?pid ?index ?start

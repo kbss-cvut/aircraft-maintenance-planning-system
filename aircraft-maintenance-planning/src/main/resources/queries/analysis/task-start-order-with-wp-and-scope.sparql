@@ -1,0 +1,27 @@
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  mp:   <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/>
+PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX  ds:   <http://onto.fel.cvut.cz/dop2020-csat/example-schema/>
+PREFIX d: <http://onto.fel.cvut.cz/dop2020-csat/example-instance-data/>
+PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
+PREFIX spif: <http://spinrdf.org/spif#>
+
+
+SELECT ?wp ?type ?scope ?taskcat (spif:dateFormat(?st,"yyyy-MM-dd") as ?date) (str(?st) as ?start) (str(?et) as ?end) ( str(ofn:asMillis(?et - ?st)) as ?dur)
+WHERE
+{
+    ?tt mp:part_of_workpackage ?wpuri.
+    ?wpuri mp:has_id ?wp.
+    ?tt a ?tType, mp:task_card;;
+    mp:has_task_execution_part ?t.
+    ?w mp:works_on ?t;
+    mp:member_of_group ?scopeGroup.
+#    ?scopeGroup rdfs:label ?scope.
+    ?t mp:start_time ?st;
+    mp:end_time ?et.
+    ?tType rdfs:subClassOf ?cls.
+
+    BIND(replace(str(?tType), "^.*/([^/]+)$", "$1") as ?type)
+    BIND(replace(str(?scopeGroup), "^.*/([^/]+)$", "$1") as ?scope)
+    BIND(replace(str(?cls), "^.*/([^/]+)$", "$1") as ?taskcat)
+}ORDER BY ?st

@@ -12,5 +12,4 @@ CONSTRUCT{
     ?el a gr:node;
          gr:property ?prop.
     ?prop gr:label ?l.
-
 }
