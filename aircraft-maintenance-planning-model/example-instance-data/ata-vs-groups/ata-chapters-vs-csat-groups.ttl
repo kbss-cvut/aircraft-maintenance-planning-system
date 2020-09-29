@@ -1,0 +1,725 @@
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix csat-p:  <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ata:  <http://onto.fel.cvut.cz/voc/ata-100/> .
+
+ata:ata-00  rdf:type   skos:Concept ;
+        ata:has-id     "00" ;
+        skos:altLabel  "GENERAL" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-00 .
+
+ata:ata-01  rdf:type   skos:Concept ;
+        ata:has-id     "01" ;
+        skos:altLabel  "MAINTENANCE POLICY" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-01 .
+
+ata:ata-02  rdf:type   skos:Concept ;
+        ata:has-id     "02" ;
+        skos:altLabel  "OPERATIONS" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-02 .
+
+ata:ata-03  rdf:type   skos:Concept ;
+        ata:has-id     "03" ;
+        skos:altLabel  "SUPPORT" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-03 .
+
+ata:ata-04  rdf:type   skos:Concept ;
+        ata:has-id     "04" ;
+        skos:altLabel  "AIRWORTHINESS LIMITATIONS" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-04 .
+
+ata:ata-05  rdf:type   skos:Concept ;
+        ata:has-id     "05" ;
+        skos:altLabel  "TIME LIMITS/MAINTENANCE CHECKS" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-05 .
+
+ata:ata-06  rdf:type   skos:Concept ;
+        ata:has-id     "06" ;
+        skos:altLabel  "DIMENSIONS AND AREAS" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-06 .
+
+ata:ata-07  rdf:type   skos:Concept ;
+        ata:has-id     "07" ;
+        skos:altLabel  "LIFTING AND SHORING" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-07 .
+
+ata:ata-08  rdf:type   skos:Concept ;
+        ata:has-id     "08" ;
+        skos:altLabel  "LEVELING AND WEIGHING" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-08 .
+
+ata:ata-09  rdf:type   skos:Concept ;
+        ata:has-id     "09" ;
+        skos:altLabel  "TOWING AND TAXIING" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-09 .
+
+ata:ata-10  rdf:type   skos:Concept ;
+        ata:has-id     "10" ;
+        skos:altLabel  "PARKING, MOORING, STORAGE AND RETURN TO SERVICE" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-10 .
+
+ata:ata-11  rdf:type   skos:Concept ;
+        ata:has-id     "11" ;
+        skos:altLabel  "PLACARDS AND MARKINGS" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-11 .
+
+ata:ata-12  rdf:type   skos:Concept ;
+        ata:has-id     "12" ;
+        skos:altLabel  "SERVICING" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-12 .
+
+ata:ata-13  rdf:type   skos:Concept ;
+        ata:has-id     "13" ;
+        skos:altLabel  "HARDWARE AND GENERAL TOOLS" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-13 .
+
+ata:ata-15  rdf:type   skos:Concept ;
+        ata:has-id     "15" ;
+        skos:altLabel  "AIRCREW INFORMATION" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-15 .
+
+ata:ata-16  rdf:type   skos:Concept ;
+        ata:has-id     "16" ;
+        skos:altLabel  "CHANGE OF ROLE" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-16 .
+
+ata:ata-18  rdf:type   skos:Concept ;
+        ata:has-id     "18" ;
+        skos:altLabel  "VIBRATION AND NOISE ANALYSIS (HELICOPTER ONLY)" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-18 .
+
+ata:ata-20  rdf:type   skos:Concept ;
+        ata:has-id     "20" ;
+        skos:altLabel  "STANDARD PRACTICES- AIRFRAME" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-20 .
+
+ata:ata-21  rdf:type   skos:Concept ;
+        ata:has-id     "21" ;
+        skos:altLabel  "AIR CONDITIONING" .
+
+csat-p:INT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-INT" ;
+        csat-p:has-competence-about  ata:ata-21 .
+
+ata:ata-22  rdf:type   skos:Concept ;
+        ata:has-id     "22" ;
+        skos:altLabel  "AUTO FLIGHT" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-22 .
+
+ata:ata-23  rdf:type   skos:Concept ;
+        ata:has-id     "23" ;
+        skos:altLabel  "COMMUNICATION" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-23 .
+
+ata:ata-24  rdf:type   skos:Concept ;
+        ata:has-id     "24" ;
+        skos:altLabel  "ELECTRICAL POWER" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-24 .
+
+ata:ata-25  rdf:type   skos:Concept ;
+        ata:has-id     "25" ;
+        skos:altLabel  "EQUIPMENT /FURNISHINGS" .
+
+csat-p:INT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-INT" ;
+        csat-p:has-competence-about  ata:ata-25 .
+
+ata:ata-26  rdf:type   skos:Concept ;
+        ata:has-id     "26" ;
+        skos:altLabel  "FIRE PROTECTION" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-26 .
+
+ata:ata-27  rdf:type   skos:Concept ;
+        ata:has-id     "27" ;
+        skos:altLabel  "FLIGHT CONTROLS" .
+
+csat-p:EXT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-EXT" ;
+        csat-p:has-competence-about  ata:ata-27 .
+
+ata:ata-28  rdf:type   skos:Concept ;
+        ata:has-id     "28" ;
+        skos:altLabel  "FUEL" .
+
+csat-p:EXT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-EXT" ;
+        csat-p:has-competence-about  ata:ata-28 .
+
+ata:ata-29  rdf:type   skos:Concept ;
+        ata:has-id     "29" ;
+        skos:altLabel  "HYDRAULIC POWER" .
+
+csat-p:LDG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-LDG" ;
+        csat-p:has-competence-about  ata:ata-29 .
+
+ata:ata-30  rdf:type   skos:Concept ;
+        ata:has-id     "30" ;
+        skos:altLabel  "ICE AND RAIN PROTECTION" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-30 .
+
+ata:ata-31  rdf:type   skos:Concept ;
+        ata:has-id     "31" ;
+        skos:altLabel  "INDICATING / RECORDING SYSTEM" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-31 .
+
+ata:ata-32  rdf:type   skos:Concept ;
+        ata:has-id     "32" ;
+        skos:altLabel  "LANDING GEAR" .
+
+csat-p:LDG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-LDG" ;
+        csat-p:has-competence-about  ata:ata-32 .
+
+ata:ata-33  rdf:type   skos:Concept ;
+        ata:has-id     "33" ;
+        skos:altLabel  "LIGHTS" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-33 .
+
+ata:ata-34  rdf:type   skos:Concept ;
+        ata:has-id     "34" ;
+        skos:altLabel  "NAVIGATION" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-34 .
+
+ata:ata-35  rdf:type   skos:Concept ;
+        ata:has-id     "35" ;
+        skos:altLabel  "OXYGEN" .
+
+csat-p:INT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-INT" ;
+        csat-p:has-competence-about  ata:ata-35 .
+
+ata:ata-36  rdf:type   skos:Concept ;
+        ata:has-id     "36" ;
+        skos:altLabel  "PNEUMATIC" .
+
+csat-p:INT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-INT" ;
+        csat-p:has-competence-about  ata:ata-36 .
+
+ata:ata-37  rdf:type   skos:Concept ;
+        ata:has-id     "37" ;
+        skos:altLabel  "VACUUM" .
+
+csat-p:INT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-INT" ;
+        csat-p:has-competence-about  ata:ata-37 .
+
+ata:ata-38  rdf:type   skos:Concept ;
+        ata:has-id     "38" ;
+        skos:altLabel  "WATER / WASTE" .
+
+csat-p:INT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-INT" ;
+        csat-p:has-competence-about  ata:ata-38 .
+
+ata:ata-39  rdf:type   skos:Concept ;
+        ata:has-id     "39" ;
+        skos:altLabel  "ELECTRICAL - ELECTRONIC PANELS AND MULTIPURPOSE COMPONENTS" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-39 .
+
+ata:ata-40  rdf:type   skos:Concept ;
+        ata:has-id     "40" ;
+        skos:altLabel  "MULTISYSTEM" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-40 .
+
+ata:ata-41  rdf:type   skos:Concept ;
+        ata:has-id     "41" ;
+        skos:altLabel  "WATER BALLAST" .
+
+csat-p:INT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-INT" ;
+        csat-p:has-competence-about  ata:ata-41 .
+
+ata:ata-42  rdf:type   skos:Concept ;
+        ata:has-id     "42" ;
+        skos:altLabel  "INTEGRATED MODULAR AVIONICS" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-42 .
+
+ata:ata-44  rdf:type   skos:Concept ;
+        ata:has-id     "44" ;
+        skos:altLabel  "CABIN SYSTEMS" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-44 .
+
+ata:ata-45  rdf:type   skos:Concept ;
+        ata:has-id     "45" ;
+        skos:altLabel  "ONBOARD MAINTENANCE SYSTEMS (OMS)" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-45 .
+
+ata:ata-46  rdf:type   skos:Concept ;
+        ata:has-id     "46" ;
+        skos:altLabel  "INFORMATION SYSTEMS" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-46 .
+
+ata:ata-47  rdf:type   skos:Concept ;
+        ata:has-id     "47" ;
+        skos:altLabel  "INERT GAS SYSTEM" .
+
+csat-p:EXT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-EXT" ;
+        csat-p:has-competence-about  ata:ata-47 .
+
+ata:ata-48  rdf:type   skos:Concept ;
+        ata:has-id     "48" ;
+        skos:altLabel  "IN FLIGHT FUEL DISPENSING" .
+
+csat-p:EXT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-EXT" ;
+        csat-p:has-competence-about  ata:ata-48 .
+
+ata:ata-49  rdf:type   skos:Concept ;
+        ata:has-id     "49" ;
+        skos:altLabel  "AIRBORNE AUXILIARY POWER" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-49 .
+
+ata:ata-50  rdf:type   skos:Concept ;
+        ata:has-id     "50" ;
+        skos:altLabel  "CARGO AND ACCESSORY COMPARTMENTS" .
+
+csat-p:INT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-INT" ;
+        csat-p:has-competence-about  ata:ata-50 .
+
+ata:ata-51  rdf:type   skos:Concept ;
+        ata:has-id     "51" ;
+        skos:altLabel  "STANDARD PRACTICES AND STRUCTURES - GENERAL" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-51 .
+
+ata:ata-52  rdf:type   skos:Concept ;
+        ata:has-id     "52" ;
+        skos:altLabel  "DOORS" .
+
+csat-p:INT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-INT" ;
+        csat-p:has-competence-about  ata:ata-52 .
+
+ata:ata-53  rdf:type   skos:Concept ;
+        ata:has-id     "53" ;
+        skos:altLabel  "FUSELAGE" .
+
+csat-p:EXT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-EXT" ;
+        csat-p:has-competence-about  ata:ata-53 .
+
+ata:ata-54  rdf:type   skos:Concept ;
+        ata:has-id     "54" ;
+        skos:altLabel  "NACELLES/PYLONS" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-54 .
+
+ata:ata-55  rdf:type   skos:Concept ;
+        ata:has-id     "55" ;
+        skos:altLabel  "STABILIZERS" .
+
+csat-p:EXT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-EXT" ;
+        csat-p:has-competence-about  ata:ata-55 .
+
+ata:ata-56  rdf:type   skos:Concept ;
+        ata:has-id     "56" ;
+        skos:altLabel  "WINDOWS" .
+
+csat-p:INT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-INT" ;
+        csat-p:has-competence-about  ata:ata-56 .
+
+ata:ata-57  rdf:type   skos:Concept ;
+        ata:has-id     "57" ;
+        skos:altLabel  "WINGS" .
+
+csat-p:EXT_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-EXT" ;
+        csat-p:has-competence-about  ata:ata-57 .
+
+ata:ata-60  rdf:type   skos:Concept ;
+        ata:has-id     "60" ;
+        skos:altLabel  "STANDARD PRACTICES - PROP./ROTOR" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-60 .
+
+ata:ata-61  rdf:type   skos:Concept ;
+        ata:has-id     "61" ;
+        skos:altLabel  "PROPELLERS/ PROPULSORS" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-61 .
+
+ata:ata-62  rdf:type   skos:Concept ;
+        ata:has-id     "62" ;
+        skos:altLabel  "MAIN ROTOR(S)" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-62 .
+
+ata:ata-63  rdf:type   skos:Concept ;
+        ata:has-id     "63" ;
+        skos:altLabel  "MAIN ROTOR DRIVE(S)" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-63 .
+
+ata:ata-64  rdf:type   skos:Concept ;
+        ata:has-id     "64" ;
+        skos:altLabel  "TAIL ROTOR" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-64 .
+
+ata:ata-65  rdf:type   skos:Concept ;
+        ata:has-id     "65" ;
+        skos:altLabel  "TAIL ROTOR DRIVE" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-65 .
+
+ata:ata-66  rdf:type   skos:Concept ;
+        ata:has-id     "66" ;
+        skos:altLabel  "FOLDING BLADES/PYLON" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-66 .
+
+ata:ata-67  rdf:type   skos:Concept ;
+        ata:has-id     "67" ;
+        skos:altLabel  "ROTORS FLIGHT CONTROL" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-67 .
+
+ata:ata-71  rdf:type   skos:Concept ;
+        ata:has-id     "71" ;
+        skos:altLabel  "POWER PLANT" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-71 .
+
+ata:ata-72  rdf:type   skos:Concept ;
+        ata:has-id     "72" ;
+        skos:altLabel  "ENGINE" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-72 .
+
+ata:ata-72T  rdf:type  skos:Concept ;
+        ata:has-id     "72T" ;
+        skos:altLabel  "ENGINE - TURBINE/TURBOPROP, DUCTED FAN/UNDUCTED FAN" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-72T .
+
+ata:ata-72R  rdf:type  skos:Concept ;
+        ata:has-id     "72R" ;
+        skos:altLabel  "ENGINE - RECIPROCATING" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-72R .
+
+ata:ata-73  rdf:type   skos:Concept ;
+        ata:has-id     "73" ;
+        skos:altLabel  "ENGINE - FUEL AND CONTROL" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-73 .
+
+ata:ata-74  rdf:type   skos:Concept ;
+        ata:has-id     "74" ;
+        skos:altLabel  "IGNITION" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-74 .
+
+ata:ata-75  rdf:type   skos:Concept ;
+        ata:has-id     "75" ;
+        skos:altLabel  "BLEED AIR" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-75 .
+
+ata:ata-76  rdf:type   skos:Concept ;
+        ata:has-id     "76" ;
+        skos:altLabel  "ENGINE CONTROLS" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-76 .
+
+ata:ata-77  rdf:type   skos:Concept ;
+        ata:has-id     "77" ;
+        skos:altLabel  "ENGINE INDICATING" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-77 .
+
+ata:ata-78  rdf:type   skos:Concept ;
+        ata:has-id     "78" ;
+        skos:altLabel  "EXHAUST" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-78 .
+
+ata:ata-79  rdf:type   skos:Concept ;
+        ata:has-id     "79" ;
+        skos:altLabel  "OIL" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-79 .
+
+ata:ata-80  rdf:type   skos:Concept ;
+        ata:has-id     "80" ;
+        skos:altLabel  "STARTING" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-80 .
+
+ata:ata-81  rdf:type   skos:Concept ;
+        ata:has-id     "81" ;
+        skos:altLabel  "TURBINES (RECIPROCATING ENGINES)" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-81 .
+
+ata:ata-82  rdf:type   skos:Concept ;
+        ata:has-id     "82" ;
+        skos:altLabel  "WATER INJECTION" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-82 .
+
+ata:ata-83  rdf:type   skos:Concept ;
+        ata:has-id     "83" ;
+        skos:altLabel  "ACCESSORY GEAR BOX (ENGINE DRIVEN)" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-83 .
+
+ata:ata-84  rdf:type   skos:Concept ;
+        ata:has-id     "84" ;
+        skos:altLabel  "PROPULSION AUGMENTATION" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-84 .
+
+ata:ata-85  rdf:type   skos:Concept ;
+        ata:has-id     "85" ;
+        skos:altLabel  "FUEL CELL SYSTEMS" .
+
+csat-p:ENG_group  rdf:type           skos:Concept ;
+        skos:altLabel                "MECH-ENG" ;
+        csat-p:has-competence-about  ata:ata-85 .
+
+ata:ata-91  rdf:type   skos:Concept ;
+        ata:has-id     "91" ;
+        skos:altLabel  "CHARTS" .
+
+csat-p:AG_group  rdf:type            skos:Concept ;
+        skos:altLabel                "Aircraft General" ;
+        csat-p:has-competence-about  ata:ata-91 .
+
+ata:ata-97  rdf:type   skos:Concept ;
+        ata:has-id     "97" ;
+        skos:altLabel  "WIRING REPORTING" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-97 .
+
+ata:ata-115  rdf:type  skos:Concept ;
+        ata:has-id     "115" ;
+        skos:altLabel  "FLIGHT SIMULATOR SYSTEMS" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-115 .
+
+ata:ata-116  rdf:type  skos:Concept ;
+        ata:has-id     "116" ;
+        skos:altLabel  "FLIGHT SIMULATOR CUING SYSTEM" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-116 .
+
+ata:ata-92  rdf:type   skos:Concept ;
+        ata:has-id     "92" ;
+        skos:altLabel  "ELECTRICAL POWER MULTIPLEXING" .
+
+csat-p:AVIO_group  rdf:type          skos:Concept ;
+        skos:altLabel                "AVIO" ;
+        csat-p:has-competence-about  ata:ata-92 .
+
+ata:ata-93  rdf:type   skos:Concept ;
+        ata:has-id     "93" ;
+        skos:altLabel  "SURVEILLANCE" .
+
+csat-p:PMC_group  rdf:type           skos:Concept ;
+        skos:altLabel                "PECULIAR MILITARY CHAPTERS" ;
+        csat-p:has-competence-about  ata:ata-93 .
+
+ata:ata-94  rdf:type   skos:Concept ;
+        ata:has-id     "94" ;
+        skos:altLabel  "WEAPON SYSTEM" .
+
+csat-p:PMC_group  rdf:type           skos:Concept ;
+        skos:altLabel                "PECULIAR MILITARY CHAPTERS" ;
+        csat-p:has-competence-about  ata:ata-94 .
+
+ata:ata-95  rdf:type   skos:Concept ;
+        ata:has-id     "95" ;
+        skos:altLabel  "CREW ESCAPE AND SAFETY" .
+
+csat-p:PMC_group  rdf:type           skos:Concept ;
+        skos:altLabel                "PECULIAR MILITARY CHAPTERS" ;
+        csat-p:has-competence-about  ata:ata-95 .
+
+ata:ata-96  rdf:type   skos:Concept ;
+        ata:has-id     "96" ;
+        skos:altLabel  "MISSILES, DRONES AND TELEMETRY" .
+
+csat-p:PMC_group  rdf:type           skos:Concept ;
+        skos:altLabel                "PECULIAR MILITARY CHAPTERS" ;
+        csat-p:has-competence-about  ata:ata-96 .
+
+ata:ata-98  rdf:type   skos:Concept ;
+        ata:has-id     "98" ;
+        skos:altLabel  "METEOROLOGICAL AND ATMOSPHERIC RESEARCH" .
+
+csat-p:PMC_group  rdf:type           skos:Concept ;
+        skos:altLabel                "PECULIAR MILITARY CHAPTERS" ;
+        csat-p:has-competence-about  ata:ata-98 .
+
+ata:ata-99  rdf:type   skos:Concept ;
+        ata:has-id     "99" ;
+        skos:altLabel  "ELECTRONIC WARFARE SYSTEM" .
+
+csat-p:PMC_group  rdf:type           skos:Concept ;
+        skos:altLabel                "PECULIAR MILITARY CHAPTERS" ;
+        csat-p:has-competence-about  ata:ata-99 .
