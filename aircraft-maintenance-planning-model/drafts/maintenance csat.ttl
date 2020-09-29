@@ -1,0 +1,109 @@
+@prefix : <http://csat.cz/ontologies/maintenance-csat/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://csat.cz/ontologies/maintenance-csat/> .
+
+<http://csat.cz/ontologies/maintenance-csat/> rdf:type owl:Ontology ;
+                                               owl:imports <http://csat.cz/ontologies/maintenance-schema/> .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://csat.cz/ontologies/maintenance-csat/requires
+:requires rdf:type owl:ObjectProperty ;
+          rdfs:label "requires" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://csat.cz/ontologies/maintenance-csat/Client
+:Client rdf:type owl:Class ;
+        rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/organization> ;
+        rdfs:label "Client" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat/Client_Extra__Order_task
+:Client_Extra__Order_task rdf:type owl:Class ;
+                          rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/maintenance_task> ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty :requires ;
+                                            owl:someValuesFrom :Client
+                                          ] ;
+                          rdfs:label "Client Extra Order task" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat/Finding
+:Finding rdf:type owl:Class ;
+         rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Observation> ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+                           owl:someValuesFrom :Non_Planned_Task
+                         ] ;
+         rdfs:label "Finding" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat/Finding__Damage
+:Finding__Damage rdf:type owl:Class ;
+                 rdfs:subClassOf :Finding ,
+                                 <http://csat.cz/ontologies/maintenance-schema/Damage> ;
+                 rdfs:label "Finding  Damage" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat/Maintenance_Work_Order
+:Maintenance_Work_Order rdf:type owl:Class ;
+                        rdfs:subClassOf :Non_Planned_Task ;
+                        rdfs:label "Maintenance Work Order" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat/Non-Planned_Client_Extra_Order_task
+:Non-Planned_Client_Extra_Order_task rdf:type owl:Class ;
+                                     rdfs:subClassOf :Client_Extra__Order_task ,
+                                                     :Non_Planned_Task ;
+                                     rdfs:label "Non-Planned Client Extra Order task" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat/Non_Planned_Task
+:Non_Planned_Task rdf:type owl:Class ;
+                  rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/maintenance_task> ;
+                  rdfs:label "Non Planned Task" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat/Planned_Client_Extra_Order_task
+:Planned_Client_Extra_Order_task rdf:type owl:Class ;
+                                 rdfs:subClassOf :Client_Extra__Order_task ,
+                                                 :Planned_Task ;
+                                 rdfs:label "Planned Client Extra Order task" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat/Planned_Task
+:Planned_Task rdf:type owl:Class ;
+              rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/maintenance_task> ;
+              rdfs:label "Planned Task" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat/Scheduled_Work_Order
+:Scheduled_Work_Order rdf:type owl:Class ;
+                      rdfs:subClassOf :Planned_Task ;
+                      rdfs:label "Scheduled Work Order" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat/Task_Card
+:Task_Card rdf:type owl:Class ;
+           rdfs:subClassOf :Planned_Task ;
+           rdfs:label "Task Card" .
+
+
+###  http://csat.cz/ontologies/maintenance-schema/Aircraft
+<http://csat.cz/ontologies/maintenance-schema/Aircraft> rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                          owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of> ;
+                                                                          owl:someValuesFrom <http://csat.cz/ontologies/maintenance-schema/Failure_Event>
+                                                                        ] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
