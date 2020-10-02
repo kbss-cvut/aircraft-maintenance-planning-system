@@ -1,0 +1,19 @@
+BASE <http://onto.fel.cvut.cz/voc/ata-100/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ata: <http://onto.fel.cvut.cz/voc/ata-100/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX csat-p: <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/>
+
+CONSTRUCT{
+ ?c a skos:Concept;
+	ata:has-id ?ataChapterId;
+	skos:altLabel ?ataChapterName.
+
+ ?csatGroup a skos:Concept;
+	skos:altLabel ?groupName;
+	csat-p:has-competence-about ?c.
+	
+}WHERE {
+  BIND(IRI(concat("http://onto.fel.cvut.cz/voc/ata-100/ata-", ?ataChapterId)) as ?c)
+  BIND(IRI(concat("http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/", ?groupCode, "_group")) as ?csatGroup)
+}

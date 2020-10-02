@@ -1,0 +1,19 @@
+Notes
+	1. transform the table in https://docs.google.com/spreadsheets/d/1upzoAXzdCocJ8GgoS8VgW9NV62oVF-xAdWZd3nRb6TU/edit#gid=1625572667 to be used with tarql
+		- there are ata chapter codes and names associated with CSAT working (mechanic) groups.
+		- make sure that we can generated IRIs of ATA chapters and CSAT working groups according to existing ATA vocabulary and CSAT maintenance ontology.
+		- the result is stored in: ata-chapter-to-group.xlsx (tab - ata-csat-groups)
+			- the groups tab translates the group codes/labels to be consistent with other CSAT ontologies. 
+	2. make a csv of the created table 
+		- result in: ata-chapters-vs-csat-groups.csv
+		
+	3. Create bat script which calls tarql with a construct query over ata-chapters-vs-csat-groups.csv to construct the a SKOS vocabulary with association of between the ATA chapters and the CSAT Groups.
+	
+	
+	
+	
+	
+	
+	
+	
+	
