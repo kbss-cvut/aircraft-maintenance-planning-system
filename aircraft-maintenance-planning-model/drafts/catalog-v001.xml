@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="Imports Wizard Entry" name="http://csat.cz/ontologies/maintenance-schema/" uri="maintenance%20generic%20model.ttl"/>
     <uri id="User Entered Import Resolution" name="http://csat.cz/ontologies/maintenance-schema/" uri="maintenance%20csat.ttl"/>
     <uri id="Imports Wizard Entry" name="http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.1" uri="ufo/ufo-powertypes.rdf"/>
     <uri id="Imports Wizard Entry" name="http://onto.fel.cvut.cz/ontologies/ufo/1.0.2" uri="ufo/ufo.rdf"/>
