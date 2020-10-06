@@ -1,0 +1,132 @@
+[
+  {
+    "op": "core/column-addition",
+    "description": "Create column start at index 2 based on column Start Time using expression grel:replace(row.cells[\"Start Date\"].value, /(\\d+)\\.(\\d+)\\.(\\d+)/, \"$3-$2-$1\") + \"T\" + value + \":00Z\")",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "start",
+    "columnInsertIndex": 2,
+    "baseColumnName": "Start Time",
+    "expression": "grel:replace(row.cells[\"Start Date\"].value, /(\\d+)\\.(\\d+)\\.(\\d+)/, \"$3-$2-$1\") + \"T\" + value + \":00Z\")",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column end at index 5 based on column End Time using expression grel:replace(row.cells[\"End Date\"].value, /(\\d+)\\.(\\d+)\\.(\\d+)/, \"$3-$2-$1\") + \"T\" + value + \":00Z\")",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "end",
+    "columnInsertIndex": 5,
+    "baseColumnName": "End Time",
+    "expression": "grel:replace(row.cells[\"End Date\"].value, /(\\d+)\\.(\\d+)\\.(\\d+)/, \"$3-$2-$1\") + \"T\" + value + \":00Z\")",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column task_super_class at index 5 based on column Type using expression grel:if(value==\"TC\", \"task_card\", if(value==\"S\", \"scheduled_work_order\", if(value==\"M\", \"maintenance_work_order\", null)))",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "task_super_class",
+    "columnInsertIndex": 5,
+    "baseColumnName": "Type",
+    "expression": "grel:if(value==\"TC\", \"task_card\", if(value==\"S\", \"scheduled_work_order\", if(value==\"M\", \"maintenance_work_order\", null)))",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column task_type at index 7 based on column WO/TC using expression grel:row.cells.Type.value + \"-\" + value",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "task_type",
+    "columnInsertIndex": 7,
+    "baseColumnName": "WO/TC",
+    "expression": "grel:row.cells.Type.value + \"-\" + value",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column subgroup at index 3 based on column Scope using expression grel:value + \"_group\"",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "subgroup",
+    "columnInsertIndex": 3,
+    "baseColumnName": "Scope",
+    "expression": "grel:value + \"_group\"",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column group at index 5 based on column Shift Group using expression grel:value + \"_group\"",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "group",
+    "columnInsertIndex": 5,
+    "baseColumnName": "Shift Group",
+    "expression": "grel:value + \"_group\"",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column workpackage at index 13 based on column Workpackage using expression grel:escape(value,\"url\")",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "workpackage",
+    "columnInsertIndex": 13,
+    "baseColumnName": "Workpackage",
+    "expression": "grel:escape(value,\"url\")",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column work on task at index 3 based on column start using expression grel:replace(row.cells[\"Workpackage\"].value, \"/\",\"_\") + \"-\" + row.cells.Scope.value + \"-\" + row.cells[\"Type\"].value + \"-\" + row.cells[\"WO/TC\"].value + \"-\" + replace(value,\":\",\"_\") + \"-\" + replace(row.cells.end.value,\":\",\"_\")",
+    "engineConfig": {
+      "mode": "record-based",
+      "facets": []
+    },
+    "newColumnName": "work on task",
+    "columnInsertIndex": 3,
+    "baseColumnName": "start",
+    "expression": "grel:replace(row.cells[\"Workpackage\"].value, \"/\",\"_\") + \"-\" + row.cells.Scope.value + \"-\" + row.cells[\"Type\"].value + \"-\" + row.cells[\"WO/TC\"].value + \"-\" + replace(value,\":\",\"_\") + \"-\" + replace(row.cells.end.value,\":\",\"_\")",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column task_execution at index 21 based on column WP start using expression grel:replace(row.cells[\"Workpackage\"].value, \"/\", \"_\")  + \"-\" + value + \"-\" + row.cells.Type.value + \"-\" + row.cells[\"WO/TC\"].value",
+    "engineConfig": {
+      "mode": "record-based",
+      "facets": []
+    },
+    "newColumnName": "task_execution",
+    "columnInsertIndex": 21,
+    "baseColumnName": "Workpackage",
+    "expression": "grel:replace(value, \"/\", \"_\")  + \"-\" + row.cells[\"WO/TC\"].value",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column aircraft at index 20 based on column Workpackage using expression grel:value.replace(/^([^\\/]+)\\/.+/, \"$1\")",
+    "engineConfig": {
+      "mode": "record-based",
+      "facets": []
+    },
+    "newColumnName": "aircraft",
+    "columnInsertIndex": 20,
+    "baseColumnName": "Workpackage",
+    "expression": "grel:value.replace(/^([^\\/]+)\\/.+/, \"$1\")",
+    "onError": "set-to-blank"
+  }
+]
