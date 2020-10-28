@@ -1,0 +1,39 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix onto: <http://onto.fel.cvut.cz/ontologies/A/> .
+@prefix ontop: <http://onto.fel.cvut.cz/ontologies/A/voc/pojem/> .
+
+onto:voc  a <http://onto.fel.cvut.cz/ontologies/slovník/agendový/popis-dat/pojem/slovník> , owl:Ontology ;
+        dcterms:creator "Bogdan Kostov";
+        dcterms:title "Test vocabulary"@en , "Testovaci slovník"@cs ;
+        dcterms:created "2019-03-29" ;
+        bibo:status "Specification"@en , "Specifikace"@cs ;
+        vann:preferredNamespacePrefix "onto" ;
+        vann:preferredNamespaceUri "http://onto.fel.cvut.cz/ontologies/A/" ;
+        owl:imports onto:glossary , onto:model ;
+        owl:versionIRI  <http://onto.fel.cvut.cz/ontologies/A/verze/1.1.1> ;
+        <http://onto.fel.cvut.cz/ontologies/slovník/agendový/popis-dat/pojem/má-glosář>
+                onto:glossary ;
+        <http://onto.fel.cvut.cz/ontologies/slovník/agendový/popis-dat/pojem/má-model>
+                onto:model .
+
+onto:model a <http://onto.fel.cvut.cz/ontologies/slovník/agendový/popis-dat/pojem/model> .
+
+onto:glossary a <http://onto.fel.cvut.cz/ontologies/slovník/agendový/popis-dat/pojem/glosář> , skos:ConceptScheme ;
+        dcterms:creator "Bogdan Kostov";
+        dcterms:title "Test glossary"@en , "Testovaci glosář"@cs ;
+        dcterms:created "2020-27-10." ;
+        owl:versionIRI  <http://onto.fel.cvut.cz/ontologies/A/verze/1.1.1> .
+
+ontop:term-a
+        a skos:Concept ;
+        skos:inScheme onto:glossary ;
+        skos:prefLabel "Term a"@en , "pojem a"@cs .
+
+

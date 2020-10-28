@@ -1,0 +1,65 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX vann: <http://purl.org/vocab/vann/>
+PREFIX apd: <http://onto.fel.cvut.cz/ontologies/slovník/agendový/popis-dat/pojem/>
+PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
+PREFIX csat-mp: <http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/>
+PREFIX csat-mpt: <http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/pojem/>
+
+
+CONSTRUCT{
+  ?voc a apd:slovník, owl:Ontology;
+    dcterms:creator ?creator;
+	dcterms:created ?created;
+    dcterms:title ?title ;
+	dcterms:description ?description ;
+	bibo:status ?status ; 
+        vann:preferredNamespacePrefix ?prefix ;
+        vann:preferredNamespaceUri ?namespace ;
+        owl:imports ?glossary , ?model ;
+        owl:versionIRI  ?revisionIRI ;
+    apd:má-glosář ?glossary;
+    apd:má-model ?model.
+    
+  
+  ?glossary
+	a apd:glosář, skos:ConceptScheme;
+	skos:hasTopConcept ?term .
+
+  ?model
+    a apd:model .
+
+  ?term a skos:Concept;
+	skos:inScheme ?glossary ;
+	skos:prefLabel ?termLang ;
+	termit:je-draft true.
+	# skos:definition ?es ;
+	# skos:prefLabel ?termCs ;
+	# skos:scopeNote ?es.
+	
+}WHERE{
+	BIND("en" as ?lang)
+	BIND("version/0.0.1" as ?revision)
+	BIND("Martin Kala" as ?creator)
+	BIND("2017-03-01" as ?created)
+	BIND(strlang("Draft",?lang) as ?status) # bibo:draft
+	BIND(strlang("CSAT Aircraft Maintenance Terminology", ?lang) as ?title )
+	BIND(strlang("CSAT vocabulary containing relevant aircraft related terminology used in maintenance documentation", ?lang) as ?descriptoin )
+	BIND("csat-mp" as ?prefix)
+	BIND(str(csat-mp:) as ?namespace)
+	BIND("pojem/" as ?termSeparator)
+	
+	# ?aj , ?cj
+	BIND(strlang("", ?lang) as ?es)
+	# BIND(replace(?AJ,"^\\s*([].+)\\s*", "$1") as ?label)
+	BIND(strlang(?AJ, ?lang) as ?termLang)
+	# BIND(strlang(?CJ, "cs") as ?termCs)
+	BIND(IRI(concat(str(csat-mp:), ?termSeparator, replace(?AJ, "\\s", "-")) ) as ?term)
+	BIND(IRI(replace(str(csat-mp:), "/$","")) as ?voc)
+	BIND(IRI(concat(str(csat-mp:), ?revision)) as ?revisionIRI)
+	BIND(IRI(concat(str(csat-mp:), "glossary")) as ?glossary)
+	BIND(IRI(concat(str(csat-mp:), "model")) as ?model)
+}
