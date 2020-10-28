@@ -1,0 +1,98 @@
+
+Description of columns in the table screenshots dodatečné_info_TC.png and dodatečné_info_TC-02.png :
+	Each row of the table describes a task type (TC, M or S), not a specific task execution. 
+	Each task is described by its code and task category "type"
+	The subject of repair is located using four columns:
+		- ATA code
+		- Zone - should part of the section
+		- Section - section of the aircraft
+		- Area - should be part of the Zone but sometimes it is the same as the Zone
+		
+	Each task may be composed of three steps
+		- Main step - adjacent columns 
+			- "Main step" - a label identifying/describing the step
+			- Team - the team type which should perform the task
+			- Phase - ?
+			- MHrs - the typical time executing the step
+		- Access step - same as Main step but there is no Phase column
+		- Final test - same as Main step
+		Steps are ordered in the table as: Main Step, Access Step and Final Test
+		The order of execution of the steps is: Access Step, Main Step and Final Test
+		
+	Each task may have restrictions which must be met in order to perform the task. The restrictions are:
+		- El. Power - ON or OFF
+		- Hyd. Power - ON or OFF
+		- Jack - YES or NO
+	
+Questions
+	What does the table rows represent?
+		Each row of the table describes a task type (TC, M or S), not a specific task execution. 
+		
+	
+	Access Step	
+		questions:
+			WRONG - Access to what, e.g. the area, zone or section?
+			CORRECT - Does it refers to an explanation how to access the location? 
+			WRONG Does it mean that access is required for the task? If so:
+					WONG Is there information in the database that the access is blocked or made available?
+		
+		Answer:
+		- Refers to a step of the task before the main step which provides access to the parts and system to be repaired. Performed before the Main step.
+
+	Why are there two Teams?
+		Answer:
+		- Each step may have an assigned Team which should perform the step:
+			- team Main step, team access step, team final test (step) - steps and the agents performing them
+		
+	MHrs?
+		Answer:
+		- how long the task should take.
+		
+
+	What is Final Test?
+		Answer:
+		- the final step of the task. Performed after the Main step.
+
+	What is phase?
+		- phase of the task, phase of the work package?
+		- is there an association between phase and team?
+		
+	What is El. Power (Electrical Power)
+		Answer:
+		- specifies the Electrical power system's state required for the Main step.
+		- possible values (states): ON, OFF, / (no restriction)
+		
+	What is Hyd. Power (Hydraulic Power)
+		Answer:
+		- specifies the Hydraulic power system's state required for the Main step.
+		- possible values (states): ON, OFF, / (no restriction) 
+		
+	What is Jack?
+		Answer:
+		- specifies whether the Aircraft is required to be on or off the Jack for the Main step.
+		- possible values (states): Yes, NO, / (no restriction)
+		
+	What is Min. Mech?
+		Answer:
+		- minimal number of mechanics for the main task
+		
+		
+	What is Max. Mech?
+		Answer:
+		- restriction on the number of mechanics who can perform the task, e.g. due to spatial limitations in the area in which the task is performed.
+		
+	What is Skil/Scope?
+		
+		
+	What is Note?
+		Answer:
+		- text with additional information.
+	
+Questions - 10/28/2020:
+	Do we have controlled vocabulary for the values of columns Zone, Section and Area 
+	
+	Can we have more information about the steps?
+		- step codes and text description?
+		- other steps?
+	
+	Are there steps for which we can specify that they turn off the Electrical or Hydraulic power or puts the Aircraft on or off the Jack?

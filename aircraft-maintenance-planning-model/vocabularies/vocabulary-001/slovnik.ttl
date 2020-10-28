@@ -1,0 +1,3162 @@
+@prefix termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/> .
+@prefix apd:   <http://onto.fel.cvut.cz/ontologies/slovník/agendový/popis-dat/pojem/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix csat-mpt: <http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/pojem/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bibo:  <http://purl.org/ontology/bibo/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann:  <http://purl.org/vocab/vann/> .
+@prefix csat-mp: <http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/> .
+
+csat-mpt:sheet-metal-worker
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "sheet metal worker"@en .
+
+csat-mpt:stain  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "stain"@en .
+
+csat-mpt:shades  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "shades"@en .
+
+csat-mpt:coupling  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "coupling"@en .
+
+csat-mpt:burst  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "burst"@en .
+
+csat-mpt:splitter-fairing
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "splitter fairing"@en .
+
+csat-mpt:general-condition
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "general condition"@en .
+
+csat-mpt:concave  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "concave"@en .
+
+csat-mpt:rap  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rap"@en .
+
+csat-mpt:mutation  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "mutation"@en .
+
+csat-mpt:assembly  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "assembly"@en .
+
+csat-mpt:precaution  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "precaution"@en .
+
+csat-mpt:transition  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "transition"@en .
+
+csat-mpt:bundle  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "bundle"@en .
+
+csat-mpt:overhead  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "overhead"@en .
+
+csat-mpt:discharger  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "discharger"@en .
+
+csat-mpt:kit  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "kit"@en .
+
+csat-mpt:bracket  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "bracket"@en .
+
+csat-mpt:joiner  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "joiner"@en .
+
+csat-mpt:inlet  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "inlet"@en .
+
+csat-mpt:shift-leader
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "shift leader"@en .
+
+csat-mpt:shaft  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "shaft"@en .
+
+csat-mpt:cocpit-voice-recorder
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "cocpit voice recorder"@en .
+
+csat-mpt:exhaust  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "exhaust"@en .
+
+csat-mpt:countersink  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "countersink"@en .
+
+csat-mpt:Emergency-exit
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "Emergency exit"@en .
+
+csat-mpt:backrest  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "backrest"@en .
+
+csat-mpt:translating  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "translating"@en .
+
+csat-mpt:buckling  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "buckling"@en .
+
+csat-mpt:spare  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "spare"@en .
+
+csat-mpt:conduits  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "conduits"@en .
+
+csat-mpt:restore  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "restore"@en .
+
+csat-mpt:thickness  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "thickness"@en .
+
+csat-mpt:nick  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "nick"@en .
+
+csat-mpt:bolt  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "bolt"@en .
+
+csat-mpt:trimable  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "trimable"@en .
+
+csat-mpt:main-engine-control
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "main engine control"@en .
+
+csat-mpt:tune  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "tune"@en .
+
+csat-mpt:prove  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "prove"@en .
+
+csat-mpt:pylon  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "pylon"@en .
+
+csat-mpt:accessory  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "accessory"@en .
+
+csat-mpt:alternating-current
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "alternating current"@en .
+
+csat-mpt:hilok  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "hilok"@en .
+
+csat-mpt:honing  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "honing"@en .
+
+csat-mpt:grease  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "grease"@en .
+
+csat-mpt:mounting  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "mounting"@en .
+
+csat-mpt:booster-pump
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "booster pump"@en .
+
+csat-mpt:wrinkle  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "wrinkle"@en .
+
+csat-mpt:arrows  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "arrows"@en .
+
+csat-mpt:harness-assembly
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "harness assembly"@en .
+
+csat-mpt:bulbs  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "bulbs"@en .
+
+csat-mpt:program-track
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "program track"@en .
+
+csat-mpt:ELT  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "ELT"@en .
+
+csat-mpt:rear-cone  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rear cone"@en .
+
+csat-mpt:upholsterer  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "upholsterer"@en .
+
+csat-mpt:accessories  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "accessories"@en .
+
+csat-mpt:landing-gear
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "landing gear"@en .
+
+csat-mpt:sealer  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "sealer"@en .
+
+csat-mpt:rotables  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rotables"@en .
+
+csat-mpt:removal  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "removal"@en .
+
+csat-mpt:adverse  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "adverse"@en .
+
+csat-mpt:renewal  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "renewal"@en .
+
+csat-mpt:fan-cowl  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fan cowl"@en .
+
+csat-mpt:aupholster  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "aupholster"@en .
+
+csat-mpt:rod  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rod"@en .
+
+csat-mpt:extinguisher
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "extinguisher"@en .
+
+csat-mpt:nozzle  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "nozzle"@en .
+
+csat-mpt:assess  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "assess"@en .
+
+csat-mpt:igniter  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "igniter"@en .
+
+csat-mpt:inverter  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "inverter"@en .
+
+csat-mpt:life-vest-pouch
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "life vest pouch"@en .
+
+csat-mpt:sealant  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "sealant"@en .
+
+csat-mpt:disposal  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "disposal"@en .
+
+csat-mpt:floorpanel  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "floorpanel"@en .
+
+csat-mpt:portable  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "portable"@en .
+
+csat-mpt:lever  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "lever"@en .
+
+csat-mpt:light  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "light"@en .
+
+csat-mpt:vhf  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "vhf"@en .
+
+csat-mpt:edge  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "edge"@en .
+
+csat-mpt:tread  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "tread"@en .
+
+csat-mpt:stabilizer  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "stabilizer"@en .
+
+csat-mpt:strip  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "strip"@en .
+
+csat-mpt:chip  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "chip"@en .
+
+csat-mpt:retainer  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "retainer"@en .
+
+csat-mpt:intercostal  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "intercostal"@en .
+
+csat-mpt:stud  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "stud"@en .
+
+csat-mpt:standby  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "standby"@en .
+
+csat-mpt:backup  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "backup"@en .
+
+csat-mpt:shipment  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "shipment"@en .
+
+csat-mpt:seal-up  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "seal up"@en .
+
+csat-mpt:cushions  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "cushions"@en .
+
+csat-mpt:spark  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "spark"@en .
+
+csat-mpt:replaceability
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "replaceability"@en .
+
+csat-mpt:log-book  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "log book"@en .
+
+csat-mpt:junction-box
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "junction box"@en .
+
+csat-mpt:inhibition  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "inhibition"@en .
+
+csat-mpt:spring  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "spring"@en .
+
+csat-mpt:pitot-probe  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "pitot probe"@en .
+
+csat-mpt:hitch  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "hitch"@en .
+
+csat-mpt:applicable  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "applicable"@en .
+
+csat-mpt:cowlings  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "cowlings"@en .
+
+csat-mpt:fuzz  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fuzz"@en .
+
+csat-mpt:blade  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "blade"@en .
+
+csat-mpt:galley  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "galley"@en .
+
+csat-mpt:incorporated
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "incorporated"@en .
+
+csat-mpt:antenna  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "antenna"@en .
+
+csat-mpt:reverser  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "reverser"@en .
+
+csat-mpt:due-date  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "due date"@en .
+
+csat-mpt:utilization  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "utilization"@en .
+
+csat-mpt:forward  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "forward"@en .
+
+csat-mpt:bushing  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "bushing"@en .
+
+csat-mpt:puncture  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "puncture"@en .
+
+csat-mpt:slat  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "slat"@en .
+
+csat-mpt:refuel  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "refuel"@en .
+
+csat-mpt:obstruction  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "obstruction"@en .
+
+csat-mpt:spinner  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "spinner"@en .
+
+csat-mpt:outlet  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "outlet"@en .
+
+csat-mpt:housing  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "housing"@en .
+
+csat-mpt:threaded  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "threaded"@en .
+
+csat-mpt:restoration  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "restoration"@en .
+
+csat-mpt:altimetry-system
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "altimetry system"@en .
+
+<http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/pojem/buckle-(to)>
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "buckle (to)"@en .
+
+csat-mpt:vane  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "vane"@en .
+
+csat-mpt:miscellaneous
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "miscellaneous"@en .
+
+csat-mpt:injector  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "injector"@en .
+
+csat-mpt:cavities  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "cavities"@en .
+
+csat-mpt:summary-sheets
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "summary sheets"@en .
+
+csat-mpt:score  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "score"@en .
+
+csat-mpt:deferred  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "deferred"@en .
+
+csat-mpt:rotary  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rotary"@en .
+
+csat-mpt:scimitar  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "scimitar"@en .
+
+csat-mpt:folder  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "folder"@en .
+
+csat-mpt:ultrasonic  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "ultrasonic"@en .
+
+csat-mpt:frame  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "frame"@en .
+
+csat-mpt:winglet  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "winglet"@en .
+
+csat-mpt:zoning  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "zoning"@en .
+
+csat-mpt:hot-sections
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "hot sections"@en .
+
+<http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/pojem/duct/ducting>
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "duct/ducting"@en .
+
+csat-mpt:conducted  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "conducted"@en .
+
+csat-mpt:grounding  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "grounding"@en .
+
+csat-mpt:scratch  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "scratch"@en .
+
+csat-mpt:replenishment
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "replenishment"@en .
+
+csat-mpt:lifting  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "lifting"@en .
+
+csat-mpt:horizontal-stabilizer
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "horizontal stabilizer"@en .
+
+csat-mpt:venting  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "venting"@en .
+
+csat-mpt:vent  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "vent"@en .
+
+csat-mpt:deflection  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "deflection"@en .
+
+csat-mpt:delamination
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "delamination"@en .
+
+csat-mpt:template  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "template"@en .
+
+csat-mpt:disordered  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "disordered"@en .
+
+csat-mpt:couplings  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "couplings"@en .
+
+csat-mpt:switch  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "switch"@en .
+
+csat-mpt:bonding-leads
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "bonding leads"@en .
+
+csat-mpt:conduction  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "conduction"@en .
+
+csat-mpt:covering-material
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "covering material"@en .
+
+csat-mpt:aperture  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "aperture"@en .
+
+csat-mpt:riding-conditions
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "riding conditions"@en .
+
+csat-mpt:krueger-flap
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "krueger flap"@en .
+
+csat-mpt:surge-tank  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "surge tank"@en .
+
+csat-mpt:longitudinal
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "longitudinal"@en .
+
+csat-mpt:tail-skid  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "tail skid"@en .
+
+csat-mpt:angle-of-attack
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "angle of attack"@en .
+
+csat-mpt:FAN  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "FAN"@en .
+
+csat-mpt:adjust  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "adjust"@en .
+
+csat-mpt:interim  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "interim"@en .
+
+csat-mpt:engaged  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "engaged"@en .
+
+csat-mpt:seat-back-recline
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "seat back recline"@en .
+
+csat-mpt:upholstery  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "upholstery"@en .
+
+csat-mpt:cutout  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "cutout"@en .
+
+csat-mpt:dent  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "dent"@en .
+
+csat-mpt:eligible  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "eligible"@en .
+
+csat-mpt:trailing-edge
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "trailing edge"@en .
+
+csat-mpt:insulation  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "insulation"@en .
+
+csat-mpt:LRU  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "LRU"@en .
+
+csat-mpt:windshield  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "windshield"@en .
+
+csat-mpt:abradable  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "abradable"@en .
+
+csat-mpt:unit  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "unit"@en .
+
+csat-mpt:cargo-compartment
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "cargo compartment"@en .
+
+csat-mpt:raceway  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "raceway"@en .
+
+csat-mpt:aft  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "aft"@en .
+
+csat-mpt:rectification
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rectification"@en .
+
+csat-mpt:nil  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "nil"@en .
+
+csat-mpt:lifevest  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "lifevest"@en .
+
+csat-mpt:elevator  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "elevator"@en .
+
+csat-mpt:residues  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "residues"@en .
+
+csat-mpt:customized  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "customized"@en .
+
+csat-mpt:jacking-point
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "jacking point"@en .
+
+csat-mpt:flooring  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "flooring"@en .
+
+csat-mpt:groove  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "groove"@en .
+
+csat-mpt:adjustment  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "adjustment"@en .
+
+csat-mpt:fillet  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fillet"@en .
+
+csat-mpt:aids  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "aids"@en .
+
+csat-mpt:pane  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "pane"@en .
+
+csat-mpt:piston  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "piston"@en .
+
+csat-mpt:handrail  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "handrail"@en .
+
+csat-mpt:lubrication  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "lubrication"@en .
+
+csat-mpt:phase-out  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "phase out"@en .
+
+csat-mpt:couple  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "couple"@en .
+
+csat-mpt:extended  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "extended"@en .
+
+csat-mpt:inflate  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "inflate"@en .
+
+csat-mpt:suction  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "suction"@en .
+
+csat-mpt:door  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "door"@en .
+
+csat-mpt:deteriorated
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "deteriorated"@en .
+
+csat-mpt:engine-harness
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "engine harness"@en .
+
+csat-mpt:cannibalization
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "cannibalization"@en .
+
+csat-mpt:leading-edge
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "leading edge"@en .
+
+csat-mpt:faults  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "faults"@en .
+
+csat-mpt:headrest  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "headrest"@en .
+
+csat-mpt:pintle  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "pintle"@en .
+
+csat-mpt:aligned  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "aligned"@en .
+
+csat-mpt:panel  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "panel"@en .
+
+csat-mpt:aileron  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "aileron"@en .
+
+csat-mpt:sealing  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "sealing"@en .
+
+csat-mpt:spinning  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "spinning"@en .
+
+csat-mpt:cover  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "cover"@en .
+
+csat-mpt:rudder  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rudder"@en .
+
+csat-mpt:seat-bumper  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "seat bumper"@en .
+
+csat-mpt:casing  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "casing"@en .
+
+csat-mpt:lipskin  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "lipskin"@en .
+
+csat-mpt:spoilers  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "spoilers"@en .
+
+csat-mpt:harness  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "harness"@en .
+
+csat-mpt:energize  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "energize"@en .
+
+csat-mpt:shroud  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "shroud"@en .
+
+csat-mpt:flange  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "flange"@en .
+
+csat-mpt:disengage  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "disengage"@en .
+
+csat-mpt:rag  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rag"@en .
+
+csat-mpt:crack  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "crack"@en .
+
+csat-mpt:hatch  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "hatch"@en .
+
+csat-mpt:worn  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "worn"@en .
+
+csat-mpt:cylinder  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "cylinder"@en .
+
+csat-mpt:indicating  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "indicating"@en .
+
+csat-mpt:equalize  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "equalize"@en .
+
+csat-mpt:support-beam
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "support beam"@en .
+
+csat-mpt:doorstop  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "doorstop"@en .
+
+csat-mpt:cap  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "cap"@en .
+
+csat-mpt:marking  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "marking"@en .
+
+csat-mpt:remote  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "remote"@en .
+
+csat-mpt:heading  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "heading"@en .
+
+csat-mpt:wedge  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "wedge"@en .
+
+csat-mpt:stowed  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "stowed"@en .
+
+csat-mpt:quotation  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "quotation"@en .
+
+csat-mpt:bearing  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "bearing"@en .
+
+csat-mpt:stencils  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "stencils"@en .
+
+csat-mpt:pitot  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "pitot"@en .
+
+csat-mpt:dado  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "dado"@en .
+
+csat-mpt:retain  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "retain"@en .
+
+csat-mpt:goodrich  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "goodrich"@en .
+
+csat-mpt:fortified  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fortified"@en .
+
+csat-mpt:wiring  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "wiring"@en .
+
+csat-mpt:lightning-strike
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "lightning strike"@en .
+
+csat-mpt:discharging  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "discharging"@en .
+
+csat-mpt:thinner  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "thinner"@en .
+
+csat-mpt:faulty  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "faulty"@en .
+
+csat-mpt:revert  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "revert"@en .
+
+csat-mpt:workflow  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "workflow"@en .
+
+csat-mpt:conductor  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "conductor"@en .
+
+csat-mpt:hilock  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "hilock"@en .
+
+csat-mpt:flammable  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "flammable"@en .
+
+csat-mpt:clip  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "clip"@en .
+
+csat-mpt:gear-bay  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "gear bay"@en .
+
+csat-mpt:fan-blades  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fan blades"@en .
+
+csat-mpt:painting-system
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "painting system"@en .
+
+csat-mpt:track  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "track"@en .
+
+csat-mpt:stowage  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "stowage"@en .
+
+csat-mpt:lense  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "lense"@en .
+
+csat-mpt:spigot  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "spigot"@en .
+
+csat-mpt:direct-current
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "direct current"@en .
+
+csat-mpt:electrical-bonding
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "electrical bonding"@en .
+
+csat-mpt:transducer  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "transducer"@en .
+
+csat-mpt:loose  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "loose"@en .
+
+csat-mpt:purchase-price
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "purchase price"@en .
+
+csat-mpt:overhaul  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "overhaul"@en .
+
+csat-mpt:static  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "static"@en .
+
+csat-mpt:borescope  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "borescope"@en .
+
+csat-mpt:kick-panel  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "kick panel"@en .
+
+csat-mpt:swivel  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "swivel"@en .
+
+csat-mpt:placard  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "placard"@en .
+
+csat-mpt:ram  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "ram"@en .
+
+csat-mpt:machining-chips
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "machining chips"@en .
+
+csat-mpt:painter  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "painter"@en .
+
+csat-mpt:bond  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "bond"@en .
+
+csat-mpt:cone  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "cone"@en .
+
+csat-mpt:refurbishment
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "refurbishment"@en .
+
+csat-mpt:depressurize
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "depressurize"@en .
+
+csat-mpt:vapour  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "vapour"@en .
+
+csat-mpt:acoustic-panel
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "acoustic panel"@en .
+
+csat-mpt:sidewall  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "sidewall"@en .
+
+csat-mpt:link  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "link"@en .
+
+csat-mpt:blind-rivet  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "blind rivet"@en .
+
+csat-mpt:booster  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "booster"@en .
+
+csat-mpt:plunger  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "plunger"@en .
+
+csat-mpt:pax-cabin  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "pax cabin"@en .
+
+csat-mpt:leakage  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "leakage"@en .
+
+csat-mpt:oil-scavenge-filter
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "oil scavenge filter"@en .
+
+csat-mpt:belly  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "belly"@en .
+
+csat-mpt:detent  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "detent"@en .
+
+csat-mpt:trunnion  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "trunnion"@en .
+
+csat-mpt:trim  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "trim"@en .
+
+csat-mpt:retraction  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "retraction"@en .
+
+csat-mpt:intake  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "intake"@en .
+
+csat-mpt:degrease  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "degrease"@en .
+
+csat-mpt:Kruegel-flap
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "Kruegel flap"@en .
+
+csat-mpt:rust  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rust"@en .
+
+csat-mpt:electroplater
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "electroplater"@en .
+
+csat-mpt:pickslip  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "pickslip"@en .
+
+csat-mpt:altimetry  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "altimetry"@en .
+
+csat-mpt:lightning  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "lightning"@en .
+
+csat-mpt:welder  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "welder"@en .
+
+csat-mpt:torque  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "torque"@en .
+
+csat-mpt:auxiliary  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "auxiliary"@en .
+
+csat-mpt:stab  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "stab"@en .
+
+csat-mpt:crew  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "crew"@en .
+
+csat-mpt:wrench  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "wrench"@en .
+
+csat-mpt:drain  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "drain"@en .
+
+csat-mpt:fibre  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fibre"@en .
+
+csat-mpt:pedestal  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "pedestal"@en .
+
+csat-mpt:accomplishment
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "accomplishment"@en .
+
+csat-mpt:clank  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "clank"@en .
+
+csat-mpt:purchasing  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "purchasing"@en .
+
+csat-mpt:reschedule  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "reschedule"@en .
+
+csat-mpt:blower  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "blower"@en .
+
+csat-mpt:assign  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "assign"@en .
+
+csat-mpt:on-stock  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "on stock"@en .
+
+csat-mpt:fixtures  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fixtures"@en .
+
+csat-mpt:pressurize  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "pressurize"@en .
+
+csat-mpt:diameter  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "diameter"@en .
+
+csat-mpt:sealed  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "sealed"@en .
+
+csat-mpt:compound  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "compound"@en .
+
+csat-mpt:touch-up  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "touch up"@en .
+
+csat-mpt:mandatory  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "mandatory"@en .
+
+csat-mpt:inflating  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "inflating"@en .
+
+csat-mpt:align  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "align"@en .
+
+csat-mpt:defuel  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "defuel"@en .
+
+csat-mpt:invoice  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "invoice"@en .
+
+csat-mpt:bonded  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "bonded"@en .
+
+csat-mpt:leak  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "leak"@en .
+
+csat-mpt:latch  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "latch"@en .
+
+csat-mpt:fitting  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fitting"@en .
+
+csat-mpt:layout  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "layout"@en .
+
+csat-mpt:restraint-systém
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "restraint systém"@en .
+
+csat-mpt:rubber  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rubber"@en .
+
+csat-mpt:solder  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "solder"@en .
+
+csat-mpt:scavenge  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "scavenge"@en .
+
+csat-mpt:platform  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "platform"@en .
+
+csat-mpt:spatula  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "spatula"@en .
+
+csat-mpt:exciter  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "exciter"@en .
+
+csat-mpt:wire-bundles
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "wire bundles"@en .
+
+csat-mpt:jacking  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "jacking"@en .
+
+csat-mpt:conditioning-ducting
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "conditioning ducting"@en .
+
+csat-mpt:threat  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "threat"@en .
+
+csat-mpt:fan-cowling  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fan cowling"@en .
+
+csat-mpt:sampling  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "sampling"@en .
+
+csat-mpt:passenger-compartment
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "passenger compartment"@en .
+
+csat-mpt:layer  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "layer"@en .
+
+csat-mpt:flap  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "flap"@en .
+
+csat-mpt:coat  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "coat"@en .
+
+csat-mpt:diluted  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "diluted"@en .
+
+csat-mpt:restraint  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "restraint"@en .
+
+csat-mpt:grill-assy  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "grill assy"@en .
+
+csat-mpt:dashboard  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "dashboard"@en .
+
+csat-mpt:altimeter  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "altimeter"@en .
+
+csat-mpt:splice  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "splice"@en .
+
+csat-mpt:interchangeability
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "interchangeability"@en .
+
+csat-mpt:locknut  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "locknut"@en .
+
+csat-mpt:devaluation  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "devaluation"@en .
+
+csat-mpt:vapour-barrier
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "vapour barrier"@en .
+
+csat-mpt:washer  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "washer"@en .
+
+csat-mpt:spoiler  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "spoiler"@en .
+
+csat-mpt:trimmable  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "trimmable"@en .
+
+csat-mpt:screw  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "screw"@en .
+
+csat-mpt:scrapping  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "scrapping"@en .
+
+csat-mpt:gromet  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "gromet"@en .
+
+csat-mpt:marker  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "marker"@en .
+
+csat-mpt:connector  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "connector"@en .
+
+csat-mpt:buckle-mapping
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "buckle mapping"@en .
+
+csat-mpt:wrinkled  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "wrinkled"@en .
+
+csat-mpt:receptacle  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "receptacle"@en .
+
+csat-mpt:empennage  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "empennage"@en .
+
+csat-mpt:drain-tank  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "drain tank"@en .
+
+csat-mpt:descent  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "descent"@en .
+
+csat-mpt:excessive  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "excessive"@en .
+
+csat-mpt:fuselage  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fuselage"@en .
+
+csat-mpt:dorsal  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "dorsal"@en .
+
+csat-mpt:chafed  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "chafed"@en .
+
+csat-mpt:counters  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "counters"@en .
+
+csat-mpt:avionic-bay  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "avionic bay"@en .
+
+csat-mpt:particles  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "particles"@en .
+
+csat-mpt:plug  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "plug"@en .
+
+csat-mpt:pulley  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "pulley"@en .
+
+csat-mpt:race  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "race"@en .
+
+csat-mpt:sensor  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "sensor"@en .
+
+csat-mpt:lens  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "lens"@en .
+
+csat-mpt:propulsion  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "propulsion"@en .
+
+csat-mpt:props  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "props"@en .
+
+csat-mpt:susceptible  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "susceptible"@en .
+
+csat-mpt:lighting  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "lighting"@en .
+
+csat-mpt:nacelle  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "nacelle"@en .
+
+csat-mpt:foreman  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "foreman"@en .
+
+csat-mpt:gageous  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "gageous"@en .
+
+csat-mpt:rivet  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rivet"@en .
+
+csat-mpt:swirl  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "swirl"@en .
+
+csat-mpt:stainless  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "stainless"@en .
+
+csat-mpt:annunciator  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "annunciator"@en .
+
+csat-mpt:mast  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "mast"@en .
+
+csat-mpt:humidity  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "humidity"@en .
+
+csat-mpt:gasket  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "gasket"@en .
+
+csat-mpt:stainig-with
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "stainig with"@en .
+
+csat-mpt:circuit  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "circuit"@en .
+
+csat-mpt:cable  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "cable"@en .
+
+csat-mpt:lateral  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "lateral"@en .
+
+csat-mpt:drainage  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "drainage"@en .
+
+csat-mpt:dust-layers  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "dust layers"@en .
+
+csat-mpt:crank  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "crank"@en .
+
+csat-mpt:EE  a           skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "EE"@en .
+
+csat-mpt:to-provide-with
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "to provide with"@en .
+
+csat-mpt:extension  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "extension"@en .
+
+csat-mpt:override  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "override"@en .
+
+csat-mpt:axle  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "axle"@en .
+
+csat-mpt:wheel-chock  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "wheel chock"@en .
+
+csat-mpt:wheel-well  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "wheel well"@en .
+
+csat-mpt:lanyard  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "lanyard"@en .
+
+csat-mpt:actuator  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "actuator"@en .
+
+csat-mpt:fuse  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fuse"@en .
+
+csat-mpt:placards  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "placards"@en .
+
+csat-mpt:shoring  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "shoring"@en .
+
+csat-mpt:rodend  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rodend"@en .
+
+csat-mpt:depth  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "depth"@en .
+
+csat-mpt:stay  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "stay"@en .
+
+csat-mpt:acceleration
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "acceleration"@en .
+
+csat-mpt:seal  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "seal"@en .
+
+csat-mpt:fan-shroud  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fan shroud"@en .
+
+csat-mpt:cable-ties  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "cable ties"@en .
+
+csat-mpt:angle  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "angle"@en .
+
+csat-mpt:joint  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "joint"@en .
+
+csat-mpt:stucked  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "stucked"@en .
+
+<http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/pojem/inflict+A549>
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "inflict+A549"@en .
+
+csat-mpt:towing  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "towing"@en .
+
+csat-mpt:consumption  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "consumption"@en .
+
+csat-mpt:power-plant  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "power plant"@en .
+
+csat-mpt:thrust  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "thrust"@en .
+
+csat-mpt:replenish  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "replenish"@en .
+
+csat-mpt:nut  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "nut"@en .
+
+csat-mpt:default  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "default"@en .
+
+csat-mpt:fastener  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fastener"@en .
+
+csat-mpt:support  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "support"@en .
+
+csat-mpt:airfoil  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "airfoil"@en .
+
+csat-mpt:patch  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "patch"@en .
+
+csat-mpt:rub  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rub"@en .
+
+csat-mpt:workshop  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "workshop"@en .
+
+csat-mpt:flap-track  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "flap track"@en .
+
+csat-mpt:tail-cone  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "tail cone"@en .
+
+csat-mpt:harness-wiring
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "harness wiring"@en .
+
+csat-mpt:drill  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "drill"@en .
+
+csat-mpt:beam  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "beam"@en .
+
+csat-mpt:rack  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rack"@en .
+
+<http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/pojem/ram-air-inlet/intake>
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "ram air inlet/intake"@en .
+
+csat-mpt:decrease  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "decrease"@en .
+
+csat-mpt:chunk  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "chunk"@en .
+
+csat-mpt:gear  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "gear"@en .
+
+csat-mpt:fittings  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fittings"@en .
+
+csat-mpt:port  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "port"@en .
+
+csat-mpt:bonding  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "bonding"@en .
+
+csat-mpt:drag  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "drag"@en .
+
+csat-mpt:flake  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "flake"@en .
+
+csat-mpt:sleeve  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "sleeve"@en .
+
+csat-mpt:balance-panel
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "balance panel"@en .
+
+csat-mpt:ultrasound  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "ultrasound"@en .
+
+csat-mpt:rod-gauge  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rod gauge"@en .
+
+csat-mpt:stiffener  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "stiffener"@en .
+
+csat-mpt:pouch  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "pouch"@en .
+
+csat-mpt:thrust-reverser
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "thrust reverser"@en .
+
+csat-mpt:altitude  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "altitude"@en .
+
+csat-mpt:seat-workshop
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "seat workshop"@en .
+
+csat-mpt:compartment  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "compartment"@en .
+
+csat-mpt:clamp  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "clamp"@en .
+
+csat-mpt:retract  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "retract"@en .
+
+csat-mpt:nitrogen  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "nitrogen"@en .
+
+csat-mpt:signed  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "signed"@en .
+
+csat-mpt:boom  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "boom"@en .
+
+csat-mpt:ignition-leads
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "ignition leads"@en .
+
+csat-mpt:chafing  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "chafing"@en .
+
+csat-mpt:moisture  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "moisture"@en .
+
+csat-mpt:seattrack  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "seattrack"@en .
+
+csat-mpt:damping  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "damping"@en .
+
+csat-mpt:combustion  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "combustion"@en .
+
+csat-mpt:partition  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "partition"@en .
+
+csat-mpt:deflate  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "deflate"@en .
+
+csat-mpt:wear-seat  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "wear seat"@en .
+
+csat-mpt:probe  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "probe"@en .
+
+csat-mpt:dedicated  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "dedicated"@en .
+
+csat-mpt:nose-landing-gear
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "nose landing gear"@en .
+
+csat-mpt:buckle  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "buckle"@en .
+
+csat-mpt:sheet-metal  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "sheet metal"@en .
+
+csat-mpt:insufficient
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "insufficient"@en .
+
+csat-mp:model  a  apd:model .
+
+csat-mpt:dorsal-fin-keel
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "dorsal fin keel"@en .
+
+csat-mpt:sequence  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "sequence"@en .
+
+csat-mpt:pin  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "pin"@en .
+
+csat-mpt:propeller  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "propeller"@en .
+
+csat-mpt:tinsmith  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "tinsmith"@en .
+
+csat-mpt:retread  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "retread"@en .
+
+csat-mpt:discard  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "discard"@en .
+
+csat-mpt:weld  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "weld"@en .
+
+csat-mpt:ignition  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "ignition"@en .
+
+csat-mpt:disembark  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "disembark"@en .
+
+<http://onto.fel.cvut.cz/ontolgies/csat/mp-voc>
+        a                              owl:Ontology , apd:slovník ;
+        apd:má-glosář                  csat-mp:glossary ;
+        apd:má-model                   csat-mp:model ;
+        dcterms:created                "2017-03-01" ;
+        dcterms:creator                "Martin Kala" ;
+        dcterms:title                  "CSAT Aircraft Maintenance Terminology"@en ;
+        bibo:status                    "Draft"@en ;
+        vann:preferredNamespacePrefix  "csat-mp" ;
+        vann:preferredNamespaceUri     "http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/" ;
+        owl:imports                    csat-mp:glossary , csat-mp:model ;
+        owl:versionIRI                 <http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/version/0.0.1> .
+
+csat-mpt:fowler-flap  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fowler flap"@en .
+
+csat-mpt:whitesmith  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "whitesmith"@en .
+
+csat-mpt:heat-damage  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "heat damage"@en .
+
+csat-mpt:strap  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "strap"@en .
+
+csat-mpt:hinge  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "hinge"@en .
+
+csat-mpt:framework  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "framework"@en .
+
+csat-mpt:baulk  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "baulk"@en .
+
+csat-mpt:tire  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "tire"@en .
+
+csat-mpt:proximity  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "proximity"@en .
+
+csat-mpt:taxiing  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "taxiing"@en .
+
+csat-mpt:bumper  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "bumper"@en .
+
+csat-mpt:strut  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "strut"@en .
+
+csat-mpt:discrepancies
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "discrepancies"@en .
+
+csat-mpt:skin  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "skin"@en .
+
+csat-mpt:kickstrip  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "kickstrip"@en .
+
+csat-mpt:valve  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "valve"@en .
+
+csat-mpt:fuel-dump  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fuel dump"@en .
+
+csat-mpt:tighten  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "tighten"@en .
+
+csat-mpt:deviation  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "deviation"@en .
+
+csat-mpt:nut-plate  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "nut plate"@en .
+
+csat-mpt:dimming  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "dimming"@en .
+
+csat-mpt:seat-truck  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "seat truck"@en .
+
+csat-mpt:doubler  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "doubler"@en .
+
+csat-mpt:conductive-strip
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "conductive strip"@en .
+
+csat-mpt:steering  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "steering"@en .
+
+csat-mpt:vapor  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "vapor"@en .
+
+csat-mpt:update  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "update"@en .
+
+<http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/pojem/assembly/disassembly>
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "assembly/disassembly"@en .
+
+csat-mpt:leak-check  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "leak check"@en .
+
+csat-mpt:gearbox  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "gearbox"@en .
+
+csat-mpt:mat  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "mat"@en .
+
+csat-mpt:cushion  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "cushion"@en .
+
+csat-mpt:hinged-joint
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "hinged joint"@en .
+
+csat-mpt:lip  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "lip"@en .
+
+csat-mpt:velocity  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "velocity"@en .
+
+csat-mpt:hose  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "hose"@en .
+
+csat-mpt:dovetail  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "dovetail"@en .
+
+csat-mpt:recirculation-fan
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "recirculation fan"@en .
+
+csat-mpt:pressurization
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "pressurization"@en .
+
+csat-mpt:combustion-chamber
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "combustion chamber"@en .
+
+csat-mpt:bulkhead  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "bulkhead"@en .
+
+csat-mpt:scuff  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "scuff"@en .
+
+csat-mpt:OGV  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "OGV"@en .
+
+csat-mpt:alternate  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "alternate"@en .
+
+csat-mpt:tension  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "tension"@en .
+
+csat-mpt:scope  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "scope"@en .
+
+csat-mpt:attendant  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "attendant"@en .
+
+csat-mpt:bucket  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "bucket"@en .
+
+csat-mpt:blanket  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "blanket"@en .
+
+csat-mpt:fitting-tool
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fitting tool"@en .
+
+csat-mpt:gouge  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "gouge"@en .
+
+csat-mpt:agent  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "agent"@en .
+
+csat-mpt:rigging  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rigging"@en .
+
+csat-mpt:slotted-nuts
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "slotted nuts"@en .
+
+csat-mpt:shipped  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "shipped"@en .
+
+csat-mpt:ceiling-panel
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "ceiling panel"@en .
+
+csat-mpt:troubleshooting
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "troubleshooting"@en .
+
+csat-mpt:grind  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "grind"@en .
+
+csat-mpt:integrating  a  skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "integrating"@en .
+
+csat-mpt:wing-flap  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "wing flap"@en .
+
+<http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/pojem/pax/crew-door>
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "pax/crew door"@en .
+
+csat-mpt:proposal  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "proposal"@en .
+
+csat-mpt:walk-around-check
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "walk around check"@en .
+
+csat-mpt:mount  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "mount"@en .
+
+csat-mpt:spreaded  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "spreaded"@en .
+
+csat-mpt:hf  a           skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "hf"@en .
+
+csat-mpt:alignment  a    skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "alignment"@en .
+
+csat-mpt:combustion-gases
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "combustion gases"@en .
+
+csat-mpt:filler  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "filler"@en .
+
+csat-mpt:ram-air  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "ram air"@en .
+
+csat-mpt:cord  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "cord"@en .
+
+csat-mpt:wing-to-body
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "wing to body"@en .
+
+csat-mpt:jack  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "jack"@en .
+
+csat-mpt:armcaps  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "armcaps"@en .
+
+csat-mpt:refill  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "refill"@en .
+
+csat-mpt:flame-arrester
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "flame arrester"@en .
+
+csat-mpt:scraps  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "scraps"@en .
+
+csat-mpt:reheater  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "reheater"@en .
+
+csat-mpt:outflow-valve
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "outflow valve"@en .
+
+csat-mpt:scan-light  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "scan light"@en .
+
+csat-mpt:input  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "input"@en .
+
+csat-mpt:bleed  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "bleed"@en .
+
+csat-mpt:layout-table
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "layout table"@en .
+
+csat-mpt:service-door
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "service door"@en .
+
+csat-mpt:grid  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "grid"@en .
+
+csat-mpt:rupture  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rupture"@en .
+
+csat-mpt:radome  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "radome"@en .
+
+csat-mpt:towing-lever
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "towing lever"@en .
+
+csat-mpt:lavatories  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "lavatories"@en .
+
+csat-mpt:uneven  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "uneven"@en .
+
+csat-mpt:fairing  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "fairing"@en .
+
+csat-mpt:arm  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "arm"@en .
+
+csat-mpt:inlet-cowl  a   skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "inlet cowl"@en .
+
+csat-mpt:replenishing
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "replenishing"@en .
+
+csat-mpt:spinner-front-cone
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "spinner front cone"@en .
+
+csat-mpt:strike  a       skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "strike"@en .
+
+csat-mpt:web  a          skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "web"@en .
+
+csat-mpt:stringer  a     skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "stringer"@en .
+
+csat-mpt:sticker  a      skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "sticker"@en .
+
+csat-mpt:rear  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "rear"@en .
+
+csat-mp:glossary  a         skos:ConceptScheme , apd:glosář ;
+        skos:hasTopConcept  csat-mpt:seat-truck , csat-mpt:align , csat-mpt:lifevest , csat-mpt:deflate , csat-mpt:handrail , csat-mpt:angle-of-attack , csat-mpt:flange , csat-mpt:link , csat-mpt:strip , csat-mpt:axle , csat-mpt:shipped , <http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/pojem/assembly/disassembly> , csat-mpt:retract , csat-mpt:scratch , csat-mpt:intercostal , csat-mpt:replaceability , csat-mpt:conduits , csat-mpt:template , csat-mpt:zoning , csat-mpt:oil-scavenge-filter , csat-mpt:sealant , csat-mpt:towing , csat-mpt:mount , csat-mpt:deflection , csat-mpt:edge , csat-mpt:thickness , csat-mpt:goodrich , csat-mpt:aupholster , csat-mpt:towing-lever , csat-mpt:partition , csat-mpt:scrapping , csat-mpt:disembark , csat-mpt:upholstery , csat-mpt:locknut , csat-mpt:residues , csat-mpt:log-book , csat-mpt:thrust , csat-mpt:fuselage , csat-mpt:groove , csat-mpt:empennage , csat-mpt:spinning , csat-mpt:clip , csat-mpt:workshop , csat-mpt:dashboard , csat-mpt:faulty , csat-mpt:combustion-chamber , csat-mpt:landing-gear , csat-mpt:threat , csat-mpt:stowed , csat-mpt:adverse , csat-mpt:chafed , csat-mpt:unit , csat-mpt:indicating , csat-mpt:stringer , csat-mpt:boom , csat-mpt:support-beam , csat-mpt:rotables , csat-mpt:horizontal-stabilizer , csat-mpt:combustion , csat-mpt:lightning-strike , csat-mpt:lighting , csat-mpt:buckling , csat-mpt:aligned , csat-mpt:floorpanel , csat-mpt:cutout , csat-mpt:extended , csat-mpt:torque , csat-mpt:purchase-price , csat-mpt:strut , csat-mpt:kick-panel , csat-mpt:trailing-edge , csat-mpt:compound , csat-mpt:power-plant , csat-mpt:fibre , csat-mpt:propulsion , csat-mpt:utilization , csat-mpt:skin , csat-mpt:scavenge , csat-mpt:tread , csat-mpt:port , csat-mpt:summary-sheets , csat-mpt:cowlings , csat-mpt:shades , csat-mpt:nose-landing-gear , csat-mpt:door , csat-mpt:hilock , csat-mpt:decrease , csat-mpt:latch , csat-mpt:foreman , csat-mpt:wedge , csat-mpt:doorstop , csat-mpt:chip , csat-mpt:wheel-chock , csat-mpt:avionic-bay , csat-mpt:fan-blades , csat-mpt:drainage , csat-mpt:discharger , csat-mpt:bulbs , csat-mpt:windshield , csat-mpt:score , csat-mpt:backup , csat-mpt:welder , csat-mpt:altitude , csat-mpt:stain , csat-mpt:scraps , csat-mpt:seattrack , csat-mpt:couplings , csat-mpt:pintle , csat-mpt:depth , csat-mpt:auxiliary , csat-mpt:fowler-flap , csat-mpt:hinged-joint , csat-mpt:bond , csat-mpt:machining-chips , csat-mpt:equalize , csat-mpt:invoice , csat-mpt:ultrasound , csat-mpt:tension , csat-mpt:sequence , csat-mpt:retain , csat-mpt:forward , csat-mpt:filler , csat-mpt:insufficient , csat-mpt:LRU , csat-mpt:tune , csat-mpt:jacking , csat-mpt:tighten , <http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/pojem/inflict+A549> , csat-mpt:ignition-leads , csat-mpt:aperture , csat-mpt:kit , csat-mpt:ram , csat-mpt:gromet , csat-mpt:pax-cabin , csat-mpt:proximity , csat-mpt:refuel , csat-mpt:scope , csat-mpt:sensor , csat-mpt:extension , csat-mpt:static , csat-mpt:restraint-systém , csat-mpt:reverser , csat-mpt:combustion-gases , csat-mpt:flap , csat-mpt:miscellaneous , csat-mpt:refurbishment , csat-mpt:harness-wiring , csat-mpt:uneven , csat-mpt:wheel-well , csat-mpt:rubber , csat-mpt:angle , csat-mpt:tinsmith , csat-mpt:tire , csat-mpt:velocity , csat-mpt:piston , csat-mpt:attendant , csat-mpt:alternating-current , csat-mpt:adjustment , csat-mpt:borescope , csat-mpt:ultrasonic , csat-mpt:revert , csat-mpt:loose , csat-mpt:counters , csat-mpt:overhead , csat-mpt:heading , csat-mpt:particles , csat-mpt:disposal , csat-mpt:track , csat-mpt:chafing , csat-mpt:krueger-flap , csat-mpt:outlet , csat-mpt:FAN , csat-mpt:reschedule , csat-mpt:airfoil , csat-mpt:raceway , csat-mpt:suction , csat-mpt:alignment , csat-mpt:faults , csat-mpt:assess , csat-mpt:trunnion , csat-mpt:drain-tank , csat-mpt:swirl , csat-mpt:interchangeability , csat-mpt:nut , csat-mpt:spare , csat-mpt:altimetry , csat-mpt:incorporated , csat-mpt:wrinkle , csat-mpt:renewal , csat-mpt:lens , csat-mpt:hot-sections , csat-mpt:booster-pump , csat-mpt:jacking-point , csat-mpt:washer , csat-mpt:layout , csat-mpt:restraint , csat-mpt:disordered , csat-mpt:default , csat-mpt:pedestal , csat-mpt:pressurization , csat-mpt:shaft , csat-mpt:removal , csat-mpt:applicable , csat-mpt:rod-gauge , csat-mpt:gasket , csat-mpt:deferred , csat-mpt:seat-back-recline , csat-mpt:spinner , csat-mpt:seat-workshop , csat-mpt:lip , csat-mpt:dent , csat-mpt:pulley , csat-mpt:inflate , csat-mpt:exciter , csat-mpt:jack , csat-mpt:worn , csat-mpt:ELT , csat-mpt:light , csat-mpt:inhibition , csat-mpt:conductor , csat-mpt:electroplater , csat-mpt:whitesmith , csat-mpt:painting-system , csat-mpt:crew , csat-mpt:marking , csat-mpt:bolt , csat-mpt:deteriorated , csat-mpt:layout-table , csat-mpt:drag , csat-mpt:degrease , csat-mpt:sidewall , csat-mpt:drain , csat-mpt:panel , csat-mpt:lipskin , csat-mpt:nut-plate , csat-mpt:proposal , csat-mpt:chock , csat-mpt:heat-damage , csat-mpt:outflow-valve , csat-mpt:signed , csat-mpt:lense , csat-mpt:due-date , csat-mpt:dedicated , <http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/pojem/buckle-(to)> , csat-mpt:pylon , csat-mpt:spoilers , csat-mpt:retainer , csat-mpt:acoustic-panel , csat-mpt:deviation , csat-mpt:injector , csat-mpt:inlet-cowl , csat-mpt:wing-flap , csat-mpt:devaluation , csat-mpt:ram-air , csat-mpt:spreaded , csat-mpt:housing , csat-mpt:restore , csat-mpt:gear , csat-mpt:defuel , csat-mpt:cushions , csat-mpt:diameter , csat-mpt:intake , csat-mpt:pitot-probe , csat-mpt:transducer , csat-mpt:burst , csat-mpt:stainig-with , csat-mpt:inlet , csat-mpt:descent , csat-mpt:update , csat-mpt:vapour-barrier , csat-mpt:nitrogen , csat-mpt:cable-ties , csat-mpt:dimming , csat-mpt:crack , csat-mpt:fairing , csat-mpt:exhaust , csat-mpt:rear , csat-mpt:obstruction , csat-mpt:dovetail , csat-mpt:upholsterer , csat-mpt:mounting , csat-mpt:eligible , csat-mpt:spinner-front-cone , csat-mpt:vane , csat-mpt:blind-rivet , csat-mpt:propeller , csat-mpt:transition , csat-mpt:spoiler , csat-mpt:belly , csat-mpt:prove , csat-mpt:restoration , csat-mpt:cover , csat-mpt:gearbox , csat-mpt:bundle , csat-mpt:sealing , csat-mpt:pin , csat-mpt:screw , csat-mpt:shipment , csat-mpt:steering , csat-mpt:fitting , csat-mpt:pitot , csat-mpt:buckle , csat-mpt:blower , csat-mpt:grind , csat-mpt:quotation , csat-mpt:remote , csat-mpt:accessory , csat-mpt:actuator , csat-mpt:chunk , csat-mpt:conducted , csat-mpt:wear-seat , csat-mpt:riding-conditions , csat-mpt:gageous , csat-mpt:lever , csat-mpt:pane , csat-mpt:fan-cowl , csat-mpt:thrust-reverser , csat-mpt:seal-up , csat-mpt:aids , csat-mpt:scuff , csat-mpt:vent , csat-mpt:fastener , csat-mpt:scimitar , csat-mpt:pressurize , csat-mpt:sealed , csat-mpt:plug , csat-mpt:nacelle , csat-mpt:cavities , csat-mpt:cargo-compartment , csat-mpt:conductive-strip , csat-mpt:EE , csat-mpt:taxiing , csat-mpt:splitter-fairing , csat-mpt:compartment , csat-mpt:rectification , csat-mpt:dust-layers , csat-mpt:main-engine-control , csat-mpt:cannibalization , csat-mpt:elevator , csat-mpt:rupture , csat-mpt:depressurize , csat-mpt:humidity , csat-mpt:support , csat-mpt:blanket , csat-mpt:dorsal , csat-mpt:slat , csat-mpt:passenger-compartment , csat-mpt:sheet-metal , csat-mpt:web , csat-mpt:trimable , csat-mpt:stowage , csat-mpt:bleed , csat-mpt:precaution , csat-mpt:seal , csat-mpt:joiner , csat-mpt:nozzle , csat-mpt:leak , csat-mpt:life-vest-pouch , csat-mpt:tong , csat-mpt:reheater , csat-mpt:rigging , csat-mpt:flame-arrester , csat-mpt:couple , csat-mpt:workflow , csat-mpt:bulkhead , csat-mpt:cable , csat-mpt:puncture , csat-mpt:vapor , <http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/pojem/pax/crew-door> , csat-mpt:touch-up , csat-mpt:clank , csat-mpt:bumper , csat-mpt:balance-panel , csat-mpt:tail-skid , csat-mpt:assign , csat-mpt:spigot , csat-mpt:hinge , csat-mpt:rudder , csat-mpt:props , csat-mpt:connector , csat-mpt:grill-assy , csat-mpt:wing-to-body , csat-mpt:radome , csat-mpt:replenishment , csat-mpt:conditioning-ducting , csat-mpt:pickslip , csat-mpt:rack , csat-mpt:flammable , csat-mpt:trimmable , csat-mpt:lavatories , csat-mpt:venting , csat-mpt:igniter , csat-mpt:flooring , csat-mpt:platform , csat-mpt:override , csat-mpt:diluted , csat-mpt:fuse , csat-mpt:valve , csat-mpt:honing , csat-mpt:framework , csat-mpt:buckle-mapping , csat-mpt:threaded , csat-mpt:rear-cone , csat-mpt:rivet , csat-mpt:mast , csat-mpt:dorsal-fin-keel , csat-mpt:winglet , csat-mpt:swivel , csat-mpt:rodend , csat-mpt:strap , csat-mpt:rotary , csat-mpt:fitting-tool , csat-mpt:joint , csat-mpt:clamp , <http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/pojem/ram-air-inlet/intake> , csat-mpt:delamination , csat-mpt:placard , csat-mpt:backrest , csat-mpt:drill , csat-mpt:OGV , csat-mpt:stucked , csat-mpt:lifting , csat-mpt:slotted-nuts , csat-mpt:fuel-dump , csat-mpt:placards , csat-mpt:hitch , csat-mpt:susceptible , csat-mpt:retraction , csat-mpt:lateral , csat-mpt:replenishing , csat-mpt:engaged , csat-mpt:adjust , csat-mpt:consumption , <http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/pojem/duct/ducting> , csat-mpt:to-provide-with , csat-mpt:cap , csat-mpt:stiffener , csat-mpt:hatch , csat-mpt:cone , csat-mpt:purchasing , csat-mpt:beam , csat-mpt:vhf , csat-mpt:bonding-leads , csat-mpt:sticker , csat-mpt:fortified , csat-mpt:engine-harness , csat-mpt:grease , csat-mpt:integrating , csat-mpt:splice , csat-mpt:phase-out , csat-mpt:circumferential , csat-mpt:rag , csat-mpt:covering-material , csat-mpt:stud , csat-mpt:shift-leader , csat-mpt:ceiling-panel , csat-mpt:overhaul , csat-mpt:interim , csat-mpt:damping , csat-mpt:rap , csat-mpt:conduction , csat-mpt:translating , csat-mpt:accessories , csat-mpt:mutation , csat-mpt:hf , csat-mpt:lubrication , csat-mpt:doubler , csat-mpt:stab , csat-mpt:fuzz , csat-mpt:longitudinal , csat-mpt:dado , csat-mpt:baulk , csat-mpt:Kruegel-flap , csat-mpt:inflating , csat-mpt:lanyard , csat-mpt:assembly , csat-mpt:antenna , csat-mpt:thinner , csat-mpt:moisture , csat-mpt:sealer , csat-mpt:altimetry-system , csat-mpt:tail-cone , csat-mpt:circuit , csat-mpt:headrest , csat-mpt:galley , csat-mpt:energize , csat-mpt:retread , csat-mpt:fittings , csat-mpt:sleeve , csat-mpt:mandatory , csat-mpt:disengage , csat-mpt:wiring , csat-mpt:frame , csat-mpt:grounding , csat-mpt:aileron , csat-mpt:countersink , csat-mpt:harness , csat-mpt:hilok , csat-mpt:shroud , csat-mpt:cord , csat-mpt:altimeter , csat-mpt:gear-bay , csat-mpt:alternate , csat-mpt:spark , csat-mpt:booster , csat-mpt:flake , csat-mpt:coupling , csat-mpt:ignition , csat-mpt:armcaps , csat-mpt:surge-tank , csat-mpt:pouch , csat-mpt:refill , csat-mpt:program-track , csat-mpt:bracket , csat-mpt:Emergency-exit , csat-mpt:arm , csat-mpt:bushing , csat-mpt:bonding , csat-mpt:blade , csat-mpt:bucket , csat-mpt:weld , csat-mpt:solder , csat-mpt:folder , csat-mpt:plunger , csat-mpt:switch , csat-mpt:scan-light , csat-mpt:cylinder , csat-mpt:shoring , csat-mpt:wrench , csat-mpt:trim , csat-mpt:wire-bundles , csat-mpt:harness-assembly , csat-mpt:race , csat-mpt:junction-box , csat-mpt:stay , csat-mpt:rub , csat-mpt:wrinkled , csat-mpt:receptacle , csat-mpt:input , csat-mpt:layer , csat-mpt:spring , csat-mpt:aft , csat-mpt:discrepancies , csat-mpt:inverter , csat-mpt:gouge , csat-mpt:stencils , csat-mpt:excessive , csat-mpt:abradable , csat-mpt:bonded , csat-mpt:nil , csat-mpt:leak-check , csat-mpt:lightning , csat-mpt:fan-shroud , csat-mpt:crank , csat-mpt:rust , csat-mpt:painter , csat-mpt:strike , csat-mpt:discard , csat-mpt:direct-current , csat-mpt:customized , csat-mpt:casing , csat-mpt:fan-cowling , csat-mpt:fillet , csat-mpt:kickstrip , csat-mpt:grid , csat-mpt:leading-edge , csat-mpt:mat , csat-mpt:probe , csat-mpt:acceleration , csat-mpt:agent , csat-mpt:service-door , csat-mpt:recirculation-fan , csat-mpt:flap-track , csat-mpt:marker , csat-mpt:rod , csat-mpt:on-stock , csat-mpt:cocpit-voice-recorder , csat-mpt:seat-bumper , csat-mpt:nick , csat-mpt:standby , csat-mpt:vapour , csat-mpt:sheet-metal-worker , csat-mpt:stainless , csat-mpt:patch , csat-mpt:concave , csat-mpt:coat , csat-mpt:portable , csat-mpt:detent , csat-mpt:accomplishment , csat-mpt:insulation , csat-mpt:leakage , csat-mpt:troubleshooting , csat-mpt:sampling , csat-mpt:cushion , csat-mpt:bearing , csat-mpt:spatula , csat-mpt:stabilizer , csat-mpt:extinguisher , csat-mpt:fixtures , csat-mpt:arrows , csat-mpt:electrical-bonding , csat-mpt:general-condition , csat-mpt:hose , csat-mpt:discharging , csat-mpt:annunciator , csat-mpt:walk-around-check , csat-mpt:replenish .
+
+csat-mpt:tong  a         skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "tong"@en .
+
+csat-mpt:chock  a        skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "chock"@en .
+
+csat-mpt:circumferential
+        a                skos:Concept ;
+        termit:je-draft  true ;
+        skos:inScheme    csat-mp:glossary ;
+        skos:prefLabel   "circumferential"@en .
