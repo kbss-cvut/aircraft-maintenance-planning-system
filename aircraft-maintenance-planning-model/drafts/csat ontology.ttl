@@ -1,9 +1,16 @@
 @prefix : <http://csat.cz/ontologies/maintenance-csat-onto/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix annot: <http://onto.fel.cvut.cz/ontologies/ufo/annot/> .
+@prefix terms: <http://purl.org/dc/terms/> .
 @base <http://csat.cz/ontologies/maintenance-csat-onto/> .
 
 <http://csat.cz/ontologies/maintenance-csat-onto/> rdf:type owl:Ontology ;
@@ -34,13 +41,30 @@
           rdfs:label "requires" .
 
 
+###  http://csat.cz/ontologies/maintenance-csat-onto/task_type
+:task_type rdf:type owl:ObjectProperty ;
+           rdfs:domain <http://csat.cz/ontologies/maintenance-schema/Maintenance_task> ;
+           rdfs:range <http://csat.cz/ontologies/maintenance-schema/Maintenance_task> ;
+           rdfs:label "task type" .
+
+
 #################################################################
 #    Data properties
 #################################################################
 
+###  http://csat.cz/ontologies/maintenance-csat-onto/ATA_code
+:ATA_code rdf:type owl:DatatypeProperty ;
+          rdfs:label "ATA code" .
+
+
 ###  http://csat.cz/ontologies/maintenance-csat-onto/List_of_technicians_available
 :List_of_technicians_available rdf:type owl:DatatypeProperty ;
                                rdfs:range xsd:string .
+
+
+###  http://csat.cz/ontologies/maintenance-csat-onto/MHrs
+:MHrs rdf:type owl:DatatypeProperty ;
+      rdfs:label "MHrs" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/aircraft_age
@@ -54,19 +78,20 @@
       rdfs:label "date" .
 
 
-###  http://csat.cz/ontologies/maintenance-csat-onto/maintenance_task_end_date
-:maintenance_task_end_date rdf:type owl:DatatypeProperty ;
-                           rdfs:subPropertyOf :date .
+###  http://csat.cz/ontologies/maintenance-csat-onto/duration
+:duration rdf:type owl:DatatypeProperty ;
+          rdfs:label "duration" .
 
 
-###  http://csat.cz/ontologies/maintenance-csat-onto/maintenance_task_scheduled_time
-:maintenance_task_scheduled_time rdf:type owl:DatatypeProperty ;
-                                 rdfs:subPropertyOf :time .
+###  http://csat.cz/ontologies/maintenance-csat-onto/has_restriction_value
+:has_restriction_value rdf:type owl:DatatypeProperty ;
+                       rdfs:domain :Restriction ;
+                       rdfs:label "has restriction value" .
 
 
-###  http://csat.cz/ontologies/maintenance-csat-onto/maintenance_task_start_time
-:maintenance_task_start_time rdf:type owl:DatatypeProperty ;
-                             rdfs:subPropertyOf :time .
+###  http://csat.cz/ontologies/maintenance-csat-onto/note
+:note rdf:type owl:DatatypeProperty ;
+      rdfs:label "note" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/number_of_planned_tasks
@@ -74,31 +99,15 @@
                          rdfs:subPropertyOf :اhas_number .
 
 
-###  http://csat.cz/ontologies/maintenance-csat-onto/regestration_number
-:regestration_number rdf:type owl:DatatypeProperty ;
-                     rdfs:range owl:real ;
-                     rdfs:label "regestration number" .
+###  http://csat.cz/ontologies/maintenance-csat-onto/order
+:order rdf:type owl:DatatypeProperty ;
+       rdfs:label "order" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/time
 :time rdf:type owl:DatatypeProperty ;
       rdfs:range xsd:dateTime ;
       rdfs:label "time" .
-
-
-###  http://csat.cz/ontologies/maintenance-csat-onto/workpackage_end_date
-:workpackage_end_date rdf:type owl:DatatypeProperty ;
-                      rdfs:subPropertyOf :date .
-
-
-###  http://csat.cz/ontologies/maintenance-csat-onto/workpackage_scheduled_time
-:workpackage_scheduled_time rdf:type owl:DatatypeProperty ;
-                            rdfs:subPropertyOf :time .
-
-
-###  http://csat.cz/ontologies/maintenance-csat-onto/workpackage_start_date
-:workpackage_start_date rdf:type owl:DatatypeProperty ;
-                        rdfs:subPropertyOf :date .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/worksession_end_date
@@ -131,6 +140,48 @@
              rdfs:label "number" .
 
 
+###  http://csat.cz/ontologies/maintenance-schema/maintenance_task_end_date
+<http://csat.cz/ontologies/maintenance-schema/maintenance_task_end_date> rdf:type owl:DatatypeProperty ;
+                                                                         rdfs:subPropertyOf :date ;
+                                                                         rdfs:label "maintenance task end date" .
+
+
+###  http://csat.cz/ontologies/maintenance-schema/maintenance_task_scheduled_time
+<http://csat.cz/ontologies/maintenance-schema/maintenance_task_scheduled_time> rdf:type owl:DatatypeProperty ;
+                                                                               rdfs:subPropertyOf :time ;
+                                                                               rdfs:label "maintenance task scheduled time" .
+
+
+###  http://csat.cz/ontologies/maintenance-schema/maintenance_task_start_time
+<http://csat.cz/ontologies/maintenance-schema/maintenance_task_start_time> rdf:type owl:DatatypeProperty ;
+                                                                           rdfs:subPropertyOf :time ;
+                                                                           rdfs:label "maintenance task start time" .
+
+
+###  http://csat.cz/ontologies/maintenance-schema/regestration_number
+<http://csat.cz/ontologies/maintenance-schema/regestration_number> rdf:type owl:DatatypeProperty ;
+                                                                   rdfs:range owl:real ;
+                                                                   rdfs:label "regestration number" .
+
+
+###  http://csat.cz/ontologies/maintenance-schema/workpackage_end_date
+<http://csat.cz/ontologies/maintenance-schema/workpackage_end_date> rdf:type owl:DatatypeProperty ;
+                                                                    rdfs:subPropertyOf :date ;
+                                                                    rdfs:label "workpackage end date" .
+
+
+###  http://csat.cz/ontologies/maintenance-schema/workpackage_scheduled_time
+<http://csat.cz/ontologies/maintenance-schema/workpackage_scheduled_time> rdf:type owl:DatatypeProperty ;
+                                                                          rdfs:subPropertyOf :time ;
+                                                                          rdfs:label "workpackage scheduled time" .
+
+
+###  http://csat.cz/ontologies/maintenance-schema/workpackage_start_date
+<http://csat.cz/ontologies/maintenance-schema/workpackage_start_date> rdf:type owl:DatatypeProperty ;
+                                                                      rdfs:subPropertyOf :date ;
+                                                                      rdfs:label "workpackage start date" .
+
+
 ###  http://csat.cz/ontologies/maintenance-schema/A/age
 <http://csat.cz/ontologies/maintenance-schema/A/age> rdfs:range xsd:integer .
 
@@ -145,20 +196,57 @@
       rdfs:label "AVIO" .
 
 
+###  http://csat.cz/ontologies/maintenance-csat-onto/Access_step
+:Access_step rdf:type owl:Class ;
+             rdfs:subClassOf :Task_steps ;
+             rdfs:label "Access step" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat-onto/Check
+:Check rdf:type owl:Class ;
+       rdfs:subClassOf :Planned_Task ;
+       rdfs:label "Check" .
+
+
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Client
 :Client rdf:type owl:Class ;
-        rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/organization> ;
+        rdfs:subClassOf ufo:organization ;
         rdfs:label "Client" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Client_Extra__Order_task
 :Client_Extra__Order_task rdf:type owl:Class ;
-                          rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/maintenance_task> ,
+                          rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Maintenance_task> ,
                                           [ rdf:type owl:Restriction ;
-                                            owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/has-participant> ;
+                                            owl:onProperty ufo:has-participant ;
                                             owl:someValuesFrom :Client
                                           ] ;
                           rdfs:label "Client Extra Order task" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat-onto/ENG
+:ENG rdf:type owl:Class ;
+     rdfs:subClassOf :Maintenance_team ;
+     rdfs:label "ENG" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat-onto/El._Power
+:El._Power rdf:type owl:Class ;
+           rdfs:subClassOf :Restriction ,
+                           <http://csat.cz/ontologies/maintenance-schema/Function> ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :has_restriction_value ;
+                             owl:someValuesFrom rdfs:Literal
+                           ] ;
+           rdfs:comment """specifies the Electrical power system's state required for the Main step.
+		- possible values (states): ON, OFF, / (no restriction)""" ;
+           rdfs:label "El. Power" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat-onto/Final_step
+:Final_step rdf:type owl:Class ;
+            rdfs:subClassOf :Task_steps ;
+            rdfs:label "Final step" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Finding
@@ -172,10 +260,37 @@
                  rdfs:subClassOf :Finding ,
                                  <http://csat.cz/ontologies/maintenance-schema/Damage> ,
                                  [ rdf:type owl:Restriction ;
-                                   owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+                                   owl:onProperty ufo:is-part-of ;
                                    owl:someValuesFrom :Non_Planned_Task
                                  ] ;
                  rdfs:label "Finding  Damage" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat-onto/Hyd._Power
+:Hyd._Power rdf:type owl:Class ;
+            rdfs:subClassOf :Restriction ,
+                            <http://csat.cz/ontologies/maintenance-schema/Function> ;
+            rdfs:comment """- specifies the Hydraulic power system's state required for the Main step.
+		- possible values (states): ON, OFF, / (no restriction)""" ;
+            rdfs:label "Hyd. Power" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat-onto/INT
+:INT rdf:type owl:Class ;
+     rdfs:subClassOf :Maintenance_team ;
+     rdfs:label "INT" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat-onto/Jack
+:Jack rdf:type owl:Class ;
+      rdfs:subClassOf :Restriction ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :has_restriction_value ;
+                        owl:someValuesFrom rdfs:Literal
+                      ] ;
+      rdfs:comment """- specifies whether the Aircraft is required to be on or off the Jack for the Main step.
+		- possible values (states): Yes, NO, / (no restriction)""" ;
+      rdfs:label "Jack" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/List_of_technicians_available
@@ -201,9 +316,15 @@
           rdfs:label "MECH-LDG" .
 
 
+###  http://csat.cz/ontologies/maintenance-csat-onto/Main_step
+:Main_step rdf:type owl:Class ;
+           rdfs:subClassOf :Task_steps ;
+           rdfs:label "Main step" .
+
+
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Group
 :Maintenance_Group rdf:type owl:Class ;
-                   rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/physical-agent> ;
+                   rdfs:subClassOf ufo:physical-agent ;
                    rdfs:label "Maintenance Group" .
 
 
@@ -212,6 +333,38 @@
                         rdfs:subClassOf :Non_Planned_Task ,
                                         :Work_Order ;
                         rdfs:label "Maintenance Work Order" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_team
+:Maintenance_team rdf:type owl:Class ;
+                  rdfs:subClassOf ufo:physical-agent ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty ufo:performs ;
+                                    owl:someValuesFrom <http://csat.cz/ontologies/maintenance-schema/Maintenance_task>
+                                  ] ;
+                  rdfs:label "Maintenance team" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat-onto/Max._Mech
+:Max._Mech rdf:type owl:Class ;
+           rdfs:subClassOf :Restriction ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :has_restriction_value ;
+                             owl:someValuesFrom owl:real
+                           ] ;
+           rdfs:comment "restriction on the number of mechanics who can perform the task, e.g. due to spatial limitations in the area in which the task is performed." ;
+           rdfs:label "Max. Mech" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat-onto/Min._Mech
+:Min._Mech rdf:type owl:Class ;
+           rdfs:subClassOf :Restriction ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :has_restriction_value ;
+                             owl:someValuesFrom owl:real
+                           ] ;
+           rdfs:comment "minimal number of mechanics for the main task" ;
+           rdfs:label "Min. Mech" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Non-Planned_Client_Extra_Order_task
@@ -240,6 +393,17 @@
               rdfs:label "Planned Task" .
 
 
+###  http://csat.cz/ontologies/maintenance-csat-onto/Restriction
+:Restriction rdf:type owl:Class ;
+             rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Requirement> ;
+             rdfs:comment """Each task may have restrictions which must be met in order to perform the task
+The restrictions are: 
+		- El. Power - ON or OFF
+		- Hyd. Power - ON or OFF
+		- Jack - YES or NO""" ;
+             rdfs:label "Restriction" .
+
+
 ###  http://csat.cz/ontologies/maintenance-csat-onto/SEAT
 :SEAT rdf:type owl:Class ;
       rdfs:subClassOf :Maintenance_Group ;
@@ -259,10 +423,40 @@
                       rdfs:label "Scheduled Work Order" .
 
 
+###  http://csat.cz/ontologies/maintenance-csat-onto/Section
+:Section rdf:type owl:Class ;
+         rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Aircraft> ;
+         rdfs:comment "Section" .
+
+
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Task_Card
 :Task_Card rdf:type owl:Class ;
            rdfs:subClassOf :Planned_Task ;
            rdfs:label "Task Card" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat-onto/Task_steps
+:Task_steps rdf:type owl:Class ;
+            rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Maintenance_task> ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :requires ;
+                              owl:someValuesFrom :Restriction
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :order ;
+                              owl:someValuesFrom xsd:integer
+                            ] ;
+            rdfs:comment """Each task may be composed of three steps
+		- Main step - adjacent columns 
+			- \"Main step\" - a label identifying/describing the step
+			- Team - the team type which should perform the task 
+			- Phase - ?
+			- MHrs - the typical time executing the step 
+		- Access step - same as Main step but there is no Phase column
+		- Final test - same as Main step
+		Steps are ordered in the table as: Main Step, Access Step and Final Test
+		The order of execution of the steps is: Access Step, Main Step and Final Test""" ;
+            rdfs:label "Task steps" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/WASH
@@ -273,7 +467,7 @@
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/WOS_Action
 :WOS_Action rdf:type owl:Class ;
-            rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/action> ;
+            rdfs:subClassOf ufo:action ;
             rdfs:label "WOS Action" .
 
 
@@ -300,9 +494,9 @@
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Work_Order
 :Work_Order rdf:type owl:Class ;
-            rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/maintenance_task> ,
+            rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Maintenance_task> ,
                             [ rdf:type owl:Restriction ;
-                              owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+                              owl:onProperty ufo:is-part-of ;
                               owl:someValuesFrom <http://csat.cz/ontologies/maintenance-schema/Workpackage>
                             ] ;
             rdfs:label "Work Order" .
@@ -316,7 +510,7 @@
                                    owl:someValuesFrom :WOS_Action
                                  ] ,
                                  [ rdf:type owl:Restriction ;
-                                   owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+                                   owl:onProperty ufo:is-part-of ;
                                    owl:allValuesFrom :Work_Order
                                  ] ;
                  rdfs:label "Work Order Step" .
@@ -331,6 +525,12 @@
 :aircraft_registration rdf:type owl:Class ;
                        rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Workpackage_Information_Content> ;
                        rdfs:label "aircraft registration" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat-onto/area
+:area rdf:type owl:Class ;
+      rdfs:subClassOf :zone ;
+      rdfs:comment "area" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/maintenance_task_end_date
@@ -386,6 +586,18 @@
                         rdfs:label "workpackage start time" .
 
 
+###  http://csat.cz/ontologies/maintenance-csat-onto/zone
+:zone rdf:type owl:Class ;
+      rdfs:subClassOf :Section ;
+      rdfs:comment "zone" .
+
+
+###  http://csat.cz/ontologies/maintenance-csat-onto/AV/INT
+<http://csat.cz/ontologies/maintenance-csat-onto/AV/INT> rdf:type owl:Class ;
+                                                         rdfs:subClassOf :Maintenance_team ;
+                                                         rdfs:label "AV/INT" .
+
+
 ###  http://csat.cz/ontologies/maintenance-schema/Workpackage_Information_Content
 <http://csat.cz/ontologies/maintenance-schema/Workpackage_Information_Content> rdfs:subClassOf [ rdf:type owl:Restriction ;
                                                                                                  owl:onProperty <http://csat.cz/ontologies/maintenance-schema/describes> ;
@@ -396,7 +608,7 @@
 
 ###  http://csat.cz/ontologies/maintenance-schema/work_session
 <http://csat.cz/ontologies/maintenance-schema/work_session> rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                              owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+                                                                              owl:onProperty ufo:is-part-of ;
                                                                               owl:someValuesFrom <http://csat.cz/ontologies/maintenance-schema/Workpackage>
                                                                             ] .
 
@@ -415,7 +627,7 @@
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/344800-01-1
 <http://csat.cz/ontologies/maintenance-csat-onto/344800-01-1> rdf:type owl:NamedIndividual ,
-                                                                       <http://csat.cz/ontologies/maintenance-schema/maintenance_task> ;
+                                                                       <http://csat.cz/ontologies/maintenance-schema/Maintenance_task> ;
                                                               rdfs:label "344800-01-1" .
 
 
@@ -435,25 +647,7 @@
 :aircraft_age rdfs:label "aircraft age" .
 
 
-:maintenance_task_end_date rdfs:label "maintenance task end date" .
-
-
-:maintenance_task_scheduled_time rdfs:label "maintenance task scheduled time" .
-
-
-:maintenance_task_start_time rdfs:label "maintenance task start time" .
-
-
 :number_of_planned_tasks rdfs:label "number of planned tasks" .
-
-
-:workpackage_end_date rdfs:label "workpackage end date" .
-
-
-:workpackage_scheduled_time rdfs:label "workpackage scheduled time" .
-
-
-:workpackage_start_date rdfs:label "workpackage start date" .
 
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

@@ -1,9 +1,9 @@
-
+﻿
 Description of columns in the table screenshots dodatečné_info_TC.png and dodatečné_info_TC-02.png :
 	Each row of the table describes a task type (TC, M or S), not a specific task execution. 
 	Each task is described by its code and task category "type"
-	The subject of repair is located using four columns:
-		- ATA code
+	The subject of repair is located using four columns: (JA: Maintenable item??)
+		- ATA code (JA: data property (added))
 		- Zone - should part of the section
 		- Section - section of the aircraft
 		- Area - should be part of the Zone but sometimes it is the same as the Zone
@@ -11,15 +11,16 @@ Description of columns in the table screenshots dodatečné_info_TC.png and doda
 	Each task may be composed of three steps
 		- Main step - adjacent columns 
 			- "Main step" - a label identifying/describing the step
-			- Team - the team type which should perform the task
+			- Team - the team type which should perform the task (JA: what is the diffrent betweem team and maintenatnce task)
 			- Phase - ?
-			- MHrs - the typical time executing the step
+			- MHrs - the typical time executing the step (JA: data property (added))
 		- Access step - same as Main step but there is no Phase column
 		- Final test - same as Main step
 		Steps are ordered in the table as: Main Step, Access Step and Final Test
-		The order of execution of the steps is: Access Step, Main Step and Final Test
+		The order of execution of the steps is: Access Step, Main Step and Final Test (JA: data property (added) )
 		
-	Each task may have restrictions which must be met in order to perform the task. The restrictions are:
+	Each task may have restrictions which must be met in order to perform the task. 
+The restrictions are: (JA: data property (added) (has restriction value ) )
 		- El. Power - ON or OFF
 		- Hyd. Power - ON or OFF
 		- Jack - YES or NO
@@ -84,7 +85,7 @@ Questions
 	What is Skil/Scope?
 		
 		
-	What is Note?
+	What is Note? (JA: note fot task??) (JA: note data property (added) )
 		Answer:
 		- text with additional information.
 	
