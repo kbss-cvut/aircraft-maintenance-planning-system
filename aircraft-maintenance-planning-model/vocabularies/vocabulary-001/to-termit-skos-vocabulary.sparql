@@ -27,12 +27,12 @@ CONSTRUCT{
   
   ?glossary
 	a apd:glosář, skos:ConceptScheme;
-	skos:hasTopConcept ?term .
+	skos:hasTopConcept ?termIRI .
 
   ?model
     a apd:model .
 
-  ?term a skos:Concept;
+  ?termIRI a skos:Concept;
 	skos:inScheme ?glossary ;
 	skos:prefLabel ?termLang ;
 	termit:je-draft true.
@@ -52,12 +52,9 @@ CONSTRUCT{
 	BIND(str(csat-mp:) as ?namespace)
 	BIND("pojem/" as ?termSeparator)
 	
-	# ?aj , ?cj
 	BIND(strlang("", ?lang) as ?es)
-	# BIND(replace(?AJ,"^\\s*([].+)\\s*", "$1") as ?label)
-	BIND(strlang(?AJ, ?lang) as ?termLang)
-	# BIND(strlang(?CJ, "cs") as ?termCs)
-	BIND(IRI(concat(str(csat-mp:), ?termSeparator, replace(?AJ, "\\s", "-")) ) as ?term)
+	BIND(strlang(?label, ?lang) as ?termLang)
+	BIND(IRI(concat(str(csat-mp:), ?termSeparator, replace(?termId, "[\\s/\\\\]", "-")) ) as ?termIRI)
 	BIND(IRI(replace(str(csat-mp:), "/$","")) as ?voc)
 	BIND(IRI(concat(str(csat-mp:), ?revision)) as ?revisionIRI)
 	BIND(IRI(concat(str(csat-mp:), "glossary")) as ?glossary)

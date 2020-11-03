@@ -10,11 +10,12 @@ To create a termit vocabulary from csv vocabulary:
 		- ?revision - specifies the version of the vocabulary. 
 		- ?status - specifies the status of the vocabulary. - TODO is it necessary?
 		- ?prefix and ?namespace - specifies the prefix and the namespace of the vocabulary. - TODO is it necessary?
-		- ?term and ?termLang - the term IRI and label
+		- ?termIRI and ?termLang - the term IRI and label as literal with language tag
 		- ?termSeparator - specifies the an IRI path component used by termit to separate terms in the vocabulary IRI. Set according to the cofiguration target TermIt installation. Default value is "pojem/".
 		
 	3. run build.bat
-		- requires tarql [1] to be on the path 
+		- input a file - a csv with semi-column ";" separator. The table should have the two columns "termId" containing the id of the term and "label". If a vocabulary does not have term identifier, one can use copy the label column and use it as term identifier.
+		- requires tarql [1] and [2] jena command line utilities to be on the path 
 		- if necessary change command options and names of input and output files
 	3a The output file should be URL decoded because the generated *.ttl file contains IRIs with diacritics tarql will serialize those characters as url encoded. 
 	
@@ -33,3 +34,5 @@ To create a termit vocabulary from csv vocabulary:
 				
 References:
 [1] - Tarql: SPARQL for Tables - http://github.com/tarql/tarql
+[2] - Apache Jena - http://jena.apache.org/
+ 
