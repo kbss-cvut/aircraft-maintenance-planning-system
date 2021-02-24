@@ -1,0 +1,201 @@
+@prefix : <http://onto.fel.cvut.cz/ontologies/ufo-c-ext#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ufoaex: <http://onto.fel.cvut.cz/ontologies/ufo-a-ext/> .
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext> a owl:Ontology ;
+	owl:imports <http://onto.fel.cvut.cz/ontologies/ufo-c/1.0.1> .
+# 
+# 
+# #################################################################
+# #
+# #    Object Properties
+# #
+# #################################################################
+# 
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/constitutes
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/constitutes> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/has-part> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/creates
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/creates> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/has-participant> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/object-creation-event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/endurant> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/has-life
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/has-life> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/has-participant> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/endurant> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/endurant-life> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/propositional-content-of
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/propositional-content-of> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/goal> , <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/proposition> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/satisfies
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/satisfies> a owl:ObjectProperty ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/proposition> .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+# 
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-a-ext/intrinsic-moment
+
+ufoaex:intrinsic-moment a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/trope> ;
+	rdfs:comment "TODO - belongs to UFO-A"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-a-ext/mode
+
+ufoaex:mode a owl:Class ;
+	rdfs:subClassOf ufoaex:intrinsic-moment .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-a-ext/phased-qua-individual
+
+ufoaex:phased-qua-individual a owl:Class ;
+	rdfs:subClassOf ufoaex:qua-individual .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-a-ext/qua-individual
+
+ufoaex:qua-individual a owl:Class ;
+	rdfs:subClassOf ufoaex:mode .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-a-ext/quality
+
+ufoaex:quality a owl:Class ;
+	rdfs:subClassOf ufoaex:intrinsic-moment .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-a-ext/relational-qua-individual
+
+ufoaex:relational-qua-individual a owl:Class ;
+	rdfs:subClassOf ufoaex:qua-individual .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/belief
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/belief> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/mental-moment> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/claim
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/claim> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/social-moment> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/closed-commitment
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/closed-commitment> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/commitment> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/commitment
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/commitment> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/endurant> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/desire
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/desire> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/mental-moment> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/endurant-life
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/endurant-life> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/participation> ;
+	rdfs:comment "current life of the endurant"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/event-in-the-life-of-endurant
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/event-in-the-life-of-endurant> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/participation> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/goal
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/goal> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/proposition> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/intentional-moment
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/intentional-moment> a owl:Class ;
+	rdfs:subClassOf ufoaex:intrinsic-moment , _:genid1 .
+
+_:genid1 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/inheres-in> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/ufo/agent> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/mental-moment
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/mental-moment> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/intentional-moment> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/object-usage-event
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/object-usage-event> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/participation> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/open-commitment
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/open-commitment> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/commitment> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/perception
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/perception> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/action> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/proposition
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/proposition> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/object> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/relator
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/relator> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/trope> , _:genid2 .
+
+_:genid2 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/has-object-part> ;
+	owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+	owl:onClass ufoaex:qua-individual .
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/relator> rdfs:subClassOf _:genid3 .
+
+_:genid3 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/has-object-part> ;
+	owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+	owl:onClass <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/social-commitment> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/social-commitment
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/social-commitment> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/commitment> , <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/social-moment> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/social-moment
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/social-moment> a owl:Class ;
+	rdfs:subClassOf ufoaex:qua-individual , <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/intentional-moment> ;
+	rdfs:comment "TODO - this class should be quaindividual."@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo-c-ext/social-relator
+
+<http://onto.fel.cvut.cz/ontologies/ufo-c-ext/social-relator> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo-c-ext/relator> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/trope
+
+<http://onto.fel.cvut.cz/ontologies/ufo/trope> rdfs:label "Moment"@en .
+# 
+# Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

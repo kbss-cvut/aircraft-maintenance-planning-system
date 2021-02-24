@@ -1,0 +1,496 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://onto.fel.cvut.cz/ontologies/ufo-ontouml/"
+     xml:base="http://onto.fel.cvut.cz/ontologies/ufo-ontouml/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:bibo="http://purl.org/ontology/bibo/"
+     xmlns:vann="http://purl.org/vocab/vann/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:ufo="http://onto.fel.cvut.cz/ontologies/ufo/">
+    <owl:Ontology rdf:about="http://onto.fel.cvut.cz/ontologies/ufo-ontouml">
+        <owl:versionIRI rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo-ontouml/1.0.2"/>
+        <owl:imports rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo-a/1.0.1"/>
+        <bibo:status xml:lang="en">Ontology Specification</bibo:status>
+        <terms:description xml:lang="en">The ontology aims at formalize the basic notions of the OntoUML language.</terms:description>
+        <terms:creator rdf:resource="http://onto.fel.cvut.cz/ontologies/kbss/people/petr-kremen"/>
+        <terms:title xml:lang="en">Unified Foundational Ontology - OntoUML</terms:title>
+        <vann:preferredNamespacePrefix xml:lang="en">ufo</vann:preferredNamespacePrefix>
+        <terms:rights rdf:resource="https://creativecommons.org/licenses/by-sa/4.0"/>
+        <vann:preferredNamespaceUri xml:lang="en">http://onto.fel.cvut.cz/ontologies/ufo/</vann:preferredNamespaceUri>
+        <terms:created xml:lang="en">22.11.2017</terms:created>
+        <owl:versionInfo xml:lang="en">1.0.2</owl:versionInfo>
+        <owl:priorVersion rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo-ontouml/1.0.1"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/source -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/source"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-mixin -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-mixin">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/non-rigid-mixin"/>
+        <rdfs:label xml:lang="en">Anti Rigid Mixin</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-mixin"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/non-rigid-mixin"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-sortal -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-sortal">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/sortal-universal"/>
+        <rdfs:label xml:lang="en">Anti Rigid Sortal</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-sortal"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/sortal-universal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/category -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/category">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/rigid-mixin"/>
+        <terms:description xml:lang="en">A «category» represents a rigid and relationally independent mixin, i.e., a dispersive universal that aggregates essential properties which are common to different substance sortals. For example, the category RationalEntity as a generalization of Person and IntelligentAgent.</terms:description>
+        <rdfs:label xml:lang="en">Category</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/category"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/rigid-mixin"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/category"/>
+        <owl:annotatedProperty rdf:resource="http://purl.org/dc/terms/description"/>
+        <owl:annotatedTarget xml:lang="en">A «category» represents a rigid and relationally independent mixin, i.e., a dispersive universal that aggregates essential properties which are common to different substance sortals. For example, the category RationalEntity as a generalization of Person and IntelligentAgent.</owl:annotatedTarget>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/collective -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/collective">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal"/>
+        <terms:description xml:lang="en">A «collective» represents a substance sortal whose instances are collectives, i.e., they are collections of complexes that have a uniform structure. Examples include a deck of cards, a forest, a group of people, a pile of bricks. Collectives can typically relate to complexes via a constitution relation. For example, a pile of bricks that constitutes a wall, a group of people that constitutes a football team. In this case, the collectives typically have an extensional principle of identity, in contrast to the complexes they constitute. For instance, The Beatles was in a given world w constituted by the collective {John, Paul, George, Pete} and in another world w’ constituted by the collective {John, Paul, George, Ringo}. The replacement of Pete Best by Ringo Star does not alter the identity of the band, but creates a numerically different group of people.</terms:description>
+        <rdfs:label xml:lang="en">Collective</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/collective"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/collective"/>
+        <owl:annotatedProperty rdf:resource="http://purl.org/dc/terms/description"/>
+        <owl:annotatedTarget xml:lang="en">A «collective» represents a substance sortal whose instances are collectives, i.e., they are collections of complexes that have a uniform structure. Examples include a deck of cards, a forest, a group of people, a pile of bricks. Collectives can typically relate to complexes via a constitution relation. For example, a pile of bricks that constitutes a wall, a group of people that constitutes a football team. In this case, the collectives typically have an extensional principle of identity, in contrast to the complexes they constitute. For instance, The Beatles was in a given world w constituted by the collective {John, Paul, George, Pete} and in another world w’ constituted by the collective {John, Paul, George, Ringo}. The replacement of Pete Best by Ringo Star does not alter the identity of the band, but creates a numerically different group of people.</owl:annotatedTarget>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/intrinsic-moment-universal -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/intrinsic-moment-universal">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/moment-universal"/>
+        <rdfs:label xml:lang="en">Intrinsic moment universal</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/kind -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/kind">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal"/>
+        <terms:description xml:lang="en">A «kind» represents a substance sortal whose instances are functional complexes. Examples include instances of Natural Kinds (such as Person, Dog, Tree) and of artifacts (Chair, Car, Television).</terms:description>
+        <rdfs:label xml:lang="en">Kind</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/kind"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/kind"/>
+        <owl:annotatedProperty rdf:resource="http://purl.org/dc/terms/description"/>
+        <owl:annotatedTarget xml:lang="en">A «kind» represents a substance sortal whose instances are functional complexes. Examples include instances of Natural Kinds (such as Person, Dog, Tree) and of artifacts (Chair, Car, Television).</owl:annotatedTarget>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/mixin -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/mixin">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/non-rigid-mixin"/>
+        <terms:description xml:lang="en">A «mixin» represents properties which are essential to some of its instances and accidental to others (semi-rigidity). An example is the mixin Seatable, which represents a property that can be considered essential to the kinds Chair and Stool, but accidental to Crate, Paper Box or Rock.</terms:description>
+        <rdfs:label xml:lang="en">Mixin</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/mixin"/>
+        <owl:annotatedProperty rdf:resource="http://purl.org/dc/terms/description"/>
+        <owl:annotatedTarget xml:lang="en">A «mixin» represents properties which are essential to some of its instances and accidental to others (semi-rigidity). An example is the mixin Seatable, which represents a property that can be considered essential to the kinds Chair and Stool, but accidental to Crate, Paper Box or Rock.</owl:annotatedTarget>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/mixin"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/non-rigid-mixin"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/substantial-universal"/>
+        <terms:description xml:lang="en">Mixin Universal represents the general properties of all mixins, i.e., non-sortals (or dispersive universals).</terms:description>
+        <rdfs:label xml:lang="en">Mixin Universal</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/substantial-universal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal"/>
+        <owl:annotatedProperty rdf:resource="http://purl.org/dc/terms/description"/>
+        <owl:annotatedTarget xml:lang="en">Mixin Universal represents the general properties of all mixins, i.e., non-sortals (or dispersive universals).</owl:annotatedTarget>
+        <terms:source>ofscm</terms:source>
+        <rdfs:comment>definition partially reused from Mixin Class</rdfs:comment>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/mode-universal -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/mode-universal">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/intrinsic-moment-universal"/>
+        <rdfs:label xml:lang="en">Mode universal</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/mode-universal"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/intrinsic-moment-universal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/moment-universal -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/moment-universal">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/monadic-universal"/>
+        <rdfs:label xml:lang="en">Moment universal</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/moment-universal"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/monadic-universal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/monadic-universal -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/monadic-universal">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/universal"/>
+        <rdfs:label xml:lang="en">Monadic universal</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/monadic-universal"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/universal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/non-rigid-mixin -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/non-rigid-mixin">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal"/>
+        <rdfs:label xml:lang="en">Non Rigid Mixin</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/non-rigid-mixin"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/phase -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/phase">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-sortal"/>
+        <terms:description xml:lang="en">A «phase» represents the phased-sortals phase, i.e. anti-rigid and relationally independent universals defined as part of a partition of a substance sortal. For instance, 〈Catterpillar, Butterfly〉 partitions the kind Lepdopterum.</terms:description>
+        <rdfs:label xml:lang="en">Phase</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/phase"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-sortal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/phase"/>
+        <owl:annotatedProperty rdf:resource="http://purl.org/dc/terms/description"/>
+        <owl:annotatedTarget xml:lang="en">A «phase» represents the phased-sortals phase, i.e. anti-rigid and relationally independent universals defined as part of a partition of a substance sortal. For instance, 〈Catterpillar, Butterfly〉 partitions the kind Lepdopterum.</owl:annotatedTarget>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/quality-universal -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/quality-universal">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/intrinsic-moment-universal"/>
+        <rdfs:label xml:lang="en">Quality universal</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/quality-universal"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/intrinsic-moment-universal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/quantity -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/quantity">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal"/>
+        <terms:description xml:lang="en">A «quantity» represents a substance sortal whose instances are quantities. Examples are those stuff universals that are typically referred in natural language by mass general terms (e.g., Gold, Water, Sand, Clay).</terms:description>
+        <rdfs:label xml:lang="en">Quantity</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/quantity"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/quantity"/>
+        <owl:annotatedProperty rdf:resource="http://purl.org/dc/terms/description"/>
+        <owl:annotatedTarget xml:lang="en">A «quantity» represents a substance sortal whose instances are quantities. Examples are those stuff universals that are typically referred in natural language by mass general terms (e.g., Gold, Water, Sand, Clay).</owl:annotatedTarget>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/relator -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/relator">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/moment-universal"/>
+        <rdfs:label xml:lang="en">Relator</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/relator"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/moment-universal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/rigid-mixin -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/rigid-mixin">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal"/>
+        <rdfs:label xml:lang="en">Rigid Mixin</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/rigid-mixin"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/rigid-sortal -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/rigid-sortal">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/sortal-universal"/>
+        <terms:source xml:lang="en">ofscm</terms:source>
+        <rdfs:label xml:lang="en">Rigid Sortal</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/role -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/role">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-sortal"/>
+        <terms:description xml:lang="en">A «role» represents a phased-sortal role, i.e. anti-rigid and relationally dependent universal. For instance, the role student is played by an instance of the kind Person.</terms:description>
+        <rdfs:label xml:lang="en">Role</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/role"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-sortal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/role"/>
+        <owl:annotatedProperty rdf:resource="http://purl.org/dc/terms/description"/>
+        <owl:annotatedTarget xml:lang="en">A «role» represents a phased-sortal role, i.e. anti-rigid and relationally dependent universal. For instance, the role student is played by an instance of the kind Person.</owl:annotatedTarget>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/role-mixin -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/role-mixin">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-mixin"/>
+        <terms:description xml:lang="en">A «roleMixin» represents an anti-rigid and externally dependent non-sortal, i.e., a dispersive universal that aggregates properties which are common to different roles. In includes formal roles such as whole and part, and initiatior and responder.</terms:description>
+        <rdfs:label xml:lang="en">Role Mixin</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/role-mixin"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-mixin"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/role-mixin"/>
+        <owl:annotatedProperty rdf:resource="http://purl.org/dc/terms/description"/>
+        <owl:annotatedTarget xml:lang="en">A «roleMixin» represents an anti-rigid and externally dependent non-sortal, i.e., a dispersive universal that aggregates properties which are common to different roles. In includes formal roles such as whole and part, and initiatior and responder.</owl:annotatedTarget>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/sortal-universal -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/sortal-universal">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/substantial-universal"/>
+        <rdfs:label xml:lang="en">Sortal Universal</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/sortal-universal"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/substantial-universal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/sub-kind -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/sub-kind">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/rigid-sortal"/>
+        <terms:description xml:lang="en">A «subkind» is a rigid, relationally independent restriction of a substance sortal that carries the principle of identity supplied by it. An example could be the subkind MalePerson of the kind Person. In general, the stereotype «subkind» can be omitted in conceptual models without loss of clarity.</terms:description>
+        <rdfs:label xml:lang="en">Subkind</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/sub-kind"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/rigid-sortal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/sub-kind"/>
+        <owl:annotatedProperty rdf:resource="http://purl.org/dc/terms/description"/>
+        <owl:annotatedTarget xml:lang="en">A «subkind» is a rigid, relationally independent restriction of a substance sortal that carries the principle of identity supplied by it. An example could be the subkind MalePerson of the kind Person. In general, the stereotype «subkind» can be omitted in conceptual models without loss of clarity.</owl:annotatedTarget>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/rigid-sortal"/>
+        <terms:description xml:lang="en">Substance Sortal is an abstract metaclass that represents the general properties of all substance sortals, i.e., rigid, relationally independent object universals that supply a principle of identity for their instances. Substance Sortal has no concrete syntax. Thus, symbolic representations are defined by each of its concrete subclasses.</terms:description>
+        <rdfs:label xml:lang="en">Substance sortal</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/rigid-sortal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal"/>
+        <owl:annotatedProperty rdf:resource="http://purl.org/dc/terms/description"/>
+        <owl:annotatedTarget xml:lang="en">Substance Sortal is an abstract metaclass that represents the general properties of all substance sortals, i.e., rigid, relationally independent object universals that supply a principle of identity for their instances. Substance Sortal has no concrete syntax. Thus, symbolic representations are defined by each of its concrete subclasses.</owl:annotatedTarget>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/substantial-universal -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/substantial-universal">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/monadic-universal"/>
+        <rdfs:label xml:lang="en">Substantial Universal</rdfs:label>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/substantial-universal"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/monadic-universal"/>
+        <terms:source>ofscm</terms:source>
+    </owl:Axiom>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/universal -->
+
+    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/universal"/>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+
