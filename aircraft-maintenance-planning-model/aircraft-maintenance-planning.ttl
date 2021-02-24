@@ -19,8 +19,8 @@
                                                                              rdfs:range <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/object> .
 
 
-###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/discobered-during-task
-<http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/discobered-during-task> rdf:type owl:ObjectProperty ;
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/discovered-during-task
+<http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/discovered-during-task> rdf:type owl:ObjectProperty ;
                                                                                           rdfs:domain <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/maintenance_task> ;
                                                                                           rdfs:range <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/maintenance_task> .
 
