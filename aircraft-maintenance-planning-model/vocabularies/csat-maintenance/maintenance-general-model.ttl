@@ -1,0 +1,178 @@
+@prefix : <http://csat.cz/ontologies/maintenance-schema/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix annot: <http://onto.fel.cvut.cz/ontologies/ufo/annot/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+
+<http://csat.cz/ontologies/maintenance-schema/> a owl:Ontology ;
+	owl:imports <http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.1> , <http://onto.fel.cvut.cz/ontologies/ufo/1.0.2> .
+
+:affect a owl:ObjectProperty ;
+	rdfs:label "affect" .
+
+:describes a owl:ObjectProperty ;
+	rdfs:domain :Document ;
+	rdfs:range owl:Thing ;
+	rdfs:label "describes" .
+
+:has_subject a owl:ObjectProperty ;
+	rdfs:label "has subject" .
+
+:requires a owl:ObjectProperty .
+
+:violates a owl:ObjectProperty ;
+	rdfs:domain :Nonconfirmity ;
+	rdfs:range :Requirement .
+
+:task_code a owl:DatatypeProperty ;
+	rdfs:label "task code" .
+
+<http://csat.cz/ontologies/maintenance-schema/A/age> a owl:DatatypeProperty ;
+	rdfs:label "age" .
+
+:Aircraft a owl:Class ;
+	rdfs:subClassOf :System ;
+	rdfs:label "Aircraft" .
+
+:Component a owl:Class ;
+	rdfs:subClassOf :area ;
+	rdfs:label "Component" .
+
+:Damage a owl:Class ;
+	rdfs:subClassOf :Failure_Event , _:node1evcgtq59x1 .
+
+_:node1evcgtq59x1 a owl:Restriction ;
+	owl:onProperty ufo:brings-about ;
+	owl:someValuesFrom :Damage_State .
+
+:Damage rdfs:label "Damage" .
+
+:Damage_State a owl:Class ;
+	rdfs:subClassOf ufo:situation , _:node1evcgtq59x2 .
+
+_:node1evcgtq59x2 a owl:Restriction ;
+	owl:onProperty :affect ;
+	owl:someValuesFrom :Function .
+
+:Damage_State rdfs:label "Damage State" .
+
+:Document a owl:Class ;
+	rdfs:subClassOf ufo:object ;
+	rdfs:label "Document" .
+
+:Failure_Event a owl:Class ;
+	rdfs:subClassOf ufo:atomic-event ;
+	rdfs:label "Failure Event" .
+
+:Function a owl:Class ;
+	rdfs:subClassOf ufo:disposition , _:node1evcgtq59x3 .
+
+_:node1evcgtq59x3 a owl:Restriction ;
+	owl:onProperty ufo:performs ;
+	owl:someValuesFrom :work_session .
+
+:Function rdfs:label "Function" .
+
+:Maintenance_Item a owl:Class ;
+	rdfs:subClassOf :Component , _:node1evcgtq59x4 .
+
+_:node1evcgtq59x4 a owl:Restriction ;
+	owl:onProperty ufo:is-participation-of ;
+	owl:someValuesFrom :Process_of_Degradation .
+
+:Maintenance_Item rdfs:label "Maintenance Item" .
+
+:Maintenance_Plan a owl:Class .
+
+:Maintenance_strategy a owl:Class ;
+	rdfs:subClassOf :Maintenance_Plan ;
+	rdfs:label "Maintenance strategy" .
+
+:Maintenance_task a owl:Class ;
+	rdfs:subClassOf ufo:complex-event , _:node1evcgtq59x5 .
+
+_:node1evcgtq59x5 a owl:Restriction ;
+	owl:onProperty ufo:is-part-of ;
+	owl:someValuesFrom :Workpackage .
+
+:Maintenance_task rdfs:label "Maintenance task" .
+
+:Mechanic a owl:Class ;
+	rdfs:subClassOf ufo:person , _:node1evcgtq59x6 .
+
+_:node1evcgtq59x6 a owl:Restriction ;
+	owl:onProperty ufo:performs ;
+	owl:someValuesFrom :Observation .
+
+:Mechanic rdfs:subClassOf _:node1evcgtq59x7 .
+
+_:node1evcgtq59x7 a owl:Restriction ;
+	owl:onProperty ufo:performs ;
+	owl:someValuesFrom :work_session .
+
+:Mechanic rdfs:label "mechanic" .
+
+:Nonconfirmity a owl:Class ;
+	rdfs:subClassOf ufo:disposition , _:node1evcgtq59x8 .
+
+_:node1evcgtq59x8 a owl:Restriction ;
+	owl:onProperty ufo:is-manifested-by ;
+	owl:someValuesFrom :Failure_Event .
+
+:Nonconfirmity rdfs:label "Nonconfirmity" .
+
+:Observation a owl:Class ;
+	rdfs:subClassOf ufo:complex-event .
+
+:Process_of_Degradation a owl:Class ;
+	rdfs:subClassOf ufo:complex-event ;
+	rdfs:label "Process of Degradation" .
+
+:Requirement a owl:Class ;
+	rdfs:subClassOf ufo:trope ;
+	rdfs:label "Requirement" .
+
+:State_of_Degradation a owl:Class ;
+	rdfs:subClassOf ufo:situation , _:node1evcgtq59x9 .
+
+_:node1evcgtq59x9 a owl:Restriction ;
+	owl:onProperty ufo:triggers ;
+	owl:someValuesFrom :Failure_Event .
+
+:State_of_Degradation rdfs:label "State of Degradation" .
+
+:System a owl:Class ;
+	rdfs:subClassOf ufo:physical-object ;
+	rdfs:label "System" .
+
+:Workpackage a owl:Class ;
+	rdfs:subClassOf ufo:complex-event ;
+	rdfs:label "Workpackage" .
+
+:Workpackage_Information_Content a owl:Class ;
+	rdfs:subClassOf :Document ;
+	rdfs:label "Workpackage Information Content" .
+
+:area a owl:Class .
+
+:work_session a owl:Class ;
+	rdfs:subClassOf ufo:complex-event , _:node1evcgtq59x10 .
+
+_:node1evcgtq59x10 a owl:Restriction ;
+	owl:onProperty ufo:is-part-of ;
+	owl:someValuesFrom :Maintenance_task .
+
+:work_session rdfs:label "work session" .
+
+ufo:agent rdfs:subClassOf _:node1evcgtq59x11 .
+
+_:node1evcgtq59x11 a owl:Restriction ;
+	owl:onProperty :requires ;
+	owl:someValuesFrom :Maintenance_task .
