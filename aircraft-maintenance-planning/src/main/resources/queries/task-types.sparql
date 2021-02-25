@@ -1,0 +1,15 @@
+PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX  mp:   <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/>
+
+SELECT DISTINCT ?type ?typeId ?typeLabel
+WHERE
+{
+	?type a owl:Class;
+        rdfs:subClassOf	mp:task_card.
+    OPTIONAL{
+        ?type rdfs:label ?typeLabel.
+    }
+    BIND(replace(str(?type), "^.*/([^/]+)$", "$1") as ?typeId)
+}

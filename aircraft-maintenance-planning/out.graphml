@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><graphml xmlns="http://graphml.graphdrawing.org/xmlns" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<key id="vertex_label_key" for="node" attr.name="label" attr.type="string"/>
+<key id="edge_label_key" for="edge" attr.name="EdgeLabel" attr.type="string"/>
+<key id="key0" for="node" attr.name="scope" attr.type="string"/>
+<key id="key1" for="node" attr.name="id" attr.type="string"/>
+<graph edgedefault="directed">
+<node id="1">
+<data key="vertex_label_key">cz.cvut.kbss.amaplas.exp.graphml.JGraphT2GraphMlExp$Tmp@5a61f5df</data>
+</node>
+<node id="2">
+<data key="vertex_label_key">cz.cvut.kbss.amaplas.exp.graphml.JGraphT2GraphMlExp$Tmp@2c9f9fb0</data>
+</node>
+<node id="3">
+<data key="vertex_label_key">cz.cvut.kbss.amaplas.exp.graphml.JGraphT2GraphMlExp$Tmp@2096442d</data>
+</node>
+<edge source="1" target="2">
+<data key="edge_label_key">4</data>
+</edge>
+<edge source="2" target="3">
+<data key="edge_label_key">5</data>
+</edge>
+</graph>
+</graphml>
