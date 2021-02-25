@@ -9,7 +9,7 @@ This project contains software modules produced by the Doprava 2020 CSAT project
 - file containing ontology should be idealy named same as "fragment of url"
     - e.g. http://onto.fel.cvut.cz/ontologies/csat-maintenance in csat-maintenance.ttl
 
-#### Directory structure
+### Directory structure
 
 - ./bin - for scripts
 - ./target - for output of scripts
