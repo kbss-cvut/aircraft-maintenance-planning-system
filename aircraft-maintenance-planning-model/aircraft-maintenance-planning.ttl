@@ -20,10 +20,17 @@ csat-p:damage_of rdf:type owl:ObjectProperty ;
                  rdfs:range csat-p:object .
 
 
+<<<<<<< HEAD
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/discobered-during-task
 csat-p:discobered-during-task rdf:type owl:ObjectProperty ;
                               rdfs:domain csat-p:maintenance_task ;
                               rdfs:range csat-p:maintenance_task .
+=======
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/discovered-during-task
+<http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/discovered-during-task> rdf:type owl:ObjectProperty ;
+                                                                                          rdfs:domain <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/maintenance_task> ;
+                                                                                          rdfs:range <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/maintenance_task> .
+>>>>>>> 5c06d313a54c4898bcf31eb0a666b7cb05d106ff
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/finding_of

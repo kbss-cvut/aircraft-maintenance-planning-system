@@ -1,0 +1,379 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://csat.cz/ontologies/maintenance-schema/"
+     xml:base="http://csat.cz/ontologies/maintenance-schema/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:ufo="http://onto.fel.cvut.cz/ontologies/ufo/"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:bibo="http://purl.org/ontology/bibo/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+     xmlns:vann="http://purl.org/vocab/vann/"
+     xmlns:annot="http://onto.fel.cvut.cz/ontologies/ufo/annot/"
+     xmlns:terms="http://purl.org/dc/terms/">
+    <owl:Ontology rdf:about="http://csat.cz/ontologies/maintenance-schema/">
+        <owl:imports rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.1"/>
+        <owl:imports rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/1.0.2"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/affect -->
+
+    <owl:ObjectProperty rdf:about="http://csat.cz/ontologies/maintenance-schema/affect">
+        <rdfs:label>affect</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/describes -->
+
+    <owl:ObjectProperty rdf:about="http://csat.cz/ontologies/maintenance-schema/describes">
+        <rdfs:domain rdf:resource="http://csat.cz/ontologies/maintenance-schema/Document"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:label>describes</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/has_subject -->
+
+    <owl:ObjectProperty rdf:about="http://csat.cz/ontologies/maintenance-schema/has_subject">
+        <rdfs:label>has subject</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/requires -->
+
+    <owl:ObjectProperty rdf:about="http://csat.cz/ontologies/maintenance-schema/requires"/>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/violates -->
+
+    <owl:ObjectProperty rdf:about="http://csat.cz/ontologies/maintenance-schema/violates">
+        <rdfs:domain rdf:resource="http://csat.cz/ontologies/maintenance-schema/Nonconfirmity"/>
+        <rdfs:range rdf:resource="http://csat.cz/ontologies/maintenance-schema/Requirement"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/task_code -->
+
+    <owl:DatatypeProperty rdf:about="http://csat.cz/ontologies/maintenance-schema/task_code">
+        <rdfs:label>task code</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/A/age -->
+
+    <owl:DatatypeProperty rdf:about="http://csat.cz/ontologies/maintenance-schema/A/age">
+        <rdfs:label>age</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Aircraft -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Aircraft">
+        <rdfs:subClassOf rdf:resource="http://csat.cz/ontologies/maintenance-schema/System"/>
+        <rdfs:label>Aircraft</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Component -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Component">
+        <rdfs:subClassOf rdf:resource="http://csat.cz/ontologies/maintenance-schema/area"/>
+        <rdfs:label>Component</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Damage -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Damage">
+        <rdfs:subClassOf rdf:resource="http://csat.cz/ontologies/maintenance-schema/Failure_Event"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/brings-about"/>
+                <owl:someValuesFrom rdf:resource="http://csat.cz/ontologies/maintenance-schema/Damage_State"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Damage</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Damage_State -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Damage_State">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://csat.cz/ontologies/maintenance-schema/affect"/>
+                <owl:someValuesFrom rdf:resource="http://csat.cz/ontologies/maintenance-schema/Function"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Damage State</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Document -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Document">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
+        <rdfs:label>Document</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Failure_Event -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Failure_Event">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/atomic-event"/>
+        <rdfs:label>Failure Event</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Function -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Function">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/disposition"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/performs"/>
+                <owl:someValuesFrom rdf:resource="http://csat.cz/ontologies/maintenance-schema/work_session"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Function</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Maintenance_Item -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Maintenance_Item">
+        <rdfs:subClassOf rdf:resource="http://csat.cz/ontologies/maintenance-schema/Component"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of"/>
+                <owl:someValuesFrom rdf:resource="http://csat.cz/ontologies/maintenance-schema/Process_of_Degradation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Maintenance Item</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Maintenance_Plan -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Maintenance_Plan"/>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Maintenance_strategy -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Maintenance_strategy">
+        <rdfs:subClassOf rdf:resource="http://csat.cz/ontologies/maintenance-schema/Maintenance_Plan"/>
+        <rdfs:label>Maintenance strategy</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Maintenance_task -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Maintenance_task">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-part-of"/>
+                <owl:someValuesFrom rdf:resource="http://csat.cz/ontologies/maintenance-schema/Workpackage"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Maintenance task</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Mechanic -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Mechanic">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/person"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/performs"/>
+                <owl:someValuesFrom rdf:resource="http://csat.cz/ontologies/maintenance-schema/Observation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/performs"/>
+                <owl:someValuesFrom rdf:resource="http://csat.cz/ontologies/maintenance-schema/work_session"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>mechanic</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Nonconfirmity -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Nonconfirmity">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/disposition"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by"/>
+                <owl:someValuesFrom rdf:resource="http://csat.cz/ontologies/maintenance-schema/Failure_Event"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Nonconfirmity</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Observation -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Observation">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Process_of_Degradation -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Process_of_Degradation">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
+        <rdfs:label>Process of Degradation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Requirement -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Requirement">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope"/>
+        <rdfs:label>Requirement</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/State_of_Degradation -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/State_of_Degradation">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/triggers"/>
+                <owl:someValuesFrom rdf:resource="http://csat.cz/ontologies/maintenance-schema/Failure_Event"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>State of Degradation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/System -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/System">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/physical-object"/>
+        <rdfs:label>System</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Workpackage -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Workpackage">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
+        <rdfs:label>Workpackage</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/Workpackage_Information_Content -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/Workpackage_Information_Content">
+        <rdfs:subClassOf rdf:resource="http://csat.cz/ontologies/maintenance-schema/Document"/>
+        <rdfs:label>Workpackage Information Content</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/area -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/area"/>
+    
+
+
+    <!-- http://csat.cz/ontologies/maintenance-schema/work_session -->
+
+    <owl:Class rdf:about="http://csat.cz/ontologies/maintenance-schema/work_session">
+        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-part-of"/>
+                <owl:someValuesFrom rdf:resource="http://csat.cz/ontologies/maintenance-schema/Maintenance_task"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>work session</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://onto.fel.cvut.cz/ontologies/ufo/agent -->
+
+    <rdf:Description rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/agent">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://csat.cz/ontologies/maintenance-schema/requires"/>
+                <owl:someValuesFrom rdf:resource="http://csat.cz/ontologies/maintenance-schema/Maintenance_task"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

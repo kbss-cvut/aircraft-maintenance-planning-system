@@ -1,0 +1,248 @@
+@prefix : <http://csat.cz/ontologies/maintenance-schema/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://csat.cz/ontologies/maintenance-schema/> a owl:Ontology ;
+	owl:imports <http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.1> , <http://onto.fel.cvut.cz/ontologies/ufo/1.0.2> .
+# 
+# 
+# #################################################################
+# #
+# #    Object Properties
+# #
+# #################################################################
+# 
+# 
+# http://csat.cz/ontologies/maintenance-schema/affect
+
+:affect a owl:ObjectProperty ;
+	rdfs:label "affect" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/describes
+
+:describes a owl:ObjectProperty ;
+	rdfs:domain :Document ;
+	rdfs:range owl:Thing ;
+	rdfs:label "describes" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/has_subject
+
+:has_subject a owl:ObjectProperty ;
+	rdfs:label "has subject" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/violates
+
+:violates a owl:ObjectProperty ;
+	rdfs:domain :Nonconfirmity ;
+	rdfs:range :Requirement .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Data properties
+# #
+# #################################################################
+# 
+# 
+# http://csat.cz/ontologies/maintenance-schema/A/age
+
+<http://csat.cz/ontologies/maintenance-schema/A/age> a owl:DatatypeProperty ;
+	rdfs:label "age" .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+# 
+# 
+# http://csat.cz/ontologies/maintenance-schema/Aircraft
+
+:Aircraft a owl:Class ;
+	rdfs:subClassOf :System , _:genid1 .
+
+_:genid1 a owl:Restriction ;
+	owl:onProperty <http://csat.cz/ontologies/maintenance-schema/A/age> ;
+	owl:someValuesFrom owl:real .
+
+:Aircraft rdfs:label "Aircraft" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/Component
+
+:Component a owl:Class ;
+	rdfs:subClassOf :Aircraft ;
+	rdfs:label "Component" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/Damage
+
+:Damage a owl:Class ;
+	rdfs:subClassOf :Failure_Event , _:genid2 .
+
+_:genid2 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/brings-about> ;
+	owl:someValuesFrom :Damage_State .
+
+:Damage rdfs:label "Damage" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/Damage_State
+
+:Damage_State a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/situation> , _:genid3 .
+
+_:genid3 a owl:Restriction ;
+	owl:onProperty :affect ;
+	owl:someValuesFrom :Function .
+
+:Damage_State rdfs:label "Damage State" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/Document
+
+:Document a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	rdfs:label "Document" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/Failure_Event
+
+:Failure_Event a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> ;
+	rdfs:label "Failure Event" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/Function
+
+:Function a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/disposition> , _:genid4 .
+
+_:genid4 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/performs> ;
+	owl:someValuesFrom :work_session .
+
+:Function rdfs:label "Function" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/Maintenance_Item
+
+:Maintenance_Item a owl:Class ;
+	rdfs:subClassOf :Component , _:genid5 .
+
+_:genid5 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of> ;
+	owl:someValuesFrom :Process_of_Degradation .
+
+:Maintenance_Item rdfs:label "Maintenance Item" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/Maintenance_strategy
+
+:Maintenance_strategy a owl:Class ;
+	rdfs:subClassOf :Document ;
+	rdfs:label "Maintenance strategy" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/Nonconfirmity
+
+:Nonconfirmity a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/disposition> , _:genid6 .
+
+_:genid6 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by> ;
+	owl:someValuesFrom :Failure_Event .
+
+:Nonconfirmity rdfs:label "Nonconfirmity" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/Observation
+
+:Observation a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> .
+# 
+# http://csat.cz/ontologies/maintenance-schema/Process_of_Degradation
+
+:Process_of_Degradation a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> ;
+	rdfs:label "Process of Degradation" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/Requirement
+
+:Requirement a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/trope> ;
+	rdfs:label "Requirement" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/State_of_Degradation
+
+:State_of_Degradation a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/situation> , _:genid7 .
+
+_:genid7 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/triggers> ;
+	owl:someValuesFrom :Failure_Event .
+
+:State_of_Degradation rdfs:label "State of Degradation" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/System
+
+:System a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/physical-object> ;
+	rdfs:label "System" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/Workpackage
+
+:Workpackage a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> ;
+	rdfs:label "Workpackage" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/Workpackage_Information_Content
+
+:Workpackage_Information_Content a owl:Class ;
+	rdfs:subClassOf :Document ;
+	rdfs:label "Workpackage Information Content" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/maintenance_task
+
+:maintenance_task a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> , _:genid8 .
+
+_:genid8 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+	owl:someValuesFrom :Workpackage .
+
+:maintenance_task rdfs:label "maintenance task" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/mechanic
+
+:mechanic a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/person> , _:genid9 .
+
+_:genid9 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/performs> ;
+	owl:someValuesFrom :Observation .
+
+:mechanic rdfs:subClassOf _:genid10 .
+
+_:genid10 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/performs> ;
+	owl:someValuesFrom :work_session .
+
+:mechanic rdfs:label "mechanic" .
+# 
+# http://csat.cz/ontologies/maintenance-schema/work_session
+
+:work_session a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> , _:genid11 .
+
+_:genid11 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+	owl:someValuesFrom :maintenance_task .
+
+:work_session rdfs:label "work session" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/agent
+
+<http://onto.fel.cvut.cz/ontologies/ufo/agent> rdfs:subClassOf _:genid12 .
+
+_:genid12 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/performs> ;
+	owl:someValuesFrom :maintenance_task .
+# 
+# Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

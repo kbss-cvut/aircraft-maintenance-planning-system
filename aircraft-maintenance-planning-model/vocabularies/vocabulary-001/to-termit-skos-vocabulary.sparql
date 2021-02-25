@@ -5,9 +5,11 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX bibo: <http://purl.org/ontology/bibo/>
 PREFIX vann: <http://purl.org/vocab/vann/>
 PREFIX apd: <http://onto.fel.cvut.cz/ontologies/slovník/agendový/popis-dat/pojem/>
+PREFIX caf: <http://onto.fel.cvut.cz/ontologies/slovnik/slovnik-komponent-a-zavad---novy/pojem/>
 PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
 PREFIX csat-mp: <http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/>
 PREFIX csat-mpt: <http://onto.fel.cvut.cz/ontolgies/csat/mp-voc/pojem/>
+
 
 
 CONSTRUCT{
@@ -36,12 +38,18 @@ CONSTRUCT{
 	skos:inScheme ?glossary ;
 	skos:prefLabel ?termLang ;
 	termit:je-draft true.
+	
+  ?termIRI skos:prefLabel ?termLang2.
+  ?termIRI skos:altLabel ?termLang3.
+  ?termIRI skos:altLabel ?abbreviation.
+  ?termIRI skos:broader ?cat.
 	# skos:definition ?es ;
 	# skos:prefLabel ?termCs ;
 	# skos:scopeNote ?es.
 	
 }WHERE{
 	BIND("en" as ?lang)
+	BIND("cs" as ?lang2)
 	BIND("version/0.0.1" as ?revision)
 	BIND("Martin Kala" as ?creator)
 	BIND("2017-03-01" as ?created)
@@ -52,9 +60,14 @@ CONSTRUCT{
 	BIND(str(csat-mp:) as ?namespace)
 	BIND("pojem/" as ?termSeparator)
 	
-	BIND(strlang("", ?lang) as ?es)
+	BIND(IF(?category = "C", caf:component, if(?category = "F", caf:failure, ?category)) as ?cat)
+	# BIND(?category as ?cat)
+	# BIND(strlang("", ?lang) as ?es)
 	BIND(strlang(?label, ?lang) as ?termLang)
-	BIND(IRI(concat(str(csat-mp:), ?termSeparator, replace(?termId, "[\\s/\\\\]", "-")) ) as ?termIRI)
+	BIND(strlang(?label2, ?lang2) as ?termLang2)
+	BIND(strlang(?label3, ?lang2) as ?termLang3)
+	BIND(strlang(?abr, ?lang) as ?abbreviation)
+	BIND(IRI(concat(str(csat-mp:), ?termSeparator, replace(?termId, "[\\s/\\\\\\)\\(]", "-")) ) as ?termIRI)
 	BIND(IRI(replace(str(csat-mp:), "/$","")) as ?voc)
 	BIND(IRI(concat(str(csat-mp:), ?revision)) as ?revisionIRI)
 	BIND(IRI(concat(str(csat-mp:), "glossary")) as ?glossary)

@@ -13,7 +13,7 @@ PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
 CONSTRUCT {
   # workpackage description
   ?workpackageIRI a mp:workpackage, owl:NamedIndividual;
-    mp:has_id ?Workapckage;
+    mp:has_id ?Workpackage;
     mp:start_time ?WP_start_D;
     mp:end_time ?WP_end_D.
     
@@ -48,8 +48,9 @@ CONSTRUCT {
 	rdfs:label ?Description.
 
   # aircraft description
+  ?workpackageIRI mp:repair_of ?aircraftIRI.
   ?aircraftIRI a mp:aircraft, owl:NamedIndividual;
-	rdfs:label ?aircraft.
+	mp:has_model ?acmodel.
 } WHERE {
     SERVICE <ontorefine:2509139576799> {
 	  ?row a :Row ;
@@ -72,14 +73,15 @@ CONSTRUCT {
 	       :WP_start ?WP_start ;
 	       :WP_end ?WP_end ;
 	       :Real_date_of_booking_entry ?Real_date_of_booking_entry ;
-		   :aircraft ?aircraft. 
+		   :A_C_model ?acmodel.
+		   #:aircraft ?aircraft.
 	
 	  BIND(iri(concat(str(d:), ?workpackage)) as ?workpackageIRI) # instance
 	  BIND(iri(concat(str(d:), ?work_on_task)) as ?work_on_taskIRI) # instance
 	  BIND(iri(concat(str(d:), ?task_execution)) as ?task_executionIRI) # instance
 	  BIND(iri(concat(str(d:), ?group)) as ?groupIRI) # instance
 	  BIND(iri(concat(str(d:), ?subgroup)) as ?subgroupIRI) # instance
-	  BIND(IRI(concat(str(d:), ?aircraft)) as ?aircraftIRI) # instance
+	  BIND(IRI(concat(str(d:), ?acmodel, "-", ?workpackage)) as ?aircraftIRI) # instance
       BIND(IRI(concat(str(ds:), ?task_type)) as ?task_typeIRI)
       BIND(IRI(concat(str(mp:), ?task_super_class)) as ?task_super_classIRI)
       

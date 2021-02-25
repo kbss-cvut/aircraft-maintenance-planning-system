@@ -48,7 +48,7 @@
     "newColumnName": "task_type",
     "columnInsertIndex": 7,
     "baseColumnName": "WO/TC",
-    "expression": "grel:row.cells.Type.value + \"-\" + value",
+    "expression": "grel:escape(row.cells.Type.value + \"-\" + value,\"url\")",
     "onError": "set-to-blank"
   },
   {
@@ -61,7 +61,7 @@
     "newColumnName": "subgroup",
     "columnInsertIndex": 3,
     "baseColumnName": "Scope",
-    "expression": "grel:value + \"_group\"",
+    "expression": "grel:escape(value + \"_group\",\"url\")",
     "onError": "set-to-blank"
   },
   {
@@ -74,7 +74,7 @@
     "newColumnName": "group",
     "columnInsertIndex": 5,
     "baseColumnName": "Shift Group",
-    "expression": "grel:value + \"_group\"",
+    "expression": "grel:escape(value + \"_group\",\"url\")",
     "onError": "set-to-blank"
   },
   {
@@ -92,7 +92,7 @@
   },
   {
     "op": "core/column-addition",
-    "description": "Create column work on task at index 3 based on column start using expression grel:replace(row.cells[\"Workpackage\"].value, \"/\",\"_\") + \"-\" + row.cells.Scope.value + \"-\" + row.cells[\"Type\"].value + \"-\" + row.cells[\"WO/TC\"].value + \"-\" + replace(value,\":\",\"_\") + \"-\" + replace(row.cells.end.value,\":\",\"_\")",
+    "description": "Create column work on task at index 3 based on column start using expression grel:escape(row.cells[\"Workpackage\"].value,\"url\") + \"-\" + row.cells.Scope.value + \"-\" + row.cells[\"Type\"].value + \"-\" + row.cells[\"WO/TC\"].value + \"-\" + replace(value,\":\",\"_\") + \"-\" + replace(row.cells.end.value,\":\",\"_\")",
     "engineConfig": {
       "mode": "record-based",
       "facets": []
@@ -100,7 +100,7 @@
     "newColumnName": "work on task",
     "columnInsertIndex": 3,
     "baseColumnName": "start",
-    "expression": "grel:replace(row.cells[\"Workpackage\"].value, \"/\",\"_\") + \"-\" + row.cells.Scope.value + \"-\" + row.cells[\"Type\"].value + \"-\" + row.cells[\"WO/TC\"].value + \"-\" + replace(value,\":\",\"_\") + \"-\" + replace(row.cells.end.value,\":\",\"_\")",
+    "expression": "grel:escape(row.cells[\"Workpackage\"].value + \"-\" + row.cells.Scope.value + \"-\" + row.cells[\"Type\"].value + \"-\" + row.cells[\"WO/TC\"].value + \"-\" + replace(value,\":\",\"_\") + \"-\" + replace(row.cells.end.value,\":\",\"_\"), \"url\")",
     "onError": "set-to-blank"
   },
   {
@@ -113,7 +113,7 @@
     "newColumnName": "task_execution",
     "columnInsertIndex": 21,
     "baseColumnName": "Workpackage",
-    "expression": "grel:replace(value, \"/\", \"_\")  + \"-\" + row.cells[\"WO/TC\"].value",
+	"expression": "grel:escape(value + \"-\" + row.cells[\"WO/TC\"].value,\"url\")",
     "onError": "set-to-blank"
   },
   {
