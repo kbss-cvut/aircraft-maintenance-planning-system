@@ -1,21 +1,26 @@
 # aircraft-maintenance-planning-system                                                                                                                                                               
 This project contains software modules produced by the Doprava 2020 CSAT project. This includes the software for generating maintenance plans and the aircraft maintenance planning ontology model.
 
-## Name-ing conventions
 
-### Files and directories
+## Software
+
+## Model
+
+### Name-ing conventions
+
+#### Files and directories
 
 - RDF data should be saved in *.ttl files
 - file containing ontology should be idealy named same as "fragment of url"
     - e.g. http://onto.fel.cvut.cz/ontologies/csat-maintenance in csat-maintenance.ttl
 
-### Directory structure
+#### Directory structure
 
 - ./bin - for scripts
-- ./target - for output of scripts
-- ./source - for source files of scripts
+- ./input - for output of scripts
+- ./output - for source files of scripts
 
-### RDF resources
+#### RDF resources
 
 - IRI fragment should be separated by "/" instead of "#"
 - resources should be lower-case with words separated by "-"
