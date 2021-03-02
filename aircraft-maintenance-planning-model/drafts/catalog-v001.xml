@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="User Entered Import Resolution" name="http://csat.cz/ontologies/maintenance-csat-onto/" uri="file:/C:/Users/ahmadjan/Desktop/csat/git%20repository/aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/csat-maintenance/csat-maintenance.ttl"/>
     <uri id="Imports Wizard Entry" name="http://csat.cz/ontologies/maintenance-schema/" uri="maintenance%20generic%20model.ttl"/>
     <uri id="User Entered Import Resolution" name="http://csat.cz/ontologies/maintenance-schema/" uri="maintenance%20csat.ttl"/>
     <uri id="Imports Wizard Entry" name="http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.1" uri="ufo/ufo-powertypes.rdf"/>
     <uri id="Imports Wizard Entry" name="http://onto.fel.cvut.cz/ontologies/ufo/1.0.2" uri="ufo/ufo.rdf"/>
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1605736110694" name="http://csat.cz/ontologies/maintenance-csat-onto-instances/" uri="csat%20onto%20instances.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1605736110694" name="http://csat.cz/ontologies/maintenance-csat-onto/" uri="csat%20ntology.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1605736110694" name="http://csat.cz/ontologies/maintenance-schema/" uri="maintenance%20general%20model.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1605736110694" name="http://onto.fel.cvut.cz/ontologies/ufo-a/" uri="ufo/ufo-a.rdf"/>
-        <uri id="Automatically generated entry, Timestamp=1605736110694" name="http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/" uri="ufo/ufo-b-dispositions.rdf"/>
-        <uri id="Automatically generated entry, Timestamp=1605736110694" name="http://onto.fel.cvut.cz/ontologies/ufo-b-temporal/" uri="ufo/ufo-b-temporal.rdf"/>
-        <uri id="Automatically generated entry, Timestamp=1605736110694" name="http://onto.fel.cvut.cz/ontologies/ufo-b/" uri="ufo/ufo-b.rdf"/>
-        <uri id="Automatically generated entry, Timestamp=1605736110694" name="http://onto.fel.cvut.cz/ontologies/ufo-c/" uri="ufo/ufo-c.rdf"/>
-        <uri id="Automatically generated entry, Timestamp=1605736110694" name="http://onto.fel.cvut.cz/ontologies/ufo-cs" uri="ufo/ufo-cs.rdf"/>
-        <uri id="Automatically generated entry, Timestamp=1605736110694" name="http://onto.fel.cvut.cz/ontologies/ufo-ontouml/" uri="ufo/ufo-ontouml.rdf"/>
-        <uri id="Automatically generated entry, Timestamp=1605736110694" name="http://onto.fel.cvut.cz/ontologies/ufo-powertypes/" uri="ufo/ufo-powertypes.rdf"/>
-        <uri id="Automatically generated entry, Timestamp=1605736110694" name="http://onto.fel.cvut.cz/ontologies/ufo/" uri="ufo/ufo.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1614689493726" name="http://csat.cz/ontologies/maintenance-csat-onto-instances/" uri="csat%20onto%20instances.owl"/>
     </group>
 </catalog>
