@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="Imports Wizard Entry" name="http://onto.fel.cvut.cz/ontologies/csat-maintenance/" uri="csat-maintenance.ttl"/>
     <uri id="Imports Wizard Entry" name="http://onto.fel.cvut.cz/ontologies/maintenance-schema/" uri="maintenance-general-model.ttl"/>
     <uri id="User Entered Import Resolution" name="http://csat.cz/ontologies/maintenance-schema/" uri="maintenance-general-model.ttl"/>
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base=""/>
