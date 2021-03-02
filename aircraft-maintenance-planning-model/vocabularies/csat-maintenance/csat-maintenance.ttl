@@ -1,4 +1,4 @@
-@prefix : <http://csat.cz/ontologies/maintenance-csat-onto/> .
+@prefix : <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
@@ -11,18 +11,20 @@
 @prefix vann: <http://purl.org/vocab/vann/> .
 @prefix annot: <http://onto.fel.cvut.cz/ontologies/ufo/annot/> .
 @prefix terms: <http://purl.org/dc/terms/> .
-@base <http://onto.fel.cvut.cz/ontologies/maintenance-csat-onto/> .
+@prefix csat-maintenance: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
+@prefix maintenance-schema: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
+@base <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
 
-<http://onto.fel.cvut.cz/ontologies/maintenance-csat-onto/> rdf:type owl:Ontology ;
-                                                             owl:imports <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/> rdf:type owl:Ontology ;
+                                                        owl:imports maintenance-schema: .
 
 #################################################################
 #    Annotation properties
 #################################################################
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation
-:has_abbreviation rdf:type owl:AnnotationProperty ;
-                  rdfs:label "has abbreviation" .
+<http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> rdf:type owl:AnnotationProperty ;
+                                                                   rdfs:label "has abbreviation" .
 
 
 #################################################################
@@ -30,8 +32,8 @@
 #################################################################
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/leads
-:leads rdf:type owl:ObjectProperty ;
-       rdfs:comment "leads" .
+<http://csat.cz/ontologies/maintenance-csat-onto/leads> rdf:type owl:ObjectProperty ;
+                                                        rdfs:comment "leads" .
 
 
 ###  http://csat.cz/ontologies/maintenance-schema/has_dmage
@@ -260,167 +262,167 @@
 #################################################################
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Adjusting
-:Adjusting rdf:type owl:Class ;
-           rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-           :has_abbreviation "ADJ" ;
-           rdfs:label "Adjusting" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Adjusting> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                            <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "ADJ" ;
+                                                            rdfs:label "Adjusting" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Borescope_Inspection
-:Borescope_Inspection rdf:type owl:Class ;
-                      rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-                      :has_abbreviation "BSI" ;
-                      rdfs:label "Borescope Inspection" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Borescope_Inspection> rdf:type owl:Class ;
+                                                                       rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                                       <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "BSI" ;
+                                                                       rdfs:label "Borescope Inspection" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Change
-:Change rdf:type owl:Class ;
-        rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-        :has_abbreviation "CHG" ,
-                          "Change" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Change> rdf:type owl:Class ;
+                                                         rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                         <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "CHG" ,
+                                                                                                                            "Change" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Check
-:Check rdf:type owl:Class ;
-       rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-       :has_abbreviation "CHK" ;
-       rdfs:label "Check" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Check> rdf:type owl:Class ;
+                                                        rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                        <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "CHK" ;
+                                                        rdfs:label "Check" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Detail_Visual_Inspection
-:Detail_Visual_Inspection rdf:type owl:Class ;
-                          rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-                          :has_abbreviation "DVI" ;
-                          rdfs:label "Detail Visual Inspection" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Detail_Visual_Inspection> rdf:type owl:Class ;
+                                                                           rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                                           <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "DVI" ;
+                                                                           rdfs:label "Detail Visual Inspection" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Detailed_Inspection
-:Detailed_Inspection rdf:type owl:Class ;
-                     rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-                     :has_abbreviation "DET" ;
-                     rdfs:label "Detailed Inspection" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Detailed_Inspection> rdf:type owl:Class ;
+                                                                      rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                                      <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "DET" ;
+                                                                      rdfs:label "Detailed Inspection" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Functional_Ttest
-:Functional_Ttest rdf:type owl:Class ;
-                  rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-                  :has_abbreviation "FNC" ;
-                  rdfs:label "Functional Ttest" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Functional_Ttest> rdf:type owl:Class ;
+                                                                   rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                                   <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "FNC" ;
+                                                                   rdfs:label "Functional Ttest" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/General
-:General rdf:type owl:Class ;
-         rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-         :has_abbreviation "GEN" ;
-         rdfs:label "General" .
+<http://csat.cz/ontologies/maintenance-csat-onto/General> rdf:type owl:Class ;
+                                                          rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                          <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "GEN" ;
+                                                          rdfs:label "General" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/General_visual_inspection
-:General_visual_inspection rdf:type owl:Class ;
-                           rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-                           :has_abbreviation "GVI" ;
-                           rdfs:label "General visual inspection" .
+<http://csat.cz/ontologies/maintenance-csat-onto/General_visual_inspection> rdf:type owl:Class ;
+                                                                            rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                                            <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "GVI" ;
+                                                                            rdfs:label "General visual inspection" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Heavy_Maintenance_Group
-:Heavy_Maintenance_Group rdf:type owl:Class ;
-                         rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Maintenance_Group> ;
-                         rdfs:label "Heavy Maintenance Group" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Heavy_Maintenance_Group> rdf:type owl:Class ;
+                                                                          rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Maintenance_Group> ;
+                                                                          rdfs:label "Heavy Maintenance Group" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Line_Manager
-:Line_Manager rdf:type owl:Class ;
-              rdfs:subClassOf :Maintenance_Manager ,
-                              [ rdf:type owl:Restriction ;
-                                owl:onProperty :leads ;
-                                owl:someValuesFrom :Team_Leader
-                              ] ;
-              rdfs:label "Line Manager" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Line_Manager> rdf:type owl:Class ;
+                                                               rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Manager> ,
+                                                                               [ rdf:type owl:Restriction ;
+                                                                                 owl:onProperty <http://csat.cz/ontologies/maintenance-csat-onto/leads> ;
+                                                                                 owl:someValuesFrom <http://csat.cz/ontologies/maintenance-csat-onto/Team_Leader>
+                                                                               ] ;
+                                                               rdfs:label "Line Manager" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Lubrication
-:Lubrication rdf:type owl:Class ;
-             rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-             :has_abbreviation "LUB" ;
-             rdfs:label "Lubrication" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Lubrication> rdf:type owl:Class ;
+                                                              rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                              <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "LUB" ;
+                                                              rdfs:label "Lubrication" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Manager
-:Maintenance_Manager rdf:type owl:Class ;
-                     rdfs:subClassOf ufo:physical-agent ;
-                     rdfs:label "Maintenance Manager" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Manager> rdf:type owl:Class ;
+                                                                      rdfs:subClassOf ufo:physical-agent ;
+                                                                      rdfs:label "Maintenance Manager" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Support_Group
-:Maintenance_Support_Group rdf:type owl:Class ;
-                           rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Maintenance_Group> ;
-                           rdfs:label "Maintenance Support Group" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Support_Group> rdf:type owl:Class ;
+                                                                            rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Maintenance_Group> ;
+                                                                            rdfs:label "Maintenance Support Group" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Operational_Check
-:Operational_Check rdf:type owl:Class ;
-                   rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-                   :has_abbreviation "OPS" ;
-                   rdfs:label "Operational Check" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Operational_Check> rdf:type owl:Class ;
+                                                                    rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                                    <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "OPS" ;
+                                                                    rdfs:label "Operational Check" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Operational_Test
-:Operational_Test rdf:type owl:Class ;
-                  rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-                  :has_abbreviation "OPC" ;
-                  rdfs:label "Operational Test" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Operational_Test> rdf:type owl:Class ;
+                                                                   rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                                   <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "OPC" ;
+                                                                   rdfs:label "Operational Test" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Repair
-:Repair rdf:type owl:Class ;
-        rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-        :has_abbreviation "REP" ;
-        rdfs:label "Repair" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Repair> rdf:type owl:Class ;
+                                                         rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                         <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "REP" ;
+                                                         rdfs:label "Repair" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Restoration
-:Restoration rdf:type owl:Class ;
-             rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-             :has_abbreviation "RST" ;
-             rdfs:label "Restoration" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Restoration> rdf:type owl:Class ;
+                                                              rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                              <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "RST" ;
+                                                              rdfs:label "Restoration" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Servising
-:Servising rdf:type owl:Class ;
-           rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-           :has_abbreviation "SVC" ;
-           rdfs:label "Servising" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Servising> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                            <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "SVC" ;
+                                                            rdfs:label "Servising" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Special_Detailed_Inspection
-:Special_Detailed_Inspection rdf:type owl:Class ;
-                             rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-                             :has_abbreviation "SDI" ;
-                             rdfs:label "Special Detailed Inspection" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Special_Detailed_Inspection> rdf:type owl:Class ;
+                                                                              rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                                              <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "SDI" ;
+                                                                              rdfs:label "Special Detailed Inspection" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Team_Leader
-:Team_Leader rdf:type owl:Class ;
-             rdfs:subClassOf :Maintenance_Manager ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty :leads ;
-                               owl:someValuesFrom :Heavy_Maintenance_Group
-                             ] ;
-             rdfs:label "Team Leader" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Team_Leader> rdf:type owl:Class ;
+                                                              rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Manager> ,
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <http://csat.cz/ontologies/maintenance-csat-onto/leads> ;
+                                                                                owl:someValuesFrom <http://csat.cz/ontologies/maintenance-csat-onto/Heavy_Maintenance_Group>
+                                                                              ] ;
+                                                              rdfs:label "Team Leader" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Temporary_Protection_Syst
-:Temporary_Protection_Syst rdf:type owl:Class ;
-                           rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-                           :has_abbreviation "TPS" ;
-                           rdfs:label "Temporary Protection Syst" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Temporary_Protection_Syst> rdf:type owl:Class ;
+                                                                            rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                                            <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "TPS" ;
+                                                                            rdfs:label "Temporary Protection Syst" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/Visual_Check
-:Visual_Check rdf:type owl:Class ;
-              rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-              :has_abbreviation "VCK" ;
-              rdfs:label "Visual Check" .
+<http://csat.cz/ontologies/maintenance-csat-onto/Visual_Check> rdf:type owl:Class ;
+                                                               rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                               <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "VCK" ;
+                                                               rdfs:label "Visual Check" .
 
 
 ###  http://csat.cz/ontologies/maintenance-csat-onto/AV/INT
@@ -452,8 +454,8 @@
 
 ###  http://csat.cz/ontologies/maintenance-schema/Avionics_Mechanic_Group
 <http://csat.cz/ontologies/maintenance-schema/Avionics_Mechanic_Group> rdf:type owl:Class ;
-                                                                       rdfs:subClassOf :Heavy_Maintenance_Group ;
-                                                                       :has_abbreviation "AVIO" ;
+                                                                       rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Heavy_Maintenance_Group> ;
+                                                                       <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "AVIO" ;
                                                                        rdfs:label "Avionics Mechanic Group" .
 
 
@@ -481,8 +483,8 @@
 
 ###  http://csat.cz/ontologies/maintenance-schema/Composite_Workshop__Support_Group
 <http://csat.cz/ontologies/maintenance-schema/Composite_Workshop__Support_Group> rdf:type owl:Class ;
-                                                                                 rdfs:subClassOf :Maintenance_Support_Group ;
-                                                                                 :has_abbreviation "Composite Workshop  Support Group" ;
+                                                                                 rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Support_Group> ;
+                                                                                 <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "Composite Workshop  Support Group" ;
                                                                                  rdfs:label "Composite Workshop  Support Group" .
 
 
@@ -494,8 +496,7 @@
 
 ###  http://csat.cz/ontologies/maintenance-schema/El._Power
 <http://csat.cz/ontologies/maintenance-schema/El._Power> rdf:type owl:Class ;
-                                                         rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Function> ,
-                                                                         <http://csat.cz/ontologies/maintenance-schema/Restriction> ,
+                                                         rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Restriction> ,
                                                                          [ rdf:type owl:Restriction ;
                                                                            owl:onProperty <http://csat.cz/ontologies/maintenance-schema/has_restriction_value> ;
                                                                            owl:someValuesFrom rdfs:Literal
@@ -507,15 +508,15 @@
 
 ###  http://csat.cz/ontologies/maintenance-schema/Engine_Mechanic_Group
 <http://csat.cz/ontologies/maintenance-schema/Engine_Mechanic_Group> rdf:type owl:Class ;
-                                                                     rdfs:subClassOf :Heavy_Maintenance_Group ;
-                                                                     :has_abbreviation "ING" ;
+                                                                     rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Heavy_Maintenance_Group> ;
+                                                                     <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "ING" ;
                                                                      rdfs:label "Engine Mechanic Group" .
 
 
 ###  http://csat.cz/ontologies/maintenance-schema/Exterior_Mechanic_Group
 <http://csat.cz/ontologies/maintenance-schema/Exterior_Mechanic_Group> rdf:type owl:Class ;
-                                                                       rdfs:subClassOf :Heavy_Maintenance_Group ;
-                                                                       :has_abbreviation "MECH-EXT" ;
+                                                                       rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Heavy_Maintenance_Group> ;
+                                                                       <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "MECH-EXT" ;
                                                                        rdfs:label "Exterior Mechanic Group" .
 
 
@@ -544,8 +545,7 @@
 
 ###  http://csat.cz/ontologies/maintenance-schema/Hyd._Power
 <http://csat.cz/ontologies/maintenance-schema/Hyd._Power> rdf:type owl:Class ;
-                                                          rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Function> ,
-                                                                          <http://csat.cz/ontologies/maintenance-schema/Restriction> ;
+                                                          rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Restriction> ;
                                                           rdfs:comment """- specifies the Hydraulic power system's state required for the Main step.
 		- possible values (states): ON, OFF, / (no restriction)""" ;
                                                           rdfs:label "Hyd. Power" .
@@ -559,8 +559,8 @@
 
 ###  http://csat.cz/ontologies/maintenance-schema/Interior_Mechanic_Group
 <http://csat.cz/ontologies/maintenance-schema/Interior_Mechanic_Group> rdf:type owl:Class ;
-                                                                       rdfs:subClassOf :Heavy_Maintenance_Group ;
-                                                                       :has_abbreviation "MECH-INT" ;
+                                                                       rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Heavy_Maintenance_Group> ;
+                                                                       <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "MECH-INT" ;
                                                                        rdfs:label "Interior Mechanic Group" .
 
 
@@ -578,15 +578,15 @@
 
 ###  http://csat.cz/ontologies/maintenance-schema/Joiners_Support_Group
 <http://csat.cz/ontologies/maintenance-schema/Joiners_Support_Group> rdf:type owl:Class ;
-                                                                     rdfs:subClassOf :Maintenance_Support_Group ;
-                                                                     :has_abbreviation "JOI" ;
+                                                                     rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Support_Group> ;
+                                                                     <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "JOI" ;
                                                                      rdfs:label "Joiners Support Group" .
 
 
 ###  http://csat.cz/ontologies/maintenance-schema/Landing_Gear_Mechanic_Group
 <http://csat.cz/ontologies/maintenance-schema/Landing_Gear_Mechanic_Group> rdf:type owl:Class ;
-                                                                           rdfs:subClassOf :Heavy_Maintenance_Group ;
-                                                                           :has_abbreviation "MECH-LDG" ;
+                                                                           rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Heavy_Maintenance_Group> ;
+                                                                           <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "MECH-LDG" ;
                                                                            rdfs:label "Landing Gear Mechanic Group" .
 
 
@@ -662,8 +662,8 @@
 
 ###  http://csat.cz/ontologies/maintenance-schema/Non-Destructive_Testing_Support_Group
 <http://csat.cz/ontologies/maintenance-schema/Non-Destructive_Testing_Support_Group> rdf:type owl:Class ;
-                                                                                     rdfs:subClassOf :Maintenance_Support_Group ;
-                                                                                     :has_abbreviation "NDT" ;
+                                                                                     rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Support_Group> ;
+                                                                                     <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "NDT" ;
                                                                                      rdfs:label "Non-Destructive Testing Support Group" .
 
 
@@ -687,8 +687,8 @@
 
 ###  http://csat.cz/ontologies/maintenance-schema/Paintshop_Support_Group
 <http://csat.cz/ontologies/maintenance-schema/Paintshop_Support_Group> rdf:type owl:Class ;
-                                                                       rdfs:subClassOf :Maintenance_Support_Group ;
-                                                                       :has_abbreviation "PAINT" ;
+                                                                       rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Support_Group> ;
+                                                                       <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "PAINT" ;
                                                                        rdfs:label "Paintshop Support Group" .
 
 
@@ -726,8 +726,8 @@ The restrictions are:
 
 ###  http://csat.cz/ontologies/maintenance-schema/Seat_Workshop__Support_Group
 <http://csat.cz/ontologies/maintenance-schema/Seat_Workshop__Support_Group> rdf:type owl:Class ;
-                                                                            rdfs:subClassOf :Maintenance_Support_Group ;
-                                                                            :has_abbreviation "SEAT" ;
+                                                                            rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Support_Group> ;
+                                                                            <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "SEAT" ;
                                                                             rdfs:label "Seat Workshop  Support Group" .
 
 
@@ -739,8 +739,8 @@ The restrictions are:
 
 ###  http://csat.cz/ontologies/maintenance-schema/Sheetmetal__Support_Group
 <http://csat.cz/ontologies/maintenance-schema/Sheetmetal__Support_Group> rdf:type owl:Class ;
-                                                                         rdfs:subClassOf :Maintenance_Support_Group ;
-                                                                         :has_abbreviation "SHM" ;
+                                                                         rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Support_Group> ;
+                                                                         <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "SHM" ;
                                                                          rdfs:label "Sheetmetal  Support Group" .
 
 
@@ -776,15 +776,15 @@ The restrictions are:
 
 ###  http://csat.cz/ontologies/maintenance-schema/Technical_Cleaning_Support_Group
 <http://csat.cz/ontologies/maintenance-schema/Technical_Cleaning_Support_Group> rdf:type owl:Class ;
-                                                                                rdfs:subClassOf :Maintenance_Support_Group ;
-                                                                                :has_abbreviation "WASH" ;
+                                                                                rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Support_Group> ;
+                                                                                <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "WASH" ;
                                                                                 rdfs:label "Technical Cleaning Support Group" .
 
 
 ###  http://csat.cz/ontologies/maintenance-schema/Upholistery__Support_Group
 <http://csat.cz/ontologies/maintenance-schema/Upholistery__Support_Group> rdf:type owl:Class ;
-                                                                          rdfs:subClassOf :Maintenance_Support_Group ;
-                                                                          :has_abbreviation "UPHO" ;
+                                                                          rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Support_Group> ;
+                                                                          <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "UPHO" ;
                                                                           rdfs:label "Upholistery Support Group" .
 
 
@@ -796,8 +796,8 @@ The restrictions are:
 
 ###  http://csat.cz/ontologies/maintenance-schema/Welding_Support_Group
 <http://csat.cz/ontologies/maintenance-schema/Welding_Support_Group> rdf:type owl:Class ;
-                                                                     rdfs:subClassOf :Maintenance_Support_Group ;
-                                                                     :has_abbreviation "WELL" ;
+                                                                     rdfs:subClassOf <http://csat.cz/ontologies/maintenance-csat-onto/Maintenance_Support_Group> ;
+                                                                     <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "WELL" ;
                                                                      rdfs:label "Welding Support Group" .
 
 
@@ -897,11 +897,11 @@ The restrictions are:
                                                     rdfs:comment "zone" .
 
 
-###  http://onto.fel.cvut.cz/ontologies/maintenance-csat-onto/Discard/one_Time_Used
-<http://onto.fel.cvut.cz/ontologies/maintenance-csat-onto/Discard/one_Time_Used> rdf:type owl:Class ;
-                                                                                 rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
-                                                                                 :has_abbreviation "DIS" ;
-                                                                                 rdfs:label "Discard/one Time Used" .
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/Discard/one_Time_Used
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Discard/one_Time_Used> rdf:type owl:Class ;
+                                                                            rdfs:subClassOf <http://csat.cz/ontologies/maintenance-schema/Task_Card> ;
+                                                                            <http://csat.cz/ontologies/maintenance-csat-onto/has_abbreviation> "DIS" ;
+                                                                            rdfs:label "Discard/one Time Used" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/ufo/complex-event
