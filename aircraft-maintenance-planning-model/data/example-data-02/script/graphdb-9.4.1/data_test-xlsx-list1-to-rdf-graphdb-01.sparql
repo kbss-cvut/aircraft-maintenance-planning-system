@@ -1,4 +1,4 @@
-# old version of Graph DB
+# new version of Graph DB
 BASE <http://example/base/>
 PREFIX : <http://example/base/> #<http://example.com/resource/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>

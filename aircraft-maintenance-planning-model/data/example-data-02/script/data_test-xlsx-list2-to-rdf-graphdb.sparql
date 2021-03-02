@@ -1,4 +1,4 @@
-# new version of Graph DB
+# old version of Graph DB
 PREFIX : <http://example.com/resource/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX mp: <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/>
