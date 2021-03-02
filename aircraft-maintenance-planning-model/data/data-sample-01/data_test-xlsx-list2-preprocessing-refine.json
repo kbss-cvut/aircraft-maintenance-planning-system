@@ -1,0 +1,106 @@
+[
+  {
+    "op": "core/column-addition",
+    "description": "Create column task_type at index 5 based on column CSAT WO/TC using expression grel:row.cells.type.value + \"-\" + value",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "task_type",
+    "columnInsertIndex": 5,
+    "baseColumnName": "CSAT WO/TC",
+    "expression": "grel:row.cells.type.value + \"-\" + value",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column workpackage at index 3 based on column WP using expression grel:escape(value,\"url\")",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "workpackage",
+    "columnInsertIndex": 3,
+    "baseColumnName": "WP",
+    "expression": "grel:escape(value,\"url\")",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column task_super_class at index 7 based on column type using expression grel:if(value==\"TC\", \"task_card\", if(value==\"S\", \"scheduled_work_order\", if(value==\"M\", \"maintenance_work_order\", null)))",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "task_super_class",
+    "columnInsertIndex": 7,
+    "baseColumnName": "type",
+    "expression": "grel:if(value==\"TC\", \"task_card\", if(value==\"S\", \"scheduled_work_order\", if(value==\"M\", \"maintenance_work_order\", null)))",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column aircraft at index 2 based on column WP using expression grel:value.replace(/^([^\\/]+)\\/.+/, \"$1\")",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "aircraft",
+    "columnInsertIndex": 2,
+    "baseColumnName": "WP",
+    "expression": "grel:value.replace(/^([^\\/]+)\\/.+/, \"$1\")",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column task_execution at index 4 based on column CSAT WO/TC using expression grel:replace(row.cells[\"WP\"].value, \"/\", \"_\") + \"-\" + value",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "task_execution",
+    "columnInsertIndex": 4,
+    "baseColumnName": "CSAT WO/TC",
+    "expression": "grel:replace(row.cells[\"WP\"].value, \"/\", \"_\") + \"-\" + value",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column referenced_task_execution at index 13 based on column TC reference using expression grel:replace(row.cells[\"WP\"].value, \"/\", \"_\") + \"-\" + value",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "referenced_task_execution",
+    "columnInsertIndex": 13,
+    "baseColumnName": "TC reference",
+    "expression": "grel:replace(row.cells[\"WP\"].value, \"/\", \"_\") + \"-\" + value",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column task_step_execution at index 18 based on column workstep using expression grel:row.cells[\"WP\"].value.replace(\"/\", \"_\") + \"-\" + row.cells[\"task_type\"].value + \"-\" + value",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "task_step_execution",
+    "columnInsertIndex": 18,
+    "baseColumnName": "workstep",
+    "expression": "grel:row.cells[\"WP\"].value.replace(\"/\", \"_\") + \"-\" + row.cells[\"task_type\"].value + \"-\" + value",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column task_step_execution_type at index 18 based on column workstep using expression grel:row.cells[\"task_type\"].value + \"-\" + value",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "task_step_execution_type",
+    "columnInsertIndex": 18,
+    "baseColumnName": "workstep",
+    "expression": "grel:row.cells[\"task_type\"].value + \"-\" + value",
+    "onError": "set-to-blank"
+  }
+]
