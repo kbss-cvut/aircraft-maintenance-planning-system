@@ -1,0 +1,23 @@
+column position	column name
+1	Start Date
+2	Start Time
+3	start date time
+4	End Date
+5	End Time
+6	end date time
+7	Duration Full
+8	Scope
+9	Shift Group
+10	Type
+11	WO/TC
+12	Closing date
+13	Description
+14	Workpackage
+15	task execution
+16	aircraft
+17	WP start
+18	WP end
+19	Real date of booking entry
+20	WP start d
+21	WP end d
+22	Real date of booking entryd

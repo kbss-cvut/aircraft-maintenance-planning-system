@@ -1,0 +1,96 @@
+# old version of Graph DB
+PREFIX : <http://example.com/resource/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX mp: <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/>
+PREFIX ds: <http://onto.fel.cvut.cz/dop2020-csat/example-schema/>
+PREFIX d: <http://onto.fel.cvut.cz/dop2020-csat/example-instance-data/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+PREFIX ata: <http://onto.fel.cvut.cz/voc/ata-100/> 
+
+# Example RDF transformation using the custom IRIs and type
+CONSTRUCT {
+    # workpackage description
+    ?workpackageIRI a mp:workpackage, owl:NamedIndividual;
+                    mp:has_id ?WP.
+                    
+
+    # task execution description
+    ?task_executionIRI a mp:complex_execution, ?task_typeIRI, ?task_super_classIRI, owl:NamedIndividual;
+                       mp:issue_time ?issue_date_D;
+                       mp:end_time ?closing_date_D;
+                       mp:has_work_order_step ?task_step_executionIRI;
+					   mp:part_of_workpackage ?workpackageIRI.
+    
+    ?task_executionIRI mp:references_task ?referenced_task_executionIRI .
+
+    # task execution type
+    ?task_typeIRI a owl:Class;
+                  rdfs:subClassOf ?task_super_classIRI;
+                  mp:references_ata_code ?ataIRI.
+
+    # task step execution
+    ?task_step_executionIRI a ?task_step_execution_typeIRI, owl:NamedIndividual;
+                            mp:step_index ?workstep;
+                            mp:has_workorder_description ?WO_text.
+    
+	?task_step_executionIRI mp:has_workorder_action ?WO_action .
+	
+    ?task_step_execution_typeIRI a owl:Class;
+            rdfs:subClassOf mp:work_order_step.
+
+} WHERE {
+    SERVICE <ontorefine:2385299743863> {
+        # Triple patterns for accessing each row and the columns in contains
+        # Note that no triples will be generated for NULL values in the table
+        # You should inspect your data in Refine mode and add OPTIONAL accordingly
+        ?row a :Row ;
+             :A_C_age ?A_C_age ;
+             :WP ?WP ;
+             :aircraft ?aircraft ;
+             #:CSAT_WO_TC ?CSAT_WO_TC ;
+             :task_execution ?task_execution ;
+             :workpackage ?workpackage ;
+             :type ?type ;
+             :state ?state ;
+             :task_type ?task_type ;
+             :task_super_class ?task_super_class ;
+             :issue_date ?issue_date ;
+             :closing_date ?closing_date ;
+             :workstep ?workstep ;
+             :task_step_execution_type ?task_step_execution_type ;
+             :task_step_execution ?task_step_execution ;
+             :WO_text ?WO_text .
+             
+        
+#        OPTIONAL{?row :Customer_ref ?Customer_ref .}
+        OPTIONAL{
+            ?row :ATA ?ATA .
+            BIND(IRI(concat(str(ata:), "ata-", ?ATA)) as ?ataIRI)
+        }
+        OPTIONAL{
+            ?row :TC_reference ?TC_reference ;
+                 :referenced_task_execution ?referenced_task_execution ;
+            BIND(iri(concat(str(d:), ?referenced_task_execution)) as ?referenced_task_executionIRI) # instance
+        }
+        OPTIONAL{
+            ?row :WO_action ?WO_action .
+        }
+        
+        BIND(iri(concat(str(d:), ?workpackage)) as ?workpackageIRI) # instance
+        BIND(iri(concat(str(d:), ?task_execution)) as ?task_executionIRI) # instance
+        BIND(IRI(concat(str(d:), ?aircraft)) as ?aircraftIRI) # instance
+        BIND(iri(concat(str(d:), ?task_step_execution)) as ?task_step_executionIRI) # instance
+        BIND(IRI(concat(str(ds:), ?task_type)) as ?task_typeIRI)
+        BIND(IRI(concat(str(mp:), ?task_super_class)) as ?task_super_classIRI)
+        BIND(IRI(concat(str(ds:), ?task_step_execution_type)) as ?task_step_execution_typeIRI)
+        
+
+        BIND(spif:parseDate(?issue_date ,"dd.MM.yyyy") as ?issue_date_D)
+        BIND(spif:parseDate(?closing_date ,"dd.MM.yyyy") as ?closing_date_D)
+    }
+} LIMIT 100
+

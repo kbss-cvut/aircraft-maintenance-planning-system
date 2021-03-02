@@ -13,9 +13,21 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <graphdb.version>9.3.2</graphdb.version>
     </properties>
 
     <dependencies>
+        <!-- excel -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.15</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.15</version>
+        </dependency>
 <!--        XQuery-->
 <!--        <dependency>-->
 <!--            <groupId>org.basex</groupId>-->
@@ -24,9 +36,64 @@
 <!--        </dependency>-->
 
 <!--        jaxb + moxi-->
+<!--        <dependency>-->
+<!--            <groupId>com.ontotext.graphdb</groupId>-->
+<!--            <artifactId>graphdb-framework-openrefine</artifactId>-->
+<!--        </dependency>-->
+        <!-- Commandline parameters processing -->
+        <dependency>
+            <groupId>args4j</groupId>
+            <artifactId>args4j</artifactId>
+            <version>2.33</version>
+            <type>jar</type>
+        </dependency>
+
+        <!-- validation -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.2.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator-annotation-processor</artifactId>
+            <version>6.0.2.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>2.2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.16</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ontotext.graphdb</groupId>
+            <artifactId>graphdb-enterprise-runtime</artifactId>
+            <version>${graphdb.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.jgrapht</groupId>
             <artifactId>jgrapht-core</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-io</artifactId>
             <version>1.4.0</version>
         </dependency>
         <dependency>
@@ -125,6 +192,39 @@
 <!--            <scope>test</scope>-->
 <!--        </dependency>-->
 
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.xmlgraphics/batik-all &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.xmlgraphics</groupId>-->
+<!--            <artifactId>batik-all</artifactId>-->
+<!--            <version>1.13</version>-->
+<!--            <type>pom</type>-->
+<!--        </dependency>-->
+
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.cmd.SequenceAnalysis</mainClass>
+                        </manifest>
+
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>ontotext-public</id>
+            <url>http://maven.ontotext.com/repository/owlim-releases</url>
+        </repository>
+    </repositories>
 </project>

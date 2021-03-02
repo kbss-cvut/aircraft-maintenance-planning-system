@@ -7,21 +7,34 @@ PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
 PREFIX spif: <http://spinrdf.org/spif#>
 
 
-SELECT ?wp ?type ?scope ?taskcat (spif:dateFormat(?st,"yyyy-MM-dd") as ?date) (str(?st) as ?start) (str(?et) as ?end) ( str(ofn:asMillis(?et - ?st)) as ?dur)
+#SELECT ?wp ?acmodel ?type (sample(?ttLabel) as ?typeLabel) ?scope ?taskcat (spif:dateFormat(?st,"yyyy-MM-dd") as ?date) (str(?st) as ?start) (str(?et) as ?end) ( str(ofn:asMillis(?et - ?st)) as ?dur)
+SELECT ?wp ?acmodel ?type (?ttLabel as ?typeLabel) ?scope ?taskcat (spif:dateFormat(?st,"yyyy-MM-dd") as ?date) (str(?st) as ?start) (str(?et) as ?end) (str(ofn:asMillis(?et - ?st)) as ?dur)
 WHERE
 {
     ?tt mp:part_of_workpackage ?wpuri.
-    ?wpuri mp:has_id ?wp.
-    ?tt a ?tType, mp:task_card;;
-    mp:has_task_execution_part ?t.
+    ?wpuri mp:has_id ?wp;
+        mp:repair_of ?ac.
+    ?ac mp:has_model ?acmodel.
+
+    ?tt a ?tType, mp:task_card;
+        mp:has_task_execution_part ?t.
+    OPTIONAL{
+        ?tType rdfs:label ?ttLabel.
+    }
     ?w mp:works_on ?t;
-    mp:member_of_group ?scopeGroup.
+        mp:member_of_group ?scopeGroup.
 #    ?scopeGroup rdfs:label ?scope.
     ?t mp:start_time ?st;
-    mp:end_time ?et.
+        mp:end_time ?et.
     ?tType rdfs:subClassOf ?cls.
 
+    # select specific aircraft
+#    FITER(?acmodel in ("738" "73G" "73H" "73J" "73W" "B735"))
+#    FILTER(!contains(?wp, "SICHR") ) # this workpackages do not contain TCs
+#    FILTER(!contains(?wp, "/L-") )
     BIND(replace(str(?tType), "^.*/([^/]+)$", "$1") as ?type)
     BIND(replace(str(?scopeGroup), "^.*/([^/]+)$", "$1") as ?scope)
     BIND(replace(str(?cls), "^.*/([^/]+)$", "$1") as ?taskcat)
-}ORDER BY ?st
+}
+#GROUP BY ?wp ?acmodel ?type ?scope ?taskcat ?st ?et - group by takes takes too long to calculate
+#ORDER BY ?st

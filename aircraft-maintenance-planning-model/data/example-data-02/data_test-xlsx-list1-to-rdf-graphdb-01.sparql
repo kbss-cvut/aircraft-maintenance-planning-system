@@ -1,0 +1,104 @@
+# new version of Graph DB
+BASE <http://example/base/>
+PREFIX : <http://example/base/> #<http://example.com/resource/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX mp: <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/>
+PREFIX ds: <http://onto.fel.cvut.cz/dop2020-csat/example-schema/>
+PREFIX d: <http://onto.fel.cvut.cz/dop2020-csat/example-instance-data/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+
+
+CONSTRUCT {
+  # workpackage description
+  ?workpackageIRI a mp:workpackage, owl:NamedIndividual;
+    mp:has_id ?Workpackage;
+    mp:start_time ?WP_start_D;
+    mp:end_time ?WP_end_D.
+    
+
+  # task execution description
+  ?task_executionIRI a mp:complex_execution, ?task_typeIRI, ?task_super_classIRI, owl:NamedIndividual;
+    mp:has_task_execution_part ?work_on_taskIRI;
+	rdfs:label ?Description;
+	mp:part_of_workpackage ?workpackageIRI.
+    	
+  # work on task description
+  ?work_on_taskIRI a mp:atomic_execution, owl:NamedIndividual;
+    mp:start_time ?startDT;
+    mp:end_time ?endDT.
+  
+  # worker description
+  [] a mp:worker;
+    mp:works_on ?work_on_taskIRI;
+    mp:member_of_group ?subgroupIRI.
+
+  # group description
+  ?groupIRI a mp:maintenance_group, owl:NamedIndividual;
+    rdfs:label ?Shift_Group;
+    mp:has_group_part ?subgroupIRI;.
+
+  ?subgroupIRI a mp:maintenance_group, owl:Individual;
+    rdfs:label ?scope.
+
+  # task type description
+  ?task_typeIRI a owl:Class;
+    rdfs:subClassOf ?task_super_classIRI;
+	rdfs:label ?Description.
+
+  # aircraft description
+  ?workpackageIRI mp:repair_of ?aircraftIRI.
+  ?aircraftIRI a mp:aircraft, owl:NamedIndividual;
+	mp:has_model ?acmodel.
+} WHERE {
+        # Columns as variables:
+        #   ?c_bookingno_i, ?c_Employee_No, ?c_start, ?c_work_on_task, ?c_subgroup,
+        #   ?c_user_sign, ?c_group, ?c_Start_Date, ?c_task_super_class, ?c_end, ?c_task_type,
+        #   ?c_Start_Time, ?c_End_Date, ?c_End_Time, ?c_workpackage, ?c_Duration_Full,
+        #   ?c_Scope, ?c_Shift_Group, ?c_Type, ?c_WO_TC, ?c_aircraft, ?c_TC_reference,
+        #   ?c_task_execution, ?c_Closing_date, ?c_Description, ?c_Workpackage, ?c_A_C_model,
+        #   ?c_A_C_age, ?c_WP_start, ?c_WP_end, ?c_Real_date_of_booking_entry
+        # Metadata as variables:
+        #   ?row_index, ?record_id
+    SERVICE <rdf-mapper:ontorefine:1625172787060> {
+		# make columns accessible for the construct clause and other bind operations in the WHERE clause
+        BIND(?c_start as ?start)
+        BIND(?c_task_execution as ?task_execution)
+        BIND(?c_work_on_task as ?work_on_task)
+        BIND(?c_end as ?end)
+        BIND(?c_Scope as ?Scope)
+        BIND(?c_subgroup as ?subgroup)
+        BIND(?c_Shift_Group as ?Shift_Group)
+        BIND(?c_group as ?group)
+        BIND(?c_Type as ?Type)
+        BIND(?c_task_super_class as ?task_super_class)
+        BIND(?c_WO_TC as ?WO_TC)
+        BIND(?c_task_type as ?task_type)
+        BIND(?c_Closing_date as ?Closing_date)
+        BIND(?c_Description as ?Description)
+        BIND(?c_Workpackage as ?Workpackage)
+        BIND(?c_workpackage as ?workpackage)
+        BIND(?c_WP_start as ?WP_start)
+        BIND(?c_WP_end as ?WP_end)
+        BIND(?c_Real_date_of_booking_entry as ?Real_date_of_booking_entry)
+        BIND(?c_A_C_model as ?acmodel)
+        #BIND(?c_aircraft as ?aircraft)
+	
+	  BIND(iri(concat(str(d:), ?workpackage)) as ?workpackageIRI) # instance
+	  BIND(iri(concat(str(d:), ?work_on_task)) as ?work_on_taskIRI) # instance
+	  BIND(iri(concat(str(d:), ?task_execution)) as ?task_executionIRI) # instance
+	  BIND(iri(concat(str(d:), ?group)) as ?groupIRI) # instance
+	  BIND(iri(concat(str(d:), ?subgroup)) as ?subgroupIRI) # instance
+	  BIND(IRI(concat(str(d:), encode_for_uri(?acmodel), "-", ?workpackage)) as ?aircraftIRI) # instance
+      BIND(IRI(concat(str(ds:), ?task_type)) as ?task_typeIRI)
+      BIND(IRI(concat(str(mp:), ?task_super_class)) as ?task_super_classIRI)
+      
+	  BIND(xsd:dateTime(?start) as ?startDT)
+	  BIND(xsd:dateTime(?end) as ?endDT)
+	  BIND(spif:parseDate(?WP_start,"dd.MM.yyyy") as ?WP_start_D)
+	  BIND(spif:parseDate(?WP_end,"dd.MM.yyyy") as ?WP_end_D)
+	}
+}
