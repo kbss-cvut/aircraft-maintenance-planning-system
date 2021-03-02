@@ -82,7 +82,8 @@ public class SparqlDataReader {
 //            }
 //        }
         List<Result> results = convert(rs, SparqlDataReader::convertToTimeLog);
-        Result.normalizeTaskTypeLabels(results);
+//        Result.normalizeTaskTypeLabels(results);
+        Result.normalizeTaskTypes(results);
         return results.stream().collect(Collectors.groupingBy(Result::form0))
                 .entrySet().stream()
                 .map(e -> e.getValue().get(0))

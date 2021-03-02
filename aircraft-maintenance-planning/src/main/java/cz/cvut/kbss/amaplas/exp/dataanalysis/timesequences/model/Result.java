@@ -94,6 +94,20 @@ public class Result{
         return String.join(",", wp, scope, taskType.type, SparqlDataReader.df.format(start));
     }
 
+    public static void normalizeScopes(List<Result> results){
+        results.stream().collect(Collectors.groupingBy(r -> r.taskType)).entrySet().stream()
+                .forEach(e ->
+                        e.getKey().scope = e.getValue().stream().collect(Collectors.groupingBy(r -> r.scope)).entrySet().stream()
+                                .max(Comparator.comparing(ee -> ee.getValue().size()))
+                                .map(ee -> ee.getKey()).orElseGet(null)
+                );
+    }
+
+    public static void normalizeTaskTypes(List<Result> results){
+        normalizeTaskTypeLabels(results);
+        normalizeScopes(results);
+    }
+
     public static void normalizeTaskTypeLabels(List<Result> results){
         Map<String, TaskType> taskTypeMap = TaskType.normalizeTaskTypes(
                 results.stream()

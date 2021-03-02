@@ -7,6 +7,7 @@ public class TaskType extends EventType {
     public String id;
     public String type;
     public String label;
+    public String scope;
     public String taskcat;
     public String viewLabel;
 

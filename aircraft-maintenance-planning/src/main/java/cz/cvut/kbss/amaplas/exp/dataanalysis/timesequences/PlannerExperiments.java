@@ -53,11 +53,11 @@ public class PlannerExperiments extends ExtractData{
         stats = calculateTaskTypeScopeStatsPerWP(results);
         writeCSV(stats, outputDir + "wp-taskType-scope-stats.csv");
 
-        Map<TaskType, String> taskScopeMap = findBestScopeForTaskTypes(results);
-        Map<String, Set<TaskType>> scopeTaskMap = new HashMap<>();
-                taskScopeMap.entrySet().stream()
-                .collect(Collectors.groupingBy(e -> e.getValue(), Collectors.toSet())).entrySet()
-                .forEach(e -> scopeTaskMap.put(e.getKey(), e.getValue().stream().map(ee -> ee.getKey()).collect(Collectors.toSet())));
+//        Map<TaskType, String> taskScopeMap = findBestScopeForTaskTypes(results);
+//        Map<String, Set<TaskType>> scopeTaskMap = results.stream().map(r -> r.taskType).collect(Collectors.groupingBy(t -> t.scope, Collectors.toSet()));
+//        taskScopeMap.entrySet().stream()
+//                .collect(Collectors.groupingBy(e -> e.getValue(), Collectors.toSet())).entrySet()
+//                .forEach(e -> scopeTaskMap.put(e.getKey(), e.getValue().stream().map(ee -> ee.getKey()).collect(Collectors.toSet())));
         writeMap(taskScopeMap, outputDir + "taskScopeMap.csv", "task type", "scope");
 
         // order
@@ -92,33 +92,38 @@ public class PlannerExperiments extends ExtractData{
 
         String wpFN = testPlan.getKey().replaceAll("[\\/+ ]", "_");
 
-        // plan just tasks
-        Map<String, List<Result>> taskStartPlans = historyPlans(plans, orderBy, r -> r.taskType);
-        planExperiment(taskStartPlans, testPlan, testWP, taskTypes, outputDir, "");
+//        // plan just tasks
+//        Map<String, List<Result>> taskStartPlans = historyPlans(plans, orderBy, r -> r.taskType);
+//        planExperiment(taskStartPlans, testPlan, testWP, taskTypes, outputDir, "");
 
         // do the same for each scope in history
-        taskStartPlans = historyPlans(plans, orderBy, r -> r.taskType.type + r.scope);
-        planExperiment(taskStartPlans, testPlan, testWP, taskTypes, outputDir, "");
+        Function<Result, Object> taskTypeScopeKey = r -> r.scope.equals(r.taskType.scope) ? r.taskType.type + r.scope : null;
+        Map<String, List<Result>> filteredPlans = new HashMap<>();
+        plans.entrySet().forEach(e ->
+            filteredPlans.put(e.getKey(), e.getValue().stream().filter(r -> taskTypeScopeKey.apply(r) != null).collect(Collectors.toList()))
+        );
+        Map<String, List<Result>> taskStartPlans = historyPlans(filteredPlans, orderBy, taskTypeScopeKey);
+        planExperiment(taskStartPlans, testPlan, testWP, taskTypes, outputDir, "scopes");
 
 
         // plan separate scopes separately
         Set<String> nonPlannedScopes = new HashSet<>();
-        for(String scope : scopes){
-            Map<String, List<Result>> taskScopeStartPlans = new HashMap<>();
-            Set<TaskType> typeSetPerScope = new HashSet<>(taskTypes);
-            typeSetPerScope.retainAll(scopeTaskMap.get(scope));
-            if(typeSetPerScope == null)
-                continue;
-            taskStartPlans.entrySet().stream().map(e -> Pair.of(
-                    e.getKey(),
-                    e.getValue().stream().filter(r -> scope.equals(r.scope) && typeSetPerScope.contains(r.taskType)).collect(Collectors.toList())
-            )).filter(p -> !p.getValue().isEmpty()).forEach(p -> taskScopeStartPlans.put(p.getKey(), p.getValue()));
-
-//            boolean ret = planExperiment(taskScopeStartPlans, testPlan, testWP, taskTypes, outputDir, scope + "-");
-            boolean ret = planExperiment(taskScopeStartPlans, testPlan, testWP, typeSetPerScope, outputDir, scope + "-");
-            if(!ret)
-                nonPlannedScopes.add(scope);
-        }
+//        for(String scope : scopes){
+//            Map<String, List<Result>> taskScopeStartPlans = new HashMap<>();
+//            Set<TaskType> typeSetPerScope = new HashSet<>(taskTypes);
+//            typeSetPerScope.retainAll(scopeTaskMap.get(scope));
+//            if(typeSetPerScope == null)
+//                continue;
+//            taskStartPlans.entrySet().stream().map(e -> Pair.of(
+//                    e.getKey(),
+//                    e.getValue().stream().filter(r -> scope.equals(r.scope) && typeSetPerScope.contains(r.taskType)).collect(Collectors.toList())
+//            )).filter(p -> !p.getValue().isEmpty()).forEach(p -> taskScopeStartPlans.put(p.getKey(), p.getValue()));
+//
+////            boolean ret = planExperiment(taskScopeStartPlans, testPlan, testWP, taskTypes, outputDir, scope + "-");
+//            boolean ret = planExperiment(taskScopeStartPlans, testPlan, testWP, typeSetPerScope, outputDir, scope + "-");
+//            if(!ret)
+//                nonPlannedScopes.add(scope);
+//        }
 
         planReports.println(String.format("By scope planning has planned %d from total %d",
                 plannedByScope.values().stream().mapToInt(Set::size).sum(),
@@ -448,14 +453,7 @@ public class PlannerExperiments extends ExtractData{
 
     public static Map<TaskType, String> findBestScopeForTaskTypes(List<Result> results){
         Map<TaskType, String> taskScopeMap = new HashMap<>();
-        results.stream().collect(Collectors.groupingBy(r -> r.taskType)).entrySet().stream()
-                .forEach(e -> taskScopeMap.put(
-                        e.getKey(),
-                        e.getValue().stream().collect(Collectors.groupingBy(r -> r.scope)).entrySet().stream()
-                                .max(Comparator.comparing(ee -> ee.getValue().size()))
-                                .map(ee -> ee.getKey()).orElseGet(null)
-                        )
-                );
+        results.stream().map(r -> r.taskType).forEach(t -> taskScopeMap.put(t, t.scope));
         return taskScopeMap;
     }
 

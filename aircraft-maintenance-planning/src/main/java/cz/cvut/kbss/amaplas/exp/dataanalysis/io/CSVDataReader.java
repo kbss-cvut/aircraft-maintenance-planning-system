@@ -41,7 +41,8 @@ public class CSVDataReader {
                     }
                 }
             }
-            Result.normalizeTaskTypeLabels(ret);
+//            Result.normalizeTaskTypeLabels(ret);
+            Result.normalizeTaskTypes(ret);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

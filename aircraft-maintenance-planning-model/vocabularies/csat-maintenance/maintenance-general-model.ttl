@@ -1,0 +1,243 @@
+@prefix : <http://csat.cz/ontologies/maintenance-schema/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix annot: <http://onto.fel.cvut.cz/ontologies/ufo/annot/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@base <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/> rdf:type owl:Ontology ;
+                                                          owl:imports <http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.1> ,
+                                                                      <http://onto.fel.cvut.cz/ontologies/ufo/1.0.2> .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/affect
+:affect rdf:type owl:ObjectProperty ;
+        rdfs:label "affect" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/describes
+:describes rdf:type owl:ObjectProperty ;
+           rdfs:domain :Document ;
+           rdfs:range owl:Thing ;
+           rdfs:label "describes" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/has_subject
+:has_subject rdf:type owl:ObjectProperty ;
+             rdfs:label "has subject" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/requires
+:requires rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/violates
+:violates rdf:type owl:ObjectProperty ;
+          rdfs:domain :Nonconfirmity ;
+          rdfs:range :Requirement .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/task_code
+:task_code rdf:type owl:DatatypeProperty ;
+           rdfs:label "task code" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/A/age
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/A/age> rdf:type owl:DatatypeProperty ;
+                                                              rdfs:label "age" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Aircraft
+:Aircraft rdf:type owl:Class ;
+          rdfs:subClassOf :System ;
+          rdfs:label "Aircraft" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Component
+:Component rdf:type owl:Class ;
+           rdfs:subClassOf :area ;
+           rdfs:label "Component" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Damage
+:Damage rdf:type owl:Class ;
+        rdfs:subClassOf :Failure_Event ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty ufo:brings-about ;
+                          owl:someValuesFrom :Damage_State
+                        ] ;
+        rdfs:label "Damage" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Damage_State
+:Damage_State rdf:type owl:Class ;
+              rdfs:subClassOf ufo:situation ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :affect ;
+                                owl:someValuesFrom :Function
+                              ] ;
+              rdfs:label "Damage State" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Document
+:Document rdf:type owl:Class ;
+          rdfs:subClassOf ufo:object ;
+          rdfs:label "Document" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Failure_Event
+:Failure_Event rdf:type owl:Class ;
+               rdfs:subClassOf ufo:atomic-event ;
+               rdfs:label "Failure Event" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Function
+:Function rdf:type owl:Class ;
+          rdfs:subClassOf ufo:disposition ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty ufo:performs ;
+                            owl:someValuesFrom :work_session
+                          ] ;
+          rdfs:label "Function" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_Item
+:Maintenance_Item rdf:type owl:Class ;
+                  rdfs:subClassOf :Component ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty ufo:is-participation-of ;
+                                    owl:someValuesFrom :Process_of_Degradation
+                                  ] ;
+                  rdfs:label "Maintenance Item" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_Plan
+:Maintenance_Plan rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_strategy
+:Maintenance_strategy rdf:type owl:Class ;
+                      rdfs:subClassOf :Maintenance_Plan ;
+                      rdfs:label "Maintenance strategy" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_task
+:Maintenance_task rdf:type owl:Class ;
+                  rdfs:subClassOf ufo:complex-event ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty ufo:is-part-of ;
+                                    owl:someValuesFrom :Workpackage
+                                  ] ;
+                  rdfs:label "Maintenance task" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Mechanic
+:Mechanic rdf:type owl:Class ;
+          rdfs:subClassOf ufo:person ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty ufo:performs ;
+                            owl:someValuesFrom :Observation
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty ufo:performs ;
+                            owl:someValuesFrom :work_session
+                          ] ;
+          rdfs:label "mechanic" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Nonconfirmity
+:Nonconfirmity rdf:type owl:Class ;
+               rdfs:subClassOf ufo:disposition ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty ufo:is-manifested-by ;
+                                 owl:someValuesFrom :Failure_Event
+                               ] ;
+               rdfs:label "Nonconfirmity" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Observation
+:Observation rdf:type owl:Class ;
+             rdfs:subClassOf ufo:complex-event .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Process_of_Degradation
+:Process_of_Degradation rdf:type owl:Class ;
+                        rdfs:subClassOf ufo:complex-event ;
+                        rdfs:label "Process of Degradation" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Requirement
+:Requirement rdf:type owl:Class ;
+             rdfs:subClassOf ufo:trope ;
+             rdfs:label "Requirement" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/State_of_Degradation
+:State_of_Degradation rdf:type owl:Class ;
+                      rdfs:subClassOf ufo:situation ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty ufo:triggers ;
+                                        owl:someValuesFrom :Failure_Event
+                                      ] ;
+                      rdfs:label "State of Degradation" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/System
+:System rdf:type owl:Class ;
+        rdfs:subClassOf ufo:physical-object ;
+        rdfs:label "System" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Workpackage
+:Workpackage rdf:type owl:Class ;
+             rdfs:subClassOf ufo:complex-event ;
+             rdfs:label "Workpackage" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Workpackage_Information_Content
+:Workpackage_Information_Content rdf:type owl:Class ;
+                                 rdfs:subClassOf :Document ;
+                                 rdfs:label "Workpackage Information Content" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/area
+:area rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/work_session
+:work_session rdf:type owl:Class ;
+              rdfs:subClassOf ufo:complex-event ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty ufo:is-part-of ;
+                                owl:someValuesFrom :Maintenance_task
+                              ] ;
+              rdfs:label "work session" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/ufo/agent
+ufo:agent rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty :requires ;
+                            owl:someValuesFrom :Maintenance_task
+                          ] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

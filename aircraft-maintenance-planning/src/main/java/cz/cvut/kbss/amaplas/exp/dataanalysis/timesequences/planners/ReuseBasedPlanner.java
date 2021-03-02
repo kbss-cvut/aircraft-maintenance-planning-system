@@ -26,6 +26,86 @@ public class ReuseBasedPlanner {
     }
 
     public List<SequencePattern> plan(Map<String, List<Result>> history, Set<TaskType> taskTypes,
+                                                  UnacceptableOrder isUnacceptableOrder,
+                                                  SimilarityMeasure similarityMeasure){
+        // order history wps according to similarity with taskTypes
+        List<Pair<String, Set<TaskType>>> similarPlans = history.entrySet().stream().map(e -> Pair.of(
+                e.getKey(),
+                e.getValue().stream().map(r -> r.taskType).collect(Collectors.toSet()))
+        ).sorted(Comparator.comparing(
+                (Pair<String, Set<TaskType>> p) -> similarityMeasure.similarity(p.getValue(), taskTypes)
+                ).reversed()// biggest number at the beginning
+        ).collect(Collectors.toList());
+
+        int k = 0;
+        Set<TaskType> remainder = new HashSet<>(taskTypes);
+        Set<TaskType> plannedByThisWP = new HashSet<>();
+        Set<TaskType> plannedByOtherWP = new HashSet<>();
+        Result t1 = null;
+        Result t2 = null;
+
+        List<SequencePattern> plan = new ArrayList<>();
+        Set<TaskType> tasks = new HashSet<>();
+
+        while(!remainder.isEmpty() && k < similarPlans.size()){ // revise condition
+
+            String key = similarPlans.get(k).getKey();
+            Set<TaskType> sim = similarPlans.get(k).getValue(); // Error - tasks type set of the similar plan in history, may contain task types which are not part of the set of tasks to be planned
+
+//            Set<TaskType> sim = new HashSet<>(similarPlans.get(k).getValue());
+//            sim.retainAll(remainder); // work only on non
+            t1 = null;// if null the alg will calculate try to connect the remaining tasks to all of the tasks, if t1 is not reset to null the alg will try to order from the end of the last planned task
+            List<Result> p = history.get(key);
+            for(int i = 0; i < p.size() - 1; i ++ ){
+                if(!taskTypes.contains(p.get(i).taskType))
+                    continue;
+
+                if(t1 == null) {
+                    t1 = p.get(i);
+                    continue;
+                }
+
+
+
+                t2 = p.get(i);
+//                if(t1.taskType.equals(t2.taskType) && t1.scope.equals(t2.scope)) // hack - this condition should be given as input parameter
+                if() // the second element of the plan should be from the reminder, i.e., do not plan edges that are already planned using previous WPs
+                if(t1.taskType.equals(t2.taskType)) // hack - this condition should be given as input parameter
+                    continue;
+                List<TaskType> pat = Arrays.asList(t1.taskType, t2.taskType);
+                List<Result> instances = Arrays.asList(t1, t2);
+
+                boolean planned = isUnacceptableOrder.isOrderAcceptable(instances, plannedByOtherWP, plan);
+                if(planned)
+                    continue;
+
+                // add ordered pair to plan
+                SequencePattern seqpat = new SequencePattern();
+                seqpat.pattern = pat;
+                seqpat.instances.add(instances);
+                if(t1.start.getTime() == t2.start.getTime()){
+                    seqpat.patternType = PatternType.EQUALITY;
+                }
+                plan.add(seqpat);
+
+                // finish iteration
+                plannedByThisWP.add(t1.taskType);
+                plannedByThisWP.add(t2.taskType);
+                remainder.remove(t1.taskType);
+                remainder.remove(t2.taskType);
+                t1 = t2;
+            }
+
+            k ++;
+        }
+
+        // combine tasks which start at the same time
+
+        SequencePattern.calculateSupportClasses(plan);
+        return plan;
+    }
+
+    public List<SequencePattern> plan_algorithm_version_001(Map<String, List<Result>> history, Set<TaskType> taskTypes,
                                       UnacceptableOrder isUnacceptableOrder,
                                       SimilarityMeasure similarityMeasure){
         // order history wps according to similarity with taskTypes
