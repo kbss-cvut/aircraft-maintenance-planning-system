@@ -1,4 +1,8 @@
-author: Bogdan Kostov
+# CSAT Lexical glossary
+
+The glossary contains components and failures extracted from general lexical vocabulary created in CSAT before this project. 
+
+## Transformation Instructions
 
 To create a termit vocabulary from csv vocabulary:
 	1. preparation - create a folder and copy the files to-termit-skos-vocabulary.sparql and build.bat.
