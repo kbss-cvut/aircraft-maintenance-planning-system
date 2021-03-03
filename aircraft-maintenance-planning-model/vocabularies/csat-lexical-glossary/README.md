@@ -1,6 +1,6 @@
-# CSAT Lexical glossary
+# CSAT Lexical Glossary
 
-The glossary contains components and failures extracted from general lexical vocabulary created in CSAT before this project. 
+The glossary contains components and failures extracted from general lexical vocabulary created in CSAT before this project. Components and failures were selected from the generic lecical vocabulary manually by domain experts.
 
 ## Transformation Instructions
 
