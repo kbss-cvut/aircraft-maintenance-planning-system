@@ -1,9 +1,9 @@
 # old version of Graph DB
 PREFIX : <http://example.com/resource/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX mp: <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/>
-PREFIX ds: <http://onto.fel.cvut.cz/dop2020-csat/example-schema/>
-PREFIX d: <http://onto.fel.cvut.cz/dop2020-csat/example-instance-data/>
+PREFIX mp:  <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> 
+PREFIX ds: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX d: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
