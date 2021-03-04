@@ -20,19 +20,22 @@ CONSTRUCT {
     
 
   # task execution description
-  ?task_executionIRI a mp:complex_execution, ?task_typeIRI, ?task_super_classIRI, owl:NamedIndividual;
+  ?task_executionIRI a mp:maintenance_task, mp:complex_execution, ?task_typeIRI, ?task_super_classIRI, owl:NamedIndividual;
     mp:has_task_execution_part ?work_on_taskIRI;
 	rdfs:label ?Description;
-	mp:part_of_workpackage ?workpackageIRI.
+	mp:part_of_workpackage ?workpackageIRI;
+    ufo:is_part_of ?workpackageIRI.
     	
   # work on task description
-  ?work_on_taskIRI a mp:atomic_execution, owl:NamedIndividual;
+  ?work_on_taskIRI a mp:work_session, mp:atomic_execution, owl:NamedIndividual;
     mp:start_time ?startDT;
-    mp:end_time ?endDT.
+    mp:end_time ?endDT;
+    ufo:is_part_of ?task_executionIRI.
   
   # worker description
   [] a mp:worker;
-    mp:works_on ?work_on_taskIRI;
+#    mp:works_on ?work_on_taskIRI;
+    ufo:performs ?work_on_taskIRI;
     mp:member_of_group ?subgroupIRI.
 
   # group description
@@ -51,6 +54,7 @@ CONSTRUCT {
   # aircraft description
   ?workpackageIRI mp:repair_of ?aircraftIRI.
   ?aircraftIRI a mp:aircraft, owl:NamedIndividual;
+	mp:age ?acage;
 	mp:has_model ?acmodel.
 } WHERE {
     SERVICE <ontorefine:2509139576799> {
@@ -75,6 +79,7 @@ CONSTRUCT {
 	       :WP_end ?WP_end ;
 	       :Real_date_of_booking_entry ?Real_date_of_booking_entry ;
 		   :A_C_model ?acmodel.
+		   :A_C_age ?acage.
 		   #:aircraft ?aircraft.
 	
 	  BIND(iri(concat(str(d:), ?workpackage)) as ?workpackageIRI) # instance
