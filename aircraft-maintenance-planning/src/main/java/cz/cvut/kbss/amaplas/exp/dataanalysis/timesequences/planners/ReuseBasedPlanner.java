@@ -50,27 +50,30 @@ public class ReuseBasedPlanner {
         while(!remainder.isEmpty() && k < similarPlans.size()){ // revise condition
 
             String key = similarPlans.get(k).getKey();
-            Set<TaskType> sim = similarPlans.get(k).getValue(); // Error - tasks type set of the similar plan in history, may contain task types which are not part of the set of tasks to be planned
+//            Set<TaskType> sim = similarPlans.get(k).getValue(); // Error - tasks type set of the similar plan in history, may contain task types which are not part of the set of tasks to be planned
 
 //            Set<TaskType> sim = new HashSet<>(similarPlans.get(k).getValue());
 //            sim.retainAll(remainder); // work only on non
             t1 = null;// if null the alg will calculate try to connect the remaining tasks to all of the tasks, if t1 is not reset to null the alg will try to order from the end of the last planned task
             List<Result> p = history.get(key);
+
+            // induce the orders between tasks common with the selected plan
             for(int i = 0; i < p.size() - 1; i ++ ){
                 if(!taskTypes.contains(p.get(i).taskType))
                     continue;
-
+                // select the first task
                 if(t1 == null) {
                     t1 = p.get(i);
                     continue;
                 }
 
 
-
                 t2 = p.get(i);
 //                if(t1.taskType.equals(t2.taskType) && t1.scope.equals(t2.scope)) // hack - this condition should be given as input parameter
-                if() // the second element of the plan should be from the reminder, i.e., do not plan edges that are already planned using previous WPs
-                if(t1.taskType.equals(t2.taskType)) // hack - this condition should be given as input parameter
+                // filter irrelevant orderings
+                if(t1.taskType.equals(t2.taskType) || // do not plan the same task
+                        !(remainder.contains(t1.taskType) || remainder.contains(t2.taskType)) // one of the task types should be from the reminder, i.e., do not plan edges that are already planned using previous WPs
+                ) // hack - this condition should be given as input parameter
                     continue;
                 List<TaskType> pat = Arrays.asList(t1.taskType, t2.taskType);
                 List<Result> instances = Arrays.asList(t1, t2);
@@ -95,7 +98,9 @@ public class ReuseBasedPlanner {
                 remainder.remove(t2.taskType);
                 t1 = t2;
             }
-
+            // prepare to plan for the next wp
+            plannedByOtherWP.addAll(plannedByThisWP);
+            plannedByThisWP = new HashSet<>();
             k ++;
         }
 

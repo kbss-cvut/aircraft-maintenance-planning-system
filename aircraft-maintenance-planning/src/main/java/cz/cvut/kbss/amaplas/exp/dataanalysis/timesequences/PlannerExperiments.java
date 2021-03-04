@@ -58,7 +58,7 @@ public class PlannerExperiments extends ExtractData{
 //        taskScopeMap.entrySet().stream()
 //                .collect(Collectors.groupingBy(e -> e.getValue(), Collectors.toSet())).entrySet()
 //                .forEach(e -> scopeTaskMap.put(e.getKey(), e.getValue().stream().map(ee -> ee.getKey()).collect(Collectors.toSet())));
-        writeMap(taskScopeMap, outputDir + "taskScopeMap.csv", "task type", "scope");
+//        writeMap(taskScopeMap, outputDir + "taskScopeMap.csv", "task type", "scope");
 
         // order
         Function<Result, Long> orderBy = r -> r.start.getTime();
@@ -102,8 +102,16 @@ public class PlannerExperiments extends ExtractData{
         plans.entrySet().forEach(e ->
             filteredPlans.put(e.getKey(), e.getValue().stream().filter(r -> taskTypeScopeKey.apply(r) != null).collect(Collectors.toList()))
         );
+        Pair<String, List<Result>> testPlanScopes = Pair.of(testPlan.getKey(),
+                historyPlan(
+                        testPlan.getValue().stream()
+                                .filter(r -> taskTypeScopeKey.apply(r) != null).collect(Collectors.toList()),
+                        orderBy,
+                        taskTypeScopeKey
+                )
+        );
         Map<String, List<Result>> taskStartPlans = historyPlans(filteredPlans, orderBy, taskTypeScopeKey);
-        planExperiment(taskStartPlans, testPlan, testWP, taskTypes, outputDir, "scopes");
+        planExperiment(taskStartPlans, testPlanScopes, testWP, taskTypes, outputDir, "scopes-");
 
 
         // plan separate scopes separately
@@ -290,26 +298,27 @@ public class PlannerExperiments extends ExtractData{
      */
     public Map<String, List<Result>> historyPlans(Map<String, List<Result>> plans, Function<Result, Long> orderBy, Function<Result, Object> groupId){
         Map<String, List<Result>> planHistory = new HashMap<>();
-
-        Comparator<Result> order = Comparator.comparing(orderBy);
 //        Function<Result, Object> fullGroupId = r -> Arrays.asList(orderBy.apply(r), groupId.apply(r));
-
         plans.entrySet().stream()
                 // leave only starts of different tasks types executed by different scope groups in each plan
-                .map(e -> Pair.of(e.getKey(), e.getValue().stream()
-//                                .collect(Collectors.groupingBy(r -> new TaskScopeType(r.taskType, r.scope)))
-                                .collect(Collectors.groupingBy(groupId))
-                                .entrySet().stream()
-                                .map(pe -> pe.getValue().stream()
-//                                        .collect(Collectors.groupingBy(orderBy)).entrySet().stream()
-                                        .collect(Collectors.minBy(order)).orElse(null))
-//                                .map(pe -> pe.getValue().stream().collect(Collectors.minBy(order)).orElse(null))
-//                                .filter(r -> r != null)
-                                .sorted(order)
-                                .collect(Collectors.toList()))
-                )
+                .map(e -> Pair.of(e.getKey(), historyPlan(e.getValue(), orderBy, groupId)))
                 .forEach(p -> planHistory.put(p.getKey(), p.getRight()));
         return planHistory;
+    }
+
+    public List<Result> historyPlan(Collection<Result> plan, Function<Result, Long> orderBy, Function<Result, Object> groupId){
+        Comparator<Result> order = Comparator.comparing(orderBy);
+        return plan.stream()
+//                                .collect(Collectors.groupingBy(r -> new TaskScopeType(r.taskType, r.scope)))
+                .collect(Collectors.groupingBy(groupId))
+                .entrySet().stream()
+                .map(pe -> pe.getValue().stream()
+//                                        .collect(Collectors.groupingBy(orderBy)).entrySet().stream()
+                        .collect(Collectors.minBy(order)).orElse(null))
+//                                .map(pe -> pe.getValue().stream().collect(Collectors.minBy(order)).orElse(null))
+//                                .filter(r -> r != null)
+                .sorted(order)
+                .collect(Collectors.toList());
     }
 
 

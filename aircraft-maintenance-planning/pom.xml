@@ -218,6 +218,57 @@
                     </descriptorRefs>
                 </configuration>
             </plugin>
+
+            <!-- generate scripts -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.8</version>
+                <executions>
+                    <execution>
+                        <id>generate-class-path</id>
+                        <phase>prepare-package</phase>
+                        <goals><goal>build-classpath</goal></goals>
+                        <configuration>
+                            <outputFile>${build.directory}/classpath.txt</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <executions>
+                    <execution>
+                        <id>script-generation</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>cz.cvut.kbss.amaplas.exp.cmd.MainGenerator</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-jar-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <archive>-->
+<!--                        <manifest>-->
+<!--                            <addClasspath>true</addClasspath>-->
+<!--&lt;!&ndash;                            <classpathPrefix>C:/Users/kostobog/.m2/repository/</classpathPrefix>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <classpathLayoutType>repository</classpathLayoutType>&ndash;&gt;-->
+<!--                        </manifest>-->
+<!--                        <manifestEntries>-->
+<!--                            <Class-Path>.</Class-Path>-->
+<!--                        </manifestEntries>-->
+<!--                    </archive>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 
