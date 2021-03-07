@@ -1,0 +1,1 @@
+rdfpipe -i application/rdf+xml ro.owl
