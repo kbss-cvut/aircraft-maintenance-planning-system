@@ -1,9 +1,8 @@
-# old version of Graph DB
 PREFIX : <http://example.com/resource/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX mp: <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/>
-PREFIX ds: <http://onto.fel.cvut.cz/dop2020-csat/example-schema/>
-PREFIX d: <http://onto.fel.cvut.cz/dop2020-csat/example-instance-data/>
+PREFIX mp:  <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> 
+PREFIX ds: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX d: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -11,7 +10,7 @@ PREFIX spif: <http://spinrdf.org/spif#>
 PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
 PREFIX ata: <http://onto.fel.cvut.cz/voc/ata-100/> 
 
-# Example RDF transformation using the custom IRIs and type
+
 CONSTRUCT {
     # workpackage description
     ?workpackageIRI a mp:workpackage, owl:NamedIndividual;
@@ -19,7 +18,7 @@ CONSTRUCT {
                     
 
     # task execution description
-    ?task_executionIRI a mp:complex_execution, ?task_typeIRI, ?task_super_classIRI, owl:NamedIndividual;
+    ?task_executionIRI a mp:complex_execution, ?task_typeIRI, owl:NamedIndividual;
                        mp:issue_time ?issue_date_D;
                        mp:end_time ?closing_date_D;
                        mp:has_work_order_step ?task_step_executionIRI;
@@ -30,7 +29,8 @@ CONSTRUCT {
     # task execution type
     ?task_typeIRI a owl:Class;
                   rdfs:subClassOf ?task_super_classIRI;
-                  mp:references_ata_code ?ataIRI.
+                  mp:references_ata_code ?ataIRI;
+				  mp:has_id ?CSAT_WO_TC.
 
     # task step execution
     ?task_step_executionIRI a ?task_step_execution_typeIRI, owl:NamedIndividual;
@@ -41,18 +41,21 @@ CONSTRUCT {
 	
     ?task_step_execution_typeIRI a owl:Class;
             rdfs:subClassOf mp:work_order_step.
+			
+	# aircraft description
+	?workpackageIRI mp:repair_of ?aircraftIRI.
+	?aircraftIRI a mp:aircraft, owl:NamedIndividual;
+	mp:has_model ?acmodel;
+	mp:age ?acage.
 
 } WHERE {
     SERVICE <ontorefine:2385299743863> {
-        # Triple patterns for accessing each row and the columns in contains
-        # Note that no triples will be generated for NULL values in the table
-        # You should inspect your data in Refine mode and add OPTIONAL accordingly
         ?row a :Row ;
-             :A_C_age ?A_C_age ;
+			 :AC ?acmodel ;
+             :A_C_age ?acage ;
              :WP ?WP ;
-             :aircraft ?aircraft ;
-             #:CSAT_WO_TC ?CSAT_WO_TC ;
-             :task_execution ?task_execution ;
+             :CSAT_WO_TC ?CSAT_WO_TC ; # use as id of task type
+             :task_execution ?task_execution ; # based on CSAT_WO_TC
              :workpackage ?workpackage ;
              :type ?type ;
              :state ?state ;
@@ -82,7 +85,7 @@ CONSTRUCT {
         
         BIND(iri(concat(str(d:), ?workpackage)) as ?workpackageIRI) # instance
         BIND(iri(concat(str(d:), ?task_execution)) as ?task_executionIRI) # instance
-        BIND(IRI(concat(str(d:), ?aircraft)) as ?aircraftIRI) # instance
+        BIND(IRI(concat(str(d:), ?acmodel, "-", ?workpackage)) as ?aircraftIRI) # instance
         BIND(iri(concat(str(d:), ?task_step_execution)) as ?task_step_executionIRI) # instance
         BIND(IRI(concat(str(ds:), ?task_type)) as ?task_typeIRI)
         BIND(IRI(concat(str(mp:), ?task_super_class)) as ?task_super_classIRI)
@@ -92,5 +95,4 @@ CONSTRUCT {
         BIND(spif:parseDate(?issue_date ,"dd.MM.yyyy") as ?issue_date_D)
         BIND(spif:parseDate(?closing_date ,"dd.MM.yyyy") as ?closing_date_D)
     }
-} LIMIT 100
-
+}

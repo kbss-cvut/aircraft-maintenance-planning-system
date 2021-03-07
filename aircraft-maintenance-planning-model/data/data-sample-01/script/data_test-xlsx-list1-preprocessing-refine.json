@@ -115,18 +115,5 @@
     "baseColumnName": "Workpackage",
 	"expression": "grel:escape(value + \"-\" + row.cells[\"WO/TC\"].value,\"url\")",
     "onError": "set-to-blank"
-  },
-  {
-    "op": "core/column-addition",
-    "description": "Create column aircraft at index 20 based on column Workpackage using expression grel:value.replace(/^([^\\/]+)\\/.+/, \"$1\")",
-    "engineConfig": {
-      "mode": "record-based",
-      "facets": []
-    },
-    "newColumnName": "aircraft",
-    "columnInsertIndex": 20,
-    "baseColumnName": "Workpackage",
-    "expression": "grel:value.replace(/^([^\\/]+)\\/.+/, \"$1\")",
-    "onError": "set-to-blank"
   }
 ]

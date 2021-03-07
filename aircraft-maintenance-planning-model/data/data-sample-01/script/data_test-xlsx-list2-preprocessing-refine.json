@@ -9,7 +9,7 @@
     "newColumnName": "task_type",
     "columnInsertIndex": 5,
     "baseColumnName": "CSAT WO/TC",
-    "expression": "grel:row.cells.type.value + \"-\" + value",
+    "expression": "grel:escape(row.cells.type.value,\"url\") + \"-\" + escape(value,\"url\")",
     "onError": "set-to-blank"
   },
   {
@@ -40,19 +40,6 @@
   },
   {
     "op": "core/column-addition",
-    "description": "Create column aircraft at index 2 based on column WP using expression grel:value.replace(/^([^\\/]+)\\/.+/, \"$1\")",
-    "engineConfig": {
-      "mode": "row-based",
-      "facets": []
-    },
-    "newColumnName": "aircraft",
-    "columnInsertIndex": 2,
-    "baseColumnName": "WP",
-    "expression": "grel:value.replace(/^([^\\/]+)\\/.+/, \"$1\")",
-    "onError": "set-to-blank"
-  },
-  {
-    "op": "core/column-addition",
     "description": "Create column task_execution at index 4 based on column CSAT WO/TC using expression grel:replace(row.cells[\"WP\"].value, \"/\", \"_\") + \"-\" + value",
     "engineConfig": {
       "mode": "row-based",
@@ -61,7 +48,7 @@
     "newColumnName": "task_execution",
     "columnInsertIndex": 4,
     "baseColumnName": "CSAT WO/TC",
-    "expression": "grel:replace(row.cells[\"WP\"].value, \"/\", \"_\") + \"-\" + value",
+    "expression": "grel:escape(row.cells[\"WP\"].value, \"url\") + \"-\" + escape(value,\"url\")",
     "onError": "set-to-blank"
   },
   {
@@ -74,7 +61,7 @@
     "newColumnName": "referenced_task_execution",
     "columnInsertIndex": 13,
     "baseColumnName": "TC reference",
-    "expression": "grel:replace(row.cells[\"WP\"].value, \"/\", \"_\") + \"-\" + value",
+    "expression": "grel:escape(row.cells[\"WP\"].value, \"url\") + \"-\" + escape(value, \"url\")",
     "onError": "set-to-blank"
   },
   {
@@ -87,7 +74,7 @@
     "newColumnName": "task_step_execution",
     "columnInsertIndex": 18,
     "baseColumnName": "workstep",
-    "expression": "grel:row.cells[\"WP\"].value.replace(\"/\", \"_\") + \"-\" + row.cells[\"task_type\"].value + \"-\" + value",
+    "expression": "grel:escape(row.cells[\"WP\"].value, \"url\") + \"-\" + row.cells[\"task_type\"].value + \"-\" + value",
     "onError": "set-to-blank"
   },
   {
