@@ -9,6 +9,5 @@
         <uri id="Automatically generated entry, Timestamp=1615112928573" name="http://www.ontologylibrary.mil/CommonCore/Mid/TimeOntology" uri="./external/TimeOntology.owl"/>
         <uri id="Automatically generated entry, Timestamp=1615112928573" name="http://www.ontologylibrary.mil/CommonCore/Mid/UnitsOfMeasureOntology" uri="./external/UnitsOfMeasureOntology.owl"/>
         <uri id="Automatically generated entry, Timestamp=1615112928573" name="http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology" uri="./external/ExtendedRelationOntology.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1615112928573" name="duplicate:http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN" uri="./external/romain.ttl"/>
     </group>
 </catalog>
