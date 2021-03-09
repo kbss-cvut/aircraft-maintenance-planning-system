@@ -1,1 +1,842 @@
-rdfpipe -i application/rdf+xml InformationEntityOntology.owl
+@prefix : <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#> .
+@prefix bfo: <http://purl.obolibrary.org/obo#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ero: <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ro: <http://www.obofoundry.org/ro/ro.owl#> .
+@prefix time: <http://www.ontologylibrary.mil/CommonCore/Mid/TimeOntology#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology> a owl:Ontology ;
+    rdfs:label "Information Entity Ontology"@en ;
+    ero:acronym "INFO"@en ;
+    owl:imports <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology>,
+        <http://www.ontologylibrary.mil/CommonCore/Mid/TimeOntology>,
+        <http://www.ontologylibrary.mil/CommonCore/Mid/UnitsOfMeasureOntology>,
+        <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology> ;
+    owl:versionInfo "March 28, 2017"^^xsd:date,
+        "COPYRIGHT © 2015 CUBRC, Inc."^^xsd:string,
+        "Version 0.90"^^xsd:string .
+
+:Algorithm a owl:Class ;
+    rdfs:label "Algorithm"^^xsd:string ;
+    ero:definition "A Directive Information Content Entity that prescribes the inputs and output of mathematical functions as well as workflow of execution for achieving an predefined objective." ;
+    ero:definition_source "http://purl.obolibrary.org/obo/IAO_0000064"^^xsd:string ;
+    rdfs:subClassOf :DirectiveInformationContentEntity .
+
+:ArbitraryIdentifier a owl:Class ;
+    rdfs:label "Arbitrary Identifier"^^xsd:string ;
+    ero:alternative_label "Arbitrary ID"^^xsd:string ;
+    ero:definition "A Non-Name Identifier that consists of a string of characters that does not follow an encoding system."^^xsd:string ;
+    rdfs:subClassOf :NonNameIdentifier ;
+    owl:disjointWith :CodeIdentifier .
+
+:ArtificialLanguage a owl:Class ;
+    rdfs:label "Artificial Language"^^xsd:string ;
+    ero:definition "A Language that is developed through conscious planning and premeditation, rather than one that was developed through use and repetition."^^xsd:string ;
+    ero:definition_source "https://en.wikipedia.org/wiki/Constructed_language"^^xsd:string ;
+    ero:example_of_usage "Esperanto"^^xsd:string,
+        "Python Programming Language"^^xsd:string ;
+    rdfs:subClassOf :Language .
+
+:Certificate a owl:Class ;
+    rdfs:label "Certificate" ;
+    ero:definition "An Information Content Entity that attests to certain characteristics of an Object, Person, or Organization."^^xsd:string ;
+    ero:definition_source "https://en.wikipedia.org/wiki/Certification"^^xsd:string ;
+    rdfs:subClassOf :InformationContentEntity .
+
+:CityIdentifier a owl:Class ;
+    rdfs:label "City Identifier"^^xsd:string ;
+    ero:definition "A Sub-National Entity Identifier that designates some City."^^xsd:string ;
+    rdfs:subClassOf :SubNationalEntityIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#City> ] .
+
+:CityPartIdentifier a owl:Class ;
+    rdfs:label "City Part Identifier"^^xsd:string ;
+    ero:definition "A Geopolitical Entity Part Identifier that designates some City Part."^^xsd:string ;
+    rdfs:subClassOf :GeopoliticalEntityPartIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#CityPart> ] .
+
+:ContinentIdentifier a owl:Class ;
+    rdfs:label "Continent Identifier"^^xsd:string ;
+    ero:definition "A Geospatial Region Identifier that designates some Continent."^^xsd:string ;
+    rdfs:subClassOf :GeospatialRegionIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#Continent> ] .
+
+:CountMeasurement a owl:Class ;
+    rdfs:label "Count Measurement"^^xsd:string ;
+    ero:definition "A Ratio Measurement Information Content Entity that measures the number of members of some aggregate."^^xsd:string ;
+    rdfs:subClassOf :RatioMeasurementInformationContentEntity .
+
+:CountryIdentifier a owl:Class ;
+    rdfs:label "Country Identifier"^^xsd:string ;
+    ero:definition "A Geopolitical Entity Identifier that designates some Country."^^xsd:string ;
+    rdfs:subClassOf :GeopoliticalEntityIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#Country> ] .
+
+:CountryPartIdentifier a owl:Class ;
+    rdfs:label "Country Part Identifier"^^xsd:string ;
+    ero:definition "A Geopolitical Entity Part Identifier that designates some Country Part."^^xsd:string ;
+    rdfs:subClassOf :GeopoliticalEntityPartIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#CountryPart> ] .
+
+:DateIdentifier a owl:Class ;
+    rdfs:label "Date Identifier"^^xsd:string ;
+    ero:definition "A Temporal Interval Identifier that designates some Day."^^xsd:string ;
+    rdfs:subClassOf :TemporalIntervalIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:Day ] .
+
+:DecadeIdentifier a owl:Class ;
+    rdfs:label "Decade Identifier"^^xsd:string ;
+    ero:definition "A Temporal Interval Identifier that designates some Decade."^^xsd:string ;
+    rdfs:subClassOf :TemporalIntervalIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:Decade ] .
+
+:DistanceMeasurement a owl:Class ;
+    rdfs:label "Distance Measurement"^^xsd:string ;
+    ero:definition "A Ratio Measurement Information Content Entity that describes a One-Dimensional Extent inhering in some Site that is externally connected to two Independent Continuants."^^xsd:string ;
+    ero:elucidation "Displacement (vector) is the shortest possible distance (scalar) between two points. Further thought is needed to adequately handle measurements of distance traveled along a path, e.g., a circuitous path or an arc (such as the surface of a planet), versus the simple case of a direct, straight line between two points."^^xsd:string,
+        "Distance is a measure between two reference points, which are located on or in, or in some manner part of, the two obejcts for which the length of the extent between is sought. For exmple, the center point of the indentation of a ball in the sand and the edge of the foul line, the forwardmost point on a car's bumper and the closest point on the 2-dimensional plane that serves as the fiat boundary of a crosswalk, the center of an antenna array and closest point on ground."^^xsd:string ;
+    rdfs:subClassOf :RatioMeasurementInformationContentEntity .
+
+:GeopoliticalEntityBorderIdentifier a owl:Class ;
+    rdfs:label "Geopolitical Entity Border Identifier"^^xsd:string ;
+    ero:definition "A Geospatial Boundary Identifier that designates some Geopolitical Entity Border."^^xsd:string ;
+    rdfs:subClassOf :GeospatialBoundaryIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#GeopoliticalEntityBorder> ] .
+
+:GeospatialLocationIdentifier a owl:Class ;
+    rdfs:label "Geospatial Location Identifier"^^xsd:string ;
+    ero:definition "A Geospatial Region Identifier that designates some Geospatial Location."^^xsd:string ;
+    rdfs:subClassOf :GeospatialRegionIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#GeospatialLocation> ] .
+
+:GeospatialRegionBoundingBoxIdentifierList a owl:Class ;
+    rdfs:label "Geospatial Region Bounding Box Identifier List"^^xsd:string ;
+    ero:definition "A Measurement Unit of Geocoordinate that is comprised of 4 pairs of coordinates, one for each of the 4 defining points (North, West, South, East) of a Geospatial Region Bounding Box."^^xsd:string ;
+    rdfs:subClassOf :MeasurementUnitOfGeocoordinate .
+
+:GlobalAreaReferenceSystem a :GeospatialCoordinateReferenceSystem,
+        owl:NamedIndividual ;
+    rdfs:label "Global Area Reference System"^^xsd:string ;
+    ero:acronym "GARS"^^xsd:string .
+
+:HourIdentifier a owl:Class ;
+    rdfs:label "Hour Identifier"^^xsd:string ;
+    ero:definition "A Temporal Interval Identifier that designates some Hour."^^xsd:string ;
+    rdfs:subClassOf :TemporalIntervalIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:Hour ] .
+
+:InformationQualityEntity a owl:Class ;
+    rdfs:label "Information Quality Entity"^^xsd:string ;
+    ero:alternative_label "IQE"^^xsd:string ;
+    ero:definition "A Quality that concretizes some Information Content Entity."^^xsd:string ;
+    rdfs:comment "Typically, an IQE will be a complex pattern made up of multiple qualities joined together spatially."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ero:inheres_in ;
+            owl:someValuesFrom :InformationBearingEntity ],
+        obo:BFO_0000019 .
+
+:InformationStructureEntity a owl:Class ;
+    rdfs:label "Information Structure Entity"^^xsd:string ;
+    ero:definition "A Generically Dependent Continuant that is not an Information Content Entity (ICE) but which is complemented or complementable by some ICE to create another ICE."^^xsd:string ;
+    ero:example_of_usage "a blank page in a document"^^xsd:string,
+        "a cell in a spreadsheet"^^xsd:string ;
+    rdfs:subClassOf obo:BFO_0000031 .
+
+:MinuteIdentifier a owl:Class ;
+    rdfs:label "Minute Identifier"^^xsd:string ;
+    ero:definition "A Temporal Interval Identifier that designates some Minute."^^xsd:string ;
+    rdfs:subClassOf :TemporalIntervalIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:Minute ] .
+
+:MonthIdentifier a owl:Class ;
+    rdfs:label "Month Identifier"^^xsd:string ;
+    ero:definition "A Temporal Interval Identifier that designates some Month."^^xsd:string ;
+    rdfs:subClassOf :TemporalIntervalIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:Month ] .
+
+:MultiDayTemporalIntervalIdentifier a owl:Class ;
+    rdfs:label "Multi-Day Temporal Interval Identifier"^^xsd:string ;
+    ero:definition "A Temporal Interval Identifier that designates some Multi-Day Temporal Interval."^^xsd:string ;
+    rdfs:subClassOf :TemporalIntervalIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:MultiDayTemporalInterval ] .
+
+:MultiHourTemporalIntervalIdentifier a owl:Class ;
+    rdfs:label "Multi-Hour Temporal Interval Identifier"^^xsd:string ;
+    ero:definition "A Temporal Interval Identifier that designates some Multi-Hour Temporal Interval."^^xsd:string ;
+    rdfs:subClassOf :TemporalIntervalIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:MultiHourTemporalInterval ] .
+
+:MultiMinuteTemporalIntervalIdentifier a owl:Class ;
+    rdfs:label "Multi-Minute Temporal Interval Identifier"^^xsd:string ;
+    ero:definition "A Temporal Interval Identifier that designates some Multi-Minute Temporal Interval."^^xsd:string ;
+    rdfs:subClassOf :TemporalIntervalIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:MultiMinuteTemporalInterval ] .
+
+:MultiMonthTemporalIntervalIdentifier a owl:Class ;
+    rdfs:label "Multi-Month Temporal Interval Identifier"^^xsd:string ;
+    ero:definition "A Temporal Interval Identifier that designates some Multi-Month Temporal Interval."^^xsd:string ;
+    rdfs:subClassOf :TemporalIntervalIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:MultiMonthTemporalInterval ] .
+
+:MultiSecondTemporalIntervalIdentifier a owl:Class ;
+    rdfs:label "Multi-Second Temporal Interval Identifier"^^xsd:string ;
+    ero:definition "A Temporal Interval Identifier that designates some Multi-Second Temporal Interval."^^xsd:string ;
+    rdfs:subClassOf :TemporalIntervalIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:MultiSecondTemporalInterval ] .
+
+:MultiWeekTemporalIntervalIdentifier a owl:Class ;
+    rdfs:label "Multi-Week Temporal Interval Identifier"^^xsd:string ;
+    ero:definition "A Temporal Interval Identifier that designates some Multi-Week Temporal Interval."^^xsd:string ;
+    rdfs:subClassOf :TemporalIntervalIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:MultiWeekTemporalInterval ] .
+
+:MultiYearTemporalIntervalIdentifier a owl:Class ;
+    rdfs:label "Multi-Year Temporal Interval Identifier"^^xsd:string ;
+    ero:definition "A Temporal Interval Identifier that designates some Multi-Year Temporal Interval."^^xsd:string ;
+    rdfs:subClassOf :TemporalIntervalIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:MultiYearTemporalInterval ] .
+
+:NautralLanguage a owl:Class ;
+    rdfs:label "Natural Language"^^xsd:string ;
+    ero:definition "A Language that is developed and evolves through use and repetition, rather than through conscious planning or premeditation."^^xsd:string ;
+    ero:definition_source "https://en.wikipedia.org/wiki/Natural_language"^^xsd:string ;
+    ero:example_of_usage "English"^^xsd:string,
+        "Mandarin (Chinese)"^^xsd:string,
+        "Spanish"^^xsd:string ;
+    rdfs:subClassOf :Language .
+
+:Nickname a owl:Class ;
+    rdfs:label "Nickname"^^xsd:string ;
+    ero:definition "A Designative Name that is used as a substitute for an entity's proper name."^^xsd:string ;
+    rdfs:subClassOf :DesignativeName .
+
+:ProvinceIdentifier a owl:Class ;
+    rdfs:label "Province Identifier"^^xsd:string ;
+    ero:definition "A Sub-National Entity Identifier that designates some Province."^^xsd:string ;
+    rdfs:subClassOf :SubNationalEntityIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#Province> ] .
+
+:ProvincePartIdentifier a owl:Class ;
+    rdfs:label "Province Part Identifier"^^xsd:string ;
+    ero:definition "A Geopolitical Entity Part Identifier that designates some Province Part."^^xsd:string ;
+    rdfs:subClassOf :GeopoliticalEntityPartIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#ProvincePart> ] .
+
+:SecondIdentifier a owl:Class ;
+    rdfs:label "Second Identifier"^^xsd:string ;
+    ero:definition "A Temporal Interval Identifier that designates some Second."^^xsd:string ;
+    rdfs:subClassOf :TemporalIntervalIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:Second ] .
+
+:StateIdentifier a owl:Class ;
+    rdfs:label "State Identifier"^^xsd:string ;
+    ero:definition "A Sub-National Entity Identifier that designates some State."^^xsd:string ;
+    rdfs:subClassOf :SubNationalEntityIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#State> ] .
+
+:StatePartIdentifier a owl:Class ;
+    rdfs:label "State Part Identifier"^^xsd:string ;
+    ero:definition "A Geopolitical Entity Part Identifier that designates some State Part."^^xsd:string ;
+    rdfs:subClassOf :GeopoliticalEntityPartIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#StatePart> ] .
+
+:SubcontinentIdentifier a owl:Class ;
+    rdfs:label "Subcontinent Identifier"^^xsd:string ;
+    ero:definition "A Geospatial Region Identifier that designates some Subcontinent."^^xsd:string ;
+    rdfs:subClassOf :GeospatialRegionIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#Subcontinent> ] .
+
+:TimeOfDayIdentifier a owl:Class ;
+    rdfs:label "Time of Day Identifier"^^xsd:string ;
+    ero:definition "A Temporal Instant Identifier that designates some Time of Day."^^xsd:string ;
+    rdfs:subClassOf :TemporalInstantIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:TimeOfDay ] .
+
+:UniversalTransverseMercatorReferenceSystem a :GeospatialCoordinateReferenceSystem,
+        owl:NamedIndividual ;
+    rdfs:label "Universal Transverse Mercator Reference System"^^xsd:string ;
+    ero:acronym "UTM"^^xsd:string .
+
+:WeekIdentifier a owl:Class ;
+    rdfs:label "Week Identifier"^^xsd:string ;
+    ero:definition "A Temporal Interval Identifier that designates some Week."^^xsd:string ;
+    rdfs:subClassOf :TemporalIntervalIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:Week ] .
+
+:WorldGeodeticReferenceSystem84 a :GeospatialCoordinateReferenceSystem,
+        owl:NamedIndividual ;
+    rdfs:label "World Geodetic Reference System 84"^^xsd:string ;
+    ero:acronym "WGS-84"^^xsd:string .
+
+:WorldGeographicReferenceSystem a :GeospatialCoordinateReferenceSystem,
+        owl:NamedIndividual ;
+    rdfs:label "World Geographic Reference System"^^xsd:string ;
+    ero:acronym "WGRS"^^xsd:string .
+
+:YearIdentifier a owl:Class ;
+    rdfs:label "Year Identifier"^^xsd:string ;
+    ero:definition "A Temporal Interval Identifier that designates some Year."^^xsd:string ;
+    rdfs:subClassOf :TemporalIntervalIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom time:Year ] .
+
+:contains_token_information a owl:DatatypeProperty ;
+    rdfs:label "contains token"^^xsd:string ;
+    rdfs:domain :InformationBearingEntity ;
+    rdfs:range xsd:string .
+
+:designated_by a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is designated by"^^xsd:string ;
+    ero:definition "The inverse of designates, which relates an Entity to some Designative Information Content Entity."^^xsd:string ;
+    rdfs:range :DesignativeInformationContentEntity ;
+    rdfs:subPropertyOf :is_subject_of ;
+    owl:inverseOf :designates .
+
+:has_URI_value a owl:DatatypeProperty ;
+    rdfs:label "has URI value"^^xsd:string ;
+    rdfs:domain :InformationBearingEntity ;
+    rdfs:range xsd:anyURI .
+
+:has_boolean_value a owl:DatatypeProperty ;
+    rdfs:label "has boolean value"^^xsd:string ;
+    rdfs:domain :InformationBearingEntity ;
+    rdfs:range xsd:boolean .
+
+:has_date_value a owl:DatatypeProperty ;
+    rdfs:label "has date value"^^xsd:string ;
+    rdfs:domain :InformationBearingEntity ;
+    rdfs:range xsd:date .
+
+:has_datetime_value a owl:DatatypeProperty ;
+    rdfs:label "has datetime value"^^xsd:string ;
+    rdfs:domain :InformationBearingEntity ;
+    rdfs:range xsd:dateTime .
+
+:has_decimal_value a owl:DatatypeProperty ;
+    rdfs:label "has decimal value"^^xsd:string ;
+    rdfs:domain :InformationBearingEntity ;
+    rdfs:range xsd:decimal .
+
+:has_integer_value a owl:DatatypeProperty ;
+    rdfs:label "has integer value"^^xsd:string ;
+    rdfs:domain :InformationBearingEntity ;
+    rdfs:range xsd:integer .
+
+:has_text_value a owl:DatatypeProperty ;
+    rdfs:label "has text value"^^xsd:string ;
+    ero:definition "A relationship between an Information Bearing Entity and a string representation."^^xsd:string ;
+    rdfs:domain :InformationBearingEntity ;
+    rdfs:range xsd:string .
+
+:is_excerpted_from a owl:ObjectProperty ;
+    rdfs:label "is excerpted from"^^xsd:string ;
+    ero:definition "An Information Bearing Entity b1 is excerpted from another Information Bearing Entity B2 iff b1 is part of some Information Bearing Entity B1 that is the bearer of some Information Content Entity C1, B2 is the bearer of some Information Content Entity C2, C1 is not identical with C2, b1 is the bearer of some Information Content Entity c1, b2 is an Information Bearing Entity that is part of B2 and b2 is the bearer of c1 (i.e. the same Information Content Entity as borne by b1)."^^xsd:string ;
+    rdfs:domain :InformationBearingEntity ;
+    rdfs:range :InformationBearingEntity .
+
+:is_geospatial_coordinate_reference_system_of a owl:ObjectProperty ;
+    rdfs:label "is geospatial coordinate reference system of"^^xsd:string ;
+    rdfs:domain :GeospatialCoordinateReferenceSystem ;
+    rdfs:range :InformationBearingEntity ;
+    rdfs:subPropertyOf ero:inheres_in ;
+    owl:inverseOf :uses_geospatial_coordinate_reference_system .
+
+:is_mention_of a owl:ObjectProperty ;
+    rdfs:label "is mention of"^^xsd:string ;
+    ero:definition "An instance b1 of a Information Bearing Entity is mention of some instance c1 of some Entity or Event iff b1 is used as a reference to c1."^^xsd:string ;
+    owl:inverseOf :is_mentioned_by .
+
+:language_used_in a owl:ObjectProperty ;
+    rdfs:label "languaged used in"^^xsd:string ;
+    rdfs:domain :Language ;
+    rdfs:range :InformationBearingEntity ;
+    rdfs:subPropertyOf :prescribes ;
+    owl:inverseOf :uses_language .
+
+:represented_by a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "represented by"^^xsd:string ;
+    ero:definition "The inverse of designates, which relates an Entity to some Representational Information Content Entity."^^xsd:string ;
+    rdfs:range :RepresentationalInformationContentEntity ;
+    rdfs:subPropertyOf :described_by ;
+    owl:inverseOf :represents .
+
+:uses_measurement_unit a owl:ObjectProperty ;
+    rdfs:label "uses measurement unit"^^xsd:string ;
+    ero:elucidation "An Information Bearing Entity carries the content of some corresponding Information Content Entity. In some cases of measurements, this content is composed of both some amount and the scale according to which the measurement was made."^^xsd:string ;
+    rdfs:domain :InformationBearingEntity ;
+    rdfs:range :MeasurementUnit ;
+    rdfs:subPropertyOf ero:bearer_of ;
+    owl:inverseOf ero:is_measurement_unit_of .
+
+:CodeIdentifier a owl:Class ;
+    rdfs:label "Code Identifier"^^xsd:string ;
+    ero:alternative_label "Code ID"^^xsd:string,
+        "ID Code"^^xsd:string,
+        "Identifier Code"^^xsd:string ;
+    ero:definition "A Non-Name Identifier that consists of a string of characters that was created and assigned according to an encoding system such that metadata can be derived from the identifier."^^xsd:string ;
+    rdfs:subClassOf :NonNameIdentifier .
+
+:DesignativeName a owl:Class ;
+    rdfs:label "Designative Name"^^xsd:string ;
+    ero:alternative_label "Name"^^xsd:string ;
+    ero:definition "A Designative Information Content Entity that consists of a string of characters that designates an entity within a specified cultural or social namespace and which is typically a word or phrase in a natural language that has an accepted cultural or social significance."^^xsd:string ;
+    rdfs:subClassOf :DesignativeInformationContentEntity ;
+    owl:disjointWith :NonNameIdentifier .
+
+:GeospatialBoundaryIdentifier a owl:Class ;
+    rdfs:label "Geospatial Boundary Identifier"^^xsd:string ;
+    ero:definition "A Spatial Region Identifier that designates some Geospatial Boundary."^^xsd:string ;
+    rdfs:subClassOf :SiteIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#GeospatialBoundary> ] .
+
+:MeasurementUnitOfGeocoordinate a owl:Class ;
+    rdfs:label "Measurement Unit of Geocoordinate"^^xsd:string ;
+    ero:definition "A Measurement Unit specifying the geospatial coordinates of a location."^^rdfs:Literal ;
+    rdfs:subClassOf :MeasurementUnit .
+
+:TemporalInstantIdentifier a owl:Class ;
+    rdfs:label "Temporal Instant Identifier"^^xsd:string ;
+    ero:definition "A Connected Temporal Region Identifier that designates some Temporal Instant."^^xsd:string ;
+    rdfs:subClassOf :ConnectedTemporalRegionIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom obo:BFO_0000148 ] .
+
+:TemporalRegionIdentifier a owl:Class ;
+    rdfs:label "Temporal Region Identifier"^^xsd:string ;
+    ero:definition "A Designative Information Content Entity that designates some Temporal Region."^^xsd:string ;
+    rdfs:subClassOf :DesignativeInformationContentEntity ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom obo:BFO_0000008 ] .
+
+:is_a_interval_measurement_of a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is a interval measurement of"^^xsd:string ;
+    ero:definition "For all Types T1 and T2, if T1 is a interval measurement of T2 then there is some instance of T1, t1, that places some instance of T2, t2, onto a scale which has uniform intervals but has a zero value that does not correspond to an absence of the quality being measured."^^xsd:string ;
+    ero:example_of_usage "a measurement of air temperature on the Celsius scale."^^xsd:string ;
+    rdfs:domain :IntervalMeasurementInformationContentEntity ;
+    rdfs:subPropertyOf :is_a_measurement_of ;
+    owl:inverseOf :is_measured_by_interval .
+
+:is_a_nominal_measurement_of a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is a nominal measurement of"^^xsd:string ;
+    ero:definition "For all Types T1 and T2, if T1 is a nominal measurement of T2 then there is some instance of T1, t1, that classifies some instance of T2, t2, relative to some set of shared, possibly arbitrary, characteristics."^^xsd:string ;
+    ero:example_of_usage "classifying automobiles as sedans, coupes, hatchbacks, or convertibles"^^xsd:string,
+        "classifying military intelligence as strategic, operational, or tactical"^^xsd:string,
+        "classifying rocks as igneous, sedimentary, or metamorphic"^^xsd:string ;
+    rdfs:domain :NominalMeasurementInformationContentEntity ;
+    rdfs:subPropertyOf :is_a_measurement_of ;
+    owl:inverseOf :is_measured_by_nominal .
+
+:is_a_ordinal_measurement_of a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is a ordinal measurement of"^^xsd:string ;
+    ero:definition "For all Types T1 and T2, if T1 is a ordinal measurement of T2 then there is some instance of T1, t1, that places some instance of T2, t2, onto a rank order."^^xsd:string ;
+    ero:example_of_usage "placing Geospatial Regions into a rank order of small, medium, large"^^xsd:string,
+        "placing military units onto a readiness rank order of red, yellow, green"^^xsd:string ;
+    rdfs:domain :OrdinalMeasurementInformationContentEntity ;
+    rdfs:subPropertyOf :is_a_measurement_of ;
+    owl:inverseOf :is_measured_by_ordinal .
+
+:is_a_ratio_measurement_of a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is a ratio measurement of"^^xsd:string ;
+    ero:definition "For all Types T1 and T2, if T1 is a ratio measurement of T2 then there is some instance of T1, t1, that places some instance of T2, t2, onto a scale having equal unit values and a zero value that corresponds to the absence of the quality being measured."^^xsd:string ;
+    ero:example_of_usage "the barometric pressure at 1,000 feet above sea level"^^xsd:string,
+        "the measure of air temperature on the Kelvin scale"^^xsd:string,
+        "the number of members in an Organization"^^xsd:string ;
+    rdfs:domain :RatioMeasurementInformationContentEntity ;
+    rdfs:subPropertyOf :is_a_measurement_of ;
+    owl:inverseOf :is_measured_by_ratio .
+
+:is_measured_by_interval a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is measured by interval"^^xsd:string ;
+    ero:definition "The inverse of is a interval measurement of, which relates an Entity to some Interval Measurement Information Content Entity."^^xsd:string ;
+    rdfs:range :IntervalMeasurementInformationContentEntity ;
+    rdfs:subPropertyOf :is_measured_by .
+
+:is_measured_by_nominal a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is measured by nominal"^^xsd:string ;
+    ero:definition "The inverse of is a nominal measurement of, which relates an Entity to some Nominal Measurement Information Content Entity."^^xsd:string ;
+    rdfs:range :NominalMeasurementInformationContentEntity ;
+    rdfs:subPropertyOf :is_measured_by .
+
+:is_measured_by_ordinal a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is measured by ordinal"^^xsd:string ;
+    ero:definition "The inverse of is a ordinal measurement of, which relates an Entity to some Ordinal Measurement Information Content Entity."^^xsd:string ;
+    rdfs:range :OrdinalMeasurementInformationContentEntity ;
+    rdfs:subPropertyOf :is_measured_by .
+
+:is_measured_by_ratio a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is measured by ratio"^^xsd:string ;
+    ero:definition "The inverse of is a ratio measurement of, which relates an Entity to some Ratio Measurement Information Content Entity."^^xsd:string ;
+    rdfs:range :RatioMeasurementInformationContentEntity ;
+    rdfs:subPropertyOf :is_measured_by .
+
+:is_mentioned_by a owl:ObjectProperty ;
+    rdfs:label "is mentioned by"^^xsd:string ;
+    ero:definition "An instance c1 of a Entity or Event is mentioned by an instance b1 of some Information Bearing Entity iff b1 is used as a reference to c1."^^xsd:string .
+
+:prescribed_by a owl:ObjectProperty ;
+    rdfs:label "prescribed by"^^xsd:string ;
+    ero:definition "The inverse of presecribes, which relates an Entity to some Directive Information Content Entity."^^xsd:string ;
+    rdfs:range :DirectiveInformationContentEntity ;
+    rdfs:subPropertyOf :is_subject_of ;
+    owl:inverseOf :prescribes .
+
+:uses_geospatial_coordinate_reference_system a owl:ObjectProperty ;
+    rdfs:label "uses geospatial coordinate reference system"^^xsd:string ;
+    rdfs:domain :InformationBearingEntity ;
+    rdfs:range :GeospatialCoordinateReferenceSystem ;
+    rdfs:subPropertyOf ero:bearer_of .
+
+:uses_language a owl:ObjectProperty ;
+    rdfs:label "uses language"^^xsd:string ;
+    rdfs:domain :InformationBearingEntity ;
+    rdfs:range :Language ;
+    rdfs:subPropertyOf :prescribed_by .
+
+ero:is_measurement_unit_of a owl:ObjectProperty ;
+    rdfs:label "is measurement unit of"^^xsd:string ;
+    ero:elucidation "An Information Bearing Entity carries the content of some corresponding Information Content Entity. In some cases of measurements, this content is composed of both some amount and the scale according to which the measurement was made."^^xsd:string ;
+    rdfs:domain :MeasurementUnit ;
+    rdfs:range :InformationBearingEntity ;
+    rdfs:subPropertyOf ero:inheres_in .
+
+xsd:date a rdfs:Datatype .
+
+:ConnectedTemporalRegionIdentifier a owl:Class ;
+    rdfs:label "Connected Temporal Region Identifier"^^xsd:string ;
+    ero:definition "A Temporal Region Identifier that designates some Connected Temporal Region."^^xsd:string ;
+    ero:elucidation "A Connected Temporal Region is a Temporal Region that is contiguous such that there are no gaps in the spanned period of time."^^xsd:string ;
+    rdfs:subClassOf :TemporalRegionIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom obo:BFO_0000008 ] .
+
+:GeopoliticalEntityIdentifier a owl:Class ;
+    rdfs:label "Geopolitical Entity Identifier"^^xsd:string ;
+    ero:definition "A Geospatial Region Identifier that desginates some Geopolitical Entity."^^xsd:string ;
+    rdfs:subClassOf :GeospatialRegionIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#GeopoliticalEntity> ] .
+
+:IntervalMeasurementInformationContentEntity a owl:Class ;
+    rdfs:label "Interval Measurement Information Content Entity"^^xsd:string ;
+    ero:definition "A Measurement Information Content Entity that consists of a symbol that places a Quality of an Entity onto some interval scale having no true zero value."^^xsd:string ;
+    rdfs:subClassOf :MeasurementInformationContentEntity ;
+    owl:disjointWith :NominalMeasurementInformationContentEntity,
+        :OrdinalMeasurementInformationContentEntity,
+        :RatioMeasurementInformationContentEntity ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :is_a_interval_measurement_of ;
+            owl:someValuesFrom obo:BFO_0000001 ] .
+
+:SiteIdentifier a owl:Class ;
+    rdfs:label "Site Identifier"^^xsd:string ;
+    ero:definition "A Designative Information Content Entity that designates some Site."^^xsd:string ;
+    rdfs:subClassOf :DesignativeInformationContentEntity ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom obo:BFO_0000029 ] .
+
+:described_by a owl:ObjectProperty ;
+    rdfs:label "described by"^^xsd:string ;
+    ero:definition "The inverse of describes, which relates an Entity to some Descriptive Information Content Entity."^^xsd:string ;
+    rdfs:range :DescriptiveInformationContentEntity ;
+    rdfs:subPropertyOf :is_subject_of ;
+    owl:inverseOf :describes .
+
+:represents a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "represents"^^xsd:string ;
+    ero:definition "For all Types T1 and T2, if T1 represents T2 then there is some instance of T1, t1, that presents the characteristics by which some instance of T2, t2, can be recognized or visualized and moreover, there is a one-to-one correspondence between the components of t1 and t2."^^xsd:string ;
+    ero:elucidation "The relationship that is being defined here is that between a photographic image and its object, or between a written transcript and the verbal event that it transcribes."^^xsd:string ;
+    ero:example_of_usage "a court transcript represents a courtroom proceeding"^^xsd:string,
+        "a photograph of the Statue of Liberty represents the Statue of Liberty"^^xsd:string,
+        "a video of a sporting event represents that sporting event"^^xsd:string ;
+    rdfs:domain :RepresentationalInformationContentEntity ;
+    rdfs:subPropertyOf :describes .
+
+:MeasurementUnit a owl:Class ;
+    rdfs:label "Measurement Unit"^^xsd:string ;
+    ero:definition "A Descriptive Information Content Entity that describes a definite magnitude of a physical quantity, defined and adopted by convention and/or by law, that is used as a standard for measurement of the same physical quantity."^^xsd:string ;
+    ero:definition_source "Derived from http://en.wikipedia.org/wiki/Measurement_unit"^^xsd:string ;
+    rdfs:subClassOf :DescriptiveInformationContentEntity .
+
+:NominalMeasurementInformationContentEntity a owl:Class ;
+    rdfs:label "Nominal Measurement Information Content Entity"^^xsd:string ;
+    ero:definition "A Measurement Information Content Entity that consists of a symbol that classifies Entities according to some shared, possibly arbitrary, characteristic."^^xsd:string ;
+    rdfs:subClassOf :MeasurementInformationContentEntity ;
+    owl:disjointWith :OrdinalMeasurementInformationContentEntity,
+        :RatioMeasurementInformationContentEntity ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :is_a_nominal_measurement_of ;
+            owl:someValuesFrom obo:BFO_0000001 ] .
+
+:NonNameIdentifier a owl:Class ;
+    rdfs:label "Non-Name Identifier"^^xsd:string ;
+    ero:alternative_label "ID"^^xsd:string,
+        "Identifier"^^xsd:string ;
+    ero:definition "A Designative Information Content Entity that consists of a string of characters that designates an entity within a specified namespace or context, is not a Designative Name, may be automatically or randomly generated, and typically has no preexisting cultural or social significance."^^xsd:string ;
+    rdfs:subClassOf :DesignativeInformationContentEntity .
+
+:RepresentationalInformationContentEntity a owl:Class ;
+    rdfs:label "Representational Information Content Entity"^^xsd:string ;
+    ero:definition "A Descriptive Information Content Entity that consists of a set of propositions or an image that represents some Entity."^^xsd:string ;
+    rdfs:subClassOf :DescriptiveInformationContentEntity ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :represents ;
+            owl:someValuesFrom obo:BFO_0000001 ] .
+
+:SubNationalEntityIdentifier a owl:Class ;
+    rdfs:label "Sub-National Entity Identifier"^^xsd:string ;
+    ero:definition "A Geopolitical Entity Identifier that designates some Sub-National Entity."^^xsd:string ;
+    rdfs:subClassOf :GeopoliticalEntityIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#FirstOrderAdministrativeRegion> ] .
+
+:prescribes a owl:ObjectProperty ;
+    rdfs:label "prescribes"^^xsd:string ;
+    ero:definition "For all types T1 and T2, if T1 prescribes T2, then there is some instance of T1, t1, that serves as a rule or guide to some instance of T2, t2 (if T2 is a type of bfo:Occurrent) or that serves as a model for some instance of T2, t2 (if T2 is a type of bfo:Continuant)."^^xsd:string ;
+    ero:example_of_usage "a blueprint serves as a model of some Artifact or Facility"^^xsd:string,
+        "a professional code of conduct serves as a set of rules to be followed while acting in a role within that profession"^^xsd:string,
+        "an Operations Plan serves as a guide for the tasks that need to be performed to achieve the Objectives of the Operation"^^xsd:string ;
+    rdfs:domain :DirectiveInformationContentEntity ;
+    rdfs:subPropertyOf :is_about .
+
+:GeopoliticalEntityPartIdentifier a owl:Class ;
+    rdfs:label "Geopolitical Entity Part Identifier"^^xsd:string ;
+    ero:definition "A Geospatial Region Identifier that designates some Geopolitical Entity Part."^^xsd:string ;
+    rdfs:subClassOf :GeospatialRegionIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#GeopoliticalEntityPart> ] .
+
+:Language a owl:Class ;
+    rdfs:label "Language"^^xsd:string ;
+    ero:definition "A Directive Information Content Entity that prescribes a canonical format for communication."^^xsd:string ;
+    rdfs:subClassOf :DirectiveInformationContentEntity .
+
+:OrdinalMeasurementInformationContentEntity a owl:Class ;
+    rdfs:label "Ordinal Measurement Information Content Entity"^^xsd:string ;
+    ero:definition "A Measurement Information Content Entity that consists of a symbol that places an Entity into some rank order."^^xsd:string ;
+    rdfs:subClassOf :MeasurementInformationContentEntity ;
+    owl:disjointWith :RatioMeasurementInformationContentEntity ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :is_a_ordinal_measurement_of ;
+            owl:someValuesFrom obo:BFO_0000001 ] .
+
+:describes a owl:ObjectProperty ;
+    rdfs:label "describes"^^xsd:string ;
+    ero:definition "For all Types T1 and T2, if T1 describes T2 then there is some instance of T1, t1 that presents the characteristics by which some instance of T2, t2 can be recognized or visualized."^^xsd:string ;
+    ero:example_of_usage "a newspaper article describes some current event"^^xsd:string,
+        "a visitor's log describes some facility visit"^^xsd:string,
+        "an accident report describes some accident"^^xsd:string ;
+    rdfs:comment "It is possible that this relation should be a functional property, that is for all x, y, z if x describes y and x describes z then y = z. For example, if a financial report x describes the quarterly results of a company y and that same financial report describes the quarterly results of a company z, then it should be inferred that companies y and z are the same. We refrained from classifying the relation as a functional property on the concern that descriptions are multifaceted and so consequently it may be that the same report would contain descriptions of multiple entities."^^xsd:string ;
+    rdfs:domain :DescriptiveInformationContentEntity ;
+    rdfs:subPropertyOf :is_about .
+
+:is_about a owl:ObjectProperty ;
+    rdfs:label "is about"^^xsd:string ;
+    ero:definition "A primitive (i.e. undefined) relationship between an Information Content Entity and some Entity."^^xsd:string ;
+    ero:definition_source "Derived from IAO_0003136"^^xsd:string ;
+    rdfs:domain :InformationContentEntity ;
+    rdfs:range obo:BFO_0000001 ;
+    owl:inverseOf :is_subject_of .
+
+:is_subject_of a owl:ObjectProperty ;
+    rdfs:label "is subject of"^^xsd:string ;
+    ero:definition "The inverse of is about, which relates an Entity to some Information Content Entity."^^xsd:string ;
+    rdfs:range :InformationContentEntity .
+
+:GeospatialRegionIdentifier a owl:Class ;
+    rdfs:label "Geospatial Region Identifier"^^xsd:string ;
+    ero:definition "A Spatial Region Identifier that designates some Geospatial Region."^^xsd:string ;
+    rdfs:subClassOf :SiteIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#GeospatialRegion> ] .
+
+:is_a_measurement_of a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is a measurement of"^^xsd:string ;
+    ero:definition "For all Types T1 and T2, if T1 is a measurement of T2 then there is some instance of T1, t1, that estimates some characteristic of some instance of T2, t2, relative to some scale or classification scheme."^^xsd:string ;
+    rdfs:comment "This object property, as well as all of its children are typified as functional properties. This means that for instances x, y, and z if x is a measurement of y and x is a measurement of z, then y = z."^^xsd:string ;
+    rdfs:domain :MeasurementInformationContentEntity ;
+    rdfs:subPropertyOf :describes ;
+    owl:inverseOf :is_measured_by .
+
+:is_measured_by a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is measured by"^^xsd:string ;
+    ero:definition "The inverse of is a measurement of, which relates an Entity to some Measurement Information Content Entity."^^xsd:string ;
+    rdfs:range :MeasurementInformationContentEntity ;
+    rdfs:subPropertyOf :described_by .
+
+:DescriptiveInformationContentEntity a owl:Class ;
+    rdfs:label "Descriptive Information Content Entity"^^xsd:string ;
+    ero:alternative_label "Descriptive ICE"^^xsd:string ;
+    ero:definition "An Information Content Entity that consists of a set of propositions that describe some Entity."^^xsd:string ;
+    rdfs:subClassOf :InformationContentEntity ;
+    owl:disjointWith :DesignativeInformationContentEntity,
+        :DirectiveInformationContentEntity ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :describes ;
+            owl:someValuesFrom obo:BFO_0000001 ] .
+
+:DirectiveInformationContentEntity a owl:Class ;
+    rdfs:label "Directive Information Content Entity"^^xsd:string ;
+    ero:alternative_label "Directive ICE"^^xsd:string ;
+    ero:definition "An Information Content Entity that consists of a set of propositions or images (as in the case of a blueprint) that prescribe some Entity."^^xsd:string ;
+    rdfs:subClassOf :InformationContentEntity ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :prescribes ;
+            owl:someValuesFrom obo:BFO_0000001 ] .
+
+:GeospatialCoordinateReferenceSystem a owl:Class ;
+    rdfs:label "Geospatial Coordinate Reference System"^^xsd:string ;
+    ero:definition "A Descriptive Information Content Entity that describes a set of standards for determining the location of a point at or near the surface of the Earth."^^xsd:string ;
+    rdfs:subClassOf :DescriptiveInformationContentEntity .
+
+:MeasurementInformationContentEntity a owl:Class ;
+    rdfs:label "Measurement Information Content Entity"^^xsd:string ;
+    ero:alternative_label "Measurement ICE"^^xsd:string ;
+    ero:definition "A Descriptive Information Content Entity that consists of a symbol that is a measure of the extent, dimensions, quanity, or quality of an Entity relative to some standard."^^xsd:string ;
+    rdfs:subClassOf :DescriptiveInformationContentEntity ;
+    owl:disjointWith :RepresentationalInformationContentEntity ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :is_a_measurement_of ;
+            owl:someValuesFrom obo:BFO_0000001 ] .
+
+:DesignativeInformationContentEntity a owl:Class ;
+    rdfs:label "Designative Information Content Entity"^^xsd:string ;
+    ero:alternative_label "Designative ICE"^^xsd:string ;
+    ero:definition "An Information Content Entity that consists of a set of symbols that denote some Entity."^^xsd:string ;
+    rdfs:subClassOf :InformationContentEntity ;
+    owl:disjointWith :DirectiveInformationContentEntity ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom obo:BFO_0000001 ] .
+
+:InformationContentEntity a owl:Class ;
+    rdfs:label "Information Content Entity"^^xsd:string ;
+    ero:alternative_label "ICE"^^xsd:string ;
+    ero:definition "A Generically Dependent Continuant that generically depends on some Information Bearing Entity and stands in relation of aboutness to some Entity."^^xsd:string ;
+    ero:definition_source "Derived from: http://purl.obolibrary.org/obo/IAO_0000030"^^xsd:string ;
+    ero:elucidation "Information Content Entity is here intended to be a class of Entities whose instances are the informational content of Information Bearing Entities. For example, three instances of information bearers -- such as a bar chart, color-coded map, and a written report -- each of which lists the GDP of Countries for the year 2010 are each different bearers of the same information content. It is this content that is generically dependent upon its bearer. This treatment of Informational Content Entity (cf. the Information Artifact Ontology) leads to a principle of subtyping based upon the relationship that ICE's have with the Entity they are about rather than characteristics such as format, language, measurement scale, or media. The latter are treated here as being Qualities of bearers."^^xsd:string ;
+    rdfs:subClassOf obo:BFO_0000031 ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :is_about ;
+            owl:someValuesFrom obo:BFO_0000001 ] .
+
+:RatioMeasurementInformationContentEntity a owl:Class ;
+    rdfs:label "Ratio Measurement Information Content Entity"^^xsd:string ;
+    ero:definition "A Measurement Information Content Entity that consists of a symbol that places a Quality of an Entity onto an interval scale having a true zero value."^^xsd:string ;
+    rdfs:subClassOf :MeasurementInformationContentEntity ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :is_a_ratio_measurement_of ;
+            owl:someValuesFrom obo:BFO_0000001 ] .
+
+:TemporalIntervalIdentifier a owl:Class ;
+    rdfs:label "Temporal Interval Identifier"^^xsd:string ;
+    ero:definition "A Connected Temporal Region Identifier that designates some Temporal Interval."^^xsd:string ;
+    rdfs:subClassOf :ConnectedTemporalRegionIdentifier ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty :designates ;
+            owl:someValuesFrom obo:BFO_0000038 ] .
+
+:InformationBearingEntity a owl:Class ;
+    rdfs:label "Information Bearing Entity"^^xsd:string ;
+    ero:alternative_label "IBE"^^xsd:string ;
+    ero:definition "An Object upon which an Information Content Entity generically depends."^^xsd:string ;
+    ero:definition_source "Derived from: http://purl/obolibrary.org/obo/IAO_0000178"^^xsd:string ;
+    rdfs:subClassOf obo:BFO_0000030 ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty ero:bearer_of ;
+            owl:someValuesFrom :InformationContentEntity ] .
+
+:designates a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "designates"^^xsd:string ;
+    ero:definition "For all types T1 and T2, if T1 designates T2, then there is some instance of T1, t1, by which some instance of T2, t2,  is called, or classified, distinguished from others."^^xsd:string ;
+    ero:example_of_usage "a URL identifies the location of a Web Page on the internet"^^xsd:string,
+        "a person's name designates that person"^^xsd:string,
+        "a vehicle identification number designates some vehicle"^^xsd:string ;
+    rdfs:domain :DesignativeInformationContentEntity ;
+    rdfs:subPropertyOf :is_about .
+

@@ -1,1 +1,416 @@
-rdfpipe -i application/rdf+xml UnitsOfMeasureOntology.owl
+@prefix : <http://www.ontologylibrary.mil/CommonCore/Mid/UnitsOfMeasureOntology#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ero: <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.ontologylibrary.mil/CommonCore/Mid/UnitsOfMeasureOntology> a owl:Ontology ;
+    owl:versionInfo "COPYRIGHT © 2015 CUBRC, Inc."^^xsd:string,
+        "October 24, 2016",
+        "Version 0.90" .
+
+:AcreMeasurementUnit a :MeasurementUnitOfArea,
+        owl:NamedIndividual ;
+    rdfs:label "Acre Measurement Unit" .
+
+:AtmosphereMeasurementUnit a :MeasurementUnitOfPressure,
+        owl:NamedIndividual ;
+    rdfs:label "Atmosphere Measurement Unit" .
+
+:BarMeasurementUnit a :MeasurementUnitOfPressure,
+        owl:NamedIndividual ;
+    rdfs:label "Bar Measurement Unit" .
+
+:BayreMeasurementUnit a :MeasurementUnitOfPressure,
+        owl:NamedIndividual ;
+    rdfs:label "Bayre Measurement Unit" .
+
+:BritishThermalUnitMeasurementUnit a :MeasurementUnitOfEnergy,
+        :MeasurementUnitOfPower,
+        :MeasurementUnitOfWork,
+        owl:NamedIndividual ;
+    rdfs:label "British Thermal Unit Measurement Unit" .
+
+:CalorieMeasurementUnit a :MeasurementUnitOfEnergy,
+        :MeasurementUnitOfPower,
+        :MeasurementUnitOfWork,
+        owl:NamedIndividual ;
+    rdfs:label "Calorie Measurement Unit" .
+
+:CentigramMeasurementUnit a :MeasurementUnitOfMass,
+        owl:NamedIndividual ;
+    rdfs:label "Centigram Measurement Unit" .
+
+:CentiliterMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Centiliter Measurement Unit" .
+
+:CentimeterMeasurementUnit a :MeasurementUnitOfLength,
+        owl:NamedIndividual ;
+    rdfs:label "Centimeter Measurement Unit" .
+
+:CubicCentimeterMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Cubic Centimeter Measurement Unit" .
+
+:CubicDecimeterMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Cubic Decimeter Measurement Unit" .
+
+:CubicFootMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Cubic Foot Measurement Unit" .
+
+:CubicInchMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Cubic Inch Measurement Unit" .
+
+:CubicMeterMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Cubic Meter Measurement Unit" .
+
+:CubicMillimeterMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Cubic Millimeter Measurement Unit" .
+
+:CubicYardMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Cubic Yard Measurement Unit" .
+
+:DayMeasurementUnit a :MeasurementUnitOfTime,
+        owl:NamedIndividual ;
+    rdfs:label "Day Measurement Unit" .
+
+:DecibelMeasurementUnit a :MeasurementUnitOfLevel,
+        owl:NamedIndividual ;
+    rdfs:label "Decibel Measurement Unit" .
+
+:DecigramMeasurementUnit a :MeasurementUnitOfMass,
+        owl:NamedIndividual ;
+    rdfs:label "Decigram Measurement Unit" .
+
+:DeciliterMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Deciliter Measurement Unit" .
+
+:DecimeterMeasurementUnit a :MeasurementUnitOfLength,
+        owl:NamedIndividual ;
+    rdfs:label "Decimeter Measurement Unit" .
+
+:DegreeCelsiusMeasurementUnit a :MeasurementUnitOfTemperature,
+        owl:NamedIndividual ;
+    rdfs:label "Degree Celsius Measurement Unit" .
+
+:DegreeFahrenheitMeasurementUnit a :MeasurementUnitOfTemperature,
+        owl:NamedIndividual ;
+    rdfs:label "Degree Fahhrenheit Measurement Unit" .
+
+:DyneMeasurementUnit a :MeasurementUnitOfForce,
+        owl:NamedIndividual ;
+    rdfs:label "Dyne Measurement Unit" .
+
+:ErgMeasurementUnit a :MeasurementUnitOfEnergy,
+        :MeasurementUnitOfPower,
+        :MeasurementUnitOfWork,
+        owl:NamedIndividual ;
+    rdfs:label "Erg Measurement Unit" .
+
+:FootMeasurementUnit a :MeasurementUnitOfLength,
+        owl:NamedIndividual ;
+    rdfs:label "Foot Measurement Unit" .
+
+:GallonMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Gallon Measurement Unit" .
+
+:GramMeasurementUnit a :MeasurementUnitOfMass,
+        owl:NamedIndividual ;
+    rdfs:label "Gram Measurement Unit" .
+
+:HorsepowerMeasurementUnit a :MeasurementUnitOfEnergy,
+        :MeasurementUnitOfPower,
+        :MeasurementUnitOfWork,
+        owl:NamedIndividual ;
+    rdfs:label "Horsepower Measurement Unit" .
+
+:HourMeasurementUnit a :MeasurementUnitOfTime,
+        owl:NamedIndividual ;
+    rdfs:label "Hour Measurement Unit" .
+
+:InchMeasurementUnit a :MeasurementUnitOfLength,
+        owl:NamedIndividual ;
+    rdfs:label "Inch Measurement Unit" .
+
+:JouleMeasurementUnit a :MeasurementUnitOfEnergy,
+        :MeasurementUnitOfPower,
+        :MeasurementUnitOfWork,
+        owl:NamedIndividual ;
+    rdfs:label "Joule Measurement Unit" .
+
+:KilogramMeasurementUnit a :MeasurementUnitOfMass,
+        owl:NamedIndividual ;
+    rdfs:label "Kilogram Measurement Unit" .
+
+:KiloliterMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Kiloliter Measurement Unit" .
+
+:KilometerMeasurementUnit a :MeasurementUnitOfLength,
+        owl:NamedIndividual ;
+    rdfs:label "Kilometer Measurement Unit" .
+
+:KilometerPerHourMeasurementUnit a :MeasurementUnitOfSpeed,
+        owl:NamedIndividual ;
+    rdfs:label "Kilometer Per Hour Measurement Unit" .
+
+:KilopondMeasurementUnit a :MeasurementUnitOfForce,
+        owl:NamedIndividual ;
+    rdfs:label "Kilopond Measurement Unit" .
+
+:KnotMeasurementUnit a :MeasurementUnitOfSpeed,
+        owl:NamedIndividual ;
+    rdfs:label "Knot Measurement Unit" .
+
+:LiterMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Liter Measurement Unit" .
+
+:LongTonMeasurementUnit a :MeasurementUnitOfMass,
+        owl:NamedIndividual ;
+    rdfs:label "Long Ton Measurement Unit" .
+
+:MeterMeasurementUnit a :MeasurementUnitOfLength,
+        owl:NamedIndividual ;
+    rdfs:label "Meter Measurement Unit" .
+
+:MeterPerSecondMeasurementUnit a :MeasurementUnitOfSpeed,
+        owl:NamedIndividual ;
+    rdfs:label "Meter Per Second Measurement Unit" .
+
+:MetricTonMeasurementUnit a :MeasurementUnitOfMass,
+        owl:NamedIndividual ;
+    rdfs:label "Metric Ton Measurement Unit" .
+
+:MileMeasurementUnit a :MeasurementUnitOfLength,
+        owl:NamedIndividual ;
+    rdfs:label "Mile Measurement Unit" .
+
+:MilePerHourMeasurementUnit a :MeasurementUnitOfSpeed,
+        owl:NamedIndividual ;
+    rdfs:label "Mile Per Hour Measurement Unit" .
+
+:MillibarMeasurementUnit a :MeasurementUnitOfPressure,
+        owl:NamedIndividual ;
+    rdfs:label "Millibar Measurement Unit" .
+
+:MilligramMeasurementUnit a :MeasurementUnitOfMass,
+        owl:NamedIndividual ;
+    rdfs:label "Milligram Measurement Unit" .
+
+:MilliliterMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Milliliter Measurement Unit" .
+
+:MillimeterMeasurementUnit a :MeasurementUnitOfLength,
+        owl:NamedIndividual ;
+    rdfs:label "Millimeter Measurement Unit" .
+
+:MinuteMeasurementUnit a :MeasurementUnitOfTime,
+        owl:NamedIndividual ;
+    rdfs:label "Minute Measurement Unit" .
+
+:MonthMeasurementUnit a :MeasurementUnitOfTime,
+        owl:NamedIndividual ;
+    rdfs:label "Month Measurement Unit" .
+
+:NauticalMileMeasurementUnit a :MeasurementUnitOfLength,
+        owl:NamedIndividual ;
+    rdfs:label "Nautical Mile Measurement Unit" .
+
+:NewtonMeasurementUnit a :MeasurementUnitOfForce,
+        owl:NamedIndividual ;
+    rdfs:label "Newton Measurement Unit" .
+
+:OunceMeasurementUnit a :MeasurementUnitOfMass,
+        owl:NamedIndividual ;
+    rdfs:label "Ounce Measurement Unit" .
+
+:PascalMeasurementUnit a :MeasurementUnitOfPressure,
+        owl:NamedIndividual ;
+    rdfs:label "Pascal Measurement Unit" .
+
+:PintMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Pint Measurement Unit" .
+
+:PoundForceMeasurementUnit a :MeasurementUnitOfForce,
+        owl:NamedIndividual ;
+    rdfs:label "Pound Force Measurement Unit" .
+
+:PoundMeasurementUnit a :MeasurementUnitOfMass,
+        owl:NamedIndividual ;
+    rdfs:label "Pound Measurement Unit" .
+
+:PoundsPerSquareInchMeasurementUnit a :MeasurementUnitOfPressure,
+        owl:NamedIndividual ;
+    rdfs:label "Pounds Per Square Inch Measurement Unit" .
+
+:QuartMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Quart Measurement Unit" .
+
+:SecondMeasurementUnit a :MeasurementUnitOfTime,
+        owl:NamedIndividual ;
+    rdfs:label "Second Measurement Unit" .
+
+:ShortTonMeasurementUnit a :MeasurementUnitOfMass,
+        owl:NamedIndividual ;
+    rdfs:label "Short Ton Measurement Unit" .
+
+:SquareCentimeterMeasurementUnit a :MeasurementUnitOfArea,
+        owl:NamedIndividual ;
+    rdfs:label "Square Centimeter Measurement Unit" .
+
+:SquareDecimeterMeasurementUnit a :MeasurementUnitOfArea,
+        owl:NamedIndividual ;
+    rdfs:label "Square Decimeter Measurement Unit" .
+
+:SquareFootMeasurementUnit a :MeasurementUnitOfArea,
+        owl:NamedIndividual ;
+    rdfs:label "Square Foot Measurement Unit" .
+
+:SquareInchMeasurementUnit a :MeasurementUnitOfArea,
+        owl:NamedIndividual ;
+    rdfs:label "Square Inch Measurement Unit" .
+
+:SquareKilometerMeasurementUnit a :MeasurementUnitOfArea,
+        owl:NamedIndividual ;
+    rdfs:label "Square Kilometer Measurement Unit" .
+
+:SquareMeterMeasurementUnit a :MeasurementUnitOfArea,
+        owl:NamedIndividual ;
+    rdfs:label "Square Meter Measurement Unit" .
+
+:SquareMileMeasurementUnit a :MeasurementUnitOfArea,
+        owl:NamedIndividual ;
+    rdfs:label "Square Mile Measurement Unit" .
+
+:SquareMillimeterMeasurementUnit a :MeasurementUnitOfArea,
+        owl:NamedIndividual ;
+    rdfs:label "Square Millimeter Measurement Unit" .
+
+:SquareYardMeasurementUnit a :MeasurementUnitOfArea,
+        owl:NamedIndividual ;
+    rdfs:label "Square Yard Measurement Unit" .
+
+:TablespoonMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Tablespoon Measurement Unit" .
+
+:TeaspoonMeasurementUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Teaspoon Measurement Unit" .
+
+:TwentyFootEquivalentUnit a :MeasurementUnitOfVolume,
+        owl:NamedIndividual ;
+    rdfs:label "Twenty Foot Equivalent Unit" .
+
+:WattMeasurementUnit a :MeasurementUnitOfPower,
+        owl:NamedIndividual ;
+    rdfs:label "Watt Measurement Unit" .
+
+:WeekMeasurementUnit a :MeasurementUnitOfTime,
+        owl:NamedIndividual ;
+    rdfs:label "Week Measurement Unit" .
+
+:YardMeasurementUnit a :MeasurementUnitOfLength,
+        owl:NamedIndividual ;
+    rdfs:label "Yard Measurement Unit" .
+
+:YearMeasurementUnit a :MeasurementUnitOfTime,
+        owl:NamedIndividual ;
+    rdfs:label "Year Measurement Unit" .
+
+:MeasurementUnitOfLevel a owl:Class ;
+    rdfs:label "Measurement Unit of Level" ;
+    ero:definition "A measurement unit used in measurements of a ratio of the quality to a reference value of that same quality"^^xsd:string ;
+    ero:example_of_usage ""^^xsd:string ;
+    rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementUnit> .
+
+:MeasurementUnitOfTemperature a owl:Class ;
+    rdfs:label "Measurement Unit of Temperature" ;
+    ero:definition "A measurement unit used in measurements of the thermal energy in an object "^^xsd:string ;
+    ero:example_of_usage "celsius, fahrenheit, kelvin"^^xsd:string ;
+    rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementUnit> .
+
+:MeasurementUnitOfForce a owl:Class ;
+    rdfs:label "Measurement Unit of Force" ;
+    ero:definition "A measurement unit used in measurements of interactions in which the motion or velocity of an object are changed."^^xsd:string ;
+    ero:example_of_usage "newton, dyne, pound force "^^xsd:string ;
+    rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementUnit> .
+
+:MeasurementUnitOfSpeed a owl:Class ;
+    rdfs:label "Measurement Unit of Speed" ;
+    ero:definition "A measurement unit used in measurements of the rates at which objects cover distance"^^xsd:string ;
+    ero:example_of_usage "miles per hour, kilometers per hour, knot, mach"^^xsd:string ;
+    rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementUnit> .
+
+:MeasurementUnitOfEnergy a owl:Class ;
+    rdfs:label "Measurement Unit of Energy" ;
+    ero:definition "A measurement unit used in measurements of the amount of work that is available in an object"^^xsd:string ;
+    ero:example_of_usage "ft-lbs, calorie, horsepower, kilowatt"^^xsd:string ;
+    rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementUnit> .
+
+:MeasurementUnitOfWork a owl:Class ;
+    rdfs:label "Measurement Unit of Work" ;
+    ero:definition "A measurement unit used in measurements of displacements of points to which forces have been applied"^^xsd:string ;
+    ero:example_of_usage "joule, erg, kilowatt hour"^^xsd:string ;
+    rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementUnit> .
+
+:MeasurementUnitOfPower a owl:Class ;
+    rdfs:label "Measurement Unit of Power" ;
+    ero:definition "A measurement unit used in measurements of rates of work"^^xsd:string ;
+    ero:example_of_usage "watt, horsepower"^^xsd:string ;
+    rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementUnit> .
+
+:MeasurementUnitOfPressure a owl:Class ;
+    rdfs:label "Measurement Unit of Pressure" ;
+    ero:definition "A measurement unit used in measurements of force applied perpendicular to a surface per unit area"^^xsd:string ;
+    ero:example_of_usage "pascal, atmosphere, pound-force per square inch"^^xsd:string ;
+    rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementUnit> .
+
+:MeasurementUnitOfTime a owl:Class ;
+    rdfs:label "Measurement Unit of Time" ;
+    ero:definition "A measurement unit used in measurements of temporal regions"^^xsd:string ;
+    ero:example_of_usage "second, minute, hour, day"^^xsd:string ;
+    rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementUnit> .
+
+:MeasurementUnitOfArea a owl:Class ;
+    rdfs:label "Measurement Unit of Area" ;
+    ero:definition "A measurement unit used in measurements of two dimensional regions or geospatial regions"^^xsd:string ;
+    ero:example_of_usage "square feet, square meters, acre, hectare"^^xsd:string ;
+    rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementUnit> .
+
+:MeasurementUnitOfLength a owl:Class ;
+    rdfs:label "Measurement Unit of Length" ;
+    ero:definition "A measurement unit used in measurements of one dimensional regions or geosptial regions"^^xsd:string ;
+    ero:example_of_usage "foot, meter, kilometer, mile"^^xsd:string ;
+    rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementUnit> .
+
+:MeasurementUnitOfMass a owl:Class ;
+    rdfs:label "Measurement Unit of Mass" ;
+    ero:definition "A measurement unit used in measurements of an object's resistance to acceleration when a force has been applied"^^xsd:string ;
+    ero:example_of_usage "ounce, gram, pound"^^xsd:string ;
+    rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementUnit> .
+
+:MeasurementUnitOfVolume a owl:Class ;
+    rdfs:label "Measurement Unit of Volume" ;
+    ero:definition "A measurement unit used in measurements of three dimensional regions or geospatial regions"^^xsd:string ;
+    ero:example_of_usage "cubic feet, cubic meter, quart, liter"^^xsd:string ;
+    rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementUnit> .
+

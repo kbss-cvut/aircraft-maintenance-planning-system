@@ -1,1 +1,296 @@
-rdfpipe -i application/rdf+xml TimeOntology.owl
+@prefix : <http://www.ontologylibrary.mil/CommonCore/Mid/TimeOntology#> .
+@prefix bfo: <http://purl.obolibrary.org/obo#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ero: <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.ontologylibrary.mil/CommonCore/Mid/TimeOntology> a owl:Ontology ;
+    owl:imports <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology> ;
+    owl:versionInfo "COPYRIGHT © 2015 CUBRC, Inc."^^xsd:string,
+        "October 24, 2016"^^xsd:string,
+        "Version 0.90"^^xsd:string .
+
+:MultiDayTemporalInterval a owl:Class ;
+    rdfs:label "Multi-Day Temporal Interval"^^xsd:string ;
+    ero:definition " A defined class composed of instances of temporal intervals measured in days and spanning more than 1 day."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :interval_contains ;
+            owl:someValuesFrom :Day ],
+        obo:BFO_0000038 .
+
+:MultiHourTemporalInterval a owl:Class ;
+    rdfs:label "Multi-Hour Temporal Interval"^^xsd:string ;
+    ero:definition " A defined class composed of instances of temporal intervals measured in hours and spanning more than 1 hour."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :interval_contains ;
+            owl:someValuesFrom :Hour ],
+        obo:BFO_0000038 .
+
+:MultiMinuteTemporalInterval a owl:Class ;
+    rdfs:label "Part of Hour"^^xsd:string ;
+    ero:definition " A defined class composed of instances of temporal intervals measured in minutes and spanning more than 1 minute."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :interval_contains ;
+            owl:someValuesFrom :Minute ],
+        obo:BFO_0000038 .
+
+:MultiMonthTemporalInterval a owl:Class ;
+    rdfs:label "Multimonth Temporal Interval"^^xsd:string ;
+    ero:definition " A defined class composed of instances of temporal intervals measured in months and spanning more than 1 month."^^xsd:string ;
+    ero:elucidation "Comment: Could also be used for seasons of year (e.g. Spring, Summer, etc.)"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :interval_contains ;
+            owl:someValuesFrom :Month ],
+        obo:BFO_0000038 .
+
+:MultiSecondTemporalInterval a owl:Class ;
+    rdfs:label "Part of Minute"^^xsd:string ;
+    ero:definition " A defined class composed of instances of temporal intervals measured in seconds and spanning more than 1 second."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :interval_contains ;
+            owl:someValuesFrom :Second ],
+        obo:BFO_0000038 .
+
+:MultiWeekTemporalInterval a owl:Class ;
+    rdfs:label "Multi-Week Temporal Interval"^^xsd:string ;
+    ero:definition " A defined class composed of instances of temporal intervals measured in weeks and spanning more than 1 week."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :interval_contains ;
+            owl:someValuesFrom :Week ],
+        obo:BFO_0000038 .
+
+:MultiYearTemporalInterval a owl:Class ;
+    rdfs:label "Multi-Year Temporal Interval"^^xsd:string ;
+    ero:definition " A defined class composed of instances of temporal intervals measured in years and spanning more than 1 year."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :interval_contains ;
+            owl:someValuesFrom :Year ],
+        obo:BFO_0000038 .
+
+:TimeOfDay a owl:Class ;
+    rdfs:label "Time Of Day"^^xsd:string ;
+    ero:definition " A type of temporal instant, indicating the approximate time broken down into hours, minutes and seconds."^^xsd:string ;
+    rdfs:subClassOf obo:BFO_0000148 .
+
+:has_ending_instant a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    ero:definition " For Temporal Interval t1 and Temporal Instant t2, t1 has ending instant t2 if and only if no Temporal Instant t3 that is part of t1 is after t2."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000148 ;
+    owl:inverseOf :is_ending_instant_of .
+
+:has_inside_instant a owl:ObjectProperty ;
+    ero:definition " For Temporal Interval t1 and Temporal Instant t2, t1 has inside instant t2 if and only if there exists Temporal Instants t3 and t4, non-identical with t2, and part of t1 such that t3 is before t2 and t4 is after t2."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000148 ;
+    owl:inverseOf :is_inside_instant_of .
+
+:has_starting_instant a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    ero:definition " For Temporal Interval t1 and Temporal Instant t2, t1 has starting instant t2 if and only if no temporal instant t3 that is part of t1 is before t2."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000148 ;
+    owl:inverseOf :is_starting_instant_of .
+
+:instant_is_after a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    ero:definition " For type Temporal Instant, is_after is a primitive relationship. Informally, one temporal intstant t2 is after some temporal instant t1 if and only if there is some Connected Temporal Region t3 between t1 and t2."^^xsd:string ;
+    rdfs:domain obo:BFO_0000148 ;
+    rdfs:range obo:BFO_0000148 ;
+    owl:inverseOf :instant_is_before .
+
+:interval_disjoint a owl:ObjectProperty ;
+    rdfs:label "interval disjoint"^^xsd:string ;
+    ero:definition " A Temporal Interval INT1 is disjoint with a Temporal Interval INT2 iff INT1 is before or meets INT2 OR INT2 is before or meets INT1. In other words, INT1 and INT2 are disjoint iff INT1 and INT2 do not overlap."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000038 ;
+    owl:propertyDisjointWith :interval_overlapped_by,
+        :interval_overlaps .
+
+:interval_equals a owl:ObjectProperty,
+        owl:SymmetricProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "interval equals"^^xsd:string ;
+    ero:definition " A Temporal Interval INT1 is equal to some Temporal Interval INT2 iff there exists Temporal Instants inst1 and inst2 such that inst1 is the starting instant of both INT1 and INT2 and inst2 is the ending instant of both INT1 and INT2."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000038 .
+
+:interval_finished_by a owl:ObjectProperty ;
+    rdfs:label "interval finished by"^^xsd:string ;
+    ero:definition " A Temporal Interval INT2 is finished by some Temporal Interval INT1 iff there exists Temporal Instants inst1, inst2, and inst3 such that inst 1 is the starting instant of INT1, inst2 is the ending instant of both INT1 and INT2, inst3 is the starting instant of INT2, and inst3 is before inst1."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000038 ;
+    owl:inverseOf :interval_finishes .
+
+:interval_is_after a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "interval is after"^^xsd:string ;
+    ero:definition " A TemporalInterval INT2 is after some TemporalInterval INT1 iff there exists TemporalInstants inst2, inst1 such that inst2 is the starting instant of INT2 and inst1 is the ending instant of INT1 and inst2 is after inst1."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000038 ;
+    owl:inverseOf :interval_is_before .
+
+:interval_meets a owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "interval meets"^^xsd:string ;
+    ero:definition " A Temporal Interval INT1 meets some Temporal Interval INT2 iff there exists some Temporal Instant inst1 such that inst1 is the ending instant of INT1 and inst1 is the starting instant of INT2."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000038 ;
+    owl:inverseOf :interval_met_by .
+
+:interval_started_by a owl:ObjectProperty ;
+    rdfs:label "interval started by"^^xsd:string ;
+    ero:definition " A Temporal Interval INT2 is started by some Temporal Interval INT1 iff there exist Temporal Instants inst1, inst2, and inst3 such that inst1 is the starting instant of both INT1 and INT2, inst2 is the ending instant of INT1, inst3 is the ending instant of INT2 and inst2 is before inst3."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000038 ;
+    owl:inverseOf :interval_starts .
+
+:Decade a owl:Class ;
+    ero:definition " A type of temporal interval, denoting a period of ten years."^^xsd:string ;
+    ero:definition_source "http://wordnetweb.princeton.edu/perl/webwn?s=decade"^^xsd:string ;
+    rdfs:subClassOf obo:BFO_0000038 .
+
+:Second a owl:Class ;
+    rdfs:label "Second"^^xsd:string ;
+    ero:definition " A type of temporal interval, the basic unit of time and time calculations; equal to 1/60 of a minute."^^xsd:string ;
+    ero:definition_source "http://wordnetweb.princeton.edu/perl/webwn?s=second"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :interval_during ;
+            owl:someValuesFrom :Minute ],
+        obo:BFO_0000038 .
+
+:instant_is_before a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    ero:definition " For type Temporal Instant, is_before is a primitive relationship. Informally, one temporal intstant t1 is before another temporal instant t2 if and only if there is some Connected Temporal Region t3 between t1 and t2."^^xsd:string ;
+    rdfs:domain obo:BFO_0000148 ;
+    rdfs:range obo:BFO_0000148 .
+
+:interval_finishes a owl:ObjectProperty ;
+    rdfs:label "interval finishes"^^xsd:string ;
+    ero:definition " A Temporal Interval INT1 finishes some Temporal Interval INT2 iff there exists Temporal Instants inst1, inst2, and inst3 such that inst 1 is the starting instant of INT1, inst2 is the ending instant of both INT1 and INT2, inst3 is the starting instant of INT2, and inst3 is before inst1."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000038 .
+
+:interval_is_before a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "interval is before"^^xsd:string ;
+    ero:definition " A TemporalInterval INT1 is before some TemporalInterval INT2 iff there exists TemporalInstants inst1, inst2 such that inst1 is the ending instant of INT1 and inst2 is the starting instant of INT2 and inst1 is before inst2."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000038 .
+
+:interval_met_by a owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "interval met by"^^xsd:string ;
+    ero:definition " A Temporal Interval INT2 is met by some Temporal Interval INT1 iff there exists some Temporal Instant inst1 such that inst1 is the starting instant of INT2 and inst1 is the ending instant of INT1."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000038 .
+
+:interval_overlapped_by a owl:ObjectProperty ;
+    rdfs:label "interval overlapped by"^^xsd:string ;
+    ero:definition " A Temporal Interval INT2 is overlapped by some Temporal Interval INT1 iff there exist Temporal Instants inst1, inst2, inst3, inst4 such that inst1 is the starting instant of INT1, inst2 is the ending instant of INT1, inst3 is the starting instant of INT2, inst4 is the ending instant of INT2, inst1 is before inst3, inst3 is before inst2, and inst2 is before inst4."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000038 ;
+    owl:inverseOf :interval_overlaps .
+
+:interval_starts a owl:ObjectProperty ;
+    rdfs:label "interval starts"^^xsd:string ;
+    ero:definition " A Temporal Interval INT1 starts some Temporal Interval INT2 iff there exist Temporal Instants inst1, inst2, and inst3 such that inst1 is the starting instant of both INT1 and INT2, inst2 is the ending instant of INT1, inst3 is the ending instant of INT2 and inst2 is before inst3."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000038 .
+
+:is_ending_instant_of a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    ero:definition " For Temporal Instant t1 and Temporal Interval t2, t1 is ending instant of t2 if and only if no Temporal Instant t3 that is part of t2 is after t1."^^xsd:string ;
+    rdfs:domain obo:BFO_0000148 ;
+    rdfs:range obo:BFO_0000038 .
+
+:is_inside_instant_of a owl:ObjectProperty ;
+    ero:definition " For Temporal Instant t1 and Temporal Interval t2, t1 is inside instant of t2 if and only if there are Temporal Instants t3 and t4 non-identical to t1 and part of t2 such that t3 is before t1 and t4 is after t1."^^xsd:string ;
+    rdfs:domain obo:BFO_0000148 ;
+    rdfs:range obo:BFO_0000038 .
+
+:is_starting_instant_of a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    ero:definition " For Temporal Instant t1 and Temporal Interval t2, t1 is starting instant of t2 if and only if no Temporal Instant t3 that is part of t2 is before t1."^^xsd:string ;
+    rdfs:domain obo:BFO_0000148 ;
+    rdfs:range obo:BFO_0000038 .
+
+:Day a owl:Class ;
+    rdfs:label "Day"^^xsd:string ;
+    ero:definition " A type of temporal interval, indicated a period of twenty-four hours on the Gregorian calendar."^^xsd:string ;
+    ero:definition_source "http://wordnetweb.princeton.edu/perl/webwn?s=day)"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :interval_during ;
+            owl:someValuesFrom :Week ],
+        obo:BFO_0000038 .
+
+:Hour a owl:Class ;
+    ero:definition " A type of temporal interval, denoting a period of sixty minutes or 1/24  of a day. "^^xsd:string ;
+    ero:definition_source "http://wordnetweb.princeton.edu/perl/webwn?s=hour"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :interval_during ;
+            owl:someValuesFrom :Day ],
+        obo:BFO_0000038 .
+
+:Minute a owl:Class ;
+    ero:definition " A type of temporal interval, equal to sixty seconds or 1/60 of an hour."^^xsd:string ;
+    ero:definition_source "http://wordnetweb.princeton.edu/perl/webwn?s=minute"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :interval_during ;
+            owl:someValuesFrom :Hour ],
+        obo:BFO_0000038 .
+
+:Month a owl:Class ;
+    rdfs:label "Month"^^xsd:string ;
+    ero:definition " A type of temporal interval, denoting approximately four weeks or 1/12 of a standard year."^^xsd:string ;
+    ero:definition_source "http://wordnetweb.princeton.edu/perl/webwn?s=month"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :interval_during ;
+            owl:someValuesFrom :Year ],
+        obo:BFO_0000038 .
+
+:Week a owl:Class ;
+    rdfs:label "Week"^^xsd:string ;
+    ero:definition " A type of temporal interval, denoting a period of seven days or approximately 1/4 of a month."^^xsd:string ;
+    ero:definition_source "http://wordnetweb.princeton.edu/perl/webwn?s=week"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :interval_during ;
+            owl:someValuesFrom :Month ],
+        obo:BFO_0000038 .
+
+:Year a owl:Class ;
+    rdfs:label "Year"^^xsd:string ;
+    ero:definition " A type of temporal interval, denoting a period of twelve months or 365 days."^^xsd:string ;
+    ero:definition_source "http://wordnetweb.princeton.edu/perl/webwn?s=year"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :interval_during ;
+            owl:someValuesFrom :Decade ],
+        obo:BFO_0000038 .
+
+:interval_overlaps a owl:ObjectProperty ;
+    rdfs:label "interval overlaps"^^xsd:string ;
+    ero:definition " A Temporal Interval INT1 overlaps some Temporal Interval INT2 iff there exist Temporal Instants inst1, inst2, inst3, inst4 such that inst1 is the starting instant of INT1, inst2 is the ending instant of INT1, inst3 is the starting instant of INT2, inst4 is the ending instant of INT2, inst1 is before inst3, inst3 is before inst2, and inst2 is before inst4."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000038 .
+
+:interval_contains a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "interval contains"^^xsd:string ;
+    ero:definition " A Temporal Interval INT2 contains some Temporal Interval INT1 iff there exist Temporal Instants inst1, inst2, inst3, and inst4 such that inst1 is the starting instant of INT1, inst2 is the ending instant of INT1, inst3 is the starting instant of INT2, inst4 is the ending instant of INT2, inst3 is before inst1, and inst2 is before inst4."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000038 ;
+    owl:inverseOf :interval_during .
+
+:interval_during a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "interval during"^^xsd:string ;
+    ero:definition " A Temporal Interval INT1 is during some Temporal Interval INT2 iff there exist Temporal Instants inst1, inst2, inst3, and inst4 such that inst1 is the starting instant of INT1, inst2 is the ending instant of INT1, inst3 is the starting instant of INT2, inst4 is the ending instant of INT2, inst3 is before inst1, and inst2 is before inst4."^^xsd:string ;
+    rdfs:domain obo:BFO_0000038 ;
+    rdfs:range obo:BFO_0000038 .
+

@@ -1,1 +1,431 @@
-rdfpipe -i application/rdf+xml GeospatialOntology.owl
+@prefix : <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ero: <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology> a owl:Ontology ;
+    owl:imports <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology> ;
+    owl:versionInfo "COPYRIGHT © 2015 CUBRC, Inc."^^xsd:string,
+        "October 24, 2016"^^xsd:string,
+        "Version 0.90"^^xsd:string .
+
+:AtmosphericFeature a owl:Class ;
+    rdfs:label "Atmospheric Feature"^^xsd:string ;
+    ero:definition "A Geographic Feature that is part of the atmosphere (including the atmosphere itself as a non-proper part) having a relatively stable lifecycle and which has a location that can be distinguished from the surrounding portion of the atmosphere."^^xsd:string ;
+    rdfs:subClassOf :GeographicFeature .
+
+:BoundingBoxPoint a owl:Class ;
+    rdfs:label "Bounding Box Point"^^xsd:string ;
+    ero:definition "A Geospatial Position that is a proper part of some Geospatial Region Bounding Box."^^xsd:string ;
+    rdfs:subClassOf :GeospatialPosition ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( :GeospatialPosition [ a owl:Restriction ;
+                        owl:onProperty <http://www.obofoundry.org/ro/ro.owl#proper_part_of> ;
+                        owl:someValuesFrom :GeospatialRegionBoundingBox ] ) ] .
+
+:CityPart a owl:Class ;
+    rdfs:label "City Part"^^xsd:string ;
+    ero:definition "A Geopolitical Entity Part that consists of one or more fiat sub-sections of a City."^^xsd:string ;
+    ero:example_of_usage "the Flatbush neighorhood of New York City"^^xsd:string,
+        "the French Quarter of New Orleans"^^xsd:string ;
+    rdfs:comment "This defined class should be used for instances that are sections of a City demarcated based on cultural, historic, or demographic reasons."^^xsd:string ;
+    rdfs:subClassOf :GeopoliticalEntityPart ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty <http://www.obofoundry.org/ro/ro.owl#part_of> ;
+            owl:someValuesFrom :City ] .
+
+:ConstructedFeature a owl:Class ;
+    rdfs:label "Constructed Feature"^^xsd:string ;
+    ero:definition "An Anthropogenic Feature that has been constructed by deliberate human effort."^^xsd:string ;
+    rdfs:subClassOf :AnthropogenicFeature .
+
+:Continent a owl:Class ;
+    rdfs:label "Continent"^^xsd:string ;
+    ero:definition "A Geospatial Region bounded by any of the Earth's main continuous expanses of land."^^xsd:string ;
+    ero:definition_source "Derived from: JC3IEDM version 3.0.2"^^xsd:string ;
+    rdfs:subClassOf :GeospatialRegion .
+
+:CountryPart a owl:Class ;
+    rdfs:label "Country Part"^^xsd:string ;
+    ero:definition "A Geopolitical Entity Part that consists of one or more fiat sub-sections of a Country."^^xsd:string ;
+    ero:example_of_usage "Northern Iraq"^^xsd:string,
+        "Southeastern United States"^^xsd:string ;
+    rdfs:comment "This defined class should be used for instances which are not proper sub-national entities (e.g. it should not be used for Cities, Provinces, or States)."^^xsd:string ;
+    rdfs:subClassOf :GeopoliticalEntityPart ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty <http://www.obofoundry.org/ro/ro.owl#part_of> ;
+            owl:someValuesFrom :Country ] .
+
+:FourthOrderAdministrativeRegion a owl:Class ;
+    rdfs:label "Fourth-Order Administrative Region"^^xsd:string ;
+    ero:definition "A Geopolitical Entity that is a subdivision of a Third-Order Administrative Region."^^xsd:string ;
+    ero:definition_source "Geonames: http://www.geonames.org/export/codes.html"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://www.obofoundry.org/ro/ro.owl#proper_part_of> ;
+            owl:someValuesFrom :ThirdOrderAdministrativeRegion ],
+        :GeopoliticalEntity .
+
+:GeopoliticalEntityBorder a owl:Class ;
+    rdfs:label "Geopolitical Entity Border"^^xsd:string ;
+    ero:definition "A Geospatial Boundary that is a boundary of some Geopolitical Entity."^^xsd:string ;
+    ero:definition_source "Derived from: http://en.wikipedia.org/wiki/International_border"^^xsd:string ;
+    rdfs:subClassOf :GeospatialBoundary .
+
+:GeospatialEllipse a owl:Class ;
+    rdfs:label "Geospatial Ellipse"^^xsd:string ;
+    ero:definition "A Geospatial Boundary that is formed by following a symmetric arc between four vertices which are connected to the center point of the ellipse via a straight line."^^xsd:string ;
+    rdfs:subClassOf :GeospatialLineString .
+
+:GeospatialErrorRegion a owl:Class ;
+    rdfs:label "Geospatial Error Region"^^xsd:string ;
+    ero:definition "A Geospatial Boundary that bounds some Geospatail Region according to probability estimations for locating some object within it."^^xsd:string ;
+    rdfs:subClassOf :GeospatialBoundary .
+
+:GeospatialLine a owl:Class ;
+    rdfs:label "Geospatial Line"^^xsd:string ;
+    ero:definition "A Geospatial Line String that has only two vertices."^^xsd:string ;
+    rdfs:subClassOf :GeospatialLineString .
+
+:HighDensityResidentialArea a owl:Class ;
+    rdfs:label "High Density Residential Area"^^xsd:string ;
+    ero:definition "A Populated Place which is characterized by densely contained multiple-unit living structures."^^xsd:string ;
+    ero:definition_source "Derived from: Anderson et. al. A Land Use and Land Cover Classification System for use with Remote Sensor Data, Geological Survey Professional Paper 964"^^xsd:string ;
+    rdfs:subClassOf :PopulatedPlace .
+
+:HydrographicFeature a owl:Class ;
+    rdfs:label "Hydrographic Feature"^^xsd:string ;
+    ero:definition "A Geographic Feature associated with water."^^xsd:string ;
+    rdfs:subClassOf :GeographicFeature .
+
+:LowDensityResidentialArea a owl:Class ;
+    rdfs:label "Low Density Residential Area"^^xsd:string ;
+    ero:definition "A Populated Place where houses are on lots of more than one acre."^^xsd:string ;
+    ero:definition_source "Derived from: Anderson et. al. A Land Use and Land Cover Classification System for use with Remote Sensor Data, Geological Survey Professional Paper 964"^^xsd:string ;
+    rdfs:subClassOf :PopulatedPlace .
+
+:ObjectTrackPoint a owl:Class ;
+    rdfs:label "Object Track Point"^^xsd:string ;
+    ero:definition "A Geospatial Location an Object was located at during some motion."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :spatial_part_of ;
+            owl:someValuesFrom :ObjectTrack ],
+        :GeospatialLocation .
+
+:Park a owl:Class ;
+    rdfs:label "Park"^^xsd:string ;
+    ero:definition "An Anthropogenic Feature that is a bounded area of land, or water, usually in its natural or semi-natural (landscaped) state and set aside for some purpose, usually to do with recreation or conservation."^^xsd:string ;
+    ero:definition_source "Wikipedia: Park"^^xsd:string ;
+    rdfs:subClassOf :AnthropogenicFeature .
+
+:PhysiographicFeature a owl:Class ;
+    rdfs:label "Physiographic Feature"^^xsd:string ;
+    ero:definition "A Geographic Feature that is a geomorphological unit characterized by its surface form and location in the landscape."^^xsd:string ;
+    ero:definition_source "Derived from: http://en.wikipedia.org/wiki/Landform"^^xsd:string ;
+    rdfs:subClassOf :GeographicFeature .
+
+:ProvincePart a owl:Class ;
+    rdfs:label "Province Part"^^xsd:string ;
+    ero:definition "A Geopolitical Entity Part that consists of one or more fiat sub-sections of a Province."^^xsd:string ;
+    ero:example_of_usage "the Greater Montreal Area of Quebec"^^xsd:string,
+        "the southwest area of Al Anbar Province"^^xsd:string ;
+    rdfs:comment "This defined class should be used for instances that are sections of a Province demarcated based on cultural, historic, or demographic reasons."^^xsd:string ;
+    rdfs:subClassOf :GeopoliticalEntityPart ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty <http://www.obofoundry.org/ro/ro.owl#part_of> ;
+            owl:someValuesFrom :Province ] .
+
+:SeaLevel a owl:Class ;
+    rdfs:label "Sea Level"^^xsd:string ;
+    ero:definition "A two-dimensional continuant fiat boundary that divides the spheroid composed of Earth and its atmosphere at some point that corresponds to the mean level of calm water in the Earth’s oceans."^^xsd:string ;
+    rdfs:subClassOf obo:BFO_0000146 .
+
+:StatePart a owl:Class ;
+    rdfs:label "State Part"^^xsd:string ;
+    ero:definition "A Geopolitical Entity Part that consists of one or more fiat sub-sections of a State."^^xsd:string ;
+    ero:example_of_usage "the Texas Panhandle"^^xsd:string,
+        "the Western New York Region"^^xsd:string ;
+    rdfs:comment "This defined class should be used for instances that are sections of a State demarcated based on cultural, historic, or demographic reasons."^^xsd:string ;
+    rdfs:subClassOf :GeopoliticalEntityPart ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty <http://www.obofoundry.org/ro/ro.owl#part_of> ;
+            owl:someValuesFrom :State ] .
+
+:Subcontinent a owl:Class ;
+    rdfs:label "Subcontinent"^^xsd:string ;
+    ero:definition "A Geospatial Region bounded by a large, relatively self-contained landmass forming a subdivision of a Continent."^^xsd:string ;
+    ero:definition_source "Derived from: http://en.wikipedia.org/wiki/Subcontinent"^^xsd:string ;
+    rdfs:subClassOf :GeospatialRegion .
+
+:Town a owl:Class ;
+    rdfs:label "Town"^^xsd:string ;
+    ero:definition "A Geopolitical Entity in which a human population permanently resides that is typically larger than the population of a Village but smaller than that of a City; is designated as a town based on a particular administrative, legal, or historical status; and which delimits a local Government that typically exercises less power than that of a City Government."^^xsd:string ;
+    ero:definition_source "Derived from: http://www.dictionary.com/browse/town"^^xsd:string ;
+    rdfs:subClassOf :GeopoliticalEntity .
+
+:Village a owl:Class ;
+    rdfs:label "Village"^^xsd:string ;
+    ero:definition "A Geopolitical Entity in which a human population permanently resides that is typically larger than the population of a hamlet but smaller than that of a Town."^^xsd:string ;
+    ero:definition_source "Derived from: http://www.merriam-webster.com/dictionary/village"^^xsd:string ;
+    rdfs:subClassOf :GeopoliticalEntity .
+
+:coincides_with a owl:ObjectProperty ;
+    rdfs:label "coincides with"^^xsd:string ;
+    ero:definition "An immaterial entity im1 coincides with some immaterial entity im2 iff im1 is a spatial part of im2 and im2 is a spatial part of im1."^^xsd:string ;
+    rdfs:domain obo:BFO_0000141 ;
+    rdfs:range obo:BFO_0000141 .
+
+:connected_with a owl:ObjectProperty ;
+    rdfs:label "connected with"^^xsd:string ;
+    ero:definition "An immaterial entity im1 is connected with some immaterial entity im2 iff there exists some immaterial entity im3 that is common to both im1 and im2."^^xsd:string ;
+    rdfs:domain obo:BFO_0000141 ;
+    rdfs:range obo:BFO_0000141 .
+
+:disconnected_with a owl:ObjectProperty ;
+    rdfs:label "disconnected with"^^xsd:string ;
+    ero:definition "An immaterial entity im1 is disconnected with some immaterial entity im2 iff there does not exist some immaterial entity im3 that is common to both im1 and im2."^^xsd:string ;
+    rdfs:domain obo:BFO_0000141 ;
+    rdfs:range obo:BFO_0000141 .
+
+:externally_connects_with a owl:ObjectProperty ;
+    rdfs:label "externally connects with"^^xsd:string ;
+    ero:definition "An immaterial entity im1 externally connects with some immaterial entity im2 iff im1 connects with im2 and im1 does not overlap with im2."^^xsd:string ;
+    rdfs:domain obo:BFO_0000141 ;
+    rdfs:range obo:BFO_0000141 .
+
+:has_latitude_value a owl:DatatypeProperty ;
+    rdfs:label "has latitude value"^^xsd:string ;
+    ero:definition "A Data Property that has as its range the latitude value from some Geospatial Location coordinates set expressed in decimal degrees."^^xsd:string ;
+    rdfs:range xsd:decimal .
+
+:has_longitude_value a owl:DatatypeProperty ;
+    rdfs:label "has longitude value"^^xsd:string ;
+    ero:definition "A Data Property that has as its range the longitude value from some Geospatial Location coordinates set expressed in decimal degrees."^^xsd:string ;
+    rdfs:range xsd:decimal .
+
+:has_spatial_part_of a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "has spatial part of"^^xsd:string ;
+    ero:definition "Inverse of spatial part of"^^xsd:string ;
+    rdfs:domain obo:BFO_0000141 ;
+    rdfs:range obo:BFO_0000141 ;
+    rdfs:subPropertyOf <http://www.obofoundry.org/ro/ro.owl#has_part> ;
+    owl:inverseOf :spatial_part_of .
+
+:has_tangential_proper_part a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "has tangential proper part"^^xsd:string ;
+    ero:definition "Inverse of tangential proper part of"^^xsd:string ;
+    rdfs:domain obo:BFO_0000141 ;
+    rdfs:range obo:BFO_0000141 ;
+    rdfs:subPropertyOf :has_spatial_proper_part ;
+    owl:inverseOf :tangential_proper_part_of .
+
+:overlaps_with a owl:ObjectProperty ;
+    rdfs:label "overlaps with"^^xsd:string ;
+    ero:definition "An immaterial entity im1 overlaps with some immaterial entity im2 iff there exists some immaterial entity im such that im is a spatial part of im1 and im is a spatial part of im2."^^xsd:string ;
+    rdfs:domain obo:BFO_0000141 ;
+    rdfs:range obo:BFO_0000141 .
+
+:partially_overlaps_with a owl:ObjectProperty ;
+    rdfs:label "partially overlaps with"^^xsd:string ;
+    ero:definition "An immaterial entity im1 partially overlaps with some immaterial entity im2 iff im1 overlaps with im2 and im1 is not a spatial part of im2 and im2 is not a spatial part of im1."^^xsd:string ;
+    rdfs:domain obo:BFO_0000141 ;
+    rdfs:range obo:BFO_0000141 .
+
+<http://www.opengis.net/ont/geosparql#asWKT> a owl:DatatypeProperty ;
+    rdfs:label "as WKT"^^xsd:string ;
+    ero:definition "A Data Property that has as its range a string formated according to the Well-known text standardization for geometric objects."^^xsd:string ;
+    ero:example_of_usage """Polygon ((10 10, 10 20, 20 20, 20 15, 10 10))
+Point ZM (1 2 5 40)"""^^xsd:string ;
+    rdfs:comment "ISO 19162:2015"^^xsd:string ;
+    rdfs:range <http://www.opengis.net/ont/geosparql#wktLiteral> .
+
+:City a owl:Class ;
+    rdfs:label "City"^^xsd:string ;
+    ero:definition "A Geopolitical Entity in which a relatively large human population permanently resides; is designated as a city based on a particular administrative, legal, or historical status; and which delimits a local Government that typically oversees the provision of systems for sanitation, utilities, land usage, housing, and transportation."^^xsd:string ;
+    ero:definition_source "Derived from: http://en.wikipedia.org/wiki/City"^^xsd:string ;
+    rdfs:subClassOf :GeopoliticalEntity .
+
+:GeospatialPolygon a owl:Class ;
+    rdfs:label "Geospatial Polygon"^^xsd:string ;
+    ero:definition "A Geospatial Line String that has at least three vertices where the connecting lines form a closed loop."^^xsd:string ;
+    rdfs:subClassOf :GeospatialLineString .
+
+:GeospatialRegionBoundingBox a owl:Class ;
+    rdfs:label "Geospatial Region Bounding Box"^^xsd:string ;
+    ero:definition "A Geospatial Polygon that has some Geospatial Region as a non-tangential proper part."^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :has_nontangential_proper_part ;
+            owl:someValuesFrom :GeospatialRegion ],
+        :GeospatialPolygon .
+
+:ObjectTrack a owl:Class ;
+    rdfs:label "Object Track"^^xsd:string ;
+    ero:definition "A Geospatial Location an Object has traversed during some motion."^^xsd:string ;
+    rdfs:subClassOf :GeospatialLocation .
+
+:Province a owl:Class ;
+    rdfs:label "Province"^^xsd:string ;
+    ero:definition "A First-Order Administrative Region that is part of a Country and delimits the authority of a magistrate who holds constitutionally-defined administrative jurisdiction over the defined geographic territory that bounds the Province."^^xsd:string ;
+    ero:definition_source "Derived from: https://en.wikipedia.org/wiki/Province"^^xsd:string ;
+    rdfs:subClassOf :FirstOrderAdministrativeRegion .
+
+:SecondOrderAdministrativeRegion a owl:Class ;
+    rdfs:label "Second-Order Administrative Region"^^xsd:string ;
+    ero:definition "A Geopolitical Entity that is a subdivision of a First-Order Administrative Region."^^xsd:string ;
+    ero:definition_source "Geonames: http://www.geonames.org/export/codes.html"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://www.obofoundry.org/ro/ro.owl#proper_part_of> ;
+            owl:someValuesFrom :FirstOrderAdministrativeRegion ],
+        :GeopoliticalEntity .
+
+:State a owl:Class ;
+    rdfs:label "State"^^xsd:string ;
+    ero:alternative_label "Constituent State"^^xsd:string ;
+    ero:definition "A First-Order Administrative Region that is part of a Country and delimits a centralized regional Government that holds constitutionally-defined administrative jurisdiction over the defined geographic territory that bounds the State."^^xsd:string ;
+    ero:definition_source "Derived from: https://en.wikipedia.org/wiki/Constituent_state"^^xsd:string ;
+    rdfs:subClassOf :FirstOrderAdministrativeRegion .
+
+:ThirdOrderAdministrativeRegion a owl:Class ;
+    rdfs:label "Third-Order Administrative Region"^^xsd:string ;
+    ero:definition "A Geopolitical Entity that is a subdivision of a Second-Order Administrative Region."^^xsd:string ;
+    ero:definition_source "Geonames: http://www.geonames.org/export/codes.html"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://www.obofoundry.org/ro/ro.owl#proper_part_of> ;
+            owl:someValuesFrom :SecondOrderAdministrativeRegion ],
+        :GeopoliticalEntity .
+
+:has_nontangential_proper_part a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "has nontangential proper part"^^xsd:string ;
+    ero:definition "Inverse of nontangential proper part of"^^xsd:string ;
+    rdfs:domain obo:BFO_0000141 ;
+    rdfs:range obo:BFO_0000141 ;
+    rdfs:subPropertyOf :has_spatial_proper_part ;
+    owl:inverseOf :nontangential_proper_part_of .
+
+:nontangential_proper_part_of a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "nontangential proper part of"^^xsd:string ;
+    ero:definition "An immaterial entity im1 is a nontangential proper part of some immaterial entity im2 iff im1 is a spatial proper part of im2 and there does not exist an immaterial entity im such that im externally connects with im1 and im externally connects with im2."^^xsd:string ;
+    rdfs:domain obo:BFO_0000141 ;
+    rdfs:range obo:BFO_0000141 ;
+    rdfs:subPropertyOf :spatial_proper_part_of .
+
+:tangential_proper_part_of a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "tangential proper part of"^^xsd:string ;
+    ero:definition "An immaterial entity im1 is a tangential proper part of some immaterial entity im2 iff im1 is a proper part of im2 and there exists some immaterial entity im such that im externally connects with im1 and im externally connects with im2."^^xsd:string ;
+    rdfs:domain obo:BFO_0000141 ;
+    rdfs:range obo:BFO_0000141 ;
+    rdfs:subPropertyOf :spatial_proper_part_of .
+
+<http://www.opengis.net/ont/geosparql#wktLiteral> a rdfs:Datatype .
+
+:Country a owl:Class ;
+    rdfs:label "Country"^^xsd:string ;
+    ero:alternative_label "Sovereign State"^^xsd:string ;
+    ero:definition "A Geopolitical Entity with effective internal and external sovereignty over a Geospatial Region and population which is not dependent on or subject to any other power or Geopolitical Entity."^^xsd:string ;
+    rdfs:subClassOf :GeopoliticalEntity .
+
+:EnvironmentalFeature a owl:Class ;
+    rdfs:label "Environmental Feature"^^xsd:string ;
+    ero:definition "A Material Entity that is either a natural or man-made feature of the environment."^^xsd:string ;
+    rdfs:subClassOf obo:BFO_0000040 .
+
+:GeospatialLocation a owl:Class ;
+    rdfs:label "Geospatial Location"^^xsd:string ;
+    ero:definition "A Geospatial Region at which an Entity or Event is located."^^xsd:string ;
+    rdfs:subClassOf :GeospatialRegion .
+
+:GeospatialPosition a owl:Class ;
+    rdfs:label "Geospatial Position"^^xsd:string ;
+    ero:definition "A zero-dimensional continuant fiat boundary that is at or near the surface of the Earth and fixed according to some Geospatial Coordinate Reference System."^^xsd:string ;
+    rdfs:subClassOf obo:BFO_0000147 .
+
+:PopulatedPlace a owl:Class ;
+    rdfs:label "Populated place"^^xsd:string ;
+    ero:definition "An Anthropogenic Feature at which people live or have lived."^^xsd:string ;
+    ero:definition_source "Derived from: http://en.wikipedia.org/wiki/Human_settlement"^^xsd:string ;
+    rdfs:subClassOf :AnthropogenicFeature .
+
+:has_spatial_proper_part a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "has spatial proper part"^^xsd:string ;
+    ero:definition "Inverse of spatial proper part of"^^xsd:string ;
+    rdfs:domain obo:BFO_0000141 ;
+    rdfs:range obo:BFO_0000141 ;
+    rdfs:subPropertyOf <http://www.obofoundry.org/ro/ro.owl#has_proper_part> ;
+    owl:inverseOf :spatial_proper_part_of .
+
+:spatial_part_of a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "spatial part of"^^xsd:string ;
+    ero:definition "An immaterial entity im1 is a spatial part of some immaterial entity im2 iff for every immaterial entity im if im is connected with im1, then im is connected with im2."^^xsd:string ;
+    rdfs:domain obo:BFO_0000141 ;
+    rdfs:range obo:BFO_0000141 ;
+    rdfs:subPropertyOf <http://www.obofoundry.org/ro/ro.owl#part_of> .
+
+:AnthropogenicFeature a owl:Class ;
+    rdfs:label "Anthropogenic Feature"^^xsd:string ;
+    ero:definition "An Environmental Feature that is related to or is the result of the influence of human beings on the environment."^^xsd:string ;
+    ero:definition_source "Derived from: http://www.merriam-webster.com/dictionary/anthropogenic"^^xsd:string ;
+    rdfs:subClassOf :EnvironmentalFeature .
+
+:FirstOrderAdministrativeRegion a owl:Class ;
+    rdfs:label "First-Order Administrative Region"^^xsd:string ;
+    ero:definition "A Geopolitical Entity that is a primary administrative division of a Country."^^xsd:string ;
+    ero:definition_source "Geonames: http://www.geonames.org/export/codes.html"^^xsd:string ;
+    ero:example_of_usage "a state in the United States"^^xsd:string ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty <http://www.obofoundry.org/ro/ro.owl#proper_part_of> ;
+            owl:someValuesFrom :Country ],
+        :GeopoliticalEntity .
+
+:GeographicFeature a owl:Class ;
+    rdfs:label "Geographic Feature"^^xsd:string ;
+    ero:definition "An Environmental Feature that is a natural (i.e. not human made) topographical feature having a (relatively) stable location in some Geospatial Region which can be designated by location-specific data."^^xsd:string ;
+    rdfs:subClassOf :EnvironmentalFeature .
+
+:GeospatialBoundary a owl:Class ;
+    rdfs:label "Geospatial Boundary"^^xsd:string ;
+    ero:definition "A One-Dimensional Continuant Fiat Boundary that is a boundary of some Geospatial Region."^^xsd:string ;
+    rdfs:subClassOf obo:BFO_0000142 .
+
+:GeospatialLineString a owl:Class ;
+    rdfs:label "Geospatial Line String"^^xsd:string ;
+    ero:definition "A Geospatial Boundary that has two or more Geospatial Positions as vertices, where each vertex is connected to only one other vertex by a straight line."^^xsd:string ;
+    rdfs:subClassOf :GeospatialBoundary .
+
+:spatial_proper_part_of a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "spatial proper part of"^^xsd:string ;
+    ero:definition "An immaterial entity im1 is a spatial proper part of some immaterial entity im2 iff im1 is a spatial part of im2 and im2 is not a spatial part of im1."^^xsd:string ;
+    rdfs:domain obo:BFO_0000141 ;
+    rdfs:range obo:BFO_0000141 ;
+    rdfs:subPropertyOf <http://www.obofoundry.org/ro/ro.owl#proper_part_of> .
+
+:GeopoliticalEntityPart a owl:Class ;
+    rdfs:label "Geopolitical Entity Part"^^xsd:string ;
+    ero:definition "A Geospatial Region that consists of one or more fiat sub-sections of a Geopolitical Entity."^^xsd:string ;
+    rdfs:subClassOf :GeospatialRegion ;
+    owl:equivalentClass [ a owl:Restriction ;
+            owl:onProperty <http://www.obofoundry.org/ro/ro.owl#part_of> ;
+            owl:someValuesFrom :GeopoliticalEntity ] .
+
+:GeospatialRegion a owl:Class ;
+    rdfs:label "Geospatial Region"^^xsd:string ;
+    ero:definition "A Site at or near the surface of the Earth."^^xsd:string ;
+    rdfs:subClassOf obo:BFO_0000029 .
+
+:GeopoliticalEntity a owl:Class ;
+    rdfs:label "Geopolitical Entity"^^xsd:string ;
+    ero:definition "A Geospatial Region that delimits the authority of a formally constituted Government to exercise its control within the bounded area."^^xsd:string ;
+    rdfs:subClassOf :GeospatialRegion .
+
