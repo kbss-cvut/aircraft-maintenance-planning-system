@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1615286619401" name="http://www.obofoundry.org/ro/ro.owl" uri="external/original-files/ro.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1615286619401" name="http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology" uri="external/original-files/ArtifactOntology.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1615286619401" name="http://www.ontologylibrary.mil/CommonCore/Mid/EventOntology" uri="external/original-files/EventOntology.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1615286619401" name="http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology" uri="external/original-files/GeospatialOntology.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1615286619401" name="http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology" uri="external/original-files/InformationEntityOntology.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1615286619401" name="http://www.ontologylibrary.mil/CommonCore/Mid/TimeOntology" uri="external/original-files/TimeOntology.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1615286619401" name="http://www.ontologylibrary.mil/CommonCore/Mid/UnitsOfMeasureOntology" uri="external/original-files/UnitsOfMeasureOntology.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1615286619401" name="http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology" uri="external/original-files/ExtendedRelationOntology.owl"/>
+    </group>
+</catalog>
