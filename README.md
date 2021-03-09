@@ -19,6 +19,7 @@ This project contains software modules produced by the Doprava 2020 CSAT project
 - ./bin - for scripts
 - ./input - for output of scripts
 - ./output - for source files of scripts
+- ./doc - documentation of ontologies
 
 #### RDF resources
 
