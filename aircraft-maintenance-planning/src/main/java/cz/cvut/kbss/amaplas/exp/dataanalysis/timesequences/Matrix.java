@@ -2,7 +2,7 @@ package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences;
 
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.Result;
 import org.apache.commons.collections4.PredicateUtils;
-import org.checkerframework.checker.units.qual.K;
+//import org.checkerframework.checker.units.qual.K;
 
 import java.util.Arrays;
 import java.util.List;

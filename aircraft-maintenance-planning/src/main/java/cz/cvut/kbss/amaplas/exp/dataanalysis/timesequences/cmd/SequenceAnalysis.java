@@ -1,7 +1,6 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.cmd;
 
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.ExtractData;
-import org.checkerframework.checker.index.qual.Positive;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
@@ -10,7 +9,6 @@ import org.kohsuke.args4j.spi.IntOptionHandler;
 import org.kohsuke.args4j.spi.OptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -18,6 +16,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.util.Set;
 
