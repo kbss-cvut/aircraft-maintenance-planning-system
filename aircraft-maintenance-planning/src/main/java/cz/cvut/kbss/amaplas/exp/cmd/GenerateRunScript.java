@@ -88,12 +88,13 @@ public class GenerateRunScript {
         if(jarFile == null || classpath == null)
             return;
         // add jar file to classpath
-        classpath = jarFile.getCanonicalPath() + ";" + classpath;
+//        classpath = jarFile.getCanonicalPath() + ";" + classpath;
+        classpath = new File(jarFile.getCanonicalFile().getParentFile(), "classes").getPath() + ";" + classpath;
         // build java command
         String cmd = String.format(
                 "@echo off\n" +
-                "java -classpath %s %s\n" +
-                "@echo off", classpath, "%*");
+                "java -classpath %s %s %s\n" +
+                "@echo off", classpath, CMDMain.class.getCanonicalName(), "%*");
 
         File cmdFile = new File("./target", "run.bat");
         try(Writer w = new FileWriter(cmdFile)) {
