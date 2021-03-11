@@ -81,11 +81,18 @@
             <version>1.18.16</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>com.ontotext.graphdb</groupId>-->
+<!--            <artifactId>graphdb-enterprise-runtime</artifactId>-->
+<!--            <version>${graphdb.version}</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
         <dependency>
-            <groupId>com.ontotext.graphdb</groupId>
-            <artifactId>graphdb-enterprise-runtime</artifactId>
-            <version>${graphdb.version}</version>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>4.6</version>
         </dependency>
+
         <dependency>
             <groupId>org.jgrapht</groupId>
             <artifactId>jgrapht-core</artifactId>
@@ -98,15 +105,20 @@
         </dependency>
         <dependency>
             <groupId>org.topbraid</groupId>
-            <artifactId>shacl</artifactId>
-            <version>1.0.1</version>
-            <exclusions> <!-- TODO update jena libs and remove exclusions -->
-                <exclusion>
-                    <groupId>org.apache.jena</groupId>
-                    <artifactId>jena-arq</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>spin</artifactId>
+            <version>2.0.0</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.topbraid</groupId>-->
+<!--            <artifactId>shacl</artifactId>-->
+<!--            <version>1.0.1</version>-->
+<!--            <exclusions> &lt;!&ndash; TODO update jena libs and remove exclusions &ndash;&gt;-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.apache.jena</groupId>-->
+<!--                    <artifactId>jena-arq</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
@@ -185,6 +197,17 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>cz.cvut.kbss</groupId>-->
+<!--            <artifactId>ufo-validator</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.topbraid</groupId>
+            <artifactId>shacl</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+
 <!--        <dependency>-->
 <!--            <groupId>org.hamcrest</groupId>-->
 <!--            <artifactId>hamcrest-core</artifactId>-->
@@ -273,9 +296,15 @@
     </build>
 
     <repositories>
+<!--        <repository>-->
+<!--            <id>ontotext-public</id>-->
+<!--            <url>http://maven.ontotext.com/repository/owlim-releases</url>-->
+<!--        </repository>-->
         <repository>
-            <id>ontotext-public</id>
-            <url>http://maven.ontotext.com/repository/owlim-releases</url>
+            <id>tq-spin</id>
+            <name>TopBraid SPIN Repository</name>
+<!--            <url>ftp://ftp.topquadrant.com/public_html/repository/spin</url>-->
+            <url>http://www.topquadrant.com/repository/spin</url>
         </repository>
     </repositories>
 </project>
