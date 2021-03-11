@@ -7,9 +7,10 @@
 @base <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN> .
 
 <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN> rdf:type owl:Ontology ;
-                                                             owl:imports <http://purl.obolibrary.org/obo/bfo/2.0/bfo.owl> ,
+                                                             owl:imports 
+															 <http://purl.obolibrary.org/obo/bfo/2.0/bfo.owl> ,
                                                                          <http://purl.obolibrary.org/obo/iao/2017-03-24/iao.owl> ,
-                                                                         <http://www.obofoundry.org/ro/ro.owl> ,
+                                                                       <http://www.obofoundry.org/ro/ro.owl> ,
                                                                          <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology> ,
                                                                          <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology> ,
                                                                          <http://www.ontologylibrary.mil/CommonCore/Mid/TimeOntology> ,

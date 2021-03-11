@@ -1,0 +1,4029 @@
+@prefix : <http://www.semanticweb.org/ahmadjan/ontologies/2021/2/untitled-ontology-303#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance-merge> a owl:Ontology ;
+	<http://purl.org/dc/terms/created> "16.11.2017"@en , "20.10.2017"@en , "22.11.2017"@en ;
+	<http://purl.org/dc/terms/description> "Operational version of the UFO Ontology describes basic notions of UFO in terms of the Web Ontology Language, possibly extended with SWRL rules. The main goals of the ontology are (1) to provide easy way to link UFO-related terms to applications, resources, as well as multimedia, (2) to provide a computable artifact for basic reasoning and UFO-compliant data integration."@en , "The ontology aims at formalize basic notions of multi-level modeling in the Unified Foundational Ontology."@en , "The ontology aims at formalize basic notions of the Unified Foundational Ontology, part A - structural models."@en , "The ontology aims at formalize basic notions of the Unified Foundational Ontology, part B - Events."@en , "The ontology aims at formalize basic notions of the Unified Foundational Ontology, part C - Social."@en , "The ontology aims at formalize the basic notions around dispositions and actions in the Unified Foundational Ontology."@en , "The ontology aims at formalize the basic notions of the OntoUML language."@en , "The ontology aims at formalizing basic temporal properties of the Unified Foundational Ontology, namely Allen algebra."@en ;
+	<http://purl.org/dc/terms/rights> <https://creativecommons.org/licenses/by-sa/4.0> , "https://creativecommons.org/licenses/by-sa/4.0"^^xsd:string ;
+	<http://purl.org/dc/terms/title> "Unified Foundational Ontology"@en , "Unified Foundational Ontology - A"@en , "Unified Foundational Ontology - B"@en , "Unified Foundational Ontology - B - dispositions"@en , "Unified Foundational Ontology - B - temporal reasoning"@en , "Unified Foundational Ontology - C"@en , "Unified Foundational Ontology - OntoUML"@en , "Unified Foundational Ontology - Powertypes"@en ;
+	<http://purl.org/ontology/bibo/status> "Ontology Specification"@en ;
+	<http://purl.org/vocab/vann/preferredNamespacePrefix> "ufo"@en ;
+	<http://purl.org/vocab/vann/preferredNamespaceUri> "http://onto.fel.cvut.cz/ontologies/ufo/"@en ;
+	owl:priorVersion <http://onto.fel.cvut.cz/ontologies/ufo-a/1.0.0> , <http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/1.0.0> , <http://onto.fel.cvut.cz/ontologies/ufo-b-temporal/1.0.0> , <http://onto.fel.cvut.cz/ontologies/ufo-b/1.0.0> , <http://onto.fel.cvut.cz/ontologies/ufo-c/1.0.0> , <http://onto.fel.cvut.cz/ontologies/ufo-ontouml/1.0.1> , <http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.0> , "http://onto.fel.cvut.cz/ontologies/ufo/1.0.1"^^xsd:string ;
+	owl:versionInfo "1.0.1"@en , "1.0.2"@en .
+# 
+# 
+# #################################################################
+# #
+# #    Annotation properties
+# #
+# #################################################################
+# 
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> a owl:AnnotationProperty ;
+	rdfs:label "has abbreviation" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/axiom
+
+<http://onto.fel.cvut.cz/ontologies/ufo/axiom> a owl:AnnotationProperty .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/contributes-to
+
+<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to> a owl:AnnotationProperty .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for
+
+<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> a owl:AnnotationProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/contributes-to> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for
+
+<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for> a owl:AnnotationProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/contributes-to> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/fol-formula
+
+<http://onto.fel.cvut.cz/ontologies/ufo/fol-formula> a owl:AnnotationProperty .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/is-associated-with
+
+<http://onto.fel.cvut.cz/ontologies/ufo/is-associated-with> a owl:AnnotationProperty ;
+	rdfs:label "is associated with"@en ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/power-type> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/is-necessary-condition-for
+
+<http://onto.fel.cvut.cz/ontologies/ufo/is-necessary-condition-for> a owl:AnnotationProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/is-sufficient-condition-for
+
+<http://onto.fel.cvut.cz/ontologies/ufo/is-sufficient-condition-for> a owl:AnnotationProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/necessary-condition-for
+
+<http://onto.fel.cvut.cz/ontologies/ufo/necessary-condition-for> a owl:AnnotationProperty .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl
+
+<http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl> a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/created
+
+<http://purl.org/dc/terms/created> a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/creator
+
+<http://purl.org/dc/terms/creator> a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/description
+
+<http://purl.org/dc/terms/description> a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/rights
+
+<http://purl.org/dc/terms/rights> a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/source
+
+<http://purl.org/dc/terms/source> a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/title
+
+<http://purl.org/dc/terms/title> a owl:AnnotationProperty .
+# 
+# http://purl.org/ontology/bibo/status
+
+<http://purl.org/ontology/bibo/status> a owl:AnnotationProperty .
+# 
+# http://purl.org/vocab/vann/preferredNamespacePrefix
+
+<http://purl.org/vocab/vann/preferredNamespacePrefix> a owl:AnnotationProperty .
+# 
+# http://purl.org/vocab/vann/preferredNamespaceUri
+
+<http://purl.org/vocab/vann/preferredNamespaceUri> a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2002/07/owl#versionInfo
+
+owl:versionInfo a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2003/11/swrl#argument1
+
+<http://www.w3.org/2003/11/swrl#argument1> a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2003/11/swrl#argument2
+
+<http://www.w3.org/2003/11/swrl#argument2> a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2003/11/swrl#propertyPredicate
+
+<http://www.w3.org/2003/11/swrl#propertyPredicate> a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2004/02/skos/core#definition
+
+<http://www.w3.org/2004/02/skos/core#definition> a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2004/02/skos/core#example
+
+<http://www.w3.org/2004/02/skos/core#example> a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2004/02/skos/core#scopeNote
+
+<http://www.w3.org/2004/02/skos/core#scopeNote> a owl:AnnotationProperty .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Object Properties
+# #
+# #################################################################
+# 
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_dmage
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_dmage> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Planned_Task> ;
+	rdfs:label "has damage" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_fiding
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_fiding> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Finding> ;
+	rdfs:label "has finding" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_follow_up_actions
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_follow_up_actions> a owl:ObjectProperty ;
+	rdfs:label "has follow up actions" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_scope
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_scope> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_task> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Group> ;
+	rdfs:label "has scope" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/leads
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/leads> a owl:ObjectProperty ;
+	rdfs:comment "leads" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/member_of_group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/member_of_group> a owl:ObjectProperty ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Group> ;
+	rdfs:label "member of group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/referes_to
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/referes_to> a owl:ObjectProperty ;
+	rdfs:label "referes to" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/requires
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/requires> a owl:ObjectProperty ;
+	rdfs:label "requires" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/task_type
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/task_type> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_task> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_task> ;
+	rdfs:label "task type" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/affect
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/affect> a owl:ObjectProperty ;
+	rdfs:label "affect" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/describes
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/describes> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Document> ;
+	rdfs:range owl:Thing ;
+	rdfs:label "describes" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/has_subject
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/has_subject> a owl:ObjectProperty ;
+	rdfs:label "has subject" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/requires
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/requires> a owl:ObjectProperty .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/violates
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/violates> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Nonconfirmity> .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/activates
+
+<http://onto.fel.cvut.cz/ontologies/ufo/activates> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/situation> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/disposition> ;
+	rdfs:label "activates"@en .
+
+_:genid1 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/activates> ;
+	owl:annotatedProperty rdfs:domain ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/situation> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a20"^^xsd:string .
+
+_:genid2 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/activates> ;
+	owl:annotatedProperty rdfs:range ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/disposition> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a34"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/before
+
+<http://onto.fel.cvut.cz/ontologies/ufo/before> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/is-temporally-related> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:label "before"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/brings-about
+
+<http://onto.fel.cvut.cz/ontologies/ufo/brings-about> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/situation> ;
+	rdfs:label "brings about"@en .
+
+_:genid3 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/brings-about> ;
+	owl:annotatedProperty rdfs:domain ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a17"^^xsd:string .
+
+_:genid4 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/brings-about> ;
+	owl:annotatedProperty rdfs:range ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/situation> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a31"^^xsd:string , "a52-part2"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/causes
+
+<http://onto.fel.cvut.cz/ontologies/ufo/causes> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:label "causes"@en .
+
+_:genid5 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/causes> ;
+	owl:annotatedProperty rdfs:domain ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a18"^^xsd:string .
+
+_:genid6 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/causes> ;
+	owl:annotatedProperty rdfs:range ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a32"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/depends-on
+
+<http://onto.fel.cvut.cz/ontologies/ufo/depends-on> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	rdfs:label "depends on"@en .
+
+_:genid7 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/depends-on> ;
+	owl:annotatedProperty rdfs:subPropertyOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a71"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> "P2"^^xsd:string .
+
+_:genid8 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/depends-on> ;
+	owl:annotatedProperty rdfs:domain ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a14"^^xsd:string .
+
+_:genid9 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/depends-on> ;
+	owl:annotatedProperty rdfs:range ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a28"^^xsd:string , "a49-part2"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/directly-causes
+
+<http://onto.fel.cvut.cz/ontologies/ufo/directly-causes> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/causes> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:label "directly causes"@en .
+
+_:genid10 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/directly-causes> ;
+	owl:annotatedProperty rdfs:subPropertyOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/causes> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a11"^^xsd:string .
+
+_:genid11 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/directly-causes> ;
+	owl:annotatedProperty rdfs:domain ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a19"^^xsd:string .
+
+_:genid12 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/directly-causes> ;
+	owl:annotatedProperty rdfs:range ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a33"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/during
+
+<http://onto.fel.cvut.cz/ontologies/ufo/during> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/is-temporally-related> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:label "during"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/equals
+
+<http://onto.fel.cvut.cz/ontologies/ufo/equals> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/is-temporally-related> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:label "equals"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on
+
+<http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on> a owl:ObjectProperty ;
+	owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/participation> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	rdfs:label "exclusively depends on"@en .
+
+_:genid13 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on> ;
+	owl:annotatedProperty owl:equivalentProperty ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/is-necessary-condition-for> "P5"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/is-sufficient-condition-for> "P5"^^xsd:string .
+
+_:genid14 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on> ;
+	owl:annotatedProperty rdfs:domain ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/participation> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a24"^^xsd:string .
+
+_:genid15 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on> ;
+	owl:annotatedProperty rdfs:range ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a38"^^xsd:string , "a55-part2"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> "P4"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/finishes
+
+<http://onto.fel.cvut.cz/ontologies/ufo/finishes> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/is-temporally-related> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:label "finishes"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point
+
+<http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/time-point> ;
+	rdfs:label "has begin point"@en .
+
+_:genid16 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	owl:annotatedProperty rdfs:domain ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a22"^^xsd:string .
+
+_:genid17 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	owl:annotatedProperty rdfs:range ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/time-point> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a36"^^xsd:string , "a53-part2"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/has-end-point
+
+<http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/time-point> ;
+	rdfs:label "has end point"@en .
+
+_:genid18 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	owl:annotatedProperty rdfs:domain ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a23"^^xsd:string .
+
+_:genid19 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	owl:annotatedProperty rdfs:range ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/time-point> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a37"^^xsd:string , "a54-part2"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/has-event-part
+
+<http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/has-part> , <http://onto.fel.cvut.cz/ontologies/ufo/mereologically-overlaps> ;
+	owl:inverseOf <http://onto.fel.cvut.cz/ontologies/ufo/is-event-part-of> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:label "has event part"@en .
+
+_:genid20 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	owl:annotatedProperty rdfs:subPropertyOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/mereologically-overlaps> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a66-part1"^^xsd:string , "a66-part2"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for> "M7"^^xsd:string .
+
+_:genid21 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	owl:annotatedProperty rdfs:domain ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a13"^^xsd:string .
+
+_:genid22 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	owl:annotatedProperty rdfs:range ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a27"^^xsd:string , "a48-part2"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/has-inherent-moment
+
+<http://onto.fel.cvut.cz/ontologies/ufo/has-inherent-moment> a owl:ObjectProperty ;
+	owl:inverseOf <http://onto.fel.cvut.cz/ontologies/ufo/inheres-in> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/entity> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/trope> ;
+	rdfs:label "has inherent moment"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/has-object-part
+
+<http://onto.fel.cvut.cz/ontologies/ufo/has-object-part> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/has-part> ;
+	owl:inverseOf <http://onto.fel.cvut.cz/ontologies/ufo/is-object-part-of> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	rdfs:label "has object part"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/has-part
+
+<http://onto.fel.cvut.cz/ontologies/ufo/has-part> a owl:ObjectProperty ;
+	owl:inverseOf <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/entity> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/entity> ;
+	rdfs:label "has part"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/has-participant
+
+<http://onto.fel.cvut.cz/ontologies/ufo/has-participant> a owl:ObjectProperty ;
+	owl:inverseOf <http://onto.fel.cvut.cz/ontologies/ufo/is-participant-of> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	rdfs:label "has participant"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/has-post-situation
+
+<http://onto.fel.cvut.cz/ontologies/ufo/has-post-situation> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/situation> ;
+	rdfs:label "has post situation"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/has-pre-situation
+
+<http://onto.fel.cvut.cz/ontologies/ufo/has-pre-situation> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/situation> ;
+	rdfs:label "has pre situation"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/has-property
+
+<http://onto.fel.cvut.cz/ontologies/ufo/has-property> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/power-type> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/power-type> ;
+	rdfs:label "has property"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/has-type
+
+<http://onto.fel.cvut.cz/ontologies/ufo/has-type> a owl:ObjectProperty ;
+	rdfs:comment "This relation is a relationship between an individual and its type. The type is understood in the sens  of UFO instance powertype."@en ;
+	rdfs:label "has type"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/inheres-in
+
+<http://onto.fel.cvut.cz/ontologies/ufo/inheres-in> a owl:ObjectProperty ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/entity> ;
+	rdfs:label "inheres in"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/is-classified-by
+
+<http://onto.fel.cvut.cz/ontologies/ufo/is-classified-by> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/individual> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/type> ;
+	rdfs:label "is classified by"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/is-event-part-of
+
+<http://onto.fel.cvut.cz/ontologies/ufo/is-event-part-of> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> , <http://onto.fel.cvut.cz/ontologies/ufo/mereologically-overlaps> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:label "is event part of"@en .
+
+_:genid23 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/is-event-part-of> ;
+	owl:annotatedProperty rdfs:subPropertyOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/mereologically-overlaps> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a66-part2"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for> "M7"^^xsd:string ;
+	rdfs:comment "a66-part3"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by
+
+<http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/disposition> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> ;
+	rdfs:label "is manifested by"@en .
+
+_:genid24 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by> ;
+	owl:annotatedProperty rdfs:domain ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/disposition> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a21"^^xsd:string , "a60-part2"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> "D2"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for> "D2"^^xsd:string .
+
+_:genid25 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by> ;
+	owl:annotatedProperty rdfs:range ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a35"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/is-object-part-of
+
+<http://onto.fel.cvut.cz/ontologies/ufo/is-object-part-of> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	rdfs:label "is object part of"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/is-part-of
+
+<http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/entity> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/entity> ;
+	rdfs:label "is part of"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/is-participant-of
+
+<http://onto.fel.cvut.cz/ontologies/ufo/is-participant-of> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:label "is participant of"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of
+
+<http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/has-participant> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/participation> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	rdfs:label "is participation of"@en .
+
+_:genid26 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of> ;
+	owl:annotatedProperty rdfs:domain ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/participation> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a25"^^xsd:string .
+
+_:genid27 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of> ;
+	owl:annotatedProperty rdfs:range ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a39"^^xsd:string , "a56-part2"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/is-performed-by
+
+<http://onto.fel.cvut.cz/ontologies/ufo/is-performed-by> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/has-participant> ;
+	owl:inverseOf <http://onto.fel.cvut.cz/ontologies/ufo/performs> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/action> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/agent> ;
+	rdfs:label "is performed by"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/is-snapshot-of
+
+<http://onto.fel.cvut.cz/ontologies/ufo/is-snapshot-of> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/object-snapshot> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	rdfs:label "is snapshot of"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/is-temporally-related
+
+<http://onto.fel.cvut.cz/ontologies/ufo/is-temporally-related> a owl:ObjectProperty ;
+	rdfs:label "is temporally related"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/meets
+
+<http://onto.fel.cvut.cz/ontologies/ufo/meets> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/is-temporally-related> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:label "meets"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/mereologically-overlaps
+
+<http://onto.fel.cvut.cz/ontologies/ufo/mereologically-overlaps> a owl:ObjectProperty ;
+	rdfs:label "mereologically overlaps"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/object-has-trope
+
+<http://onto.fel.cvut.cz/ontologies/ufo/object-has-trope> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/has-inherent-moment> ;
+	owl:inverseOf <http://onto.fel.cvut.cz/ontologies/ufo/trope-inheres-in-object> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/trope> ;
+	rdfs:label "object has trope"@en .
+
+_:genid28 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/object-has-trope> ;
+	owl:annotatedProperty rdfs:domain ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a57-part2"^^xsd:string .
+
+_:genid29 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/object-has-trope> ;
+	owl:annotatedProperty rdfs:range ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/trope> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a57-part2"^^xsd:string , "a57-part3"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/obtains-in
+
+<http://onto.fel.cvut.cz/ontologies/ufo/obtains-in> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/situation> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/time-point> ;
+	rdfs:label "obtains in"@en .
+
+_:genid30 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/obtains-in> ;
+	owl:annotatedProperty rdfs:domain ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/situation> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a15"^^xsd:string , "a58-part2"^^xsd:string .
+
+_:genid31 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/obtains-in> ;
+	owl:annotatedProperty rdfs:range ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/time-point> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a29"^^xsd:string , "a50-part2"^^xsd:string , "a51-part2"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/performs
+
+<http://onto.fel.cvut.cz/ontologies/ufo/performs> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/is-participant-of> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/agent> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/action> ;
+	rdfs:label "performs"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/precedes
+
+<http://onto.fel.cvut.cz/ontologies/ufo/precedes> a owl:ObjectProperty , owl:AsymmetricProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/time-point> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/time-point> ;
+	rdfs:label "precedes"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/starts
+
+<http://onto.fel.cvut.cz/ontologies/ufo/starts> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/is-temporally-related> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:label "starts"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/temporally-overlaps
+
+<http://onto.fel.cvut.cz/ontologies/ufo/temporally-overlaps> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/is-temporally-related> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:label "temporally overlaps"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/triggers
+
+<http://onto.fel.cvut.cz/ontologies/ufo/triggers> a owl:ObjectProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/situation> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdfs:label "triggers"@en .
+
+_:genid32 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/triggers> ;
+	owl:annotatedProperty rdfs:domain ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/situation> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a16"^^xsd:string , "a59-part2"^^xsd:string .
+
+_:genid33 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/triggers> ;
+	owl:annotatedProperty rdfs:range ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a30"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/trope-inheres-in-object
+
+<http://onto.fel.cvut.cz/ontologies/ufo/trope-inheres-in-object> a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/inheres-in> ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/ufo/trope> ;
+	rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	rdfs:label "trope inheres in object"@en .
+
+_:genid34 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/trope-inheres-in-object> ;
+	owl:annotatedProperty rdfs:domain ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/trope> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a12"^^xsd:string .
+
+_:genid35 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/trope-inheres-in-object> ;
+	owl:annotatedProperty rdfs:range ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a26"^^xsd:string , "a47-part2"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> "D1"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for> "D1"^^xsd:string .
+# 
+# http://www.w3.org/2002/07/owl#differentFrom
+
+owl:differentFrom a owl:ObjectProperty .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Data properties
+# #
+# #################################################################
+# 
+# 
+# http://csat.cz/ontologies/maintenance-schema/A/age
+
+<http://csat.cz/ontologies/maintenance-schema/A/age> a owl:DatatypeProperty ;
+	rdfs:range xsd:integer .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/ATA_code
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/ATA_code> a owl:DatatypeProperty ;
+	rdfs:label "ATA code" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/List_of_technicians_available
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/List_of_technicians_available> a owl:DatatypeProperty ;
+	rdfs:range xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/MHrs
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/MHrs> a owl:DatatypeProperty ;
+	rdfs:label "MHrs" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/aircraft_age
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/aircraft_age> a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://csat.cz/ontologies/maintenance-schema/A/age> .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/aircraft_regestration_number
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/aircraft_regestration_number> a owl:DatatypeProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Aircraft> ;
+	rdfs:range owl:real ;
+	rdfs:label "aircraft regestration number" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/date
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/date> a owl:DatatypeProperty ;
+	rdfs:range xsd:dateTimeStamp ;
+	rdfs:label "date" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/duration
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/duration> a owl:DatatypeProperty ;
+	rdfs:label "duration" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_restriction_value
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_restriction_value> a owl:DatatypeProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Restriction> ;
+	rdfs:label "has restriction value" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_end_date
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_end_date> a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/date> ;
+	rdfs:label "maintenance task end date" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_end_time
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_end_time> a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time> ;
+	rdfs:label "maintenance task end time" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_scheduled_time
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_scheduled_time> a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time> ;
+	rdfs:label "maintenance task scheduled time" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_start_time
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_start_time> a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time> ;
+	rdfs:label "maintenance task start time" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/note
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/note> a owl:DatatypeProperty ;
+	rdfs:label "note" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/number_of_planned_tasks
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/number_of_planned_tasks> a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/اhas_number> ;
+	rdfs:label "number of planned tasks" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/order
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/order> a owl:DatatypeProperty ;
+	rdfs:label "order" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/task_type_identifier
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/task_type_identifier> a owl:DatatypeProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_task> ;
+	rdfs:range xsd:integer ;
+	rdfs:label "task type identifier" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/time
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/time> a owl:DatatypeProperty ;
+	rdfs:range xsd:dateTime ;
+	rdfs:label "time" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/wo_text
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/wo_text> a owl:DatatypeProperty ;
+	rdfs:domain <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Work_Order> ;
+	rdfs:range xsd:string ;
+	rdfs:label "wo text" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_end_date
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_end_date> a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/date> ;
+	rdfs:label "workpackage end date" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_end_time
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_end_time> a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time> ;
+	rdfs:label "workpackage end time" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_scheduled_time
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_scheduled_time> a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time> ;
+	rdfs:label "workpackage scheduled time" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_start__time
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_start__time> a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time> ;
+	rdfs:label "workpackage start time" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_start_date
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_start_date> a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/date> ;
+	rdfs:label "workpackage start date" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/worksession_end_date
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/worksession_end_date> a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/date> ;
+	rdfs:label "worksession end date" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/worksession_end_time
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/worksession_end_time> a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time> ;
+	rdfs:label "worksession end time" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/worksession_start_date
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/worksession_start_date> a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/date> ;
+	rdfs:label "worksession start date" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/worksession_start_time
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/worksession_start_time> a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time> ;
+	rdfs:label "worksession start time" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/اhas_number
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/اhas_number> a owl:DatatypeProperty ;
+	rdfs:range owl:real ;
+	rdfs:label "number" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/task_code
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/task_code> a owl:DatatypeProperty ;
+	rdfs:label "task code" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/A/age
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/A/age> a owl:DatatypeProperty ;
+	rdfs:label "age" .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+# 
+# 
+# http://csat.cz/ontologies/maintenance-csat-onto/AV/INT
+
+<http://csat.cz/ontologies/maintenance-csat-onto/AV/INT> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_team> ;
+	rdfs:label "AV/INT" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Access_step
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Access_step> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_steps> ;
+	rdfs:label "Access step" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Adjusting
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Adjusting> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "ADJ" ;
+	rdfs:label "Adjusting" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Aircraft
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Aircraft> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/maintenance-schema/System> , _:genid36 .
+
+_:genid36 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/ATA_code> ;
+	owl:someValuesFrom xsd:integer .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Aircraft> rdfs:subClassOf _:genid37 .
+
+_:genid37 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/aircraft_age> ;
+	owl:someValuesFrom xsd:integer .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Aircraft> rdfs:subClassOf _:genid38 .
+
+_:genid38 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/aircraft_regestration_number> ;
+	owl:someValuesFrom xsd:integer .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Avionics_Mechanic_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Avionics_Mechanic_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Heavy_Maintenance_Group> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "AVIO" ;
+	rdfs:label "Avionics Mechanic Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Borescope_Inspection
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Borescope_Inspection> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "BSI" ;
+	rdfs:label "Borescope Inspection" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Change
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Change> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "CHG" , "Change" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Check
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Check> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Planned_Task> , <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "CHK" ;
+	rdfs:label "Check" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Client
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Client> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/organization> ;
+	rdfs:label "Client" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Client_Extra__Order_task
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Client_Extra__Order_task> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_task> , _:genid39 .
+
+_:genid39 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/has-participant> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Client> .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Client_Extra__Order_task> rdfs:label "Client Extra Order task" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Composite_Workshop__Support_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Composite_Workshop__Support_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Support_Group> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "Composite Workshop  Support Group" ;
+	rdfs:label "Composite Workshop  Support Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Damage
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Damage> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Failure_Event> .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Detail_Visual_Inspection
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Detail_Visual_Inspection> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "DVI" ;
+	rdfs:label "Detail Visual Inspection" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Detailed_Inspection
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Detailed_Inspection> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "DET" ;
+	rdfs:label "Detailed Inspection" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Document
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Document> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Document> .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/ENG
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/ENG> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_team> ;
+	rdfs:label "ENG" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/El._Power
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/El._Power> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Restriction> , _:genid40 .
+
+_:genid40 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_restriction_value> ;
+	owl:someValuesFrom rdfs:Literal .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/El._Power> rdfs:comment """specifies the Electrical power system's state required for the Main step.
+		- possible values (states): ON, OFF, / (no restriction)""" ;
+	rdfs:label "El. Power" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Engine_Mechanic_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Engine_Mechanic_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Heavy_Maintenance_Group> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "ING" ;
+	rdfs:label "Engine Mechanic Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Exterior_Mechanic_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Exterior_Mechanic_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Heavy_Maintenance_Group> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "MECH-EXT" ;
+	rdfs:label "Exterior Mechanic Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Final_step
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Final_step> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_steps> ;
+	rdfs:label "Final step" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Finding
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Finding> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Observation> ;
+	rdfs:label "Finding" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Finding__Damage
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Finding__Damage> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Damage> , <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Finding> , _:genid41 .
+
+_:genid41 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Non_Planned_Task> .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Finding__Damage> rdfs:label "Finding  Damage" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Functional_Ttest
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Functional_Ttest> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "FNC" ;
+	rdfs:label "Functional Ttest" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/General
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/General> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "GEN" ;
+	rdfs:label "General" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/General_visual_inspection
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/General_visual_inspection> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "GVI" ;
+	rdfs:label "General visual inspection" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Heavy_Maintenance_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Heavy_Maintenance_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Group> ;
+	rdfs:label "Heavy Maintenance Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Hyd._Power
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Hyd._Power> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Restriction> ;
+	rdfs:comment """- specifies the Hydraulic power system's state required for the Main step.
+		- possible values (states): ON, OFF, / (no restriction)""" ;
+	rdfs:label "Hyd. Power" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/INT
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/INT> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_team> ;
+	rdfs:label "INT" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Interior_Mechanic_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Interior_Mechanic_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Heavy_Maintenance_Group> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "MECH-INT" ;
+	rdfs:label "Interior Mechanic Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Jack
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Jack> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Restriction> , _:genid42 .
+
+_:genid42 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_restriction_value> ;
+	owl:someValuesFrom rdfs:Literal .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Jack> rdfs:comment """- specifies whether the Aircraft is required to be on or off the Jack for the Main step.
+		- possible values (states): Yes, NO, / (no restriction)""" ;
+	rdfs:label "Jack" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Joiners_Support_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Joiners_Support_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Support_Group> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "JOI" ;
+	rdfs:label "Joiners Support Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Landing_Gear_Mechanic_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Landing_Gear_Mechanic_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Heavy_Maintenance_Group> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "MECH-LDG" ;
+	rdfs:label "Landing Gear Mechanic Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Line_Manager
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Line_Manager> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Manager> , _:genid43 .
+
+_:genid43 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/leads> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Team_Leader> .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Line_Manager> rdfs:label "Line Manager" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Lubrication
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Lubrication> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "LUB" ;
+	rdfs:label "Lubrication" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Main_step
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Main_step> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_steps> ;
+	rdfs:label "Main step" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/physical-agent> ;
+	rdfs:label "Maintenance Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Manager
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Manager> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/physical-agent> ;
+	rdfs:label "Maintenance Manager" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Plan
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Plan> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Document> ;
+	rdfs:comment "Description of the maintenance and inspection tasks to be performed at maintenance objects. The maintenance plans describe the dates and scope of the tasks." ;
+	rdfs:label "Maintenance Plan" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Support_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Support_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Group> ;
+	rdfs:label "Maintenance Support Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Work_Order
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Work_Order> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Work_Order> ;
+	rdfs:comment "A maintenance work order provides details about maintenance, repair, or operations work, such as replacing a part, returning an asset to operating condition, or performing an inspection." ;
+	rdfs:label "Maintenance Work Order" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_task
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_task> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> , _:genid44 .
+
+_:genid44 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task_type> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_task> .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_task> rdfs:subClassOf _:genid45 .
+
+_:genid45 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-performed-by> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Group> .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_task> rdfs:comment "Maintenance tasks indicate which action—or set of actions—a maintenance technician is supposed to perform to complete a work order" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_team
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_team> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/physical-agent> , _:genid46 .
+
+_:genid46 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/performs> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_task> .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_team> rdfs:label "Maintenance team" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Max._Mech
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Max._Mech> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Restriction> , _:genid47 .
+
+_:genid47 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_restriction_value> ;
+	owl:someValuesFrom owl:real .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Max._Mech> rdfs:comment "restriction on the number of mechanics who can perform the task, e.g. due to spatial limitations in the area in which the task is performed." ;
+	rdfs:label "Max. Mech" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Min._Mech
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Min._Mech> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Restriction> , _:genid48 .
+
+_:genid48 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_restriction_value> ;
+	owl:someValuesFrom owl:real .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Min._Mech> rdfs:comment "minimal number of mechanics for the main task" ;
+	rdfs:label "Min. Mech" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Non-Destructive_Testing_Support_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Non-Destructive_Testing_Support_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Support_Group> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "NDT" ;
+	rdfs:label "Non-Destructive Testing Support Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Non-Planned_Client_Extra_Order_task
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Non-Planned_Client_Extra_Order_task> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Client_Extra__Order_task> , <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Non_Planned_Task> ;
+	rdfs:label "Non-Planned Client Extra Order task" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Non_Planned_Task
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Non_Planned_Task> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Client_Extra__Order_task> , _:genid49 .
+
+_:genid49 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_fiding> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Finding> .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Non_Planned_Task> rdfs:comment "non planned maintenance is any maintenance task that occurs unexpectedly. It happens when there is no formal strategy in place to address a repair, replacement, or inspection before it’s needed. Unplanned maintenance is commonly the result of equipment failure that was not anticipated." ;
+	rdfs:label "Non Planned Task" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Observation
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Observation> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Operational_Check
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Operational_Check> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "OPS" ;
+	rdfs:label "Operational Check" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Operational_Test
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Operational_Test> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "OPC" ;
+	rdfs:label "Operational Test" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Paintshop_Support_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Paintshop_Support_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Support_Group> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "PAINT" ;
+	rdfs:label "Paintshop Support Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Planned_Client_Extra_Order_task
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Planned_Client_Extra_Order_task> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Client_Extra__Order_task> , <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Planned_Task> ;
+	rdfs:label "Planned Client Extra Order task" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Planned_Task
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Planned_Task> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Client_Extra__Order_task> ;
+	rdfs:label "Planned Task" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Repair
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Repair> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "REP" ;
+	rdfs:label "Repair" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Requirement
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Requirement> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/disposition> .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Restoration
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Restoration> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "RST" ;
+	rdfs:label "Restoration" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Restriction
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Restriction> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Requirement> ;
+	rdfs:comment """Each task may have restrictions which must be met in order to perform the task
+The restrictions are: 
+		- El. Power - ON or OFF
+		- Hyd. Power - ON or OFF
+		- Jack - YES or NO""" ;
+	rdfs:label "Restriction" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Scheduled_Work_Order
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Scheduled_Work_Order> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Planned_Task> , <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Work_Order> ;
+	rdfs:comment "is the work order that  has been scheduled in the  schedule event" ;
+	rdfs:label "Scheduled Work Order" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Seat_Workshop__Support_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Seat_Workshop__Support_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Support_Group> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "SEAT" ;
+	rdfs:label "Seat Workshop  Support Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Section
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Section> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Aircraft> ;
+	rdfs:comment "Section" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Servising
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Servising> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "SVC" ;
+	rdfs:label "Servising" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Sheetmetal__Support_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Sheetmetal__Support_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Support_Group> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "SHM" ;
+	rdfs:label "Sheetmetal  Support Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Special_Detailed_Inspection
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Special_Detailed_Inspection> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "SDI" ;
+	rdfs:label "Special Detailed Inspection" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Planned_Task> ;
+	rdfs:label "Task Card" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_steps
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_steps> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_task> , _:genid50 .
+
+_:genid50 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/requires> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Restriction> .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_steps> rdfs:subClassOf _:genid51 .
+
+_:genid51 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/order> ;
+	owl:someValuesFrom xsd:integer .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_steps> rdfs:comment """Each task may be composed of three steps
+		- Main step - adjacent columns 
+			- \"Main step\" - a label identifying/describing the step
+			- Team - the team type which should perform the task 
+			- Phase - ?
+			- MHrs - the typical time executing the step 
+		- Access step - same as Main step but there is no Phase column
+		- Final test - same as Main step
+		Steps are ordered in the table as: Main Step, Access Step and Final Test
+		The order of execution of the steps is: Access Step, Main Step and Final Test""" ;
+	rdfs:label "Task steps" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Team_Leader
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Team_Leader> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Manager> , _:genid52 .
+
+_:genid52 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/leads> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Heavy_Maintenance_Group> .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Team_Leader> rdfs:label "Team Leader" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Technical_Cleaning_Support_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Technical_Cleaning_Support_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Support_Group> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "WASH" ;
+	rdfs:label "Technical Cleaning Support Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Temporary_Protection_Syst
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Temporary_Protection_Syst> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "TPS" ;
+	rdfs:label "Temporary Protection Syst" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Upholistery__Support_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Upholistery__Support_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Support_Group> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "UPHO" ;
+	rdfs:label "Upholistery Support Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Visual_Check
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Visual_Check> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "VCK" ;
+	rdfs:label "Visual Check" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/WOS_Action
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/WOS_Action> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/action> ;
+	rdfs:label "WOS Action" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Welding_Support_Group
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Welding_Support_Group> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Support_Group> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "WELL" ;
+	rdfs:label "Welding Support Group" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Work_Order
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Work_Order> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_task> , _:genid53 .
+
+_:genid53 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wo_text> ;
+	owl:someValuesFrom xsd:string .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Work_Order> rdfs:comment "A work order is a task order sent by a customer or organization, usually for a service technician." ;
+	rdfs:label "Work Order" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Work_Order_Step
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Work_Order_Step> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Work_Order> , _:genid54 .
+
+_:genid54 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_follow_up_actions> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/csat-maintenance/WOS_Action> .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Work_Order_Step> rdfs:subClassOf _:genid55 .
+
+_:genid55 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+	owl:allValuesFrom <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Work_Order> .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Work_Order_Step> rdfs:label "Work Order Step" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Workpackage_Information_Content
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Workpackage_Information_Content> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Document> , _:genid56 .
+
+_:genid56 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/List_of_technicians_available> ;
+	owl:someValuesFrom xsd:string .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Workpackage_Information_Content> rdfs:subClassOf _:genid57 .
+
+_:genid57 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/aircraft_age> ;
+	owl:someValuesFrom xsd:integer .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Workpackage_Information_Content> rdfs:subClassOf _:genid58 .
+
+_:genid58 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/aircraft_regestration_number> ;
+	owl:someValuesFrom owl:real .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Workpackage_Information_Content> rdfs:subClassOf _:genid59 .
+
+_:genid59 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_end_time> ;
+	owl:someValuesFrom xsd:string .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Workpackage_Information_Content> rdfs:subClassOf _:genid60 .
+
+_:genid60 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_scheduled_time> ;
+	owl:someValuesFrom xsd:string .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Workpackage_Information_Content> rdfs:subClassOf _:genid61 .
+
+_:genid61 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_start_time> ;
+	owl:someValuesFrom xsd:string .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Workpackage_Information_Content> rdfs:subClassOf _:genid62 .
+
+_:genid62 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/number_of_planned_tasks> ;
+	owl:someValuesFrom xsd:integer .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Workpackage_Information_Content> rdfs:subClassOf _:genid63 .
+
+_:genid63 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_end_time> ;
+	owl:someValuesFrom xsd:string .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Workpackage_Information_Content> rdfs:subClassOf _:genid64 .
+
+_:genid64 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_scheduled_time> ;
+	owl:someValuesFrom xsd:string .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Workpackage_Information_Content> rdfs:subClassOf _:genid65 .
+
+_:genid65 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_start__time> ;
+	owl:someValuesFrom xsd:string .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Workpackage_Information_Content> rdfs:label "Workpackage Information content" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/area
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/area> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/zone> ;
+	rdfs:comment "area" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/zone
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/zone> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Section> ;
+	rdfs:comment "zone" .
+# 
+# http://onto.fel.cvut.cz/ontologies/csat-maintenance/Discard/one_Time_Used
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Discard/one_Time_Used> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Task_Card> ;
+	<http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_abbreviation> "DIS" ;
+	rdfs:label "Discard/one Time Used" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/Component
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Component> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/area> ;
+	rdfs:label "Component" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/Damage
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Damage> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Failure_Event> , _:genid66 .
+
+_:genid66 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/brings-about> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Damage_State> .
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Damage> rdfs:label "Damage" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/Damage_State
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Damage_State> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/situation> , _:genid67 .
+
+_:genid67 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/maintenance-schema/affect> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Function> .
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Damage_State> rdfs:label "Damage State" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/Document
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Document> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	rdfs:label "Document" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/Failure_Event
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Failure_Event> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> ;
+	rdfs:label "Failure Event" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/Function
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Function> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/disposition> , _:genid68 .
+
+_:genid68 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/performs> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/maintenance-schema/work_session> .
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Function> rdfs:label "Function" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_Item
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_Item> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Component> , _:genid69 .
+
+_:genid69 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Process_of_Degradation> .
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_Item> rdfs:label "Maintenance Item" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_strategy
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_strategy> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Plan> ;
+	rdfs:label "Maintenance strategy" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_task
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_task> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> , _:genid70 .
+
+_:genid70 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Workpackage> .
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_task> rdfs:label "Maintenance task" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/Mechanic
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Mechanic> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/person> , _:genid71 .
+
+_:genid71 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/performs> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Observation> .
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Mechanic> rdfs:subClassOf _:genid72 .
+
+_:genid72 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/performs> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/maintenance-schema/work_session> .
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Mechanic> rdfs:label "mechanic" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/Nonconfirmity
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Nonconfirmity> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/disposition> , _:genid73 .
+
+_:genid73 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Failure_Event> .
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Nonconfirmity> rdfs:label "Nonconfirmity" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/Observation
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Observation> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/Process_of_Degradation
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Process_of_Degradation> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> ;
+	rdfs:label "Process of Degradation" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/State_of_Degradation
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/State_of_Degradation> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/situation> , _:genid74 .
+
+_:genid74 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/triggers> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Failure_Event> .
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/State_of_Degradation> rdfs:label "State of Degradation" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/System
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/System> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/physical-object> ;
+	rdfs:label "System" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/Workpackage
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/Workpackage> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> ;
+	rdfs:label "Workpackage" .
+# 
+# http://onto.fel.cvut.cz/ontologies/maintenance-schema/work_session
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/work_session> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_task> , _:genid75 .
+
+_:genid75 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_task> .
+
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema/work_session> rdfs:label "work session" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/action
+
+<http://onto.fel.cvut.cz/ontologies/ufo/action> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/event> , _:genid76 .
+
+_:genid76 owl:intersectionOf _:genid79 .
+
+_:genid79 a rdf:List ;
+	rdf:first <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdf:rest _:genid77 .
+
+_:genid77 a rdf:List ;
+	rdf:first _:genid78 .
+
+_:genid78 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-performed-by> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/ufo/agent> .
+
+_:genid77 rdf:rest rdf:nil .
+
+_:genid76 a owl:Class .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/action> rdfs:subClassOf _:genid80 .
+
+_:genid80 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-performed-by> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/ufo/agent> .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/action> rdfs:label "Action"@en ;
+	<http://www.w3.org/2004/02/skos/core#definition> "Action is an event performed by an Agent. A single proactive object (agent) is responsible for performing the action."@en ;
+	<http://www.w3.org/2004/02/skos/core#example> "- An action *is performed by* an agent."@en ;
+	<http://www.w3.org/2004/02/skos/core#scopeNote> """- *Use of deicing equipment* is an action performed by aerodrome staff.
+- An *ATC clearance deviation* is an action performed by a pilot."""@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/agent
+
+<http://onto.fel.cvut.cz/ontologies/ufo/agent> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/object> , _:genid81 .
+
+_:genid81 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/maintenance-schema/requires> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_task> .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/agent> rdfs:label "Agent"@en ;
+	<http://www.w3.org/2004/02/skos/core#definition> "Agent is a proactive object. It has its own beliefs, intentions, goals."@en ;
+	<http://www.w3.org/2004/02/skos/core#example> """* An agent *performs* an action.
+* An agent *provides* a service."""@en ;
+	<http://www.w3.org/2004/02/skos/core#scopeNote> """- A *pilot* is an agent who operates the aircraft, communicates with ATC, etc.
+- An *air traffic control organization* is an agent (legal body) that provides services, reacts to other organization requests, etc."""@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-mixin
+
+<http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-mixin> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/non-rigid-mixin> ;
+	rdfs:label "Anti Rigid Mixin"@en .
+
+_:genid82 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-mixin> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/non-rigid-mixin> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-sortal
+
+<http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-sortal> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/sortal-universal> ;
+	rdfs:label "Anti Rigid Sortal"@en .
+
+_:genid83 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-sortal> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/sortal-universal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/atomic-event
+
+<http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/event> , _:genid85 .
+
+_:genid85 a owl:Class ;
+	owl:complementOf _:genid86 .
+
+_:genid86 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/ufo/event> .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> rdfs:subClassOf _:genid88 .
+
+_:genid88 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/depends-on> ;
+	owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> rdfs:subClassOf _:genid90 .
+
+_:genid90 a owl:Restriction ;
+	owl:onProperty _:genid91 .
+
+_:genid91 owl:inverseOf <http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by> .
+
+_:genid90 owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> owl:disjointWith <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> ;
+	rdfs:label "Atomic Event"@en .
+
+_:genid84 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a08"^^xsd:string , "a61-part1"^^xsd:string , "a62-part1"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> "M1"^^xsd:string .
+
+_:genid87 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid85 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a61-part2"^^xsd:string , "a62-part2"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> "M1"^^xsd:string .
+
+_:genid89 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid88 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a49-part1"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/is-necessary-condition-for> "P1"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/is-sufficient-condition-for> "P1"^^xsd:string .
+
+_:genid92 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid90 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a60-part1"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> "D2"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for> "D2"^^xsd:string .
+
+_:genid93 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> ;
+	owl:annotatedProperty owl:disjointWith ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a45"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> "M2"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for> "M2"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/category
+
+<http://onto.fel.cvut.cz/ontologies/ufo/category> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/rigid-mixin> ;
+	<http://purl.org/dc/terms/description> "A «category» represents a rigid and relationally independent mixin, i.e., a dispersive universal that aggregates essential properties which are common to different substance sortals. For example, the category RationalEntity as a generalization of Person and IntelligentAgent."@en ;
+	rdfs:label "Category"@en .
+
+_:genid94 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/category> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/rigid-mixin> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+
+_:genid95 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/category> ;
+	owl:annotatedProperty <http://purl.org/dc/terms/description> ;
+	owl:annotatedTarget "A «category» represents a rigid and relationally independent mixin, i.e., a dispersive universal that aggregates essential properties which are common to different substance sortals. For example, the category RationalEntity as a generalization of Person and IntelligentAgent."@en ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/collective
+
+<http://onto.fel.cvut.cz/ontologies/ufo/collective> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal> ;
+	<http://purl.org/dc/terms/description> "A «collective» represents a substance sortal whose instances are collectives, i.e., they are collections of complexes that have a uniform structure. Examples include a deck of cards, a forest, a group of people, a pile of bricks. Collectives can typically relate to complexes via a constitution relation. For example, a pile of bricks that constitutes a wall, a group of people that constitutes a football team. In this case, the collectives typically have an extensional principle of identity, in contrast to the complexes they constitute. For instance, The Beatles was in a given world w constituted by the collective {John, Paul, George, Pete} and in another world w’ constituted by the collective {John, Paul, George, Ringo}. The replacement of Pete Best by Ringo Star does not alter the identity of the band, but creates a numerically different group of people."@en ;
+	rdfs:label "Collective"@en .
+
+_:genid96 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/collective> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+
+_:genid97 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/collective> ;
+	owl:annotatedProperty <http://purl.org/dc/terms/description> ;
+	owl:annotatedTarget "A «collective» represents a substance sortal whose instances are collectives, i.e., they are collections of complexes that have a uniform structure. Examples include a deck of cards, a forest, a group of people, a pile of bricks. Collectives can typically relate to complexes via a constitution relation. For example, a pile of bricks that constitutes a wall, a group of people that constitutes a football team. In this case, the collectives typically have an extensional principle of identity, in contrast to the complexes they constitute. For instance, The Beatles was in a given world w constituted by the collective {John, Paul, George, Pete} and in another world w’ constituted by the collective {John, Paul, George, Ringo}. The replacement of Pete Best by Ringo Star does not alter the identity of the band, but creates a numerically different group of people."@en ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/complex-event
+
+<http://onto.fel.cvut.cz/ontologies/ufo/complex-event> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/event> , _:genid99 .
+
+_:genid99 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/has_scope> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Group> .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/complex-event> rdfs:subClassOf _:genid100 .
+
+_:genid100 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	owl:minCardinality "2"^^xsd:nonNegativeInteger .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/complex-event> rdfs:subClassOf _:genid102 .
+
+_:genid102 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task_type_identifier> ;
+	owl:someValuesFrom xsd:integer .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/complex-event> rdfs:label "Complex Event"@en .
+
+_:genid101 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid100 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a48-part1"^^xsd:string .
+
+_:genid98 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a09"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/disposition
+
+<http://onto.fel.cvut.cz/ontologies/ufo/disposition> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/trope> ;
+	rdfs:label "Disposition"^^xsd:string .
+
+_:genid103 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/disposition> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/trope> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a06"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> "D1"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for> "D1"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/endurant
+
+<http://onto.fel.cvut.cz/ontologies/ufo/endurant> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/individual> ;
+	owl:disjointWith <http://onto.fel.cvut.cz/ontologies/ufo/perdurant> ;
+	rdfs:label "Endurant"@en .
+
+_:genid104 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/endurant> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/individual> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a01"^^xsd:string .
+
+_:genid105 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/endurant> ;
+	owl:annotatedProperty owl:disjointWith ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/perdurant> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a41-part1"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/entity
+
+<http://onto.fel.cvut.cz/ontologies/ufo/entity> a owl:Class ;
+	rdfs:label "Entity"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/event
+
+<http://onto.fel.cvut.cz/ontologies/ufo/event> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/perdurant> , _:genid107 .
+
+_:genid107 a owl:Class ;
+	owl:unionOf _:genid109 .
+
+_:genid109 a rdf:List ;
+	rdf:first <http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> ;
+	rdf:rest _:genid108 .
+
+_:genid108 a rdf:List ;
+	rdf:first <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> ;
+	rdf:rest rdf:nil .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/event> rdfs:subClassOf _:genid111 .
+
+_:genid111 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/brings-about> ;
+	owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/event> rdfs:subClassOf _:genid113 .
+
+_:genid113 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/event> rdfs:subClassOf _:genid115 .
+
+_:genid115 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/event> rdfs:subClassOf _:genid117 .
+
+_:genid117 a owl:Restriction ;
+	owl:onProperty _:genid118 .
+
+_:genid118 owl:inverseOf <http://onto.fel.cvut.cz/ontologies/ufo/triggers> .
+
+_:genid117 owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/event> rdfs:label "Event"@en ;
+	<http://www.w3.org/2004/02/skos/core#definition> "An event, perdurant in the ontological sense. Events do not change its properties over time."@en ;
+	<http://www.w3.org/2004/02/skos/core#example> """Event *has participant* an object.
+Event *is part of* another event.
+Event *is followed by* another event.
+Event *is caused by/contributes to/mitigates* another event."""@en ;
+	<http://www.w3.org/2004/02/skos/core#scopeNote> """- a *flight* is an event which describes the course of aircraft movement ground-air-ground,
+- a *runway incursion* is an event which describes incorrect presence of an object on the runway"""@en .
+
+_:genid106 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/perdurant> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a02-part1"^^xsd:string , "a41-part2"^^xsd:string .
+
+_:genid110 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid107 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a46"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> "M2"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for> "M2"^^xsd:string .
+
+_:genid112 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid111 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a52-part1"^^xsd:string .
+
+_:genid114 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid113 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a53-part1"^^xsd:string .
+
+_:genid116 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid115 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a54-part1"^^xsd:string .
+
+_:genid119 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid117 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a59-part1"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/event-type
+
+<http://onto.fel.cvut.cz/ontologies/ufo/event-type> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/type> ;
+	rdfs:label "Event Type"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/fact
+
+<http://onto.fel.cvut.cz/ontologies/ufo/fact> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/situation> , _:genid121 .
+
+_:genid121 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/obtains-in> ;
+	owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/fact> rdfs:label "Fact"@en .
+
+_:genid120 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/fact> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/situation> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a07"^^xsd:string .
+
+_:genid122 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/fact> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid121 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a51-part1"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/individual
+
+<http://onto.fel.cvut.cz/ontologies/ufo/individual> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/entity> ;
+	owl:disjointWith <http://onto.fel.cvut.cz/ontologies/ufo/time-point> ;
+	rdfs:label "Individual"@en .
+
+_:genid123 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/individual> ;
+	owl:annotatedProperty owl:disjointWith ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/time-point> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a40"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/intrinsic-moment-universal
+
+<http://onto.fel.cvut.cz/ontologies/ufo/intrinsic-moment-universal> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/moment-universal> ;
+	rdfs:label "Intrinsic moment universal"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/kind
+
+<http://onto.fel.cvut.cz/ontologies/ufo/kind> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal> ;
+	<http://purl.org/dc/terms/description> "A «kind» represents a substance sortal whose instances are functional complexes. Examples include instances of Natural Kinds (such as Person, Dog, Tree) and of artifacts (Chair, Car, Television)."@en ;
+	rdfs:label "Kind"@en .
+
+_:genid124 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/kind> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+
+_:genid125 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/kind> ;
+	owl:annotatedProperty <http://purl.org/dc/terms/description> ;
+	owl:annotatedTarget "A «kind» represents a substance sortal whose instances are functional complexes. Examples include instances of Natural Kinds (such as Person, Dog, Tree) and of artifacts (Chair, Car, Television)."@en ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/mixin
+
+<http://onto.fel.cvut.cz/ontologies/ufo/mixin> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/non-rigid-mixin> ;
+	<http://purl.org/dc/terms/description> "A «mixin» represents properties which are essential to some of its instances and accidental to others (semi-rigidity). An example is the mixin Seatable, which represents a property that can be considered essential to the kinds Chair and Stool, but accidental to Crate, Paper Box or Rock."@en ;
+	rdfs:label "Mixin"@en .
+
+_:genid126 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/mixin> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/non-rigid-mixin> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+
+_:genid127 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/mixin> ;
+	owl:annotatedProperty <http://purl.org/dc/terms/description> ;
+	owl:annotatedTarget "A «mixin» represents properties which are essential to some of its instances and accidental to others (semi-rigidity). An example is the mixin Seatable, which represents a property that can be considered essential to the kinds Chair and Stool, but accidental to Crate, Paper Box or Rock."@en ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal
+
+<http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/substantial-universal> ;
+	<http://purl.org/dc/terms/description> "Mixin Universal represents the general properties of all mixins, i.e., non-sortals (or dispersive universals)."@en ;
+	rdfs:label "Mixin Universal"@en .
+
+_:genid128 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/substantial-universal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+
+_:genid129 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal> ;
+	owl:annotatedProperty <http://purl.org/dc/terms/description> ;
+	owl:annotatedTarget "Mixin Universal represents the general properties of all mixins, i.e., non-sortals (or dispersive universals)."@en ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string ;
+	rdfs:comment "definition partially reused from Mixin Class"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/mode-universal
+
+<http://onto.fel.cvut.cz/ontologies/ufo/mode-universal> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/intrinsic-moment-universal> ;
+	rdfs:label "Mode universal"@en .
+
+_:genid130 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/mode-universal> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/intrinsic-moment-universal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/moment-universal
+
+<http://onto.fel.cvut.cz/ontologies/ufo/moment-universal> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/monadic-universal> ;
+	rdfs:label "Moment universal"@en .
+
+_:genid131 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/moment-universal> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/monadic-universal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/monadic-universal
+
+<http://onto.fel.cvut.cz/ontologies/ufo/monadic-universal> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/universal> ;
+	rdfs:label "Monadic universal"@en .
+
+_:genid132 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/monadic-universal> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/universal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/non-rigid-mixin
+
+<http://onto.fel.cvut.cz/ontologies/ufo/non-rigid-mixin> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal> ;
+	rdfs:label "Non Rigid Mixin"@en .
+
+_:genid133 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/non-rigid-mixin> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/object
+
+<http://onto.fel.cvut.cz/ontologies/ufo/object> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/endurant> , _:genid135 .
+
+_:genid135 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/object-has-trope> ;
+	owl:someValuesFrom owl:Thing .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/object> owl:disjointWith <http://onto.fel.cvut.cz/ontologies/ufo/trope> ;
+	rdfs:label "Object"@en ;
+	<http://www.w3.org/2004/02/skos/core#definition> "Object is any identifiable endurant entity existence of which is not directly dependent on an existence of another endurant. Objects participate in events and can have tropes. Theirs state can change over time."@en ;
+	<http://www.w3.org/2004/02/skos/core#example> """- An object *participates in* an event.
+- An object *has part* another object."""@en ;
+	<http://www.w3.org/2004/02/skos/core#scopeNote> """- An *aircraft* is an object.
+- An *ATC descent procedure* is an object (formal regulation) that describes the course of a descent operation/process (event)."""@en .
+
+_:genid134 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/endurant> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a03"^^xsd:string .
+
+_:genid136 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid135 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a57-part1"^^xsd:string .
+
+_:genid137 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	owl:annotatedProperty owl:disjointWith ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/trope> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a42"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/object-change-event
+
+<http://onto.fel.cvut.cz/ontologies/ufo/object-change-event> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/participation> ;
+	rdfs:label "Object change event"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/object-creation-event
+
+<http://onto.fel.cvut.cz/ontologies/ufo/object-creation-event> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/participation> ;
+	rdfs:label "Object creation event"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/object-destruction-event
+
+<http://onto.fel.cvut.cz/ontologies/ufo/object-destruction-event> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/participation> ;
+	rdfs:label "Object destruction event"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/object-snapshot
+
+<http://onto.fel.cvut.cz/ontologies/ufo/object-snapshot> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/perdurant> , _:genid138 .
+
+_:genid138 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/ufo/situation> .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/object-snapshot> rdfs:subClassOf _:genid139 .
+
+_:genid139 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-snapshot-of> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/ufo/object> .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/object-snapshot> rdfs:label "Object Snapshot"@en ;
+	<http://www.w3.org/2004/02/skos/core#definition> "Object Snapshot is a immutable state description of an object within a situation. Object Snapshot and an Object share the attribute types and relation types of their identifying objects. Object serve only for identification purpose."@en ;
+	<http://www.w3.org/2004/02/skos/core#example> """- an object snapshot *is identified by* an object
+- a situation *has part* an object snapshot"""@en ;
+	<http://www.w3.org/2004/02/skos/core#scopeNote> "- * Aircraft OK-123, just before landing 1.1.2014 at 18.00* is a snapshot of the aircraft containing the setting of its controls and conditions of the its technical systems. Another snapshot *Aircraft OK-123, just before takeoff 1.1.2014 at 9.00* might have completely different state of controls and conditions. In both cases, however, we speak about the same aircraft (same object)."@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/organization
+
+<http://onto.fel.cvut.cz/ontologies/ufo/organization> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/agent> ;
+	rdfs:label "Organization"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/participation
+
+<http://onto.fel.cvut.cz/ontologies/ufo/participation> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/event> , _:genid141 .
+
+_:genid141 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/ufo/object> .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/participation> rdfs:subClassOf _:genid142 .
+
+_:genid142 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on> ;
+	owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/participation> rdfs:subClassOf _:genid144 .
+
+_:genid144 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of> ;
+	owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/participation> rdfs:label "Participation"@en .
+
+_:genid140 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/participation> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a10"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> "P4"^^xsd:string .
+
+_:genid143 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/participation> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid142 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a55-part1"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> "P4"^^xsd:string .
+
+_:genid145 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/participation> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid144 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a56-part1"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/perdurant
+
+<http://onto.fel.cvut.cz/ontologies/ufo/perdurant> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/individual> ;
+	rdfs:label "Perdurant"@en .
+
+_:genid146 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/perdurant> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/individual> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a02-part2"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/person
+
+<http://onto.fel.cvut.cz/ontologies/ufo/person> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/physical-agent> ;
+	rdfs:label "Person"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/phase
+
+<http://onto.fel.cvut.cz/ontologies/ufo/phase> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-sortal> ;
+	<http://purl.org/dc/terms/description> "A «phase» represents the phased-sortals phase, i.e. anti-rigid and relationally independent universals defined as part of a partition of a substance sortal. For instance, 〈Catterpillar, Butterfly〉 partitions the kind Lepdopterum."@en ;
+	rdfs:label "Phase"@en .
+
+_:genid147 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/phase> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-sortal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+
+_:genid148 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/phase> ;
+	owl:annotatedProperty <http://purl.org/dc/terms/description> ;
+	owl:annotatedTarget "A «phase» represents the phased-sortals phase, i.e. anti-rigid and relationally independent universals defined as part of a partition of a substance sortal. For instance, 〈Catterpillar, Butterfly〉 partitions the kind Lepdopterum."@en ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/physical-agent
+
+<http://onto.fel.cvut.cz/ontologies/ufo/physical-agent> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/agent> ;
+	rdfs:label "Physical agent"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/physical-object
+
+<http://onto.fel.cvut.cz/ontologies/ufo/physical-object> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	rdfs:label "Physical object"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/power-type
+
+<http://onto.fel.cvut.cz/ontologies/ufo/power-type> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/type> ;
+	rdfs:label "Power Type"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/property
+
+<http://onto.fel.cvut.cz/ontologies/ufo/property> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/entity> ;
+	rdfs:label "Property"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/quality-universal
+
+<http://onto.fel.cvut.cz/ontologies/ufo/quality-universal> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/intrinsic-moment-universal> ;
+	rdfs:label "Quality universal"@en .
+
+_:genid149 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/quality-universal> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/intrinsic-moment-universal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/quantity
+
+<http://onto.fel.cvut.cz/ontologies/ufo/quantity> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal> ;
+	<http://purl.org/dc/terms/description> "A «quantity» represents a substance sortal whose instances are quantities. Examples are those stuff universals that are typically referred in natural language by mass general terms (e.g., Gold, Water, Sand, Clay)."@en ;
+	rdfs:label "Quantity"@en .
+
+_:genid150 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/quantity> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+
+_:genid151 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/quantity> ;
+	owl:annotatedProperty <http://purl.org/dc/terms/description> ;
+	owl:annotatedTarget "A «quantity» represents a substance sortal whose instances are quantities. Examples are those stuff universals that are typically referred in natural language by mass general terms (e.g., Gold, Water, Sand, Clay)."@en ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/relator
+
+<http://onto.fel.cvut.cz/ontologies/ufo/relator> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/moment-universal> ;
+	rdfs:label "Relator"@en .
+
+_:genid152 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/relator> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/moment-universal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/rigid-mixin
+
+<http://onto.fel.cvut.cz/ontologies/ufo/rigid-mixin> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal> ;
+	rdfs:label "Rigid Mixin"@en .
+
+_:genid153 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/rigid-mixin> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/rigid-sortal
+
+<http://onto.fel.cvut.cz/ontologies/ufo/rigid-sortal> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/sortal-universal> ;
+	<http://purl.org/dc/terms/source> "ofscm"@en ;
+	rdfs:label "Rigid Sortal"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/role
+
+<http://onto.fel.cvut.cz/ontologies/ufo/role> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-sortal> ;
+	<http://purl.org/dc/terms/description> "A «role» represents a phased-sortal role, i.e. anti-rigid and relationally dependent universal. For instance, the role student is played by an instance of the kind Person."@en ;
+	rdfs:label "Role"@en .
+
+_:genid154 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/role> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-sortal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+
+_:genid155 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/role> ;
+	owl:annotatedProperty <http://purl.org/dc/terms/description> ;
+	owl:annotatedTarget "A «role» represents a phased-sortal role, i.e. anti-rigid and relationally dependent universal. For instance, the role student is played by an instance of the kind Person."@en ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/role-mixin
+
+<http://onto.fel.cvut.cz/ontologies/ufo/role-mixin> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-mixin> ;
+	<http://purl.org/dc/terms/description> "A «roleMixin» represents an anti-rigid and externally dependent non-sortal, i.e., a dispersive universal that aggregates properties which are common to different roles. In includes formal roles such as whole and part, and initiatior and responder."@en ;
+	rdfs:label "Role Mixin"@en .
+
+_:genid156 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/role-mixin> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-mixin> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+
+_:genid157 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/role-mixin> ;
+	owl:annotatedProperty <http://purl.org/dc/terms/description> ;
+	owl:annotatedTarget "A «roleMixin» represents an anti-rigid and externally dependent non-sortal, i.e., a dispersive universal that aggregates properties which are common to different roles. In includes formal roles such as whole and part, and initiatior and responder."@en ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/situation
+
+<http://onto.fel.cvut.cz/ontologies/ufo/situation> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/perdurant> , _:genid158 .
+
+_:genid158 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/obtains-in> ;
+	owl:maxCardinality "1"^^xsd:nonNegativeInteger .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/situation> rdfs:label "Situation"@en ;
+	<http://www.w3.org/2004/02/skos/core#definition> """Situation is a snapshot of object states valid in the given temporal range. The states involve trope values and relator values.
+
+Since most relators will not be reified and will be modeled in terms of the binary properties only, separation of object snapshot identity will not be solved at this point. 
+
+Thus, situation will play a role of a context (higher-level construct) of statements about objects."""@en .
+
+_:genid159 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/situation> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid158 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a50-part1"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/sortal-universal
+
+<http://onto.fel.cvut.cz/ontologies/ufo/sortal-universal> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/substantial-universal> ;
+	rdfs:label "Sortal Universal"@en .
+
+_:genid160 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/sortal-universal> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/substantial-universal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/sub-kind
+
+<http://onto.fel.cvut.cz/ontologies/ufo/sub-kind> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/rigid-sortal> ;
+	<http://purl.org/dc/terms/description> "A «subkind» is a rigid, relationally independent restriction of a substance sortal that carries the principle of identity supplied by it. An example could be the subkind MalePerson of the kind Person. In general, the stereotype «subkind» can be omitted in conceptual models without loss of clarity."@en ;
+	rdfs:label "Subkind"@en .
+
+_:genid161 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/sub-kind> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/rigid-sortal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+
+_:genid162 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/sub-kind> ;
+	owl:annotatedProperty <http://purl.org/dc/terms/description> ;
+	owl:annotatedTarget "A «subkind» is a rigid, relationally independent restriction of a substance sortal that carries the principle of identity supplied by it. An example could be the subkind MalePerson of the kind Person. In general, the stereotype «subkind» can be omitted in conceptual models without loss of clarity."@en ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal
+
+<http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/rigid-sortal> ;
+	<http://purl.org/dc/terms/description> "Substance Sortal is an abstract metaclass that represents the general properties of all substance sortals, i.e., rigid, relationally independent object universals that supply a principle of identity for their instances. Substance Sortal has no concrete syntax. Thus, symbolic representations are defined by each of its concrete subclasses."@en ;
+	rdfs:label "Substance sortal"@en .
+
+_:genid163 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/rigid-sortal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+
+_:genid164 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal> ;
+	owl:annotatedProperty <http://purl.org/dc/terms/description> ;
+	owl:annotatedTarget "Substance Sortal is an abstract metaclass that represents the general properties of all substance sortals, i.e., rigid, relationally independent object universals that supply a principle of identity for their instances. Substance Sortal has no concrete syntax. Thus, symbolic representations are defined by each of its concrete subclasses."@en ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/substantial-universal
+
+<http://onto.fel.cvut.cz/ontologies/ufo/substantial-universal> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/monadic-universal> ;
+	rdfs:label "Substantial Universal"@en .
+
+_:genid165 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/substantial-universal> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/monadic-universal> ;
+	<http://purl.org/dc/terms/source> "ofscm"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/time-point
+
+<http://onto.fel.cvut.cz/ontologies/ufo/time-point> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/entity> , _:genid166 .
+
+_:genid166 a owl:Restriction ;
+	owl:onProperty _:genid167 .
+
+_:genid167 owl:inverseOf <http://onto.fel.cvut.cz/ontologies/ufo/obtains-in> .
+
+_:genid166 owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/ufo/situation> .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/time-point> rdfs:label "Time Point"@en .
+
+_:genid168 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/time-point> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid166 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a58-part1"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/trope
+
+<http://onto.fel.cvut.cz/ontologies/ufo/trope> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/endurant> , _:genid170 .
+
+_:genid170 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/trope-inheres-in-object> ;
+	owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+<http://onto.fel.cvut.cz/ontologies/ufo/trope> rdfs:label "Trope"^^xsd:string ;
+	<http://www.w3.org/2004/02/skos/core#definition> "Trope is a property of some object/event or another trope. The trope CANNOT exist without the object/event it inheres in."^^xsd:string ;
+	<http://www.w3.org/2004/02/skos/core#example> """We say that:
+
+A trope *inheres in* an object."""@en ;
+	<http://www.w3.org/2004/02/skos/core#scopeNote> """Examples include:
+ - *function* of a VOR beacon (property of an object), 
+ - *availability* of VOR beacon function (property of a property), 
+ - *efficiency* of a rescue operation (property of an event)"""@en .
+
+_:genid169 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/trope> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/endurant> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a05"^^xsd:string .
+
+_:genid171 a owl:Axiom ;
+	owl:annotatedSource <http://onto.fel.cvut.cz/ontologies/ufo/trope> ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget _:genid170 ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a47-part1"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> "D1"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for> "D1"^^xsd:string .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/type
+
+<http://onto.fel.cvut.cz/ontologies/ufo/type> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/universal> ;
+	rdfs:label "Type"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/universal
+
+<http://onto.fel.cvut.cz/ontologies/ufo/universal> a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/entity> ;
+	rdfs:label "Universal"@en .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Individuals
+# #
+# #################################################################
+# 
+# 
+# http://csat.cz/ontologies/maintenance-csat-onto/4800160-wo-text
+
+<http://csat.cz/ontologies/maintenance-csat-onto/4800160-wo-text> a owl:NamedIndividual ;
+	rdfs:comment "PLS PERFORM LUBRICATION OF LEADING EDGE IAW AMM 12-22-27-640-006-A AFTER TECHNICAL CLEANING" ;
+	rdfs:label "4800160-wo-text" .
+# 
+
+_:genid172 <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#x> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#y> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has_event_part> .
+
+_:genid173 <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#x> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#y> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has_object_part> .
+
+_:genid174 <http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a70"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/is-necessary-condition-for> "D4"^^xsd:string .
+
+_:genid175 <http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a69"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for> "D3"^^xsd:string .
+# 
+# 
+# #################################################################
+# #
+# #    Annotations
+# #
+# #################################################################
+# 
+# 
+
+<http://csat.cz/ontologies/maintenance-schema/Maintenance_Item> rdfs:comment "A maintenance item describes which preventive maintenance tasks should take place regularly at a technical object (component) or a group of technical objects." .
+# 
+
+<http://csat.cz/ontologies/maintenance-schema/Maintenance_strategy> rdfs:comment "A maintenance strategy defines the rules for the sequence of planned maintenance work. It contains general scheduling information, and can therefore be assigned to as many maintenance task lists" .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    General axioms
+# #
+# #################################################################
+# 
+# 
+
+_:genid181 a owl:Axiom ;
+	owl:annotatedSource _:genid176 .
+
+_:genid176 owl:intersectionOf _:genid180 .
+
+_:genid180 a rdf:List ;
+	rdf:first <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdf:rest _:genid177 .
+
+_:genid177 a rdf:List ;
+	rdf:first _:genid178 .
+
+_:genid178 a owl:Class ;
+	owl:complementOf _:genid179 .
+
+_:genid179 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/ufo/event> .
+
+_:genid177 rdf:rest rdf:nil .
+
+_:genid176 a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> .
+
+_:genid181 owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a62"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/is-sufficient-condition-for> "M1"^^xsd:string .
+# 
+
+_:genid186 a owl:Axiom ;
+	owl:annotatedSource _:genid182 .
+
+_:genid182 owl:intersectionOf _:genid185 .
+
+_:genid185 a rdf:List ;
+	rdf:first <http://onto.fel.cvut.cz/ontologies/ufo/event> ;
+	rdf:rest _:genid183 .
+
+_:genid183 a rdf:List ;
+	rdf:first _:genid184 .
+
+_:genid184 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on> ;
+	owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+_:genid183 rdf:rest rdf:nil .
+
+_:genid182 a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/participation> .
+
+_:genid186 owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/participation> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a72"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/is-sufficient-condition-for> "P4"^^xsd:string .
+# 
+
+_:genid191 a owl:Axiom ;
+	owl:annotatedSource _:genid187 .
+
+_:genid187 owl:intersectionOf _:genid190 .
+
+_:genid190 a rdf:List ;
+	rdf:first <http://onto.fel.cvut.cz/ontologies/ufo/situation> ;
+	rdf:rest _:genid188 .
+
+_:genid188 a rdf:List ;
+	rdf:first _:genid189 .
+
+_:genid189 a owl:Restriction ;
+	owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/obtains-in> ;
+	owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/ufo/time-point> .
+
+_:genid188 rdf:rest rdf:nil .
+
+_:genid187 a owl:Class ;
+	rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/fact> .
+
+_:genid191 owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget <http://onto.fel.cvut.cz/ontologies/ufo/fact> ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a93"^^xsd:string .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Rules
+# #
+# #################################################################
+# 
+# 
+
+<urn:swrl#e> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#o> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#e1> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#e2> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#e3> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#s> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#d> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#x> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#y> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#z> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#t1> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#t2> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#t> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#t3> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#t4> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#t5> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#t6> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#1t> a <http://www.w3.org/2003/11/swrl#Variable> .
+
+_:genid192 <http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for> "P2"^^xsd:string ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid197 .
+
+_:genid197 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid198 .
+
+_:genid198 a <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+	<http://www.w3.org/2003/11/swrl#classPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/atomic-event> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e> .
+
+_:genid197 rdf:rest _:genid195 .
+
+_:genid195 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid196 .
+
+_:genid196 a <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+	<http://www.w3.org/2003/11/swrl#classPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/object> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#o> .
+
+_:genid195 rdf:rest _:genid193 .
+
+_:genid193 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid194 .
+
+_:genid194 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#o> .
+
+_:genid193 rdf:rest rdf:nil .
+
+_:genid192 <http://www.w3.org/2003/11/swrl#head> _:genid199 .
+
+_:genid199 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid200 .
+
+_:genid200 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/depends-on> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#o> .
+
+_:genid199 rdf:rest rdf:nil .
+
+_:genid201 <http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a63"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/is-necessary-condition-for> "M3"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/is-sufficient-condition-for> "M3"^^xsd:string ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid204 .
+
+_:genid204 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid205 .
+
+_:genid205 a <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+	<http://www.w3.org/2003/11/swrl#classPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e> .
+
+_:genid204 rdf:rest _:genid202 .
+
+_:genid202 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid203 .
+
+_:genid203 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e2> .
+
+_:genid202 rdf:rest rdf:nil .
+
+_:genid201 <http://www.w3.org/2003/11/swrl#head> _:genid206 .
+
+_:genid206 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid207 .
+
+_:genid207 a <http://www.w3.org/2003/11/swrl#DifferentIndividualsAtom> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e2> .
+
+_:genid206 rdf:rest rdf:nil .
+
+_:genid208 <http://onto.fel.cvut.cz/ontologies/ufo/is-necessary-condition-for> "M4"^^xsd:string ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid215 .
+
+_:genid215 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid216 .
+
+_:genid216 a <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+	<http://www.w3.org/2003/11/swrl#classPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> .
+
+_:genid215 rdf:rest _:genid213 .
+
+_:genid213 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid214 .
+
+_:genid214 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e2> .
+
+_:genid213 rdf:rest _:genid211 .
+
+_:genid211 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid212 .
+
+_:genid212 a <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+	<http://www.w3.org/2003/11/swrl#classPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> .
+
+_:genid211 rdf:rest _:genid209 .
+
+_:genid209 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid210 .
+
+_:genid210 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e3> .
+
+_:genid209 rdf:rest rdf:nil .
+
+_:genid208 <http://www.w3.org/2003/11/swrl#head> _:genid217 .
+
+_:genid217 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid218 .
+
+_:genid218 a <http://www.w3.org/2003/11/swrl#DifferentIndividualsAtom> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e3> .
+
+_:genid217 rdf:rest rdf:nil .
+
+_:genid219 <http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl> "true"^^xsd:boolean ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid222 .
+
+_:genid222 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid223 .
+
+_:genid223 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/activates> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#s> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#d> .
+
+_:genid222 rdf:rest _:genid220 .
+
+_:genid220 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid221 .
+
+_:genid221 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#d> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e> .
+
+_:genid220 rdf:rest rdf:nil .
+
+_:genid219 <http://www.w3.org/2003/11/swrl#head> _:genid224 .
+
+_:genid224 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid225 .
+
+_:genid225 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/triggers> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#s> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e> .
+
+_:genid224 rdf:rest rdf:nil .
+
+_:genid226 a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid229 .
+
+_:genid229 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid230 .
+
+_:genid230 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/brings-about> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#x> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#y> .
+
+_:genid229 rdf:rest _:genid227 .
+
+_:genid227 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid228 .
+
+_:genid228 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/triggers> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#y> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#z> .
+
+_:genid227 rdf:rest rdf:nil .
+
+_:genid226 <http://www.w3.org/2003/11/swrl#head> _:genid231 .
+
+_:genid231 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid232 .
+
+_:genid232 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/directly-causes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#x> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#z> .
+
+_:genid231 rdf:rest rdf:nil .
+
+_:genid233 <http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a95"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl> "true"^^xsd:boolean ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid236 .
+
+_:genid236 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid237 .
+
+_:genid237 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/causes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e2> .
+
+_:genid236 rdf:rest _:genid234 .
+
+_:genid234 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid235 .
+
+_:genid235 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/causes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e3> .
+
+_:genid234 rdf:rest rdf:nil .
+
+_:genid233 <http://www.w3.org/2003/11/swrl#head> _:genid238 .
+
+_:genid238 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid239 .
+
+_:genid239 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/causes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e3> .
+
+_:genid238 rdf:rest rdf:nil .
+
+_:genid240 <http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for> "P3"^^xsd:string ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid243 .
+
+_:genid243 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid244 .
+
+_:genid244 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#o> .
+
+_:genid243 rdf:rest _:genid241 .
+
+_:genid241 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid242 .
+
+_:genid242 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e1> .
+
+_:genid241 rdf:rest rdf:nil .
+
+_:genid240 <http://www.w3.org/2003/11/swrl#head> _:genid245 .
+
+_:genid245 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid246 .
+
+_:genid246 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#o> .
+
+_:genid245 rdf:rest rdf:nil .
+
+_:genid247 <http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for> "P3"^^xsd:string ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid250 .
+
+_:genid250 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid251 .
+
+_:genid251 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e1> .
+
+_:genid250 rdf:rest _:genid248 .
+
+_:genid248 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid249 .
+
+_:genid249 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#o> .
+
+_:genid248 rdf:rest rdf:nil .
+
+_:genid247 <http://www.w3.org/2003/11/swrl#head> _:genid252 .
+
+_:genid252 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid253 .
+
+_:genid253 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#o> .
+
+_:genid252 rdf:rest rdf:nil .
+
+_:genid254 <http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a90"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl> "true"^^xsd:boolean ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid257 .
+
+_:genid257 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid258 .
+
+_:genid258 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t1> .
+
+_:genid257 rdf:rest _:genid255 .
+
+_:genid255 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid256 .
+
+_:genid256 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t2> .
+
+_:genid255 rdf:rest rdf:nil .
+
+_:genid254 <http://www.w3.org/2003/11/swrl#head> _:genid259 .
+
+_:genid259 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid260 .
+
+_:genid260 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/precedes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t2> .
+
+_:genid259 rdf:rest rdf:nil .
+
+_:genid261 <http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a92"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl> "true"^^xsd:boolean ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid264 .
+
+_:genid264 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid265 .
+
+_:genid265 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t> .
+
+_:genid264 rdf:rest _:genid262 .
+
+_:genid262 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid263 .
+
+_:genid263 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t> .
+
+_:genid262 rdf:rest rdf:nil .
+
+_:genid261 <http://www.w3.org/2003/11/swrl#head> _:genid266 .
+
+_:genid266 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid267 .
+
+_:genid267 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/meets> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e2> .
+
+_:genid266 rdf:rest rdf:nil .
+
+_:genid268 <http://onto.fel.cvut.cz/ontologies/ufo/axiom> "f5"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl> "true"^^xsd:boolean ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid275 .
+
+_:genid275 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid276 .
+
+_:genid276 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t1> .
+
+_:genid275 rdf:rest _:genid273 .
+
+_:genid273 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid274 .
+
+_:genid274 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t1> .
+
+_:genid273 rdf:rest _:genid271 .
+
+_:genid271 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid272 .
+
+_:genid272 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t2> .
+
+_:genid271 rdf:rest _:genid269 .
+
+_:genid269 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid270 .
+
+_:genid270 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t2> .
+
+_:genid269 rdf:rest rdf:nil .
+
+_:genid268 <http://www.w3.org/2003/11/swrl#head> _:genid277 .
+
+_:genid277 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid278 .
+
+_:genid278 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/equals> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e2> .
+
+_:genid277 rdf:rest rdf:nil .
+
+_:genid279 <http://onto.fel.cvut.cz/ontologies/ufo/axiom> "f2"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl> "true"^^xsd:boolean ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid288 .
+
+_:genid288 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid289 .
+
+_:genid289 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t1> .
+
+_:genid288 rdf:rest _:genid286 .
+
+_:genid286 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid287 .
+
+_:genid287 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t1> .
+
+_:genid286 rdf:rest _:genid284 .
+
+_:genid284 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid285 .
+
+_:genid285 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t2> .
+
+_:genid284 rdf:rest _:genid282 .
+
+_:genid282 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid283 .
+
+_:genid283 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/precedes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t3> .
+
+_:genid282 rdf:rest _:genid280 .
+
+_:genid280 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid281 .
+
+_:genid281 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t3> .
+
+_:genid280 rdf:rest rdf:nil .
+
+_:genid279 <http://www.w3.org/2003/11/swrl#head> _:genid290 .
+
+_:genid290 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid291 .
+
+_:genid291 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/starts> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e2> .
+
+_:genid290 rdf:rest rdf:nil .
+
+_:genid292 <http://onto.fel.cvut.cz/ontologies/ufo/axiom> "f1"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl> "true"^^xsd:boolean ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid309 .
+
+_:genid309 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid310 .
+
+_:genid310 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t1> .
+
+_:genid309 rdf:rest _:genid307 .
+
+_:genid307 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid308 .
+
+_:genid308 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/precedes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t2> .
+
+_:genid307 rdf:rest _:genid305 .
+
+_:genid305 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid306 .
+
+_:genid306 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t2> .
+
+_:genid305 rdf:rest _:genid303 .
+
+_:genid303 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid304 .
+
+_:genid304 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t3> .
+
+_:genid303 rdf:rest _:genid301 .
+
+_:genid301 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid302 .
+
+_:genid302 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/precedes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t4> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t3> .
+
+_:genid301 rdf:rest _:genid299 .
+
+_:genid299 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid300 .
+
+_:genid300 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t4> .
+
+_:genid299 rdf:rest _:genid297 .
+
+_:genid297 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid298 .
+
+_:genid298 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t5> .
+
+_:genid297 rdf:rest _:genid295 .
+
+_:genid295 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid296 .
+
+_:genid296 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/precedes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t5> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t6> .
+
+_:genid295 rdf:rest _:genid293 .
+
+_:genid293 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid294 .
+
+_:genid294 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t6> .
+
+_:genid293 rdf:rest rdf:nil .
+
+_:genid292 <http://www.w3.org/2003/11/swrl#head> _:genid311 .
+
+_:genid311 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid312 .
+
+_:genid312 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/temporally-overlaps> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e2> .
+
+_:genid311 rdf:rest rdf:nil .
+
+_:genid313 <http://onto.fel.cvut.cz/ontologies/ufo/axiom> "f3"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl> "true"^^xsd:boolean ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid324 .
+
+_:genid324 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid325 .
+
+_:genid325 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t1> .
+
+_:genid324 rdf:rest _:genid322 .
+
+_:genid322 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid323 .
+
+_:genid323 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/precedes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t1> .
+
+_:genid322 rdf:rest _:genid320 .
+
+_:genid320 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid321 .
+
+_:genid321 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t2> .
+
+_:genid320 rdf:rest _:genid318 .
+
+_:genid318 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid319 .
+
+_:genid319 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t3> .
+
+_:genid318 rdf:rest _:genid316 .
+
+_:genid316 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid317 .
+
+_:genid317 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/precedes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t3> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t4> .
+
+_:genid316 rdf:rest _:genid314 .
+
+_:genid314 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid315 .
+
+_:genid315 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t4> .
+
+_:genid314 rdf:rest rdf:nil .
+
+_:genid313 <http://www.w3.org/2003/11/swrl#head> _:genid326 .
+
+_:genid326 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid327 .
+
+_:genid327 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/during> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e2> .
+
+_:genid326 rdf:rest rdf:nil .
+
+_:genid328 <http://onto.fel.cvut.cz/ontologies/ufo/axiom> "f4"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl> "true"^^xsd:boolean ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid337 .
+
+_:genid337 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid338 .
+
+_:genid338 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t1> .
+
+_:genid337 rdf:rest _:genid335 .
+
+_:genid335 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid336 .
+
+_:genid336 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t1> .
+
+_:genid335 rdf:rest _:genid333 .
+
+_:genid333 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid334 .
+
+_:genid334 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t3> .
+
+_:genid333 rdf:rest _:genid331 .
+
+_:genid331 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid332 .
+
+_:genid332 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/precedes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t4> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t3> .
+
+_:genid331 rdf:rest _:genid329 .
+
+_:genid329 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid330 .
+
+_:genid330 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t4> .
+
+_:genid329 rdf:rest rdf:nil .
+
+_:genid328 <http://www.w3.org/2003/11/swrl#head> _:genid339 .
+
+_:genid339 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid340 .
+
+_:genid340 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/finishes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e2> .
+
+_:genid339 rdf:rest rdf:nil .
+
+_:genid341 <http://onto.fel.cvut.cz/ontologies/ufo/axiom> "a91"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl> "true"^^xsd:boolean ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid346 .
+
+_:genid346 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid347 .
+
+_:genid347 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-end-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#1t> .
+
+_:genid346 rdf:rest _:genid344 .
+
+_:genid344 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid345 .
+
+_:genid345 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/precedes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t2> .
+
+_:genid344 rdf:rest _:genid342 .
+
+_:genid342 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid343 .
+
+_:genid343 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t2> .
+
+_:genid342 rdf:rest rdf:nil .
+
+_:genid341 <http://www.w3.org/2003/11/swrl#head> _:genid348 .
+
+_:genid348 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid349 .
+
+_:genid349 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/before> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e2> .
+
+_:genid348 rdf:rest rdf:nil .
+
+_:genid350 <http://onto.fel.cvut.cz/ontologies/ufo/is-necessary-condition-for> "M3"^^xsd:string ;
+	<http://onto.fel.cvut.cz/ontologies/ufo/is-sufficient-condition-for> "M3"^^xsd:string ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid351 .
+
+_:genid351 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid352 .
+
+_:genid352 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e> .
+
+_:genid351 rdf:rest rdf:nil .
+
+_:genid350 <http://www.w3.org/2003/11/swrl#head> _:genid353 .
+
+_:genid353 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid354 .
+
+_:genid354 a <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+	<http://www.w3.org/2003/11/swrl#classPredicate> _:genid355 .
+
+_:genid355 a owl:Class ;
+	owl:complementOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> .
+
+_:genid354 <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e> .
+
+_:genid353 rdf:rest rdf:nil .
+
+_:genid356 <http://onto.fel.cvut.cz/ontologies/ufo/is-sufficient-condition-for> "M4"^^xsd:string ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid359 .
+
+_:genid359 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid360 .
+
+_:genid360 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e2> .
+
+_:genid359 rdf:rest _:genid357 .
+
+_:genid357 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid358 .
+
+_:genid358 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e1> .
+
+_:genid357 rdf:rest rdf:nil .
+
+_:genid356 <http://www.w3.org/2003/11/swrl#head> _:genid361 .
+
+_:genid361 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid362 .
+
+_:genid362 a <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+	<http://www.w3.org/2003/11/swrl#classPredicate> _:genid363 .
+
+_:genid363 a owl:Class ;
+	owl:complementOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> .
+
+_:genid362 <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> .
+
+_:genid361 rdf:rest rdf:nil .
+
+_:genid364 <http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for> "M7"^^xsd:string ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid367 .
+
+_:genid367 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid368 .
+
+_:genid368 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e2> .
+
+_:genid367 rdf:rest _:genid365 .
+
+_:genid365 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid366 .
+
+_:genid366 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e3> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e2> .
+
+_:genid365 rdf:rest rdf:nil .
+
+_:genid364 <http://www.w3.org/2003/11/swrl#head> _:genid369 .
+
+_:genid369 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid370 .
+
+_:genid370 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/mereologically-overlaps> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e3> .
+
+_:genid369 rdf:rest rdf:nil .
+
+_:genid371 <http://onto.fel.cvut.cz/ontologies/ufo/is-necessary-condition-for> "M5"^^xsd:string ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid374 .
+
+_:genid374 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid375 .
+
+_:genid375 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#x> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#y> .
+
+_:genid374 rdf:rest _:genid372 .
+
+_:genid372 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid373 .
+
+_:genid373 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#y> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#z> .
+
+_:genid372 rdf:rest rdf:nil .
+
+_:genid371 <http://www.w3.org/2003/11/swrl#head> _:genid376 .
+
+_:genid376 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid377 .
+
+_:genid377 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#x> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#z> .
+
+_:genid376 rdf:rest rdf:nil .
+
+_:genid378 a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid381 .
+
+_:genid381 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid382 .
+
+_:genid382 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-object-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#x> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#y> .
+
+_:genid381 rdf:rest _:genid379 .
+
+_:genid379 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid380 .
+
+_:genid380 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-object-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#y> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#z> .
+
+_:genid379 rdf:rest rdf:nil .
+
+_:genid378 <http://www.w3.org/2003/11/swrl#head> _:genid383 .
+
+_:genid383 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid384 .
+
+_:genid384 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/has-object-part> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#x> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#z> .
+
+_:genid383 rdf:rest rdf:nil .
+
+_:genid385 <http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl> "true"^^xsd:boolean ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid388 .
+
+_:genid388 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid389 .
+
+_:genid389 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#d> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#e> .
+
+_:genid388 rdf:rest _:genid386 .
+
+_:genid386 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid387 .
+
+_:genid387 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/inheres-in> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#d> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#o> .
+
+_:genid386 rdf:rest rdf:nil .
+
+_:genid385 <http://www.w3.org/2003/11/swrl#head> _:genid390 .
+
+_:genid390 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid391 .
+
+_:genid391 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/depends-on> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#e> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#o> .
+
+_:genid390 rdf:rest rdf:nil .
+
+_:genid392 <http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl> "true"^^xsd:boolean ;
+	rdfs:comment "procedural irreflexivity"^^xsd:string ;
+	a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid393 .
+
+_:genid393 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid394 .
+
+_:genid394 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/precedes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t2> .
+
+_:genid393 rdf:rest rdf:nil .
+
+_:genid392 <http://www.w3.org/2003/11/swrl#head> _:genid395 .
+
+_:genid395 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid396 .
+
+_:genid396 a <http://www.w3.org/2003/11/swrl#DifferentIndividualsAtom> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t2> .
+
+_:genid395 rdf:rest rdf:nil .
+
+_:genid397 a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid400 .
+
+_:genid400 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid401 .
+
+_:genid401 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/precedes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t2> .
+
+_:genid400 rdf:rest _:genid398 .
+
+_:genid398 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid399 .
+
+_:genid399 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/precedes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t3> .
+
+_:genid398 rdf:rest rdf:nil .
+
+_:genid397 <http://www.w3.org/2003/11/swrl#head> _:genid402 .
+
+_:genid402 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid403 .
+
+_:genid403 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/precedes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t3> .
+
+_:genid402 rdf:rest rdf:nil .
+
+_:genid404 a <http://www.w3.org/2003/11/swrl#Imp> ;
+	<http://www.w3.org/2003/11/swrl#body> _:genid407 .
+
+_:genid407 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid408 .
+
+_:genid408 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/precedes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t2> .
+
+_:genid407 rdf:rest _:genid405 .
+
+_:genid405 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid406 .
+
+_:genid406 a <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+	<http://www.w3.org/2003/11/swrl#propertyPredicate> <http://onto.fel.cvut.cz/ontologies/ufo/precedes> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t2> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t3> .
+
+_:genid405 rdf:rest rdf:nil .
+
+_:genid404 <http://www.w3.org/2003/11/swrl#head> _:genid409 .
+
+_:genid409 a <http://www.w3.org/2003/11/swrl#AtomList> ;
+	rdf:first _:genid410 .
+
+_:genid410 a <http://www.w3.org/2003/11/swrl#DifferentIndividualsAtom> ;
+	<http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#t1> ;
+	<http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#t3> .
+
+_:genid409 rdf:rest rdf:nil .
+# Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
