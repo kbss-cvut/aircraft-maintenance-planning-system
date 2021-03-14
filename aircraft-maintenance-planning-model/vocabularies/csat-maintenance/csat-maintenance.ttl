@@ -15,8 +15,8 @@
 @prefix maintenance-schema: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
 @base <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
 
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/> rdf:type owl:Ontology ;
-                                                        owl:imports maintenance-schema: .
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/> a owl:Ontology ;
+                                                        owl:imports <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
 
 #################################################################
 #    Annotation properties
