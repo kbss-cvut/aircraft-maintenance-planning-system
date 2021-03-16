@@ -8,7 +8,7 @@
 
 <http://onto.fel.cvut.cz/ontologies/romain-csat-maintenance-mapping> rdf:type owl:Ontology ;
                                                                       owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance-merge> ,
-                                                                                  <http://www.semanticweb.org/ahmadjan/ontologies/2021/2/untitled-ontology-300> .
+                                                                                  <http://onto.fel.cvut.cz/ontologies/romain-merge> .
 
 #################################################################
 #    Classes
@@ -49,24 +49,6 @@
 ###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Workpackage
 <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Workpackage> owl:equivalentClass <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000020ROMAIN> .
 
-
-###  http://onto.fel.cvut.cz/ontologies/ufo/endurant
-<http://onto.fel.cvut.cz/ontologies/ufo/endurant> owl:equivalentClass <http://purl.obolibrary.org/obo/BFO_0000002> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/ufo/entity
-<http://onto.fel.cvut.cz/ontologies/ufo/entity> owl:equivalentClass <http://purl.obolibrary.org/obo/BFO_0000001> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/ufo/perdurant
-<http://onto.fel.cvut.cz/ontologies/ufo/perdurant> owl:equivalentClass <http://purl.obolibrary.org/obo/BFO_0000003> .
-
-
-###  http://purl.obolibrary.org/obo/BFO_0000001
-
-###  http://purl.obolibrary.org/obo/BFO_0000002
-
-###  http://purl.obolibrary.org/obo/BFO_0000003
 
 ###  http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact
 
