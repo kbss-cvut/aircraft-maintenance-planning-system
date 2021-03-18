@@ -4,533 +4,698 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN> .
 
-<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN> rdf:type owl:Ontology ;
-                                                             owl:imports 
-															 <http://purl.obolibrary.org/obo/bfo/2.0/bfo.owl> ,
-                                                                         <http://purl.obolibrary.org/obo/iao/2017-03-24/iao.owl> ,
-                                                                       <http://www.obofoundry.org/ro/ro.owl> ,
-                                                                         <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology> ,
-                                                                         <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology> ,
-                                                                         <http://www.ontologylibrary.mil/CommonCore/Mid/TimeOntology> ,
-                                                                         <http://www.ontologylibrary.mil/CommonCore/Mid/UnitsOfMeasureOntology> ,
-                                                                         <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology> ;
-                                                             <http://purl.org/dc/elements/1.1/title> "ROMAIN: Reference Ontology for industrial Maintenance" .
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN> a owl:Ontology ;
+	owl:imports <http://purl.obolibrary.org/obo/bfo/2.0/bfo.owl> , <http://purl.obolibrary.org/obo/iao/2017-03-24/iao.owl> , <http://www.obofoundry.org/ro/ro.owl> , <http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology> , <http://www.ontologylibrary.mil/CommonCore/Mid/TimeOntology> , <http://www.ontologylibrary.mil/CommonCore/Mid/UnitsOfMeasureOntology> , <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology> ;
+	<http://purl.org/dc/elements/1.1/title> "ROMAIN: Reference Ontology for industrial Maintenance" .
+# 
+# 
+# #################################################################
+# #
+# #    Object Properties
+# #
+# #################################################################
+# 
+# 
+# http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#prescribes
 
-#################################################################
-#    Object Properties
-#################################################################
+<http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#prescribes> a owl:ObjectProperty .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLObjectProperty_ROMAIN00000023ROMAIN
 
-###  http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#prescribes
-<http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#prescribes> rdf:type owl:ObjectProperty .
-
-
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLObjectProperty_ROMAIN00000023ROMAIN
-:OWLObjectProperty_ROMAIN00000023ROMAIN rdf:type owl:ObjectProperty ;
-                                        rdfs:comment """For all Types T1 and T2, if T1 describes T2 then there is some instance
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLObjectProperty_ROMAIN00000023ROMAIN> a owl:ObjectProperty ;
+	rdfs:comment """For all Types T1 and T2, if T1 describes T2 then there is some instance
 of T1, t1 that presents the characteristics by which some instance of T2,
 t2 can be recognized or visualized.""" ;
-                                        rdfs:label "describes"@en .
+	rdfs:label "describes"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLObjectProperty_ROMAIN00000024ROMAIN
 
-
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLObjectProperty_ROMAIN00000024ROMAIN
-:OWLObjectProperty_ROMAIN00000024ROMAIN rdf:type owl:ObjectProperty ;
-                                        <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#definition> """A relation between a continuant and a directive ICE in which the continuant
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLObjectProperty_ROMAIN00000024ROMAIN> a owl:ObjectProperty ;
+	<http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#definition> """A relation between a continuant and a directive ICE in which the continuant
 does not fulfill the directions expressed in the directive ICE.""" ;
-                                        rdfs:label "violates"@en .
+	rdfs:label "violates"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLObjectProperty_ROMAIN00000025ROMAIN
 
-
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLObjectProperty_ROMAIN00000025ROMAIN
-:OWLObjectProperty_ROMAIN00000025ROMAIN rdf:type owl:ObjectProperty ;
-                                        <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#definition> """a relation between an occurrent and a dependent continuant in which the
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLObjectProperty_ROMAIN00000025ROMAIN> a owl:ObjectProperty ;
+	<http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#definition> """a relation between an occurrent and a dependent continuant in which the
 dependent continuant is the reason to the appearance of the occurent.""" ;
-                                        rdfs:label "has subject"@en .
+	rdfs:label "has subject"@en .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+# 
+# 
+# http://purl.obolibrary.org/obo/BFO_0000141
 
+<http://purl.obolibrary.org/obo/BFO_0000141> owl:disjointWith <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000017ROMAIN> .
+# 
+# http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact
 
-#################################################################
-#    Classes
-#################################################################
+<http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact> a owl:Class .
+# 
+# http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#CodeIdentifier
 
-###  http://purl.obolibrary.org/obo/BFO_0000141
-<http://purl.obolibrary.org/obo/BFO_0000141> owl:disjointWith :OWLClass_ROMAIN00000017ROMAIN .
+<http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#CodeIdentifier> a owl:Class .
+# 
+# http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DateIdentifier
 
+<http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DateIdentifier> a owl:Class .
+# 
+# http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DescriptiveInformationContentEntity
 
-###  http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DesignativeInformationContentEntity
-<http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DesignativeInformationContentEntity> rdf:type owl:Class ;
-                                                                                                              rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000033> ,
-                                                                                                                              [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
-                                                                                                                                                       owl:onProperty <http://purl.obolibrary.org/obo/BFO_0000051> ;
-                                                                                                                                                       owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DesignativeInformationContentEntity>
-                                                                                                                                                     ]
-                                                                                                                                                     [ rdf:type owl:Restriction ;
-                                                                                                                                                       owl:onProperty <http://purl.obolibrary.org/obo/BFO_0000051> ;
-                                                                                                                                                       owl:someValuesFrom :OWLClass_ROMAIN00000029ROMAIN
-                                                                                                                                                     ]
-                                                                                                                                                     [ rdf:type owl:Restriction ;
-                                                                                                                                                       owl:onProperty <http://purl.obolibrary.org/obo/BFO_0000051> ;
-                                                                                                                                                       owl:someValuesFrom :OWLClass_ROMAIN00000032ROMAIN
-                                                                                                                                                     ]
-                                                                                                                                                   ) ;
-                                                                                                                                rdf:type owl:Class
-                                                                                                                              ] .
+<http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DescriptiveInformationContentEntity> a owl:Class .
+# 
+# http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DesignativeInformationContentEntity
 
+<http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DesignativeInformationContentEntity> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000033> , _:genid1 .
 
-###  http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DirectiveInformationContentEntity
-<http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DirectiveInformationContentEntity> rdf:type owl:Class ;
-                                                                                                            rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000033> .
+_:genid1 owl:intersectionOf _:genid6 .
 
+_:genid6 a rdf:List ;
+	rdf:first _:genid7 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000000ROMAIN
-:OWLClass_ROMAIN00000000ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000033> ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> "An IAO:information content entity that prescribes a need or expectation to be met" ;
-                               rdfs:label "Requirement Specification"@en .
+_:genid7 a owl:Restriction ;
+	owl:onProperty <http://purl.obolibrary.org/obo/BFO_0000051> ;
+	owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DesignativeInformationContentEntity> .
 
+_:genid6 rdf:rest _:genid4 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000001ROMAIN
-:OWLClass_ROMAIN00000001ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DateIdentifier> ;
-                               rdfs:label "Start Day"@en .
+_:genid4 a rdf:List ;
+	rdf:first _:genid5 .
 
+_:genid5 a owl:Restriction ;
+	owl:onProperty <http://purl.obolibrary.org/obo/BFO_0000051> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000029ROMAIN> .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000002ROMAIN
-:OWLClass_ROMAIN00000002ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DescriptiveInformationContentEntity> ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :OWLObjectProperty_ROMAIN00000023ROMAIN ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000020ROMAIN
-                                               ] ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> "An IAO:information content entity describing a desired ROM:Maintenance Action" ;
-                               rdfs:label "Maintenance Work Order Specification"@en .
+_:genid4 rdf:rest _:genid2 .
 
+_:genid2 a rdf:List ;
+	rdf:first _:genid3 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000003ROMAIN
-:OWLClass_ROMAIN00000003ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DescriptiveInformationContentEntity> ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#is_input_of> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000033ROMAIN
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :OWLObjectProperty_ROMAIN00000023ROMAIN ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000012ROMAIN
-                                               ] ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> "An IAO:information content entity describing a ROM:Non-conformity." ;
-                               rdfs:label "Maintenance Notification"@en .
+_:genid3 a owl:Restriction ;
+	owl:onProperty <http://purl.obolibrary.org/obo/BFO_0000051> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000032ROMAIN> .
 
+_:genid2 rdf:rest rdf:nil .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000004ROMAIN
-:OWLClass_ROMAIN00000004ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000104> ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://purl.obolibrary.org/obo/BFO_0000051> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000036ROMAIN
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#prescribes> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000020ROMAIN
-                                               ] ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> """An IAO:plan specification containing Maintenance Strategies and
+_:genid1 a owl:Class .
+# 
+# http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DirectiveInformationContentEntity
+
+<http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DirectiveInformationContentEntity> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000033> .
+# 
+# http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementInformationContentEntity
+
+<http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementInformationContentEntity> a owl:Class .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000000ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000000ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000033> ;
+	<http://purl.obolibrary.org/obo/IAO_0000115> "An IAO:information content entity that prescribes a need or expectation to be met" ;
+	rdfs:label "Requirement Specification"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000001ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000001ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DateIdentifier> ;
+	rdfs:label "Start Day"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000002ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000002ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DescriptiveInformationContentEntity> , _:genid8 .
+
+_:genid8 a owl:Restriction ;
+	owl:onProperty <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLObjectProperty_ROMAIN00000023ROMAIN> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000020ROMAIN> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000002ROMAIN> <http://purl.obolibrary.org/obo/IAO_0000115> "An IAO:information content entity describing a desired ROM:Maintenance Action" ;
+	rdfs:label "Maintenance Work Order Specification"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000003ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000003ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DescriptiveInformationContentEntity> , _:genid9 .
+
+_:genid9 a owl:Restriction ;
+	owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#is_input_of> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000033ROMAIN> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000003ROMAIN> rdfs:subClassOf _:genid10 .
+
+_:genid10 a owl:Restriction ;
+	owl:onProperty <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLObjectProperty_ROMAIN00000023ROMAIN> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000012ROMAIN> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000003ROMAIN> <http://purl.obolibrary.org/obo/IAO_0000115> "An IAO:information content entity describing a ROM:Non-conformity." ;
+	rdfs:label "Maintenance Notification"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000004ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000004ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000104> , _:genid11 .
+
+_:genid11 a owl:Restriction ;
+	owl:onProperty <http://purl.obolibrary.org/obo/BFO_0000051> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000036ROMAIN> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000004ROMAIN> rdfs:subClassOf _:genid12 .
+
+_:genid12 a owl:Restriction ;
+	owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#prescribes> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000020ROMAIN> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000004ROMAIN> <http://purl.obolibrary.org/obo/IAO_0000115> """An IAO:plan specification containing Maintenance Strategies and
 Maintenance Standard Work Procedures for a ROM:Maintainable Item
 over its lifecycle.""" ;
-                               rdfs:label "Maintenance Plan Specification"@en .
+	rdfs:label "Maintenance Plan Specification"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000005ROMAIN
 
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000005ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DescriptiveInformationContentEntity> , _:genid13 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000005ROMAIN
-:OWLClass_ROMAIN00000005ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DescriptiveInformationContentEntity> ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :OWLObjectProperty_ROMAIN00000023ROMAIN ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000006ROMAIN
-                                               ] ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> """An IOA:information content entity describing the ROM:Maintenance
+_:genid13 a owl:Restriction ;
+	owl:onProperty <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLObjectProperty_ROMAIN00000023ROMAIN> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000006ROMAIN> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000005ROMAIN> <http://purl.obolibrary.org/obo/IAO_0000115> """An IOA:information content entity describing the ROM:Maintenance
 Strategy Type to manage a specific functional failure.""" ;
-                               rdfs:label "Maintenance Strategy Specification"@en .
+	rdfs:label "Maintenance Strategy Specification"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000006ROMAIN
 
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000006ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DirectiveInformationContentEntity> , _:genid14 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000006ROMAIN
-:OWLClass_ROMAIN00000006ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DirectiveInformationContentEntity> ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://purl.obolibrary.org/obo/IAO_0000136> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000014ROMAIN
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#prescribes> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000004ROMAIN
-                                               ] ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> "An IAO:information content entity resulting from ROM:maintenance strategy development process for a ROM:Maintainable Item." ;
-                               rdfs:label "Maintenance Strategy Type"@en .
+_:genid14 a owl:Restriction ;
+	owl:onProperty <http://purl.obolibrary.org/obo/IAO_0000136> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000014ROMAIN> .
 
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000006ROMAIN> rdfs:subClassOf _:genid15 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000007ROMAIN
-:OWLClass_ROMAIN00000007ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DescriptiveInformationContentEntity> ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> "An IOA:information content entity describing a list of ROM:Maintenance Work Order Specification to be executed in a defined BFO:one-dimensional temporal region (i.e. temporal interval)." ;
-                               rdfs:label "Maintenance Schedule List"@en .
+_:genid15 a owl:Restriction ;
+	owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#prescribes> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000004ROMAIN> .
 
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000006ROMAIN> <http://purl.obolibrary.org/obo/IAO_0000115> "An IAO:information content entity resulting from ROM:maintenance strategy development process for a ROM:Maintainable Item." ;
+	rdfs:label "Maintenance Strategy Type"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000007ROMAIN
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000008ROMAIN
-:OWLClass_ROMAIN00000008ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000104> ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> """An IAO:plan specification that describes the steps required for a specific
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000007ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DescriptiveInformationContentEntity> ;
+	<http://purl.obolibrary.org/obo/IAO_0000115> "An IOA:information content entity describing a list of ROM:Maintenance Work Order Specification to be executed in a defined BFO:one-dimensional temporal region (i.e. temporal interval)." ;
+	rdfs:label "Maintenance Schedule List"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000008ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000008ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000104> ;
+	<http://purl.obolibrary.org/obo/IAO_0000115> """An IAO:plan specification that describes the steps required for a specific
 ROM:Maintenance Action.""" ;
-                               rdfs:label "Standard Work Procedure Specification"@en .
+	rdfs:label "Standard Work Procedure Specification"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000009ROMAIN
 
-
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000009ROMAIN
-:OWLClass_ROMAIN00000009ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> """A BFO:role that is borne by an CCO:artifact(s) when it becomes a part
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000009ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> ;
+	<http://purl.obolibrary.org/obo/IAO_0000115> """A BFO:role that is borne by an CCO:artifact(s) when it becomes a part
 of another BFO:material entity, to provide a particular BFO:function.""" ;
-                               rdfs:label "Component Role"@en .
+	rdfs:label "Component Role"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000010ROMAIN
 
-
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000010ROMAIN
-:OWLClass_ROMAIN00000010ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> """A BFO:role borne by a group of one or more CCO:artifact(s) as an
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000010ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> ;
+	<http://purl.obolibrary.org/obo/IAO_0000115> """A BFO:role borne by a group of one or more CCO:artifact(s) as an
 output of a ROM:Maintenance Strategy Process.""" ;
-                               rdfs:label "Maintainable Item Role"@en .
+	rdfs:label "Maintainable Item Role"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000011ROMAIN
 
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000011ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> ;
+	<http://purl.obolibrary.org/obo/IAO_0000115> "A BFO:role that is borne by an CCO:artifact to deliver potential or actual value to an CCO:organization" ;
+	rdfs:label "Asset Role"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000012ROMAIN
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000011ROMAIN
-:OWLClass_ROMAIN00000011ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> "A BFO:role that is borne by an CCO:artifact to deliver potential or actual value to an CCO:organization" ;
-                               rdfs:label "Asset Role"@en .
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000012ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000020> , _:genid16 .
 
+_:genid16 a owl:Restriction ;
+	owl:onProperty <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLObjectProperty_ROMAIN00000024ROMAIN> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000000ROMAIN> .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000012ROMAIN
-:OWLClass_ROMAIN00000012ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000020> ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :OWLObjectProperty_ROMAIN00000024ROMAIN ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000000ROMAIN
-                                               ] ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> """A BFO:specifically dependent continuant that inheres in a material entity
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000012ROMAIN> <http://purl.obolibrary.org/obo/IAO_0000115> """A BFO:specifically dependent continuant that inheres in a material entity
 and deviates from a design specification.""" ;
-                               rdfs:label "Nonconformity"@en .
+	rdfs:label "Nonconformity"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000013ROMAIN
 
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000013ROMAIN> a owl:Class ;
+	owl:equivalentClass _:genid17 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000013ROMAIN
-:OWLClass_ROMAIN00000013ROMAIN rdf:type owl:Class ;
-                               owl:equivalentClass [ owl:intersectionOf ( <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact>
-                                                                          [ rdf:type owl:Restriction ;
-                                                                            owl:onProperty <http://purl.obolibrary.org/obo/RO_0000053> ;
-                                                                            owl:someValuesFrom :OWLClass_ROMAIN00000011ROMAIN
-                                                                          ]
-                                                                        ) ;
-                                                     rdf:type owl:Class
-                                                   ] ,
-                                                   [ owl:intersectionOf ( <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact>
-                                                                          [ rdf:type owl:Restriction ;
-                                                                            owl:onProperty <http://purl.obolibrary.org/obo/RO_0000087> ;
-                                                                            owl:someValuesFrom :OWLClass_ROMAIN00000011ROMAIN
-                                                                          ]
-                                                                        ) ;
-                                                     rdf:type owl:Class
-                                                   ] ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact> ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://purl.obolibrary.org/obo/BFO_0000051> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000014ROMAIN
-                                               ] ;
-                               rdfs:label "Asset"@en .
+_:genid17 owl:intersectionOf _:genid20 .
 
+_:genid20 a rdf:List ;
+	rdf:first <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact> ;
+	rdf:rest _:genid18 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000014ROMAIN
-:OWLClass_ROMAIN00000014ROMAIN rdf:type owl:Class ;
-                               owl:equivalentClass [ owl:intersectionOf ( <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact>
-                                                                          [ rdf:type owl:Restriction ;
-                                                                            owl:onProperty <http://purl.obolibrary.org/obo/RO_0000053> ;
-                                                                            owl:someValuesFrom :OWLClass_ROMAIN00000010ROMAIN
-                                                                          ]
-                                                                        ) ;
-                                                     rdf:type owl:Class
-                                                   ] ,
-                                                   [ owl:intersectionOf ( <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact>
-                                                                          [ rdf:type owl:Restriction ;
-                                                                            owl:onProperty <http://purl.obolibrary.org/obo/RO_0000087> ;
-                                                                            owl:someValuesFrom :OWLClass_ROMAIN00000010ROMAIN
-                                                                          ]
-                                                                        ) ;
-                                                     rdf:type owl:Class
-                                                   ] ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact> ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://purl.obolibrary.org/obo/RO_0000053> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000012ROMAIN
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://purl.obolibrary.org/obo/RO_0000085> ;
-                                                 owl:someValuesFrom <http://purl.obolibrary.org/obo/BFO_0000034>
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://www.obofoundry.org/ro/ro.owl#participates_in> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000016ROMAIN
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://www.obofoundry.org/ro/ro.owl#participates_in> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000019ROMAIN
-                                               ] ;
-                               rdfs:label "Maintainable Item"@en .
+_:genid18 a rdf:List ;
+	rdf:first _:genid19 .
 
+_:genid19 a owl:Restriction ;
+	owl:onProperty <http://purl.obolibrary.org/obo/RO_0000053> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000011ROMAIN> .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000015ROMAIN
-:OWLClass_ROMAIN00000015ROMAIN rdf:type owl:Class ;
-                               owl:equivalentClass [ owl:intersectionOf ( <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact>
-                                                                          [ rdf:type owl:Restriction ;
-                                                                            owl:onProperty <http://purl.obolibrary.org/obo/RO_0000053> ;
-                                                                            owl:someValuesFrom :OWLClass_ROMAIN00000009ROMAIN
-                                                                          ]
-                                                                        ) ;
-                                                     rdf:type owl:Class
-                                                   ] ,
-                                                   [ owl:intersectionOf ( <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact>
-                                                                          [ rdf:type owl:Restriction ;
-                                                                            owl:onProperty <http://purl.obolibrary.org/obo/RO_0000087> ;
-                                                                            owl:someValuesFrom :OWLClass_ROMAIN00000009ROMAIN
-                                                                          ]
-                                                                        ) ;
-                                                     rdf:type owl:Class
-                                                   ] ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact> ;
-                               rdfs:label "Component"@en .
+_:genid18 rdf:rest rdf:nil .
 
+_:genid17 a owl:Class .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000016ROMAIN
-:OWLClass_ROMAIN00000016ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> ,
-                                               [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
-                                                                        owl:onProperty <http://www.obofoundry.org/ro/ro.owl#precedes> ;
-                                                                        owl:someValuesFrom :OWLClass_ROMAIN00000019ROMAIN
-                                                                      ]
-                                                                      [ rdf:type owl:Restriction ;
-                                                                        owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#has_output> ;
-                                                                        owl:someValuesFrom :OWLClass_ROMAIN00000012ROMAIN
-                                                                      ]
-                                                                    ) ;
-                                                 rdf:type owl:Class
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://www.obofoundry.org/ro/ro.owl#precedes> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000019ROMAIN
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#has_output> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000012ROMAIN
-                                               ] ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> "A BFO:process that results in the loss of a desired quality or function." ;
-                               rdfs:label "Process Of Degradation"@en .
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000013ROMAIN> owl:equivalentClass _:genid21 .
 
+_:genid21 owl:intersectionOf _:genid24 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000017ROMAIN
-:OWLClass_ROMAIN00000017ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> "A BFO:Process in which some BFO:independent continuant endures and one or more of the dependent entities it bears does not change in kind or intensity" ;
-                               rdfs:label "State"@en .
+_:genid24 a rdf:List ;
+	rdf:first <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact> ;
+	rdf:rest _:genid22 .
 
+_:genid22 a rdf:List ;
+	rdf:first _:genid23 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000018ROMAIN
-:OWLClass_ROMAIN00000018ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf :OWLClass_ROMAIN00000017ROMAIN ,
-                                               [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
-                                                                        owl:onProperty <http://www.obofoundry.org/ro/ro.owl#has_participant> ;
-                                                                        owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact>
-                                                                      ]
-                                                                      [ rdf:type owl:Restriction ;
-                                                                        owl:onProperty <http://www.obofoundry.org/ro/ro.owl#preceded_by> ;
-                                                                        owl:someValuesFrom :OWLClass_ROMAIN00000022ROMAIN
-                                                                      ]
-                                                                    ) ;
-                                                 rdf:type owl:Class
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#affects> ;
-                                                 owl:someValuesFrom <http://purl.obolibrary.org/obo/BFO_0000034>
-                                               ] ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> "A ROM:state during which a CCO:artifact is unable to perform its BFO:function." ;
-                               rdfs:label "State Of Failure"@en .
+_:genid23 a owl:Restriction ;
+	owl:onProperty <http://purl.obolibrary.org/obo/RO_0000087> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000011ROMAIN> .
 
+_:genid22 rdf:rest rdf:nil .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000019ROMAIN
-:OWLClass_ROMAIN00000019ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf :OWLClass_ROMAIN00000017ROMAIN ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://www.obofoundry.org/ro/ro.owl#precedes> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000022ROMAIN
-                                               ] ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> "A ROM:state during which a CCO:artifact bears an undesirable BFO:quality or BFO:function." ;
-                               rdfs:label "State Of Degradation"@en .
+_:genid21 a owl:Class .
 
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000013ROMAIN> rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact> , _:genid25 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000020ROMAIN
-:OWLClass_ROMAIN00000020ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://purl.obolibrary.org/obo/BFO_0000051> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000026ROMAIN
-                                               ] ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> "A BFO:process to perform work on a CCO:artifact according to a ROM:Maintenance Work Order Specification." ;
-                               rdfs:label "Maintenance Action"@en .
+_:genid25 a owl:Restriction ;
+	owl:onProperty <http://purl.obolibrary.org/obo/BFO_0000051> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000014ROMAIN> .
 
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000013ROMAIN> rdfs:label "Asset"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000014ROMAIN
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000021ROMAIN
-:OWLClass_ROMAIN00000021ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#has_output> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000003ROMAIN
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#occurs_on> ;
-                                                 owl:someValuesFrom <http://purl.obolibrary.org/obo/BFO_0000008>
-                                               ] ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> "A BFO:process resulting in an action." ;
-                               rdfs:label "Triggering Event"@en .
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000014ROMAIN> a owl:Class ;
+	owl:equivalentClass _:genid26 .
 
+_:genid26 owl:intersectionOf _:genid29 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000022ROMAIN
-:OWLClass_ROMAIN00000022ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://www.obofoundry.org/ro/ro.owl#precedes> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000018ROMAIN
-                                               ] ;
-                               <http://purl.obolibrary.org/obo/IAO_0000115> "A BFO:process that precedes the ROM:State of Failure." ;
-                               rdfs:label "Failure Event"@en .
+_:genid29 a rdf:List ;
+	rdf:first <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact> ;
+	rdf:rest _:genid27 .
 
+_:genid27 a rdf:List ;
+	rdf:first _:genid28 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000024ROMAIN
-:OWLClass_ROMAIN00000024ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#CodeIdentifier> ;
-                               rdfs:label "Location Code"@en .
+_:genid28 a owl:Restriction ;
+	owl:onProperty <http://purl.obolibrary.org/obo/RO_0000053> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000010ROMAIN> .
 
+_:genid27 rdf:rest rdf:nil .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000025ROMAIN
-:OWLClass_ROMAIN00000025ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#CodeIdentifier> ;
-                               rdfs:label "Order Number"@en .
+_:genid26 a owl:Class .
 
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000014ROMAIN> owl:equivalentClass _:genid30 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000026ROMAIN
-:OWLClass_ROMAIN00000026ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf :OWLClass_ROMAIN00000020ROMAIN ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :OWLObjectProperty_ROMAIN00000025ROMAIN ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000012ROMAIN
-                                               ] ;
-                               rdfs:label "Maintenance Task"@en .
+_:genid30 owl:intersectionOf _:genid33 .
 
+_:genid33 a rdf:List ;
+	rdf:first <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact> ;
+	rdf:rest _:genid31 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000027ROMAIN
-:OWLClass_ROMAIN00000027ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#CodeIdentifier> ;
-                               rdfs:label "Order Type Code"@en .
+_:genid31 a rdf:List ;
+	rdf:first _:genid32 .
 
+_:genid32 a owl:Restriction ;
+	owl:onProperty <http://purl.obolibrary.org/obo/RO_0000087> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000010ROMAIN> .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000028ROMAIN
-:OWLClass_ROMAIN00000028ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#CodeIdentifier> ;
-                               rdfs:label "System Status Code"@en .
+_:genid31 rdf:rest rdf:nil .
 
+_:genid30 a owl:Class .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000029ROMAIN
-:OWLClass_ROMAIN00000029ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DesignativeInformationContentEntity> ;
-                               rdfs:label "Cost measurment ICE"@en .
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000014ROMAIN> rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact> , _:genid34 .
 
+_:genid34 a owl:Restriction ;
+	owl:onProperty <http://purl.obolibrary.org/obo/RO_0000053> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000012ROMAIN> .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000030ROMAIN
-:OWLClass_ROMAIN00000030ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf :OWLClass_ROMAIN00000029ROMAIN ;
-                               rdfs:label "Actual Cost"@en .
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000014ROMAIN> rdfs:subClassOf _:genid35 .
 
+_:genid35 a owl:Restriction ;
+	owl:onProperty <http://purl.obolibrary.org/obo/RO_0000085> ;
+	owl:someValuesFrom <http://purl.obolibrary.org/obo/BFO_0000034> .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000031ROMAIN
-:OWLClass_ROMAIN00000031ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf :OWLClass_ROMAIN00000029ROMAIN ;
-                               rdfs:label "Planned Cost"@en .
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000014ROMAIN> rdfs:subClassOf _:genid36 .
 
+_:genid36 a owl:Restriction ;
+	owl:onProperty <http://www.obofoundry.org/ro/ro.owl#participates_in> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000016ROMAIN> .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000032ROMAIN
-:OWLClass_ROMAIN00000032ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementInformationContentEntity> ;
-                               rdfs:label "Time measurement ICE"@en .
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000014ROMAIN> rdfs:subClassOf _:genid37 .
 
+_:genid37 a owl:Restriction ;
+	owl:onProperty <http://www.obofoundry.org/ro/ro.owl#participates_in> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000019ROMAIN> .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000033ROMAIN
-:OWLClass_ROMAIN00000033ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> ;
-                               rdfs:label "Maintenance Planning Activity"@en .
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000014ROMAIN> rdfs:label "Maintainable Item"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000015ROMAIN
 
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000015ROMAIN> a owl:Class ;
+	owl:equivalentClass _:genid38 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000034ROMAIN
-:OWLClass_ROMAIN00000034ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf :OWLClass_ROMAIN00000006ROMAIN ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#prescribes> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000004ROMAIN
-                                               ] ;
-                               rdfs:label "Fixed Interval Repair Strategy"@en .
+_:genid38 owl:intersectionOf _:genid41 .
 
+_:genid41 a rdf:List ;
+	rdf:first <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact> ;
+	rdf:rest _:genid39 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000035ROMAIN
-:OWLClass_ROMAIN00000035ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#has_output> ;
-                                                 owl:someValuesFrom :OWLClass_ROMAIN00000006ROMAIN
-                                               ] ;
-                               rdfs:label "Maintenance Strategy Development Process"@en .
+_:genid39 a rdf:List ;
+	rdf:first _:genid40 .
 
+_:genid40 a owl:Restriction ;
+	owl:onProperty <http://purl.obolibrary.org/obo/RO_0000053> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000009ROMAIN> .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000036ROMAIN
-:OWLClass_ROMAIN00000036ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DirectiveInformationContentEntity> ;
-                               rdfs:label "Maintenance Time Interval"@en .
+_:genid39 rdf:rest rdf:nil .
 
+_:genid38 a owl:Class .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000037ROMAIN
-:OWLClass_ROMAIN00000037ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf :OWLClass_ROMAIN00000006ROMAIN ;
-                               rdfs:label "Failure Finding Maintenance Strategy"@en .
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000015ROMAIN> owl:equivalentClass _:genid42 .
 
+_:genid42 owl:intersectionOf _:genid45 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000038ROMAIN
-:OWLClass_ROMAIN00000038ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf :OWLClass_ROMAIN00000006ROMAIN ;
-                               rdfs:label "Modification Maintenance Strategy"@en .
+_:genid45 a rdf:List ;
+	rdf:first <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact> ;
+	rdf:rest _:genid43 .
 
+_:genid43 a rdf:List ;
+	rdf:first _:genid44 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000039ROMAIN
-:OWLClass_ROMAIN00000039ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf :OWLClass_ROMAIN00000006ROMAIN ;
-                               rdfs:label "On Condition Maintenance Startegy"@en .
+_:genid44 a owl:Restriction ;
+	owl:onProperty <http://purl.obolibrary.org/obo/RO_0000087> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000009ROMAIN> .
 
+_:genid43 rdf:rest rdf:nil .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000040ROMAIN
-:OWLClass_ROMAIN00000040ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf :OWLClass_ROMAIN00000006ROMAIN ;
-                               rdfs:label "Run-To-Failure Maintenance Strategy"@en .
+_:genid42 a owl:Class .
 
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000015ROMAIN> rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact> ;
+	rdfs:label "Component"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000016ROMAIN
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLClass_ROMAIN00000041ROMAIN
-:OWLClass_ROMAIN00000041ROMAIN rdf:type owl:Class ;
-                               rdfs:subClassOf :OWLClass_ROMAIN00000006ROMAIN ;
-                               rdfs:label "Schedule Restoration Maintenance Strategy"@en .
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000016ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> , _:genid46 .
 
+_:genid46 owl:intersectionOf _:genid49 .
 
-#################################################################
-#    Individuals
-#################################################################
+_:genid49 a rdf:List ;
+	rdf:first _:genid50 .
 
-###  http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN#OWLNamedIndividual_ROMAIN00000000ROMAIN
-:OWLNamedIndividual_ROMAIN00000000ROMAIN rdf:type owl:NamedIndividual ,
-                                                  :OWLClass_ROMAIN00000005ROMAIN ;
-                                         rdfs:label "strategy spec1"@en .
+_:genid50 a owl:Restriction ;
+	owl:onProperty <http://www.obofoundry.org/ro/ro.owl#precedes> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000019ROMAIN> .
 
+_:genid49 rdf:rest _:genid47 .
 
-###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
+_:genid47 a rdf:List ;
+	rdf:first _:genid48 .
+
+_:genid48 a owl:Restriction ;
+	owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#has_output> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000012ROMAIN> .
+
+_:genid47 rdf:rest rdf:nil .
+
+_:genid46 a owl:Class .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000016ROMAIN> rdfs:subClassOf _:genid51 .
+
+_:genid51 a owl:Restriction ;
+	owl:onProperty <http://www.obofoundry.org/ro/ro.owl#precedes> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000019ROMAIN> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000016ROMAIN> rdfs:subClassOf _:genid52 .
+
+_:genid52 a owl:Restriction ;
+	owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#has_output> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000012ROMAIN> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000016ROMAIN> <http://purl.obolibrary.org/obo/IAO_0000115> "A BFO:process that results in the loss of a desired quality or function." ;
+	rdfs:label "Process Of Degradation"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000017ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000017ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> ;
+	<http://purl.obolibrary.org/obo/IAO_0000115> "A BFO:Process in which some BFO:independent continuant endures and one or more of the dependent entities it bears does not change in kind or intensity" ;
+	rdfs:label "State"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000018ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000018ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000017ROMAIN> , _:genid53 .
+
+_:genid53 owl:intersectionOf _:genid56 .
+
+_:genid56 a rdf:List ;
+	rdf:first _:genid57 .
+
+_:genid57 a owl:Restriction ;
+	owl:onProperty <http://www.obofoundry.org/ro/ro.owl#has_participant> ;
+	owl:someValuesFrom <http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology#Artifact> .
+
+_:genid56 rdf:rest _:genid54 .
+
+_:genid54 a rdf:List ;
+	rdf:first _:genid55 .
+
+_:genid55 a owl:Restriction ;
+	owl:onProperty <http://www.obofoundry.org/ro/ro.owl#preceded_by> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000022ROMAIN> .
+
+_:genid54 rdf:rest rdf:nil .
+
+_:genid53 a owl:Class .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000018ROMAIN> rdfs:subClassOf _:genid58 .
+
+_:genid58 a owl:Restriction ;
+	owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#affects> ;
+	owl:someValuesFrom <http://purl.obolibrary.org/obo/BFO_0000034> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000018ROMAIN> <http://purl.obolibrary.org/obo/IAO_0000115> "A ROM:state during which a CCO:artifact is unable to perform its BFO:function." ;
+	rdfs:label "State Of Failure"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000019ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000019ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000017ROMAIN> , _:genid59 .
+
+_:genid59 a owl:Restriction ;
+	owl:onProperty <http://www.obofoundry.org/ro/ro.owl#precedes> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000022ROMAIN> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000019ROMAIN> <http://purl.obolibrary.org/obo/IAO_0000115> "A ROM:state during which a CCO:artifact bears an undesirable BFO:quality or BFO:function." ;
+	rdfs:label "State Of Degradation"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000020ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000020ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> , _:genid60 .
+
+_:genid60 a owl:Restriction ;
+	owl:onProperty <http://purl.obolibrary.org/obo/BFO_0000051> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000026ROMAIN> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000020ROMAIN> <http://purl.obolibrary.org/obo/IAO_0000115> "A BFO:process to perform work on a CCO:artifact according to a ROM:Maintenance Work Order Specification." ;
+	rdfs:label "Maintenance Action"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000021ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000021ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> , _:genid61 .
+
+_:genid61 a owl:Restriction ;
+	owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#has_output> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000003ROMAIN> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000021ROMAIN> rdfs:subClassOf _:genid62 .
+
+_:genid62 a owl:Restriction ;
+	owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#occurs_on> ;
+	owl:someValuesFrom <http://purl.obolibrary.org/obo/BFO_0000008> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000021ROMAIN> <http://purl.obolibrary.org/obo/IAO_0000115> "A BFO:process resulting in an action." ;
+	rdfs:label "Triggering Event"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000022ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000022ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> , _:genid63 .
+
+_:genid63 a owl:Restriction ;
+	owl:onProperty <http://www.obofoundry.org/ro/ro.owl#precedes> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000018ROMAIN> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000022ROMAIN> <http://purl.obolibrary.org/obo/IAO_0000115> "A BFO:process that precedes the ROM:State of Failure." ;
+	rdfs:label "Failure Event"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000024ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000024ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#CodeIdentifier> ;
+	rdfs:label "Location Code"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000025ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000025ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#CodeIdentifier> ;
+	rdfs:label "Order Number"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000026ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000026ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000020ROMAIN> , _:genid64 .
+
+_:genid64 a owl:Restriction ;
+	owl:onProperty <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLObjectProperty_ROMAIN00000025ROMAIN> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000012ROMAIN> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000026ROMAIN> rdfs:label "Maintenance Task"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000027ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000027ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#CodeIdentifier> ;
+	rdfs:label "Order Type Code"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000028ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000028ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#CodeIdentifier> ;
+	rdfs:label "System Status Code"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000029ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000029ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DesignativeInformationContentEntity> ;
+	rdfs:label "Cost measurment ICE"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000030ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000030ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000029ROMAIN> ;
+	rdfs:label "Actual Cost"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000031ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000031ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000029ROMAIN> ;
+	rdfs:label "Planned Cost"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000032ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000032ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#MeasurementInformationContentEntity> ;
+	rdfs:label "Time measurement ICE"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000033ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000033ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> ;
+	rdfs:label "Maintenance Planning Activity"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000034ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000034ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000006ROMAIN> , _:genid65 .
+
+_:genid65 a owl:Restriction ;
+	owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#prescribes> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000004ROMAIN> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000034ROMAIN> rdfs:label "Fixed Interval Repair Strategy"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000035ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000035ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000015> , _:genid66 .
+
+_:genid66 a owl:Restriction ;
+	owl:onProperty <http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology#has_output> ;
+	owl:someValuesFrom <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000006ROMAIN> .
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000035ROMAIN> rdfs:label "Maintenance Strategy Development Process"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000036ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000036ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology#DirectiveInformationContentEntity> ;
+	rdfs:label "Maintenance Time Interval"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000037ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000037ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000006ROMAIN> ;
+	rdfs:label "Failure Finding Maintenance Strategy"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000038ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000038ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000006ROMAIN> ;
+	rdfs:label "Modification Maintenance Strategy"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000039ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000039ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000006ROMAIN> ;
+	rdfs:label "On Condition Maintenance Startegy"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000040ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000040ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000006ROMAIN> ;
+	rdfs:label "Run-To-Failure Maintenance Strategy"@en .
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000041ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000041ROMAIN> a owl:Class ;
+	rdfs:subClassOf <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000006ROMAIN> ;
+	rdfs:label "Schedule Restoration Maintenance Strategy"@en .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Individuals
+# #
+# #################################################################
+# 
+# 
+# http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLNamedIndividual_ROMAIN00000000ROMAIN
+
+<http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLNamedIndividual_ROMAIN00000000ROMAIN> a owl:NamedIndividual , <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAINOWLClass_ROMAIN00000005ROMAIN> ;
+	rdfs:label "strategy spec1"@en .
+# 
+# Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

@@ -2,6 +2,5 @@
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
     <uri id="Imports Wizard Entry" name="http://onto.fel.cvut.cz/ontologies/maintenance-schema/" uri="maintenance-general-model.ttl"/>
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1615463641325" name="http://onto.fel.cvut.cz/ontologies/csat-maintenance/" uri="csat-maintenance.rdf"/>
     </group>
 </catalog>

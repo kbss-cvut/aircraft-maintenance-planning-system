@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-    <uri id="User Entered Import Resolution" name="http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN" uri="romain.ttl"/>
-    <uri id="User Entered Import Resolution" name="http://purl.obolibrary.org/obo/iao/2017-03-24/iao.owl" uri="external/iao.ttl"/>
-    <uri id="User Entered Import Resolution" name="http://purl.obolibrary.org/obo/bfo/2.0/bfo.owl" uri="external/bfo.ttl"/>
-    <uri id="User Entered Import Resolution" name="http://www.obofoundry.org/ro/ro.owl" uri="external/ro.ttl"/>
-    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base=""/>
-</catalog>
