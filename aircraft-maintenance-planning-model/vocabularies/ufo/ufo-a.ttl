@@ -1,506 +1,267 @@
-<?xml version="1.0"?>
-<rdf:RDF xmlns="http://onto.fel.cvut.cz/ontologies/ufo-a/"
-     xml:base="http://onto.fel.cvut.cz/ontologies/ufo-a/"
-     xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:ufo="http://onto.fel.cvut.cz/ontologies/ufo/"
-     xmlns:voc="http://onto.fel.cvut.cz/ontologies/voc/"
-     xmlns:xml="http://www.w3.org/XML/1998/namespace"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:bibo="http://purl.org/ontology/bibo/"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
-     xmlns:vann="http://purl.org/vocab/vann/"
-     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
-     xmlns:terms="http://purl.org/dc/terms/">
-    <owl:Ontology rdf:about="http://onto.fel.cvut.cz/ontologies/ufo-a">
-        <owl:versionIRI rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo-a/1.0.1"/>
-        <terms:created xml:lang="en">20.10.2017</terms:created>
-        <terms:creator rdf:resource="http://onto.fel.cvut.cz/ontologies/kbss/people/petr-kremen"/>
-        <terms:description xml:lang="en">The ontology aims at formalize basic notions of the Unified Foundational Ontology, part A - structural models.</terms:description>
-        <terms:rights rdf:resource="https://creativecommons.org/licenses/by-sa/4.0"/>
-        <terms:title xml:lang="en">Unified Foundational Ontology - A</terms:title>
-        <bibo:status xml:lang="en">Ontology Specification</bibo:status>
-        <vann:preferredNamespacePrefix xml:lang="en">ufo</vann:preferredNamespacePrefix>
-        <vann:preferredNamespaceUri xml:lang="en">http://onto.fel.cvut.cz/ontologies/ufo/</vann:preferredNamespaceUri>
-        <owl:priorVersion rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo-a/1.0.0"/>
-        <owl:versionInfo xml:lang="en">1.0.1</owl:versionInfo>
-    </owl:Ontology>
-    
+@prefix : <http://onto.fel.cvut.cz/ontologies/ufo-a/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix voc: <http://onto.fel.cvut.cz/ontologies/voc/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+<http://onto.fel.cvut.cz/ontologies/ufo-a> a owl:Ontology ;
+    terms:created "20.10.2017"@en ;
+    terms:creator <http://onto.fel.cvut.cz/ontologies/kbss/people/petr-kremen> ;
+    terms:description "The ontology aims at formalize basic notions of the Unified Foundational Ontology, part A - structural models."@en ;
+    terms:rights <https://creativecommons.org/licenses/by-sa/4.0> ;
+    terms:title "Unified Foundational Ontology - A"@en ;
+    bibo:status "Ontology Specification"@en ;
+    vann:preferredNamespacePrefix "ufo"@en ;
+    vann:preferredNamespaceUri "http://onto.fel.cvut.cz/ontologies/ufo/"@en ;
+    owl:priorVersion <http://onto.fel.cvut.cz/ontologies/ufo-a/1.0.0> ;
+    owl:versionIRI <http://onto.fel.cvut.cz/ontologies/ufo-a/1.0.1> ;
+    owl:versionInfo "1.0.1"@en .
 
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Annotation properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+ufo:axiom a owl:AnnotationProperty .
 
-    
+ufo:contributes-to-necessary-condition-for a owl:AnnotationProperty .
 
+ufo:contributes-to-sufficient-condition-for a owl:AnnotationProperty .
 
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/axiom -->
+ufo:universal a owl:Class ;
+    rdfs:label "Universal"@en .
 
-    <owl:AnnotationProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/axiom"/>
-    
+terms:created a owl:AnnotationProperty .
 
+terms:creator a owl:AnnotationProperty .
 
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for -->
+terms:description a owl:AnnotationProperty .
 
-    <owl:AnnotationProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for"/>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for -->
-
-    <owl:AnnotationProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for"/>
-    
-
-
-    <!-- http://purl.org/dc/terms/created -->
-
-    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/created"/>
-    
-
-
-    <!-- http://purl.org/dc/terms/creator -->
-
-    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/creator"/>
-    
-
-
-    <!-- http://purl.org/dc/terms/description -->
-
-    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/description"/>
-    
-
-
-    <!-- http://purl.org/dc/terms/rights -->
-
-    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/rights"/>
-    
-
-
-    <!-- http://purl.org/dc/terms/title -->
-
-    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/title"/>
-    
-
-
-    <!-- http://purl.org/ontology/bibo/status -->
-
-    <owl:AnnotationProperty rdf:about="http://purl.org/ontology/bibo/status"/>
-    
-
-
-    <!-- http://purl.org/vocab/vann/preferredNamespacePrefix -->
-
-    <owl:AnnotationProperty rdf:about="http://purl.org/vocab/vann/preferredNamespacePrefix"/>
-    
-
-
-    <!-- http://purl.org/vocab/vann/preferredNamespaceUri -->
-
-    <owl:AnnotationProperty rdf:about="http://purl.org/vocab/vann/preferredNamespaceUri"/>
-    
-
-
-    <!-- http://www.w3.org/2002/07/owl#versionInfo -->
-
-    <owl:AnnotationProperty rdf:about="http://www.w3.org/2002/07/owl#versionInfo"/>
-    
-
-
-    <!-- http://www.w3.org/2003/11/swrl#argument1 -->
-
-    <owl:AnnotationProperty rdf:about="http://www.w3.org/2003/11/swrl#argument1"/>
-    
-
-
-    <!-- http://www.w3.org/2003/11/swrl#argument2 -->
-
-    <owl:AnnotationProperty rdf:about="http://www.w3.org/2003/11/swrl#argument2"/>
-    
-
-
-    <!-- http://www.w3.org/2003/11/swrl#propertyPredicate -->
-
-    <owl:AnnotationProperty rdf:about="http://www.w3.org/2003/11/swrl#propertyPredicate"/>
-    
-
-
-    <!-- http://www.w3.org/2004/02/skos/core#definition -->
-
-    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#definition"/>
-    
-
-
-    <!-- http://www.w3.org/2004/02/skos/core#example -->
-
-    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#example"/>
-    
-
-
-    <!-- http://www.w3.org/2004/02/skos/core#scopeNote -->
-
-    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#scopeNote"/>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Object Properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/has-inherent-moment -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/has-inherent-moment">
-        <owl:inverseOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/inheres-in"/>
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/endurant"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope"/>
-        <rdfs:label xml:lang="en">has inherent moment</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/has-object-part -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/has-object-part">
-        <rdfs:subPropertyOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-part"/>
-        <owl:inverseOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-object-part-of"/>
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <rdfs:label xml:lang="en">has object part</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/has-part -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/has-part">
-        <owl:inverseOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-part-of"/>
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/entity"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/entity"/>
-        <rdfs:label xml:lang="en">has part</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/inheres-in -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/inheres-in">
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/endurant"/>
-        <rdfs:label xml:lang="en">inheres in</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/is-object-part-of -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/is-object-part-of">
-        <rdfs:subPropertyOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-part-of"/>
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <rdfs:label xml:lang="en">is object part of</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/is-part-of -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/is-part-of">
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/entity"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/entity"/>
-        <rdfs:label>is part of</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/object-has-trope -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/object-has-trope">
-        <rdfs:subPropertyOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-inherent-moment"/>
-        <owl:inverseOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope-inheres-in-object"/>
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope"/>
-        <rdfs:label xml:lang="en">object has trope</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object-has-trope"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <ufo:axiom>a57-part2</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object-has-trope"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope"/>
-        <ufo:axiom>a57-part2</ufo:axiom>
-        <ufo:axiom>a57-part3</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/trope-inheres-in-object -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/trope-inheres-in-object">
-        <rdfs:subPropertyOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/inheres-in"/>
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <rdfs:label xml:lang="en">trope inheres in object</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope-inheres-in-object"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope"/>
-        <ufo:axiom>a12</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope-inheres-in-object"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <ufo:axiom>a26</ufo:axiom>
-        <ufo:axiom>a47-part2</ufo:axiom>
-        <ufo:contributes-to-necessary-condition-for>D1</ufo:contributes-to-necessary-condition-for>
-        <ufo:contributes-to-sufficient-condition-for>D1</ufo:contributes-to-sufficient-condition-for>
-    </owl:Axiom>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Classes
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/endurant -->
-
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/endurant">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/individual"/>
-        <rdfs:label xml:lang="en">Endurant</rdfs:label>
-    </owl:Class>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/endurant"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/individual"/>
-        <ufo:axiom>a01</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/entity -->
-
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/entity">
-        <rdfs:label xml:lang="en">Entity</rdfs:label>
-    </owl:Class>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/individual -->
-
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/individual">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/entity"/>
-        <rdfs:label xml:lang="en">Individual</rdfs:label>
-    </owl:Class>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/object -->
-
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/object">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/substantial"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object-has-trope"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <owl:disjointWith rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope"/>
-        <rdfs:label xml:lang="en">Object</rdfs:label>
-        <skos:definition xml:lang="en">Object is any identifiable endurant entity existence of which is not directly dependent on an existence of another endurant. Objects participate in events and can have tropes. Theirs state can change over time.</skos:definition>
-        <skos:example xml:lang="en">- An object *participates in* an event.
-- An object *has part* another object.</skos:example>
-        <skos:scopeNote xml:lang="en">- An *aircraft* is an object.
-- An *ATC descent procedure* is an object (formal regulation) that describes the course of a descent operation/process (event).</skos:scopeNote>
-    </owl:Class>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/substantial"/>
-        <ufo:axiom>a03</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object-has-trope"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-            </owl:Restriction>
-        </owl:annotatedTarget>
-        <ufo:axiom>a57-part1</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#disjointWith"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope"/>
-        <ufo:axiom>a42</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/substantial -->
-
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/substantial">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/endurant"/>
-        <rdfs:label xml:lang="en">Substantial</rdfs:label>
-        <skos:definition xml:lang="en">A substantial is an endurant that does not ufo:inheres-in another endurant, i.e., which is not a moment.</skos:definition>
-        <skos:example xml:lang="en">Amounts of Matter -  sugar, sand, and gold
-Objects - dog, a house, a hammer, a car, Alan Turing and The Rolling Stones but also Fiat Objects such as the North-Sea and its proper-parts, postal districts and a non-smoking area of a restaurant.</skos:example>
-    </owl:Class>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/trope -->
-
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/trope">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/endurant"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope-inheres-in-object"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label>Trope</rdfs:label>
-        <skos:definition>Trope is a property of some object/event or another trope. The trope CANNOT exist without the object/event it inheres in.</skos:definition>
-        <skos:example xml:lang="en">We say that:
-
-A trope *inheres in* an object.</skos:example>
-        <skos:scopeNote xml:lang="en">Examples include:
+terms:rights a owl:AnnotationProperty .
+
+terms:title a owl:AnnotationProperty .
+
+bibo:status a owl:AnnotationProperty .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+owl:versionInfo a owl:AnnotationProperty .
+
+swrl:argument1 a owl:AnnotationProperty .
+
+swrl:argument2 a owl:AnnotationProperty .
+
+swrl:propertyPredicate a owl:AnnotationProperty .
+
+skos:definition a owl:AnnotationProperty .
+
+skos:example a owl:AnnotationProperty .
+
+skos:scopeNote a owl:AnnotationProperty .
+
+ufo:has-inherent-moment a owl:ObjectProperty ;
+    rdfs:label "has inherent moment"@en ;
+    rdfs:domain ufo:endurant ;
+    rdfs:range ufo:trope ;
+    owl:inverseOf ufo:inheres-in .
+
+ufo:has-part a owl:ObjectProperty ;
+    rdfs:label "has part"@en ;
+    rdfs:domain ufo:entity ;
+    rdfs:range ufo:entity ;
+    owl:inverseOf ufo:is-part-of .
+
+ufo:is-object-part-of a owl:ObjectProperty ;
+    rdfs:label "is object part of"@en ;
+    rdfs:domain ufo:object ;
+    rdfs:range ufo:object ;
+    rdfs:subPropertyOf ufo:is-part-of .
+
+ufo:individual a owl:Class ;
+    rdfs:label "Individual"@en ;
+    rdfs:subClassOf ufo:entity .
+
+ufo:inheres-in a owl:ObjectProperty ;
+    rdfs:label "inheres in"@en ;
+    rdfs:domain ufo:trope ;
+    rdfs:range ufo:endurant .
+
+ufo:is-part-of a owl:ObjectProperty ;
+    rdfs:label "is part of" ;
+    rdfs:domain ufo:entity ;
+    rdfs:range ufo:entity .
+
+ufo:substantial a owl:Class ;
+    rdfs:label "Substantial"@en ;
+    rdfs:subClassOf ufo:endurant ;
+    skos:definition "A substantial is an endurant that does not ufo:inheres-in another endurant, i.e., which is not a moment."@en ;
+    skos:example """Amounts of Matter -  sugar, sand, and gold
+Objects - dog, a house, a hammer, a car, Alan Turing and The Rolling Stones but also Fiat Objects such as the North-Sea and its proper-parts, postal districts and a non-smoking area of a restaurant."""@en .
+
+<urn:swrl#z> a swrl:Variable .
+
+ufo:has-object-part a owl:ObjectProperty ;
+    rdfs:label "has object part"@en ;
+    rdfs:domain ufo:object ;
+    rdfs:range ufo:object ;
+    rdfs:subPropertyOf ufo:has-part ;
+    owl:inverseOf ufo:is-object-part-of .
+
+<urn:swrl#x> a swrl:Variable .
+
+<urn:swrl#y> a swrl:Variable .
+
+ufo:object-has-trope a owl:ObjectProperty ;
+    rdfs:label "object has trope"@en ;
+    rdfs:domain ufo:object ;
+    rdfs:range ufo:trope ;
+    rdfs:subPropertyOf ufo:has-inherent-moment ;
+    owl:inverseOf ufo:trope-inheres-in-object .
+
+ufo:entity a owl:Class ;
+    rdfs:label "Entity"@en .
+
+ufo:trope-inheres-in-object a owl:ObjectProperty ;
+    rdfs:label "trope inheres in object"@en ;
+    rdfs:domain ufo:trope ;
+    rdfs:range ufo:object ;
+    rdfs:subPropertyOf ufo:inheres-in .
+
+ufo:endurant a owl:Class ;
+    rdfs:label "Endurant"@en ;
+    rdfs:subClassOf ufo:individual .
+
+ufo:trope a owl:Class ;
+    rdfs:label "Trope" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:trope-inheres-in-object ],
+        ufo:endurant ;
+    skos:definition "Trope is a property of some object/event or another trope. The trope CANNOT exist without the object/event it inheres in." ;
+    skos:example """We say that:
+
+A trope *inheres in* an object."""@en ;
+    skos:scopeNote """Examples include:
  - *function* of a VOR beacon (property of an object), 
  - *availability* of VOR beacon function (property of a property), 
- - *efficiency* of a rescue operation (property of an event)</skos:scopeNote>
-    </owl:Class>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/endurant"/>
-        <ufo:axiom>a05</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope-inheres-in-object"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </owl:annotatedTarget>
-        <ufo:axiom>a47-part1</ufo:axiom>
-        <ufo:contributes-to-necessary-condition-for>D1</ufo:contributes-to-necessary-condition-for>
-        <ufo:contributes-to-sufficient-condition-for>D1</ufo:contributes-to-sufficient-condition-for>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#disjointWith"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope"/>
-        <ufo:axiom>a42</ufo:axiom>
-    </owl:Axiom>
-    
+ - *efficiency* of a rescue operation (property of an event)"""@en .
 
+ufo:object a owl:Class ;
+    rdfs:label "Object"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ufo:object-has-trope ;
+            owl:someValuesFrom owl:Thing ],
+        ufo:substantial ;
+    owl:disjointWith ufo:trope ;
+    skos:definition "Object is any identifiable endurant entity existence of which is not directly dependent on an existence of another endurant. Objects participate in events and can have tropes. Theirs state can change over time."@en ;
+    skos:example """- An object *participates in* an event.
+- An object *has part* another object."""@en ;
+    skos:scopeNote """- An *aircraft* is an object.
+- An *ATC descent procedure* is an object (formal regulation) that describes the course of a descent operation/process (event)."""@en .
 
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/universal -->
+[] swrl:argument1 <urn:swrl#x> ;
+    swrl:argument2 <urn:swrl#y> ;
+    swrl:propertyPredicate ufo:has_object_part .
 
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/universal">
-        <rdfs:label xml:lang="en">Universal</rdfs:label>
-    </owl:Class>
-    <rdf:Description>
-        <swrl:argument1 rdf:resource="urn:swrl#x"/>
-        <swrl:argument2 rdf:resource="urn:swrl#y"/>
-        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has_object_part"/>
-    </rdf:Description>
-    
+[] a owl:Axiom ;
+    ufo:axiom "a01" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:endurant ;
+    owl:annotatedTarget ufo:individual .
 
+[] a owl:Axiom ;
+    ufo:axiom "a42" ;
+    owl:annotatedProperty owl:disjointWith ;
+    owl:annotatedSource ufo:object ;
+    owl:annotatedTarget ufo:trope .
 
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Rules
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+[] a swrl:Imp ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#x> ;
+                    swrl:argument2 <urn:swrl#y> ;
+                    swrl:propertyPredicate ufo:has-object-part ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 <urn:swrl#y> ;
+                            swrl:argument2 <urn:swrl#z> ;
+                            swrl:propertyPredicate ufo:has-object-part ] ;
+                    rdf:rest () ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#x> ;
+                    swrl:argument2 <urn:swrl#z> ;
+                    swrl:propertyPredicate ufo:has-object-part ] ;
+            rdf:rest () ] .
 
-    <rdf:Description rdf:about="urn:swrl#x">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="urn:swrl#y">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="urn:swrl#z">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
-        <swrl:body>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-object-part"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#x"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#y"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                        <rdf:first>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-object-part"/>
-                                <swrl:argument1 rdf:resource="urn:swrl#y"/>
-                                <swrl:argument2 rdf:resource="urn:swrl#z"/>
-                            </rdf:Description>
-                        </rdf:first>
-                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                    </rdf:Description>
-                </rdf:rest>
-            </rdf:Description>
-        </swrl:body>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-object-part"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#x"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#z"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-            </rdf:Description>
-        </swrl:head>
-    </rdf:Description>
-</rdf:RDF>
+[] a owl:Axiom ;
+    ufo:axiom "a57-part1" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:object ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:onProperty ufo:object-has-trope ;
+            owl:someValuesFrom owl:Thing ] .
 
+[] a owl:Axiom ;
+    ufo:axiom "a42" ;
+    owl:annotatedProperty owl:disjointWith ;
+    owl:annotatedSource ufo:object ;
+    owl:annotatedTarget ufo:trope .
 
+[] a owl:Axiom ;
+    ufo:axiom "a12" ;
+    owl:annotatedProperty rdfs:domain ;
+    owl:annotatedSource ufo:trope-inheres-in-object ;
+    owl:annotatedTarget ufo:trope .
 
-<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+[] a owl:Axiom ;
+    ufo:axiom "a26",
+        "a47-part2" ;
+    ufo:contributes-to-necessary-condition-for "D1" ;
+    ufo:contributes-to-sufficient-condition-for "D1" ;
+    owl:annotatedProperty rdfs:range ;
+    owl:annotatedSource ufo:trope-inheres-in-object ;
+    owl:annotatedTarget ufo:object .
+
+[] a owl:Axiom ;
+    ufo:axiom "a57-part2" ;
+    owl:annotatedProperty rdfs:domain ;
+    owl:annotatedSource ufo:object-has-trope ;
+    owl:annotatedTarget ufo:object .
+
+[] a owl:Axiom ;
+    ufo:axiom "a05" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:trope ;
+    owl:annotatedTarget ufo:endurant .
+
+[] a owl:Axiom ;
+    ufo:axiom "a57-part2",
+        "a57-part3" ;
+    owl:annotatedProperty rdfs:range ;
+    owl:annotatedSource ufo:object-has-trope ;
+    owl:annotatedTarget ufo:trope .
+
+[] a owl:Axiom ;
+    ufo:axiom "a47-part1" ;
+    ufo:contributes-to-necessary-condition-for "D1" ;
+    ufo:contributes-to-sufficient-condition-for "D1" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:trope ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:trope-inheres-in-object ] .
+
+[] a owl:Axiom ;
+    ufo:axiom "a03" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:object ;
+    owl:annotatedTarget ufo:substantial .
 

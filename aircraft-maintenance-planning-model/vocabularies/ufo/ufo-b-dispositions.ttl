@@ -1,206 +1,92 @@
-<?xml version="1.0"?>
-<rdf:RDF xmlns="http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/"
-     xml:base="http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
-     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
-     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:annot="http://onto.fel.cvut.cz/ontologies/ufo/annot/"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:terms="http://purl.org/dc/terms/"
-     xmlns:xml="http://www.w3.org/XML/1998/namespace"
-     xmlns:bibo="http://purl.org/ontology/bibo/"
-     xmlns:vann="http://purl.org/vocab/vann/"
-     xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:ufo="http://onto.fel.cvut.cz/ontologies/ufo/">
-    <owl:Ontology rdf:about="http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions">
-        <owl:versionIRI rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/1.0.1"/>
-        <owl:imports rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo-b/1.0.1"/>
-        <bibo:status xml:lang="en">Ontology Specification</bibo:status>
-        <owl:priorVersion rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/1.0.0"/>
-        <terms:creator rdf:resource="http://onto.fel.cvut.cz/ontologies/kbss/people/petr-kremen"/>
-        <terms:created xml:lang="en">16.11.2017</terms:created>
-        <terms:title xml:lang="en">Unified Foundational Ontology - B - dispositions</terms:title>
-        <vann:preferredNamespacePrefix xml:lang="en">ufo</vann:preferredNamespacePrefix>
-        <terms:rights rdf:resource="https://creativecommons.org/licenses/by-sa/4.0"/>
-        <vann:preferredNamespaceUri xml:lang="en">http://onto.fel.cvut.cz/ontologies/ufo/</vann:preferredNamespaceUri>
-        <owl:versionInfo xml:lang="en">1.0.1</owl:versionInfo>
-        <terms:description xml:lang="en">The ontology aims at formalize the basic notions around dispositions and actions in the Unified Foundational Ontology.</terms:description>
-    </owl:Ontology>
-    
+@prefix : <http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/> .
+@prefix annot: <http://onto.fel.cvut.cz/ontologies/ufo/annot/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+<http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions> a owl:Ontology ;
+    terms:created "16.11.2017"@en ;
+    terms:creator <http://onto.fel.cvut.cz/ontologies/kbss/people/petr-kremen> ;
+    terms:description "The ontology aims at formalize the basic notions around dispositions and actions in the Unified Foundational Ontology."@en ;
+    terms:rights <https://creativecommons.org/licenses/by-sa/4.0> ;
+    terms:title "Unified Foundational Ontology - B - dispositions"@en ;
+    bibo:status "Ontology Specification"@en ;
+    vann:preferredNamespacePrefix "ufo"@en ;
+    vann:preferredNamespaceUri "http://onto.fel.cvut.cz/ontologies/ufo/"@en ;
+    owl:imports <http://onto.fel.cvut.cz/ontologies/ufo-b/1.0.1> ;
+    owl:priorVersion <http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/1.0.0> ;
+    owl:versionIRI <http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/1.0.1> ;
+    owl:versionInfo "1.0.1"@en .
 
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Annotation properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+annot:swrl a owl:AnnotationProperty .
 
-    
+ufo:activates a owl:ObjectProperty .
 
+ufo:depends-on a owl:ObjectProperty .
 
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl -->
+ufo:triggers a owl:ObjectProperty .
 
-    <owl:AnnotationProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl"/>
-    
+ufo:is-manifested-by a owl:ObjectProperty .
 
+<urn:swrl#o> a swrl:Variable .
 
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Object Properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+<urn:swrl#s> a swrl:Variable .
 
-    
+<urn:swrl#d> a swrl:Variable .
 
+<urn:swrl#e> a swrl:Variable .
 
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/activates -->
+[] a swrl:Imp ;
+    annot:swrl true ;
+    ufo:axiom "a70" ;
+    ufo:is-necessary-condition-for "D4" ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#d> ;
+                    swrl:argument2 <urn:swrl#e> ;
+                    swrl:propertyPredicate ufo:is-manifested-by ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 <urn:swrl#d> ;
+                            swrl:argument2 <urn:swrl#o> ;
+                            swrl:propertyPredicate ufo:inheres-in ] ;
+                    rdf:rest () ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#e> ;
+                    swrl:argument2 <urn:swrl#o> ;
+                    swrl:propertyPredicate ufo:depends-on ] ;
+            rdf:rest () ] .
 
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/activates"/>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/depends-on -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/depends-on"/>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by"/>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/triggers -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/triggers"/>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Rules
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    <rdf:Description rdf:about="urn:swrl#s">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="urn:swrl#d">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="urn:swrl#e">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="urn:swrl#o">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description>
-        <ufo:axiom>a69</ufo:axiom>
-        <ufo:contributes-to-sufficient-condition-for>D3</ufo:contributes-to-sufficient-condition-for>
-        <annot:swrl rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</annot:swrl>
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
-        <swrl:body>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/activates"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#s"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#d"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                        <rdf:first>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by"/>
-                                <swrl:argument1 rdf:resource="urn:swrl#d"/>
-                                <swrl:argument2 rdf:resource="urn:swrl#e"/>
-                            </rdf:Description>
-                        </rdf:first>
-                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                    </rdf:Description>
-                </rdf:rest>
-            </rdf:Description>
-        </swrl:body>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/triggers"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#s"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#e"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-            </rdf:Description>
-        </swrl:head>
-    </rdf:Description>
-    <rdf:Description>
-        <ufo:axiom>a70</ufo:axiom>
-        <ufo:is-necessary-condition-for>D4</ufo:is-necessary-condition-for>
-        <annot:swrl rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</annot:swrl>
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
-        <swrl:body>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#d"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#e"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                        <rdf:first>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/inheres-in"/>
-                                <swrl:argument1 rdf:resource="urn:swrl#d"/>
-                                <swrl:argument2 rdf:resource="urn:swrl#o"/>
-                            </rdf:Description>
-                        </rdf:first>
-                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                    </rdf:Description>
-                </rdf:rest>
-            </rdf:Description>
-        </swrl:body>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/depends-on"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#o"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-            </rdf:Description>
-        </swrl:head>
-    </rdf:Description>
-</rdf:RDF>
-
-
-
-<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+[] a swrl:Imp ;
+    annot:swrl true ;
+    ufo:axiom "a69" ;
+    ufo:contributes-to-sufficient-condition-for "D3" ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#s> ;
+                    swrl:argument2 <urn:swrl#d> ;
+                    swrl:propertyPredicate ufo:activates ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 <urn:swrl#d> ;
+                            swrl:argument2 <urn:swrl#e> ;
+                            swrl:propertyPredicate ufo:is-manifested-by ] ;
+                    rdf:rest () ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#s> ;
+                    swrl:argument2 <urn:swrl#e> ;
+                    swrl:propertyPredicate ufo:triggers ] ;
+            rdf:rest () ] .
 

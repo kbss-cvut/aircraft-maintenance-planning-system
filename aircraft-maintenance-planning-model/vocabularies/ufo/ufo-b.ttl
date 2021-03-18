@@ -1,1710 +1,967 @@
-<?xml version="1.0"?>
-<rdf:RDF xmlns="http://onto.fel.cvut.cz/ontologies/ufo-b/"
-     xml:base="http://onto.fel.cvut.cz/ontologies/ufo-b/"
-     xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:ufo="http://onto.fel.cvut.cz/ontologies/ufo/"
-     xmlns:voc="http://onto.fel.cvut.cz/ontologies/voc/"
-     xmlns:xml="http://www.w3.org/XML/1998/namespace"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:bibo="http://purl.org/ontology/bibo/"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
-     xmlns:vann="http://purl.org/vocab/vann/"
-     xmlns:annot="http://onto.fel.cvut.cz/ontologies/ufo/annot/"
-     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
-     xmlns:terms="http://purl.org/dc/terms/">
-    <owl:Ontology rdf:about="http://onto.fel.cvut.cz/ontologies/ufo-b">
-        <owl:versionIRI rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo-b/1.0.1"/>
-        <owl:imports rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo-a/1.0.1"/>
-        <terms:created xml:lang="en">16.11.2017</terms:created>
-        <terms:creator rdf:resource="http://onto.fel.cvut.cz/ontologies/kbss/people/petr-kremen"/>
-        <terms:description xml:lang="en">The ontology aims at formalize basic notions of the Unified Foundational Ontology, part B - Events.</terms:description>
-        <terms:rights rdf:resource="https://creativecommons.org/licenses/by-sa/4.0"/>
-        <terms:title xml:lang="en">Unified Foundational Ontology - B</terms:title>
-        <bibo:status xml:lang="en">Ontology Specification</bibo:status>
-        <vann:preferredNamespacePrefix xml:lang="en">ufo</vann:preferredNamespacePrefix>
-        <vann:preferredNamespaceUri xml:lang="en">http://onto.fel.cvut.cz/ontologies/ufo/</vann:preferredNamespaceUri>
-        <owl:priorVersion rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo-b/1.0.0"/>
-        <owl:versionInfo xml:lang="en">1.0.1</owl:versionInfo>
-    </owl:Ontology>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Annotation properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/axiom -->
-
-    <owl:AnnotationProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/axiom"/>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for -->
-
-    <owl:AnnotationProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-necessary-condition-for"/>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for -->
-
-    <owl:AnnotationProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/contributes-to-sufficient-condition-for"/>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/fol-formula -->
-
-    <owl:AnnotationProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/fol-formula"/>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/is-necessary-condition-for -->
-
-    <owl:AnnotationProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/is-necessary-condition-for"/>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/is-sufficient-condition-for -->
-
-    <owl:AnnotationProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/is-sufficient-condition-for"/>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/necessary-condition-for -->
-
-    <owl:AnnotationProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/necessary-condition-for"/>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl -->
-
-    <owl:AnnotationProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl"/>
-    
-
-
-    <!-- http://www.w3.org/2004/02/skos/core#definition -->
-
-    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#definition"/>
-    
-
-
-    <!-- http://www.w3.org/2004/02/skos/core#example -->
-
-    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#example"/>
-    
-
-
-    <!-- http://www.w3.org/2004/02/skos/core#scopeNote -->
-
-    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#scopeNote"/>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Object Properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/activates -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/activates">
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/disposition"/>
-        <rdfs:label xml:lang="en">activates</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/activates"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-        <ufo:axiom>a20</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/activates"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/disposition"/>
-        <ufo:axiom>a34</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/brings-about -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/brings-about">
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-        <rdfs:label xml:lang="en">brings about</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/brings-about"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <ufo:axiom>a17</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/brings-about"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-        <ufo:axiom>a31</ufo:axiom>
-        <ufo:axiom>a52-part2</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/causes -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/causes">
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:label xml:lang="en">causes</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/causes"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <ufo:axiom>a18</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/causes"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <ufo:axiom>a32</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/depends-on -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/depends-on">
-        <rdfs:subPropertyOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on"/>
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/atomic-event"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <rdfs:label xml:lang="en">depends on</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/depends-on"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subPropertyOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on"/>
-        <ufo:axiom>a71</ufo:axiom>
-        <ufo:contributes-to-necessary-condition-for>P2</ufo:contributes-to-necessary-condition-for>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/depends-on"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/atomic-event"/>
-        <ufo:axiom>a14</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/depends-on"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <ufo:axiom>a28</ufo:axiom>
-        <ufo:axiom>a49-part2</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/directly-causes -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/directly-causes">
-        <rdfs:subPropertyOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/causes"/>
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:label xml:lang="en">directly causes</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/directly-causes"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subPropertyOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/causes"/>
-        <ufo:axiom>a11</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/directly-causes"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <ufo:axiom>a19</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/directly-causes"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <ufo:axiom>a33</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on">
-        <owl:equivalentProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of"/>
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/participation"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <rdfs:label xml:lang="en">exclusively depends on</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#equivalentProperty"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of"/>
-        <ufo:is-necessary-condition-for>P5</ufo:is-necessary-condition-for>
-        <ufo:is-sufficient-condition-for>P5</ufo:is-sufficient-condition-for>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/participation"/>
-        <ufo:axiom>a24</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <ufo:axiom>a38</ufo:axiom>
-        <ufo:axiom>a55-part2</ufo:axiom>
-        <ufo:contributes-to-necessary-condition-for>P4</ufo:contributes-to-necessary-condition-for>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point">
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/time-point"/>
-        <rdfs:label xml:lang="en">has begin point</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <ufo:axiom>a22</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/time-point"/>
-        <ufo:axiom>a36</ufo:axiom>
-        <ufo:axiom>a53-part2</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/has-end-point -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/has-end-point">
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/time-point"/>
-        <rdfs:label xml:lang="en">has end point</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-end-point"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <ufo:axiom>a23</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-end-point"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/time-point"/>
-        <ufo:axiom>a37</ufo:axiom>
-        <ufo:axiom>a54-part2</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/has-event-part -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part">
-        <rdfs:subPropertyOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-part"/>
-        <rdfs:subPropertyOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/mereologically-overlaps"/>
-        <owl:inverseOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-event-part-of"/>
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:label xml:lang="en">has event part</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subPropertyOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/mereologically-overlaps"/>
-        <ufo:axiom>a66-part1</ufo:axiom>
-        <ufo:axiom>a66-part2</ufo:axiom>
-        <ufo:contributes-to-sufficient-condition-for>M7</ufo:contributes-to-sufficient-condition-for>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <ufo:axiom>a13</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <ufo:axiom>a27</ufo:axiom>
-        <ufo:axiom>a48-part2</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/has-part -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/has-part"/>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/has-participant -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/has-participant">
-        <owl:inverseOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-participant-of"/>
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <rdfs:label>has participant</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/has-post-situation -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/has-post-situation">
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-        <rdfs:label>has post situation</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/has-pre-situation -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/has-pre-situation">
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-        <rdfs:label>has pre situation</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/is-event-part-of -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/is-event-part-of">
-        <rdfs:subPropertyOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-part-of"/>
-        <rdfs:subPropertyOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/mereologically-overlaps"/>
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:label xml:lang="en">is event part of</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-event-part-of"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subPropertyOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/mereologically-overlaps"/>
-        <ufo:axiom>a66-part2</ufo:axiom>
-        <ufo:contributes-to-sufficient-condition-for>M7</ufo:contributes-to-sufficient-condition-for>
-        <rdfs:comment>a66-part3</rdfs:comment>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by">
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/disposition"/>
-        <rdfs:label xml:lang="en">is manifested by</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/disposition"/>
-        <ufo:axiom>a21</ufo:axiom>
-        <ufo:axiom>a60-part2</ufo:axiom>
-        <ufo:contributes-to-necessary-condition-for>D2</ufo:contributes-to-necessary-condition-for>
-        <ufo:contributes-to-sufficient-condition-for>D2</ufo:contributes-to-sufficient-condition-for>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/is-part-of -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/is-part-of"/>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/is-participant-of -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/is-participant-of">
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:label xml:lang="en">is participant of</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of">
-        <rdfs:subPropertyOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-participant"/>
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/participation"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <rdfs:label xml:lang="en">is participation of</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#equivalentProperty"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of"/>
-        <ufo:is-necessary-condition-for>P5</ufo:is-necessary-condition-for>
-        <ufo:is-sufficient-condition-for>P5</ufo:is-sufficient-condition-for>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/participation"/>
-        <ufo:axiom>a25</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <ufo:axiom>a39</ufo:axiom>
-        <ufo:axiom>a56-part2</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/is-snapshot-of -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/is-snapshot-of">
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object-snapshot"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-        <rdfs:label xml:lang="en">is snapshot of</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/mereologically-overlaps -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/mereologically-overlaps">
-        <rdfs:label xml:lang="en">mereologically overlaps</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/obtains-in -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/obtains-in">
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/time-point"/>
-        <rdfs:label xml:lang="en">obtains in</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/obtains-in"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-        <ufo:axiom>a15</ufo:axiom>
-        <ufo:axiom>a58-part2</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/obtains-in"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/time-point"/>
-        <ufo:axiom>a29</ufo:axiom>
-        <ufo:axiom>a50-part2</ufo:axiom>
-        <ufo:axiom>a51-part2</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/triggers -->
-
-    <owl:ObjectProperty rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/triggers">
-        <rdfs:domain rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-        <rdfs:range rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:label xml:lang="en">triggers</rdfs:label>
-    </owl:ObjectProperty>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/triggers"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#domain"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-        <ufo:axiom>a16</ufo:axiom>
-        <ufo:axiom>a59-part2</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/triggers"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <ufo:axiom>a30</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Classes
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/atomic-event -->
-
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/atomic-event">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:subClassOf>
-            <owl:Class>
-                <owl:complementOf>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                        <owl:someValuesFrom rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-                    </owl:Restriction>
-                </owl:complementOf>
-            </owl:Class>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/depends-on"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty>
-                    <rdf:Description>
-                        <owl:inverseOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by"/>
-                    </rdf:Description>
-                </owl:onProperty>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <owl:disjointWith rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
-        <rdfs:label xml:lang="en">Atomic Event</rdfs:label>
-    </owl:Class>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/atomic-event"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <ufo:axiom>a08</ufo:axiom>
-        <ufo:axiom>a61-part1</ufo:axiom>
-        <ufo:axiom>a62-part1</ufo:axiom>
-        <ufo:contributes-to-necessary-condition-for>M1</ufo:contributes-to-necessary-condition-for>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/atomic-event"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget>
-            <owl:Class>
-                <owl:complementOf>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                        <owl:someValuesFrom rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-                    </owl:Restriction>
-                </owl:complementOf>
-            </owl:Class>
-        </owl:annotatedTarget>
-        <ufo:axiom>a61-part2</ufo:axiom>
-        <ufo:axiom>a62-part2</ufo:axiom>
-        <ufo:contributes-to-necessary-condition-for>M1</ufo:contributes-to-necessary-condition-for>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/atomic-event"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/depends-on"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </owl:annotatedTarget>
-        <ufo:axiom>a49-part1</ufo:axiom>
-        <ufo:is-necessary-condition-for>P1</ufo:is-necessary-condition-for>
-        <ufo:is-sufficient-condition-for>P1</ufo:is-sufficient-condition-for>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/atomic-event"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget>
-            <owl:Restriction>
-                <owl:onProperty>
-                    <rdf:Description>
-                        <owl:inverseOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-manifested-by"/>
-                    </rdf:Description>
-                </owl:onProperty>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </owl:annotatedTarget>
-        <ufo:axiom>a60-part1</ufo:axiom>
-        <ufo:contributes-to-necessary-condition-for>D2</ufo:contributes-to-necessary-condition-for>
-        <ufo:contributes-to-sufficient-condition-for>D2</ufo:contributes-to-sufficient-condition-for>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/atomic-event"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#disjointWith"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
-        <ufo:axiom>a45</ufo:axiom>
-        <ufo:contributes-to-necessary-condition-for>M2</ufo:contributes-to-necessary-condition-for>
-        <ufo:contributes-to-sufficient-condition-for>M2</ufo:contributes-to-sufficient-condition-for>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/complex-event -->
-
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/complex-event">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:minCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label xml:lang="en">Complex Event</rdfs:label>
-    </owl:Class>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/atomic-event"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#disjointWith"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
-        <ufo:axiom>a45</ufo:axiom>
-        <ufo:contributes-to-necessary-condition-for>M2</ufo:contributes-to-necessary-condition-for>
-        <ufo:contributes-to-sufficient-condition-for>M2</ufo:contributes-to-sufficient-condition-for>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <ufo:axiom>a09</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:minCardinality>
-            </owl:Restriction>
-        </owl:annotatedTarget>
-        <ufo:axiom>a48-part1</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/disposition -->
-
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/disposition">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope"/>
-        <rdfs:label>Disposition</rdfs:label>
-    </owl:Class>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/disposition"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/trope"/>
-        <ufo:axiom>a06</ufo:axiom>
-        <ufo:contributes-to-necessary-condition-for>D1</ufo:contributes-to-necessary-condition-for>
-        <ufo:contributes-to-sufficient-condition-for>D1</ufo:contributes-to-sufficient-condition-for>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/endurant -->
-
-    <rdf:Description rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/endurant">
-        <owl:disjointWith rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/perdurant"/>
-    </rdf:Description>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/endurant"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#disjointWith"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/perdurant"/>
-        <ufo:axiom>a41-part1</ufo:axiom>
-    </owl:Axiom>
-    
-
-
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/event -->
-
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/event">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/perdurant"/>
-        <rdfs:subClassOf>
-            <owl:Class>
-                <owl:unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/atomic-event"/>
-                    <rdf:Description rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
-                </owl:unionOf>
-            </owl:Class>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/brings-about"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-end-point"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty>
-                    <rdf:Description>
-                        <owl:inverseOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/triggers"/>
-                    </rdf:Description>
-                </owl:onProperty>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label xml:lang="en">Event</rdfs:label>
-        <skos:definition xml:lang="en">An event, perdurant in the ontological sense. Events do not change its properties over time.</skos:definition>
-        <skos:example xml:lang="en">Event *has participant* an object.
+@prefix : <http://onto.fel.cvut.cz/ontologies/ufo-b/> .
+@prefix annot: <http://onto.fel.cvut.cz/ontologies/ufo/annot/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix voc: <http://onto.fel.cvut.cz/ontologies/voc/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://onto.fel.cvut.cz/ontologies/ufo-b> a owl:Ontology ;
+    terms:created "16.11.2017"@en ;
+    terms:creator <http://onto.fel.cvut.cz/ontologies/kbss/people/petr-kremen> ;
+    terms:description "The ontology aims at formalize basic notions of the Unified Foundational Ontology, part B - Events."@en ;
+    terms:rights <https://creativecommons.org/licenses/by-sa/4.0> ;
+    terms:title "Unified Foundational Ontology - B"@en ;
+    bibo:status "Ontology Specification"@en ;
+    vann:preferredNamespacePrefix "ufo"@en ;
+    vann:preferredNamespaceUri "http://onto.fel.cvut.cz/ontologies/ufo/"@en ;
+    owl:imports <http://onto.fel.cvut.cz/ontologies/ufo-a/1.0.1> ;
+    owl:priorVersion <http://onto.fel.cvut.cz/ontologies/ufo-b/1.0.0> ;
+    owl:versionIRI <http://onto.fel.cvut.cz/ontologies/ufo-b/1.0.1> ;
+    owl:versionInfo "1.0.1"@en .
+
+annot:swrl a owl:AnnotationProperty .
+
+ufo:axiom a owl:AnnotationProperty .
+
+ufo:contributes-to-necessary-condition-for a owl:AnnotationProperty .
+
+ufo:contributes-to-sufficient-condition-for a owl:AnnotationProperty .
+
+ufo:fol-formula a owl:AnnotationProperty .
+
+ufo:has-post-situation a owl:ObjectProperty ;
+    rdfs:label "has post situation" ;
+    rdfs:domain ufo:event ;
+    rdfs:range ufo:situation .
+
+ufo:has-pre-situation a owl:ObjectProperty ;
+    rdfs:label "has pre situation" ;
+    rdfs:domain ufo:event ;
+    rdfs:range ufo:situation .
+
+ufo:is-necessary-condition-for a owl:AnnotationProperty .
+
+ufo:is-sufficient-condition-for a owl:AnnotationProperty .
+
+ufo:necessary-condition-for a owl:AnnotationProperty .
+
+ufo:object-change-event a owl:Class ;
+    rdfs:label "Object change event"@en ;
+    rdfs:subClassOf ufo:participation .
+
+ufo:object-creation-event a owl:Class ;
+    rdfs:label "Object creation event"@en ;
+    rdfs:subClassOf ufo:participation .
+
+ufo:object-destruction-event a owl:Class ;
+    rdfs:label "Object destruction event"@en ;
+    rdfs:subClassOf ufo:participation .
+
+skos:definition a owl:AnnotationProperty .
+
+skos:example a owl:AnnotationProperty .
+
+skos:scopeNote a owl:AnnotationProperty .
+
+ufo:has-part a owl:ObjectProperty .
+
+ufo:has-participant a owl:ObjectProperty ;
+    rdfs:label "has participant" ;
+    rdfs:domain ufo:event ;
+    rdfs:range ufo:object ;
+    owl:inverseOf ufo:is-participant-of .
+
+ufo:is-participant-of a owl:ObjectProperty ;
+    rdfs:label "is participant of"@en ;
+    rdfs:domain ufo:object ;
+    rdfs:range ufo:event .
+
+ufo:is-snapshot-of a owl:ObjectProperty ;
+    rdfs:label "is snapshot of"@en ;
+    rdfs:domain ufo:object-snapshot ;
+    rdfs:range ufo:object .
+
+ufo:object-snapshot a owl:Class ;
+    rdfs:label "Object Snapshot"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ufo:is-snapshot-of ;
+            owl:someValuesFrom ufo:object ],
+        [ a owl:Restriction ;
+            owl:onProperty ufo:is-part-of ;
+            owl:someValuesFrom ufo:situation ],
+        ufo:perdurant ;
+    skos:definition "Object Snapshot is a immutable state description of an object within a situation. Object Snapshot and an Object share the attribute types and relation types of their identifying objects. Object serve only for identification purpose."@en ;
+    skos:example """- an object snapshot *is identified by* an object
+- a situation *has part* an object snapshot"""@en ;
+    skos:scopeNote "- * Aircraft OK-123, just before landing 1.1.2014 at 18.00* is a snapshot of the aircraft containing the setting of its controls and conditions of the its technical systems. Another snapshot *Aircraft OK-123, just before takeoff 1.1.2014 at 9.00* might have completely different state of controls and conditions. In both cases, however, we speak about the same aircraft (same object)."@en .
+
+ufo:activates a owl:ObjectProperty ;
+    rdfs:label "activates"@en ;
+    rdfs:domain ufo:situation ;
+    rdfs:range ufo:disposition .
+
+ufo:endurant owl:disjointWith ufo:perdurant .
+
+ufo:is-event-part-of a owl:ObjectProperty ;
+    rdfs:label "is event part of"@en ;
+    rdfs:domain ufo:event ;
+    rdfs:range ufo:event ;
+    rdfs:subPropertyOf ufo:is-part-of,
+        ufo:mereologically-overlaps .
+
+ufo:is-part-of a owl:ObjectProperty .
+
+ufo:is-manifested-by a owl:ObjectProperty ;
+    rdfs:label "is manifested by"@en ;
+    rdfs:domain ufo:disposition .
+
+ufo:directly-causes a owl:ObjectProperty ;
+    rdfs:label "directly causes"@en ;
+    rdfs:domain ufo:event ;
+    rdfs:range ufo:event ;
+    rdfs:subPropertyOf ufo:causes .
+
+ufo:fact a owl:Class ;
+    rdfs:label "Fact"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:obtains-in ],
+        ufo:situation .
+
+ufo:has-begin-point a owl:ObjectProperty ;
+    rdfs:label "has begin point"@en ;
+    rdfs:domain ufo:event ;
+    rdfs:range ufo:time-point .
+
+ufo:has-end-point a owl:ObjectProperty ;
+    rdfs:label "has end point"@en ;
+    rdfs:domain ufo:event ;
+    rdfs:range ufo:time-point .
+
+ufo:individual owl:disjointWith ufo:time-point .
+
+<urn:swrl#z> a swrl:Variable .
+
+ufo:brings-about a owl:ObjectProperty ;
+    rdfs:label "brings about"@en ;
+    rdfs:domain ufo:event ;
+    rdfs:range ufo:situation .
+
+ufo:disposition a owl:Class ;
+    rdfs:label "Disposition" ;
+    rdfs:subClassOf ufo:trope .
+
+ufo:mereologically-overlaps a owl:ObjectProperty ;
+    rdfs:label "mereologically overlaps"@en .
+
+ufo:triggers a owl:ObjectProperty ;
+    rdfs:label "triggers"@en ;
+    rdfs:domain ufo:situation ;
+    rdfs:range ufo:event .
+
+<urn:swrl#x> a swrl:Variable .
+
+<urn:swrl#y> a swrl:Variable .
+
+ufo:depends-on a owl:ObjectProperty ;
+    rdfs:label "depends on"@en ;
+    rdfs:domain ufo:atomic-event ;
+    rdfs:range ufo:object ;
+    rdfs:subPropertyOf ufo:exclusively-depends-on .
+
+<urn:swrl#e3> a swrl:Variable .
+
+ufo:causes a owl:ObjectProperty ;
+    rdfs:label "causes"@en ;
+    rdfs:domain ufo:event ;
+    rdfs:range ufo:event .
+
+ufo:obtains-in a owl:ObjectProperty ;
+    rdfs:label "obtains in"@en ;
+    rdfs:domain ufo:situation ;
+    rdfs:range ufo:time-point .
+
+ufo:perdurant a owl:Class ;
+    rdfs:label "Perdurant"@en ;
+    rdfs:subClassOf ufo:individual .
+
+<urn:swrl#o> a swrl:Variable .
+
+ufo:is-participation-of a owl:ObjectProperty ;
+    rdfs:label "is participation of"@en ;
+    rdfs:domain ufo:participation ;
+    rdfs:range ufo:object ;
+    rdfs:subPropertyOf ufo:has-participant .
+
+ufo:time-point a owl:Class ;
+    rdfs:label "Time Point"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty [ owl:inverseOf ufo:obtains-in ] ;
+            owl:someValuesFrom ufo:situation ],
+        ufo:entity .
+
+<urn:swrl#e> a swrl:Variable .
+
+<urn:swrl#e2> a swrl:Variable .
+
+ufo:complex-event a owl:Class ;
+    rdfs:label "Complex Event"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "2"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:has-event-part ],
+        ufo:event .
+
+ufo:participation a owl:Class ;
+    rdfs:label "Participation"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty ufo:is-participation-of ;
+            owl:someValuesFrom ufo:object ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:is-participation-of ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:exclusively-depends-on ],
+        ufo:event .
+
+ufo:atomic-event a owl:Class ;
+    rdfs:label "Atomic Event"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty [ owl:inverseOf ufo:is-manifested-by ] ],
+        [ a owl:Class ;
+            owl:complementOf [ a owl:Restriction ;
+                    owl:onProperty ufo:has-event-part ;
+                    owl:someValuesFrom ufo:event ] ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:depends-on ],
+        ufo:event ;
+    owl:disjointWith ufo:complex-event .
+
+ufo:exclusively-depends-on a owl:ObjectProperty ;
+    rdfs:label "exclusively depends on"@en ;
+    rdfs:domain ufo:participation ;
+    rdfs:range ufo:object ;
+    owl:equivalentProperty ufo:is-participation-of .
+
+ufo:situation a owl:Class .
+
+<urn:swrl#e1> a swrl:Variable .
+
+ufo:has-event-part a owl:ObjectProperty ;
+    rdfs:label "has event part"@en ;
+    rdfs:domain ufo:event ;
+    rdfs:range ufo:event ;
+    rdfs:subPropertyOf ufo:has-part,
+        ufo:mereologically-overlaps ;
+    owl:inverseOf ufo:is-event-part-of .
+
+ufo:event a owl:Class ;
+    rdfs:label "Event"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:has-begin-point ],
+        [ a owl:Class ;
+            owl:unionOf ( ufo:atomic-event ufo:complex-event ) ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:has-end-point ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty [ owl:inverseOf ufo:triggers ] ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:brings-about ],
+        ufo:perdurant ;
+    skos:definition "An event, perdurant in the ontological sense. Events do not change its properties over time."@en ;
+    skos:example """Event *has participant* an object.
 Event *is part of* another event.
 Event *is followed by* another event.
-Event *is caused by/contributes to/mitigates* another event.</skos:example>
-        <skos:scopeNote xml:lang="en">- a *flight* is an event which describes the course of aircraft movement ground-air-ground,
-- a *runway incursion* is an event which describes incorrect presence of an object on the runway</skos:scopeNote>
-    </owl:Class>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/perdurant"/>
-        <ufo:axiom>a02-part1</ufo:axiom>
-        <ufo:axiom>a41-part2</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget>
-            <owl:Class>
-                <owl:unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/atomic-event"/>
-                    <rdf:Description rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
-                </owl:unionOf>
-            </owl:Class>
-        </owl:annotatedTarget>
-        <ufo:axiom>a46</ufo:axiom>
-        <ufo:contributes-to-necessary-condition-for>M2</ufo:contributes-to-necessary-condition-for>
-        <ufo:contributes-to-sufficient-condition-for>M2</ufo:contributes-to-sufficient-condition-for>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/brings-about"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </owl:annotatedTarget>
-        <ufo:axiom>a52-part1</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </owl:annotatedTarget>
-        <ufo:axiom>a53-part1</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-end-point"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </owl:annotatedTarget>
-        <ufo:axiom>a54-part1</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget>
-            <owl:Restriction>
-                <owl:onProperty>
-                    <rdf:Description>
-                        <owl:inverseOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/triggers"/>
-                    </rdf:Description>
-                </owl:onProperty>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </owl:annotatedTarget>
-        <ufo:axiom>a59-part1</ufo:axiom>
-    </owl:Axiom>
-    
+Event *is caused by/contributes to/mitigates* another event."""@en ;
+    skos:scopeNote """- a *flight* is an event which describes the course of aircraft movement ground-air-ground,
+- a *runway incursion* is an event which describes incorrect presence of an object on the runway"""@en .
 
+[] a owl:Axiom ;
+    ufo:axiom "a66-part1",
+        "a66-part2" ;
+    ufo:contributes-to-sufficient-condition-for "M7" ;
+    owl:annotatedProperty rdfs:subPropertyOf ;
+    owl:annotatedSource ufo:has-event-part ;
+    owl:annotatedTarget ufo:mereologically-overlaps .
 
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/fact -->
+[] a owl:Axiom ;
+    ufo:axiom "a52-part1" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:event ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:brings-about ] .
 
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/fact">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/obtains-in"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label xml:lang="en">Fact</rdfs:label>
-    </owl:Class>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/fact"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-        <ufo:axiom>a07</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/fact"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/obtains-in"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </owl:annotatedTarget>
-        <ufo:axiom>a51-part1</ufo:axiom>
-    </owl:Axiom>
-    
+[] a swrl:Imp ;
+    ufo:axiom "a63" ;
+    ufo:is-necessary-condition-for "M3" ;
+    ufo:is-sufficient-condition-for "M3" ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:ClassAtom ;
+                    swrl:argument1 <urn:swrl#e> ;
+                    swrl:classPredicate ufo:complex-event ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 <urn:swrl#e1> ;
+                            swrl:argument2 <urn:swrl#e2> ;
+                            swrl:propertyPredicate ufo:has-event-part ] ;
+                    rdf:rest () ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:DifferentIndividualsAtom ;
+                    swrl:argument1 <urn:swrl#e1> ;
+                    swrl:argument2 <urn:swrl#e2> ] ;
+            rdf:rest () ] .
 
+[] a owl:Axiom ;
+    ufo:axiom "a37",
+        "a54-part2" ;
+    owl:annotatedProperty rdfs:range ;
+    owl:annotatedSource ufo:has-end-point ;
+    owl:annotatedTarget ufo:time-point .
 
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/individual -->
+[] a owl:Axiom ;
+    ufo:axiom "a09" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:complex-event ;
+    owl:annotatedTarget ufo:event .
 
-    <rdf:Description rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/individual">
-        <owl:disjointWith rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/time-point"/>
-    </rdf:Description>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/individual"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#disjointWith"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/time-point"/>
-        <ufo:axiom>a40</ufo:axiom>
-    </owl:Axiom>
-    
+[] a owl:Axiom ;
+    ufo:axiom "a36",
+        "a53-part2" ;
+    owl:annotatedProperty rdfs:range ;
+    owl:annotatedSource ufo:has-begin-point ;
+    owl:annotatedTarget ufo:time-point .
 
+[] a owl:Axiom ;
+    ufo:axiom "a32" ;
+    owl:annotatedProperty rdfs:range ;
+    owl:annotatedSource ufo:causes ;
+    owl:annotatedTarget ufo:event .
 
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/object-change-event -->
+[] a swrl:Imp ;
+    ufo:contributes-to-sufficient-condition-for "P3" ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#e> ;
+                    swrl:argument2 <urn:swrl#e1> ;
+                    swrl:propertyPredicate ufo:has-event-part ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 <urn:swrl#e1> ;
+                            swrl:argument2 <urn:swrl#o> ;
+                            swrl:propertyPredicate ufo:exclusively-depends-on ] ;
+                    rdf:rest () ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#e> ;
+                    swrl:argument2 <urn:swrl#o> ;
+                    swrl:propertyPredicate ufo:exclusively-depends-on ] ;
+            rdf:rest () ] .
 
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/object-change-event">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/participation"/>
-        <rdfs:label xml:lang="en">Object change event</rdfs:label>
-    </owl:Class>
-    
+[] a owl:Axiom ;
+    ufo:axiom "a72" ;
+    ufo:is-sufficient-condition-for "P4" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource [ a owl:Class ;
+            rdfs:subClassOf ufo:participation ;
+            owl:intersectionOf ( ufo:event [ a owl:Restriction ;
+                        owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onProperty ufo:exclusively-depends-on ] ) ] ;
+    owl:annotatedTarget ufo:participation .
 
+[] a owl:Axiom ;
+    ufo:axiom "a46" ;
+    ufo:contributes-to-necessary-condition-for "M2" ;
+    ufo:contributes-to-sufficient-condition-for "M2" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:event ;
+    owl:annotatedTarget [ a owl:Class ;
+            owl:unionOf ( ufo:atomic-event ufo:complex-event ) ] .
 
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/object-creation-event -->
+[] a owl:Axiom ;
+    ufo:axiom "a21",
+        "a60-part2" ;
+    ufo:contributes-to-necessary-condition-for "D2" ;
+    ufo:contributes-to-sufficient-condition-for "D2" ;
+    owl:annotatedProperty rdfs:domain ;
+    owl:annotatedSource ufo:is-manifested-by ;
+    owl:annotatedTarget ufo:disposition .
 
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/object-creation-event">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/participation"/>
-        <rdfs:label xml:lang="en">Object creation event</rdfs:label>
-    </owl:Class>
-    
+[] a owl:Axiom ;
+    ufo:axiom "a25" ;
+    owl:annotatedProperty rdfs:domain ;
+    owl:annotatedSource ufo:is-participation-of ;
+    owl:annotatedTarget ufo:participation .
 
+[] a owl:Axiom ;
+    ufo:axiom "a14" ;
+    owl:annotatedProperty rdfs:domain ;
+    owl:annotatedSource ufo:depends-on ;
+    owl:annotatedTarget ufo:atomic-event .
 
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/object-destruction-event -->
+[] a owl:Axiom ;
+    ufo:axiom "a23" ;
+    owl:annotatedProperty rdfs:domain ;
+    owl:annotatedSource ufo:has-end-point ;
+    owl:annotatedTarget ufo:event .
 
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/object-destruction-event">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/participation"/>
-        <rdfs:label xml:lang="en">Object destruction event</rdfs:label>
-    </owl:Class>
-    
+[] a owl:Axiom ;
+    ufo:axiom "a33" ;
+    owl:annotatedProperty rdfs:range ;
+    owl:annotatedSource ufo:directly-causes ;
+    owl:annotatedTarget ufo:event .
 
+[] a owl:Axiom ;
+    ufo:axiom "a45" ;
+    ufo:contributes-to-necessary-condition-for "M2" ;
+    ufo:contributes-to-sufficient-condition-for "M2" ;
+    owl:annotatedProperty owl:disjointWith ;
+    owl:annotatedSource ufo:atomic-event ;
+    owl:annotatedTarget ufo:complex-event .
 
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/object-snapshot -->
+[] a owl:Axiom ;
+    ufo:axiom "a93" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource [ a owl:Class ;
+            rdfs:subClassOf ufo:fact ;
+            owl:intersectionOf ( ufo:situation [ a owl:Restriction ;
+                        owl:onProperty ufo:obtains-in ;
+                        owl:someValuesFrom ufo:time-point ] ) ] ;
+    owl:annotatedTarget ufo:fact .
 
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/object-snapshot">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/perdurant"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-part-of"/>
-                <owl:someValuesFrom rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-snapshot-of"/>
-                <owl:someValuesFrom rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label xml:lang="en">Object Snapshot</rdfs:label>
-        <skos:definition xml:lang="en">Object Snapshot is a immutable state description of an object within a situation. Object Snapshot and an Object share the attribute types and relation types of their identifying objects. Object serve only for identification purpose.</skos:definition>
-        <skos:example xml:lang="en">- an object snapshot *is identified by* an object
-- a situation *has part* an object snapshot</skos:example>
-        <skos:scopeNote xml:lang="en">- * Aircraft OK-123, just before landing 1.1.2014 at 18.00* is a snapshot of the aircraft containing the setting of its controls and conditions of the its technical systems. Another snapshot *Aircraft OK-123, just before takeoff 1.1.2014 at 9.00* might have completely different state of controls and conditions. In both cases, however, we speak about the same aircraft (same object).</skos:scopeNote>
-    </owl:Class>
-    
+[] a owl:Axiom ;
+    ufo:axiom "a48-part1" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:complex-event ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:minCardinality "2"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:has-event-part ] .
 
+[] a owl:Axiom ;
+    ufo:axiom "a18" ;
+    owl:annotatedProperty rdfs:domain ;
+    owl:annotatedSource ufo:causes ;
+    owl:annotatedTarget ufo:event .
 
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/participation -->
+[] a owl:Axiom ;
+    ufo:axiom "a06" ;
+    ufo:contributes-to-necessary-condition-for "D1" ;
+    ufo:contributes-to-sufficient-condition-for "D1" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:disposition ;
+    owl:annotatedTarget ufo:trope .
 
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/participation">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of"/>
-                <owl:someValuesFrom rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label xml:lang="en">Participation</rdfs:label>
-    </owl:Class>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/participation"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-        <ufo:axiom>a10</ufo:axiom>
-        <ufo:contributes-to-necessary-condition-for>P4</ufo:contributes-to-necessary-condition-for>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/participation"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </owl:annotatedTarget>
-        <ufo:axiom>a55-part1</ufo:axiom>
-        <ufo:contributes-to-necessary-condition-for>P4</ufo:contributes-to-necessary-condition-for>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/participation"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/is-participation-of"/>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </owl:annotatedTarget>
-        <ufo:axiom>a56-part1</ufo:axiom>
-    </owl:Axiom>
-    
+[] a owl:Axiom ;
+    ufo:axiom "a56-part1" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:participation ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:is-participation-of ] .
 
+[] a owl:Axiom ;
+    ufo:axiom "a11" ;
+    owl:annotatedProperty rdfs:subPropertyOf ;
+    owl:annotatedSource ufo:directly-causes ;
+    owl:annotatedTarget ufo:causes .
 
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/perdurant -->
+[] a owl:Axiom ;
+    ufo:axiom "a51-part1" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:fact ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:obtains-in ] .
 
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/perdurant">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/individual"/>
-        <rdfs:label xml:lang="en">Perdurant</rdfs:label>
-    </owl:Class>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/endurant"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#disjointWith"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/perdurant"/>
-        <ufo:axiom>a41-part1</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/perdurant"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/individual"/>
-        <ufo:axiom>a02-part2</ufo:axiom>
-    </owl:Axiom>
-    
+[] a swrl:Imp ;
+    ufo:is-sufficient-condition-for "M4" ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#e1> ;
+                    swrl:argument2 <urn:swrl#e2> ;
+                    swrl:propertyPredicate ufo:has-event-part ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 <urn:swrl#e2> ;
+                            swrl:argument2 <urn:swrl#e1> ;
+                            swrl:propertyPredicate ufo:has-event-part ] ;
+                    rdf:rest () ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:ClassAtom ;
+                    swrl:argument1 <urn:swrl#e1> ;
+                    swrl:classPredicate [ a owl:Class ;
+                            owl:complementOf ufo:complex-event ] ] ;
+            rdf:rest () ] .
 
+[] a owl:Axiom ;
+    ufo:axiom "a02-part1",
+        "a41-part2" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:event ;
+    owl:annotatedTarget ufo:perdurant .
 
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/situation -->
+[] a owl:Axiom ;
+    ufo:axiom "a30" ;
+    owl:annotatedProperty rdfs:range ;
+    owl:annotatedSource ufo:triggers ;
+    owl:annotatedTarget ufo:event .
 
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-    
+[] a swrl:Imp ;
+    ufo:is-necessary-condition-for "M4" ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:ClassAtom ;
+                    swrl:argument1 <urn:swrl#e1> ;
+                    swrl:classPredicate ufo:complex-event ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 <urn:swrl#e1> ;
+                            swrl:argument2 <urn:swrl#e2> ;
+                            swrl:propertyPredicate ufo:has-event-part ] ;
+                    rdf:rest [ a swrl:AtomList ;
+                            rdf:first [ a swrl:ClassAtom ;
+                                    swrl:argument1 <urn:swrl#e2> ;
+                                    swrl:classPredicate ufo:complex-event ] ;
+                            rdf:rest [ a swrl:AtomList ;
+                                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                                            swrl:argument1 <urn:swrl#e2> ;
+                                            swrl:argument2 <urn:swrl#e3> ;
+                                            swrl:propertyPredicate ufo:has-event-part ] ;
+                                    rdf:rest () ] ] ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:DifferentIndividualsAtom ;
+                    swrl:argument1 <urn:swrl#e1> ;
+                    swrl:argument2 <urn:swrl#e3> ] ;
+            rdf:rest () ] .
 
+[] a owl:Axiom ;
+    ufo:axiom "a61-part2",
+        "a62-part2" ;
+    ufo:contributes-to-necessary-condition-for "M1" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:atomic-event ;
+    owl:annotatedTarget [ a owl:Class ;
+            owl:complementOf [ a owl:Restriction ;
+                    owl:onProperty ufo:has-event-part ;
+                    owl:someValuesFrom ufo:event ] ] .
 
-    <!-- http://onto.fel.cvut.cz/ontologies/ufo/time-point -->
+[] a owl:Axiom ;
+    ufo:axiom "a45" ;
+    ufo:contributes-to-necessary-condition-for "M2" ;
+    ufo:contributes-to-sufficient-condition-for "M2" ;
+    owl:annotatedProperty owl:disjointWith ;
+    owl:annotatedSource ufo:atomic-event ;
+    owl:annotatedTarget ufo:complex-event .
 
-    <owl:Class rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/time-point">
-        <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/entity"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty>
-                    <rdf:Description>
-                        <owl:inverseOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/obtains-in"/>
-                    </rdf:Description>
-                </owl:onProperty>
-                <owl:someValuesFrom rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label xml:lang="en">Time Point</rdfs:label>
-    </owl:Class>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/individual"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#disjointWith"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/time-point"/>
-        <ufo:axiom>a40</ufo:axiom>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/time-point"/>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget>
-            <owl:Restriction>
-                <owl:onProperty>
-                    <rdf:Description>
-                        <owl:inverseOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/obtains-in"/>
-                    </rdf:Description>
-                </owl:onProperty>
-                <owl:someValuesFrom rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-            </owl:Restriction>
-        </owl:annotatedTarget>
-        <ufo:axiom>a58-part1</ufo:axiom>
-    </owl:Axiom>
-    <rdf:Description>
-        <swrl:argument1 rdf:resource="urn:swrl#x"/>
-        <swrl:argument2 rdf:resource="urn:swrl#y"/>
-        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has_event_part"/>
-    </rdf:Description>
-    
+[] a owl:Axiom ;
+    ufo:axiom "a02-part2" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:perdurant ;
+    owl:annotatedTarget ufo:individual .
 
+[] a swrl:Imp ;
+    ufo:contributes-to-sufficient-condition-for "M7" ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#e1> ;
+                    swrl:argument2 <urn:swrl#e2> ;
+                    swrl:propertyPredicate ufo:has-event-part ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 <urn:swrl#e3> ;
+                            swrl:argument2 <urn:swrl#e2> ;
+                            swrl:propertyPredicate ufo:has-event-part ] ;
+                    rdf:rest () ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#e1> ;
+                    swrl:argument2 <urn:swrl#e3> ;
+                    swrl:propertyPredicate ufo:mereologically-overlaps ] ;
+            rdf:rest () ] .
 
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // General axioms
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+[] a owl:Axiom ;
+    ufo:axiom "a53-part1" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:event ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:has-begin-point ] .
 
-    <owl:Axiom>
-        <owl:annotatedSource>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-                    <owl:Class>
-                        <owl:complementOf>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                                <owl:someValuesFrom rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-                            </owl:Restriction>
-                        </owl:complementOf>
-                    </owl:Class>
-                </owl:intersectionOf>
-                <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/atomic-event"/>
-            </owl:Class>
-        </owl:annotatedSource>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/atomic-event"/>
-        <ufo:axiom>a62</ufo:axiom>
-        <ufo:is-sufficient-condition-for>M1</ufo:is-sufficient-condition-for>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/event"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on"/>
-                        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-                <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/participation"/>
-            </owl:Class>
-        </owl:annotatedSource>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/participation"/>
-        <ufo:axiom>a72</ufo:axiom>
-        <ufo:is-sufficient-condition-for>P4</ufo:is-sufficient-condition-for>
-    </owl:Axiom>
-    <owl:Axiom>
-        <owl:annotatedSource>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="http://onto.fel.cvut.cz/ontologies/ufo/situation"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/obtains-in"/>
-                        <owl:someValuesFrom rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/time-point"/>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-                <rdfs:subClassOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/fact"/>
-            </owl:Class>
-        </owl:annotatedSource>
-        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
-        <owl:annotatedTarget rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/fact"/>
-        <ufo:axiom>a93</ufo:axiom>
-    </owl:Axiom>
-    
+[] a owl:Axiom ;
+    ufo:axiom "a27",
+        "a48-part2" ;
+    owl:annotatedProperty rdfs:range ;
+    owl:annotatedSource ufo:has-event-part ;
+    owl:annotatedTarget ufo:event .
 
+[] a owl:Axiom ;
+    ufo:axiom "a66-part2" ;
+    ufo:contributes-to-sufficient-condition-for "M7" ;
+    rdfs:comment "a66-part3" ;
+    owl:annotatedProperty rdfs:subPropertyOf ;
+    owl:annotatedSource ufo:is-event-part-of ;
+    owl:annotatedTarget ufo:mereologically-overlaps .
 
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Rules
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+[] a swrl:Imp ;
+    ufo:contributes-to-sufficient-condition-for "P2" ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:ClassAtom ;
+                    swrl:argument1 <urn:swrl#e> ;
+                    swrl:classPredicate ufo:atomic-event ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:ClassAtom ;
+                            swrl:argument1 <urn:swrl#o> ;
+                            swrl:classPredicate ufo:object ] ;
+                    rdf:rest [ a swrl:AtomList ;
+                            rdf:first [ a swrl:IndividualPropertyAtom ;
+                                    swrl:argument1 <urn:swrl#e> ;
+                                    swrl:argument2 <urn:swrl#o> ;
+                                    swrl:propertyPredicate ufo:exclusively-depends-on ] ;
+                            rdf:rest () ] ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#e> ;
+                    swrl:argument2 <urn:swrl#o> ;
+                    swrl:propertyPredicate ufo:depends-on ] ;
+            rdf:rest () ] .
 
-    <rdf:Description rdf:about="urn:swrl#e">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="urn:swrl#o">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="urn:swrl#e1">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="urn:swrl#e2">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="urn:swrl#e3">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="urn:swrl#x">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="urn:swrl#y">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="urn:swrl#z">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description>
-        <ufo:axiom>a63</ufo:axiom>
-        <ufo:is-necessary-condition-for>M3</ufo:is-necessary-condition-for>
-        <ufo:is-sufficient-condition-for>M3</ufo:is-sufficient-condition-for>
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
-        <swrl:body>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                        <swrl:classPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                        <rdf:first>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                                <swrl:argument1 rdf:resource="urn:swrl#e1"/>
-                                <swrl:argument2 rdf:resource="urn:swrl#e2"/>
-                            </rdf:Description>
-                        </rdf:first>
-                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                    </rdf:Description>
-                </rdf:rest>
-            </rdf:Description>
-        </swrl:body>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DifferentIndividualsAtom"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e1"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#e2"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-            </rdf:Description>
-        </swrl:head>
-    </rdf:Description>
-    <rdf:Description>
-        <ufo:is-necessary-condition-for>M4</ufo:is-necessary-condition-for>
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
-        <swrl:body>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                        <swrl:classPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e1"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                        <rdf:first>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                                <swrl:argument1 rdf:resource="urn:swrl#e1"/>
-                                <swrl:argument2 rdf:resource="urn:swrl#e2"/>
-                            </rdf:Description>
-                        </rdf:first>
-                        <rdf:rest>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                                <rdf:first>
-                                    <rdf:Description>
-                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                        <swrl:classPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
-                                        <swrl:argument1 rdf:resource="urn:swrl#e2"/>
-                                    </rdf:Description>
-                                </rdf:first>
-                                <rdf:rest>
-                                    <rdf:Description>
-                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                                        <rdf:first>
-                                            <rdf:Description>
-                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                                                <swrl:argument1 rdf:resource="urn:swrl#e2"/>
-                                                <swrl:argument2 rdf:resource="urn:swrl#e3"/>
-                                            </rdf:Description>
-                                        </rdf:first>
-                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                                    </rdf:Description>
-                                </rdf:rest>
-                            </rdf:Description>
-                        </rdf:rest>
-                    </rdf:Description>
-                </rdf:rest>
-            </rdf:Description>
-        </swrl:body>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DifferentIndividualsAtom"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e1"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#e3"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-            </rdf:Description>
-        </swrl:head>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
-        <swrl:body>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/brings-about"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#x"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#y"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                        <rdf:first>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/triggers"/>
-                                <swrl:argument1 rdf:resource="urn:swrl#y"/>
-                                <swrl:argument2 rdf:resource="urn:swrl#z"/>
-                            </rdf:Description>
-                        </rdf:first>
-                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                    </rdf:Description>
-                </rdf:rest>
-            </rdf:Description>
-        </swrl:body>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/directly-causes"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#x"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#z"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-            </rdf:Description>
-        </swrl:head>
-    </rdf:Description>
-    <rdf:Description>
-        <ufo:axiom>a95</ufo:axiom>
-        <annot:swrl rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</annot:swrl>
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
-        <swrl:body>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/causes"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e1"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#e2"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                        <rdf:first>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/causes"/>
-                                <swrl:argument1 rdf:resource="urn:swrl#e2"/>
-                                <swrl:argument2 rdf:resource="urn:swrl#e3"/>
-                            </rdf:Description>
-                        </rdf:first>
-                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                    </rdf:Description>
-                </rdf:rest>
-            </rdf:Description>
-        </swrl:body>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/causes"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e1"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#e3"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-            </rdf:Description>
-        </swrl:head>
-    </rdf:Description>
-    <rdf:Description>
-        <ufo:contributes-to-necessary-condition-for>P3</ufo:contributes-to-necessary-condition-for>
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
-        <swrl:body>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#o"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                        <rdf:first>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                                <swrl:argument1 rdf:resource="urn:swrl#e"/>
-                                <swrl:argument2 rdf:resource="urn:swrl#e1"/>
-                            </rdf:Description>
-                        </rdf:first>
-                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                    </rdf:Description>
-                </rdf:rest>
-            </rdf:Description>
-        </swrl:body>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e1"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#o"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-            </rdf:Description>
-        </swrl:head>
-    </rdf:Description>
-    <rdf:Description>
-        <ufo:contributes-to-sufficient-condition-for>P3</ufo:contributes-to-sufficient-condition-for>
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
-        <swrl:body>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#e1"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                        <rdf:first>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on"/>
-                                <swrl:argument1 rdf:resource="urn:swrl#e1"/>
-                                <swrl:argument2 rdf:resource="urn:swrl#o"/>
-                            </rdf:Description>
-                        </rdf:first>
-                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                    </rdf:Description>
-                </rdf:rest>
-            </rdf:Description>
-        </swrl:body>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#o"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-            </rdf:Description>
-        </swrl:head>
-    </rdf:Description>
-    <rdf:Description>
-        <ufo:is-necessary-condition-for>M3</ufo:is-necessary-condition-for>
-        <ufo:is-sufficient-condition-for>M3</ufo:is-sufficient-condition-for>
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
-        <swrl:body>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#e"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-            </rdf:Description>
-        </swrl:body>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                        <swrl:classPredicate>
-                            <owl:Class>
-                                <owl:complementOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
-                            </owl:Class>
-                        </swrl:classPredicate>
-                        <swrl:argument1 rdf:resource="urn:swrl#e"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-            </rdf:Description>
-        </swrl:head>
-    </rdf:Description>
-    <rdf:Description>
-        <ufo:is-sufficient-condition-for>M4</ufo:is-sufficient-condition-for>
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
-        <swrl:body>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e1"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#e2"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                        <rdf:first>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                                <swrl:argument1 rdf:resource="urn:swrl#e2"/>
-                                <swrl:argument2 rdf:resource="urn:swrl#e1"/>
-                            </rdf:Description>
-                        </rdf:first>
-                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                    </rdf:Description>
-                </rdf:rest>
-            </rdf:Description>
-        </swrl:body>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                        <swrl:classPredicate>
-                            <owl:Class>
-                                <owl:complementOf rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/complex-event"/>
-                            </owl:Class>
-                        </swrl:classPredicate>
-                        <swrl:argument1 rdf:resource="urn:swrl#e1"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-            </rdf:Description>
-        </swrl:head>
-    </rdf:Description>
-    <rdf:Description>
-        <ufo:contributes-to-sufficient-condition-for>M7</ufo:contributes-to-sufficient-condition-for>
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
-        <swrl:body>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e1"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#e2"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                        <rdf:first>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                                <swrl:argument1 rdf:resource="urn:swrl#e3"/>
-                                <swrl:argument2 rdf:resource="urn:swrl#e2"/>
-                            </rdf:Description>
-                        </rdf:first>
-                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                    </rdf:Description>
-                </rdf:rest>
-            </rdf:Description>
-        </swrl:body>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/mereologically-overlaps"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e1"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#e3"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-            </rdf:Description>
-        </swrl:head>
-    </rdf:Description>
-    <rdf:Description>
-        <ufo:is-necessary-condition-for>M5</ufo:is-necessary-condition-for>
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
-        <swrl:body>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#x"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#y"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                        <rdf:first>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                                <swrl:argument1 rdf:resource="urn:swrl#y"/>
-                                <swrl:argument2 rdf:resource="urn:swrl#z"/>
-                            </rdf:Description>
-                        </rdf:first>
-                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                    </rdf:Description>
-                </rdf:rest>
-            </rdf:Description>
-        </swrl:body>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/has-event-part"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#x"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#z"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-            </rdf:Description>
-        </swrl:head>
-    </rdf:Description>
-    <rdf:Description>
-        <ufo:contributes-to-sufficient-condition-for>P2</ufo:contributes-to-sufficient-condition-for>
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
-        <swrl:body>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                        <swrl:classPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/atomic-event"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                        <rdf:first>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                <swrl:classPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/object"/>
-                                <swrl:argument1 rdf:resource="urn:swrl#o"/>
-                            </rdf:Description>
-                        </rdf:first>
-                        <rdf:rest>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                                <rdf:first>
-                                    <rdf:Description>
-                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/exclusively-depends-on"/>
-                                        <swrl:argument1 rdf:resource="urn:swrl#e"/>
-                                        <swrl:argument2 rdf:resource="urn:swrl#o"/>
-                                    </rdf:Description>
-                                </rdf:first>
-                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                            </rdf:Description>
-                        </rdf:rest>
-                    </rdf:Description>
-                </rdf:rest>
-            </rdf:Description>
-        </swrl:body>
-        <swrl:head>
-            <rdf:Description>
-                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
-                <rdf:first>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="http://onto.fel.cvut.cz/ontologies/ufo/depends-on"/>
-                        <swrl:argument1 rdf:resource="urn:swrl#e"/>
-                        <swrl:argument2 rdf:resource="urn:swrl#o"/>
-                    </rdf:Description>
-                </rdf:first>
-                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-            </rdf:Description>
-        </swrl:head>
-    </rdf:Description>
-</rdf:RDF>
+[] a owl:Axiom ;
+    ufo:axiom "a28",
+        "a49-part2" ;
+    owl:annotatedProperty rdfs:range ;
+    owl:annotatedSource ufo:depends-on ;
+    owl:annotatedTarget ufo:object .
 
+[] a swrl:Imp ;
+    ufo:is-necessary-condition-for "M5" ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#x> ;
+                    swrl:argument2 <urn:swrl#y> ;
+                    swrl:propertyPredicate ufo:has-event-part ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 <urn:swrl#y> ;
+                            swrl:argument2 <urn:swrl#z> ;
+                            swrl:propertyPredicate ufo:has-event-part ] ;
+                    rdf:rest () ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#x> ;
+                    swrl:argument2 <urn:swrl#z> ;
+                    swrl:propertyPredicate ufo:has-event-part ] ;
+            rdf:rest () ] .
 
+[] a owl:Axiom ;
+    ufo:axiom "a40" ;
+    owl:annotatedProperty owl:disjointWith ;
+    owl:annotatedSource ufo:individual ;
+    owl:annotatedTarget ufo:time-point .
 
-<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+[] a swrl:Imp ;
+    ufo:is-necessary-condition-for "M3" ;
+    ufo:is-sufficient-condition-for "M3" ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#e> ;
+                    swrl:argument2 <urn:swrl#e> ;
+                    swrl:propertyPredicate ufo:has-event-part ] ;
+            rdf:rest () ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:ClassAtom ;
+                    swrl:argument1 <urn:swrl#e> ;
+                    swrl:classPredicate [ a owl:Class ;
+                            owl:complementOf ufo:complex-event ] ] ;
+            rdf:rest () ] .
+
+[] a owl:Axiom ;
+    ufo:axiom "a38",
+        "a55-part2" ;
+    ufo:contributes-to-necessary-condition-for "P4" ;
+    owl:annotatedProperty rdfs:range ;
+    owl:annotatedSource ufo:exclusively-depends-on ;
+    owl:annotatedTarget ufo:object .
+
+[] a owl:Axiom ;
+    ufo:axiom "a08",
+        "a61-part1",
+        "a62-part1" ;
+    ufo:contributes-to-necessary-condition-for "M1" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:atomic-event ;
+    owl:annotatedTarget ufo:event .
+
+[] a owl:Axiom ;
+    ufo:is-necessary-condition-for "P5" ;
+    ufo:is-sufficient-condition-for "P5" ;
+    owl:annotatedProperty owl:equivalentProperty ;
+    owl:annotatedSource ufo:exclusively-depends-on ;
+    owl:annotatedTarget ufo:is-participation-of .
+
+[] a owl:Axiom ;
+    ufo:axiom "a71" ;
+    ufo:contributes-to-necessary-condition-for "P2" ;
+    owl:annotatedProperty rdfs:subPropertyOf ;
+    owl:annotatedSource ufo:depends-on ;
+    owl:annotatedTarget ufo:exclusively-depends-on .
+
+[] a owl:Axiom ;
+    ufo:axiom "a22" ;
+    owl:annotatedProperty rdfs:domain ;
+    owl:annotatedSource ufo:has-begin-point ;
+    owl:annotatedTarget ufo:event .
+
+[] a owl:Axiom ;
+    ufo:axiom "a60-part1" ;
+    ufo:contributes-to-necessary-condition-for "D2" ;
+    ufo:contributes-to-sufficient-condition-for "D2" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:atomic-event ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty [ owl:inverseOf ufo:is-manifested-by ] ] .
+
+[] a owl:Axiom ;
+    ufo:axiom "a24" ;
+    owl:annotatedProperty rdfs:domain ;
+    owl:annotatedSource ufo:exclusively-depends-on ;
+    owl:annotatedTarget ufo:participation .
+
+[] a owl:Axiom ;
+    ufo:axiom "a07" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:fact ;
+    owl:annotatedTarget ufo:situation .
+
+[] a owl:Axiom ;
+    ufo:axiom "a41-part1" ;
+    owl:annotatedProperty owl:disjointWith ;
+    owl:annotatedSource ufo:endurant ;
+    owl:annotatedTarget ufo:perdurant .
+
+[] a owl:Axiom ;
+    ufo:axiom "a10" ;
+    ufo:contributes-to-necessary-condition-for "P4" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:participation ;
+    owl:annotatedTarget ufo:event .
+
+[] a owl:Axiom ;
+    ufo:axiom "a58-part1" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:time-point ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:onProperty [ owl:inverseOf ufo:obtains-in ] ;
+            owl:someValuesFrom ufo:situation ] .
+
+[] a owl:Axiom ;
+    ufo:axiom "a34" ;
+    owl:annotatedProperty rdfs:range ;
+    owl:annotatedSource ufo:activates ;
+    owl:annotatedTarget ufo:disposition .
+
+[] a owl:Axiom ;
+    ufo:axiom "a40" ;
+    owl:annotatedProperty owl:disjointWith ;
+    owl:annotatedSource ufo:individual ;
+    owl:annotatedTarget ufo:time-point .
+
+[] a owl:Axiom ;
+    ufo:axiom "a49-part1" ;
+    ufo:is-necessary-condition-for "P1" ;
+    ufo:is-sufficient-condition-for "P1" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:atomic-event ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:depends-on ] .
+
+[] a owl:Axiom ;
+    ufo:axiom "a19" ;
+    owl:annotatedProperty rdfs:domain ;
+    owl:annotatedSource ufo:directly-causes ;
+    owl:annotatedTarget ufo:event .
+
+[] a owl:Axiom ;
+    ufo:axiom "a29",
+        "a50-part2",
+        "a51-part2" ;
+    owl:annotatedProperty rdfs:range ;
+    owl:annotatedSource ufo:obtains-in ;
+    owl:annotatedTarget ufo:time-point .
+
+[] a owl:Axiom ;
+    ufo:axiom "a59-part1" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:event ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty [ owl:inverseOf ufo:triggers ] ] .
+
+[] a owl:Axiom ;
+    ufo:is-necessary-condition-for "P5" ;
+    ufo:is-sufficient-condition-for "P5" ;
+    owl:annotatedProperty owl:equivalentProperty ;
+    owl:annotatedSource ufo:exclusively-depends-on ;
+    owl:annotatedTarget ufo:is-participation-of .
+
+[] a owl:Axiom ;
+    ufo:axiom "a41-part1" ;
+    owl:annotatedProperty owl:disjointWith ;
+    owl:annotatedSource ufo:endurant ;
+    owl:annotatedTarget ufo:perdurant .
+
+[] a owl:Axiom ;
+    ufo:axiom "a15",
+        "a58-part2" ;
+    owl:annotatedProperty rdfs:domain ;
+    owl:annotatedSource ufo:obtains-in ;
+    owl:annotatedTarget ufo:situation .
+
+[] a owl:Axiom ;
+    ufo:axiom "a55-part1" ;
+    ufo:contributes-to-necessary-condition-for "P4" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:participation ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:exclusively-depends-on ] .
+
+[] a swrl:Imp ;
+    annot:swrl true ;
+    ufo:axiom "a95" ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#e1> ;
+                    swrl:argument2 <urn:swrl#e2> ;
+                    swrl:propertyPredicate ufo:causes ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 <urn:swrl#e2> ;
+                            swrl:argument2 <urn:swrl#e3> ;
+                            swrl:propertyPredicate ufo:causes ] ;
+                    rdf:rest () ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#e1> ;
+                    swrl:argument2 <urn:swrl#e3> ;
+                    swrl:propertyPredicate ufo:causes ] ;
+            rdf:rest () ] .
+
+[] a owl:Axiom ;
+    ufo:axiom "a62" ;
+    ufo:is-sufficient-condition-for "M1" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource [ a owl:Class ;
+            rdfs:subClassOf ufo:atomic-event ;
+            owl:intersectionOf ( ufo:event [ a owl:Class ;
+                        owl:complementOf [ a owl:Restriction ;
+                                owl:onProperty ufo:has-event-part ;
+                                owl:someValuesFrom ufo:event ] ] ) ] ;
+    owl:annotatedTarget ufo:atomic-event .
+
+[] a owl:Axiom ;
+    ufo:axiom "a31",
+        "a52-part2" ;
+    owl:annotatedProperty rdfs:range ;
+    owl:annotatedSource ufo:brings-about ;
+    owl:annotatedTarget ufo:situation .
+
+[] a swrl:Imp ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#x> ;
+                    swrl:argument2 <urn:swrl#y> ;
+                    swrl:propertyPredicate ufo:brings-about ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 <urn:swrl#y> ;
+                            swrl:argument2 <urn:swrl#z> ;
+                            swrl:propertyPredicate ufo:triggers ] ;
+                    rdf:rest () ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#x> ;
+                    swrl:argument2 <urn:swrl#z> ;
+                    swrl:propertyPredicate ufo:directly-causes ] ;
+            rdf:rest () ] .
+
+[] a swrl:Imp ;
+    ufo:contributes-to-necessary-condition-for "P3" ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#e> ;
+                    swrl:argument2 <urn:swrl#o> ;
+                    swrl:propertyPredicate ufo:exclusively-depends-on ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 <urn:swrl#e> ;
+                            swrl:argument2 <urn:swrl#e1> ;
+                            swrl:propertyPredicate ufo:has-event-part ] ;
+                    rdf:rest () ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#e1> ;
+                    swrl:argument2 <urn:swrl#o> ;
+                    swrl:propertyPredicate ufo:exclusively-depends-on ] ;
+            rdf:rest () ] .
+
+[] a owl:Axiom ;
+    ufo:axiom "a13" ;
+    owl:annotatedProperty rdfs:domain ;
+    owl:annotatedSource ufo:has-event-part ;
+    owl:annotatedTarget ufo:event .
+
+[] a owl:Axiom ;
+    ufo:axiom "a20" ;
+    owl:annotatedProperty rdfs:domain ;
+    owl:annotatedSource ufo:activates ;
+    owl:annotatedTarget ufo:situation .
+
+[] a owl:Axiom ;
+    ufo:axiom "a54-part1" ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource ufo:event ;
+    owl:annotatedTarget [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty ufo:has-end-point ] .
+
+[] a owl:Axiom ;
+    ufo:axiom "a16",
+        "a59-part2" ;
+    owl:annotatedProperty rdfs:domain ;
+    owl:annotatedSource ufo:triggers ;
+    owl:annotatedTarget ufo:situation .
+
+[] swrl:argument1 <urn:swrl#x> ;
+    swrl:argument2 <urn:swrl#y> ;
+    swrl:propertyPredicate ufo:has_event_part .
+
+[] a owl:Axiom ;
+    ufo:axiom "a17" ;
+    owl:annotatedProperty rdfs:domain ;
+    owl:annotatedSource ufo:brings-about ;
+    owl:annotatedTarget ufo:event .
+
+[] a owl:Axiom ;
+    ufo:axiom "a39",
+        "a56-part2" ;
+    owl:annotatedProperty rdfs:range ;
+    owl:annotatedSource ufo:is-participation-of ;
+    owl:annotatedTarget ufo:object .
 
