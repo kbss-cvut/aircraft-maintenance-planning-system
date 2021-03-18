@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-ontouml/1.0.2" uri="ufo-ontouml.rdf"/>
-    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.1" uri="ufo-powertypes.rdf"/>
-    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo/1.0.2" uri="ufo.rdf"/>
-    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-c/1.0.1" uri="ufo-c.rdf"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-ontouml/1.0.2" uri="ufo-ontouml.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.1" uri="ufo-powertypes.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo/1.0.2" uri="ufo.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-c/1.0.1" uri="ufo-c.ttl"/>
     <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-c-ext" uri="ufo-c-ext.ttl"/>
     <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo/ufo-c-extension/0.0.1" uri="ufo-c-extension.ttl"/>
     <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo/ufo-a-extension/0.0.1" uri="ufo-a-extension.ttl"/>
-    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-b-temporal/1.0.1" uri="ufo-b-temporal.rdf"/>
-    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-a/1.0.1" uri="ufo-a.rdf"/>
-    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-b/1.0.1" uri="ufo-b.rdf"/>
-    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/1.0.1" uri="ufo-b-dispositions.rdf"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-b-temporal/1.0.1" uri="ufo-b-temporal.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-a/1.0.1" uri="ufo-a.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-b/1.0.1" uri="ufo-b.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/1.0.1" uri="ufo-b-dispositions.ttl"/>
     <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo/ufo-b-extension/0.0.1" uri="ufo-b-extension.ttl"/>
     
 </catalog>
