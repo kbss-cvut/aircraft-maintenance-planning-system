@@ -11,6 +11,7 @@ PREFIX spif: <http://spinrdf.org/spif#>
 PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
 PREFIX ata: <http://onto.fel.cvut.cz/voc/ata-100/> 
 
+
 # Example RDF transformation using the custom IRIs and type
 CONSTRUCT {
     # workpackage description
@@ -19,12 +20,15 @@ CONSTRUCT {
                     
 
     # task execution description
-    ?task_executionIRI a mp:complex_execution, ?task_typeIRI, ?task_super_classIRI, owl:NamedIndividual;
+    ?task_executionIRI a mp:complex_execution, mp:maintenance_task, ?task_typeIRI, ?task_super_classIRI, owl:NamedIndividual;
                        mp:issue_time ?issue_date_D;
                        mp:end_time ?closing_date_D;
+					   ufo:has_part ?task_step_executionIRI;
                        mp:has_work_order_step ?task_step_executionIRI;
+					   ufo:is_part_of ?workpackageIRI;
 					   mp:part_of_workpackage ?workpackageIRI.
     
+	
     ?task_executionIRI mp:references_task ?referenced_task_executionIRI .
 
     # task execution type

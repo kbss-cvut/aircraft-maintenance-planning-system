@@ -20,19 +20,21 @@ CONSTRUCT {
     
 
   # task execution description
-  ?task_executionIRI a mp:complex_execution, ?task_typeIRI, ?task_super_classIRI, owl:NamedIndividual;
+  ?task_executionIRI a mp:complex_execution, mp:maintenance_task, ?task_typeIRI, ?task_super_classIRI, owl:NamedIndividual;
     mp:has_task_execution_part ?work_on_taskIRI;
+	ufo:has_part ?work_on_taskIRI;
 	rdfs:label ?Description;
 	mp:part_of_workpackage ?workpackageIRI.
     	
   # work on task description
-  ?work_on_taskIRI a mp:atomic_execution, owl:NamedIndividual;
+  ?work_on_taskIRI a mp:atomic_execution, mp:work_session, owl:NamedIndividual;
     mp:start_time ?startDT;
-    mp:end_time ?endDT.
+    mp:end_time ?endDT;
+	ufo:is_part_of ?task_executionIRI.
   
   # worker description
   [] a mp:worker;
-    mp:works_on ?work_on_taskIRI;
+    ufo:performs ?work_on_taskIRI;
     mp:member_of_group ?subgroupIRI.
 
   # group description
