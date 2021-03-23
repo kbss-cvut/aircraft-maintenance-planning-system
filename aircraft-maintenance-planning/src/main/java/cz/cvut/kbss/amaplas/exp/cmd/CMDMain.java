@@ -71,6 +71,7 @@ public class CMDMain {
 
     public static void main(String[] args) throws Exception {
 //        args = new String[]{"Graphml2Owl"};
+        System.out.println("Running a command...");
         String clsName = args[0];
 //        String clsName = "Graphml2Owl";
         Class cls = getCommand(clsName);
@@ -89,7 +90,9 @@ public class CMDMain {
             m.invoke(null, (Object)Arrays.copyOfRange(args, 1, args.length));
 
 
-//            System.out.println(String.format("%s found -> %s", clsName, cls.getCanonicalName()));
+//            System.out.println(String.fo  rmat("%s found -> %s", clsName, cls.getCanonicalName()));
+        }else{
+            System.err.println(String.format("Could not find command \"%s\"", clsName));
         }
     }
 }

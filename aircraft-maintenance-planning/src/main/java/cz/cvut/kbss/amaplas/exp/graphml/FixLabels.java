@@ -32,7 +32,7 @@ public class FixLabels extends XmlPreprocessor {
 
     public void wrapNodes(Collection<Node> nodes, String wrapperLocalName){
         for(Node n : nodes) {
-            wrapNode(n, TEXT_WRAPPER);
+            wrapNode(n, wrapperLocalName);
         }
     }
 

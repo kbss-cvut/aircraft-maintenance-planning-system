@@ -13,12 +13,15 @@ import java.util.Date;
 public class Graphml2Owl {
 
 
-    public void execute(String input, String outputDir, String ns) throws IOException {
+    public void execute(String input, String outputDir, String ns, String prefix) throws IOException {
         File in = new File(input);
         String inName = in.getName();
         File outputGraph = new File(outputDir,  input.substring(0, inName.lastIndexOf(".")) + "-graph.ttl");
         File outputSchema = new File(outputDir, input.substring(0, inName.lastIndexOf(".")) + "-schema.ttl");
-        Model graph = new Graphml2JenaModel().execute(input, ns, "csat-s1");
+        String nsp = ns;
+        if(!nsp.endsWith("/") && !nsp.endsWith("#"))
+            nsp += "/";
+        Model graph = new Graphml2JenaModel().execute(input, nsp, prefix);
         write(graph, outputGraph.getCanonicalPath());
 
         Model schema = new GraphToSchema().constructSchemaFromGraph(graph);
@@ -40,20 +43,22 @@ public class Graphml2Owl {
     public static void script_1() throws IOException {
         String input = "c:\\Users\\kostobog\\Documents\\skola\\projects\\2019-CSAT-doprava-2020\\code\\aircraft-maintenance-planning-system\\aircraft-maintenance-planning-model\\drafts\\maintenance-planning-model-B.graphml";
         String ns = "http://csat.cz/ontologies/planning-schema/";
-        new Graphml2Owl().execute(input, ".", ns);
+        new Graphml2Owl().execute(input, ".", ns, "csat-mpmb");
     }
 
 
     public static void main(String[] args) throws IOException {
+        System.out.println("Running Graphml2OWL");
 //        script_1();
         System.out.println(new File(".").getCanonicalPath());
         try {
             String input = args[0];
             String ns = args[1];
+            String prefix = args[2];
             String outputDir = ".";
-            if(args.length > 2)
-
-            new Graphml2Owl().execute(input, outputDir, ns);
+            if(args.length > 3)
+                outputDir = args[3];
+            new Graphml2Owl().execute(input, outputDir, ns, prefix);
         }catch(Exception e){
             System.out.println("");
             System.out.println("could not execute Graphml2Owl");
@@ -67,8 +72,8 @@ public class Graphml2Owl {
             System.out.println("output2: in-schema.ttl - contains owl schema corresponding to the input");
             System.out.println("");
             System.out.println("example: run Graphml2Owl diagram.graphml http://example.com/ontology-namespace/");
-
             e.printStackTrace();
         }
+        System.out.println("Done.");
     }
 }

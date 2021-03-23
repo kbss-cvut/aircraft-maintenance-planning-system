@@ -1,11 +1,16 @@
 package cz.cvut.kbss.amaplas.exp.graphml.model;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.eclipse.persistence.oxm.annotations.XmlPath;
 
 import javax.xml.bind.annotation.*;
 
+@Getter
+@Setter
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Node {
+public class Node implements IGraphElement {
 
     @XmlAttribute(name = "id")
     public String id;

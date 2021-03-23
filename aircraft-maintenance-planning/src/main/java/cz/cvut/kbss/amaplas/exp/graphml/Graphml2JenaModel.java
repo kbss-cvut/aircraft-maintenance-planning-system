@@ -3,6 +3,7 @@ package cz.cvut.kbss.amaplas.exp.graphml;
 import cz.cvut.kbss.amaplas.exp.common.JAXBUtils;
 import cz.cvut.kbss.amaplas.exp.graphml.model.Edge;
 import cz.cvut.kbss.amaplas.exp.graphml.model.Graph;
+import cz.cvut.kbss.amaplas.exp.graphml.model.IGraphElement;
 import cz.cvut.kbss.amaplas.exp.graphml.model.Node;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jena.rdf.model.Model;
@@ -15,12 +16,13 @@ import org.apache.jena.vocabulary.RDFS;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.util.ArrayList;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.regex.MatchResult;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,7 +43,10 @@ public class Graphml2JenaModel {
         Graph g = JAXBUtils.loadData(file, Graph.class, null, new FixLabels());
         Model m = toModel(g, null);
 //        m.setNsPrefix(, ns);
-        m.setNsPrefix(prefix, ns);
+        String nsp = ns;
+        if(!nsp.endsWith("/") && !nsp.endsWith("#"))
+            nsp += "/";
+        m.setNsPrefix(prefix, nsp);
         m.setNsPrefix(Vocabulary.P, Vocabulary.NS + "#");
 
         return m;
@@ -113,7 +118,29 @@ public class Graphml2JenaModel {
         l = l.trim().replaceAll(" +", " ");
         l = handleNodeProperties(n, l, node);
         l = l.replaceAll("\\s+", " ").trim();
+
+        l = normalizeLabel(l);
+
         node.addProperty(Vocabulary.p_dp_label, l);
+    }
+
+    /**
+     * normalize label to space separated terms. processes camelcase, replace "_+" to " " or "-+" to " ".
+     * @param l
+     * @return
+     */
+    public String normalizeLabel(String l){
+        if(!l.matches(".+\\s.+")){
+            String[] terms = StringUtils.splitByCharacterTypeCamelCase(l);
+            if(terms.length > 1){
+                l = String.join(" ", terms);
+            }else if(l.matches(".*_.*")){
+                l = l.replaceAll("_+", " ");
+            }else{
+                l = l.replaceAll("-+", " ");
+            }
+        }
+        return l;
     }
 //
 //    protected String setCharBetween(String str, int from, int to, char c){
@@ -148,15 +175,35 @@ public class Graphml2JenaModel {
     }
 
 
-
-    public Resource asres(Node n){
-        return asres(n.id);
+    public String urlEncode(String str){
+        try {
+            return str == null ? null :
+                    URLEncoder.encode(str.replaceAll("\\s", "_"), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public Resource asres(Edge e){
-        return asres(e.id);
+    public String localName(IGraphElement el){
+        String localName = el.getId();
+//        String localName =
+//                el.getId() + "-" +
+//                Optional.ofNullable(el.getText()).map(this::urlEncode).orElse("");
+        return localName;
     }
 
+//    public Resource asres(Node n){
+//        return asres(n.id);
+//    }
+
+//    public Resource asres(Edge e){
+//        return asres(e.id);
+//    }
+
+    public Resource asres(IGraphElement el){
+        return asres(localName(el));
+    }
     public Resource asres(String id){
         return ResourceFactory.createResource(namespace + id);
     }
@@ -172,9 +219,9 @@ public class Graphml2JenaModel {
                 .addProperty(Vocabulary.p_op_source, reg.get(e.source))
                 .addProperty(Vocabulary.p_op_target, reg.get(e.target))
                 .addLiteral(Vocabulary.p_dp_id, e.id);
-        if (e.label != null){
-            edge.addLiteral(Vocabulary.p_dp_label, e.label);
-            edge.addLiteral(RDFS.label, e.label);
+        if (e.text != null){
+            edge.addLiteral(Vocabulary.p_dp_label, e.text);
+            edge.addLiteral(RDFS.label, e.text);
         }
         if(e.labelColor != null)
             edge.addLiteral(Vocabulary.p_dp_textColor, e.labelColor);

@@ -1,5 +1,7 @@
 package cz.cvut.kbss.amaplas.exp.graphml.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.eclipse.persistence.oxm.annotations.XmlPath;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -7,8 +9,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
+@Getter
+@Setter
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Edge {
+public class Edge implements IGraphElement {
     @XmlAttribute
     public String id;
     @XmlAttribute
@@ -17,7 +21,7 @@ public class Edge {
     public String target;
 
     @XmlPath("data/y:PolyLineEdge/y:EdgeLabel/y:tmptxt/text()")
-    public String label;
+    public String text;
 
     @XmlPath("data/y:PolyLineEdge/y:EdgeLabel/@textColor")
     public String labelColor;
