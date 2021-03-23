@@ -1,0 +1,80 @@
+@prefix : <http://onto.fel.cvut.cz/ontologies/ufo-powertypes/> .
+@prefix annot: <http://onto.fel.cvut.cz/ontologies/ufo/annot/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix voc: <http://onto.fel.cvut.cz/ontologies/voc/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://onto.fel.cvut.cz/ontologies/ufo-powertypes> a owl:Ontology ;
+    terms:created "16.11.2017"@en ;
+    terms:creator <http://onto.fel.cvut.cz/ontologies/kbss/people/petr-kremen> ;
+    terms:description "The ontology aims at formalize basic notions of multi-level modeling in the Unified Foundational Ontology."@en ;
+    terms:rights <https://creativecommons.org/licenses/by-sa/4.0> ;
+    terms:title "Unified Foundational Ontology - Powertypes"@en ;
+    bibo:status "Ontology Specification"@en ;
+    vann:preferredNamespacePrefix "ufo"@en ;
+    vann:preferredNamespaceUri "http://onto.fel.cvut.cz/ontologies/ufo/"@en ;
+    owl:imports <http://onto.fel.cvut.cz/ontologies/ufo-a/1.0.1>,
+        <http://onto.fel.cvut.cz/ontologies/ufo-b/1.0.1> ;
+    owl:priorVersion <http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.0> ;
+    owl:versionIRI <http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.1> ;
+    owl:versionInfo "1.0.1"@en .
+
+ufo:event-type a owl:Class ;
+    rdfs:label "Event Type"@en ;
+    rdfs:subClassOf ufo:type .
+
+ufo:has-property a owl:ObjectProperty ;
+    rdfs:label "has property"@en ;
+    rdfs:domain ufo:power-type ;
+    rdfs:range ufo:power-type .
+
+ufo:has-type a owl:ObjectProperty ;
+    rdfs:label "has type"@en ;
+    rdfs:comment "This relation is a relationship between an individual and its type. The type is understood in the sens  of UFO instance powertype."@en .
+
+ufo:is-associated-with a owl:AnnotationProperty ;
+    rdfs:label "is associated with"@en ;
+    rdfs:domain ufo:power-type .
+
+ufo:is-classified-by a owl:ObjectProperty ;
+    rdfs:label "is classified by"@en ;
+    rdfs:domain ufo:individual ;
+    rdfs:range ufo:type .
+
+ufo:property a owl:Class ;
+    rdfs:label "Property"@en ;
+    rdfs:subClassOf ufo:entity .
+
+terms:creator a owl:AnnotationProperty .
+
+skos:definition a owl:AnnotationProperty .
+
+skos:example a owl:AnnotationProperty .
+
+skos:scopeNote a owl:AnnotationProperty .
+
+ufo:entity a owl:Class .
+
+ufo:individual a owl:Class .
+
+ufo:universal a owl:Class .
+
+ufo:power-type a owl:Class ;
+    rdfs:label "Power Type"@en ;
+    rdfs:subClassOf ufo:type .
+
+ufo:type a owl:Class ;
+    rdfs:label "Type"@en ;
+    rdfs:subClassOf ufo:universal .
+

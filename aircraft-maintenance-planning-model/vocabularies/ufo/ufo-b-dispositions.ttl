@@ -1,0 +1,92 @@
+@prefix : <http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/> .
+@prefix annot: <http://onto.fel.cvut.cz/ontologies/ufo/annot/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions> a owl:Ontology ;
+    terms:created "16.11.2017"@en ;
+    terms:creator <http://onto.fel.cvut.cz/ontologies/kbss/people/petr-kremen> ;
+    terms:description "The ontology aims at formalize the basic notions around dispositions and actions in the Unified Foundational Ontology."@en ;
+    terms:rights <https://creativecommons.org/licenses/by-sa/4.0> ;
+    terms:title "Unified Foundational Ontology - B - dispositions"@en ;
+    bibo:status "Ontology Specification"@en ;
+    vann:preferredNamespacePrefix "ufo"@en ;
+    vann:preferredNamespaceUri "http://onto.fel.cvut.cz/ontologies/ufo/"@en ;
+    owl:imports <http://onto.fel.cvut.cz/ontologies/ufo-b/1.0.1> ;
+    owl:priorVersion <http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/1.0.0> ;
+    owl:versionIRI <http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/1.0.1> ;
+    owl:versionInfo "1.0.1"@en .
+
+annot:swrl a owl:AnnotationProperty .
+
+ufo:activates a owl:ObjectProperty .
+
+ufo:depends-on a owl:ObjectProperty .
+
+ufo:triggers a owl:ObjectProperty .
+
+ufo:is-manifested-by a owl:ObjectProperty .
+
+<urn:swrl#o> a swrl:Variable .
+
+<urn:swrl#s> a swrl:Variable .
+
+<urn:swrl#d> a swrl:Variable .
+
+<urn:swrl#e> a swrl:Variable .
+
+[] a swrl:Imp ;
+    annot:swrl true ;
+    ufo:axiom "a70" ;
+    ufo:is-necessary-condition-for "D4" ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#d> ;
+                    swrl:argument2 <urn:swrl#e> ;
+                    swrl:propertyPredicate ufo:is-manifested-by ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 <urn:swrl#d> ;
+                            swrl:argument2 <urn:swrl#o> ;
+                            swrl:propertyPredicate ufo:inheres-in ] ;
+                    rdf:rest () ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#e> ;
+                    swrl:argument2 <urn:swrl#o> ;
+                    swrl:propertyPredicate ufo:depends-on ] ;
+            rdf:rest () ] .
+
+[] a swrl:Imp ;
+    annot:swrl true ;
+    ufo:axiom "a69" ;
+    ufo:contributes-to-sufficient-condition-for "D3" ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#s> ;
+                    swrl:argument2 <urn:swrl#d> ;
+                    swrl:propertyPredicate ufo:activates ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 <urn:swrl#d> ;
+                            swrl:argument2 <urn:swrl#e> ;
+                            swrl:propertyPredicate ufo:is-manifested-by ] ;
+                    rdf:rest () ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:IndividualPropertyAtom ;
+                    swrl:argument1 <urn:swrl#s> ;
+                    swrl:argument2 <urn:swrl#e> ;
+                    swrl:propertyPredicate ufo:triggers ] ;
+            rdf:rest () ] .
+

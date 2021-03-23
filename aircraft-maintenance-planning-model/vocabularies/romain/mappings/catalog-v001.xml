@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-    <uri id="Imports Wizard Entry" name="http://onto.fel.cvut.cz/ontologies/csat-maintenance-merge" uri="csat-maintenance-merge.ttl"/>
-    <uri id="User Entered Import Resolution" name="http://www.semanticweb.org/ahmadjan/ontologies/2021/2/untitled-ontology-300" uri="romain-merge.ttl"/>
-    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base=""/>
+    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Mid/UnitsOfMeasureOntology" uri="file:/C:/Users/ahmadjan/Desktop/csat/git%20repository/aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/romain/external/UnitsOfMeasureOntology.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Mid/TimeOntology" uri="file:/C:/Users/ahmadjan/Desktop/csat/git%20repository/aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/romain/external/TimeOntology.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology" uri="file:/C:/Users/ahmadjan/Desktop/csat/git%20repository/aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/romain/external/InformationEntityOntology.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology" uri="file:/C:/Users/ahmadjan/Desktop/csat/git%20repository/aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/romain/external/EventOntology.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology" uri="file:/C:/Users/ahmadjan/Desktop/csat/git%20repository/aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/romain/external/GeospatialOntology.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://www.obofoundry.org/ro/ro.owl" uri="file:/C:/Users/ahmadjan/Desktop/csat/git%20repository/aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/romain/external/ro.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN" uri="file:/C:/Users/ahmadjan/Desktop/csat/git%20repository/aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/romain/romain.ttl"/>
+	<uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/csat-maintenance/" uri="file:/C:/Users/ahmadjan/Desktop/csat/git%20repository/aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/csat-maintenance/csat-maintenance.ttl"/>
 </catalog>

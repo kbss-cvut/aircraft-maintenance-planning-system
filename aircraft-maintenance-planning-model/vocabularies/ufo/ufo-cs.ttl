@@ -1,0 +1,78 @@
+@prefix : <http://onto.fel.cvut.cz/ontologies/ufo-cs/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix town-plan: <http://onto.fel.cvut.cz/ontologies/town-plan/> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix voc: <http://onto.fel.cvut.cz/ontologies/voc/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+town-plan:Proces rdfs:label "Proces"@cs .
+
+<http://onto.fel.cvut.cz/ontologies/ufo-cs> a owl:Ontology ;
+    owl:imports <http://onto.fel.cvut.cz/ontologies/ufo> .
+
+ufo:Action rdfs:label "Akce"@cs .
+
+ufo:Entity rdfs:label "Entita"@cs .
+
+ufo:Event rdfs:label "Událost"@cs .
+
+ufo:Individual rdfs:label "Individuál"@cs .
+
+ufo:Object rdfs:label "Objekt"@cs .
+
+ufo:Participation rdfs:label "Účast"@cs .
+
+ufo:Person rdfs:label "Osoba"@cs .
+
+ufo:Physical_object rdfs:label "Fyzický objekt"@cs .
+
+ufo:Situation rdfs:label "Situace"@cs .
+
+ufo:Trope rdfs:label "Vlastnost"@cs .
+
+ufo:Universal rdfs:label "Universál"@cs .
+
+ufo:activates rdfs:label "aktivuje"@cs .
+
+ufo:has_event_part rdfs:label "má jako část událost"@cs .
+
+ufo:has_object_part rdfs:label "má jako část objekt"@cs .
+
+ufo:has_part rdfs:label "má část"@cs .
+
+ufo:has_participant rdfs:label "má účastníka"@cs .
+
+ufo:has_post_situation rdfs:label "má následnou situaci"@cs .
+
+ufo:has_pre_situation rdfs:label "má předchozí situaci"@cs .
+
+ufo:has_trope rdfs:label "má vlastnost"@cs .
+
+ufo:inheres_in rdfs:label "je vlastností"@cs .
+
+ufo:is_event_part_of rdfs:label "je částí události"@cs .
+
+ufo:is_manifested_by rdfs:label "je manifestován"@cs .
+
+ufo:is_object_part_of rdfs:label "je částí objektu"@cs .
+
+ufo:is_part_of rdfs:label "je částí"@cs .
+
+ufo:is_participant_of rdfs:label "je účastníkem"@cs .
+
+ufo:is_participation_of rdfs:label "je účastí"@cs .
+
+ufo:is_performed_by rdfs:label "je provedena"@cs .
+
+ufo:is_snapshot_of rdfs:label "je snapshotem"@cs .
+
+ufo:object_snapshot rdfs:label "Snapshot objektu"@cs .
+
+ufo:physical_agent rdfs:label "Fyzický agent"@cs .
+

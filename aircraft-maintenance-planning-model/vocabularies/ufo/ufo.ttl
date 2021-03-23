@@ -1,0 +1,47 @@
+@prefix : <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix annot: <http://onto.fel.cvut.cz/ontologies/ufo/annot/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix voc: <http://onto.fel.cvut.cz/ontologies/voc/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://onto.fel.cvut.cz/ontologies/ufo> a owl:Ontology ;
+    terms:creator <http://onto.fel.cvut.cz/ontologies/kbss/people/petr-kremen> ;
+    terms:description "Operational version of the UFO Ontology describes basic notions of UFO in terms of the Web Ontology Language, possibly extended with SWRL rules. The main goals of the ontology are (1) to provide easy way to link UFO-related terms to applications, resources, as well as multimedia, (2) to provide a computable artifact for basic reasoning and UFO-compliant data integration."@en ;
+    terms:rights "https://creativecommons.org/licenses/by-sa/4.0" ;
+    terms:title "Unified Foundational Ontology"@en ;
+    bibo:status "Ontology Specification"@en ;
+    owl:imports <http://onto.fel.cvut.cz/ontologies/ufo-a/1.0.1>,
+        <http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/1.0.1>,
+        <http://onto.fel.cvut.cz/ontologies/ufo-b-temporal/1.0.1>,
+        <http://onto.fel.cvut.cz/ontologies/ufo-b/1.0.1>,
+        <http://onto.fel.cvut.cz/ontologies/ufo-c/1.0.1>,
+        <http://onto.fel.cvut.cz/ontologies/ufo-ontouml/1.0.2>,
+        <http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.1> ;
+    owl:priorVersion "http://onto.fel.cvut.cz/ontologies/ufo/1.0.1" ;
+    owl:versionIRI <http://onto.fel.cvut.cz/ontologies/ufo/1.0.2> ;
+    owl:versionInfo "1.0.2"@en .
+
+:is-necessary-condition-for a owl:AnnotationProperty ;
+    rdfs:subPropertyOf :contributes-to-necessary-condition-for .
+
+:is-sufficient-condition-for a owl:AnnotationProperty ;
+    rdfs:subPropertyOf :contributes-to-sufficient-condition-for .
+
+:contributes-to-necessary-condition-for a owl:AnnotationProperty ;
+    rdfs:subPropertyOf :contributes-to .
+
+:contributes-to-sufficient-condition-for a owl:AnnotationProperty ;
+    rdfs:subPropertyOf :contributes-to .
+
+:contributes-to a owl:AnnotationProperty .
+
