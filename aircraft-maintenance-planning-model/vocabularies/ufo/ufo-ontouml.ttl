@@ -1,339 +1,439 @@
 @prefix : <http://onto.fel.cvut.cz/ontologies/ufo-ontouml/> .
-@prefix bibo: <http://purl.org/ontology/bibo/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix swrl: <http://www.w3.org/2003/11/swrl#> .
-@prefix terms: <http://purl.org/dc/terms/> .
-@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
 @prefix vann: <http://purl.org/vocab/vann/> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix terms: <http://purl.org/dc/terms/> .
 
 <http://onto.fel.cvut.cz/ontologies/ufo-ontouml> a owl:Ontology ;
-    terms:created "22.11.2017"@en ;
-    terms:creator <http://onto.fel.cvut.cz/ontologies/kbss/people/petr-kremen> ;
-    terms:description "The ontology aims at formalize the basic notions of the OntoUML language."@en ;
-    terms:rights <https://creativecommons.org/licenses/by-sa/4.0> ;
-    terms:title "Unified Foundational Ontology - OntoUML"@en ;
-    bibo:status "Ontology Specification"@en ;
-    vann:preferredNamespacePrefix "ufo"@en ;
-    vann:preferredNamespaceUri "http://onto.fel.cvut.cz/ontologies/ufo/"@en ;
-    owl:imports <http://onto.fel.cvut.cz/ontologies/ufo-a/1.0.1> ;
-    owl:priorVersion <http://onto.fel.cvut.cz/ontologies/ufo-ontouml/1.0.1> ;
-    owl:versionIRI <http://onto.fel.cvut.cz/ontologies/ufo-ontouml/1.0.2> ;
-    owl:versionInfo "1.0.2"@en .
+	owl:versionIRI :1.0.2 ;
+	terms:created "22.11.2017"@en ;
+	terms:creator <http://onto.fel.cvut.cz/ontologies/kbss/people/petr-kremen> ;
+	terms:description "The ontology aims at formalize the basic notions of the OntoUML language."@en ;
+	terms:rights <https://creativecommons.org/licenses/by-sa/4.0> ;
+	terms:title "Unified Foundational Ontology - OntoUML"@en ;
+	bibo:status "Ontology Specification"@en ;
+	vann:preferredNamespacePrefix "ufo"@en ;
+	vann:preferredNamespaceUri "http://onto.fel.cvut.cz/ontologies/ufo/"@en ;
+	owl:priorVersion :1.0.1 .
+# 
+# 
+# #################################################################
+# #
+# #    Annotation properties
+# #
+# #################################################################
+# 
+# 
+# http://purl.org/dc/terms/created
+
+terms:created a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/creator
+
+terms:creator a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/description
+
+terms:description a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/rights
+
+terms:rights a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/source
 
 terms:source a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/title
 
-ufo:mode-universal a owl:Class ;
-    rdfs:label "Mode universal"@en ;
-    rdfs:subClassOf ufo:intrinsic-moment-universal .
+terms:title a owl:AnnotationProperty .
+# 
+# http://purl.org/ontology/bibo/status
 
-ufo:quality-universal a owl:Class ;
-    rdfs:label "Quality universal"@en ;
-    rdfs:subClassOf ufo:intrinsic-moment-universal .
+bibo:status a owl:AnnotationProperty .
+# 
+# http://purl.org/vocab/vann/preferredNamespacePrefix
 
-ufo:relator a owl:Class ;
-    rdfs:label "Relator"@en ;
-    rdfs:subClassOf ufo:moment-universal .
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+# 
+# http://purl.org/vocab/vann/preferredNamespaceUri
 
-ufo:category a owl:Class ;
-    rdfs:label "Category"@en ;
-    terms:description "A «category» represents a rigid and relationally independent mixin, i.e., a dispersive universal that aggregates essential properties which are common to different substance sortals. For example, the category RationalEntity as a generalization of Person and IntelligentAgent."@en ;
-    rdfs:subClassOf ufo:rigid-mixin .
-
-ufo:collective a owl:Class ;
-    rdfs:label "Collective"@en ;
-    terms:description "A «collective» represents a substance sortal whose instances are collectives, i.e., they are collections of complexes that have a uniform structure. Examples include a deck of cards, a forest, a group of people, a pile of bricks. Collectives can typically relate to complexes via a constitution relation. For example, a pile of bricks that constitutes a wall, a group of people that constitutes a football team. In this case, the collectives typically have an extensional principle of identity, in contrast to the complexes they constitute. For instance, The Beatles was in a given world w constituted by the collective {John, Paul, George, Pete} and in another world w’ constituted by the collective {John, Paul, George, Ringo}. The replacement of Pete Best by Ringo Star does not alter the identity of the band, but creates a numerically different group of people."@en ;
-    rdfs:subClassOf ufo:substance-sortal .
-
-ufo:kind a owl:Class ;
-    rdfs:label "Kind"@en ;
-    terms:description "A «kind» represents a substance sortal whose instances are functional complexes. Examples include instances of Natural Kinds (such as Person, Dog, Tree) and of artifacts (Chair, Car, Television)."@en ;
-    rdfs:subClassOf ufo:substance-sortal .
-
-ufo:mixin a owl:Class ;
-    rdfs:label "Mixin"@en ;
-    terms:description "A «mixin» represents properties which are essential to some of its instances and accidental to others (semi-rigidity). An example is the mixin Seatable, which represents a property that can be considered essential to the kinds Chair and Stool, but accidental to Crate, Paper Box or Rock."@en ;
-    rdfs:subClassOf ufo:non-rigid-mixin .
-
-ufo:phase a owl:Class ;
-    rdfs:label "Phase"@en ;
-    terms:description "A «phase» represents the phased-sortals phase, i.e. anti-rigid and relationally independent universals defined as part of a partition of a substance sortal. For instance, 〈Catterpillar, Butterfly〉 partitions the kind Lepdopterum."@en ;
-    rdfs:subClassOf ufo:anti-rigid-sortal .
-
-ufo:quantity a owl:Class ;
-    rdfs:label "Quantity"@en ;
-    terms:description "A «quantity» represents a substance sortal whose instances are quantities. Examples are those stuff universals that are typically referred in natural language by mass general terms (e.g., Gold, Water, Sand, Clay)."@en ;
-    rdfs:subClassOf ufo:substance-sortal .
-
-ufo:role a owl:Class ;
-    rdfs:label "Role"@en ;
-    terms:description "A «role» represents a phased-sortal role, i.e. anti-rigid and relationally dependent universal. For instance, the role student is played by an instance of the kind Person."@en ;
-    rdfs:subClassOf ufo:anti-rigid-sortal .
-
-ufo:role-mixin a owl:Class ;
-    rdfs:label "Role Mixin"@en ;
-    terms:description "A «roleMixin» represents an anti-rigid and externally dependent non-sortal, i.e., a dispersive universal that aggregates properties which are common to different roles. In includes formal roles such as whole and part, and initiatior and responder."@en ;
-    rdfs:subClassOf ufo:anti-rigid-mixin .
-
-ufo:sub-kind a owl:Class ;
-    rdfs:label "Subkind"@en ;
-    terms:description "A «subkind» is a rigid, relationally independent restriction of a substance sortal that carries the principle of identity supplied by it. An example could be the subkind MalePerson of the kind Person. In general, the stereotype «subkind» can be omitted in conceptual models without loss of clarity."@en ;
-    rdfs:subClassOf ufo:rigid-sortal .
-
-ufo:universal a owl:Class .
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+# 
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-mixin
 
 ufo:anti-rigid-mixin a owl:Class ;
-    rdfs:label "Anti Rigid Mixin"@en ;
-    rdfs:subClassOf ufo:non-rigid-mixin .
+	rdfs:subClassOf ufo:non-rigid-mixin ;
+	rdfs:label "Anti Rigid Mixin"@en .
 
-ufo:rigid-mixin a owl:Class ;
-    rdfs:label "Rigid Mixin"@en ;
-    rdfs:subClassOf ufo:mixin-universal .
-
-ufo:intrinsic-moment-universal a owl:Class ;
-    rdfs:label "Intrinsic moment universal"@en ;
-    rdfs:subClassOf ufo:moment-universal .
-
-ufo:moment-universal a owl:Class ;
-    rdfs:label "Moment universal"@en ;
-    rdfs:subClassOf ufo:monadic-universal .
-
-ufo:rigid-sortal a owl:Class ;
-    rdfs:label "Rigid Sortal"@en ;
-    terms:source "ofscm"@en ;
-    rdfs:subClassOf ufo:sortal-universal .
-
-ufo:sortal-universal a owl:Class ;
-    rdfs:label "Sortal Universal"@en ;
-    rdfs:subClassOf ufo:substantial-universal .
+_:genid1 a owl:Axiom ;
+	owl:annotatedSource ufo:anti-rigid-mixin ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:non-rigid-mixin ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/anti-rigid-sortal
 
 ufo:anti-rigid-sortal a owl:Class ;
-    rdfs:label "Anti Rigid Sortal"@en ;
-    rdfs:subClassOf ufo:sortal-universal .
+	rdfs:subClassOf ufo:sortal-universal ;
+	rdfs:label "Anti Rigid Sortal"@en .
 
-ufo:monadic-universal a owl:Class ;
-    rdfs:label "Monadic universal"@en ;
-    rdfs:subClassOf ufo:universal .
+_:genid2 a owl:Axiom ;
+	owl:annotatedSource ufo:anti-rigid-sortal ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:sortal-universal ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/category
 
-ufo:non-rigid-mixin a owl:Class ;
-    rdfs:label "Non Rigid Mixin"@en ;
-    rdfs:subClassOf ufo:mixin-universal .
+ufo:category a owl:Class ;
+	rdfs:subClassOf ufo:rigid-mixin ;
+	terms:description "A «category» represents a rigid and relationally independent mixin, i.e., a dispersive universal that aggregates essential properties which are common to different substance sortals. For example, the category RationalEntity as a generalization of Person and IntelligentAgent."@en ;
+	rdfs:label "Category"@en .
 
-ufo:substantial-universal a owl:Class ;
-    rdfs:label "Substantial Universal"@en ;
-    rdfs:subClassOf ufo:monadic-universal .
+_:genid3 a owl:Axiom ;
+	owl:annotatedSource ufo:category ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:rigid-mixin ;
+	terms:source "ofscm" .
+
+_:genid4 a owl:Axiom ;
+	owl:annotatedSource ufo:category ;
+	owl:annotatedProperty terms:description ;
+	owl:annotatedTarget "A «category» represents a rigid and relationally independent mixin, i.e., a dispersive universal that aggregates essential properties which are common to different substance sortals. For example, the category RationalEntity as a generalization of Person and IntelligentAgent."@en ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/collective
+
+ufo:collective a owl:Class ;
+	rdfs:subClassOf ufo:substance-sortal ;
+	terms:description "A «collective» represents a substance sortal whose instances are collectives, i.e., they are collections of complexes that have a uniform structure. Examples include a deck of cards, a forest, a group of people, a pile of bricks. Collectives can typically relate to complexes via a constitution relation. For example, a pile of bricks that constitutes a wall, a group of people that constitutes a football team. In this case, the collectives typically have an extensional principle of identity, in contrast to the complexes they constitute. For instance, The Beatles was in a given world w constituted by the collective {John, Paul, George, Pete} and in another world w’ constituted by the collective {John, Paul, George, Ringo}. The replacement of Pete Best by Ringo Star does not alter the identity of the band, but creates a numerically different group of people."@en ;
+	rdfs:label "Collective"@en .
+
+_:genid5 a owl:Axiom ;
+	owl:annotatedSource ufo:collective ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:substance-sortal ;
+	terms:source "ofscm" .
+
+_:genid6 a owl:Axiom ;
+	owl:annotatedSource ufo:collective ;
+	owl:annotatedProperty terms:description ;
+	owl:annotatedTarget "A «collective» represents a substance sortal whose instances are collectives, i.e., they are collections of complexes that have a uniform structure. Examples include a deck of cards, a forest, a group of people, a pile of bricks. Collectives can typically relate to complexes via a constitution relation. For example, a pile of bricks that constitutes a wall, a group of people that constitutes a football team. In this case, the collectives typically have an extensional principle of identity, in contrast to the complexes they constitute. For instance, The Beatles was in a given world w constituted by the collective {John, Paul, George, Pete} and in another world w’ constituted by the collective {John, Paul, George, Ringo}. The replacement of Pete Best by Ringo Star does not alter the identity of the band, but creates a numerically different group of people."@en ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/intrinsic-moment-universal
+
+ufo:intrinsic-moment-universal a owl:Class ;
+	rdfs:subClassOf ufo:moment-universal ;
+	rdfs:label "Intrinsic moment universal"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/kind
+
+ufo:kind a owl:Class ;
+	rdfs:subClassOf ufo:substance-sortal ;
+	terms:description "A «kind» represents a substance sortal whose instances are functional complexes. Examples include instances of Natural Kinds (such as Person, Dog, Tree) and of artifacts (Chair, Car, Television)."@en ;
+	rdfs:label "Kind"@en .
+
+_:genid7 a owl:Axiom ;
+	owl:annotatedSource ufo:kind ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:substance-sortal ;
+	terms:source "ofscm" .
+
+_:genid8 a owl:Axiom ;
+	owl:annotatedSource ufo:kind ;
+	owl:annotatedProperty terms:description ;
+	owl:annotatedTarget "A «kind» represents a substance sortal whose instances are functional complexes. Examples include instances of Natural Kinds (such as Person, Dog, Tree) and of artifacts (Chair, Car, Television)."@en ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/mixin
+
+ufo:mixin a owl:Class ;
+	rdfs:subClassOf ufo:non-rigid-mixin ;
+	terms:description "A «mixin» represents properties which are essential to some of its instances and accidental to others (semi-rigidity). An example is the mixin Seatable, which represents a property that can be considered essential to the kinds Chair and Stool, but accidental to Crate, Paper Box or Rock."@en ;
+	rdfs:label "Mixin"@en .
+
+_:genid10 a owl:Axiom ;
+	owl:annotatedSource ufo:mixin ;
+	owl:annotatedProperty terms:description ;
+	owl:annotatedTarget "A «mixin» represents properties which are essential to some of its instances and accidental to others (semi-rigidity). An example is the mixin Seatable, which represents a property that can be considered essential to the kinds Chair and Stool, but accidental to Crate, Paper Box or Rock."@en ;
+	terms:source "ofscm" .
+
+_:genid9 a owl:Axiom ;
+	owl:annotatedSource ufo:mixin ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:non-rigid-mixin ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/mixin-universal
 
 ufo:mixin-universal a owl:Class ;
-    rdfs:label "Mixin Universal"@en ;
-    terms:description "Mixin Universal represents the general properties of all mixins, i.e., non-sortals (or dispersive universals)."@en ;
-    rdfs:subClassOf ufo:substantial-universal .
+	rdfs:subClassOf ufo:substantial-universal ;
+	terms:description "Mixin Universal represents the general properties of all mixins, i.e., non-sortals (or dispersive universals)."@en ;
+	rdfs:label "Mixin Universal"@en .
+
+_:genid11 a owl:Axiom ;
+	owl:annotatedSource ufo:mixin-universal ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:substantial-universal ;
+	terms:source "ofscm" .
+
+_:genid12 a owl:Axiom ;
+	owl:annotatedSource ufo:mixin-universal ;
+	owl:annotatedProperty terms:description ;
+	owl:annotatedTarget "Mixin Universal represents the general properties of all mixins, i.e., non-sortals (or dispersive universals)."@en ;
+	terms:source "ofscm" ;
+	rdfs:comment "definition partially reused from Mixin Class" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/mode-universal
+
+ufo:mode-universal a owl:Class ;
+	rdfs:subClassOf ufo:intrinsic-moment-universal ;
+	rdfs:label "Mode universal"@en .
+
+_:genid13 a owl:Axiom ;
+	owl:annotatedSource ufo:mode-universal ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:intrinsic-moment-universal ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/moment-universal
+
+ufo:moment-universal a owl:Class ;
+	rdfs:subClassOf ufo:monadic-universal ;
+	rdfs:label "Moment universal"@en .
+
+_:genid14 a owl:Axiom ;
+	owl:annotatedSource ufo:moment-universal ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:monadic-universal ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/monadic-universal
+
+ufo:monadic-universal a owl:Class ;
+	rdfs:subClassOf ufo:universal ;
+	rdfs:label "Monadic universal"@en .
+
+_:genid15 a owl:Axiom ;
+	owl:annotatedSource ufo:monadic-universal ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:universal ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/non-rigid-mixin
+
+ufo:non-rigid-mixin a owl:Class ;
+	rdfs:subClassOf ufo:mixin-universal ;
+	rdfs:label "Non Rigid Mixin"@en .
+
+_:genid16 a owl:Axiom ;
+	owl:annotatedSource ufo:non-rigid-mixin ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:mixin-universal ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/phase
+
+ufo:phase a owl:Class ;
+	rdfs:subClassOf ufo:anti-rigid-sortal ;
+	terms:description "A «phase» represents the phased-sortals phase, i.e. anti-rigid and relationally independent universals defined as part of a partition of a substance sortal. For instance, 〈Catterpillar, Butterfly〉 partitions the kind Lepdopterum."@en ;
+	rdfs:label "Phase"@en .
+
+_:genid17 a owl:Axiom ;
+	owl:annotatedSource ufo:phase ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:anti-rigid-sortal ;
+	terms:source "ofscm" .
+
+_:genid18 a owl:Axiom ;
+	owl:annotatedSource ufo:phase ;
+	owl:annotatedProperty terms:description ;
+	owl:annotatedTarget "A «phase» represents the phased-sortals phase, i.e. anti-rigid and relationally independent universals defined as part of a partition of a substance sortal. For instance, 〈Catterpillar, Butterfly〉 partitions the kind Lepdopterum."@en ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/quality-universal
+
+ufo:quality-universal a owl:Class ;
+	rdfs:subClassOf ufo:intrinsic-moment-universal ;
+	rdfs:label "Quality universal"@en .
+
+_:genid19 a owl:Axiom ;
+	owl:annotatedSource ufo:quality-universal ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:intrinsic-moment-universal ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/quantity
+
+ufo:quantity a owl:Class ;
+	rdfs:subClassOf ufo:substance-sortal ;
+	terms:description "A «quantity» represents a substance sortal whose instances are quantities. Examples are those stuff universals that are typically referred in natural language by mass general terms (e.g., Gold, Water, Sand, Clay)."@en ;
+	rdfs:label "Quantity"@en .
+
+_:genid20 a owl:Axiom ;
+	owl:annotatedSource ufo:quantity ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:substance-sortal ;
+	terms:source "ofscm" .
+
+_:genid21 a owl:Axiom ;
+	owl:annotatedSource ufo:quantity ;
+	owl:annotatedProperty terms:description ;
+	owl:annotatedTarget "A «quantity» represents a substance sortal whose instances are quantities. Examples are those stuff universals that are typically referred in natural language by mass general terms (e.g., Gold, Water, Sand, Clay)."@en ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/relator
+
+ufo:relator a owl:Class ;
+	rdfs:subClassOf ufo:moment-universal ;
+	rdfs:label "Relator"@en .
+
+_:genid22 a owl:Axiom ;
+	owl:annotatedSource ufo:relator ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:moment-universal ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/rigid-mixin
+
+ufo:rigid-mixin a owl:Class ;
+	rdfs:subClassOf ufo:mixin-universal ;
+	rdfs:label "Rigid Mixin"@en .
+
+_:genid23 a owl:Axiom ;
+	owl:annotatedSource ufo:rigid-mixin ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:mixin-universal ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/rigid-sortal
+
+ufo:rigid-sortal a owl:Class ;
+	rdfs:subClassOf ufo:sortal-universal ;
+	terms:source "ofscm"@en ;
+	rdfs:label "Rigid Sortal"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/role
+
+ufo:role a owl:Class ;
+	rdfs:subClassOf ufo:anti-rigid-sortal ;
+	terms:description "A «role» represents a phased-sortal role, i.e. anti-rigid and relationally dependent universal. For instance, the role student is played by an instance of the kind Person."@en ;
+	rdfs:label "Role"@en .
+
+_:genid24 a owl:Axiom ;
+	owl:annotatedSource ufo:role ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:anti-rigid-sortal ;
+	terms:source "ofscm" .
+
+_:genid25 a owl:Axiom ;
+	owl:annotatedSource ufo:role ;
+	owl:annotatedProperty terms:description ;
+	owl:annotatedTarget "A «role» represents a phased-sortal role, i.e. anti-rigid and relationally dependent universal. For instance, the role student is played by an instance of the kind Person."@en ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/role-mixin
+
+ufo:role-mixin a owl:Class ;
+	rdfs:subClassOf ufo:anti-rigid-mixin ;
+	terms:description "A «roleMixin» represents an anti-rigid and externally dependent non-sortal, i.e., a dispersive universal that aggregates properties which are common to different roles. In includes formal roles such as whole and part, and initiatior and responder."@en ;
+	rdfs:label "Role Mixin"@en .
+
+_:genid26 a owl:Axiom ;
+	owl:annotatedSource ufo:role-mixin ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:anti-rigid-mixin ;
+	terms:source "ofscm" .
+
+_:genid27 a owl:Axiom ;
+	owl:annotatedSource ufo:role-mixin ;
+	owl:annotatedProperty terms:description ;
+	owl:annotatedTarget "A «roleMixin» represents an anti-rigid and externally dependent non-sortal, i.e., a dispersive universal that aggregates properties which are common to different roles. In includes formal roles such as whole and part, and initiatior and responder."@en ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/sortal-universal
+
+ufo:sortal-universal a owl:Class ;
+	rdfs:subClassOf ufo:substantial-universal ;
+	rdfs:label "Sortal Universal"@en .
+
+_:genid28 a owl:Axiom ;
+	owl:annotatedSource ufo:sortal-universal ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:substantial-universal ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/sub-kind
+
+ufo:sub-kind a owl:Class ;
+	rdfs:subClassOf ufo:rigid-sortal ;
+	terms:description "A «subkind» is a rigid, relationally independent restriction of a substance sortal that carries the principle of identity supplied by it. An example could be the subkind MalePerson of the kind Person. In general, the stereotype «subkind» can be omitted in conceptual models without loss of clarity."@en ;
+	rdfs:label "Subkind"@en .
+
+_:genid29 a owl:Axiom ;
+	owl:annotatedSource ufo:sub-kind ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:rigid-sortal ;
+	terms:source "ofscm" .
+
+_:genid30 a owl:Axiom ;
+	owl:annotatedSource ufo:sub-kind ;
+	owl:annotatedProperty terms:description ;
+	owl:annotatedTarget "A «subkind» is a rigid, relationally independent restriction of a substance sortal that carries the principle of identity supplied by it. An example could be the subkind MalePerson of the kind Person. In general, the stereotype «subkind» can be omitted in conceptual models without loss of clarity."@en ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/substance-sortal
 
 ufo:substance-sortal a owl:Class ;
-    rdfs:label "Substance sortal"@en ;
-    terms:description "Substance Sortal is an abstract metaclass that represents the general properties of all substance sortals, i.e., rigid, relationally independent object universals that supply a principle of identity for their instances. Substance Sortal has no concrete syntax. Thus, symbolic representations are defined by each of its concrete subclasses."@en ;
-    rdfs:subClassOf ufo:rigid-sortal .
+	rdfs:subClassOf ufo:rigid-sortal ;
+	terms:description "Substance Sortal is an abstract metaclass that represents the general properties of all substance sortals, i.e., rigid, relationally independent object universals that supply a principle of identity for their instances. Substance Sortal has no concrete syntax. Thus, symbolic representations are defined by each of its concrete subclasses."@en ;
+	rdfs:label "Substance sortal"@en .
 
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty terms:description ;
-    owl:annotatedSource ufo:mixin ;
-    owl:annotatedTarget "A «mixin» represents properties which are essential to some of its instances and accidental to others (semi-rigidity). An example is the mixin Seatable, which represents a property that can be considered essential to the kinds Chair and Stool, but accidental to Crate, Paper Box or Rock."@en .
+_:genid31 a owl:Axiom ;
+	owl:annotatedSource ufo:substance-sortal ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:rigid-sortal ;
+	terms:source "ofscm" .
 
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:collective ;
-    owl:annotatedTarget ufo:substance-sortal .
+_:genid32 a owl:Axiom ;
+	owl:annotatedSource ufo:substance-sortal ;
+	owl:annotatedProperty terms:description ;
+	owl:annotatedTarget "Substance Sortal is an abstract metaclass that represents the general properties of all substance sortals, i.e., rigid, relationally independent object universals that supply a principle of identity for their instances. Substance Sortal has no concrete syntax. Thus, symbolic representations are defined by each of its concrete subclasses."@en ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/substantial-universal
 
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:moment-universal ;
-    owl:annotatedTarget ufo:monadic-universal .
+ufo:substantial-universal a owl:Class ;
+	rdfs:subClassOf ufo:monadic-universal ;
+	rdfs:label "Substantial Universal"@en .
 
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:quality-universal ;
-    owl:annotatedTarget ufo:intrinsic-moment-universal .
+_:genid33 a owl:Axiom ;
+	owl:annotatedSource ufo:substantial-universal ;
+	owl:annotatedProperty rdfs:subClassOf ;
+	owl:annotatedTarget ufo:monadic-universal ;
+	terms:source "ofscm" .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/universal
 
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty terms:description ;
-    owl:annotatedSource ufo:sub-kind ;
-    owl:annotatedTarget "A «subkind» is a rigid, relationally independent restriction of a substance sortal that carries the principle of identity supplied by it. An example could be the subkind MalePerson of the kind Person. In general, the stereotype «subkind» can be omitted in conceptual models without loss of clarity."@en .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:non-rigid-mixin ;
-    owl:annotatedTarget ufo:mixin-universal .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:monadic-universal ;
-    owl:annotatedTarget ufo:universal .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:phase ;
-    owl:annotatedTarget ufo:anti-rigid-sortal .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    rdfs:comment "definition partially reused from Mixin Class" ;
-    owl:annotatedProperty terms:description ;
-    owl:annotatedSource ufo:mixin-universal ;
-    owl:annotatedTarget "Mixin Universal represents the general properties of all mixins, i.e., non-sortals (or dispersive universals)."@en .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty terms:description ;
-    owl:annotatedSource ufo:role ;
-    owl:annotatedTarget "A «role» represents a phased-sortal role, i.e. anti-rigid and relationally dependent universal. For instance, the role student is played by an instance of the kind Person."@en .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:substantial-universal ;
-    owl:annotatedTarget ufo:monadic-universal .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:sub-kind ;
-    owl:annotatedTarget ufo:rigid-sortal .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:role ;
-    owl:annotatedTarget ufo:anti-rigid-sortal .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:sortal-universal ;
-    owl:annotatedTarget ufo:substantial-universal .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:substance-sortal ;
-    owl:annotatedTarget ufo:rigid-sortal .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:anti-rigid-mixin ;
-    owl:annotatedTarget ufo:non-rigid-mixin .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty terms:description ;
-    owl:annotatedSource ufo:phase ;
-    owl:annotatedTarget "A «phase» represents the phased-sortals phase, i.e. anti-rigid and relationally independent universals defined as part of a partition of a substance sortal. For instance, 〈Catterpillar, Butterfly〉 partitions the kind Lepdopterum."@en .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty terms:description ;
-    owl:annotatedSource ufo:kind ;
-    owl:annotatedTarget "A «kind» represents a substance sortal whose instances are functional complexes. Examples include instances of Natural Kinds (such as Person, Dog, Tree) and of artifacts (Chair, Car, Television)."@en .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:mixin-universal ;
-    owl:annotatedTarget ufo:substantial-universal .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:category ;
-    owl:annotatedTarget ufo:rigid-mixin .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:mixin ;
-    owl:annotatedTarget ufo:non-rigid-mixin .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty terms:description ;
-    owl:annotatedSource ufo:category ;
-    owl:annotatedTarget "A «category» represents a rigid and relationally independent mixin, i.e., a dispersive universal that aggregates essential properties which are common to different substance sortals. For example, the category RationalEntity as a generalization of Person and IntelligentAgent."@en .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty terms:description ;
-    owl:annotatedSource ufo:quantity ;
-    owl:annotatedTarget "A «quantity» represents a substance sortal whose instances are quantities. Examples are those stuff universals that are typically referred in natural language by mass general terms (e.g., Gold, Water, Sand, Clay)."@en .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:relator ;
-    owl:annotatedTarget ufo:moment-universal .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:role-mixin ;
-    owl:annotatedTarget ufo:anti-rigid-mixin .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty terms:description ;
-    owl:annotatedSource ufo:collective ;
-    owl:annotatedTarget "A «collective» represents a substance sortal whose instances are collectives, i.e., they are collections of complexes that have a uniform structure. Examples include a deck of cards, a forest, a group of people, a pile of bricks. Collectives can typically relate to complexes via a constitution relation. For example, a pile of bricks that constitutes a wall, a group of people that constitutes a football team. In this case, the collectives typically have an extensional principle of identity, in contrast to the complexes they constitute. For instance, The Beatles was in a given world w constituted by the collective {John, Paul, George, Pete} and in another world w’ constituted by the collective {John, Paul, George, Ringo}. The replacement of Pete Best by Ringo Star does not alter the identity of the band, but creates a numerically different group of people."@en .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty terms:description ;
-    owl:annotatedSource ufo:role-mixin ;
-    owl:annotatedTarget "A «roleMixin» represents an anti-rigid and externally dependent non-sortal, i.e., a dispersive universal that aggregates properties which are common to different roles. In includes formal roles such as whole and part, and initiatior and responder."@en .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:kind ;
-    owl:annotatedTarget ufo:substance-sortal .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty terms:description ;
-    owl:annotatedSource ufo:substance-sortal ;
-    owl:annotatedTarget "Substance Sortal is an abstract metaclass that represents the general properties of all substance sortals, i.e., rigid, relationally independent object universals that supply a principle of identity for their instances. Substance Sortal has no concrete syntax. Thus, symbolic representations are defined by each of its concrete subclasses."@en .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:mode-universal ;
-    owl:annotatedTarget ufo:intrinsic-moment-universal .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:rigid-mixin ;
-    owl:annotatedTarget ufo:mixin-universal .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:quantity ;
-    owl:annotatedTarget ufo:substance-sortal .
-
-[] a owl:Axiom ;
-    terms:source "ofscm" ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource ufo:anti-rigid-sortal ;
-    owl:annotatedTarget ufo:sortal-universal .
-
+ufo:universal a owl:Class .
+# 
+# Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

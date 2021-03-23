@@ -1,438 +1,810 @@
 @prefix : <http://onto.fel.cvut.cz/ontologies/ufo-b-temporal/> .
-@prefix annot: <http://onto.fel.cvut.cz/ontologies/ufo/annot/> .
-@prefix bibo: <http://purl.org/ontology/bibo/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix annot: <http://onto.fel.cvut.cz/ontologies/ufo/annot/> .
 @prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
 @prefix terms: <http://purl.org/dc/terms/> .
-@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
-@prefix vann: <http://purl.org/vocab/vann/> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://onto.fel.cvut.cz/ontologies/ufo-b-temporal> a owl:Ontology ;
-    terms:created "16.11.2017"@en ;
-    terms:creator <http://onto.fel.cvut.cz/ontologies/kbss/people/petr-kremen> ;
-    terms:description "The ontology aims at formalizing basic temporal properties of the Unified Foundational Ontology, namely Allen algebra."@en ;
-    terms:rights <https://creativecommons.org/licenses/by-sa/4.0> ;
-    terms:title "Unified Foundational Ontology - B - temporal reasoning"@en ;
-    bibo:status "Ontology Specification"@en ;
-    vann:preferredNamespacePrefix "ufo"@en ;
-    vann:preferredNamespaceUri "http://onto.fel.cvut.cz/ontologies/ufo/"@en ;
-    owl:imports <http://onto.fel.cvut.cz/ontologies/ufo-b/1.0.1> ;
-    owl:priorVersion <http://onto.fel.cvut.cz/ontologies/ufo-b-temporal/1.0.0> ;
-    owl:versionIRI <http://onto.fel.cvut.cz/ontologies/ufo-b-temporal/1.0.1> ;
-    owl:versionInfo "1.0.1"@en .
-
-annot:swrl a owl:AnnotationProperty .
+	owl:versionIRI :1.0.1 ;
+	terms:created "16.11.2017"@en ;
+	terms:creator <http://onto.fel.cvut.cz/ontologies/kbss/people/petr-kremen> ;
+	terms:description "The ontology aims at formalizing basic temporal properties of the Unified Foundational Ontology, namely Allen algebra."@en ;
+	terms:rights <https://creativecommons.org/licenses/by-sa/4.0> ;
+	terms:title "Unified Foundational Ontology - B - temporal reasoning"@en ;
+	bibo:status "Ontology Specification"@en ;
+	vann:preferredNamespacePrefix "ufo"@en ;
+	vann:preferredNamespaceUri "http://onto.fel.cvut.cz/ontologies/ufo/"@en ;
+	owl:priorVersion :1.0.0 .
+# 
+# 
+# #################################################################
+# #
+# #    Annotation properties
+# #
+# #################################################################
+# 
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/axiom
 
 ufo:axiom a owl:AnnotationProperty .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/annot/swrl
 
-ufo:perdurant-type a owl:Class ;
-    rdfs:subClassOf ufo:universal .
+annot:swrl a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/created
+
+terms:created a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/creator
+
+terms:creator a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/description
+
+terms:description a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/rights
+
+terms:rights a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/title
+
+terms:title a owl:AnnotationProperty .
+# 
+# http://purl.org/ontology/bibo/status
+
+bibo:status a owl:AnnotationProperty .
+# 
+# http://purl.org/vocab/vann/preferredNamespacePrefix
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+# 
+# http://purl.org/vocab/vann/preferredNamespaceUri
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Object Properties
+# #
+# #################################################################
+# 
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/before
 
 ufo:before a owl:ObjectProperty ;
-    rdfs:label "before"@en ;
-    rdfs:domain ufo:event ;
-    rdfs:range ufo:event ;
-    rdfs:subPropertyOf ufo:is-temporally-related .
+	rdfs:subPropertyOf ufo:is-temporally-related ;
+	rdfs:domain ufo:event ;
+	rdfs:range ufo:event ;
+	rdfs:label "before"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/during
 
 ufo:during a owl:ObjectProperty ;
-    rdfs:label "during"@en ;
-    rdfs:domain ufo:event ;
-    rdfs:range ufo:event ;
-    rdfs:subPropertyOf ufo:is-temporally-related .
+	rdfs:subPropertyOf ufo:is-temporally-related ;
+	rdfs:domain ufo:event ;
+	rdfs:range ufo:event ;
+	rdfs:label "during"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/equals
 
 ufo:equals a owl:ObjectProperty ;
-    rdfs:label "equals"@en ;
-    rdfs:domain ufo:event ;
-    rdfs:range ufo:event ;
-    rdfs:subPropertyOf ufo:is-temporally-related .
+	rdfs:subPropertyOf ufo:is-temporally-related ;
+	rdfs:domain ufo:event ;
+	rdfs:range ufo:event ;
+	rdfs:label "equals"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/finishes
 
 ufo:finishes a owl:ObjectProperty ;
-    rdfs:label "finishes"@en ;
-    rdfs:domain ufo:event ;
-    rdfs:range ufo:event ;
-    rdfs:subPropertyOf ufo:is-temporally-related .
+	rdfs:subPropertyOf ufo:is-temporally-related ;
+	rdfs:domain ufo:event ;
+	rdfs:range ufo:event ;
+	rdfs:label "finishes"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/has-begin-point
+
+ufo:has-begin-point a owl:ObjectProperty .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/has-end-point
+
+ufo:has-end-point a owl:ObjectProperty .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/is-temporally-related
+
+ufo:is-temporally-related a owl:ObjectProperty ;
+	rdfs:label "is temporally related"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/meets
 
 ufo:meets a owl:ObjectProperty ;
-    rdfs:label "meets"@en ;
-    rdfs:domain ufo:event ;
-    rdfs:range ufo:event ;
-    rdfs:subPropertyOf ufo:is-temporally-related .
+	rdfs:subPropertyOf ufo:is-temporally-related ;
+	rdfs:domain ufo:event ;
+	rdfs:range ufo:event ;
+	rdfs:label "meets"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/precedes
+
+ufo:precedes a owl:ObjectProperty , owl:AsymmetricProperty ;
+	rdfs:domain ufo:time-point ;
+	rdfs:range ufo:time-point ;
+	rdfs:label "precedes"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/starts
 
 ufo:starts a owl:ObjectProperty ;
-    rdfs:label "starts"@en ;
-    rdfs:domain ufo:event ;
-    rdfs:range ufo:event ;
-    rdfs:subPropertyOf ufo:is-temporally-related .
+	rdfs:subPropertyOf ufo:is-temporally-related ;
+	rdfs:domain ufo:event ;
+	rdfs:range ufo:event ;
+	rdfs:label "starts"@en .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/temporally-overlaps
 
 ufo:temporally-overlaps a owl:ObjectProperty ;
-    rdfs:label "temporally overlaps"@en ;
-    rdfs:domain ufo:event ;
-    rdfs:range ufo:event ;
-    rdfs:subPropertyOf ufo:is-temporally-related .
+	rdfs:subPropertyOf ufo:is-temporally-related ;
+	rdfs:domain ufo:event ;
+	rdfs:range ufo:event ;
+	rdfs:label "temporally overlaps"@en .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+# 
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/event
 
-<urn:swrl#1t> a swrl:Variable .
+ufo:event a owl:Class .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/perdurant-type
+
+ufo:perdurant-type a owl:Class ;
+	rdfs:subClassOf ufo:universal .
+
+ufo:universal a owl:Class .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/time-point
 
 ufo:time-point a owl:Class .
+# 
+# http://onto.fel.cvut.cz/ontologies/ufo/universal
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Rules
+# #
+# #################################################################
+# 
+# 
 
 <urn:swrl#e> a swrl:Variable .
 
+<urn:swrl#t1> a swrl:Variable .
+
+<urn:swrl#t2> a swrl:Variable .
+
+<urn:swrl#e2> a swrl:Variable .
+
 <urn:swrl#t> a swrl:Variable .
+
+<urn:swrl#e1> a swrl:Variable .
+
+<urn:swrl#t3> a swrl:Variable .
+
+<urn:swrl#t4> a swrl:Variable .
 
 <urn:swrl#t5> a swrl:Variable .
 
 <urn:swrl#t6> a swrl:Variable .
 
-<urn:swrl#t4> a swrl:Variable .
+<urn:swrl#1t> a swrl:Variable .
 
-ufo:is-temporally-related a owl:ObjectProperty ;
-    rdfs:label "is temporally related"@en .
+_:genid1 ufo:axiom "a90" ;
+	annot:swrl "true"^^xsd:boolean ;
+	a swrl:Imp ;
+	swrl:body _:genid4 .
 
-<urn:swrl#t3> a swrl:Variable .
+_:genid4 a swrl:AtomList ;
+	rdf:first _:genid5 .
 
-ufo:event a owl:Class .
+_:genid5 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-begin-point ;
+	swrl:argument1 <urn:swrl#e> ;
+	swrl:argument2 <urn:swrl#t1> .
 
-ufo:has-begin-point a owl:ObjectProperty .
+_:genid4 rdf:rest _:genid2 .
 
-ufo:has-end-point a owl:ObjectProperty .
+_:genid2 a swrl:AtomList ;
+	rdf:first _:genid3 .
 
-ufo:precedes a owl:AsymmetricProperty,
-        owl:ObjectProperty ;
-    rdfs:label "precedes"@en ;
-    rdfs:domain ufo:time-point ;
-    rdfs:range ufo:time-point .
+_:genid3 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-end-point ;
+	swrl:argument1 <urn:swrl#e> ;
+	swrl:argument2 <urn:swrl#t2> .
 
-<urn:swrl#t2> a swrl:Variable .
+_:genid2 rdf:rest rdf:nil .
 
-<urn:swrl#t1> a swrl:Variable .
+_:genid1 swrl:head _:genid6 .
 
-<urn:swrl#e1> a swrl:Variable .
+_:genid6 a swrl:AtomList ;
+	rdf:first _:genid7 .
 
-<urn:swrl#e2> a swrl:Variable .
+_:genid7 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:precedes ;
+	swrl:argument1 <urn:swrl#t1> ;
+	swrl:argument2 <urn:swrl#t2> .
 
-[] a swrl:Imp ;
-    annot:swrl true ;
-    ufo:axiom "f3" ;
-    swrl:body [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#e1> ;
-                    swrl:argument2 <urn:swrl#t1> ;
-                    swrl:propertyPredicate ufo:has-begin-point ] ;
-            rdf:rest [ a swrl:AtomList ;
-                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                            swrl:argument1 <urn:swrl#t2> ;
-                            swrl:argument2 <urn:swrl#t1> ;
-                            swrl:propertyPredicate ufo:precedes ] ;
-                    rdf:rest [ a swrl:AtomList ;
-                            rdf:first [ a swrl:IndividualPropertyAtom ;
-                                    swrl:argument1 <urn:swrl#e2> ;
-                                    swrl:argument2 <urn:swrl#t2> ;
-                                    swrl:propertyPredicate ufo:has-begin-point ] ;
-                            rdf:rest [ a swrl:AtomList ;
-                                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                                            swrl:argument1 <urn:swrl#e1> ;
-                                            swrl:argument2 <urn:swrl#t3> ;
-                                            swrl:propertyPredicate ufo:has-end-point ] ;
-                                    rdf:rest [ a swrl:AtomList ;
-                                            rdf:first [ a swrl:IndividualPropertyAtom ;
-                                                    swrl:argument1 <urn:swrl#t3> ;
-                                                    swrl:argument2 <urn:swrl#t4> ;
-                                                    swrl:propertyPredicate ufo:precedes ] ;
-                                            rdf:rest [ a swrl:AtomList ;
-                                                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                                                            swrl:argument1 <urn:swrl#e2> ;
-                                                            swrl:argument2 <urn:swrl#t4> ;
-                                                            swrl:propertyPredicate ufo:has-end-point ] ;
-                                                    rdf:rest () ] ] ] ] ] ] ;
-    swrl:head [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#e1> ;
-                    swrl:argument2 <urn:swrl#e2> ;
-                    swrl:propertyPredicate ufo:during ] ;
-            rdf:rest () ] .
+_:genid6 rdf:rest rdf:nil .
 
-[] a swrl:Imp ;
-    annot:swrl true ;
-    ufo:axiom "f2" ;
-    swrl:body [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#e1> ;
-                    swrl:argument2 <urn:swrl#t1> ;
-                    swrl:propertyPredicate ufo:has-begin-point ] ;
-            rdf:rest [ a swrl:AtomList ;
-                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                            swrl:argument1 <urn:swrl#e2> ;
-                            swrl:argument2 <urn:swrl#t1> ;
-                            swrl:propertyPredicate ufo:has-begin-point ] ;
-                    rdf:rest [ a swrl:AtomList ;
-                            rdf:first [ a swrl:IndividualPropertyAtom ;
-                                    swrl:argument1 <urn:swrl#e1> ;
-                                    swrl:argument2 <urn:swrl#t2> ;
-                                    swrl:propertyPredicate ufo:has-end-point ] ;
-                            rdf:rest [ a swrl:AtomList ;
-                                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                                            swrl:argument1 <urn:swrl#t2> ;
-                                            swrl:argument2 <urn:swrl#t3> ;
-                                            swrl:propertyPredicate ufo:precedes ] ;
-                                    rdf:rest [ a swrl:AtomList ;
-                                            rdf:first [ a swrl:IndividualPropertyAtom ;
-                                                    swrl:argument1 <urn:swrl#e2> ;
-                                                    swrl:argument2 <urn:swrl#t3> ;
-                                                    swrl:propertyPredicate ufo:has-end-point ] ;
-                                            rdf:rest () ] ] ] ] ] ;
-    swrl:head [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#e1> ;
-                    swrl:argument2 <urn:swrl#e2> ;
-                    swrl:propertyPredicate ufo:starts ] ;
-            rdf:rest () ] .
+_:genid102 a swrl:Imp ;
+	swrl:body _:genid105 .
 
-[] a swrl:Imp ;
-    swrl:body [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#t1> ;
-                    swrl:argument2 <urn:swrl#t2> ;
-                    swrl:propertyPredicate ufo:precedes ] ;
-            rdf:rest [ a swrl:AtomList ;
-                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                            swrl:argument1 <urn:swrl#t2> ;
-                            swrl:argument2 <urn:swrl#t3> ;
-                            swrl:propertyPredicate ufo:precedes ] ;
-                    rdf:rest () ] ] ;
-    swrl:head [ a swrl:AtomList ;
-            rdf:first [ a swrl:DifferentIndividualsAtom ;
-                    swrl:argument1 <urn:swrl#t1> ;
-                    swrl:argument2 <urn:swrl#t3> ] ;
-            rdf:rest () ] .
+_:genid105 a swrl:AtomList ;
+	rdf:first _:genid106 .
 
-[] a swrl:Imp ;
-    swrl:body [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#t1> ;
-                    swrl:argument2 <urn:swrl#t2> ;
-                    swrl:propertyPredicate ufo:precedes ] ;
-            rdf:rest [ a swrl:AtomList ;
-                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                            swrl:argument1 <urn:swrl#t2> ;
-                            swrl:argument2 <urn:swrl#t3> ;
-                            swrl:propertyPredicate ufo:precedes ] ;
-                    rdf:rest () ] ] ;
-    swrl:head [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#t1> ;
-                    swrl:argument2 <urn:swrl#t3> ;
-                    swrl:propertyPredicate ufo:precedes ] ;
-            rdf:rest () ] .
+_:genid106 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:precedes ;
+	swrl:argument1 <urn:swrl#t1> ;
+	swrl:argument2 <urn:swrl#t2> .
 
-[] a swrl:Imp ;
-    annot:swrl true ;
-    rdfs:comment "procedural irreflexivity" ;
-    swrl:body [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#t1> ;
-                    swrl:argument2 <urn:swrl#t2> ;
-                    swrl:propertyPredicate ufo:precedes ] ;
-            rdf:rest () ] ;
-    swrl:head [ a swrl:AtomList ;
-            rdf:first [ a swrl:DifferentIndividualsAtom ;
-                    swrl:argument1 <urn:swrl#t1> ;
-                    swrl:argument2 <urn:swrl#t2> ] ;
-            rdf:rest () ] .
+_:genid105 rdf:rest _:genid103 .
 
-[] a swrl:Imp ;
-    annot:swrl true ;
-    ufo:axiom "a90" ;
-    swrl:body [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#e> ;
-                    swrl:argument2 <urn:swrl#t1> ;
-                    swrl:propertyPredicate ufo:has-begin-point ] ;
-            rdf:rest [ a swrl:AtomList ;
-                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                            swrl:argument1 <urn:swrl#e> ;
-                            swrl:argument2 <urn:swrl#t2> ;
-                            swrl:propertyPredicate ufo:has-end-point ] ;
-                    rdf:rest () ] ] ;
-    swrl:head [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#t1> ;
-                    swrl:argument2 <urn:swrl#t2> ;
-                    swrl:propertyPredicate ufo:precedes ] ;
-            rdf:rest () ] .
+_:genid103 a swrl:AtomList ;
+	rdf:first _:genid104 .
 
-[] a swrl:Imp ;
-    annot:swrl true ;
-    ufo:axiom "f5" ;
-    swrl:body [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#e1> ;
-                    swrl:argument2 <urn:swrl#t1> ;
-                    swrl:propertyPredicate ufo:has-begin-point ] ;
-            rdf:rest [ a swrl:AtomList ;
-                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                            swrl:argument1 <urn:swrl#e2> ;
-                            swrl:argument2 <urn:swrl#t1> ;
-                            swrl:propertyPredicate ufo:has-begin-point ] ;
-                    rdf:rest [ a swrl:AtomList ;
-                            rdf:first [ a swrl:IndividualPropertyAtom ;
-                                    swrl:argument1 <urn:swrl#e1> ;
-                                    swrl:argument2 <urn:swrl#t2> ;
-                                    swrl:propertyPredicate ufo:has-end-point ] ;
-                            rdf:rest [ a swrl:AtomList ;
-                                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                                            swrl:argument1 <urn:swrl#e2> ;
-                                            swrl:argument2 <urn:swrl#t2> ;
-                                            swrl:propertyPredicate ufo:has-end-point ] ;
-                                    rdf:rest () ] ] ] ] ;
-    swrl:head [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#e1> ;
-                    swrl:argument2 <urn:swrl#e2> ;
-                    swrl:propertyPredicate ufo:equals ] ;
-            rdf:rest () ] .
+_:genid104 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:precedes ;
+	swrl:argument1 <urn:swrl#t2> ;
+	swrl:argument2 <urn:swrl#t3> .
 
-[] a swrl:Imp ;
-    annot:swrl true ;
-    ufo:axiom "f1" ;
-    swrl:body [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#e1> ;
-                    swrl:argument2 <urn:swrl#t1> ;
-                    swrl:propertyPredicate ufo:has-begin-point ] ;
-            rdf:rest [ a swrl:AtomList ;
-                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                            swrl:argument1 <urn:swrl#t1> ;
-                            swrl:argument2 <urn:swrl#t2> ;
-                            swrl:propertyPredicate ufo:precedes ] ;
-                    rdf:rest [ a swrl:AtomList ;
-                            rdf:first [ a swrl:IndividualPropertyAtom ;
-                                    swrl:argument1 <urn:swrl#e2> ;
-                                    swrl:argument2 <urn:swrl#t2> ;
-                                    swrl:propertyPredicate ufo:has-begin-point ] ;
-                            rdf:rest [ a swrl:AtomList ;
-                                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                                            swrl:argument1 <urn:swrl#e1> ;
-                                            swrl:argument2 <urn:swrl#t3> ;
-                                            swrl:propertyPredicate ufo:has-end-point ] ;
-                                    rdf:rest [ a swrl:AtomList ;
-                                            rdf:first [ a swrl:IndividualPropertyAtom ;
-                                                    swrl:argument1 <urn:swrl#t4> ;
-                                                    swrl:argument2 <urn:swrl#t3> ;
-                                                    swrl:propertyPredicate ufo:precedes ] ;
-                                            rdf:rest [ a swrl:AtomList ;
-                                                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                                                            swrl:argument1 <urn:swrl#e2> ;
-                                                            swrl:argument2 <urn:swrl#t4> ;
-                                                            swrl:propertyPredicate ufo:has-begin-point ] ;
-                                                    rdf:rest [ a swrl:AtomList ;
-                                                            rdf:first [ a swrl:IndividualPropertyAtom ;
-                                                                    swrl:argument1 <urn:swrl#e1> ;
-                                                                    swrl:argument2 <urn:swrl#t5> ;
-                                                                    swrl:propertyPredicate ufo:has-end-point ] ;
-                                                            rdf:rest [ a swrl:AtomList ;
-                                                                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                                                                            swrl:argument1 <urn:swrl#t5> ;
-                                                                            swrl:argument2 <urn:swrl#t6> ;
-                                                                            swrl:propertyPredicate ufo:precedes ] ;
-                                                                    rdf:rest [ a swrl:AtomList ;
-                                                                            rdf:first [ a swrl:IndividualPropertyAtom ;
-                                                                                    swrl:argument1 <urn:swrl#e2> ;
-                                                                                    swrl:argument2 <urn:swrl#t6> ;
-                                                                                    swrl:propertyPredicate ufo:has-end-point ] ;
-                                                                            rdf:rest () ] ] ] ] ] ] ] ] ] ;
-    swrl:head [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#e1> ;
-                    swrl:argument2 <urn:swrl#e2> ;
-                    swrl:propertyPredicate ufo:temporally-overlaps ] ;
-            rdf:rest () ] .
+_:genid103 rdf:rest rdf:nil .
 
-[] a swrl:Imp ;
-    annot:swrl true ;
-    ufo:axiom "a92" ;
-    swrl:body [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#e2> ;
-                    swrl:argument2 <urn:swrl#t> ;
-                    swrl:propertyPredicate ufo:has-end-point ] ;
-            rdf:rest [ a swrl:AtomList ;
-                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                            swrl:argument1 <urn:swrl#e1> ;
-                            swrl:argument2 <urn:swrl#t> ;
-                            swrl:propertyPredicate ufo:has-begin-point ] ;
-                    rdf:rest () ] ] ;
-    swrl:head [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#e1> ;
-                    swrl:argument2 <urn:swrl#e2> ;
-                    swrl:propertyPredicate ufo:meets ] ;
-            rdf:rest () ] .
+_:genid102 swrl:head _:genid107 .
 
-[] a swrl:Imp ;
-    annot:swrl true ;
-    ufo:axiom "a91" ;
-    swrl:body [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#e1> ;
-                    swrl:argument2 <urn:swrl#1t> ;
-                    swrl:propertyPredicate ufo:has-end-point ] ;
-            rdf:rest [ a swrl:AtomList ;
-                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                            swrl:argument1 <urn:swrl#t1> ;
-                            swrl:argument2 <urn:swrl#t2> ;
-                            swrl:propertyPredicate ufo:precedes ] ;
-                    rdf:rest [ a swrl:AtomList ;
-                            rdf:first [ a swrl:IndividualPropertyAtom ;
-                                    swrl:argument1 <urn:swrl#e2> ;
-                                    swrl:argument2 <urn:swrl#t2> ;
-                                    swrl:propertyPredicate ufo:has-begin-point ] ;
-                            rdf:rest () ] ] ] ;
-    swrl:head [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#e1> ;
-                    swrl:argument2 <urn:swrl#e2> ;
-                    swrl:propertyPredicate ufo:before ] ;
-            rdf:rest () ] .
+_:genid107 a swrl:AtomList ;
+	rdf:first _:genid108 .
 
-[] a swrl:Imp ;
-    annot:swrl true ;
-    ufo:axiom "f4" ;
-    swrl:body [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#e1> ;
-                    swrl:argument2 <urn:swrl#t1> ;
-                    swrl:propertyPredicate ufo:has-end-point ] ;
-            rdf:rest [ a swrl:AtomList ;
-                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                            swrl:argument1 <urn:swrl#e2> ;
-                            swrl:argument2 <urn:swrl#t1> ;
-                            swrl:propertyPredicate ufo:has-end-point ] ;
-                    rdf:rest [ a swrl:AtomList ;
-                            rdf:first [ a swrl:IndividualPropertyAtom ;
-                                    swrl:argument1 <urn:swrl#e1> ;
-                                    swrl:argument2 <urn:swrl#t3> ;
-                                    swrl:propertyPredicate ufo:has-begin-point ] ;
-                            rdf:rest [ a swrl:AtomList ;
-                                    rdf:first [ a swrl:IndividualPropertyAtom ;
-                                            swrl:argument1 <urn:swrl#t4> ;
-                                            swrl:argument2 <urn:swrl#t3> ;
-                                            swrl:propertyPredicate ufo:precedes ] ;
-                                    rdf:rest [ a swrl:AtomList ;
-                                            rdf:first [ a swrl:IndividualPropertyAtom ;
-                                                    swrl:argument1 <urn:swrl#e2> ;
-                                                    swrl:argument2 <urn:swrl#t4> ;
-                                                    swrl:propertyPredicate ufo:has-begin-point ] ;
-                                            rdf:rest () ] ] ] ] ] ;
-    swrl:head [ a swrl:AtomList ;
-            rdf:first [ a swrl:IndividualPropertyAtom ;
-                    swrl:argument1 <urn:swrl#e1> ;
-                    swrl:argument2 <urn:swrl#e2> ;
-                    swrl:propertyPredicate ufo:finishes ] ;
-            rdf:rest () ] .
+_:genid108 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:precedes ;
+	swrl:argument1 <urn:swrl#t1> ;
+	swrl:argument2 <urn:swrl#t3> .
 
+_:genid107 rdf:rest rdf:nil .
+
+_:genid109 a swrl:Imp ;
+	swrl:body _:genid112 .
+
+_:genid112 a swrl:AtomList ;
+	rdf:first _:genid113 .
+
+_:genid113 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:precedes ;
+	swrl:argument1 <urn:swrl#t1> ;
+	swrl:argument2 <urn:swrl#t2> .
+
+_:genid112 rdf:rest _:genid110 .
+
+_:genid110 a swrl:AtomList ;
+	rdf:first _:genid111 .
+
+_:genid111 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:precedes ;
+	swrl:argument1 <urn:swrl#t2> ;
+	swrl:argument2 <urn:swrl#t3> .
+
+_:genid110 rdf:rest rdf:nil .
+
+_:genid109 swrl:head _:genid114 .
+
+_:genid114 a swrl:AtomList ;
+	rdf:first _:genid115 .
+
+_:genid115 a swrl:DifferentIndividualsAtom ;
+	swrl:argument1 <urn:swrl#t1> ;
+	swrl:argument2 <urn:swrl#t3> .
+
+_:genid114 rdf:rest rdf:nil .
+
+_:genid15 ufo:axiom "f5" ;
+	annot:swrl "true"^^xsd:boolean ;
+	a swrl:Imp ;
+	swrl:body _:genid22 .
+
+_:genid22 a swrl:AtomList ;
+	rdf:first _:genid23 .
+
+_:genid23 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-begin-point ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#t1> .
+
+_:genid22 rdf:rest _:genid20 .
+
+_:genid20 a swrl:AtomList ;
+	rdf:first _:genid21 .
+
+_:genid21 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-begin-point ;
+	swrl:argument1 <urn:swrl#e2> ;
+	swrl:argument2 <urn:swrl#t1> .
+
+_:genid20 rdf:rest _:genid18 .
+
+_:genid18 a swrl:AtomList ;
+	rdf:first _:genid19 .
+
+_:genid19 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-end-point ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#t2> .
+
+_:genid18 rdf:rest _:genid16 .
+
+_:genid16 a swrl:AtomList ;
+	rdf:first _:genid17 .
+
+_:genid17 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-end-point ;
+	swrl:argument1 <urn:swrl#e2> ;
+	swrl:argument2 <urn:swrl#t2> .
+
+_:genid16 rdf:rest rdf:nil .
+
+_:genid15 swrl:head _:genid24 .
+
+_:genid24 a swrl:AtomList ;
+	rdf:first _:genid25 .
+
+_:genid25 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:equals ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#e2> .
+
+_:genid24 rdf:rest rdf:nil .
+
+_:genid26 ufo:axiom "f2" ;
+	annot:swrl "true"^^xsd:boolean ;
+	a swrl:Imp ;
+	swrl:body _:genid35 .
+
+_:genid35 a swrl:AtomList ;
+	rdf:first _:genid36 .
+
+_:genid36 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-begin-point ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#t1> .
+
+_:genid35 rdf:rest _:genid33 .
+
+_:genid33 a swrl:AtomList ;
+	rdf:first _:genid34 .
+
+_:genid34 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-begin-point ;
+	swrl:argument1 <urn:swrl#e2> ;
+	swrl:argument2 <urn:swrl#t1> .
+
+_:genid33 rdf:rest _:genid31 .
+
+_:genid31 a swrl:AtomList ;
+	rdf:first _:genid32 .
+
+_:genid32 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-end-point ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#t2> .
+
+_:genid31 rdf:rest _:genid29 .
+
+_:genid29 a swrl:AtomList ;
+	rdf:first _:genid30 .
+
+_:genid30 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:precedes ;
+	swrl:argument1 <urn:swrl#t2> ;
+	swrl:argument2 <urn:swrl#t3> .
+
+_:genid29 rdf:rest _:genid27 .
+
+_:genid27 a swrl:AtomList ;
+	rdf:first _:genid28 .
+
+_:genid28 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-end-point ;
+	swrl:argument1 <urn:swrl#e2> ;
+	swrl:argument2 <urn:swrl#t3> .
+
+_:genid27 rdf:rest rdf:nil .
+
+_:genid26 swrl:head _:genid37 .
+
+_:genid37 a swrl:AtomList ;
+	rdf:first _:genid38 .
+
+_:genid38 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:starts ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#e2> .
+
+_:genid37 rdf:rest rdf:nil .
+
+_:genid39 ufo:axiom "f1" ;
+	annot:swrl "true"^^xsd:boolean ;
+	a swrl:Imp ;
+	swrl:body _:genid56 .
+
+_:genid56 a swrl:AtomList ;
+	rdf:first _:genid57 .
+
+_:genid57 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-begin-point ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#t1> .
+
+_:genid56 rdf:rest _:genid54 .
+
+_:genid54 a swrl:AtomList ;
+	rdf:first _:genid55 .
+
+_:genid55 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:precedes ;
+	swrl:argument1 <urn:swrl#t1> ;
+	swrl:argument2 <urn:swrl#t2> .
+
+_:genid54 rdf:rest _:genid52 .
+
+_:genid52 a swrl:AtomList ;
+	rdf:first _:genid53 .
+
+_:genid53 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-begin-point ;
+	swrl:argument1 <urn:swrl#e2> ;
+	swrl:argument2 <urn:swrl#t2> .
+
+_:genid52 rdf:rest _:genid50 .
+
+_:genid50 a swrl:AtomList ;
+	rdf:first _:genid51 .
+
+_:genid51 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-end-point ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#t3> .
+
+_:genid50 rdf:rest _:genid48 .
+
+_:genid48 a swrl:AtomList ;
+	rdf:first _:genid49 .
+
+_:genid49 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:precedes ;
+	swrl:argument1 <urn:swrl#t4> ;
+	swrl:argument2 <urn:swrl#t3> .
+
+_:genid48 rdf:rest _:genid46 .
+
+_:genid46 a swrl:AtomList ;
+	rdf:first _:genid47 .
+
+_:genid47 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-begin-point ;
+	swrl:argument1 <urn:swrl#e2> ;
+	swrl:argument2 <urn:swrl#t4> .
+
+_:genid46 rdf:rest _:genid44 .
+
+_:genid44 a swrl:AtomList ;
+	rdf:first _:genid45 .
+
+_:genid45 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-end-point ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#t5> .
+
+_:genid44 rdf:rest _:genid42 .
+
+_:genid42 a swrl:AtomList ;
+	rdf:first _:genid43 .
+
+_:genid43 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:precedes ;
+	swrl:argument1 <urn:swrl#t5> ;
+	swrl:argument2 <urn:swrl#t6> .
+
+_:genid42 rdf:rest _:genid40 .
+
+_:genid40 a swrl:AtomList ;
+	rdf:first _:genid41 .
+
+_:genid41 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-end-point ;
+	swrl:argument1 <urn:swrl#e2> ;
+	swrl:argument2 <urn:swrl#t6> .
+
+_:genid40 rdf:rest rdf:nil .
+
+_:genid39 swrl:head _:genid58 .
+
+_:genid58 a swrl:AtomList ;
+	rdf:first _:genid59 .
+
+_:genid59 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:temporally-overlaps ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#e2> .
+
+_:genid58 rdf:rest rdf:nil .
+
+_:genid60 ufo:axiom "f3" ;
+	annot:swrl "true"^^xsd:boolean ;
+	a swrl:Imp ;
+	swrl:body _:genid71 .
+
+_:genid71 a swrl:AtomList ;
+	rdf:first _:genid72 .
+
+_:genid72 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-begin-point ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#t1> .
+
+_:genid71 rdf:rest _:genid69 .
+
+_:genid69 a swrl:AtomList ;
+	rdf:first _:genid70 .
+
+_:genid70 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:precedes ;
+	swrl:argument1 <urn:swrl#t2> ;
+	swrl:argument2 <urn:swrl#t1> .
+
+_:genid69 rdf:rest _:genid67 .
+
+_:genid67 a swrl:AtomList ;
+	rdf:first _:genid68 .
+
+_:genid68 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-begin-point ;
+	swrl:argument1 <urn:swrl#e2> ;
+	swrl:argument2 <urn:swrl#t2> .
+
+_:genid67 rdf:rest _:genid65 .
+
+_:genid65 a swrl:AtomList ;
+	rdf:first _:genid66 .
+
+_:genid66 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-end-point ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#t3> .
+
+_:genid65 rdf:rest _:genid63 .
+
+_:genid63 a swrl:AtomList ;
+	rdf:first _:genid64 .
+
+_:genid64 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:precedes ;
+	swrl:argument1 <urn:swrl#t3> ;
+	swrl:argument2 <urn:swrl#t4> .
+
+_:genid63 rdf:rest _:genid61 .
+
+_:genid61 a swrl:AtomList ;
+	rdf:first _:genid62 .
+
+_:genid62 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-end-point ;
+	swrl:argument1 <urn:swrl#e2> ;
+	swrl:argument2 <urn:swrl#t4> .
+
+_:genid61 rdf:rest rdf:nil .
+
+_:genid60 swrl:head _:genid73 .
+
+_:genid73 a swrl:AtomList ;
+	rdf:first _:genid74 .
+
+_:genid74 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:during ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#e2> .
+
+_:genid73 rdf:rest rdf:nil .
+
+_:genid75 ufo:axiom "f4" ;
+	annot:swrl "true"^^xsd:boolean ;
+	a swrl:Imp ;
+	swrl:body _:genid84 .
+
+_:genid84 a swrl:AtomList ;
+	rdf:first _:genid85 .
+
+_:genid85 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-end-point ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#t1> .
+
+_:genid84 rdf:rest _:genid82 .
+
+_:genid82 a swrl:AtomList ;
+	rdf:first _:genid83 .
+
+_:genid83 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-end-point ;
+	swrl:argument1 <urn:swrl#e2> ;
+	swrl:argument2 <urn:swrl#t1> .
+
+_:genid82 rdf:rest _:genid80 .
+
+_:genid80 a swrl:AtomList ;
+	rdf:first _:genid81 .
+
+_:genid81 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-begin-point ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#t3> .
+
+_:genid80 rdf:rest _:genid78 .
+
+_:genid78 a swrl:AtomList ;
+	rdf:first _:genid79 .
+
+_:genid79 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:precedes ;
+	swrl:argument1 <urn:swrl#t4> ;
+	swrl:argument2 <urn:swrl#t3> .
+
+_:genid78 rdf:rest _:genid76 .
+
+_:genid76 a swrl:AtomList ;
+	rdf:first _:genid77 .
+
+_:genid77 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-begin-point ;
+	swrl:argument1 <urn:swrl#e2> ;
+	swrl:argument2 <urn:swrl#t4> .
+
+_:genid76 rdf:rest rdf:nil .
+
+_:genid75 swrl:head _:genid86 .
+
+_:genid86 a swrl:AtomList ;
+	rdf:first _:genid87 .
+
+_:genid87 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:finishes ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#e2> .
+
+_:genid86 rdf:rest rdf:nil .
+
+_:genid8 ufo:axiom "a92" ;
+	annot:swrl "true"^^xsd:boolean ;
+	a swrl:Imp ;
+	swrl:body _:genid11 .
+
+_:genid11 a swrl:AtomList ;
+	rdf:first _:genid12 .
+
+_:genid12 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-end-point ;
+	swrl:argument1 <urn:swrl#e2> ;
+	swrl:argument2 <urn:swrl#t> .
+
+_:genid11 rdf:rest _:genid9 .
+
+_:genid9 a swrl:AtomList ;
+	rdf:first _:genid10 .
+
+_:genid10 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-begin-point ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#t> .
+
+_:genid9 rdf:rest rdf:nil .
+
+_:genid8 swrl:head _:genid13 .
+
+_:genid13 a swrl:AtomList ;
+	rdf:first _:genid14 .
+
+_:genid14 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:meets ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#e2> .
+
+_:genid13 rdf:rest rdf:nil .
+
+_:genid88 ufo:axiom "a91" ;
+	annot:swrl "true"^^xsd:boolean ;
+	a swrl:Imp ;
+	swrl:body _:genid93 .
+
+_:genid93 a swrl:AtomList ;
+	rdf:first _:genid94 .
+
+_:genid94 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-end-point ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#1t> .
+
+_:genid93 rdf:rest _:genid91 .
+
+_:genid91 a swrl:AtomList ;
+	rdf:first _:genid92 .
+
+_:genid92 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:precedes ;
+	swrl:argument1 <urn:swrl#t1> ;
+	swrl:argument2 <urn:swrl#t2> .
+
+_:genid91 rdf:rest _:genid89 .
+
+_:genid89 a swrl:AtomList ;
+	rdf:first _:genid90 .
+
+_:genid90 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:has-begin-point ;
+	swrl:argument1 <urn:swrl#e2> ;
+	swrl:argument2 <urn:swrl#t2> .
+
+_:genid89 rdf:rest rdf:nil .
+
+_:genid88 swrl:head _:genid95 .
+
+_:genid95 a swrl:AtomList ;
+	rdf:first _:genid96 .
+
+_:genid96 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:before ;
+	swrl:argument1 <urn:swrl#e1> ;
+	swrl:argument2 <urn:swrl#e2> .
+
+_:genid95 rdf:rest rdf:nil .
+
+_:genid97 annot:swrl "true"^^xsd:boolean ;
+	rdfs:comment "procedural irreflexivity" ;
+	a swrl:Imp ;
+	swrl:body _:genid98 .
+
+_:genid98 a swrl:AtomList ;
+	rdf:first _:genid99 .
+
+_:genid99 a swrl:IndividualPropertyAtom ;
+	swrl:propertyPredicate ufo:precedes ;
+	swrl:argument1 <urn:swrl#t1> ;
+	swrl:argument2 <urn:swrl#t2> .
+
+_:genid98 rdf:rest rdf:nil .
+
+_:genid97 swrl:head _:genid100 .
+
+_:genid100 a swrl:AtomList ;
+	rdf:first _:genid101 .
+
+_:genid101 a swrl:DifferentIndividualsAtom ;
+	swrl:argument1 <urn:swrl#t1> ;
+	swrl:argument2 <urn:swrl#t2> .
+
+_:genid100 rdf:rest rdf:nil .
+# Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

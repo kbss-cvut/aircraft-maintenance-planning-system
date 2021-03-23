@@ -7,8 +7,8 @@
 @base <http://onto.fel.cvut.cz/ontologies/romain-csat-maintenance-mapping> .
 
 <http://onto.fel.cvut.cz/ontologies/romain-csat-maintenance-mapping> rdf:type owl:Ontology ;
-                                                                      owl:imports <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN> ,
-                                                                                 <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
+                                                                      owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> ,
+                                                                                  <http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN> .
 
 #################################################################
 #    Classes

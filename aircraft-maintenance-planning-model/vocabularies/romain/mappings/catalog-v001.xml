@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Mid/UnitsOfMeasureOntology" uri="aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/romain/external/UnitsOfMeasureOntology.ttl"/>
-    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Mid/TimeOntology" uri="aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/romain/external/TimeOntology.ttl"/>
-    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology" uri="aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/romain/external/InformationEntityOntology.ttl"/>
-    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology" uri="aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/romain/external/EventOntology.ttl"/>
-    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology" uri="aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/romain/external/GeospatialOntology.ttl"/>
-    <uri id="User Entered Import Resolution" name="http://www.obofoundry.org/ro/ro.owl" uri="aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/romain/external/ro.ttl"/>
-    <uri id="User Entered Import Resolution" name="http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN" uri="aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/romain/romain.ttl"/>
-	<uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/csat-maintenance/" uri="aircraft-maintenance-planning-system/aircraft-maintenance-planning-model/vocabularies/csat-maintenance/csat-maintenance.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://purl.obolibrary.org/obo/iao/2017-03-24/iao.owl" uri="../external/iao.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://purl.obolibrary.org/obo/bfo/2.0/bfo.owl" uri="../external/bfo.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Mid/UnitsOfMeasureOntology" uri="../external/UnitsOfMeasureOntology.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Mid/TimeOntology" uri="../external/TimeOntology.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Mid/InformationEntityOntology" uri="../external/InformationEntityOntology.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Upper/ExtendedRelationOntology" uri="../external/ExtendedRelationOntology.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Mid/GeospatialOntology" uri="../external/GeospatialOntology.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://www.obofoundry.org/ro/ro.owl" uri="../external/ro.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Mid/ArtifactOntology" uri="../external/ArtifactOntology.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://www.semanticweb.org/hedi/ontologies/2018/11/ROMAIN" uri="../romain.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/csat-maintenance/" uri="../../csat-maintenance/csat-maintenance.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/maintenance-schema/" uri="../../csat-maintenance/maintenance-schema.ttl"/>
 </catalog>
