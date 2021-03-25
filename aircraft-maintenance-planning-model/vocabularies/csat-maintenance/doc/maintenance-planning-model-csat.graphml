@@ -13,7 +13,7 @@
   <key attr.name="description" attr.type="string" for="edge" id="d9"/>
   <key for="edge" id="d10" yfiles.type="edgegraphics"/>
   <graph edgedefault="directed" id="G">
-    <data key="d0"/>
+    <data key="d0" xml:space="preserve"/>
     <node id="n0">
       <data key="d6">
         <y:ShapeNode>
@@ -26,10 +26,13 @@
       </data>
     </node>
     <node id="n1">
+      <data key="d4" xml:space="preserve"/>
+      <data key="d5" xml:space="preserve"><![CDATA[concept uses the same term as Workpackage from the other diagram but it refers to a CSAT specific concept. 
+- Is this concepts used in general in A/C maintenance?]]></data>
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="30.0" width="84.705078125" x="143.22915107834524" y="252.49295774648"/>
-          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:Geometry height="30.0" width="84.705078125" x="143.22915107834524" y="265.84154753257724"/>
+          <y:Fill color="#FFCC99" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="74.705078125" x="5.0" xml:space="preserve" y="5.6494140625">workpackage<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
           <y:Shape type="rectangle"/>
@@ -37,10 +40,12 @@
       </data>
     </node>
     <node id="n2">
+      <data key="d5" xml:space="preserve"><![CDATA[CSAT specific category of maintenance tasks
+]]></data>
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="30.0" width="53.990234375" x="158.58657295334524" y="350.49295774648"/>
-          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:Geometry height="30.0" width="53.990234375" x="158.58657295334524" y="363.84154753257724"/>
+          <y:Fill color="#FFCC99" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="43.990234375" x="5.0" xml:space="preserve" y="5.6494140625">WO/TC<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
           <y:Shape type="rectangle"/>

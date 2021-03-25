@@ -1,8 +1,8 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences;
 
 import javafx.util.Pair;
-import org.eclipse.rdf4j.query.algebra.In;
-import org.eclipse.rdf4j.query.algebra.evaluation.function.numeric.Rand;
+//import org.eclipse.rdf4j.query.algebra.In;
+//import org.eclipse.rdf4j.query.algebra.evaluation.function.numeric.Rand;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
