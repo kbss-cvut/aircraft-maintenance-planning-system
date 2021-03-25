@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-ontouml/1.0.2" uri="../../ufo/ufo-ontouml.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-c/1.0.1" uri="../../ufo/ufo-c.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-b-temporal/1.0.1" uri="../../ufo/ufo-b-temporal.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-a/1.0.1" uri="../../ufo/ufo-a.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-b/1.0.1" uri="../../ufo/ufo-b.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/1.0.1" uri="../../ufo/ufo-b-dispositions.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo/1.0.2" uri="../../ufo/ufo.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.1" uri="../../ufo/ufo-powertypes.ttl"/>
     <uri id="User Entered Import Resolution" name="http://purl.obolibrary.org/obo/iao/2017-03-24/iao.owl" uri="../external/iao.ttl"/>
     <uri id="User Entered Import Resolution" name="http://purl.obolibrary.org/obo/bfo/2.0/bfo.owl" uri="../external/bfo.ttl"/>
     <uri id="User Entered Import Resolution" name="http://www.ontologylibrary.mil/CommonCore/Mid/UnitsOfMeasureOntology" uri="../external/UnitsOfMeasureOntology.ttl"/>
