@@ -1,0 +1,10 @@
+openapi: 3.0.3
+info:
+  title: NER component
+  description: NER component - discovers references of named entities in the input text
+  version: 1.0.0
+servers:
+  - url: 'https://host/context'
+paths:
+  /ner
+    post:
