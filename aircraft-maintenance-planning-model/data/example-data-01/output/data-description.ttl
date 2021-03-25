@@ -5,49 +5,43 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-descritopn/bookingno-i>
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/bookingno-i>
   a owl:DatatypeProperty;
-  dc:description "it is a booking number of the task";
-  rdfs:label "bookingno-i";
+  dc:description "Booking number of the task";
   skos:prefLabel "bookingno-i" .
 
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-descritopn/Employee-No>
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/employee-no>
   a owl:DatatypeProperty;
-  dc:description "it is an employee number who is respnsible of the task";
+  dc:description "Employee number who is responsible of the task";
   skos:prefLabel "Employee-No" .
 
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-descritopn/Start-Date> a
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/start-date> a
     owl:DatatypeProperty;
-  dc:description "it is start date of the task";
+  dc:description "Start date of the task";
+  skos:prefLabel "Start Date" .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/start-time> a
+    owl:DatatypeProperty;
+  dc:description "Start time of the task";
   skos:prefLabel "Start-Time" .
 
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-descritopn/Start-Time> a
-    owl:DatatypeProperty;
-  dc:description "it is start time of the task";
-  skos:prefLabel "Start-Time" .
-
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-descritopn/Type> a owl:ObjectProperty;
-  dc:description "it is the type of the task";
-  rdfs:label "Type";
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/type> a owl:DatatypeProperty;
+  dc:description "Type of the task";
   skos:prefLabel "Type" .
 
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-descritopn/Workpackage>
-  a owl:Class;
-  dc:description "it is a workpackage the has the description of the task";
-  rdfs:label "Workpackage";
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/workpackage>
+  a owl:DatatypeProperty;
+  dc:description "Workpackage that has the description of the task";
   skos:prefLabel "Workpackage" .
 
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-descritopn/WP-start> a owl:DatatypeProperty;
-  dc:description "it is a start time of a workpackage ";
-  rdfs:label "WP-start";
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/wp-start> a owl:DatatypeProperty;
+  dc:description "Start time of a workpackage";
   skos:prefLabel "WP-start" .
 
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-descritopn/WP-end> a owl:DatatypeProperty;
-  dc:description "it is the end time of a workpackage ";
-  rdfs:label "WP-end";
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/wp-end> a owl:DatatypeProperty;
+  dc:description "End time of a workpackage";
   skos:prefLabel "WP-end" .
 
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-descritopn/Scope> a owl:ObjectProperty;
-  dc:description "it refers to the group who is doing the task";
-  rdfs:label "Scope";
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/scope> a owl:ObjectProperty;
+  dc:description "Group who is doing the task";
   skos:prefLabel "Scope" .
