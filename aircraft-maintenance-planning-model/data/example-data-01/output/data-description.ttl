@@ -7,41 +7,42 @@
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/bookingno-i>
   a owl:DatatypeProperty;
-  dc:description "Booking number of the task";
+  dc:description "Booking number of the task"@en;
+  rdfs:comment "Reference na stažený řádek. K využití v Maintenance nulové, pouze použito jako ID."@cs;
   skos:prefLabel "bookingno-i" .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/employee-no>
   a owl:DatatypeProperty;
-  dc:description "Employee number who is responsible of the task";
+  dc:description "Employee number who is responsible of the task"@en;
   skos:prefLabel "Employee-No" .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/start-date> a
     owl:DatatypeProperty;
-  dc:description "Start date of the task";
+  dc:description "Start date of the task"@en;
   skos:prefLabel "Start Date" .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/start-time> a
     owl:DatatypeProperty;
-  dc:description "Start time of the task";
+  dc:description "Start time of the task"@en;
   skos:prefLabel "Start-Time" .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/type> a owl:DatatypeProperty;
-  dc:description "Type of the task";
+  dc:description "Type of the task"@en;
   skos:prefLabel "Type" .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/workpackage>
   a owl:DatatypeProperty;
-  dc:description "Workpackage that has the description of the task";
+  dc:description "Workpackage that has the description of the task"@en;
   skos:prefLabel "Workpackage" .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/wp-start> a owl:DatatypeProperty;
-  dc:description "Start time of a workpackage";
+  dc:description "Start time of a workpackage"@en;
   skos:prefLabel "WP-start" .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/wp-end> a owl:DatatypeProperty;
-  dc:description "End time of a workpackage";
+  dc:description "End time of a workpackage"@en;
   skos:prefLabel "WP-end" .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/scope> a owl:ObjectProperty;
-  dc:description "Group who is doing the task";
+  dc:description "Group who is doing the task"@en;
   skos:prefLabel "Scope" .
