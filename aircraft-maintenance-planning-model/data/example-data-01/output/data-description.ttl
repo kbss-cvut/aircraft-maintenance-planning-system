@@ -44,5 +44,5 @@
   skos:prefLabel "WP-end" .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance/data-description/scope> a owl:ObjectProperty;
-  dc:description "Group who is doing the task"@en;
+  dc:description "Type of group that is doing the task"@en;
   skos:prefLabel "Scope" .
