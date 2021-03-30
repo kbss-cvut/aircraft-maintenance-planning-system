@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-ontouml/1.0.2" uri="../../../../../vocabularies/ufo/ufo-ontouml.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-c/1.0.1" uri="../../../../../vocabularies/ufo/ufo-c.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-b-temporal/1.0.1" uri="../../../../../vocabularies/ufo/ufo-b-temporal.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-a/1.0.1" uri="../../../../../vocabularies/ufo/ufo-a.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-b/1.0.1" uri="../../../../../vocabularies/ufo/ufo-b.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-b-dispositions/1.0.1" uri="../../../../../vocabularies/ufo/ufo-b-dispositions.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo/1.0.2" uri="../../../../../vocabularies/ufo/ufo.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.1" uri="../../../../../vocabularies/ufo/ufo-powertypes.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/maintenance-schema/" uri="../../../../../vocabularies/csat-maintenance/maintenance-schema.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/csat-maintenance/" uri="../../../../../vocabularies/csat-maintenance/csat-maintenance.ttl"/>
+    <uri id="Imports Wizard Entry" name="http://onto.fel.cvut.cz/ontologies/csat-maintenance/wo-data/" uri="../../wo-data-schema.ttl"/>
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base=""/>
+</catalog>

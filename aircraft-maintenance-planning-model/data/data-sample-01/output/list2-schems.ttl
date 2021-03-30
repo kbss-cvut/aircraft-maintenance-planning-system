@@ -1,0 +1,121 @@
+@prefix : <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix csat: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix mydata: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/> .
+@base <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/> .
+
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/> rdf:type owl:Ontology .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/description
+dc:description rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#prefLabel
+skos:prefLabel rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/task_type
+mydata:task_type rdf:type owl:ObjectProperty ;
+                 dc:description "it is the type of the task"@en ;
+                 rdfs:label "task_type" ;
+                 skos:prefLabel "task_type" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/ATA_code
+mydata:ATA_code rdf:type owl:DatatypeProperty ;
+                rdfs:domain mydata:Aircraft ;
+                dc:description "it is the reference of work order task"@en ;
+                rdfs:label "ATA_code" ;
+                skos:prefLabel "ATA_code" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/WO_text
+mydata:WO_text rdf:type owl:DatatypeProperty ;
+               dc:description "it describes the work order"@en ;
+               rdfs:label "WO_text" ;
+               skos:prefLabel "WO_text" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/aircraft_age
+mydata:aircraft_age rdf:type owl:DatatypeProperty ;
+                    rdfs:domain mydata:Aircraft ;
+                    dc:description "it is th age of aircraft"@en ;
+                    rdfs:label "aircraft_age" ;
+                    skos:prefLabel "aircraft_age" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/closing_date
+mydata:closing_date rdf:type owl:DatatypeProperty ;
+                    dc:description "it is end date of the task"@en ;
+                    rdfs:label "closing_date" ;
+                    skos:prefLabel "closing_date" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/issue_date
+mydata:issue_date rdf:type owl:DatatypeProperty ;
+                  rdfs:domain csat:Work_Order ;
+                  dc:description "it is start date of the task"@en ;
+                  skos:prefLabel "issue_date" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/wo_reference
+mydata:wo_reference rdf:type owl:DatatypeProperty ;
+                    dc:description "it is the reference of work order task"@en ;
+                    rdfs:label "wo_reference" ;
+                    skos:prefLabel "wo_reference" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/Work_Order
+csat:Work_Order rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/Aircraft
+mydata:Aircraft rdf:type owl:Class ;
+                rdfs:label "Aircraft" ;
+                skos:prefLabel "Aircraft" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/Maintenance_Task
+mydata:Maintenance_Task rdf:type owl:Class ;
+                        dc:description "it is the maintenace task"@en ;
+                        rdfs:label "Maintenance_Task" ;
+                        skos:prefLabel "Maintenance_Task" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/WO_action
+mydata:WO_action rdf:type owl:Class ;
+                 dc:description "it describes the work order actions"@en ;
+                 rdfs:label "WO_action" ;
+                 skos:prefLabel "WO_action" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/Workpackage
+mydata:Workpackage rdf:type owl:Class ;
+                   dc:description "it is a workpackage the has the description of the work order task"@en ;
+                   rdfs:label "Workpackage" ;
+                   skos:prefLabel "Workpackage" .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
