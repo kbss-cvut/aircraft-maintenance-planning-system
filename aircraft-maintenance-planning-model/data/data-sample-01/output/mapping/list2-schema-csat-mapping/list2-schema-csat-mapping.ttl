@@ -11,55 +11,11 @@
                                                                                                           <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/> .
 
 #################################################################
-#    Object Properties
-#################################################################
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task_type
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/task_type> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/task_type> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/task_type
-
-#################################################################
-#    Data properties
-#################################################################
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/ATA_code
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/ATA_code> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/ATA_code> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/aircraft_age
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/aircraft_age> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/aircraft_age> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_end_date
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_end_date> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/closing_date> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wo_text
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/wo_text> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/WO_text> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/ATA_code
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/WO_text
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/aircraft_age
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/closing_date
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/wo_reference
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/wo_reference> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/maintenance-schema/task_code> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/task_code
-
-#################################################################
 #    Classes
 #################################################################
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/Aircraft
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Aircraft> owl:equivalentClass <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/Aircraft> .
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Aircraft> owl:equivalentClass <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/ac> .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/WOS_Action
@@ -67,24 +23,19 @@
                                                                                      <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Workpackage> .
 
 
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/Aircraft
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/Maintenance_Task
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/Maintenance_Task> owl:equivalentClass <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_task> ;
-                                                                                           rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                                                             owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/has-participant> ;
-                                                                                                             owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Aircraft>
-                                                                                                           ] ,
-                                                                                                           [ rdf:type owl:Restriction ;
-                                                                                                             owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
-                                                                                                             owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/Workpackage>
-                                                                                                           ] .
-
-
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/WO_action
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/WO_action> rdf:type owl:Class .
+
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/Workpackage
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/Workpackage> owl:equivalentClass <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Workpackage> .
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/Workpackage> rdf:type owl:Class ;
+                                                                                      owl:equivalentClass <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Workpackage> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/ac
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/task-execution
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/task-execution> owl:equivalentClass <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_task> .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_task

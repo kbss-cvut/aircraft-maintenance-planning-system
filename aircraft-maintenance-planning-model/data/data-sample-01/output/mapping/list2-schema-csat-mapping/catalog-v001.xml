@@ -10,6 +10,6 @@
     <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.1" uri="../../../../../vocabularies/ufo/ufo-powertypes.ttl"/>
     <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/maintenance-schema/" uri="../../../../../vocabularies/csat-maintenance/maintenance-schema.ttl"/>
     <uri id="User Entered Import Resolution" name="http://onto.fel.cvut.cz/ontologies/csat-maintenance/" uri="../../../../../vocabularies/csat-maintenance/csat-maintenance.ttl"/>
-    <uri id="Imports Wizard Entry" name="http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/" uri="../../list2-schems.ttl"/>
+    <uri id="Imports Wizard Entry" name="http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/" uri="../../list2-schema.ttl"/>
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base=""/>
 </catalog>

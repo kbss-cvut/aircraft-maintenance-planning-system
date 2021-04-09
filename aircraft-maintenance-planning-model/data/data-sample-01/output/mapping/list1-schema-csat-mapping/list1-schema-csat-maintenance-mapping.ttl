@@ -11,79 +11,11 @@
                                                                                                           <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/> .
 
 #################################################################
-#    Object Properties
-#################################################################
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task_type
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/task_type> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/task_type> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/task_type
-
-#################################################################
-#    Data properties
-#################################################################
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/ATA_code
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/ATA_code> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/ATA_code> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/duration
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/duration> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Duration> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_end_date
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_end_date> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/End-Date> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_end_time
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_end_time> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/End_Time> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_start_time
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance_task_start_time> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Start_Time> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wo_text
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/wo_text> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/WO_text> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_end_time
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_end_time> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/WP_end> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_start__time
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage_start__time> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/WP_start> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/ATA_code
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Duration
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/End-Date
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/End_Time
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Start_Time
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/WO_text
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/WP_end
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/WP_start
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/wo_reference
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/wo_reference> owl:equivalentProperty <http://onto.fel.cvut.cz/ontologies/maintenance-schema/task_code> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/task_code
-
-#################################################################
 #    Classes
 #################################################################
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/Aircraft
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Aircraft> owl:equivalentClass <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Aircraft> .
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/Aircraft> owl:equivalentClass <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/ac> .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_team
@@ -91,30 +23,30 @@
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/WOS_Action
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/WOS_Action> owl:equivalentClass <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/WO_action> .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Aircraft
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Maintenance_Task
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Maintenance_Task> owl:equivalentClass <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_task> ;
-                                                                               rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                                                 owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
-                                                                                                 owl:someValuesFrom <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Workpackage>
-                                                                                               ] .
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/WOS_Action> owl:equivalentClass <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/wo-action> .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Scope
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Scope> rdf:type owl:Class .
+
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Shift_Group
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Shift_Group> rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Group> .
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Shift_Group> rdf:type owl:Class ;
+                                                                          rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/Maintenance_Group> .
 
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/WO_action
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Workpackage
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Workpackage> owl:equivalentClass <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Workpackage> .
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/Workpackage> rdf:type owl:Class ;
+                                                                          owl:equivalentClass <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Workpackage> .
 
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/ac
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/task-execution
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/task-execution> owl:equivalentClass <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_task> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/wo-action
 
 ###  http://onto.fel.cvut.cz/ontologies/maintenance-schema/Maintenance_task
 
