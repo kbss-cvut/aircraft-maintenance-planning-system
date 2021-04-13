@@ -30,9 +30,23 @@ dc:description rdf:type owl:AnnotationProperty .
 skos:prefLabel rdf:type owl:AnnotationProperty .
 
 
-#################################################################
-#    Object Properties
-#################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/ac
+mydata:ac rdf:type owl:Class ;
+          dc:description "it is the system that needs maintenance"@en ;
+          skos:prefLabel "ac" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/wp
+mydata:wp rdf:type owl:Class ;
+          dc:description "it is a workpackage the has the description of the work order task"@en ;
+          skos:prefLabel "wp" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/csat-wo-tc
+mydata:csat-wo-tc rdf:type owl:DatatypeProperty ;
+                  dc:description "it is the reference of work order task"@en ;
+                  skos:prefLabel "csat wo tc" .
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/type
 mydata:type rdf:type owl:ObjectProperty ;
@@ -40,27 +54,19 @@ mydata:type rdf:type owl:ObjectProperty ;
             skos:prefLabel "type" .
 
 
-#################################################################
-#    Data properties
-#################################################################
-
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/closing-date
 mydata:closing-date rdf:type owl:DatatypeProperty ;
                     dc:description "End date of the task"@en ;
                     skos:prefLabel "closing date" .
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/start-date
+mydata:start-date rdf:type owl:DatatypeProperty ;
+                  skos:prefLabel "start date" .
 
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/csat-wo-tc
-mydata:csat-wo-tc rdf:type owl:DatatypeProperty ;
-                  dc:description "it is the reference of work order task"@en ;
-                  skos:prefLabel "wo reference" .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/duration-full
-mydata:duration-full rdf:type owl:DatatypeProperty ;
-                     dc:description "it referes to the full duration of the task"@en ;
-                     skos:prefLabel "duration" .
-
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/start-time
+mydata:start-time rdf:type owl:DatatypeProperty ;
+                  dc:description "it is start time of task"@en ;
+                  skos:prefLabel "start time" .
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/end-date
 mydata:end-date rdf:type owl:DatatypeProperty ;
@@ -73,57 +79,15 @@ mydata:end-time rdf:type owl:DatatypeProperty ;
                 dc:description "it is end time of task"@en ;
                 skos:prefLabel "end time" .
 
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/start-date
-mydata:start-date rdf:type owl:DatatypeProperty ;
-                  skos:prefLabel "start date" .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/start-time
-mydata:start-time rdf:type owl:DatatypeProperty ;
-                  dc:description "it is start time of task"@en ;
-                  skos:prefLabel "start time" .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/wo-text
-mydata:wo-text rdf:type owl:DatatypeProperty ;
-               dc:description "it describes the work order"@en ;
-               skos:prefLabel "wo text" .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/wp-end
-mydata:wp-end rdf:type owl:DatatypeProperty ;
-              dc:description "it is end time of wp"@en ;
-              skos:prefLabel " workpackage end date" .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/wp-start
-mydata:wp-start rdf:type owl:DatatypeProperty ;
-                dc:description "it is start time of wp"@en ;
-                skos:prefLabel "workpackage start date" .
-
-
-#################################################################
-#    Classes
-#################################################################
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/ac
-mydata:ac rdf:type owl:Class ;
-          dc:description "it is the system that needs maintenance"@en ;
-          skos:prefLabel "aircraft" .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/description
-mydata:description rdf:type owl:Class ;
-                   dc:description "description of task"@en ;
-                   skos:prefLabel "description" .
-
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/duration-full
+mydata:duration-full rdf:type owl:DatatypeProperty ;
+                     dc:description "it referes to the full duration of the task"@en ;
+                     skos:prefLabel "duration full" .
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/scope
 mydata:scope rdf:type owl:Class ;
              dc:description "it referes to the group who is responsible of the task"@en ;
              skos:prefLabel "scope" .
-
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/shift-group
 mydata:shift-group rdf:type owl:Class ;
@@ -131,30 +95,21 @@ mydata:shift-group rdf:type owl:Class ;
                    dc:description "it referes to the group who is responsible of the task"@en ;
                    skos:prefLabel "shift group" .
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/description
+mydata:description rdf:type owl:Class ;
+                   dc:description "description of task"@en ;
+                   skos:prefLabel "description" .
 
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/task-execution
-mydata:task-execution rdf:type owl:Class ;
-                      dc:description "it is the maintenace task"@en ;
-                      skos:prefLabel "task-execution" .
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/wp-start
+mydata:wp-start rdf:type owl:DatatypeProperty ;
+                dc:description "it is start time of wp"@en ;
+                skos:prefLabel "wp start" .
 
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/wo-action
-mydata:wo-action rdf:type owl:Class ;
-                 dc:description "it describes the work order actions"@en ;
-                 skos:prefLabel "wo-action" .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/wp
-mydata:wp rdf:type owl:Class ;
-          dc:description "it is a workpackage the has the description of the work order task"@en ;
-          skos:prefLabel "workpackage" .
-
-
-#################################################################
-#    Annotations
-#################################################################
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-data/wp-end
+mydata:wp-end rdf:type owl:DatatypeProperty ;
+              dc:description "it is end time of wp"@en ;
+              skos:prefLabel " wp end " .
 
 <http://onto.fel.cvut.cz/maintenance-csat/example-schema/wp,start-time,csat-wo-tc> mydata:identifier " identifier" .
-
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
