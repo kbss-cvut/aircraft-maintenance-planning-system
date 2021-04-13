@@ -68,8 +68,7 @@ mydata:closing-date rdf:type owl:DatatypeProperty ;
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/csat-wo-tc
 mydata:csat-wo-tc rdf:type owl:DatatypeProperty ;
                   dc:description "Reference of work order task"@en ;
-                  skos:prefLabel "wo reference" .
-
+                  skos:prefLabel "csat wo tc" .
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/customer-ref
 mydata:customer-ref rdf:type owl:DatatypeProperty ;
@@ -94,7 +93,7 @@ mydata:state rdf:type owl:DatatypeProperty ;
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/tc-reference
 mydata:tc-reference rdf:type owl:DatatypeProperty ;
                     dc:description "it is the reference of task card"@en ;
-                    skos:prefLabel "task card reference" .
+                    skos:prefLabel "tc reference" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/wo-text
@@ -110,7 +109,7 @@ mydata:wo-text rdf:type owl:DatatypeProperty ;
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/ac
 mydata:ac rdf:type owl:Class ;
           dc:description "it is the system that needs maintenance"@en ;
-          skos:prefLabel "aircraft" .
+          skos:prefLabel "ac" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/referenced-task-execution
@@ -140,7 +139,7 @@ mydata:workstep rdf:type owl:Class ;
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/wp
 mydata:wp rdf:type owl:Class ;
           dc:description "it is a workpackage the has the description of the work order task"@en ;
-          skos:prefLabel "workpackage" .
+          skos:prefLabel "wp" .
 
 
 #################################################################
