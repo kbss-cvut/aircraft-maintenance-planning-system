@@ -7,9 +7,8 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix mydata: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/> .
-@base <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/> .
 
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/> rdf:type owl:Ontology .
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data> rdf:type owl:Ontology .
 
 #################################################################
 #    Annotation properties
@@ -37,10 +36,10 @@ skos:prefLabel rdf:type owl:AnnotationProperty .
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/type
 mydata:type rdf:type owl:ObjectProperty ;
-            mydata:has-value "m" ,
-                             "s" ,
-                             "tc" ;
-            dc:description "it is the type of the task where thera are many task's type: M means maintenance, S means Scheduled or tc means task card"@en ;
+            mydata:has-value "M" ,
+                             "S" ,
+                             "TC" ;
+            dc:description "Type of the task where thera are many task's type: M means maintenance, S means Scheduled or tc means task card"@en ;
             skos:prefLabel "type" .
 
 
@@ -50,45 +49,45 @@ mydata:type rdf:type owl:ObjectProperty ;
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/ac-age
 mydata:ac-age rdf:type owl:DatatypeProperty ;
-              dc:description "it is th age of aircraft"@en ;
-              skos:prefLabel "aircraft age" .
+              dc:description "Age of aircraft"@en ;
+              skos:prefLabel "A/C age" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/ata
 mydata:ata rdf:type owl:DatatypeProperty ;
-           dc:description "it is a code for aircraft"@en ;
-           skos:prefLabel "ata" .
+           dc:description "Code for aircraft"@en ;
+           skos:prefLabel "ATA" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/closing-date
 mydata:closing-date rdf:type owl:DatatypeProperty ;
-                    dc:description "it is end date of the task"@en ;
+                    dc:description "End date of the task"@en ;
                     skos:prefLabel "closing date" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/csat-wo-tc
 mydata:csat-wo-tc rdf:type owl:DatatypeProperty ;
-                  dc:description "it is the reference of work order task"@en ;
+                  dc:description "Reference of work order task"@en ;
                   skos:prefLabel "wo reference" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/customer-ref
 mydata:customer-ref rdf:type owl:DatatypeProperty ;
-                    dc:description "it is the reference of the customer that requires this task"@en ;
-                    skos:prefLabel "customer reference" .
+                    dc:description "Reference of the customer that requires this task"@en ;
+                    skos:prefLabel "Customer ref" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/issue-date
 mydata:issue-date rdf:type owl:DatatypeProperty ;
-                  dc:description "it is start date of the task"@en ;
-                  skos:prefLabel "issue-date" .
+                  dc:description "Start date of the task"@en ;
+                  skos:prefLabel "issue date" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/state
 mydata:state rdf:type owl:DatatypeProperty ;
-             mydata:has-value "c" ,
-                              "o" ;
-             dc:description "it referes to the state of task. It could have many values: c means closed task, o means open task"@en ;
+             mydata:has-value "C" ,
+                              "O" ;
+             dc:description "State of a task. Allowed values: 'C' for closed task, O for open task"@en ;
              skos:prefLabel "state" .
 
 
@@ -122,19 +121,19 @@ mydata:referenced-task-execution rdf:type owl:Class ;
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/task-execution
 mydata:task-execution rdf:type owl:Class ;
-                      dc:description "it is the maintenace task"@en ;
+                      dc:description "Maintenace task"@en ;
                       skos:prefLabel "task execution" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/wo-action
 mydata:wo-action rdf:type owl:Class ;
-                 dc:description "it describes the work order actions"@en ;
+                 dc:description "Describes the work order actions"@en ;
                  skos:prefLabel "wo action" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/workstep
 mydata:workstep rdf:type owl:Class ;
-                dc:description "rferes to how many steps in the task "@en ;
+                dc:description "Refers to how many steps in the task "@en ;
                 skos:prefLabel "workstep" .
 
 
@@ -148,8 +147,8 @@ mydata:wp rdf:type owl:Class ;
 #    Annotations
 #################################################################
 
-<http://onto.fel.cvut.cz/maintenance-csat/example-schema/task-excution-workstep-wp> dc:description "info about what is composite key (set of columns that define composite key which they are (task-excution,wp,workstep)) "@en ;
-                                                                                    mydata:identifier " idintifier" .
+<http://onto.fel.cvut.cz/maintenance-csat/example-schema/task-excution-workstep-wp> dc:description "Info about what is composite key (set of columns that define composite key which they are (task-excution,wp,workstep)) "@en ;
+                                                                                    mydata:identifier " identifier" .
 
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
