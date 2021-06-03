@@ -115,5 +115,18 @@
     "baseColumnName": "Workpackage",
 	"expression": "grel:escape(value + \"-\" + row.cells[\"WO/TC\"].value,\"url\")",
     "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "Employee No",
+    "expression": "grel:sha1(value)",
+    "onError": "set-to-blank",
+    "newColumnName": "employee_no_anon",
+    "columnInsertIndex": 2,
+    "description": "Create column employee_no_anon at index 2 based on column Employee No using expression grel:sha1(value)"
   }
 ]

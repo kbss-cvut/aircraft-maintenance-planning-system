@@ -1,7 +1,7 @@
 # old version of Graph DB
 PREFIX : <http://example.com/resource/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX mp:  <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> 
+PREFIX mp: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/>
 PREFIX ds: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
 PREFIX d: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -24,16 +24,16 @@ CONSTRUCT {
     mp:has_task_execution_part ?work_on_taskIRI;
 	rdfs:label ?Description;
 	mp:part_of_workpackage ?workpackageIRI;
-    ufo:is_part_of ?workpackageIRI.
+	ufo:is_part_of ?workpackageIRI.
     	
   # work on task description
   ?work_on_taskIRI a mp:work_session, mp:atomic_execution, owl:NamedIndividual;
     mp:start_time ?startDT;
     mp:end_time ?endDT;
-    ufo:is_part_of ?task_executionIRI.
+	ufo:is_part_of ?task_executionIRI.
   
   # worker description
-  [] a mp:worker;
+  ?workerIRI a mp:worker;
 #    mp:works_on ?work_on_taskIRI;
     ufo:performs ?work_on_taskIRI;
     mp:member_of_group ?subgroupIRI.
@@ -44,7 +44,7 @@ CONSTRUCT {
     mp:has_group_part ?subgroupIRI;.
 
   ?subgroupIRI a mp:maintenance_group, owl:Individual;
-    rdfs:label ?scope.
+    rdfs:label ?Scope.
 
   # task type description
   ?task_typeIRI a owl:Class;
@@ -60,6 +60,8 @@ CONSTRUCT {
     SERVICE <ontorefine:2509139576799> {
 	  ?row a :Row ;
 	       :start ?start ;
+		   :employee_no ?sensitive_employee_no;
+		   :c_employee_no_anon ?employee_no_anon;
 		   :task_execution ?task_execution ;
 	       :work_on_task ?work_on_task ;
 	       :end ?end ;
@@ -78,16 +80,25 @@ CONSTRUCT {
 	       :WP_start ?WP_start ;
 	       :WP_end ?WP_end ;
 	       :Real_date_of_booking_entry ?Real_date_of_booking_entry ;
-		   :A_C_model ?acmodel.
+		   :A_C_model ?acmodel;
 		   :A_C_age ?acage.
 		   #:aircraft ?aircraft.
 	
+	  FILTER(
+		?workpackage != "" && 
+		?Scope != "" &&
+		?WO_TC != "" &&
+		?start != "" &&
+		?end != "" &&
+		?Type != ""
+      )					 
 	  BIND(iri(concat(str(d:), ?workpackage)) as ?workpackageIRI) # instance
+	  BIND(iri(concat(str(d:), IF(?sensitive_employee_no = "", "unknown_worker", ?employee_no_anon)  )) as ?workerIRI) # instance
 	  BIND(iri(concat(str(d:), ?work_on_task)) as ?work_on_taskIRI) # instance
 	  BIND(iri(concat(str(d:), ?task_execution)) as ?task_executionIRI) # instance
 	  BIND(iri(concat(str(d:), ?group)) as ?groupIRI) # instance
 	  BIND(iri(concat(str(d:), ?subgroup)) as ?subgroupIRI) # instance
-	  BIND(IRI(concat(str(d:), ?acmodel, "-", ?workpackage)) as ?aircraftIRI) # instance
+	  BIND(IRI(concat(str(d:), encode_for_uri(?acmodel), "-", ?workpackage)) as ?aircraftIRI) # instance
       BIND(IRI(concat(str(ds:), ?task_type)) as ?task_typeIRI)
       BIND(IRI(concat(str(mp:), ?task_super_class)) as ?task_super_classIRI)
       

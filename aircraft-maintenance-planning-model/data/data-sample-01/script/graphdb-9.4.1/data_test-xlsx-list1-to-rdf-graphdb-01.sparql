@@ -2,9 +2,9 @@
 BASE <http://example/base/>
 PREFIX : <http://example/base/> #<http://example.com/resource/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX mp: <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/>
-PREFIX ds: <http://onto.fel.cvut.cz/dop2020-csat/example-schema/>
-PREFIX d: <http://onto.fel.cvut.cz/dop2020-csat/example-instance-data/>
+PREFIX mp: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/>
+PREFIX ds: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX d: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -22,19 +22,22 @@ CONSTRUCT {
     
 
   # task execution description
-  ?task_executionIRI a mp:complex_execution, ?task_typeIRI, ?task_super_classIRI, owl:NamedIndividual;
+  ?task_executionIRI a mp:maintenance_task, mp:complex_execution, ?task_typeIRI, ?task_super_classIRI, owl:NamedIndividual;
     mp:has_task_execution_part ?work_on_taskIRI;
 	rdfs:label ?Description;
-	mp:part_of_workpackage ?workpackageIRI.
+	mp:part_of_workpackage ?workpackageIRI;
+	ufo:is_part_of ?workpackageIRI.
     	
   # work on task description
-  ?work_on_taskIRI a mp:atomic_execution, owl:NamedIndividual;
+  ?work_on_taskIRI a mp:work_session, mp:atomic_execution, owl:NamedIndividual;
     mp:start_time ?startDT;
-    mp:end_time ?endDT.
+    mp:end_time ?endDT;
+	ufo:is_part_of ?task_executionIRI.
   
   # worker description
-  [] a mp:worker;
-    mp:works_on ?work_on_taskIRI;
+  ?workerIRI a mp:worker;
+#    mp:works_on ?work_on_taskIRI;
+    ufo:performs ?work_on_taskIRI;
     mp:member_of_group ?subgroupIRI.
 
   # group description
@@ -43,7 +46,7 @@ CONSTRUCT {
     mp:has_group_part ?subgroupIRI;.
 
   ?subgroupIRI a mp:maintenance_group, owl:Individual;
-    rdfs:label ?scope.
+    rdfs:label ?Scope.
 
   # task type description
   ?task_typeIRI a owl:Class;
@@ -53,6 +56,7 @@ CONSTRUCT {
   # aircraft description
   ?workpackageIRI mp:repair_of ?aircraftIRI.
   ?aircraftIRI a mp:aircraft, owl:NamedIndividual;
+	mp:age ?acage;
 	mp:has_model ?acmodel.
 } WHERE {
         # Columns as variables:
@@ -64,9 +68,11 @@ CONSTRUCT {
         #   ?c_A_C_age, ?c_WP_start, ?c_WP_end, ?c_Real_date_of_booking_entry
         # Metadata as variables:
         #   ?row_index, ?record_id
-    SERVICE <rdf-mapper:ontorefine:1625172787060> {
+    SERVICE <rdf-mapper:ontorefine:2473052146343> {
 		# make columns accessible for the construct clause and other bind operations in the WHERE clause
         BIND(?c_start as ?start)
+        #BIND(?c_Employee_No as ?sensitive_employee_no)
+        BIND(?c_employee_no_anon as ?employee_no_anon)
         BIND(?c_task_execution as ?task_execution)
         BIND(?c_work_on_task as ?work_on_task)
         BIND(?c_end as ?end)
@@ -86,9 +92,19 @@ CONSTRUCT {
         BIND(?c_WP_end as ?WP_end)
         BIND(?c_Real_date_of_booking_entry as ?Real_date_of_booking_entry)
         BIND(?c_A_C_model as ?acmodel)
+		BIND(?A_C_age as ?acage)
         #BIND(?c_aircraft as ?aircraft)
-	
+      
+      FILTER(
+            ?workpackage != "" && 
+            ?Scope != "" &&
+            ?WO_TC != "" &&
+            ?start != "" &&
+            ?end != "" &&
+            ?Type != ""
+        )
 	  BIND(iri(concat(str(d:), ?workpackage)) as ?workpackageIRI) # instance
+      BIND(iri(concat(str(d:), IF(?employee_no_anon = "", "unknown_worker", ?employee_no_anon))) as ?workerIRI) # instance
 	  BIND(iri(concat(str(d:), ?work_on_task)) as ?work_on_taskIRI) # instance
 	  BIND(iri(concat(str(d:), ?task_execution)) as ?task_executionIRI) # instance
 	  BIND(iri(concat(str(d:), ?group)) as ?groupIRI) # instance
