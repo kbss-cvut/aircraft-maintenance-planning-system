@@ -1,8 +1,8 @@
 PREFIX : <http://example.com/resource/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX mp:  <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> 
-PREFIX ds: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
-PREFIX d: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/>
+PREFIX ms:  <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> 
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX cmd: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -12,44 +12,47 @@ PREFIX ata: <http://onto.fel.cvut.cz/voc/ata-100/>
 
 
 CONSTRUCT {
+    <http://onto.fel.cvut.cz/ontologies/csat-maintenance/list2> a owl:Ontology ;
+              owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
+    
     # workpackage description
-    ?workpackageIRI a mp:workpackage, owl:NamedIndividual;
-                    mp:has_id ?WP.
+    ?workpackageIRI a cm:workpackage, owl:NamedIndividual;
+                    cm:has-id ?WP.
                     
 
     # task execution description
-    ?task_executionIRI a mp:complex_execution, ?task_typeIRI, owl:NamedIndividual;
-                       mp:issue_time ?issue_date_D;
-                       mp:end_time ?closing_date_D;
-                       mp:has_work_order_step ?task_step_executionIRI;
-					   mp:part_of_workpackage ?workpackageIRI.
+    ?task_executionIRI a cm:complex-execution, ?task_typeIRI, owl:NamedIndividual;
+                       cm:issue-time ?issue_date_D;
+                       cm:end-time ?closing_date_D;
+                       cm:has-work-order-step ?task_step_executionIRI;
+					   cm:part-of-workpackage ?workpackageIRI.
     
-    ?task_executionIRI mp:references_task ?referenced_task_executionIRI .
+    ?task_executionIRI cm:references-task ?referenced_task_executionIRI .
 
     # task execution type
     ?task_typeIRI a owl:Class;
                   rdfs:subClassOf ?task_super_classIRI;
-                  mp:references_ata_code ?ataIRI;
-				  mp:has_id ?CSAT_WO_TC.
+                  cm:references-ata-code ?ataIRI;
+				  cm:has-id ?CSAT_WO_TC.
 
     # task step execution
     ?task_step_executionIRI a ?task_step_execution_typeIRI, owl:NamedIndividual;
-                            mp:step_index ?workstep;
-                            mp:has_workorder_description ?WO_text.
+                            cm:step-index ?workstep;
+                            cm:has-workorder-description ?WO_text.
     
-	?task_step_executionIRI mp:has_workorder_action ?WO_action .
+	?task_step_executionIRI cm:has-workorder-action ?WO_action .
 	
     ?task_step_execution_typeIRI a owl:Class;
-            rdfs:subClassOf mp:work_order_step.
+            rdfs:subClassOf cm:work-order-step.
 			
 	# aircraft description
-	?workpackageIRI mp:repair_of ?aircraftIRI.
-	?aircraftIRI a mp:aircraft, owl:NamedIndividual;
-	mp:has_model ?acmodel;
-	mp:age ?acage.
+	?workpackageIRI cm:repair-of ?aircraftIRI.
+	?aircraftIRI a cm:aircraft, owl:NamedIndividual;
+	cm:has-model ?acmodel;
+	cm:age ?acage.
 
 } WHERE {
-    SERVICE <ontorefine:2385299743863> {
+    SERVICE <ontorefine:2514883026341> {
         ?row a :Row ;
 			 :AC ?acmodel ;
              :A_C_age ?acage ;
@@ -77,19 +80,19 @@ CONSTRUCT {
         OPTIONAL{
             ?row :TC_reference ?TC_reference ;
                  :referenced_task_execution ?referenced_task_execution ;
-            BIND(iri(concat(str(d:), ?referenced_task_execution)) as ?referenced_task_executionIRI) # instance
+            BIND(iri(concat(str(cmd:), ?referenced_task_execution)) as ?referenced_task_executionIRI) # instance
         }
         OPTIONAL{
             ?row :WO_action ?WO_action .
         }
         
-        BIND(iri(concat(str(d:), ?workpackage)) as ?workpackageIRI) # instance
-        BIND(iri(concat(str(d:), ?task_execution)) as ?task_executionIRI) # instance
-        BIND(IRI(concat(str(d:), ?acmodel, "-", ?workpackage)) as ?aircraftIRI) # instance
-        BIND(iri(concat(str(d:), ?task_step_execution)) as ?task_step_executionIRI) # instance
-        BIND(IRI(concat(str(ds:), ?task_type)) as ?task_typeIRI)
-        BIND(IRI(concat(str(mp:), ?task_super_class)) as ?task_super_classIRI)
-        BIND(IRI(concat(str(ds:), ?task_step_execution_type)) as ?task_step_execution_typeIRI)
+        BIND(iri(concat(str(cmd:), ?workpackage)) as ?workpackageIRI) # instance
+        BIND(iri(concat(str(cmd:), ?task_execution)) as ?task_executionIRI) # instance
+        BIND(IRI(concat(str(cmd:), ?acmodel, "-", ?workpackage)) as ?aircraftIRI) # instance
+        BIND(iri(concat(str(cmd:), ?task_step_execution)) as ?task_step_executionIRI) # instance
+        BIND(IRI(concat(str(cm:), ?task_type)) as ?task_typeIRI)
+        BIND(IRI(concat(str(cm:), ?task_super_class)) as ?task_super_classIRI)
+        BIND(IRI(concat(str(cm:), ?task_step_execution_type)) as ?task_step_execution_typeIRI)
         
 
         BIND(spif:parseDate(?issue_date ,"dd.MM.yyyy") as ?issue_date_D)

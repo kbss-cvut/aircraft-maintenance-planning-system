@@ -30,7 +30,7 @@ cm:list2 a owl:Ontology;
 cm:M-4782753 a owl:Class;
   cm:has-id "4782753";
   cm:references-ata-code ata:ata-71-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4782753-1.0>
   a cm:M-4782753-1.0, owl:NamedIndividual;
@@ -65,7 +65,7 @@ cm:M-4782753-1.0 a owl:Class;
 cm:M-4798301 a owl:Class;
   cm:has-id "4798301";
   cm:references-ata-code ata:ata-25-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798301-1.0>
   a cm:M-4798301-1.0, owl:NamedIndividual;
@@ -97,7 +97,7 @@ cm:M-4798301-2.0 a owl:Class;
 cm:M-4798304 a owl:Class;
   cm:has-id "4798304";
   cm:references-ata-code ata:ata-33-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798304-1.0>
   a cm:M-4798304-1.0, owl:NamedIndividual;
@@ -120,7 +120,7 @@ cm:M-4798304-1.0 a owl:Class;
 cm:M-4798305 a owl:Class;
   cm:has-id "4798305";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798305-1.0>
   a cm:M-4798305-1.0, owl:NamedIndividual;
@@ -153,7 +153,7 @@ cm:M-4798305-2.0 a owl:Class;
 cm:M-4798315 a owl:Class;
   cm:has-id "4798315";
   cm:references-ata-code ata:ata-25-30;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798315-1.0>
   a cm:M-4798315-1.0, owl:NamedIndividual;
@@ -196,7 +196,7 @@ cm:M-4798315-3.0 a owl:Class;
 cm:M-4798321 a owl:Class;
   cm:has-id "4798321";
   cm:references-ata-code ata:ata-23-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798321-1.0>
   a cm:M-4798321-1.0, owl:NamedIndividual;
@@ -228,7 +228,7 @@ cm:M-4798321-2.0 a owl:Class;
 cm:M-4798324 a owl:Class;
   cm:has-id "4798324";
   cm:references-ata-code ata:ata-25-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798324-1.0>
   a cm:M-4798324-1.0, owl:NamedIndividual;
@@ -260,7 +260,7 @@ cm:M-4798324-2.0 a owl:Class;
 cm:M-4798325 a owl:Class;
   cm:has-id "4798325";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798325-1.0>
   a cm:M-4798325-1.0, owl:NamedIndividual;
@@ -291,7 +291,7 @@ cm:M-4798325-2.0 a owl:Class;
 cm:M-4798329 a owl:Class;
   cm:has-id "4798329";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798329-1.0>
   a cm:M-4798329-1.0, owl:NamedIndividual;
@@ -314,7 +314,7 @@ cm:M-4798329-1.0 a owl:Class;
 cm:M-4798331 a owl:Class;
   cm:has-id "4798331";
   cm:references-ata-code ata:ata-11-30;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798331-1.0>
   a cm:M-4798331-1.0, owl:NamedIndividual;
@@ -346,7 +346,7 @@ cm:M-4798331-2.0 a owl:Class;
 cm:M-4798333 a owl:Class;
   cm:has-id "4798333";
   cm:references-ata-code ata:ata-25-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798333-1.0>
   a cm:M-4798333-1.0, owl:NamedIndividual;
@@ -378,7 +378,7 @@ cm:M-4798333-2.0 a owl:Class;
 cm:M-4798336 a owl:Class;
   cm:has-id "4798336";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798336-1.0>
   a cm:M-4798336-1.0, owl:NamedIndividual;
@@ -400,7 +400,7 @@ cm:M-4798336-1.0 a owl:Class;
 cm:M-4798363 a owl:Class;
   cm:has-id "4798363";
   cm:references-ata-code ata:ata-52-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798363-1.0>
   a cm:M-4798363-1.0, owl:NamedIndividual;
@@ -423,7 +423,7 @@ cm:M-4798363-1.0 a owl:Class;
 cm:M-4798364 a owl:Class;
   cm:has-id "4798364";
   cm:references-ata-code ata:ata-25-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798364-1.0>
   a cm:M-4798364-1.0, owl:NamedIndividual;
@@ -446,7 +446,7 @@ cm:M-4798364-1.0 a owl:Class;
 cm:M-4798366 a owl:Class;
   cm:has-id "4798366";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798366-1.0>
   a cm:M-4798366-1.0, owl:NamedIndividual;
@@ -473,7 +473,7 @@ cm:M-4798366-1.0 a owl:Class;
 cm:M-4798368 a owl:Class;
   cm:has-id "4798368";
   cm:references-ata-code ata:ata-52-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798368-1.0>
   a cm:M-4798368-1.0, owl:NamedIndividual;
@@ -540,7 +540,7 @@ cm:M-4798368-6.0 a owl:Class;
 cm:M-4798376 a owl:Class;
   cm:has-id "4798376";
   cm:references-ata-code ata:ata-35-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798376-1.0>
   a cm:M-4798376-1.0, owl:NamedIndividual;
@@ -565,7 +565,7 @@ cm:M-4798376-1.0 a owl:Class;
 cm:M-4798385 a owl:Class;
   cm:has-id "4798385";
   cm:references-ata-code ata:ata-78-30;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798385-1.0>
   a cm:M-4798385-1.0, owl:NamedIndividual;
@@ -600,7 +600,7 @@ cm:M-4798385-2.0 a owl:Class;
 cm:M-4798412 a owl:Class;
   cm:has-id "4798412";
   cm:references-ata-code ata:ata-29-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798412-1.0>
   a cm:M-4798412-1.0, owl:NamedIndividual;
@@ -623,7 +623,7 @@ cm:M-4798412-1.0 a owl:Class;
 cm:M-4798416 a owl:Class;
   cm:has-id "4798416";
   cm:references-ata-code ata:ata-92-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798416-1.0>
   a cm:M-4798416-1.0, owl:NamedIndividual;
@@ -646,7 +646,7 @@ cm:M-4798416-1.0 a owl:Class;
 cm:M-4798417 a owl:Class;
   cm:has-id "4798417";
   cm:references-ata-code ata:ata-71-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798417-1.0>
   a cm:M-4798417-1.0, owl:NamedIndividual;
@@ -684,7 +684,7 @@ cm:M-4798417-2.0 a owl:Class;
 cm:M-4798810 a owl:Class;
   cm:has-id "4798810";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798810-1.0>
   a cm:M-4798810-1.0, owl:NamedIndividual;
@@ -743,7 +743,7 @@ cm:M-4798810-5.0 a owl:Class;
 cm:M-4798849 a owl:Class;
   cm:has-id "4798849";
   cm:references-ata-code ata:ata-49-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798849-1.0>
   a cm:M-4798849-1.0, owl:NamedIndividual;
@@ -775,7 +775,7 @@ cm:M-4798849-2.0 a owl:Class;
 cm:M-4798873 a owl:Class;
   cm:has-id "4798873";
   cm:references-ata-code ata:ata-55-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798873-1.0>
   a cm:M-4798873-1.0, owl:NamedIndividual;
@@ -806,7 +806,7 @@ cm:M-4798873-2.0 a owl:Class;
 cm:M-4798874 a owl:Class;
   cm:has-id "4798874";
   cm:references-ata-code ata:ata-52-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798874-1.0>
   a cm:M-4798874-1.0, owl:NamedIndividual;
@@ -828,7 +828,7 @@ cm:M-4798874-1.0 a owl:Class;
 cm:M-4798875 a owl:Class;
   cm:has-id "4798875";
   cm:references-ata-code ata:ata-21-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798875-1.0>
   a cm:M-4798875-1.0, owl:NamedIndividual;
@@ -850,7 +850,7 @@ cm:M-4798875-1.0 a owl:Class;
 cm:M-4798876 a owl:Class;
   cm:has-id "4798876";
   cm:references-ata-code ata:ata-38-30;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798876-1.0>
   a cm:M-4798876-1.0, owl:NamedIndividual;
@@ -873,7 +873,7 @@ cm:M-4798876-1.0 a owl:Class;
 cm:M-4798878 a owl:Class;
   cm:has-id "4798878";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798878-1.0>
   a cm:M-4798878-1.0, owl:NamedIndividual;
@@ -904,7 +904,7 @@ cm:M-4798878-2.0 a owl:Class;
 cm:M-4798879 a owl:Class;
   cm:has-id "4798879";
   cm:references-ata-code ata:ata-25-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798879-1.0>
   a cm:M-4798879-1.0, owl:NamedIndividual;
@@ -929,7 +929,7 @@ cm:M-4798879-1.0 a owl:Class;
 cm:M-4798886 a owl:Class;
   cm:has-id "4798886";
   cm:references-ata-code ata:ata-71-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798886-1.0>
   a cm:M-4798886-1.0, owl:NamedIndividual;
@@ -996,7 +996,7 @@ cm:M-4798886-4.0 a owl:Class;
 cm:M-4798888 a owl:Class;
   cm:has-id "4798888";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798888-1.0>
   a cm:M-4798888-1.0, owl:NamedIndividual;
@@ -1020,7 +1020,7 @@ cm:M-4798888-1.0 a owl:Class;
 cm:M-4798890 a owl:Class;
   cm:has-id "4798890";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798890-1.0>
   a cm:M-4798890-1.0, owl:NamedIndividual;
@@ -1043,7 +1043,7 @@ cm:M-4798890-1.0 a owl:Class;
 cm:M-4798891 a owl:Class;
   cm:has-id "4798891";
   cm:references-ata-code ata:ata-71-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798891-1.0>
   a cm:M-4798891-1.0, owl:NamedIndividual;
@@ -1086,7 +1086,7 @@ cm:M-4798891-2.0 a owl:Class;
 cm:M-4798897 a owl:Class;
   cm:has-id "4798897";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798897-1.0>
   a cm:M-4798897-1.0, owl:NamedIndividual;
@@ -1112,7 +1112,7 @@ cm:M-4798897-1.0 a owl:Class;
 cm:M-4798904 a owl:Class;
   cm:has-id "4798904";
   cm:references-ata-code ata:ata-20-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798904-1.0>
   a cm:M-4798904-1.0, owl:NamedIndividual;
@@ -1161,7 +1161,7 @@ cm:M-4798904-4.0 a owl:Class;
 cm:M-4798905 a owl:Class;
   cm:has-id "4798905";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798905-1.0>
   a cm:M-4798905-1.0, owl:NamedIndividual;
@@ -1188,7 +1188,7 @@ cm:M-4798905-1.0 a owl:Class;
 cm:M-4798906 a owl:Class;
   cm:has-id "4798906";
   cm:references-ata-code ata:ata-20-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798906-1.0>
   a cm:M-4798906-1.0, owl:NamedIndividual;
@@ -1257,7 +1257,7 @@ cm:M-4798906-5.0 a owl:Class;
 cm:M-4798949 a owl:Class;
   cm:has-id "4798949";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798949-1.0>
   a cm:M-4798949-1.0, owl:NamedIndividual;
@@ -1280,7 +1280,7 @@ cm:M-4798949-1.0 a owl:Class;
 cm:M-4798950 a owl:Class;
   cm:has-id "4798950";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798950-1.0>
   a cm:M-4798950-1.0, owl:NamedIndividual;
@@ -1305,7 +1305,7 @@ cm:M-4798950-1.0 a owl:Class;
 cm:M-4798952 a owl:Class;
   cm:has-id "4798952";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798952-1.0>
   a cm:M-4798952-1.0, owl:NamedIndividual;
@@ -1357,7 +1357,7 @@ cm:M-4798952-4.0 a owl:Class;
 cm:M-4798961 a owl:Class;
   cm:has-id "4798961";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798961-1.0>
   a cm:M-4798961-1.0, owl:NamedIndividual;
@@ -1400,7 +1400,7 @@ cm:M-4798961-3.0 a owl:Class;
 cm:M-4798985 a owl:Class;
   cm:has-id "4798985";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4798985-1.0>
   a cm:M-4798985-1.0, owl:NamedIndividual;
@@ -1422,7 +1422,7 @@ cm:M-4798985-1.0 a owl:Class;
 cm:M-4799009 a owl:Class;
   cm:has-id "4799009";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799009-1.0>
   a cm:M-4799009-1.0, owl:NamedIndividual;
@@ -1446,7 +1446,7 @@ cm:M-4799009-1.0 a owl:Class;
 cm:M-4799099 a owl:Class;
   cm:has-id "4799099";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799099-1.0>
   a cm:M-4799099-1.0, owl:NamedIndividual;
@@ -1489,7 +1489,7 @@ cm:M-4799099-3.0 a owl:Class;
 cm:M-4799100 a owl:Class;
   cm:has-id "4799100";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799100-1.0>
   a cm:M-4799100-1.0, owl:NamedIndividual;
@@ -1539,7 +1539,7 @@ cm:M-4799100-4.0 a owl:Class;
 cm:M-4799101 a owl:Class;
   cm:has-id "4799101";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799101-1.0>
   a cm:M-4799101-1.0, owl:NamedIndividual;
@@ -1563,7 +1563,7 @@ cm:M-4799101-1.0 a owl:Class;
 cm:M-4799104 a owl:Class;
   cm:has-id "4799104";
   cm:references-ata-code ata:ata-20-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799104-1.0>
   a cm:M-4799104-1.0, owl:NamedIndividual;
@@ -1604,7 +1604,7 @@ cm:M-4799104-3.0 a owl:Class;
 cm:M-4799105 a owl:Class;
   cm:has-id "4799105";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799105-1.0>
   a cm:M-4799105-1.0, owl:NamedIndividual;
@@ -1629,7 +1629,7 @@ cm:M-4799105-1.0 a owl:Class;
 cm:M-4799122 a owl:Class;
   cm:has-id "4799122";
   cm:references-ata-code ata:ata-75-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799122-1.0>
   a cm:M-4799122-1.0, owl:NamedIndividual;
@@ -1684,7 +1684,7 @@ cm:M-4799122-4.0 a owl:Class;
 cm:M-4799129 a owl:Class;
   cm:has-id "4799129";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799129-1.0>
   a cm:M-4799129-1.0, owl:NamedIndividual;
@@ -1707,7 +1707,7 @@ cm:M-4799129-1.0 a owl:Class;
 cm:M-4799132 a owl:Class;
   cm:has-id "4799132";
   cm:references-ata-code ata:ata-25-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799132-1.0>
   a cm:M-4799132-1.0, owl:NamedIndividual;
@@ -1733,7 +1733,7 @@ cm:M-4799132-1.0 a owl:Class;
 cm:M-4799356 a owl:Class;
   cm:has-id "4799356";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799356-1.0>
   a cm:M-4799356-1.0, owl:NamedIndividual;
@@ -1755,7 +1755,7 @@ cm:M-4799356-1.0 a owl:Class;
 cm:M-4799358 a owl:Class;
   cm:has-id "4799358";
   cm:references-ata-code ata:ata-36-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799358-1.0>
   a cm:M-4799358-1.0, owl:NamedIndividual;
@@ -1780,7 +1780,7 @@ cm:M-4799358-1.0 a owl:Class;
 cm:M-4799382 a owl:Class;
   cm:has-id "4799382";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799382-1.0>
   a cm:M-4799382-1.0, owl:NamedIndividual;
@@ -1812,7 +1812,7 @@ cm:M-4799382-2.0 a owl:Class;
 cm:M-4799411 a owl:Class;
   cm:has-id "4799411";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799411-1.0>
   a cm:M-4799411-1.0, owl:NamedIndividual;
@@ -1846,7 +1846,7 @@ cm:M-4799411-2.0 a owl:Class;
 cm:M-4799416 a owl:Class;
   cm:has-id "4799416";
   cm:references-ata-code ata:ata-11-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799416-1.0>
   a cm:M-4799416-1.0, owl:NamedIndividual;
@@ -1886,7 +1886,7 @@ cm:M-4799416-3.0 a owl:Class;
 cm:M-4799425 a owl:Class;
   cm:has-id "4799425";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799425-1.0>
   a cm:M-4799425-1.0, owl:NamedIndividual;
@@ -1908,7 +1908,7 @@ cm:M-4799425-1.0 a owl:Class;
 cm:M-4799447 a owl:Class;
   cm:has-id "4799447";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799447-1.0>
   a cm:M-4799447-1.0, owl:NamedIndividual;
@@ -1934,7 +1934,7 @@ cm:M-4799447-1.0 a owl:Class;
 cm:M-4799456 a owl:Class;
   cm:has-id "4799456";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799456-1.0>
   a cm:M-4799456-1.0, owl:NamedIndividual;
@@ -1975,7 +1975,7 @@ cm:M-4799456-3.0 a owl:Class;
 cm:M-4799459 a owl:Class;
   cm:has-id "4799459";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799459-1.0>
   a cm:M-4799459-1.0, owl:NamedIndividual;
@@ -2011,7 +2011,7 @@ cm:M-4799459-2.0 a owl:Class;
 cm:M-4799491 a owl:Class;
   cm:has-id "4799491";
   cm:references-ata-code ata:ata-36-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799491-1.0>
   a cm:M-4799491-1.0, owl:NamedIndividual;
@@ -2038,7 +2038,7 @@ cm:M-4799491-1.0 a owl:Class;
 cm:M-4799538 a owl:Class;
   cm:has-id "4799538";
   cm:references-ata-code ata:ata-11-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799538-1.0>
   a cm:M-4799538-1.0, owl:NamedIndividual;
@@ -2069,7 +2069,7 @@ cm:M-4799538-2.0 a owl:Class;
 cm:M-4799541 a owl:Class;
   cm:has-id "4799541";
   cm:references-ata-code ata:ata-32-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799541-1.0>
   a cm:M-4799541-1.0, owl:NamedIndividual;
@@ -2091,7 +2091,7 @@ cm:M-4799541-1.0 a owl:Class;
 cm:M-4799543 a owl:Class;
   cm:has-id "4799543";
   cm:references-ata-code ata:ata-11-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799543-1.0>
   a cm:M-4799543-1.0, owl:NamedIndividual;
@@ -2114,7 +2114,7 @@ cm:M-4799543-1.0 a owl:Class;
 cm:M-4799544 a owl:Class;
   cm:has-id "4799544";
   cm:references-ata-code ata:ata-78-30;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799544-1.0>
   a cm:M-4799544-1.0, owl:NamedIndividual;
@@ -2146,7 +2146,7 @@ cm:M-4799544-2.0 a owl:Class;
 cm:M-4799658 a owl:Class;
   cm:has-id "4799658";
   cm:references-ata-code ata:ata-33-X;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4799658-1.0>
   a cm:M-4799658-1.0, owl:NamedIndividual;
@@ -2168,7 +2168,7 @@ cm:M-4799658-1.0 a owl:Class;
 cm:M-4800160 a owl:Class;
   cm:has-id "4800160";
   cm:references-ata-code ata:ata-05-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4800160-1.0>
   a cm:M-4800160-1.0, owl:NamedIndividual;
@@ -2189,7 +2189,7 @@ cm:M-4800160-1.0 a owl:Class;
 cm:M-4800163 a owl:Class;
   cm:has-id "4800163";
   cm:references-ata-code ata:ata-32-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4800163-1.0>
   a cm:M-4800163-1.0, owl:NamedIndividual;
@@ -2215,7 +2215,7 @@ cm:M-4800163-1.0 a owl:Class;
 cm:M-4800166 a owl:Class;
   cm:has-id "4800166";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4800166-1.0>
   a cm:M-4800166-1.0, owl:NamedIndividual;
@@ -2246,7 +2246,7 @@ cm:M-4800166-2.0 a owl:Class;
 cm:M-4800218 a owl:Class;
   cm:has-id "4800218";
   cm:references-ata-code ata:ata-33-X;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4800218-1.0>
   a cm:M-4800218-1.0, owl:NamedIndividual;
@@ -2267,7 +2267,7 @@ cm:M-4800218-1.0 a owl:Class;
 cm:M-4802201 a owl:Class;
   cm:has-id "4802201";
   cm:references-ata-code ata:ata-25-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4802201-1.0>
   a cm:M-4802201-1.0, owl:NamedIndividual;
@@ -2293,7 +2293,7 @@ cm:M-4802201-1.0 a owl:Class;
 cm:M-4802788 a owl:Class;
   cm:has-id "4802788";
   cm:references-ata-code ata:ata-05-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4802788-1.0>
   a cm:M-4802788-1.0, owl:NamedIndividual;
@@ -2315,7 +2315,7 @@ cm:M-4802788-1.0 a owl:Class;
 cm:M-4802792 a owl:Class;
   cm:has-id "4802792";
   cm:references-ata-code ata:ata-05-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4802792-1.0>
   a cm:M-4802792-1.0, owl:NamedIndividual;
@@ -2341,7 +2341,7 @@ cm:M-4802792-1.0 a owl:Class;
 cm:M-4802920 a owl:Class;
   cm:has-id "4802920";
   cm:references-ata-code ata:ata-72-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4802920-1.0>
   a cm:M-4802920-1.0, owl:NamedIndividual;
@@ -2365,7 +2365,7 @@ cm:M-4802920-1.0 a owl:Class;
 cm:M-4802921 a owl:Class;
   cm:has-id "4802921";
   cm:references-ata-code ata:ata-72-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_1%2FH-18+C09-M-4802921-1.0>
   a cm:M-4802921-1.0, owl:NamedIndividual;
@@ -2394,7 +2394,7 @@ cm:M-4802921-1.0 a owl:Class;
 cm:M-4709942 a owl:Class;
   cm:has-id "4709942";
   cm:references-ata-code ata:ata-34-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4709942-1.0>
   a cm:M-4709942-1.0, owl:NamedIndividual;
@@ -2439,7 +2439,7 @@ cm:M-4709942-2.0 a owl:Class;
 cm:M-4710511 a owl:Class;
   cm:has-id "4710511";
   cm:references-ata-code ata:ata-53-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4710511-1.0>
   a cm:M-4710511-1.0, owl:NamedIndividual;
@@ -2463,7 +2463,7 @@ cm:M-4710511-1.0 a owl:Class;
 cm:M-4710513 a owl:Class;
   cm:has-id "4710513";
   cm:references-ata-code ata:ata-28-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4710513-1.0>
   a cm:M-4710513-1.0, owl:NamedIndividual;
@@ -2490,7 +2490,7 @@ cm:M-4710513-1.0 a owl:Class;
 cm:M-4710670 a owl:Class;
   cm:has-id "4710670";
   cm:references-ata-code ata:ata-25-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4710670-1.0>
   a cm:M-4710670-1.0, owl:NamedIndividual;
@@ -2539,7 +2539,7 @@ cm:M-4710670-4.0 a owl:Class;
 cm:M-4710672 a owl:Class;
   cm:has-id "4710672";
   cm:references-ata-code ata:ata-23-30;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4710672-1.0>
   a cm:M-4710672-1.0, owl:NamedIndividual;
@@ -2562,7 +2562,7 @@ cm:M-4710672-1.0 a owl:Class;
 cm:M-4710673 a owl:Class;
   cm:has-id "4710673";
   cm:references-ata-code ata:ata-23-30;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4710673-1.0>
   a cm:M-4710673-1.0, owl:NamedIndividual;
@@ -2587,7 +2587,7 @@ cm:M-4710673-1.0 a owl:Class;
 cm:M-4710691 a owl:Class;
   cm:has-id "4710691";
   cm:references-ata-code ata:ata-25-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4710691-1.0>
   a cm:M-4710691-1.0, owl:NamedIndividual;
@@ -2618,7 +2618,7 @@ cm:M-4710691-2.0 a owl:Class;
 cm:M-4710745 a owl:Class;
   cm:has-id "4710745";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4710745-1.0>
   a cm:M-4710745-1.0, owl:NamedIndividual;
@@ -2640,7 +2640,7 @@ cm:M-4710745-1.0 a owl:Class;
 cm:M-4710746 a owl:Class;
   cm:has-id "4710746";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4710746-1.0>
   a cm:M-4710746-1.0, owl:NamedIndividual;
@@ -2667,7 +2667,7 @@ cm:M-4710746-1.0 a owl:Class;
 cm:M-4710749 a owl:Class;
   cm:has-id "4710749";
   cm:references-ata-code ata:ata-52-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4710749-1.0>
   a cm:M-4710749-1.0, owl:NamedIndividual;
@@ -2734,7 +2734,7 @@ cm:M-4710749-6.0 a owl:Class;
 cm:M-4710757 a owl:Class;
   cm:has-id "4710757";
   cm:references-ata-code ata:ata-71-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4710757-1.0>
   a cm:M-4710757-1.0, owl:NamedIndividual;
@@ -2757,7 +2757,7 @@ cm:M-4710757-1.0 a owl:Class;
 cm:M-4711163 a owl:Class;
   cm:has-id "4711163";
   cm:references-ata-code ata:ata-35-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711163-1.0>
   a cm:M-4711163-1.0, owl:NamedIndividual;
@@ -2781,7 +2781,7 @@ cm:M-4711163-1.0 a owl:Class;
 cm:M-4711212 a owl:Class;
   cm:has-id "4711212";
   cm:references-ata-code ata:ata-36-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711212-1.0>
   a cm:M-4711212-1.0, owl:NamedIndividual;
@@ -2822,7 +2822,7 @@ cm:M-4711212-3.0 a owl:Class;
 cm:M-4711215 a owl:Class;
   cm:has-id "4711215";
   cm:references-ata-code ata:ata-53-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711215-1.0>
   a cm:M-4711215-1.0, owl:NamedIndividual;
@@ -2846,7 +2846,7 @@ cm:M-4711215-1.0 a owl:Class;
 cm:M-4711228 a owl:Class;
   cm:has-id "4711228";
   cm:references-ata-code ata:ata-38-30;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711228-1.0>
   a cm:M-4711228-1.0, owl:NamedIndividual;
@@ -2878,7 +2878,7 @@ cm:M-4711228-2.0 a owl:Class;
 cm:M-4711239 a owl:Class;
   cm:has-id "4711239";
   cm:references-ata-code ata:ata-25-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711239-1.0>
   a cm:M-4711239-1.0, owl:NamedIndividual;
@@ -2909,7 +2909,7 @@ cm:M-4711239-2.0 a owl:Class;
 cm:M-4711251 a owl:Class;
   cm:has-id "4711251";
   cm:references-ata-code ata:ata-26-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711251-1.0>
   a cm:M-4711251-1.0, owl:NamedIndividual;
@@ -2935,7 +2935,7 @@ cm:M-4711251-1.0 a owl:Class;
 cm:M-4711318 a owl:Class;
   cm:has-id "4711318";
   cm:references-ata-code ata:ata-28-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711318-1.0>
   a cm:M-4711318-1.0, owl:NamedIndividual;
@@ -2994,7 +2994,7 @@ cm:M-4711318-5.0 a owl:Class;
 cm:M-4711332 a owl:Class;
   cm:has-id "4711332";
   cm:references-ata-code ata:ata-53-30;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711332-1.0>
   a cm:M-4711332-1.0, owl:NamedIndividual;
@@ -3022,7 +3022,7 @@ cm:M-4711332-1.0 a owl:Class;
 cm:M-4711368 a owl:Class;
   cm:has-id "4711368";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711368-1.0>
   a cm:M-4711368-1.0, owl:NamedIndividual;
@@ -3099,7 +3099,7 @@ cm:M-4711368-7.0 a owl:Class;
 cm:M-4711399 a owl:Class;
   cm:has-id "4711399";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711399-1.0>
   a cm:M-4711399-1.0, owl:NamedIndividual;
@@ -3131,7 +3131,7 @@ cm:M-4711399-2.0 a owl:Class;
 cm:M-4711409 a owl:Class;
   cm:has-id "4711409";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711409-1.0>
   a cm:M-4711409-1.0, owl:NamedIndividual;
@@ -3154,7 +3154,7 @@ cm:M-4711409-1.0 a owl:Class;
 cm:M-4711432 a owl:Class;
   cm:has-id "4711432";
   cm:references-ata-code ata:ata-25-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711432-1.0>
   a cm:M-4711432-1.0, owl:NamedIndividual;
@@ -3187,7 +3187,7 @@ cm:M-4711432-2.0 a owl:Class;
 cm:M-4711433 a owl:Class;
   cm:has-id "4711433";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711433-1.0>
   a cm:M-4711433-1.0, owl:NamedIndividual;
@@ -3228,7 +3228,7 @@ cm:M-4711433-3.0 a owl:Class;
 cm:M-4711434 a owl:Class;
   cm:has-id "4711434";
   cm:references-ata-code ata:ata-25-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711434-1.0>
   a cm:M-4711434-1.0, owl:NamedIndividual;
@@ -3262,7 +3262,7 @@ cm:M-4711434-2.0 a owl:Class;
 cm:M-4711435 a owl:Class;
   cm:has-id "4711435";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711435-1.0>
   a cm:M-4711435-1.0, owl:NamedIndividual;
@@ -3303,7 +3303,7 @@ cm:M-4711435-3.0 a owl:Class;
 cm:M-4711437 a owl:Class;
   cm:has-id "4711437";
   cm:references-ata-code ata:ata-25-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711437-1.0>
   a cm:M-4711437-1.0, owl:NamedIndividual;
@@ -3335,7 +3335,7 @@ cm:M-4711437-2.0 a owl:Class;
 cm:M-4711439 a owl:Class;
   cm:has-id "4711439";
   cm:references-ata-code ata:ata-25-30;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711439-1.0>
   a cm:M-4711439-1.0, owl:NamedIndividual;
@@ -3367,7 +3367,7 @@ cm:M-4711439-2.0 a owl:Class;
 cm:M-4711440 a owl:Class;
   cm:has-id "4711440";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711440-1.0>
   a cm:M-4711440-1.0, owl:NamedIndividual;
@@ -3398,7 +3398,7 @@ cm:M-4711440-2.0 a owl:Class;
 cm:M-4711443 a owl:Class;
   cm:has-id "4711443";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711443-1.0>
   a cm:M-4711443-1.0, owl:NamedIndividual;
@@ -3427,7 +3427,7 @@ cm:M-4711443-1.0 a owl:Class;
 cm:M-4711445 a owl:Class;
   cm:has-id "4711445";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711445-1.0>
   a cm:M-4711445-1.0, owl:NamedIndividual;
@@ -3521,7 +3521,7 @@ cm:M-4711445-8.0 a owl:Class;
 cm:M-4711474 a owl:Class;
   cm:has-id "4711474";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711474-1.0>
   a cm:M-4711474-1.0, owl:NamedIndividual;
@@ -3547,7 +3547,7 @@ cm:M-4711474-1.0 a owl:Class;
 cm:M-4711476 a owl:Class;
   cm:has-id "4711476";
   cm:references-ata-code ata:ata-36-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711476-1.0>
   a cm:M-4711476-1.0, owl:NamedIndividual;
@@ -3569,7 +3569,7 @@ cm:M-4711476-1.0 a owl:Class;
 cm:M-4711478 a owl:Class;
   cm:has-id "4711478";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711478-1.0>
   a cm:M-4711478-1.0, owl:NamedIndividual;
@@ -3593,7 +3593,7 @@ cm:M-4711478-1.0 a owl:Class;
 cm:M-4711480 a owl:Class;
   cm:has-id "4711480";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711480-1.0>
   a cm:M-4711480-1.0, owl:NamedIndividual;
@@ -3629,7 +3629,7 @@ cm:M-4711480-2.0 a owl:Class;
 cm:M-4711481 a owl:Class;
   cm:has-id "4711481";
   cm:references-ata-code ata:ata-21-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711481-1.0>
   a cm:M-4711481-1.0, owl:NamedIndividual;
@@ -3654,7 +3654,7 @@ cm:M-4711481-1.0 a owl:Class;
 cm:M-4711482 a owl:Class;
   cm:has-id "4711482";
   cm:references-ata-code ata:ata-21-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711482-1.0>
   a cm:M-4711482-1.0, owl:NamedIndividual;
@@ -3696,7 +3696,7 @@ cm:M-4711482-3.0 a owl:Class;
 cm:M-4711483 a owl:Class;
   cm:has-id "4711483";
   cm:references-ata-code ata:ata-21-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711483-1.0>
   a cm:M-4711483-1.0, owl:NamedIndividual;
@@ -3718,7 +3718,7 @@ cm:M-4711483-1.0 a owl:Class;
 cm:M-4711484 a owl:Class;
   cm:has-id "4711484";
   cm:references-ata-code ata:ata-21-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711484-1.0>
   a cm:M-4711484-1.0, owl:NamedIndividual;
@@ -3741,7 +3741,7 @@ cm:M-4711484-1.0 a owl:Class;
 cm:M-4711485 a owl:Class;
   cm:has-id "4711485";
   cm:references-ata-code ata:ata-11-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711485-1.0>
   a cm:M-4711485-1.0, owl:NamedIndividual;
@@ -3764,7 +3764,7 @@ cm:M-4711485-1.0 a owl:Class;
 cm:M-4711489 a owl:Class;
   cm:has-id "4711489";
   cm:references-ata-code ata:ata-53-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711489-1.0>
   a cm:M-4711489-1.0, owl:NamedIndividual;
@@ -3792,7 +3792,7 @@ cm:M-4711489-1.0 a owl:Class;
 cm:M-4711492 a owl:Class;
   cm:has-id "4711492";
   cm:references-ata-code ata:ata-29-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711492-1.0>
   a cm:M-4711492-1.0, owl:NamedIndividual;
@@ -3824,7 +3824,7 @@ cm:M-4711492-2.0 a owl:Class;
 cm:M-4711507 a owl:Class;
   cm:has-id "4711507";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711507-1.0>
   a cm:M-4711507-1.0, owl:NamedIndividual;
@@ -3856,7 +3856,7 @@ cm:M-4711507-2.0 a owl:Class;
 cm:M-4711515 a owl:Class;
   cm:has-id "4711515";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711515-1.0>
   a cm:M-4711515-1.0, owl:NamedIndividual;
@@ -3880,7 +3880,7 @@ cm:M-4711515-1.0 a owl:Class;
 cm:M-4711519 a owl:Class;
   cm:has-id "4711519";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711519-1.0>
   a cm:M-4711519-1.0, owl:NamedIndividual;
@@ -3912,7 +3912,7 @@ cm:M-4711519-2.0 a owl:Class;
 cm:M-4711521 a owl:Class;
   cm:has-id "4711521";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711521-1.0>
   a cm:M-4711521-1.0, owl:NamedIndividual;
@@ -3934,7 +3934,7 @@ cm:M-4711521-1.0 a owl:Class;
 cm:M-4711522 a owl:Class;
   cm:has-id "4711522";
   cm:references-ata-code ata:ata-29-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711522-1.0>
   a cm:M-4711522-1.0, owl:NamedIndividual;
@@ -3957,7 +3957,7 @@ cm:M-4711522-1.0 a owl:Class;
 cm:M-4711525 a owl:Class;
   cm:has-id "4711525";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711525-1.0>
   a cm:M-4711525-1.0, owl:NamedIndividual;
@@ -3979,7 +3979,7 @@ cm:M-4711525-1.0 a owl:Class;
 cm:M-4711526 a owl:Class;
   cm:has-id "4711526";
   cm:references-ata-code ata:ata-29-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711526-1.0>
   a cm:M-4711526-1.0, owl:NamedIndividual;
@@ -4002,7 +4002,7 @@ cm:M-4711526-1.0 a owl:Class;
 cm:M-4711527 a owl:Class;
   cm:has-id "4711527";
   cm:references-ata-code ata:ata-25-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711527-1.0>
   a cm:M-4711527-1.0, owl:NamedIndividual;
@@ -4024,7 +4024,7 @@ cm:M-4711527-1.0 a owl:Class;
 cm:M-4711528 a owl:Class;
   cm:has-id "4711528";
   cm:references-ata-code ata:ata-21-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711528-1.0>
   a cm:M-4711528-1.0, owl:NamedIndividual;
@@ -4047,7 +4047,7 @@ cm:M-4711528-1.0 a owl:Class;
 cm:M-4711529 a owl:Class;
   cm:has-id "4711529";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711529-1.0>
   a cm:M-4711529-1.0, owl:NamedIndividual;
@@ -4079,7 +4079,7 @@ cm:M-4711529-2.0 a owl:Class;
 cm:M-4711530 a owl:Class;
   cm:has-id "4711530";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711530-1.0>
   a cm:M-4711530-1.0, owl:NamedIndividual;
@@ -4111,7 +4111,7 @@ cm:M-4711530-2.0 a owl:Class;
 cm:M-4711539 a owl:Class;
   cm:has-id "4711539";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711539-1.0>
   a cm:M-4711539-1.0, owl:NamedIndividual;
@@ -4143,7 +4143,7 @@ cm:M-4711539-2.0 a owl:Class;
 cm:M-4711541 a owl:Class;
   cm:has-id "4711541";
   cm:references-ata-code ata:ata-27-30;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711541-1.0>
   a cm:M-4711541-1.0, owl:NamedIndividual;
@@ -4175,7 +4175,7 @@ cm:M-4711541-2.0 a owl:Class;
 cm:M-4711542 a owl:Class;
   cm:has-id "4711542";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711542-1.0>
   a cm:M-4711542-1.0, owl:NamedIndividual;
@@ -4197,7 +4197,7 @@ cm:M-4711542-1.0 a owl:Class;
 cm:M-4711543 a owl:Class;
   cm:has-id "4711543";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711543-1.0>
   a cm:M-4711543-1.0, owl:NamedIndividual;
@@ -4219,7 +4219,7 @@ cm:M-4711543-1.0 a owl:Class;
 cm:M-4711544 a owl:Class;
   cm:has-id "4711544";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711544-1.0>
   a cm:M-4711544-1.0, owl:NamedIndividual;
@@ -4241,7 +4241,7 @@ cm:M-4711544-1.0 a owl:Class;
 cm:M-4711546 a owl:Class;
   cm:has-id "4711546";
   cm:references-ata-code ata:ata-32-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711546-1.0>
   a cm:M-4711546-1.0, owl:NamedIndividual;
@@ -4264,7 +4264,7 @@ cm:M-4711546-1.0 a owl:Class;
 cm:M-4711550 a owl:Class;
   cm:has-id "4711550";
   cm:references-ata-code ata:ata-71-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711550-1.0>
   a cm:M-4711550-1.0, owl:NamedIndividual;
@@ -4295,7 +4295,7 @@ cm:M-4711550-2.0 a owl:Class;
 cm:M-4711553 a owl:Class;
   cm:has-id "4711553";
   cm:references-ata-code ata:ata-53-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711553-1.0>
   a cm:M-4711553-1.0, owl:NamedIndividual;
@@ -4320,7 +4320,7 @@ cm:M-4711553-1.0 a owl:Class;
 cm:M-4711554 a owl:Class;
   cm:has-id "4711554";
   cm:references-ata-code ata:ata-32-30;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711554-1.0>
   a cm:M-4711554-1.0, owl:NamedIndividual;
@@ -4371,7 +4371,7 @@ cm:M-4711554-4.0 a owl:Class;
 cm:M-4711556 a owl:Class;
   cm:has-id "4711556";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711556-1.0>
   a cm:M-4711556-1.0, owl:NamedIndividual;
@@ -4404,7 +4404,7 @@ cm:M-4711556-2.0 a owl:Class;
 cm:M-4711558 a owl:Class;
   cm:has-id "4711558";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711558-1.0>
   a cm:M-4711558-1.0, owl:NamedIndividual;
@@ -4427,7 +4427,7 @@ cm:M-4711558-1.0 a owl:Class;
 cm:M-4711573 a owl:Class;
   cm:has-id "4711573";
   cm:references-ata-code ata:ata-29-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711573-1.0>
   a cm:M-4711573-1.0, owl:NamedIndividual;
@@ -4449,7 +4449,7 @@ cm:M-4711573-1.0 a owl:Class;
 cm:M-4711576 a owl:Class;
   cm:has-id "4711576";
   cm:references-ata-code ata:ata-32-30;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711576-1.0>
   a cm:M-4711576-1.0, owl:NamedIndividual;
@@ -4471,7 +4471,7 @@ cm:M-4711576-1.0 a owl:Class;
 cm:M-4711580 a owl:Class;
   cm:has-id "4711580";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711580-1.0>
   a cm:M-4711580-1.0, owl:NamedIndividual;
@@ -4494,7 +4494,7 @@ cm:M-4711580-1.0 a owl:Class;
 cm:M-4711581 a owl:Class;
   cm:has-id "4711581";
   cm:references-ata-code ata:ata-11-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711581-1.0>
   a cm:M-4711581-1.0, owl:NamedIndividual;
@@ -4527,7 +4527,7 @@ cm:M-4711581-2.0 a owl:Class;
 cm:M-4711619 a owl:Class;
   cm:has-id "4711619";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711619-1.0>
   a cm:M-4711619-1.0, owl:NamedIndividual;
@@ -4558,7 +4558,7 @@ cm:M-4711619-2.0 a owl:Class;
 cm:M-4711626 a owl:Class;
   cm:has-id "4711626";
   cm:references-ata-code ata:ata-27-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711626-1.0>
   a cm:M-4711626-1.0, owl:NamedIndividual;
@@ -4581,7 +4581,7 @@ cm:M-4711626-1.0 a owl:Class;
 cm:M-4711634 a owl:Class;
   cm:has-id "4711634";
   cm:references-ata-code ata:ata-36-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711634-1.0>
   a cm:M-4711634-1.0, owl:NamedIndividual;
@@ -4616,7 +4616,7 @@ cm:M-4711634-2.0 a owl:Class;
 cm:M-4711643 a owl:Class;
   cm:has-id "4711643";
   cm:references-ata-code ata:ata-11-30;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711643-1.0>
   a cm:M-4711643-1.0, owl:NamedIndividual;
@@ -4656,7 +4656,7 @@ cm:M-4711643-3.0 a owl:Class;
 cm:M-4711647 a owl:Class;
   cm:has-id "4711647";
   cm:references-ata-code ata:ata-20-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711647-1.0>
   a cm:M-4711647-1.0, owl:NamedIndividual;
@@ -4678,7 +4678,7 @@ cm:M-4711647-1.0 a owl:Class;
 cm:M-4711648 a owl:Class;
   cm:has-id "4711648";
   cm:references-ata-code ata:ata-55-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711648-1.0>
   a cm:M-4711648-1.0, owl:NamedIndividual;
@@ -4700,7 +4700,7 @@ cm:M-4711648-1.0 a owl:Class;
 cm:M-4711649 a owl:Class;
   cm:has-id "4711649";
   cm:references-ata-code ata:ata-55-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711649-1.0>
   a cm:M-4711649-1.0, owl:NamedIndividual;
@@ -4722,7 +4722,7 @@ cm:M-4711649-1.0 a owl:Class;
 cm:M-4711650 a owl:Class;
   cm:has-id "4711650";
   cm:references-ata-code ata:ata-55-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711650-1.0>
   a cm:M-4711650-1.0, owl:NamedIndividual;
@@ -4744,7 +4744,7 @@ cm:M-4711650-1.0 a owl:Class;
 cm:M-4711656 a owl:Class;
   cm:has-id "4711656";
   cm:references-ata-code ata:ata-26-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711656-1.0>
   a cm:M-4711656-1.0, owl:NamedIndividual;
@@ -4768,7 +4768,7 @@ cm:M-4711656-1.0 a owl:Class;
 cm:M-4711657 a owl:Class;
   cm:has-id "4711657";
   cm:references-ata-code ata:ata-55-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711657-1.0>
   a cm:M-4711657-1.0, owl:NamedIndividual;
@@ -4809,7 +4809,7 @@ cm:M-4711657-3.0 a owl:Class;
 cm:M-4711669 a owl:Class;
   cm:has-id "4711669";
   cm:references-ata-code ata:ata-55-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711669-1.0>
   a cm:M-4711669-1.0, owl:NamedIndividual;
@@ -4842,7 +4842,7 @@ cm:M-4711669-2.0 a owl:Class;
 cm:M-4711670 a owl:Class;
   cm:has-id "4711670";
   cm:references-ata-code ata:ata-11-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711670-1.0>
   a cm:M-4711670-1.0, owl:NamedIndividual;
@@ -4864,7 +4864,7 @@ cm:M-4711670-1.0 a owl:Class;
 cm:M-4711672 a owl:Class;
   cm:has-id "4711672";
   cm:references-ata-code ata:ata-20-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711672-1.0>
   a cm:M-4711672-1.0, owl:NamedIndividual;
@@ -4887,7 +4887,7 @@ cm:M-4711672-1.0 a owl:Class;
 cm:M-4711676 a owl:Class;
   cm:has-id "4711676";
   cm:references-ata-code ata:ata-25-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711676-1.0>
   a cm:M-4711676-1.0, owl:NamedIndividual;
@@ -4919,7 +4919,7 @@ cm:M-4711676-2.0 a owl:Class;
 cm:M-4711699 a owl:Class;
   cm:has-id "4711699";
   cm:references-ata-code ata:ata-12-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711699-1.0>
   a cm:M-4711699-1.0, owl:NamedIndividual;
@@ -4950,7 +4950,7 @@ cm:M-4711699-2.0 a owl:Class;
 cm:M-4711705 a owl:Class;
   cm:has-id "4711705";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711705-1.0>
   a cm:M-4711705-1.0, owl:NamedIndividual;
@@ -4972,7 +4972,7 @@ cm:M-4711705-1.0 a owl:Class;
 cm:M-4711706 a owl:Class;
   cm:has-id "4711706";
   cm:references-ata-code ata:ata-36-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711706-1.0>
   a cm:M-4711706-1.0, owl:NamedIndividual;
@@ -4995,7 +4995,7 @@ cm:M-4711706-1.0 a owl:Class;
 cm:M-4711707 a owl:Class;
   cm:has-id "4711707";
   cm:references-ata-code ata:ata-05-40;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711707-1.0>
   a cm:M-4711707-1.0, owl:NamedIndividual;
@@ -5020,7 +5020,7 @@ cm:M-4711707-1.0 a owl:Class;
 cm:M-4711735 a owl:Class;
   cm:has-id "4711735";
   cm:references-ata-code ata:ata-78-30;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711735-1.0>
   a cm:M-4711735-1.0, owl:NamedIndividual;
@@ -5045,7 +5045,7 @@ cm:M-4711735-1.0 a owl:Class;
 cm:M-4711787 a owl:Class;
   cm:has-id "4711787";
   cm:references-ata-code ata:ata-53-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711787-1.0>
   a cm:M-4711787-1.0, owl:NamedIndividual;
@@ -5069,7 +5069,7 @@ cm:M-4711787-1.0 a owl:Class;
 cm:M-4711955 a owl:Class;
   cm:has-id "4711955";
   cm:references-ata-code ata:ata-12-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4711955-1.0>
   a cm:M-4711955-1.0, owl:NamedIndividual;
@@ -5091,7 +5091,7 @@ cm:M-4711955-1.0 a owl:Class;
 cm:M-4712011 a owl:Class;
   cm:has-id "4712011";
   cm:references-ata-code ata:ata-26-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4712011-1.0>
   a cm:M-4712011-1.0, owl:NamedIndividual;
@@ -5113,7 +5113,7 @@ cm:M-4712011-1.0 a owl:Class;
 cm:M-4712013 a owl:Class;
   cm:has-id "4712013";
   cm:references-ata-code ata:ata-32-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4712013-1.0>
   a cm:M-4712013-1.0, owl:NamedIndividual;
@@ -5136,7 +5136,7 @@ cm:M-4712013-1.0 a owl:Class;
 cm:M-4712060 a owl:Class;
   cm:has-id "4712060";
   cm:references-ata-code ata:ata-11-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4712060-1.0>
   a cm:M-4712060-1.0, owl:NamedIndividual;
@@ -5159,7 +5159,7 @@ cm:M-4712060-1.0 a owl:Class;
 cm:M-4712061 a owl:Class;
   cm:has-id "4712061";
   cm:references-ata-code ata:ata-25-00;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4712061-1.0>
   a cm:M-4712061-1.0, owl:NamedIndividual;
@@ -5190,7 +5190,7 @@ cm:M-4712061-2.0 a owl:Class;
 cm:M-4712083 a owl:Class;
   cm:has-id "4712083";
   cm:references-ata-code ata:ata-25;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4712083-1.0>
   a cm:M-4712083-1.0, owl:NamedIndividual;
@@ -5226,7 +5226,7 @@ cm:M-4712083-2.0 a owl:Class;
 cm:M-4712112 a owl:Class;
   cm:has-id "4712112";
   cm:references-ata-code ata:ata-55-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4712112-1.0>
   a cm:M-4712112-1.0, owl:NamedIndividual;
@@ -5251,7 +5251,7 @@ cm:M-4712112-1.0 a owl:Class;
 cm:M-4712328 a owl:Class;
   cm:has-id "4712328";
   cm:references-ata-code ata:ata-71-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4712328-1.0>
   a cm:M-4712328-1.0, owl:NamedIndividual;
@@ -5296,7 +5296,7 @@ cm:M-4712328-3.0 a owl:Class;
 cm:M-4712397 a owl:Class;
   cm:has-id "4712397";
   cm:references-ata-code ata:ata-26-20;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4712397-1.0>
   a cm:M-4712397-1.0, owl:NamedIndividual;
@@ -5318,7 +5318,7 @@ cm:M-4712397-1.0 a owl:Class;
 cm:M-4712429 a owl:Class;
   cm:has-id "4712429";
   cm:references-ata-code ata:ata-32-10;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4712429-1.0>
   a cm:M-4712429-1.0, owl:NamedIndividual;
@@ -5340,7 +5340,7 @@ cm:M-4712429-1.0 a owl:Class;
 cm:M-4712464 a owl:Class;
   cm:has-id "4712464";
   cm:references-ata-code ata:ata-21-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4712464-1.0>
   a cm:M-4712464-1.0, owl:NamedIndividual;
@@ -5366,7 +5366,7 @@ cm:M-4712464-1.0 a owl:Class;
 cm:M-4712622 a owl:Class;
   cm:has-id "4712622";
   cm:references-ata-code ata:ata-33-X;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4712622-1.0>
   a cm:M-4712622-1.0, owl:NamedIndividual;
@@ -5388,7 +5388,7 @@ cm:M-4712622-1.0 a owl:Class;
 cm:M-4712887 a owl:Class;
   cm:has-id "4712887";
   cm:references-ata-code ata:ata-25-50;
-  rdfs:subClassOf ms:maintenance_work_order .
+  rdfs:subClassOf cm:maintenance_work_order .
 
 <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/LETADLO_3%2FH-18+C09-M-4712887-1.0>
   a cm:M-4712887-1.0, owl:NamedIndividual;
