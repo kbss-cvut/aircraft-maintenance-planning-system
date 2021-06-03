@@ -8,33 +8,75 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix mydata: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/> .
 
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data> rdf:type owl:Ontology .
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data> rdf:type owl:Ontology ;
+	mydata:real-data-sample "https://docs.google.com/spreadsheets/d/15ILm7mmJ16Bqth0XmCPmQg1JE91iHIWn/edit#gid=1623319099" ;
+	mydata:anonymized-data-sample "list2" .
 
-#################################################################
-#    Annotation properties
-#################################################################
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/has-value
 mydata:has-value rdf:type owl:AnnotationProperty .
-
-
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/identifier
 mydata:identifier rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/dc/elements/1.1/description
 dc:description rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2004/02/skos/core#prefLabel
 skos:prefLabel rdf:type owl:AnnotationProperty .
 
 
-#################################################################
-#    Object Properties
-#################################################################
 
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/type
+
+
+
+
+mydata:bookingno-i rdf:type owl:DatatypeProperty ;
+              skos:prefLabel "bookingno_i" .
+
+mydata:employee-no rdf:type owl:DatatypeProperty ;
+              skos:prefLabel "Employee No" .
+
+mydata:user-sign rdf:type owl:DatatypeProperty ;
+              skos:prefLabel "user_sign" .
+
+
+
+Start Date
+Start Time
+End Date
+End Time
+Duration Full
+Scope
+Shift Group
+Type
+WO/TC
+TC reference
+Closing date
+Description
+Workpackage
+A/C model
+A/C age
+WP start
+WP end
+Real date of booking entry
+
+
+========
+
+AC
+A/C age
+WP
+CSAT WO/TC
+type
+state
+ATA
+Customer ref
+TC reference
+issue date
+closing date
+workstep
+WO text
+WO action
+
+==========
+
+
+
+
+
 mydata:type rdf:type owl:ObjectProperty ;
             mydata:has-value "M" ,
                              "S" ,
@@ -43,17 +85,12 @@ mydata:type rdf:type owl:ObjectProperty ;
             skos:prefLabel "type" .
 
 
-#################################################################
-#    Data properties
-#################################################################
 
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/ac-age
 mydata:ac-age rdf:type owl:DatatypeProperty ;
               dc:description "Age of aircraft"@en ;
               skos:prefLabel "A/C age" .
 
 
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-execution-data/ata
 mydata:ata rdf:type owl:DatatypeProperty ;
            dc:description "Code for aircraft"@en ;
            skos:prefLabel "ATA" .
