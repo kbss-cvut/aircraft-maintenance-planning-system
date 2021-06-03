@@ -27,7 +27,7 @@
   },
   {
     "op": "core/column-addition",
-    "description": "Create column task_super_class at index 7 based on column type using expression grel:if(value==\"TC\", \"task_card\", if(value==\"S\", \"scheduled_work_order\", if(value==\"M\", \"maintenance_work_order\", null)))",
+    "description": "Create column task_super_class at index 7 based on column type using expression grel:if(value==\"TC\", \"task-card\", if(value==\"S\", \"scheduled-work-order\", if(value==\"M\", \"maintenance-work-order\", null)))",
     "engineConfig": {
       "mode": "row-based",
       "facets": []
@@ -35,7 +35,7 @@
     "newColumnName": "task_super_class",
     "columnInsertIndex": 7,
     "baseColumnName": "type",
-    "expression": "grel:if(value==\"TC\", \"task_card\", if(value==\"S\", \"scheduled_work_order\", if(value==\"M\", \"maintenance_work_order\", null)))",
+    "expression": "grel:if(value==\"TC\", \"task-card\", if(value==\"S\", \"scheduled-work-order\", if(value==\"M\", \"maintenance-work-order\", null)))",
     "onError": "set-to-blank"
   },
   {
