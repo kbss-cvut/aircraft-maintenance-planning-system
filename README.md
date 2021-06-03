@@ -27,3 +27,4 @@ This project contains software modules produced by the Doprava 2020 CSAT project
 - resources should be lower-case with words separated by "-"
 - prefixes should be globally unique
 - ontology IRI should start with http://onto.fel.cvut.cz/ontologies/
+- resource IRI cannot end with "/" or "#" at the end of the IRI

@@ -12,7 +12,7 @@
 @prefix annot: <http://onto.fel.cvut.cz/ontologies/ufo/annot/> .
 @prefix terms: <http://purl.org/dc/terms/> .
 
-<http://onto.fel.cvut.cz/ontologies/maintenance-schema/> a owl:Ontology ;
+<http://onto.fel.cvut.cz/ontologies/maintenance-schema> a owl:Ontology ;
 	owl:imports <http://onto.fel.cvut.cz/ontologies/ufo-powertypes/1.0.1> , <http://onto.fel.cvut.cz/ontologies/ufo/1.0.2> .
 # 
 # 

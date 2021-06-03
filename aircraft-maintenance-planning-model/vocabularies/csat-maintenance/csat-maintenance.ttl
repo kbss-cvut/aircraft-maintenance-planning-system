@@ -13,10 +13,10 @@
 @prefix terms: <http://purl.org/dc/terms/> .
 @prefix csat-maintenance: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
 @prefix maintenance-schema: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
-@base <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
+@base <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
 
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/> rdf:type owl:Ontology ;
-                                                        owl:imports maintenance-schema: .
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance> rdf:type owl:Ontology ;
+                                                        owl:imports <http://onto.fel.cvut.cz/ontologies/maintenance-schema> .
 
 #################################################################
 #    Annotation properties
