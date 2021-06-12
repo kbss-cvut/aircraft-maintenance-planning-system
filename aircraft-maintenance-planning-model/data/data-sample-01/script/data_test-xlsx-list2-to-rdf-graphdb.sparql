@@ -17,7 +17,7 @@ CONSTRUCT {
     
     # workpackage description
     ?workpackageIRI a cm:workpackage, owl:NamedIndividual;
-                    cm:has-id ?WP.
+                    cm:id ?WP.
                     
 
     # task execution description
@@ -25,7 +25,7 @@ CONSTRUCT {
                        cm:issue-time ?issue_date_D;
                        cm:end-time ?closing_date_D;
                        cm:has-work-order-step ?task_step_executionIRI;
-					   cm:part-of-workpackage ?workpackageIRI.
+					   cm:is-part-of-workpackage ?workpackageIRI.
     
     ?task_executionIRI cm:references-task ?referenced_task_executionIRI .
 
@@ -33,22 +33,22 @@ CONSTRUCT {
     ?task_typeIRI a owl:Class;
                   rdfs:subClassOf ?task_super_classIRI;
                   cm:references-ata-code ?ataIRI;
-				  cm:has-id ?CSAT_WO_TC.
+				  cm:id ?CSAT_WO_TC.
 
     # task step execution
     ?task_step_executionIRI a ?task_step_execution_typeIRI, owl:NamedIndividual;
-                            cm:step-index ?workstep;
-                            cm:has-workorder-description ?WO_text.
+                            cm:step-index ?workstepTyped;
+                            cm:work-order-text ?WO_text.
     
-	?task_step_executionIRI cm:has-workorder-action ?WO_action .
+	?task_step_executionIRI cm:work-order-action-text ?WO_action .
 	
     ?task_step_execution_typeIRI a owl:Class;
             rdfs:subClassOf cm:work-order-step.
 			
 	# aircraft description
-	?workpackageIRI cm:repair-of ?aircraftIRI.
+	?workpackageIRI cm:is-repair-of ?aircraftIRI.
 	?aircraftIRI a cm:aircraft, owl:NamedIndividual;
-	cm:has-model ?acmodel;
+	cm:model ?acmodel;
 	cm:age ?acage.
 
 } WHERE {
@@ -93,6 +93,7 @@ CONSTRUCT {
         BIND(IRI(concat(str(cm:), ?task_type)) as ?task_typeIRI)
         BIND(IRI(concat(str(cm:), ?task_super_class)) as ?task_super_classIRI)
         BIND(IRI(concat(str(cm:), ?task_step_execution_type)) as ?task_step_execution_typeIRI)
+        BIND(STRDT(str(?workstep), xsd:integer) as ?workstepTyped)
         
 
         BIND(spif:parseDate(?issue_date ,"dd.MM.yyyy") as ?issue_date_D)
