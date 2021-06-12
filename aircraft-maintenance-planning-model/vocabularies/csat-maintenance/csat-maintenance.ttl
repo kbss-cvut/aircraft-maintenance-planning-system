@@ -32,6 +32,11 @@ cm:adjusting a owl:Class ;
     cm:has-abbreviation "ADJ" ;
     rdfs:subClassOf cm:task-card .
 
+cm:age a owl:DatatypeProperty ;
+    rdfs:label "age" ;
+    rdfs:domain cm:aircraft ;
+    rdfs:range xsd:double .
+
 cm:area a owl:Class ;
     rdfs:comment "area" ;
     rdfs:subClassOf cm:zone .
@@ -89,6 +94,10 @@ cm:el.-power a owl:Class ;
             owl:someValuesFrom rdfs:Literal ],
         cm:restriction .
 
+cm:end-time a owl:DatatypeProperty ;
+    rdfs:label "end time" ;
+    rdfs:range xsd:date .
+
 cm:eng a owl:Class ;
     rdfs:label "ENG" ;
     rdfs:subClassOf cm:maintenance-team .
@@ -141,11 +150,20 @@ cm:has-finding a owl:ObjectProperty ;
     rdfs:label "has finding" ;
     rdfs:domain cm:finding .
 
+cm:has-work-order-step a owl:ObjectProperty ;
+    rdfs:label "has work order step" ;
+    rdfs:domain cm:work-order ;
+    rdfs:range cm:work-order-step .
+
 cm:hyd.-power a owl:Class ;
     rdfs:label "Hyd. Power" ;
     rdfs:comment """- specifies the Hydraulic power system's state required for the Main step.
 		- possible values (states): ON, OFF, / (no restriction)""" ;
     rdfs:subClassOf cm:restriction .
+
+cm:id a owl:DatatypeProperty ;
+    rdfs:label "id" ;
+    rdfs:range xsd:string .
 
 cm:int a owl:Class ;
     rdfs:label "INT" ;
@@ -155,6 +173,19 @@ cm:interior-mechanic-group a owl:Class ;
     rdfs:label "Interior Mechanic Group" ;
     cm:has-abbreviation "MECH-INT" ;
     rdfs:subClassOf cm:heavy-maintenance-group .
+
+cm:is-part-of-workpackage a owl:ObjectProperty ;
+    rdfs:label "is part of workpackage" ;
+    rdfs:range cm:workpackage .
+
+cm:is-repair-of a owl:ObjectProperty ;
+    rdfs:label "is repair of" ;
+    rdfs:domain cm:workpackage ;
+    rdfs:range cm:aircraft .
+
+cm:issue-time a owl:DatatypeProperty ;
+    rdfs:label "issue time" ;
+    rdfs:range xsd:date .
 
 cm:jack a owl:Class ;
     rdfs:label "Jack" ;
@@ -228,6 +259,11 @@ cm:min.-mech a owl:Class ;
             owl:someValuesFrom xsd:integer ],
         cm:restriction .
 
+cm:model a owl:DatatypeProperty ;
+    rdfs:label "model" ;
+    rdfs:domain cm:aircraft ;
+    rdfs:range xsd:string .
+
 cm:non-destructive-testing-support-group a owl:Class ;
     rdfs:label "Non-Destructive Testing Support Group" ;
     cm:has-abbreviation "NDT" ;
@@ -260,6 +296,14 @@ cm:planned-client-extra-order-task a owl:Class ;
     rdfs:label "Planned Client Extra Order task" ;
     rdfs:subClassOf cm:client-extra--order-task,
         cm:planned-task .
+
+cm:references-ata-code a owl:ObjectProperty ;
+    rdfs:label "references ATA code" ;
+    rdfs:domain cm:work-order .
+
+cm:references-task a owl:ObjectProperty ;
+    rdfs:label "references task" ;
+    rdfs:domain cm:work-order .
 
 cm:referes-to a owl:ObjectProperty ;
     rdfs:label "referes to" .
@@ -300,6 +344,11 @@ cm:special-detailed-inspection a owl:Class ;
     cm:has-abbreviation "SDI" ;
     rdfs:subClassOf cm:task-card .
 
+cm:step-index a owl:DatatypeProperty ;
+    rdfs:label "step index" ;
+    rdfs:domain cm:work-order-step ;
+    rdfs:range xsd:integer .
+
 cm:technical-cleaning-support-group a owl:Class ;
     rdfs:label "Technical Cleaning Support Group" ;
     cm:has-abbreviation "WASH" ;
@@ -325,15 +374,10 @@ cm:welding-support-group a owl:Class ;
     cm:has-abbreviation "WELL" ;
     rdfs:subClassOf cm:maintenance-support-group .
 
-cm:work-order-step a owl:Class ;
-    rdfs:label "Work Order Step" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cm:has-follow-up-actions ;
-            owl:someValuesFrom cm:wos-action ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom cm:work-order ;
-            owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ],
-        cm:work-order .
+cm:work-order-action-text a owl:DatatypeProperty ;
+    rdfs:label "work order action text" ;
+    rdfs:domain cm:work-order ;
+    rdfs:range xsd:string .
 
 cm:workpackage-end-date a owl:DatatypeProperty ;
     rdfs:label "workpackage end date" ;
@@ -471,8 +515,8 @@ cm:team-leader a owl:Class ;
             owl:someValuesFrom cm:heavy-maintenance-group ],
         cm:maintenance-manager .
 
-cm:wo-text a owl:DatatypeProperty ;
-    rdfs:label "wo text" ;
+cm:work-order-text a owl:DatatypeProperty ;
+    rdfs:label "work order text" ;
     rdfs:domain cm:work-order ;
     rdfs:range xsd:string .
 
@@ -500,18 +544,6 @@ cm:اhas-number a owl:DatatypeProperty ;
     rdfs:label "number" ;
     rdfs:range xsd:integer .
 
-cm:aircraft a owl:Class ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cm:aircraft-age ;
-            owl:someValuesFrom xsd:integer ],
-        [ a owl:Restriction ;
-            owl:onProperty cm:aircraft-regestration-number ;
-            owl:someValuesFrom xsd:integer ],
-        [ a owl:Restriction ;
-            owl:onProperty cm:ata-code ;
-            owl:someValuesFrom xsd:integer ],
-        <http://onto.fel.cvut.cz/ontologies/maintenance-schema/System> .
-
 cm:aircraft-age a owl:DatatypeProperty ;
     rdfs:subPropertyOf <http://csat.cz/ontologies/maintenance-schema/A/age> .
 
@@ -534,6 +566,16 @@ cm:non-planned-task a owl:Class ;
             owl:onProperty cm:has-fiding ;
             owl:someValuesFrom cm:finding ],
         cm:client-extra--order-task .
+
+cm:work-order-step a owl:Class ;
+    rdfs:label "Work Order Step" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cm:has-follow-up-actions ;
+            owl:someValuesFrom cm:wos-action ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom cm:work-order ;
+            owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ],
+        cm:work-order .
 
 <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cm:has-scope ;
@@ -584,6 +626,18 @@ cm:has-restriction-value a owl:DatatypeProperty ;
     rdfs:label "has restriction value" ;
     rdfs:domain cm:restriction .
 
+cm:aircraft a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cm:aircraft-age ;
+            owl:someValuesFrom xsd:integer ],
+        [ a owl:Restriction ;
+            owl:onProperty cm:aircraft-regestration-number ;
+            owl:someValuesFrom xsd:integer ],
+        [ a owl:Restriction ;
+            owl:onProperty cm:ata-code ;
+            owl:someValuesFrom xsd:integer ],
+        <http://onto.fel.cvut.cz/ontologies/maintenance-schema/System> .
+
 cm:date a owl:DatatypeProperty ;
     rdfs:label "date" ;
     rdfs:range xsd:dateTimeStamp .
@@ -591,14 +645,6 @@ cm:date a owl:DatatypeProperty ;
 cm:planned-task a owl:Class ;
     rdfs:label "Planned Task" ;
     rdfs:subClassOf cm:client-extra--order-task .
-
-cm:work-order a owl:Class ;
-    rdfs:label "Work Order" ;
-    rdfs:comment "A work order is a task order sent by a customer or organization, usually for a service technician." ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cm:wo-text ;
-            owl:someValuesFrom xsd:string ],
-        cm:maintenance-task .
 
 cm:heavy-maintenance-group a owl:Class ;
     rdfs:label "Heavy Maintenance Group" ;
@@ -634,6 +680,14 @@ cm:maintenance-task a owl:Class ;
             owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-performed-by> ;
             owl:someValuesFrom cm:maintenance-group ],
         <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> .
+
+cm:work-order a owl:Class ;
+    rdfs:label "Work Order" ;
+    rdfs:comment "A work order is a task order sent by a customer or organization, usually for a service technician." ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cm:work-order-text ;
+            owl:someValuesFrom xsd:string ],
+        cm:maintenance-task .
 
 cm:task-card a owl:Class ;
     rdfs:label "Task Card" ;
