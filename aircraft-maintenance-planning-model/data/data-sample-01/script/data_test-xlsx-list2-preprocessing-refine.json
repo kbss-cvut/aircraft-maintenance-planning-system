@@ -9,12 +9,12 @@
     "newColumnName": "task_type",
     "columnInsertIndex": 5,
     "baseColumnName": "CSAT WO/TC",
-    "expression": "grel:escape(row.cells.type.value,\"url\") + \"-\" + escape(value,\"url\")",
+    "expression": "grel:escape(row.cells.type.value + \"-\" + value,\"url\")",
     "onError": "set-to-blank"
   },
   {
     "op": "core/column-addition",
-    "description": "Create column workpackage at index 3 based on column WP using expression grel:escape(value,\"url\")",
+    "description": "Create column workpackage at index 3 based on column WP using expression grel:escape(value.replace(\"/\",\"--\").replace(\" \",\"-\"),\"url\")",
     "engineConfig": {
       "mode": "row-based",
       "facets": []
@@ -22,7 +22,7 @@
     "newColumnName": "workpackage",
     "columnInsertIndex": 3,
     "baseColumnName": "WP",
-    "expression": "grel:escape(value,\"url\")",
+    "expression": "grel:escape(value.replace(\"/\",\"--\").replace(\" \",\"-\"),\"url\")",
     "onError": "set-to-blank"
   },
   {
@@ -40,7 +40,7 @@
   },
   {
     "op": "core/column-addition",
-    "description": "Create column task_execution at index 4 based on column CSAT WO/TC using expression grel:replace(row.cells[\"WP\"].value, \"/\", \"_\") + \"-\" + value",
+    "description": "Create column task_execution at index 4 based on column CSAT WO/TC using expression grel:escape(row.cells[\"workpackage\"].value + \"-\" + value, \"url\")",
     "engineConfig": {
       "mode": "row-based",
       "facets": []
@@ -48,12 +48,12 @@
     "newColumnName": "task_execution",
     "columnInsertIndex": 4,
     "baseColumnName": "CSAT WO/TC",
-    "expression": "grel:escape(row.cells[\"WP\"].value, \"url\") + \"-\" + escape(value,\"url\")",
+    "expression": "grel:escape(row.cells[\"workpackage\"].value + \"--\" + value, \"url\")",
     "onError": "set-to-blank"
   },
   {
     "op": "core/column-addition",
-    "description": "Create column referenced_task_execution at index 13 based on column TC reference using expression grel:replace(row.cells[\"WP\"].value, \"/\", \"_\") + \"-\" + value",
+    "description": "Create column referenced_task_execution at index 13 based on column TC reference using expression grel:escape(row.cells[\"workpackage\"].value + \"-\" + value, \"url\")",
     "engineConfig": {
       "mode": "row-based",
       "facets": []
@@ -61,12 +61,12 @@
     "newColumnName": "referenced_task_execution",
     "columnInsertIndex": 13,
     "baseColumnName": "TC reference",
-    "expression": "grel:escape(row.cells[\"WP\"].value, \"url\") + \"-\" + escape(value, \"url\")",
+    "expression": "grel:escape(row.cells[\"workpackage\"].value + \"--\" + value, \"url\")",
     "onError": "set-to-blank"
   },
   {
     "op": "core/column-addition",
-    "description": "Create column task_step_execution at index 18 based on column workstep using expression grel:row.cells[\"WP\"].value.replace(\"/\", \"_\") + \"-\" + row.cells[\"task_type\"].value + \"-\" + value",
+    "description": "Create column task_step_execution at index 18 based on column workstep using expression grel:row.cells[\"workpackage\"].value.replace(\"/\", \"_\") + \"-\" + row.cells[\"task_type\"].value + \"-\" + value",
     "engineConfig": {
       "mode": "row-based",
       "facets": []
@@ -74,7 +74,7 @@
     "newColumnName": "task_step_execution",
     "columnInsertIndex": 18,
     "baseColumnName": "workstep",
-    "expression": "grel:escape(row.cells[\"WP\"].value, \"url\") + \"-\" + row.cells[\"task_type\"].value + \"-\" + value",
+    "expression": "grel:escape(row.cells[\"workpackage\"].value + \"-\" + row.cells[\"task_type\"].value + \"-\" + value, \"url\")",
     "onError": "set-to-blank"
   },
   {
