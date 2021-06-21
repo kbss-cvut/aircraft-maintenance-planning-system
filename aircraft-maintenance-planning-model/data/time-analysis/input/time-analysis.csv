@@ -1,0 +1,3 @@
+bookingno_i	Employee No	user_sign	Start Date	Start Time	End Date	End Time	Duration Full	Scope	Shift Group	Type	WO/TC	TC reference	Closing date	Description	Workpackage	A/C model	A/C age	WP Start date - scheduled	WP End date - scheduled	WP Start date - real	WP End date - real	Line	Real date of booking entry	project	AC registration	operator
+6567938	51658	KAGPELAP	20.06.2020	17:50	20.06.2020	18:00	0.170000	AVIO	HM_L2_A_A	ID_JOB	2032												21.06.2020			
+6567835	51802	GURFARJ	20.06.2020	18:00	21.06.2020	00:05	6.080000	WASH	WASH_1	S	5565621			TECHNICAL CLEANING FOR PLANNED WORKS PERFORM TECHNICAL CLEANING OF THE RELATED AIRCRAFT	OK-FTP/H-21 BRIDGE	73J	13.939726	03.06.2020	24.06.2020	03.06.2020		4	21.06.2020	FTP/8Y-RW-21	OK-FTP	FTAI
