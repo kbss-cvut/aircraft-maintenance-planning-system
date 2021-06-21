@@ -374,11 +374,6 @@ cm:welding-support-group a owl:Class ;
     cm:has-abbreviation "WELL" ;
     rdfs:subClassOf cm:maintenance-support-group .
 
-cm:work-order-action-text a owl:DatatypeProperty ;
-    rdfs:label "work order action text" ;
-    rdfs:domain cm:work-order ;
-    rdfs:range xsd:string .
-
 cm:workpackage-end-date a owl:DatatypeProperty ;
     rdfs:label "workpackage end date" ;
     rdfs:subPropertyOf cm:date .
@@ -514,6 +509,11 @@ cm:team-leader a owl:Class ;
             owl:onProperty cm:leads ;
             owl:someValuesFrom cm:heavy-maintenance-group ],
         cm:maintenance-manager .
+
+cm:work-order-action-text a owl:DatatypeProperty ;
+    rdfs:label "work order action text" ;
+    rdfs:domain cm:work-order ;
+    rdfs:range xsd:string .
 
 cm:work-order-text a owl:DatatypeProperty ;
     rdfs:label "work order text" ;
@@ -685,8 +685,13 @@ cm:work-order a owl:Class ;
     rdfs:label "Work Order" ;
     rdfs:comment "A work order is a task order sent by a customer or organization, usually for a service technician." ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty cm:work-order-action-text ],
+        [ a owl:Restriction ;
+            owl:onDataRange xsd:string ;
             owl:onProperty cm:work-order-text ;
-            owl:someValuesFrom xsd:string ],
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
         cm:maintenance-task .
 
 cm:task-card a owl:Class ;
