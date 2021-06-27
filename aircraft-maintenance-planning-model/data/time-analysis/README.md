@@ -1,7 +1,7 @@
 
 # Description of columns
 
-Line (Sloupec W) – odpovědná linka
+Line (Sloupec W) – odpovědná linka za revizi letadla
 AC registration (Sloupec Z) – označení (registrace) samotného letadla
 operator (Sloupec AA) – letecká společnost
 WP Start date - scheduled (Sloupec S) – plánovaný začátek revize letadla (projektu)
