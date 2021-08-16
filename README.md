@@ -38,3 +38,20 @@ This project contains software modules produced by the Doprava 2020 CSAT project
 - object property should be named with "has-" and "is-" prefix
 - datatype property should be called without "has-" and "is-" prefix
 
+
+### Transformation scripts
+
+Script to transform data into ontologies are possible to edit using [SPipes editor](https://github.com/chlupnoha/s-pipes-editor-ui).
+To run it, do the following steps:
+1) create a new folder (we will call it `SPE_ROOT`)
+2) clone project [SPipes modules](https://blaskmir@kbss.felk.cvut.cz/gitblit/r/s-pipes-modules.git
+   ) into `SPE_ROOT` folder 
+3) clone project [SPipes editor](https://github.com/chlupnoha/s-pipes-editor-ui) into `SPE_ROOT` folder
+4) edit `SPE_ROOT/s-pipes-editor-ui/docker-compose.yml`, so that
+
+    - both SCRIPTPATHS and CONTEXTS_SCRIPTPATHS points to directories `SPE_ROOT/s-pipes-modules` 
+      and `PROJECT_ROOT/aircraft-maintenance-planning-model/data`. Note, that the first variable 
+      uses ";" as delimiter, while the second one uses ",".
+    - RDF4J_PCONFIGURL points to `PROJECT_ROOT/aircraft-maintenance-planning-model/scripts/config.ttl`
+    - SCRIPTRULES=`PROJECT_ROOT/aircraft-maintenance-planning-model/scripts/rules`
+
