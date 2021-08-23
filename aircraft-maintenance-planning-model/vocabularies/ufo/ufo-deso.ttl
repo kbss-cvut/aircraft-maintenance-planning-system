@@ -11,7 +11,7 @@
 
 <http://onto.fel.cvut.cz/ontologies/ufo/deso> rdf:type owl:Ontology ;
                                               
-                                              ref:cite-bibtex ""@inproceedings{Guizzardi2010,
+                                              ref:cite-bibtex """@inproceedings{Guizzardi2010,
 author = {Guizzardi, Giancarlo and Wagner, Gerd},
 booktitle = {Simulation Conference (WSC), Proceedings of the 2010 Winter},
 file = {:C$\backslash$:/Users/user/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Guizzardi, Wagner - 2010 - Towards an ontological foundation of discrete event simulation.pdf:pdf},
@@ -22,7 +22,8 @@ publisher = {Winter Simulation Conference},
 title = {{Towards an ontological foundation of discrete event simulation}},
 url = {http://dl.acm.org/citation.cfm?id=2433508.2433585},
 year = {2010}
-} ;
+}
+""" ;
                                               
                                               owl:imports <http://onto.fel.cvut.cz/ontologies/ufo> .
 
