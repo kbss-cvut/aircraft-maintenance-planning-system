@@ -1,0 +1,121 @@
+# baseURI: http://onto.fel.cvut.cz/ontologies/s-pipes/termit-nlp-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
+
+@prefix : <http://onto.fel.cvut.cz/ontologies/s-pipes/termit-nlp-0.1/> .
+@prefix doc: <http://onto.fel.cvut.cz/ontologies/documentation/> .
+@prefix kbss-module: <http://onto.fel.cvut.cz/ontologies/lib/module/> .
+@prefix km-sesame: <http://onto.fel.cvut.cz/ontologies/lib/module/sesame/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sm: <http://topbraid.org/sparqlmotion#> .
+@prefix sml: <http://topbraid.org/sparqlmotionlib#> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+@prefix spl: <http://spinrdf.org/spl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://onto.fel.cvut.cz/ontologies/s-pipes/termit-nlp-0.1>
+  a owl:Ontology ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
+.
+:deploy
+  a kbss-module:deploy ;
+  sm:next :deploy-annotations_Return ;
+  sm:nodeX 725 ;
+  sm:nodeY 642 ;
+  rdfs:label "deploy" ;
+.
+:deploy-annotations
+  a sm:Function ;
+  sm:returnModule :extract-annotations_Return ;
+  rdfs:subClassOf sm:Functions ;
+.
+:deploy-annotations_Return
+  a sml:ReturnRDF ;
+  sm:nodeX 640 ;
+  sm:nodeY 745 ;
+  sml:serialization sml:JSONLD ;
+  rdfs:label "Deploy annotations" ;
+.
+:extract-annotations
+  a sm:Function ;
+  sm:returnModule :extract-annotations_Return ;
+  rdfs:subClassOf sm:Functions ;
+.
+:extract-annotations_Return
+  a sml:ReturnRDF ;
+  sm:nodeX 847 ;
+  sm:nodeY 745 ;
+  sml:serialization sml:JSONLD ;
+  rdfs:label "Return extracted annotations" ;
+.
+:extract-relations
+  a sml:ApplyConstruct ;
+  sm:next :extract-annotations_Return ;
+  sm:nodeX 847 ;
+  sm:nodeY 642 ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - standard case
+CONSTRUCT {
+    ?f :is-failure-of ?c .
+}
+WHERE {
+    ?r a :Row ;
+         :has-annotated-component  ?c ;
+         :has-annotated-failure ?f ;
+    . 
+    FILTER NOT EXISTS {
+         ?r :has-annotated-component  ?notExistC ;
+         FILTER(?c != ?notExistC)
+    }
+    FILTER NOT EXISTS {
+         ?r :has-annotated-failure  ?notExistF ;
+         FILTER(?f != ?notExistF)
+    }
+}""" ;
+    ] ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 2 - extract using part of relation
+CONSTRUCT {
+    ?f :is-failure-of ?c1 .
+}
+WHERE {
+    ?r a :Row ;
+         :has-annotated-component  ?c1 ;
+         :has-annotated-component  ?c2 ;
+         :has-annotated-failure ?f ;
+    . 
+    ?c1 :is-part-of ?c2 .
+    FILTER(?c1 != ?c2)
+}""" ;
+    ] ;
+  rdfs:label "extract-relations" ;
+.
+:retrieve-vocabulary
+  a sml:ApplyConstruct ;
+  sm:next :extract-relations ;
+  sm:nodeX 956 ;
+  sm:nodeY 399 ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """CONSTRUCT {
+    
+}
+WHERE {
+    
+}""" ;
+    ] ;
+  rdfs:label "retrieve-vocabulary" ;
+.
+:transform-annotated-hml
+  a sml:BindWithConstant ;
+  sm:next :deploy ;
+  sm:next :extract-relations ;
+  sm:nodeX 726 ;
+  sm:nodeY 402 ;
+  rdfs:label "transform-annotated-html" ;
+.
