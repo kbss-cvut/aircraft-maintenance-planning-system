@@ -1,0 +1,389 @@
+# baseURI: http://onto.fel.cvut.cz/ontologies/csat/wo-tc-ref-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
+
+@prefix : <http://onto.fel.cvut.cz/ontologies/csat/wo-tc-ref-0.1/> .
+@prefix ata: <http://onto.fel.cvut.cz/voc/ata-100/> .
+@prefix cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
+@prefix cmd: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/> .
+@prefix config: <http://onto.fel.cvut.cz/ontologies/csat/config/> .
+@prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix doc: <http://onto.fel.cvut.cz/ontologies/documentation/> .
+@prefix kbss-module: <http://onto.fel.cvut.cz/ontologies/lib/module/> .
+@prefix km-sesame: <http://onto.fel.cvut.cz/ontologies/lib/module/sesame/> .
+@prefix ms: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sm: <http://topbraid.org/sparqlmotion#> .
+@prefix sml: <http://topbraid.org/sparqlmotionlib#> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+@prefix spl: <http://spinrdf.org/spl#> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://onto.fel.cvut.cz/ontologies/csat/wo-tc-ref-0.1>
+  a owl:Ontology ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
+.
+:bind-dataset-file-path
+  a sm:Module ;
+  a sml:BindWithConstant ;
+  kbss-module:has-input-graph-constraint [
+      a sp:Ask ;
+      sp:text """# ?datasetType is not bound
+ASK
+WHERE {
+    FILTER( !bound(?datasetType))
+}""" ;
+    ] ;
+  kbss-module:has-input-graph-constraint [
+      a sp:Ask ;
+      sp:text """# ?workspaceDir is not bound
+ASK
+WHERE {
+    FILTER( !bound(?workspaceDir))
+}""" ;
+    ] ;
+  sm:next :download-csv-file ;
+  sm:outputVariable "datasetFilePath" ;
+  sml:value [
+      a sp:concat ;
+      sp:arg1 [
+          sp:varName "workspaceDir" ;
+        ] ;
+      sp:arg2 "/data/" ;
+      sp:arg3 [
+          sp:varName "datasetType" ;
+        ] ;
+      sp:arg4 "/target/input.csv" ;
+    ] ;
+  rdfs:label "bind-dataset-file-path" ;
+.
+:clear
+  a sml:ApplyConstruct ;
+  sm:next :transform ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """CONSTRUCT {
+    
+}
+WHERE {
+    
+}""" ;
+    ] ;
+  sml:replace true ;
+  rdfs:label "clear" ;
+.
+:deploy-to-rdf4j-server
+  a kbss-module:deploy ;
+  sm:next :deploy-wo-tc-ref_Return ;
+  rdfs:label "deploy" ;
+.
+:deploy-wo-tc-ref
+  a sm:Function ;
+  sm:returnModule :deploy-wo-tc-ref_Return ;
+  rdfs:subClassOf sm:Functions ;
+.
+:deploy-wo-tc-ref_Return
+  a sml:ReturnRDF ;
+  sml:serialization sml:RDFXML ;
+  rdfs:label "Deploy wo-tc-ref" ;
+.
+:download-csv-file
+  a sml:ImportFileFromURL ;
+  kbss-module:has-input-graph-constraint [
+      a sp:Ask ;
+      sp:text """# ?datasetUrl is not bound
+ASK
+WHERE {
+    FILTER( !bound(?datasetUrl))
+}""" ;
+    ] ;
+  sm:next :extract-generic-rdf ;
+  sm:next :extract-specific-rdf ;
+  sml:targetFilePath [
+      sp:varName "datasetFilePath" ;
+    ] ;
+  sml:url [
+      sp:varName "datasetUrl" ;
+    ] ;
+  rdfs:label "Download wo-tc-ref" ;
+.
+:extract-generic-rdf
+  a kbss-module:tarql ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.01 column AC has empty value
+ASK
+WHERE {
+    ?r a csvw:row-data .
+    FILTER NOT EXISTS {
+          ?r :AC ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.02 column A_C_age has empty value
+ASK
+WHERE {
+    ?r a csvw:row-data .
+    FILTER NOT EXISTS {
+          ?r :A_C_age ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.03 column WP has empty value
+ASK
+WHERE {
+    ?r a csvw:row-data .
+    FILTER NOT EXISTS {
+          ?r :WP ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.04 column CSAT_WO_TC has empty value
+ASK
+WHERE {
+    ?r a csvw:row-data .
+    FILTER NOT EXISTS {
+          ?r :CSAT_WO_TC ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.05 column type has empty value
+ASK
+WHERE {
+    ?r a csvw:row-data .
+    FILTER NOT EXISTS {
+          ?r :type ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.06 column state has empty value
+ASK
+WHERE {
+    ?r a csvw:row-data .
+    FILTER NOT EXISTS {
+          ?r :state ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.07 column ATA has empty value
+ASK
+WHERE {
+    ?r a csvw:row-data .
+    FILTER NOT EXISTS {
+          ?r :ATA ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.08 column issue_date has empty value
+ASK
+WHERE {
+    ?r a csvw:row-data .
+    FILTER NOT EXISTS {
+          ?r :issue_date ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.09 column sequence has empty value
+ASK
+WHERE {
+    ?r a csvw:row-data .
+    FILTER NOT EXISTS {
+          ?r :sequence ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.10 column WO_text has empty value
+ASK
+WHERE {
+    ?r a csvw:row-data .
+    FILTER NOT EXISTS {
+          ?r :WO_text ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.11 column Customer_ref has empty value
+ASK
+WHERE {
+    ?r a csvw:row-data .
+    FILTER NOT EXISTS {
+          ?r :Customer_ref ?notExistValue .
+    }
+}""" ;
+    ] ;
+  sm:next :clear ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - extract generic rdf
+#   specification: https://www.w3.org/TR/csv2rdf
+CONSTRUCT {
+
+?r a csvw:row  ;
+     csvw:rownum ?ROWNUM ;
+     csvw:describes [
+        a csvw:row-data ;
+        :AC ?AC ;
+        :A_C_age ?A_C_age ;
+        :WP ?WP ;
+        :CSAT_WO_TC ?CSAT_WO_TC ;
+        :type ?type ;
+        :state ?state ;
+        :ATA ?ATA ;
+        :Customer_ref ?Customer_ref ;
+        :TC_reference ?TC_reference ;
+        :issue_date ?issue_date ;
+        :closing_date ?closing_date ;
+        :sequence ?sequence ;
+        :WO_text ?WO_text ;
+        :WO_action ?WO_action ;
+    ] ;
+.
+
+} WHERE {     
+     BIND(iri(concat(str(:), str(?ROWNUM))) as ?r)
+}""" ;
+    ] ;
+  sml:replace true ;
+  sml:sourceFilePath [
+      sp:varName "datasetFilePath" ;
+    ] ;
+.
+:extract-specific-rdf
+  a kbss-module:tarql ;
+  sm:next :transform ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - extract ontology
+CONSTRUCT {
+    <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wo-tc-ref-34567> a owl:Ontology ;
+              owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
+        
+    # workpackage description
+    ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
+              cm:id ?WP .
+                    
+    # task execution description
+    ?task_executionIRI a cm:complex-execution, ?task_typeIRI, owl:NamedIndividual;
+           cm:issue-time ?issue_date;
+            cm:end-time ?closing_date;
+            cm:has-work-order-step ?task_step_executionIRI;
+			cm:is-part-of-workpackage ?workpackageIRI .
+    
+    ?task_executionIRI cm:references-task ?referenced_task_executionIRI .
+
+    # task execution type
+    ?task_typeIRI a owl:Class;
+            rdfs:subClassOf ?task_super_classIRI;
+            cm:references-ata-code ?ataIRI;
+			cm:id ?CSAT_WO_TC .
+
+    # task step execution
+    ?task_step_executionIRI a ?task_step_execution_typeIRI, owl:NamedIndividual;
+     		cm:step-index ?workstepTyped;
+            cm:work-order-text ?WO_text .
+    
+    ?task_step_executionIRI cm:work-order-action-text ?WO_action .
+	
+    ?task_step_execution_typeIRI a owl:Class;
+            rdfs:subClassOf cm:work-order-step.
+			
+	# aircraft description
+	?workpackageIRI cm:is-repair-of ?aircraftIRI.
+	?aircraftIRI a cm:aircraft, owl:NamedIndividual;
+			cm:model ?acModelFixed ;
+	        cm:age ?acAge .
+} WHERE {
+    BIND(replace(replace(?WP, \" \", \"-\"),\"/\", \"--\")  as ?workpackageFixed)
+    BIND(replace(replace(?TC_reference, \" \", \"-\"),\"/\", \"--\")  as ?tcReferenceFixed)
+    BIND(replace(replace(?CSAT_WO_TC, \" \", \"-\"),\"/\", \"--\")  as ?wotcFixed)
+    BIND(concat(?workpackageFixed, \"--\", ?wotcFixed) as ?task_execution)
+    BIND(iri(concat(str(cmd:), ?workpackageFixed)) as ?workpackageIRI)   
+    BIND(iri(concat(str(cmd:), ?task_execution)) as ?task_executionIRI)
+    BIND(?AC as ?acModel)
+    BIND(replace(replace(?AC, \" \", \"-\"),\"/\", \"--\")  as ?acModelFixed)
+    BIND(?A_C_age as ?acAge)
+    BIND(IRI(concat(str(cmd:), ?acModelFixed, \"-\", ?workpackageFixed)) as ?aircraftIRI)
+    BIND(concat(?type, \"-\",   ?wotcFixed) as ?taskType)     
+    BIND(concat(?taskType, \"-\",   ?sequence) as ?taskStepExecutionType)
+    BIND(concat(?workpackageFixed, \"-\",   ?taskStepExecutionType) as ?taskStepExecution)
+
+     BIND(iri(concat(str(cmd:), ?taskStepExecution)) as ?task_step_executionIRI) # instance
+     BIND(IRI(concat(str(cm:), ?taskType)) as ?task_typeIRI)
+
+     BIND(IF(?type =  \"TC\", \"task-card\",  ?x) as ?tc)
+     BIND(IF(?type =  \"S\", \"scheduled-work-order\",  ?x) as ?s)
+     BIND(IF(?type =  \"M\", \"maintenance-work-order\",   ?x) as ?m)
+     BIND(COALESCE(?tc, ?s, ?m) as ?task_super_class)
+     BIND(IRI(concat(str(cm:), ?task_super_class)) as ?task_super_classIRI)
+     BIND(IRI(concat(str(cm:), ?taskStepExecutionType)) as ?task_step_execution_typeIRI)
+     BIND(STRDT(str(?sequence), xsd:integer) as ?workstepTyped)
+     BIND(concat(?workpackageFixed, \"--\",   ?tcReferenceFixed) as ?referencedTaskExecution)
+     BIND(iri(concat(str(cmd:), ?referencedTaskExecution)) as ?referenced_task_executionIRI)
+     BIND(IRI(concat(str(ata:), \"ata-\", ?ATA)) as ?ataIRI)
+     
+}""" ;
+    ] ;
+  sml:replace false ;
+  sml:sourceFilePath [
+      sp:varName "datasetFilePath" ;
+    ] ;
+.
+:transform
+  a sml:ApplyConstruct ;
+  sm:next :deploy-to-rdf4j-server ;
+  sm:next :transform-data_Return ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - convert endDate
+CONSTRUCT {
+     ?s  cm:end-time ?endDate .
+} WHERE {
+     ?s  cm:end-timeX ?endDateNotParsed .
+#      BIND(spif:parseDate(?endDateNotParsed ,\"dd.MM.yyyy\") as ?endDate)
+}""" ;
+    ] ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - convert issueDate
+CONSTRUCT {
+     ?s  cm:issue-time ?issueDate .
+} WHERE {
+     ?s  cm:issue-timeX ?issueDateNotParsed .
+#      BIND(spif:parseDate(?issueDateNotParsed ,\"dd.MM.yyyy\") as ?issueDate)
+}""" ;
+    ] ;
+  sml:replace false ;
+.
+:transform-data_Return
+  a sml:ReturnRDF ;
+  sml:serialization sml:JSONLD ;
+  rdfs:label "Return transformed wo-tc-ref data" ;
+.
+:transform-wo-tc-ref-data
+  a sm:Function ;
+  sm:returnModule :transform-data_Return ;
+  rdfs:subClassOf sm:Functions ;
+.
