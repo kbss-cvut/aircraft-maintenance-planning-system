@@ -27,40 +27,6 @@
   a owl:Ontology ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
 .
-:bind-dataset-file-path
-  a sm:Module ;
-  a sml:BindWithConstant ;
-  kbss-module:has-input-graph-constraint [
-      a sp:Ask ;
-      sp:text """# ?datasetType is not bound
-ASK
-WHERE {
-    FILTER( !bound(?datasetType))
-}""" ;
-    ] ;
-  kbss-module:has-input-graph-constraint [
-      a sp:Ask ;
-      sp:text """# ?workspaceDir is not bound
-ASK
-WHERE {
-    FILTER( !bound(?workspaceDir))
-}""" ;
-    ] ;
-  sm:next :download-csv-file ;
-  sm:outputVariable "datasetFilePath" ;
-  sml:value [
-      a sp:concat ;
-      sp:arg1 [
-          sp:varName "workspaceDir" ;
-        ] ;
-      sp:arg2 "/data/" ;
-      sp:arg3 [
-          sp:varName "datasetType" ;
-        ] ;
-      sp:arg4 "/target/input.csv" ;
-    ] ;
-  rdfs:label "bind-dataset-file-path" ;
-.
 :clear
   a sml:ApplyConstruct ;
   sm:next :transform ;
@@ -90,26 +56,6 @@ WHERE {
   a sml:ReturnRDF ;
   sml:serialization sml:RDFXML ;
   rdfs:label "Deploy wo-tc-ref" ;
-.
-:download-csv-file
-  a sml:ImportFileFromURL ;
-  kbss-module:has-input-graph-constraint [
-      a sp:Ask ;
-      sp:text """# ?datasetUrl is not bound
-ASK
-WHERE {
-    FILTER( !bound(?datasetUrl))
-}""" ;
-    ] ;
-  sm:next :extract-generic-rdf ;
-  sm:next :extract-specific-rdf ;
-  sml:targetFilePath [
-      sp:varName "datasetFilePath" ;
-    ] ;
-  sml:url [
-      sp:varName "datasetUrl" ;
-    ] ;
-  rdfs:label "Download wo-tc-ref" ;
 .
 :extract-generic-rdf
   a kbss-module:tarql ;
@@ -223,17 +169,6 @@ WHERE {
     }
 }""" ;
     ] ;
-  kbss-module:has-output-graph-constraint [
-      a sp:Ask ;
-      sp:text """# 1.11 column Customer_ref has empty value
-ASK
-WHERE {
-    ?r a csvw:row-data .
-    FILTER NOT EXISTS {
-          ?r :Customer_ref ?notExistValue .
-    }
-}""" ;
-    ] ;
   sm:next :clear ;
   sml:constructQuery [
       a sp:Construct ;
@@ -268,7 +203,7 @@ CONSTRUCT {
     ] ;
   sml:replace true ;
   sml:sourceFilePath [
-      sp:varName "datasetFilePath" ;
+      sp:varName "datasetResource" ;
     ] ;
 .
 :extract-specific-rdf
@@ -348,7 +283,7 @@ CONSTRUCT {
     ] ;
   sml:replace false ;
   sml:sourceFilePath [
-      sp:varName "datasetFilePath" ;
+      sp:varName "datasetResource" ;
     ] ;
 .
 :transform
