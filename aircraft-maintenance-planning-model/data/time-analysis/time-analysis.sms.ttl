@@ -1,4 +1,5 @@
 # baseURI: http://onto.fel.cvut.cz/ontologies/csat/time-analysis-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1
 # imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
 
 @prefix : <http://onto.fel.cvut.cz/ontologies/csat/time-analysis-0.1/> .
@@ -21,169 +22,12 @@
 @prefix spif: <http://spinrdf.org/spif#> .
 @prefix spin: <http://spinrdf.org/spin#> .
 @prefix spl: <http://spinrdf.org/spl#> .
+@prefix td: <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1/> .
 @prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix td: <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1/> .
 
-<http://onto.fel.cvut.cz/ontologies/csat/time-analysis-0.1>
-  a owl:Ontology ;
-  owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
-  owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
-.
-:bind-scheme-file-path
-  a sml:BindWithConstant ;
-  kbss-module:has-input-graph-constraint [
-      a sp:Ask ;
-      sp:text """# ?workspaceDir is not bound
-ASK
-WHERE {
-    FILTER( !bound(?workspaceDir))
-}""" ;
-    ] ;
-  sm:next :import-scheme ;
-  sm:outputVariable "schemeFilePath" ;
-  sml:value [
-      a sp:concat ;
-      sp:arg1 [
-          sp:varName "workspaceDir" ;
-        ] ;
-      sp:arg2 "/vocabularies/csat-maintenance/csat-maintenance.ttl" ;
-    ] ;
-  rdfs:label "bind-scheme-file-path" ;
-.
-:construct-csat-maintenance-data
-  a sml:ApplyConstruct ;
-  sm:next :transform ;
-  sml:constructQuery [
-      a sp:Construct ;
-      sp:text """# 1 - extract ontology
-CONSTRUCT {
-    <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time-analysis-12345> a owl:Ontology ;
-              owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
-        
-    # workpackage description
-    ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
-              cm:id ?Workpackage ;
-              cm:workpackage-scheduled-start-time ?WP_Start_date___scheduled ;
-              cm:workpackage-scheduled-end-time ?WP_End_date___scheduled ;
-              cm:workpackage-start-time ?WP_Start_date___real ;
-              cm:workpackage-end-time ?WP_End_date___real ;
-              cm:has-client ?client .
-
-    ?taskExecution a cm:complex-execution, owl:NamedIndividual ;
-              cm:is-part-of-workpackage ?workpackageIRI ;
-              cm:has-scope ?maintenaceGroup .
-
-    ?maintenaceGroup cm:has-abbreviation ?Scope .
-    
-    ?client a cm:client, owl:NamedIndividual ;
-              cm:id ?operator;
-    .   
-} WHERE {
-     OPTIONAL {
-        ?rd :AC ?AC .
-     }
-     ?rd :bookingno_i ?bookingno_i .
-     OPTIONAL {
-        ?rd :Employee_No ?Employee_No .
-     }
-     ?rd :user_sign ?user_sign .
-     ?rd :Start_Date ?Start_Date .
-     ?rd :Start_Time ?Start_Time .
-     OPTIONAL {
-        ?rd :End_Date ?End_Date .
-     }
-     ?rd :End_Time ?End_Time .
-     ?rd :Duration_Full ?Duration_Full .
-     ?rd :Scope ?Scope .
-     OPTIONAL {
-        ?rd :Shift_Group ?Shift_Group .
-     }
-     ?rd :Type ?Type .
-     ?rd :WO_TC ?WO_TC .
-     OPTIONAL {
-        ?rd :TC_reference ?TC_reference .
-     }
-     OPTIONAL {
-        ?rd :Closing_date ?Closing_date .
-     }
-     OPTIONAL {
-        ?rd :Description ?Description .
-     }
-     OPTIONAL {
-        ?rd :Workpackage ?Workpackage .
-     }
-     OPTIONAL {
-        ?rd :A_C_model ?A_C_model .
-     }
-     OPTIONAL {
-        ?rd :A_C_age ?A_C_age .
-     }
-     OPTIONAL {
-        ?rd :WP_Start_date___scheduled ?WP_Start_date___scheduled .
-     }
-     OPTIONAL {
-        ?rd :WP_End_date___scheduled ?WP_End_date___scheduled .
-     }
-     OPTIONAL {
-        ?rd :WP_Start_date___real ?WP_Start_date___real .
-     }
-     OPTIONAL {
-        ?rd :WP_End_date___real ?WP_End_date___real .
-     }
-     OPTIONAL {
-        ?rd :Line ?Line .
-     }
-     ?rd :Real_date_of_booking_entry ?Real_date_of_booking_entry .
-     OPTIONAL {
-        ?rd :project ?project .
-     }
-     OPTIONAL {
-        ?rd :AC_registration ?AC_registration .
-     }
-     OPTIONAL {
-        ?rd :operator ?operator    .
-     }
-
-      ?maintenaceGroup rdfs:subClassOf+ cm:maintenance-group ;
-          cm:has-abbreviation ?Scope .
-
-    BIND(replace(replace(?Workpackage, \" \", \"-\"),\"/\", \"--\")  as ?workpackageFixed)
-    BIND(iri(concat(str(cmd:), ?workpackageFixed)) as ?workpackageIRI)   
-
-    BIND(replace(replace(?WO_TC, \" \", \"-\"),\"/\", \"--\")  as ?wotcFixed)
-    BIND(concat(?workpackageFixed, \"--\", ?wotcFixed) as ?taskExecutionNormalizedId)
-    BIND(iri(concat(str(cmd:), ?taskExecutionNormalizedId)) as ?taskExecution)
-
-   BIND(replace(replace(replace(replace(?operator, \" \", \"-\"),\"/\", \"--\"), \"\\\\)\", \"-\"), \"\\\\(\", \"-\")  as ?operatorFixed)
-   BIND(iri(concat(str(cmd:), ?operatorFixed)) as ?client)      
-}""" ;
-    ] ;
-  sml:replace true ;
-  rdfs:label "construct-csat-maintenance-data" ;
-.
-:deploy-time-analysis-data
-  a sm:Function ;
-  sm:returnModule td:deploy-data_Return ;
-  rdfs:subClassOf sm:Functions ;
-.
 td:deploy-data_Return
   rdfs:label "deploy-time-analysis-data" ;
-.
-:import-scheme
-  a sml:ImportRDFFromWorkspace ;
-  kbss-module:has-input-graph-constraint [
-      a sp:Ask ;
-      sp:text """# ?workspaceDir is not bound
-ASK
-WHERE {
-    FILTER( !bound(?workspaceDir))
-}""" ;
-    ] ;
-  sm:next :workaround-fix-missing-groups ;
-  sml:baseURI "http://onto.fel.cvut.cz/ontologies/csat-maintenance" ;
-  sml:ignoreImports true ;
-  rdfs:label "import-scheme" ;
 .
 td:rdfize-input-data
   kbss-module:has-output-graph-constraint [
@@ -329,6 +173,137 @@ WHERE {
     ] ;
   sm:next :construct-csat-maintenance-data ;
 .
+td:transform-data_Return
+  rdfs:label "transform-time-analysis-data" ;
+.
+<http://onto.fel.cvut.cz/ontologies/csat/time-analysis-0.1>
+  a owl:Ontology ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
+.
+:construct-csat-maintenance-data
+  a sml:ApplyConstruct ;
+  sm:next :transform ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - extract ontology
+CONSTRUCT {
+    <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time-analysis-12345> a owl:Ontology ;
+              owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
+        
+    # workpackage description
+    ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
+              cm:id ?Workpackage ;
+              cm:workpackage-scheduled-start-time ?WP_Start_date___scheduled ;
+              cm:workpackage-scheduled-end-time ?WP_End_date___scheduled ;
+              cm:workpackage-start-time ?WP_Start_date___real ;
+              cm:workpackage-end-time ?WP_End_date___real ;
+              cm:has-client ?client .
+
+    ?taskExecution a cm:complex-execution, owl:NamedIndividual ;
+              cm:is-part-of-workpackage ?workpackageIRI ;
+              cm:has-scope ?maintenaceGroup .
+
+    ?maintenaceGroup cm:has-abbreviation ?Scope .
+    
+    ?client a cm:client, owl:NamedIndividual ;
+              cm:id ?operator;
+    .   
+} WHERE {
+     OPTIONAL {
+        ?rd :AC ?AC .
+     }
+     ?rd :bookingno_i ?bookingno_i .
+     OPTIONAL {
+        ?rd :Employee_No ?Employee_No .
+     }
+     ?rd :user_sign ?user_sign .
+     ?rd :Start_Date ?Start_Date .
+     ?rd :Start_Time ?Start_Time .
+     OPTIONAL {
+        ?rd :End_Date ?End_Date .
+     }
+     ?rd :End_Time ?End_Time .
+     ?rd :Duration_Full ?Duration_Full .
+     ?rd :Scope ?Scope .
+     OPTIONAL {
+        ?rd :Shift_Group ?Shift_Group .
+     }
+     ?rd :Type ?Type .
+     ?rd :WO_TC ?WO_TC .
+     OPTIONAL {
+        ?rd :TC_reference ?TC_reference .
+     }
+     OPTIONAL {
+        ?rd :Closing_date ?Closing_date .
+     }
+     OPTIONAL {
+        ?rd :Description ?Description .
+     }
+     OPTIONAL {
+        ?rd :Workpackage ?Workpackage .
+     }
+     OPTIONAL {
+        ?rd :A_C_model ?A_C_model .
+     }
+     OPTIONAL {
+        ?rd :A_C_age ?A_C_age .
+     }
+     OPTIONAL {
+        ?rd :WP_Start_date___scheduled ?WP_Start_date___scheduled .
+     }
+     OPTIONAL {
+        ?rd :WP_End_date___scheduled ?WP_End_date___scheduled .
+     }
+     OPTIONAL {
+        ?rd :WP_Start_date___real ?WP_Start_date___real .
+     }
+     OPTIONAL {
+        ?rd :WP_End_date___real ?WP_End_date___real .
+     }
+     OPTIONAL {
+        ?rd :Line ?Line .
+     }
+     ?rd :Real_date_of_booking_entry ?Real_date_of_booking_entry .
+     OPTIONAL {
+        ?rd :project ?project .
+     }
+     OPTIONAL {
+        ?rd :AC_registration ?AC_registration .
+     }
+     OPTIONAL {
+        ?rd :operator ?operator    .
+     }
+
+      ?maintenaceGroup rdfs:subClassOf+ cm:maintenance-group ;
+          cm:has-abbreviation ?Scope .
+
+    BIND(replace(replace(?Workpackage, \" \", \"-\"),\"/\", \"--\")  as ?workpackageFixed)
+    BIND(iri(concat(str(cmd:), ?workpackageFixed)) as ?workpackageIRI)   
+
+    BIND(replace(replace(?WO_TC, \" \", \"-\"),\"/\", \"--\")  as ?wotcFixed)
+    BIND(concat(?workpackageFixed, \"--\", ?wotcFixed) as ?taskExecutionNormalizedId)
+    BIND(iri(concat(str(cmd:), ?taskExecutionNormalizedId)) as ?taskExecution)
+
+   BIND(replace(replace(replace(replace(?operator, \" \", \"-\"),\"/\", \"--\"), \"\\\\)\", \"-\"), \"\\\\(\", \"-\")  as ?operatorFixed)
+   BIND(iri(concat(str(cmd:), ?operatorFixed)) as ?client)      
+}""" ;
+    ] ;
+  sml:replace true ;
+  rdfs:label "construct-csat-maintenance-data" ;
+.
+:deploy-time-analysis-data
+  a sm:Function ;
+  sm:returnModule td:deploy-data_Return ;
+  rdfs:subClassOf sm:Functions ;
+.
+:import-scheme
+  a sml:ImportRDFFromWorkspace ;
+  sm:next :workaround-fix-missing-groups ;
+  sml:baseURI "http://onto.fel.cvut.cz/ontologies/csat-maintenance" ;
+  sml:ignoreImports true ;
+  rdfs:label "import-scheme" ;
+.
 :transform
   a sml:ApplyConstruct ;
   sm:next td:merge ;
@@ -358,9 +333,6 @@ CONSTRUCT {
   a sm:Function ;
   sm:returnModule td:transform-data_Return ;
   rdfs:subClassOf sm:Functions ;
-.
-td:transform-data_Return
-  rdfs:label "transform-time-analysis-data" ;
 .
 :workaround-fix-missing-groups
   a sml:ApplyConstruct ;
