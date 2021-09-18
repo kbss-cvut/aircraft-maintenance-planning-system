@@ -52,10 +52,10 @@ td:rdfize-input-data
 
 td:deploy-data_Return
   a sml:ReturnRDF ;
-  sml:serialization sml:JSONLD ;
+  sml:serialization sml:Turtle ;
 .
 
 td:transform-data_Return
   a sml:ReturnRDF ;
-  sml:serialization sml:JSONLD ;
+  sml:serialization sml:Turtle ;
 .
