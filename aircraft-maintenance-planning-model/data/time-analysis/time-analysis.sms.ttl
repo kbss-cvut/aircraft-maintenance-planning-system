@@ -23,9 +23,11 @@
 @prefix spl: <http://spinrdf.org/spl#> .
 @prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix td: <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1/> .
 
 <http://onto.fel.cvut.cz/ontologies/csat/time-analysis-0.1>
   a owl:Ontology ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
 .
 :bind-scheme-file-path
@@ -162,18 +164,11 @@ CONSTRUCT {
 .
 :deploy-time-analysis
   a sm:Function ;
-  sm:returnModule :deploy-time-analysis_Return ;
+  sm:returnModule td:deploy-data_Return ;
   rdfs:subClassOf sm:Functions ;
 .
-:deploy-time-analysis_Return
-  a sml:ReturnRDF ;
-  sml:serialization sml:RDFXML ;
-  rdfs:label "Deploy time-analysis" ;
-.
-:deploy-to-rdf4j-server
-  a kbss-module:deploy ;
-  sm:next :deploy-time-analysis_Return ;
-  rdfs:label "deploy" ;
+td:deploy-data_Return
+  rdfs:label "deploy-time-analysis" ;
 .
 :import-scheme
   a sml:ImportRDFFromWorkspace ;
@@ -190,8 +185,7 @@ WHERE {
   sml:ignoreImports true ;
   rdfs:label "import-scheme" ;
 .
-:rdfize-input-data
-  a kbss-module:tabular ;
+td:rdfize-input-data
   kbss-module:has-output-graph-constraint [
       a sp:Ask ;
       sp:text """# 1.01 - column bookingno_i has empty value
@@ -333,17 +327,11 @@ WHERE {
       a sp:str ;
       sp:arg1 : ;
     ] ;
-  km-tabular:delimiter "	" ;
-  km-tabular:source-resource-uri [
-      sp:varName "datasetResource" ;
-    ] ;
   sm:next :construct-csat-maintenance-data ;
-  rdfs:label "rdfize-input-data" ;
 .
 :transform
   a sml:ApplyConstruct ;
-  sm:next :deploy-to-rdf4j-server ;
-  sm:next :transform-data_Return ;
+  sm:next td:merge ;
   sml:constructQuery [
       a sp:Construct ;
       sp:text """# 1 - convert endDate
@@ -366,19 +354,17 @@ CONSTRUCT {
     ] ;
   sml:replace false ;
 .
-:transform-data_Return
-  a sml:ReturnRDF ;
-  sml:serialization sml:JSONLD ;
-  rdfs:label "Return transformed data" ;
-.
 :transform-time-analysis-data
   a sm:Function ;
-  sm:returnModule :transform-data_Return ;
+  sm:returnModule td:transform-data_Return ;
   rdfs:subClassOf sm:Functions ;
+.
+td:transform-data_Return
+  rdfs:label "transform-time-analysis-data" ;
 .
 :workaround-fix-missing-groups
   a sml:ApplyConstruct ;
-  sm:next :rdfize-input-data ;
+  sm:next td:rdfize-input-data ;
   sml:constructQuery [
       a sp:Construct ;
       sp:text """#
