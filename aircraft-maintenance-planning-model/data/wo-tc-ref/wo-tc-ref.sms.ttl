@@ -54,7 +54,7 @@ WHERE {
 .
 :deploy-wo-tc-ref_Return
   a sml:ReturnRDF ;
-  sml:serialization sml:RDFXML ;
+  sml:serialization sml:Turtle ;
   rdfs:label "Deploy wo-tc-ref" ;
 .
 :extract-generic-rdf
@@ -222,6 +222,7 @@ CONSTRUCT {
                     
     # task execution description
     ?task_executionIRI a cm:complex-execution, ?task_typeIRI, owl:NamedIndividual;
+           a ?task_super_classIRI; # TODO can be done by inference
            cm:issue-time ?issue_date;
             cm:end-time ?closing_date;
             cm:has-work-order-step ?task_step_executionIRI;
