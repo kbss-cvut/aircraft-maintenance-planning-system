@@ -162,13 +162,13 @@ CONSTRUCT {
   sml:replace true ;
   rdfs:label "construct-csat-maintenance-data" ;
 .
-:deploy-time-analysis
+:deploy-time-analysis-data
   a sm:Function ;
   sm:returnModule td:deploy-data_Return ;
   rdfs:subClassOf sm:Functions ;
 .
 td:deploy-data_Return
-  rdfs:label "deploy-time-analysis" ;
+  rdfs:label "deploy-time-analysis-data" ;
 .
 :import-scheme
   a sml:ImportRDFFromWorkspace ;
