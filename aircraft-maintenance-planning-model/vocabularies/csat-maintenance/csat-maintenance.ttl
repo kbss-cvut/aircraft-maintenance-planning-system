@@ -179,6 +179,11 @@ cm:is-part-of-workpackage a owl:ObjectProperty ;
     rdfs:label "is part of workpackage" ;
     rdfs:range cm:workpackage .
 
+
+cm:is-part-of-maintenance-task a owl:ObjectProperty ;
+    rdfs:label "is part of maintenance task" ;
+    rdfs:range cm:maintenance-task .
+
 cm:is-repair-of a owl:ObjectProperty ;
     rdfs:label "is repair of" ;
     rdfs:domain cm:workpackage ;
@@ -374,6 +379,9 @@ cm:welding-support-group a owl:Class ;
     rdfs:label "Welding Support Group" ;
     cm:has-abbreviation "WELL" ;
     rdfs:subClassOf cm:maintenance-support-group .
+
+cm:work-session a owl:Class ;
+    rdfs:subClassOf ms:work_session .
 
 cm:workpackage-end-date a owl:DatatypeProperty ;
     rdfs:label "workpackage end date" ;
