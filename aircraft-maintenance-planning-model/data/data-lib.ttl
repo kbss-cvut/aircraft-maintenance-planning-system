@@ -1,0 +1,95 @@
+# baseURI: http://onto.fel.cvut.cz/ontologies/csat/data-lib
+# imports: http://spinrdf.org/spin
+
+@prefix config: <http://onto.fel.cvut.cz/ontologies/csat/config/> .
+@prefix dl: <http://onto.fel.cvut.cz/ontologies/csat/data-lib/> .
+@prefix doc: <http://onto.fel.cvut.cz/ontologies/documentation/> .
+@prefix kbss-module: <http://onto.fel.cvut.cz/ontologies/lib/module/> .
+@prefix km-sesame: <http://onto.fel.cvut.cz/ontologies/lib/module/sesame/> .
+@prefix km-tabular: <http://onto.fel.cvut.cz/ontologies/lib/module/tabular/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sm: <http://topbraid.org/sparqlmotion#> .
+@prefix sml: <http://topbraid.org/sparqlmotionlib#> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+@prefix spl: <http://spinrdf.org/spl#> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://onto.fel.cvut.cz/ontologies/csat/data-lib>
+  a owl:Ontology ;
+  owl:imports <http://spinrdf.org/spin> ;
+.
+dl:instance
+  a spin:Function ;
+  spin:body [
+      a sp:Select ;
+      sp:text """SELECT ?resource
+WHERE {
+    BIND(CONCAT('--', STR(?arg2)) as ?idPart1)
+    BIND(COALESCE(CONCAT('--', STR(?arg3)), '') as ?idPart2)
+    BIND(COALESCE(CONCAT('--', STR(?arg4)), '') as ?idPart3)
+    BIND(COALESCE( CONCAT('--', STR(?arg5)), '') as ?idPart4)
+    BIND(COALESCE(CONCAT('--', STR(?arg6)), '') as ?idPart5)
+    BIND(dl:normalize(CONCAT(?idPart1, ?idPart2, ?idPart3, ?idPart4, ?idPart5)) as ?normalizedId)
+    BIND(URI(CONCAT(STR(?arg1), ?normalizedId)) AS ?resource)
+}""" ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate sp:arg3 ;
+      rdfs:comment "Second part of the identifier of the resource which is instance of provided type." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate sp:arg4 ;
+      rdfs:comment "Third part of the identifier of the resource which is instance of provided type." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate sp:arg5 ;
+      rdfs:comment "Fourth part of the identifier of the resource which is instance of provided type." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate sp:arg6 ;
+      rdfs:comment "Fifth part of the identifier of the resource which is instance of provided type." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "Type of the resource beeing constructed." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg2 ;
+      rdfs:comment "First part of the identifier of the resource which is instance of provided type." ;
+    ] ;
+  rdfs:comment "Returns IRI of a resource that is identified by type and possibly complex identifier. The identifier is composed of its parts and within constructed IRI is normalized (i.e. problematic IRI characters are replaced by '-')." ;
+  rdfs:subClassOf spin:Functions ;
+.
+dl:normalize
+  a spin:Function ;
+  spin:body [
+      a sp:Select ;
+      sp:text """SELECT ?normalizedText
+WHERE {
+    BIND(replace(replace(str(?arg1), ' ', ' ') ,'[ /()]', '-') as ?normalizedText)
+}""" ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg1 ;
+      rdfs:comment "Literal that should be normalized. If IRI is provided, it is converted to literal first." ;
+    ] ;
+  rdfs:comment "Normalize literal for the usage in IRI." ;
+  rdfs:subClassOf spin:Functions ;
+.
