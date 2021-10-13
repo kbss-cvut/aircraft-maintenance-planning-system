@@ -26,6 +26,7 @@
 
 <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1>
   a owl:Ontology ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/csat/data-lib> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
 .
 
