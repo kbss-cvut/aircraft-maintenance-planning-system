@@ -1,7 +1,7 @@
 @prefix : <http://onto.fel.cvut.cz/ontologies/csat-maintenance#> .
 @prefix cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
-@prefix ms: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
 @prefix fn: <http://www.w3.org/2005/xpath-functions#> .
+@prefix ms: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -411,7 +411,7 @@ cm:workpackage-information-content a owl:Class ;
         [ a owl:Restriction ;
             owl:onProperty cm:workpackage-start--time ;
             owl:someValuesFrom xsd:string ],
-        <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Document> .
+        ms:Document .
 
 cm:workpackage-start-date a owl:DatatypeProperty ;
     rdfs:label "workpackage start date" ;
@@ -444,10 +444,10 @@ cm:client a owl:Class ;
     rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/organization> .
 
 cm:damage a owl:Class ;
-    rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Failure_Event> .
+    rdfs:subClassOf ms:Failure_Event .
 
 cm:document a owl:Class ;
-    rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/maintenance-schema/Document> .
+    rdfs:subClassOf ms:Document .
 
 cm:has-fiding a owl:ObjectProperty .
 
@@ -578,12 +578,16 @@ cm:work-order-step a owl:Class ;
             owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ],
         cm:work-order .
 
+cm:workpackage a owl:Class .
+
 <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cm:has-scope ;
             owl:someValuesFrom cm:maintenance-group ],
         [ a owl:Restriction ;
             owl:onProperty cm:task-type-identifier ;
             owl:someValuesFrom xsd:integer ] .
+
+xsd:date a rdfs:Datatype .
 
 cm:finding a owl:Class ;
     rdfs:label "Finding" ;
@@ -637,7 +641,7 @@ cm:aircraft a owl:Class ;
         [ a owl:Restriction ;
             owl:onProperty cm:ata-code ;
             owl:someValuesFrom xsd:integer ],
-        <http://onto.fel.cvut.cz/ontologies/maintenance-schema/System> .
+        ms:System .
 
 cm:date a owl:DatatypeProperty ;
     rdfs:label "date" ;
@@ -686,13 +690,13 @@ cm:work-order a owl:Class ;
     rdfs:label "Work Order" ;
     rdfs:comment "A work order is a task order sent by a customer or organization, usually for a service technician." ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onDataRange xsd:string ;
-            owl:onProperty cm:work-order-action-text ],
-        [ a owl:Restriction ;
             owl:onDataRange xsd:string ;
             owl:onProperty cm:work-order-text ;
             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onDataRange xsd:string ;
+            owl:onProperty cm:work-order-action-text ],
         cm:maintenance-task .
 
 cm:task-card a owl:Class ;
