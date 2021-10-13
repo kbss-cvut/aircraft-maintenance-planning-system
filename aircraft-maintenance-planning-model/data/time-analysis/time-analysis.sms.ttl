@@ -1,4 +1,5 @@
 # baseURI: http://onto.fel.cvut.cz/ontologies/csat/time-analysis-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/csat-maintenance
 # imports: http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1
 # imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
 
@@ -8,6 +9,7 @@
 @prefix cmd: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/> .
 @prefix config: <http://onto.fel.cvut.cz/ontologies/csat/config/> .
 @prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix dl: <http://onto.fel.cvut.cz/ontologies/csat/data-lib/> .
 @prefix doc: <http://onto.fel.cvut.cz/ontologies/documentation/> .
 @prefix kbss-module: <http://onto.fel.cvut.cz/ontologies/lib/module/> .
 @prefix km-sesame: <http://onto.fel.cvut.cz/ontologies/lib/module/sesame/> .
@@ -178,6 +180,7 @@ td:transform-data_Return
 .
 <http://onto.fel.cvut.cz/ontologies/csat/time-analysis-0.1>
   a owl:Ontology ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
 .
@@ -203,6 +206,13 @@ CONSTRUCT {
     ?taskExecution a cm:complex-execution, owl:NamedIndividual ;
               cm:is-part-of-workpackage ?workpackageIRI ;
               cm:has-scope ?maintenaceGroup .
+
+    ?workSession a cm:work-session ;
+              cm:is-part-of-maintenance-task ?taskExecution ;
+              cm:duration-in-hours ?durationInHours .
+
+    ?mechanic a ms:Mechanic ;
+               ufo:performs ?workSession .
 
     ?maintenaceGroup cm:has-abbreviation ?Scope .
     
@@ -278,15 +288,14 @@ CONSTRUCT {
       ?maintenaceGroup rdfs:subClassOf+ cm:maintenance-group ;
           cm:has-abbreviation ?Scope .
 
-    BIND(replace(replace(?Workpackage, \" \", \"-\"),\"/\", \"--\")  as ?workpackageFixed)
-    BIND(iri(concat(str(cmd:), ?workpackageFixed)) as ?workpackageIRI)   
+     BIND(dl:instance(cm:workpackage, ?Workpackage) as ?workpackageIRI)
+     BIND(dl:instance(cm:complex-execution, ?Workpackage, ?WO_TC) as ?taskExecution)
 
-    BIND(replace(replace(?WO_TC, \" \", \"-\"),\"/\", \"--\")  as ?wotcFixed)
-    BIND(concat(?workpackageFixed, \"--\", ?wotcFixed) as ?taskExecutionNormalizedId)
-    BIND(iri(concat(str(cmd:), ?taskExecutionNormalizedId)) as ?taskExecution)
+     BIND(dl:instance(cm:mechanic, ?Employee_No) as ?mechanic)
+     BIND(dl:instance(cm:work-session, ?bookingno_i) as ?workSession)
+     BIND(xsd:decimal(?Duration_Full) as ?durationInHours)
 
-   BIND(replace(replace(replace(replace(?operator, \" \", \"-\"),\"/\", \"--\"), \"\\\\)\", \"-\"), \"\\\\(\", \"-\")  as ?operatorFixed)
-   BIND(iri(concat(str(cmd:), ?operatorFixed)) as ?client)      
+     BIND(dl:instance(cm:client, ?operator) as ?client)
 }""" ;
     ] ;
   sml:replace true ;

@@ -3,6 +3,7 @@
 # imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
 
 @prefix : <http://onto.fel.cvut.cz/ontologies/csat/wo-tc-ref-0.1/> .
+@prefix dl: <http://onto.fel.cvut.cz/ontologies/csat/data-lib/> .
 @prefix ata: <http://onto.fel.cvut.cz/voc/ata-100/> .
 @prefix cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
 @prefix cmd: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/> .
