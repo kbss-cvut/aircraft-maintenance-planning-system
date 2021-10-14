@@ -23,14 +23,227 @@
   a owl:Ontology ;
   owl:imports <http://spinrdf.org/spin> ;
 .
+
+
+dl:id
+  a spin:Function ;
+  spin:body [
+      a sp:Select ;
+      sp:text """SELECT ?normalizedId
+WHERE {
+    BIND(CONCAT(STR(?arg1)) as ?idPart1)
+    BIND(COALESCE(CONCAT('--', STR(?arg2)), '') as ?idPart2)
+    BIND(COALESCE(CONCAT('--', STR(?arg3)), '') as ?idPart3)
+    BIND(COALESCE(CONCAT('--', STR(?arg4)), '') as ?idPart4)
+    BIND(COALESCE(CONCAT('--', STR(?arg5)), '') as ?idPart5)
+    BIND(dl:normalize(CONCAT(?idPart1, ?idPart2, ?idPart3, ?idPart4, ?idPart5)) as ?normalizedId)
+}""" ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg1 ;
+      rdfs:comment "First part of the identifier." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate sp:arg2 ;
+      rdfs:comment "Second part of the identifier." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate sp:arg3 ;
+      rdfs:comment "Third part of the identifier." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate sp:arg4 ;
+      rdfs:comment "Fourth part of the identifier." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate sp:arg5 ;
+      rdfs:comment "Fifth part of the identifier." ;
+    ] ;
+  rdfs:comment "Returns id that can be used to construct IRI. The identifier is composed of its parts and is normalized (i.e. problematic IRI characters are replaced). Note, that all except of the first argument can be undefined for the function to return the value." ;
+  rdfs:subClassOf spin:Functions ;
+.
+
+
+dl:id-2
+  a spin:Function ;
+  spin:body [
+      a sp:Select ;
+      sp:text """SELECT ?normalizedId
+WHERE {
+    BIND(CONCAT(STR(?arg1)) as ?idPart1)
+    BIND(CONCAT('--', STR(?arg2)) as ?idPart2)
+    BIND(dl:normalize(CONCAT(?idPart1, ?idPart2)) as ?normalizedId)
+}""" ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg1 ;
+      rdfs:comment "First part of the identifier." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg2 ;
+      rdfs:comment "Second part of the identifier." ;
+    ] ;
+  rdfs:comment "Returns id that can be used to construct IRI. It is variant of dl:id with only 2 parameters that are however required for function to return value." ;
+  rdfs:subClassOf spin:Functions ;
+.
+
+
+dl:id-3
+  a spin:Function ;
+  spin:body [
+      a sp:Select ;
+      sp:text """SELECT ?normalizedId
+WHERE {
+    BIND(CONCAT(STR(?arg1)) as ?idPart1)
+    BIND(CONCAT('--', STR(?arg2)) as ?idPart2)
+    BIND(CONCAT('--', STR(?arg3)) as ?idPart3)
+    BIND(dl:normalize(CONCAT(?idPart1, ?idPart2, ?idPart3)) as ?normalizedId)
+}""" ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg1 ;
+      rdfs:comment "First part of the identifier." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg2 ;
+      rdfs:comment "Second part of the identifier." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg3 ;
+      rdfs:comment "Third part of the identifier." ;
+    ] ;
+  rdfs:comment "Returns id that can be used to construct IRI. It is variant of dl:id with only 3 parameters that are however required for function to return value." ;
+  rdfs:subClassOf spin:Functions ;
+.
+
+
+dl:id-4
+  a spin:Function ;
+  spin:body [
+      a sp:Select ;
+      sp:text """SELECT ?normalizedId
+WHERE {
+    BIND(CONCAT(STR(?arg1)) as ?idPart1)
+    BIND(CONCAT('--', STR(?arg2)) as ?idPart2)
+    BIND(CONCAT('--', STR(?arg3)) as ?idPart3)
+    BIND(CONCAT('--', STR(?arg4)) as ?idPart4)
+    BIND(dl:normalize(CONCAT(?idPart1, ?idPart2, ?idPart3, ?idPart4)) as ?normalizedId)
+}""" ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg1 ;
+      rdfs:comment "First part of the identifier." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg2 ;
+      rdfs:comment "Second part of the identifier." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg3 ;
+      rdfs:comment "Third part of the identifier." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg4 ;
+      rdfs:comment "Fourth part of the identifier." ;
+    ] ;
+  rdfs:comment "Returns id that can be used to construct IRI. It is variant of dl:id with only 4 parameters that are however required for function to return value." ;
+  rdfs:subClassOf spin:Functions ;
+.
+
+
+dl:id-5
+  a spin:Function ;
+  spin:body [
+      a sp:Select ;
+      sp:text """SELECT ?normalizedId
+WHERE {
+    BIND(CONCAT(STR(?arg1)) as ?idPart1)
+    BIND(CONCAT('--', STR(?arg2)) as ?idPart2)
+    BIND(CONCAT('--', STR(?arg3)) as ?idPart3)
+    BIND(CONCAT('--', STR(?arg4)) as ?idPart4)
+    BIND(CONCAT('--', STR(?arg5)) as ?idPart5)
+    BIND(dl:normalize(CONCAT(?idPart1, ?idPart2, ?idPart3, ?idPart4, ?idPart5)) as ?normalizedId)
+}""" ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg1 ;
+      rdfs:comment "First part of the identifier." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg2 ;
+      rdfs:comment "Second part of the identifier." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg3 ;
+      rdfs:comment "Third part of the identifier." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg4 ;
+      rdfs:comment "Fourth part of the identifier." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg5 ;
+      rdfs:comment "Fifth part of the identifier." ;
+    ] ;
+  rdfs:comment "Returns id that can be used to construct IRI. It is variant of dl:id with only 5 parameters that are however required for function to return value." ;
+  rdfs:subClassOf spin:Functions ;
+.
+
 dl:instance
   a spin:Function ;
   spin:body [
       a sp:Select ;
       sp:text """SELECT ?resource
 WHERE {
+    BIND(URI(CONCAT(STR(?arg1), '--', dl:normalize(?arg2))) AS ?resource)
+}""" ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg2 ;
+      rdfs:comment "Identifier of the resource which is instance of provided type." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "Type of the resource beeing constructed." ;
+    ] ;
+  rdfs:comment "Returns IRI of a resource that is identified by type and possibly complex identifier. The identifier within constructed IRI is normalized (i.e. problematic IRI characters are replaced)." ;
+  rdfs:subClassOf spin:Functions ;
+.
+
+dl:instance-3
+  a spin:Function ;
+  spin:body [
+      a sp:Select ;
+      sp:text """SELECT ?resource
+WHERE {
     BIND(CONCAT('--', STR(?arg2)) as ?idPart1)
-    BIND(COALESCE(CONCAT('--', STR(?arg3)), '') as ?idPart2)
+    BIND(CONCAT('--', STR(?arg3)) as ?idPart2)
     BIND(COALESCE(CONCAT('--', STR(?arg4)), '') as ?idPart3)
     BIND(COALESCE( CONCAT('--', STR(?arg5)), '') as ?idPart4)
     BIND(COALESCE(CONCAT('--', STR(?arg6)), '') as ?idPart5)
@@ -73,16 +286,71 @@ WHERE {
       spl:predicate sp:arg2 ;
       rdfs:comment "First part of the identifier of the resource which is instance of provided type." ;
     ] ;
-  rdfs:comment "Returns IRI of a resource that is identified by type and possibly complex identifier. The identifier is composed of its parts and within constructed IRI is normalized (i.e. problematic IRI characters are replaced by '-')." ;
+  rdfs:comment "Returns IRI of a resource that is identified by type and possibly complex identifier. Variant of dl:instance with 3 required parameters" ;
   rdfs:subClassOf spin:Functions ;
 .
+
+dl:instance-4
+  a spin:Function ;
+  spin:body [
+      a sp:Select ;
+      sp:text """SELECT ?resource
+WHERE {
+    BIND(CONCAT('--', STR(?arg2)) as ?idPart1)
+    BIND(CONCAT('--', STR(?arg3)) as ?idPart2)
+    BIND(CONCAT('--', STR(?arg4)) as ?idPart3)
+    BIND(COALESCE( CONCAT('--', STR(?arg5)), '') as ?idPart4)
+    BIND(COALESCE(CONCAT('--', STR(?arg6)), '') as ?idPart5)
+    BIND(dl:normalize(CONCAT(?idPart1, ?idPart2, ?idPart3, ?idPart4, ?idPart5)) as ?normalizedId)
+    BIND(URI(CONCAT(STR(?arg1), ?normalizedId)) AS ?resource)
+}""" ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate sp:arg3 ;
+      rdfs:comment "Second part of the identifier of the resource which is instance of provided type." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate sp:arg4 ;
+      rdfs:comment "Third part of the identifier of the resource which is instance of provided type." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate sp:arg5 ;
+      rdfs:comment "Fourth part of the identifier of the resource which is instance of provided type." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate sp:arg6 ;
+      rdfs:comment "Fifth part of the identifier of the resource which is instance of provided type." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "Type of the resource beeing constructed." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg2 ;
+      rdfs:comment "First part of the identifier of the resource which is instance of provided type." ;
+    ] ;
+  rdfs:comment "Returns IRI of a resource that is identified by type and possibly complex identifier. Variant of dl:instance with 4 required parameters" ;
+  rdfs:subClassOf spin:Functions ;
+.
+
 dl:normalize
   a spin:Function ;
   spin:body [
       a sp:Select ;
       sp:text """SELECT ?normalizedText
 WHERE {
-    BIND(replace(replace(str(?arg1), ' ', ' ') ,'[ /()]', '-') as ?normalizedText)
+    BIND(replace(replace(str(?arg1), ' ', ' ') ,'[ /()+]', '-') as ?normalizedText)
 }""" ;
     ] ;
   spin:constraint [
