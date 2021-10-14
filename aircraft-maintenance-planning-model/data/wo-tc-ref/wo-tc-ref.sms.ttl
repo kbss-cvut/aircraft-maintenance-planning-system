@@ -1,14 +1,15 @@
 # baseURI: http://onto.fel.cvut.cz/ontologies/csat/wo-tc-ref-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/csat-maintenance
 # imports: http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1
 # imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
 
 @prefix : <http://onto.fel.cvut.cz/ontologies/csat/wo-tc-ref-0.1/> .
-@prefix dl: <http://onto.fel.cvut.cz/ontologies/csat/data-lib/> .
 @prefix ata: <http://onto.fel.cvut.cz/voc/ata-100/> .
 @prefix cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
 @prefix cmd: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/> .
 @prefix config: <http://onto.fel.cvut.cz/ontologies/csat/config/> .
 @prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix dl: <http://onto.fel.cvut.cz/ontologies/csat/data-lib/> .
 @prefix doc: <http://onto.fel.cvut.cz/ontologies/documentation/> .
 @prefix kbss-module: <http://onto.fel.cvut.cz/ontologies/lib/module/> .
 @prefix km-sesame: <http://onto.fel.cvut.cz/ontologies/lib/module/sesame/> .
@@ -151,6 +152,7 @@ td:transform-data_Return
 .
 <http://onto.fel.cvut.cz/ontologies/csat/wo-tc-ref-0.1>
   a owl:Ontology ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
 .
@@ -166,7 +168,8 @@ CONSTRUCT {
         
     # workpackage description
     ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
-              cm:id ?WP .
+              cm:id ?WP ;
+              cm:is-repair-of ?aircraftIRI .
                     
     # task execution description
     ?task_executionIRI a cm:complex-execution, ?task_typeIRI, owl:NamedIndividual;
@@ -187,17 +190,15 @@ CONSTRUCT {
     # task step execution
     ?task_step_executionIRI a ?task_step_execution_typeIRI, owl:NamedIndividual;
      		cm:step-index ?workstepTyped;
-            cm:work-order-text ?WO_text .
-    
-    ?task_step_executionIRI cm:work-order-action-text ?WO_action .
+            cm:work-order-text ?WO_text ;
+            cm:work-order-action-text ?WO_action .
 	
     ?task_step_execution_typeIRI a owl:Class;
             rdfs:subClassOf cm:work-order-step.
 			
 	# aircraft description
-	?workpackageIRI cm:is-repair-of ?aircraftIRI.
 	?aircraftIRI a cm:aircraft, owl:NamedIndividual;
-			cm:model ?acModelFixed ;
+			cm:model ?acModel ;
 	        cm:age ?acAge .
 } WHERE {
 
@@ -224,33 +225,28 @@ CONSTRUCT {
         ?rd :WO_action ?WO_action .
     }
 
-
-    BIND(replace(replace(?WP, \" \", \"-\"),\"/\", \"--\")  as ?workpackageFixed)
-    BIND(replace(replace(?TC_reference, \" \", \"-\"),\"/\", \"--\")  as ?tcReferenceFixed)
-    BIND(replace(replace(?CSAT_WO_TC, \" \", \"-\"),\"/\", \"--\")  as ?wotcFixed)
-    BIND(concat(?workpackageFixed, \"--\", ?wotcFixed) as ?task_execution)
-    BIND(iri(concat(str(cmd:), ?workpackageFixed)) as ?workpackageIRI)   
-    BIND(iri(concat(str(cmd:), ?task_execution)) as ?task_executionIRI)
+    BIND(dl:instance(cm:workpackage, ?WP) as ?workpackageIRI)
+    BIND(dl:instance(cm:complex-execution, dl:id-2(?WP, ?CSAT_WO_TC)) as ?task_executionIRI)
     BIND(?AC as ?acModel)
-    BIND(replace(replace(?AC, \" \", \"-\"),\"/\", \"--\")  as ?acModelFixed)
     BIND(?A_C_age as ?acAge)
-    BIND(IRI(concat(str(cmd:), ?acModelFixed, \"-\", ?workpackageFixed)) as ?aircraftIRI)
-    BIND(concat(?type, \"-\",   ?wotcFixed) as ?taskType)     
-    BIND(concat(?taskType, \"-\",   ?sequence) as ?taskStepExecutionType)
-    BIND(concat(?workpackageFixed, \"-\",   ?taskStepExecutionType) as ?taskStepExecution)
+    BIND(dl:instance(cm:aircraft, ?WP) as ?aircraftIRI)
 
-    BIND(iri(concat(str(cmd:), ?taskStepExecution)) as ?task_step_executionIRI) # instance
-    BIND(IRI(concat(str(cm:), ?taskType)) as ?task_typeIRI)
+    BIND(dl:id-2(?type, ?CSAT_WO_TC) as ?taskTypeId)
+    BIND(dl:id-2(?taskTypeId, ?sequence) as ?taskStepExecutionTypeId)
+
+    BIND(dl:instance(cm:task-step-execution, dl:id-2(?WP, ?taskStepExecutionTypeId)) as ?task_step_executionIRI)
+
+    BIND(dl:instance(cm:task-type, ?taskTypeId) as ?task_typeIRI)
 
     BIND(IF(?type =  \"TC\", \"task-card\",  ?x) as ?tc)
     BIND(IF(?type =  \"S\", \"scheduled-work-order\",  ?x) as ?s)
     BIND(IF(?type =  \"M\", \"maintenance-work-order\",   ?x) as ?m)
     BIND(COALESCE(?tc, ?s, ?m) as ?task_super_class)
     BIND(IRI(concat(str(cm:), ?task_super_class)) as ?task_super_classIRI)
-    BIND(IRI(concat(str(cm:), ?taskStepExecutionType)) as ?task_step_execution_typeIRI)
+    BIND(dl:instance(cm:task-step-execution-type, ?taskStepExecutionTypeId) as ?task_step_execution_typeIRI)
+
     BIND(STRDT(str(?sequence), xsd:integer) as ?workstepTyped)
-    BIND(concat(?workpackageFixed, \"--\",   ?tcReferenceFixed) as ?referencedTaskExecution)
-    BIND(iri(concat(str(cmd:), ?referencedTaskExecution)) as ?referenced_task_executionIRI)
+    BIND(dl:instance(cm:complex-execution, dl:id-2(?WP, ?TC_reference)) as ?referenced_task_executionIRI)
     BIND(IRI(concat(str(ata:), \"ata-\", ?ATA)) as ?ataIRI)
      
 }""" ;

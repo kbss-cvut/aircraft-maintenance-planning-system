@@ -289,7 +289,7 @@ CONSTRUCT {
           cm:has-abbreviation ?Scope .
 
      BIND(dl:instance(cm:workpackage, ?Workpackage) as ?workpackageIRI)
-     BIND(dl:instance(cm:complex-execution, ?Workpackage, ?WO_TC) as ?taskExecution)
+     BIND(dl:instance(cm:complex-execution, dl:id-2(?Workpackage, ?WO_TC)) as ?taskExecution)
 
      BIND(dl:instance(cm:mechanic, ?Employee_No) as ?mechanic)
      BIND(dl:instance(cm:work-session, ?bookingno_i) as ?workSession)
