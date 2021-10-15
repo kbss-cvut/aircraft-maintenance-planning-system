@@ -1,0 +1,299 @@
+# baseURI: http://onto.fel.cvut.cz/ontologies/csat/time-estimate-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/csat-maintenance
+# imports: http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
+
+@prefix : <http://onto.fel.cvut.cz/ontologies/csat/time-estimate-0.1/> .
+@prefix ata: <http://onto.fel.cvut.cz/voc/ata-100/> .
+@prefix cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
+@prefix cmd: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/> .
+@prefix config: <http://onto.fel.cvut.cz/ontologies/csat/config/> .
+@prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix dl: <http://onto.fel.cvut.cz/ontologies/csat/data-lib/> .
+@prefix doc: <http://onto.fel.cvut.cz/ontologies/documentation/> .
+@prefix kbss-module: <http://onto.fel.cvut.cz/ontologies/lib/module/> .
+@prefix km-sesame: <http://onto.fel.cvut.cz/ontologies/lib/module/sesame/> .
+@prefix km-tabular: <http://onto.fel.cvut.cz/ontologies/lib/module/tabular/> .
+@prefix ms: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sm: <http://topbraid.org/sparqlmotion#> .
+@prefix sml: <http://topbraid.org/sparqlmotionlib#> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+@prefix spl: <http://spinrdf.org/spl#> .
+@prefix td: <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1/> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+td:deploy-data_Return
+  rdfs:label "deploy-time-estimate-data" ;
+.
+td:rdfize-input-data
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.01 - column AC registration has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :AC_registration ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.02 - column operator has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :operator ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.03 - column WP has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :WP ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.04 - column sequence has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :sequence ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.05 - column est-min has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :est_min ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 2 - found scope that is not defined in schema ontology
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    ?rd :Scope ?maintenaceGroupAbbr .
+
+    FILTER NOT EXISTS {
+         ?maintenaceGroup rdfs:subClassOf* cm:maintenance-group ;
+                cm:has-abbreviation ?maintenaceGroupAbbr .
+    }    
+}""" ;
+    ] ;
+  km-tabular:data-prefix [
+      a sp:str ;
+      sp:arg1 : ;
+    ] ;
+  sm:next :construct-csat-maintenance-data ;
+.
+td:transform-data_Return
+  rdfs:label "transform-time-estimate-data" ;
+.
+<http://onto.fel.cvut.cz/ontologies/csat/time-estimate-0.1>
+  a owl:Ontology ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
+.
+:construct-csat-maintenance-data
+  a sml:ApplyConstruct ;
+  sm:next :transform ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - extract ontology
+CONSTRUCT {
+    <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time-estimate-12345> a owl:Ontology ;
+              owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
+        
+    # workpackage description
+    ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
+              cm:id ?WP ;
+              cm:has-client ?client .
+           
+
+    ?task_executionIRI   a cm:complex-execution, owl:NamedIndividual ;
+              cm:is-part-of-workpackage ?workpackageIRI ;
+              cm:has-work-order-step ?task_step_executionIRI .     # TODO --- toto je urcite spravne ????
+
+
+   ?task_step_executionIRI a ?task_step_execution_typeIRI, owl:NamedIndividual;
+              cm:step-index ?workstepTyped . 
+
+
+    ?scoped_task_step_executionIRI a cm:scoped-task-step, ?scoped_task_step_execution_typeIRI, owl:NamedIndividual ;
+              cm:time-estimate-in-hours ?timeEstimateInHours ;
+              ufo:is-part-of ?task_executionIRI ;
+              cm:has-scope ?maintenaceGroup . 
+
+    ?maintenaceGroup cm:has-abbreviation ?Scope .
+    
+    ?client a cm:client, owl:NamedIndividual ;
+              cm:id ?operator;
+    .   
+} WHERE {
+    ?rd :AC_registration ?AC_registration .
+    ?rd :operator ?operator .
+    ?rd :WP ?WP .
+    OPTIONAL {
+      ?rd :WO ?WO .
+    }
+    OPTIONAL {
+      ?rd :TC ?TC .
+    }
+    OPTIONAL {
+      ?rd :project ?project .
+    }
+    ?rd :sequence ?sequence .
+    OPTIONAL {
+      ?rd :scope ?scope .
+    }
+    ?rd :est_min ?est_min  .
+
+    ?maintenaceGroup rdfs:subClassOf+ cm:maintenance-group ;
+          cm:has-abbreviation ?scope .
+
+     
+    BIND(dl:instance(cm:workpackage, ?WP) as ?workpackageIRI)
+
+    BIND(COALESCE(?WO, ?TC) as ?wo_or_tc)
+    BIND(dl:instance(cm:complex-execution, dl:id-2(?WP, ?wo_or_tc)) as ?task_executionIRI)
+
+#    BIND(dl:id-2(?type, ?wo_or_tc) as ?taskTypeId)  # TODO pouzi na url ?type 
+    BIND(dl:normalize(?wo_or_tc) as ?taskTypeId)
+    BIND(dl:id-2(?taskTypeId, ?sequence) as ?taskStepExecutionTypeId)
+
+    BIND(dl:instance(cm:task-step-execution-type, ?taskStepExecutionTypeId) as ?task_step_execution_typeIRI)
+    BIND(dl:instance(cm:task-step-execution, dl:id-2(?WP, ?taskStepExecutionTypeId)) as ?task_step_executionIRI)
+   
+    BIND(dl:id-2(?taskStepExecutionTypeId, ?scope) as ?scopedTaskStepExecutionTypeId)
+    BIND(dl:instance(cm:scoped-task-step-execution-type, ?scopedTaskStepExecutionTypeId) as ?scoped_task_step_execution_typeIRI)
+    BIND(dl:instance(cm:scoped-task-step-execution, dl:id-2(?WP, ?scopedTaskStepExecutionTypeId)) as ?scoped_task_step_executionIRI)
+    
+    BIND(STRDT(str(?sequence), xsd:integer) as ?workstepTyped)
+    BIND(xsd:decimal(?est_min) as ?timeEstimateInHours)
+
+    BIND(dl:instance(cm:client, ?operator) as ?client)
+}""" ;
+    ] ;
+  sml:replace true ;
+  rdfs:label "construct-csat-maintenance-data" ;
+.
+:deploy-time-estimate-data
+  a sm:Function ;
+  sm:returnModule td:deploy-data_Return ;
+  rdfs:subClassOf sm:Functions ;
+.
+:import-scheme
+  a sml:ImportRDFFromWorkspace ;
+  sm:next :workaround-fix-missing-groups ;
+  sml:baseURI "http://onto.fel.cvut.cz/ontologies/csat-maintenance" ;
+  sml:ignoreImports true ;
+  rdfs:label "import-scheme" ;
+.
+:transform
+  a sml:ApplyConstruct ;
+  sm:next td:merge ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - convert endDate
+CONSTRUCT {
+     ?s  cm:end-time ?endDate .
+} WHERE {
+     ?s  cm:end-timeX ?endDateNotParsed .
+#      BIND(spif:parseDate(?endDateNotParsed ,\"dd.MM.yyyy\") as ?endDate)
+}""" ;
+    ] ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - convert issueDate
+CONSTRUCT {
+     ?s  cm:issue-time ?issueDate .
+} WHERE {
+     ?s  cm:issue-timeX ?issueDateNotParsed .
+#      BIND(spif:parseDate(?issueDateNotParsed ,\"dd.MM.yyyy\") as ?issueDate)
+}""" ;
+    ] ;
+  sml:replace false ;
+.
+:transform-time-estimate-data
+  a sm:Function ;
+  sm:returnModule td:transform-data_Return ;
+  rdfs:subClassOf sm:Functions ;
+.
+:workaround-fix-missing-groups
+  a sml:ApplyConstruct ;
+  sm:next td:rdfize-input-data ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """#
+# TODO put to ontology
+CONSTRUCT {
+    cm:MECH-ENG-maintenance-group rdfs:subClassOf cm:maintenance-group ;
+        cm:has-abbreviation \"MECH-ENG\" ;
+        rdfs:label \"MECH-ENG Group\" ;
+    .   
+    cm:CHEM-maintenance-group rdfs:subClassOf cm:maintenance-group ;
+        cm:has-abbreviation \"CHEM\" ;
+        rdfs:label \"CHEM Group\" ;
+    .   
+    cm:MECH-maintenance-group rdfs:subClassOf cm:maintenance-group ;
+        cm:has-abbreviation \"MECH\" ;
+        rdfs:label \"MECH Group\" ;
+    .   
+    cm:ENG-maintenance-group rdfs:subClassOf cm:maintenance-group ;
+        cm:has-abbreviation \"ENG\" ;
+        rdfs:label \"ENG Group\" ;
+    .   
+    cm:GAL-maintenance-group rdfs:subClassOf cm:maintenance-group ;
+        cm:has-abbreviation \"GAL\" ;
+        rdfs:label \"GAL Group\" ;
+    .   
+    cm:COM-maintenance-group rdfs:subClassOf cm:maintenance-group ;
+        cm:has-abbreviation \"COM\" ;
+        rdfs:label \"COM Group\" ;
+    .   
+    cm:UPH-maintenance-group rdfs:subClassOf cm:maintenance-group ;
+        cm:has-abbreviation \"UPH\" ;
+        rdfs:label \"UPH Group\" ;
+    .   
+    cm:LDG-maintenance-group rdfs:subClassOf cm:maintenance-group ;
+        cm:has-abbreviation \"LDG\" ;
+        rdfs:label \"LDG Group\" ;
+    . 
+
+    cm:JOIN-maintenance-group rdfs:subClassOf cm:maintenance-group ;
+        cm:has-abbreviation \"JOIN\" ;
+        rdfs:label \"JOIN Group\" ;
+    . 
+
+    cm:TRN-maintenance-group rdfs:subClassOf cm:maintenance-group ;
+        cm:has-abbreviation \"TRN\" ;
+        rdfs:label \"TRN Group\" ;
+    . 
+} WHERE {
+}""" ;
+    ] ;
+  sml:replace false ;
+  rdfs:label "workaround-fix-missing-groups" ;
+.
