@@ -325,6 +325,16 @@ cm:scheduled-work-order a owl:Class ;
     rdfs:subClassOf cm:planned-task,
         cm:work-order .
 
+cm:scoped-task-step a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass cm:work-order-step ;
+            owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty cm:time-estimate-in-hours ],
+        cm:maintenance-task .
+
 cm:seat-workshop--support-group a owl:Class ;
     rdfs:label "Seat Workshop  Support Group" ;
     cm:has-abbreviation "SEAT" ;
@@ -385,18 +395,6 @@ cm:workpackage-end-date a owl:DatatypeProperty ;
 cm:workpackage-information-content a owl:Class ;
     rdfs:label "Workpackage Information content" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cm:aircraft-age ;
-            owl:someValuesFrom xsd:integer ],
-        [ a owl:Restriction ;
-            owl:onProperty cm:aircraft-regestration-number ;
-            owl:someValuesFrom xsd:integer ],
-        [ a owl:Restriction ;
-            owl:onProperty cm:list-of-technicians-available ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
-            owl:onProperty cm:maintenance-task-end-time ;
-            owl:someValuesFrom xsd:string ],
-        [ a owl:Restriction ;
             owl:onProperty cm:maintenance-task-scheduled-time ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
@@ -413,6 +411,18 @@ cm:workpackage-information-content a owl:Class ;
             owl:someValuesFrom xsd:string ],
         [ a owl:Restriction ;
             owl:onProperty cm:workpackage-start--time ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cm:aircraft-age ;
+            owl:someValuesFrom xsd:integer ],
+        [ a owl:Restriction ;
+            owl:onProperty cm:aircraft-regestration-number ;
+            owl:someValuesFrom xsd:integer ],
+        [ a owl:Restriction ;
+            owl:onProperty cm:list-of-technicians-available ;
+            owl:someValuesFrom xsd:string ],
+        [ a owl:Restriction ;
+            owl:onProperty cm:maintenance-task-end-time ;
             owl:someValuesFrom xsd:string ],
         ms:Document .
 
@@ -506,17 +516,15 @@ cm:task-type a owl:ObjectProperty ;
     rdfs:domain cm:maintenance-task ;
     rdfs:range cm:maintenance-task .
 
-cm:task-type-identifier a owl:DatatypeProperty ;
-    rdfs:label "task type identifier" ;
-    rdfs:domain cm:maintenance-task ;
-    rdfs:range xsd:integer .
-
 cm:team-leader a owl:Class ;
     rdfs:label "Team Leader" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cm:leads ;
             owl:someValuesFrom cm:heavy-maintenance-group ],
         cm:maintenance-manager .
+
+cm:time-estimate-in-hours a owl:DatatypeProperty ;
+    rdfs:range xsd:decimal .
 
 cm:work-order-action-text a owl:DatatypeProperty ;
     rdfs:label "work order action text" ;
@@ -575,15 +583,10 @@ cm:non-planned-task a owl:Class ;
             owl:someValuesFrom cm:finding ],
         cm:client-extra--order-task .
 
-cm:work-order-step a owl:Class ;
-    rdfs:label "Work Order Step" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cm:has-follow-up-actions ;
-            owl:someValuesFrom cm:wos-action ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom cm:work-order ;
-            owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ],
-        cm:work-order .
+cm:task-type-identifier a owl:DatatypeProperty ;
+    rdfs:label "task type identifier" ;
+    rdfs:domain cm:maintenance-task ;
+    rdfs:range xsd:integer .
 
 cm:workpackage a owl:Class ;
     rdfs:subClassOf [ a owl:Restriction ;
@@ -591,9 +594,6 @@ cm:workpackage a owl:Class ;
             owl:onProperty cm:id ] .
 
 <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cm:has-scope ;
-            owl:someValuesFrom cm:maintenance-group ],
-        [ a owl:Restriction ;
             owl:onProperty cm:task-type-identifier ;
             owl:someValuesFrom xsd:integer ] .
 
@@ -629,6 +629,16 @@ cm:task-steps a owl:Class ;
             owl:onProperty cm:order ;
             owl:someValuesFrom xsd:integer ],
         cm:maintenance-task .
+
+cm:work-order-step a owl:Class ;
+    rdfs:label "Work Order Step" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cm:has-follow-up-actions ;
+            owl:someValuesFrom cm:wos-action ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom cm:work-order ;
+            owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ],
+        cm:work-order .
 
 cm:client-extra--order-task a owl:Class ;
     rdfs:label "Client Extra Order task" ;
@@ -702,11 +712,17 @@ cm:work-order a owl:Class ;
 cm:maintenance-task a owl:Class ;
     rdfs:comment "Maintenance tasks indicate which action—or set of actions—a maintenance technician is supposed to perform to complete a work order" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cm:has-scope ;
+            owl:someValuesFrom cm:maintenance-group ],
+        [ a owl:Restriction ;
             owl:onProperty cm:task-type ;
             owl:someValuesFrom cm:maintenance-task ],
         [ a owl:Restriction ;
             owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-performed-by> ;
             owl:someValuesFrom cm:maintenance-group ],
+        [ a owl:Restriction ;
+            owl:onProperty cm:task-type-identifier ;
+            owl:someValuesFrom xsd:integer ],
         <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> .
 
 cm:task-card a owl:Class ;
