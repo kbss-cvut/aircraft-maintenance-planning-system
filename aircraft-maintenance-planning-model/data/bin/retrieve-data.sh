@@ -1,6 +1,7 @@
 #!/bin/bash 
 
-INPUT_FILE=./target/input.tsv
+INPUT_FILE_NAME=input.tsv
+INPUT_FILE=./target/$INPUT_FILE_NAME
 
 if [ ! "$#" -eq 1 ]; then
         echo Retrieve DATASET_TYPE data based on existing tsv file located in file $INPUT_FILE wtihin DATASET_TYPE directory.
