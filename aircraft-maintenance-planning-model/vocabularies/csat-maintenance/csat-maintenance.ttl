@@ -162,10 +162,6 @@ cm:hyd.-power a owl:Class ;
 		- possible values (states): ON, OFF, / (no restriction)""" ;
     rdfs:subClassOf cm:restriction .
 
-cm:id a owl:DatatypeProperty ;
-    rdfs:label "id" ;
-    rdfs:range xsd:string .
-
 cm:int a owl:Class ;
     rdfs:label "INT" ;
     rdfs:subClassOf cm:maintenance-team .
@@ -175,14 +171,13 @@ cm:interior-mechanic-group a owl:Class ;
     cm:has-abbreviation "MECH-INT" ;
     rdfs:subClassOf cm:heavy-maintenance-group .
 
-cm:is-part-of-workpackage a owl:ObjectProperty ;
-    rdfs:label "is part of workpackage" ;
-    rdfs:range cm:workpackage .
-
-
 cm:is-part-of-maintenance-task a owl:ObjectProperty ;
     rdfs:label "is part of maintenance task" ;
     rdfs:range cm:maintenance-task .
+
+cm:is-part-of-workpackage a owl:ObjectProperty ;
+    rdfs:label "is part of workpackage" ;
+    rdfs:range cm:workpackage .
 
 cm:is-repair-of a owl:ObjectProperty ;
     rdfs:label "is repair of" ;
@@ -467,6 +462,10 @@ cm:has-scope a owl:ObjectProperty ;
     rdfs:domain cm:maintenance-task ;
     rdfs:range cm:maintenance-group .
 
+cm:id a owl:DatatypeProperty ;
+    rdfs:label "id" ;
+    rdfs:range xsd:string .
+
 cm:list-of-technicians-available a owl:DatatypeProperty ;
     rdfs:range xsd:string .
 
@@ -586,7 +585,10 @@ cm:work-order-step a owl:Class ;
             owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ],
         cm:work-order .
 
-cm:workpackage a owl:Class .
+cm:workpackage a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty cm:id ] .
 
 <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cm:has-scope ;
@@ -684,16 +686,6 @@ cm:maintenance-support-group a owl:Class ;
     rdfs:label "Maintenance Support Group" ;
     rdfs:subClassOf cm:maintenance-group .
 
-cm:maintenance-task a owl:Class ;
-    rdfs:comment "Maintenance tasks indicate which action—or set of actions—a maintenance technician is supposed to perform to complete a work order" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cm:task-type ;
-            owl:someValuesFrom cm:maintenance-task ],
-        [ a owl:Restriction ;
-            owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-performed-by> ;
-            owl:someValuesFrom cm:maintenance-group ],
-        <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> .
-
 cm:work-order a owl:Class ;
     rdfs:label "Work Order" ;
     rdfs:comment "A work order is a task order sent by a customer or organization, usually for a service technician." ;
@@ -706,6 +698,16 @@ cm:work-order a owl:Class ;
             owl:onDataRange xsd:string ;
             owl:onProperty cm:work-order-action-text ],
         cm:maintenance-task .
+
+cm:maintenance-task a owl:Class ;
+    rdfs:comment "Maintenance tasks indicate which action—or set of actions—a maintenance technician is supposed to perform to complete a work order" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cm:task-type ;
+            owl:someValuesFrom cm:maintenance-task ],
+        [ a owl:Restriction ;
+            owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-performed-by> ;
+            owl:someValuesFrom cm:maintenance-group ],
+        <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> .
 
 cm:task-card a owl:Class ;
     rdfs:label "Task Card" ;
