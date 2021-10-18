@@ -223,8 +223,8 @@ CONSTRUCT {
               cm:duration-in-hours ?durationInHours ;
               cm:has-scope ?maintenaceGroup .
 
-    ?mechanic a ms:Mechanic ;
-               ufo:performs ?workSession .
+    ?mechanic a cm:mechanic ;
+               cm:performs ?workSession .
 
     ?maintenaceGroup a cm:maintenance-group ;
               cm:has-abbreviation ?Scope .

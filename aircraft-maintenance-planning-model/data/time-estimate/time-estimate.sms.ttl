@@ -144,7 +144,7 @@ CONSTRUCT {
 
     ?scoped_task_step_executionIRI a cm:scoped-task-step, ?scoped_task_step_execution_typeIRI, owl:NamedIndividual ;
               cm:time-estimate-in-hours ?timeEstimateInHours ;
-              ufo:is-part-of ?task_executionIRI ;
+              cm:is-part-of ?task_executionIRI ;
               cm:has-scope ?maintenaceGroup . 
 
     ?maintenaceGroup a cm:maintenance-group ;

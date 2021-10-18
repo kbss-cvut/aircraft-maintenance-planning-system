@@ -44,7 +44,7 @@ CONSTRUCT {
     <http://onto.fel.cvut.cz/ontologies/csat-maintenance/presence-12345> a owl:Ontology ;
               owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
         
-    ?mechanic a ms:Mechanic .
+    ?mechanic a cm:mechanic .
    
 } WHERE {
     ?rd :Employee_No ?Employee_No .
