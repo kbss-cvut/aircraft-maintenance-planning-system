@@ -173,6 +173,7 @@ WHERE {
       a sp:str ;
       sp:arg1 : ;
     ] ;
+  km-tabular:delimiter "	" ;
   sm:next :construct-csat-maintenance-data ;
 .
 td:transform-data_Return

@@ -43,7 +43,6 @@ td:merge
 .
 td:rdfize-input-data
   a kbss-module:tabular ;
-  km-tabular:delimiter "	" ;
   km-tabular:source-resource-uri [
       sp:varName "datasetResource" ;
     ] ;

@@ -31,6 +31,7 @@ td:deploy-data_Return
   rdfs:label "deploy-wo-tc-ref-data" ;
 .
 td:rdfize-input-data
+  km-tabular:delimiter "	" ;
   kbss-module:has-output-graph-constraint [
       a sp:Ask ;
       sp:text """# 1.01 column AC has empty value
