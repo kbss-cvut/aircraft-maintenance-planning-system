@@ -34,6 +34,90 @@
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
 .
+:append-next
+  a sml:ApplyConstruct ;
+  sm:next :construct-events ;
+  sm:nodeX 1590 ;
+  sm:nodeY 169 ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """CONSTRUCT {
+     ?rd1 :next  ?rd2 .
+} WHERE {
+    ?rd1 :possibly-next ?rd2 .
+    ?rd1 :date ?date ;
+        :start-time ?startTime .
+    ?rd2 :date ?date ;
+        :end-time ?endTime .
+
+    FILTER NOT EXISTS {
+        ?rdNE :date ?date ;
+            :end-time ?endTimeNE .
+        BIND(STRDT(?endTimeNE, xsd:time) as ?tNE)
+        FILTER(?startTime < ?tNE)
+        FILTER(?tNE < ?endTime)
+    }
+}""" ;
+    ] ;
+  rdfs:label "append-next" ;
+.
+:append-possible-next
+  a sml:ApplyConstruct ;
+  sm:next :append-next ;
+  sm:nodeX 1376 ;
+  sm:nodeY 124 ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """CONSTRUCT {
+     ?rd1 :possibly-next ?rd2 .
+} WHERE {
+    ?rd1 :Employee_No ?Employee_No ;
+        :date ?date ;
+        :start-time ?time1 .
+    ?rd2:Employee_No ?Employee_No ;
+        :date ?date ;
+        :end-time ?time2 .
+    FILTER(?rd1 != ?rd2)
+    FILTER(?time1 < ?time2)
+}""" ;
+    ] ;
+  sml:replace false ;
+  rdfs:label "append-possible-next" ;
+.
+:append-start-end-times
+  a sml:ApplyConstruct ;
+  sm:next :append-possible-next ;
+  sm:nodeX 1133 ;
+  sm:nodeY 88 ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - end time
+CONSTRUCT {
+     ?rd :end-time ?endTime .
+} WHERE {
+    ?rd :Employee_No ?Employee_No ;
+        :status_1 \"N\" ;
+        :time ?time .
+
+    BIND(STRDT(?time, xsd:time) as ?endTime)
+}""" ;
+    ] ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - start time
+CONSTRUCT {
+     ?rd :start-time ?startTime .
+} WHERE {
+    ?rd :Employee_No ?Employee_No ;
+        :status_1 \"A\" ;
+        :time ?time .
+
+    BIND(STRDT(?time, xsd:time) as ?startTime)
+}""" ;
+    ] ;
+  sml:replace false ;
+  rdfs:label "append-start-end-times" ;
+.
 :construct-csat-maintenance-data
   a sml:ApplyConstruct ;
   sm:next :transform ;
@@ -43,9 +127,9 @@
 CONSTRUCT {
     <http://onto.fel.cvut.cz/ontologies/csat-maintenance/presence-12345> a owl:Ontology ;
               owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
-        
+
     ?mechanic a cm:mechanic .
-   
+
 } WHERE {
     ?rd :Employee_No ?Employee_No .
     ?rd :status_1 ?status_1 .
@@ -58,6 +142,41 @@ CONSTRUCT {
     ] ;
   sml:replace true ;
   rdfs:label "construct-csat-maintenance-data" ;
+.
+:construct-events
+  a sml:ApplyConstruct ;
+  sm:next :transform ;
+  sm:nodeX 1187 ;
+  sm:nodeY 208 ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 2 - extract events
+CONSTRUCT {
+     ?presence a cm:presence ;
+         cm:start-date ?d ;
+         cm:end-date ?d ;
+         cm:start-time ?t1 ;
+         cm:end-time ?t2 ;
+         cm:has-participant  ?mechanic .
+     ?mechanic a cm:mechanic .
+} WHERE {
+    ?rd1 :next ?rd2 .
+    ?rd1 :Employee_No ?Employee_No ;
+        :date ?date ;
+        :start-time ?t1 .
+    ?rd2:Employee_No ?Employee_No ;
+        :date ?date ;
+        :end-time ?t2 .
+
+    ?r1 csvw:describes ?rd1 .
+    ?r1 csvw:url ?r1Url .
+
+    BIND(STRDT(?date, xsd:date) as ?d)
+    BIND(dl:instance(cm:presence, dl:id-3(?Employee_No, ?date, md5(str(?r1Url)))) as ?presence)
+    BIND(dl:instance(cm:mechanic, ?Employee_No) as ?mechanic)
+}""" ;
+    ] ;
+  rdfs:label "construct-events" ;
 .
 :deploy-presence-data
   a sm:Function ;
@@ -85,7 +204,6 @@ td:deploy-data_Return
   rdfs:label "deploy-presence-data" ;
 .
 td:rdfize-input-data
-  km-tabular:delimiter ";" ;
   kbss-module:has-output-graph-constraint [
       a sp:Ask ;
       sp:text """# 1.01 - column Employee_No has empty value
@@ -145,6 +263,8 @@ WHERE {
       a sp:str ;
       sp:arg1 : ;
     ] ;
+  km-tabular:delimiter ";" ;
+  sm:next :append-start-end-times ;
   sm:next :construct-csat-maintenance-data ;
 .
 td:transform-data_Return
