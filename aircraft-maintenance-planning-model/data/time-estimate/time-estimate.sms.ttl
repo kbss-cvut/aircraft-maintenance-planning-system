@@ -119,6 +119,7 @@ td:transform-data_Return
 .
 :construct-csat-maintenance-data
   a sml:ApplyConstruct ;
+  sm:next :construct-event-based-attributes ;
   sm:next :transform ;
   sml:constructQuery [
       a sp:Construct ;
@@ -143,9 +144,13 @@ CONSTRUCT {
 
 
     ?scoped_task_step_executionIRI a cm:scoped-task-step, ?scoped_task_step_execution_typeIRI, owl:NamedIndividual ;
-              cm:time-estimate-in-hours ?timeEstimateInHours ;
               cm:is-part-of ?task_executionIRI ;
               cm:has-scope ?maintenaceGroup . 
+
+    ?addEstimationEvent a cm:add-task-estimation, ufo:event ;
+              cm:time-estimate-in-hours ?timeEstimateInHours ;
+               ufo:has-participant ?scoped_task_step_executionIRI ;
+    .
 
     ?maintenaceGroup a cm:maintenance-group ;
               cm:has-abbreviation ?scope .
@@ -154,6 +159,10 @@ CONSTRUCT {
               cm:id ?operator;
     .   
 } WHERE {
+    ?r a csvw:Row .
+    ?r csvw:describes ?rd .
+    ?r csvw:url ?rUrl .
+
     ?rd :AC_registration ?AC_registration .
     ?rd :operator ?operator .
     ?rd :WP ?WP .
@@ -196,10 +205,37 @@ CONSTRUCT {
     BIND(xsd:decimal(?est_min) as ?timeEstimateInHours)
 
     BIND(dl:instance(cm:client, ?operator) as ?client)
+
+    BIND(dl:instance(cm:add-task-estimation, dl:id-3(?WP, ?taskStepExecutionTypeId,md5(str(?rUrl)))) as ?addEstimationEvent)
 }""" ;
     ] ;
   sml:replace true ;
   rdfs:label "construct-csat-maintenance-data" ;
+.
+:construct-event-based-attributes
+  a sml:ApplyConstruct ;
+  sm:next td:merge ;
+  sm:nodeX 1100 ;
+  sm:nodeY 444 ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 0 - time-estimate-in-hours
+CONSTRUCT {
+
+     ?scoped_task_step_executionIRI cm:time-estimate-in-hours ?sumOftimeEstimateInHours .
+
+} WHERE {
+    SELECT ?scoped_task_step_executionIRI (SUM(?timeEstimateInHours) as ?sumOftimeEstimateInHours)
+    WHERE {
+            ?addEstimationEvent a cm:add-task-estimation  ;
+                    cm:time-estimate-in-hours ?timeEstimateInHours ;
+                     ufo:has-participant ?scoped_task_step_executionIRI ;
+             .
+    } GROUP BY ?scoped_task_step_executionIRI
+}""" ;
+    ] ;
+  sml:replace true ;
+  rdfs:label "construct-event-based-attributes" ;
 .
 :deploy-time-estimate-data
   a sm:Function ;
