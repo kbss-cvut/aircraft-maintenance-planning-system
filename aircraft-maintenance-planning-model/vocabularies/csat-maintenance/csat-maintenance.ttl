@@ -63,7 +63,7 @@ cm:check a owl:Class ;
     rdfs:subClassOf cm:planned-task,
         cm:task-card .
 
-cm:composite-workshop--support-group a owl:Class ;
+cm:composite-workshop-support-group a owl:Class ;
     rdfs:label "Composite Workshop  Support Group" ;
     cm:has-abbreviation "Composite Workshop  Support Group" ;
     rdfs:subClassOf cm:maintenance-support-group .
@@ -335,7 +335,7 @@ cm:scoped-task-step a owl:Class ;
             owl:onProperty cm:time-estimate-in-hours ],
         cm:maintenance-task .
 
-cm:seat-workshop--support-group a owl:Class ;
+cm:seat-workshop-support-group a owl:Class ;
     rdfs:label "Seat Workshop  Support Group" ;
     cm:has-abbreviation "SEAT" ;
     rdfs:subClassOf cm:maintenance-support-group .
@@ -345,7 +345,7 @@ cm:servising a owl:Class ;
     cm:has-abbreviation "SVC" ;
     rdfs:subClassOf cm:task-card .
 
-cm:sheetmetal--support-group a owl:Class ;
+cm:sheetmetal-support-group a owl:Class ;
     rdfs:label "Sheetmetal  Support Group" ;
     cm:has-abbreviation "SHM" ;
     rdfs:subClassOf cm:maintenance-support-group .
@@ -370,7 +370,7 @@ cm:temporary-protection-syst a owl:Class ;
     cm:has-abbreviation "TPS" ;
     rdfs:subClassOf cm:task-card .
 
-cm:upholistery--support-group a owl:Class ;
+cm:upholistery-support-group a owl:Class ;
     rdfs:label "Upholistery Support Group" ;
     cm:has-abbreviation "UPHO" ;
     rdfs:subClassOf cm:maintenance-support-group .
