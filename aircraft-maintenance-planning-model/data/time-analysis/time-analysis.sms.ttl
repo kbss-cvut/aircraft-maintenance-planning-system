@@ -187,6 +187,17 @@ td:transform-data_Return
 .
 :construct-csat-maintenance-data
   a sml:ApplyConstruct ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# work-package has multiple scheduled-end-times
+ASK  {
+ ?workpackageIRI a cm:workpackage  ;
+        cm:workpackage-scheduled-end-time ?t1 ;
+        cm:workpackage-scheduled-end-time ?t2 ;
+  .
+  FILTER(?t1 != ?t2)
+}""" ;
+    ] ;
   sm:next :transform ;
   sml:constructQuery [
       a sp:Construct ;
@@ -205,17 +216,18 @@ CONSTRUCT {
               cm:has-client ?client .
 
     ?taskExecution a cm:complex-execution, owl:NamedIndividual ;
-              cm:is-part-of-workpackage ?workpackageIRI ;
-              cm:has-scope ?maintenaceGroup .
+              cm:is-part-of-workpackage ?workpackageIRI .
 
     ?workSession a cm:work-session ;
               cm:is-part-of-maintenance-task ?taskExecution ;
-              cm:duration-in-hours ?durationInHours .
+              cm:duration-in-hours ?durationInHours ;
+              cm:has-scope ?maintenaceGroup .
 
     ?mechanic a ms:Mechanic ;
                ufo:performs ?workSession .
 
-    ?maintenaceGroup cm:has-abbreviation ?Scope .
+    ?maintenaceGroup a cm:maintenance-group ;
+              cm:has-abbreviation ?Scope .
     
     ?client a cm:client, owl:NamedIndividual ;
               cm:id ?operator;

@@ -147,7 +147,8 @@ CONSTRUCT {
               ufo:is-part-of ?task_executionIRI ;
               cm:has-scope ?maintenaceGroup . 
 
-    ?maintenaceGroup cm:has-abbreviation ?Scope .
+    ?maintenaceGroup a cm:maintenance-group ;
+              cm:has-abbreviation ?Scope .
     
     ?client a cm:client, owl:NamedIndividual ;
               cm:id ?operator;
