@@ -148,7 +148,7 @@ CONSTRUCT {
               cm:has-scope ?maintenaceGroup . 
 
     ?maintenaceGroup a cm:maintenance-group ;
-              cm:has-abbreviation ?Scope .
+              cm:has-abbreviation ?scope .
     
     ?client a cm:client, owl:NamedIndividual ;
               cm:id ?operator;
