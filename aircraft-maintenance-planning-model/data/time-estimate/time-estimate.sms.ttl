@@ -220,6 +220,7 @@ CONSTRUCT {
   sml:constructQuery [
       a sp:Construct ;
       sp:text """# 0 - time-estimate-in-hours
+# TODO not correct - we need to have event identifier in the data
 CONSTRUCT {
 
      ?scoped_task_step_executionIRI cm:time-estimate-in-hours ?sumOftimeEstimateInHours .
