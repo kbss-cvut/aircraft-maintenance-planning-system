@@ -22,10 +22,6 @@ cm:has-abbreviation rdf:type owl:AnnotationProperty ;
                     rdfs:label "has abbreviation" .
 
 
-###  http://www.w3.org/2002/07/owl#qualifiedCardinality
-owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
-
-
 #################################################################
 #    Datatypes
 #################################################################
@@ -1000,7 +996,11 @@ cm:scheduled-work-order rdf:type owl:Class ;
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/scoped-task-step
 cm:scoped-task-step rdf:type owl:Class ;
                     rdfs:subClassOf cm:maintenance-task ,
-                                    <http://org.semanticweb.owlapi/error#Error1> ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass cm:work-order-step
+                                    ] ,
                                     [ rdf:type owl:Restriction ;
                                       owl:onProperty cm:time-estimate-in-hours ;
                                       owl:cardinality "1"^^xsd:nonNegativeInteger
@@ -1301,10 +1301,6 @@ cm:zone rdf:type owl:Class ;
                                                                        ] .
 
 
-###  http://org.semanticweb.owlapi/error#Error1
-<http://org.semanticweb.owlapi/error#Error1> rdf:type owl:Class .
-
-
 #################################################################
 #    Individuals
 #################################################################
@@ -1314,9 +1310,6 @@ cm:zone rdf:type owl:Class ;
                                                                   rdfs:comment "PLS PERFORM LUBRICATION OF LEADING EDGE IAW AMM 12-22-27-640-006-A AFTER TECHNICAL CLEANING" ;
                                                                   rdfs:label "4800160-wo-text" .
 
-
-[ owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
-] .
 
 #################################################################
 #    Annotations
