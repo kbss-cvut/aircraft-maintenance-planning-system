@@ -22,6 +22,10 @@ cm:has-abbreviation rdf:type owl:AnnotationProperty ;
                     rdfs:label "has abbreviation" .
 
 
+###  http://www.w3.org/2002/07/owl#qualifiedCardinality
+owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
+
+
 #################################################################
 #    Datatypes
 #################################################################
@@ -375,6 +379,13 @@ cm:adjusting rdf:type owl:Class ;
              rdfs:label "Adjusting" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/administrative-works
+cm:administrative-works rdf:type owl:Class ;
+                        rdfs:subClassOf cm:maintenance-group ;
+                        cm:has-abbreviation "ADM" ;
+                        rdfs:label "Administrative Works" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/aircraft
 cm:aircraft rdf:type owl:Class ;
             rdfs:subClassOf ms:System ,
@@ -392,6 +403,20 @@ cm:aircraft rdf:type owl:Class ;
                             ] .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/aircraft-flight-test
+cm:aircraft-flight-test rdf:type owl:Class ;
+                        rdfs:subClassOf cm:maintenance-group ;
+                        cm:has-abbreviation "AFT" ;
+                        rdfs:label "Aircraft Flight Test" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/apu-run-up
+cm:apu-run-up rdf:type owl:Class ;
+              rdfs:subClassOf cm:maintenance-group ;
+              cm:has-abbreviation "APU" ;
+              rdfs:label "Apu Run Up" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/area
 cm:area rdf:type owl:Class ;
         rdfs:subClassOf cm:zone ;
@@ -405,11 +430,25 @@ cm:avionics-mechanic-group rdf:type owl:Class ;
                            rdfs:label "Avionics Mechanic Group" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/blendoscopy-support-group
+cm:blendoscopy-support-group rdf:type owl:Class ;
+                             rdfs:subClassOf cm:maintenance-group ;
+                             cm:has-abbreviation "BLE" ;
+                             rdfs:label "Blendoscopy" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/borescope-inspection
 cm:borescope-inspection rdf:type owl:Class ;
                         rdfs:subClassOf cm:task-card ;
                         cm:has-abbreviation "BSI" ;
                         rdfs:label "Borescope Inspection" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/borescopic-inspection
+cm:borescopic-inspection rdf:type owl:Class ;
+                         rdfs:subClassOf cm:maintenance-group ;
+                         cm:has-abbreviation "BOR" ;
+                         rdfs:label "Borescopic Inspection" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/change
@@ -425,6 +464,13 @@ cm:check rdf:type owl:Class ;
                          cm:task-card ;
          cm:has-abbreviation "CHK" ;
          rdfs:label "Check" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/chemical-test-lab
+cm:chemical-test-lab rdf:type owl:Class ;
+                     rdfs:subClassOf cm:maintenance-group ;
+                     cm:has-abbreviation "CHEM" ;
+                     rdfs:label "Chemical Test / Lab" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/client
@@ -443,10 +489,17 @@ cm:client-extra--order-task rdf:type owl:Class ;
                             rdfs:label "Client Extra Order task" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/composite-technician
+cm:composite-technician rdf:type owl:Class ;
+                        rdfs:subClassOf cm:maintenance-group ;
+                        cm:has-abbreviation "KOM" ;
+                        rdfs:label "Composite Technician" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/composite-workshop-support-group
 cm:composite-workshop-support-group rdf:type owl:Class ;
                                     rdfs:subClassOf cm:maintenance-support-group ;
-                                    cm:has-abbreviation "Composite Workshop  Support Group" ;
+                                    cm:has-abbreviation "BLE" ;
                                     rdfs:label "Composite Workshop  Support Group" .
 
 
@@ -474,6 +527,13 @@ cm:document rdf:type owl:Class ;
             rdfs:subClassOf ms:Document .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/driver
+cm:driver rdf:type owl:Class ;
+          rdfs:subClassOf cm:maintenance-group ;
+          cm:has-abbreviation "DRV" ;
+          rdfs:label "Driver" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/el.-power
 cm:el.-power rdf:type owl:Class ;
              rdfs:subClassOf cm:restriction ,
@@ -486,6 +546,14 @@ cm:el.-power rdf:type owl:Class ;
              rdfs:label "El. Power" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/electroplater
+cm:electroplater rdf:type owl:Class ;
+                 rdfs:subClassOf cm:maintenance-group ;
+                 cm:has-abbreviation "Electroplater - GAL" ;
+                 rdfs:label "Electroplater" ;
+                 rdfs:seeAlso "'cm:Galvanizing plant worker'" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/eng
 cm:eng rdf:type owl:Class ;
        rdfs:subClassOf cm:maintenance-team ;
@@ -495,8 +563,22 @@ cm:eng rdf:type owl:Class ;
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/engine-mechanic-group
 cm:engine-mechanic-group rdf:type owl:Class ;
                          rdfs:subClassOf cm:heavy-maintenance-group ;
-                         cm:has-abbreviation "ING" ;
+                         cm:has-abbreviation "ENG" ;
                          rdfs:label "Engine Mechanic Group" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/engine-run-up-high-power
+cm:engine-run-up-high-power rdf:type owl:Class ;
+                            rdfs:subClassOf cm:maintenance-group ;
+                            cm:has-abbreviation "RUNH" ;
+                            rdfs:label "Engine Run Up - High Power" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/engine-run-up-idle
+cm:engine-run-up-idle rdf:type owl:Class ;
+                      rdfs:subClassOf cm:maintenance-group ;
+                      cm:has-abbreviation "RUNL" ;
+                      rdfs:label "Engine Run Up - Idle" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/exterior-mechanic-group
@@ -536,6 +618,13 @@ cm:functional-ttest rdf:type owl:Class ;
                     rdfs:label "Functional Ttest" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/galvanizing-plant-worker
+cm:galvanizing-plant-worker rdf:type owl:Class ;
+                            rdfs:subClassOf cm:maintenance-group ;
+                            cm:has-abbreviation "GAL" ;
+                            rdfs:label "Galvanizing plant worker" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/general
 cm:general rdf:type owl:Class ;
            rdfs:subClassOf cm:task-card ;
@@ -548,6 +637,13 @@ cm:general-visual-inspection rdf:type owl:Class ;
                              rdfs:subClassOf cm:task-card ;
                              cm:has-abbreviation "GVI" ;
                              rdfs:label "General visual inspection" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/goods-receiver
+cm:goods-receiver rdf:type owl:Class ;
+                  rdfs:subClassOf cm:maintenance-group ;
+                  cm:has-abbreviation "REC" ;
+                  rdfs:label "Goods Receiver" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/heavy-maintenance-group
@@ -589,10 +685,17 @@ cm:jack rdf:type owl:Class ;
         rdfs:label "Jack" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/joiner
+cm:joiner rdf:type owl:Class ;
+          rdfs:subClassOf cm:maintenance-group ;
+          cm:has-abbreviation "JOIN" ;
+          rdfs:label "Joiner" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/joiners-support-group
 cm:joiners-support-group rdf:type owl:Class ;
                          rdfs:subClassOf cm:maintenance-support-group ;
-                         cm:has-abbreviation "JOI" ;
+                         cm:has-abbreviation "JOIN" ;
                          rdfs:label "Joiners Support Group" .
 
 
@@ -601,6 +704,13 @@ cm:landing-gear-mechanic-group rdf:type owl:Class ;
                                rdfs:subClassOf cm:heavy-maintenance-group ;
                                cm:has-abbreviation "MECH-LDG" ;
                                rdfs:label "Landing Gear Mechanic Group" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/landing-gear-technician
+cm:landing-gear-technician rdf:type owl:Class ;
+                           rdfs:subClassOf cm:maintenance-group ;
+                           cm:has-abbreviation "LDG" ;
+                           rdfs:label "Landing Gear Technician" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/line-manager
@@ -701,6 +811,27 @@ cm:max.-mech rdf:type owl:Class ;
              rdfs:label "Max. Mech" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/mechanic
+cm:mechanic rdf:type owl:Class ;
+            rdfs:subClassOf cm:maintenance-group ;
+            cm:has-abbreviation "MECH" ;
+            rdfs:label "Mechanic" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/mechanic-engines
+cm:mechanic-engines rdf:type owl:Class ;
+                    rdfs:subClassOf cm:maintenance-group ;
+                    cm:has-abbreviation "MECH-ENG" ;
+                    rdfs:label "Mechanic - Engines" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/metrology
+cm:metrology rdf:type owl:Class ;
+             rdfs:subClassOf cm:maintenance-group ;
+             cm:has-abbreviation "KMS" ;
+             rdfs:label "Metrology" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/min.-mech
 cm:min.-mech rdf:type owl:Class ;
              rdfs:subClassOf cm:restriction ,
@@ -776,6 +907,27 @@ cm:planned-task rdf:type owl:Class ;
                 rdfs:label "Planned Task" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/planner
+cm:planner rdf:type owl:Class ;
+           rdfs:subClassOf cm:maintenance-group ;
+           cm:has-abbreviation "PLA" ;
+           rdfs:label "Planner" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/pressure-test-dot
+cm:pressure-test-dot rdf:type owl:Class ;
+                     rdfs:subClassOf cm:maintenance-group ;
+                     cm:has-abbreviation "PTD" ;
+                     rdfs:label "Pressure Test - Dot" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/quality-assurance
+cm:quality-assurance rdf:type owl:Class ;
+                     rdfs:subClassOf cm:maintenance-group ;
+                     cm:has-abbreviation "QAA" ;
+                     rdfs:label "Quality Assurance" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/repair
 cm:repair rdf:type owl:Class ;
           rdfs:subClassOf cm:task-card ;
@@ -806,6 +958,20 @@ The restrictions are:
                rdfs:label "Restriction" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/routin-manhours
+cm:routin-manhours rdf:type owl:Class ;
+                   rdfs:subClassOf cm:maintenance-group ;
+                   cm:has-abbreviation "ROUTINMH" ;
+                   rdfs:label "Routin Manhours" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/safety-management
+cm:safety-management rdf:type owl:Class ;
+                     rdfs:subClassOf cm:maintenance-group ;
+                     cm:has-abbreviation "SMS" ;
+                     rdfs:label "Safety Management" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/scheduled-work-order
 cm:scheduled-work-order rdf:type owl:Class ;
                         rdfs:subClassOf cm:planned-task ,
@@ -817,11 +983,7 @@ cm:scheduled-work-order rdf:type owl:Class ;
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/scoped-task-step
 cm:scoped-task-step rdf:type owl:Class ;
                     rdfs:subClassOf cm:maintenance-task ,
-                                    [ rdf:type owl:Restriction ;
-                                      owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
-                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                      owl:onClass cm:work-order-step
-                                    ] ,
+                                    <http://org.semanticweb.owlapi/error#Error1> ,
                                     [ rdf:type owl:Restriction ;
                                       owl:onProperty cm:time-estimate-in-hours ;
                                       owl:cardinality "1"^^xsd:nonNegativeInteger
@@ -848,6 +1010,13 @@ cm:servising rdf:type owl:Class ;
              rdfs:label "Servising" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/sheet-metal-worker
+cm:sheet-metal-worker rdf:type owl:Class ;
+                      rdfs:subClassOf cm:maintenance-group ;
+                      cm:has-abbreviation "SHM" ;
+                      rdfs:label "Sheet Metal Worker" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/sheetmetal-support-group
 cm:sheetmetal-support-group rdf:type owl:Class ;
                             rdfs:subClassOf cm:maintenance-support-group ;
@@ -855,11 +1024,32 @@ cm:sheetmetal-support-group rdf:type owl:Class ;
                             rdfs:label "Sheetmetal  Support Group" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/shot-blasting
+cm:shot-blasting rdf:type owl:Class ;
+                 rdfs:subClassOf cm:maintenance-group ;
+                 cm:has-abbreviation "OTR" ;
+                 rdfs:label "Shot Blasting" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/special-detailed-inspection
 cm:special-detailed-inspection rdf:type owl:Class ;
                                rdfs:subClassOf cm:task-card ;
                                cm:has-abbreviation "SDI" ;
                                rdfs:label "Special Detailed Inspection" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/standby-compass-compensation
+cm:standby-compass-compensation rdf:type owl:Class ;
+                                rdfs:subClassOf cm:maintenance-group ;
+                                cm:has-abbreviation "SCC" ;
+                                rdfs:label "Standby Compass Compensation" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/structure-damage-assesment
+cm:structure-damage-assesment rdf:type owl:Class ;
+                              rdfs:subClassOf cm:maintenance-group ;
+                              cm:has-abbreviation "SRM" ;
+                              rdfs:label "Structure Damage Assesment" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-card
@@ -916,11 +1106,25 @@ cm:temporary-protection-syst rdf:type owl:Class ;
                              rdfs:label "Temporary Protection Syst" .
 
 
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/upholistery-support-group
-cm:upholistery-support-group rdf:type owl:Class ;
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/turner
+cm:turner rdf:type owl:Class ;
+          rdfs:subClassOf cm:maintenance-group ;
+          cm:has-abbreviation "TRN" ;
+          rdfs:label "Turner" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/upholsstery-support-group
+cm:upholsstery-support-group rdf:type owl:Class ;
                              rdfs:subClassOf cm:maintenance-support-group ;
-                             cm:has-abbreviation "UPHO" ;
-                             rdfs:label "Upholistery Support Group" .
+                             cm:has-abbreviation "UPH" ;
+                             rdfs:label "Upholsstery Support Group" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/upholsterer
+cm:upholsterer rdf:type owl:Class ;
+               rdfs:subClassOf cm:maintenance-group ;
+               cm:has-abbreviation "UPH" ;
+               rdfs:label "Upholsterer" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/visual-check
@@ -930,10 +1134,24 @@ cm:visual-check rdf:type owl:Class ;
                 rdfs:label "Visual Check" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/washer-supervision
+cm:washer-supervision rdf:type owl:Class ;
+                      rdfs:subClassOf cm:maintenance-group ;
+                      cm:has-abbreviation "WSHR" ;
+                      rdfs:label "Washer Supervision" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/weighing
+cm:weighing rdf:type owl:Class ;
+            rdfs:subClassOf cm:maintenance-group ;
+            cm:has-abbreviation "WGH" ;
+            rdfs:label "Weighing" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/welding-support-group
 cm:welding-support-group rdf:type owl:Class ;
                          rdfs:subClassOf cm:maintenance-support-group ;
-                         cm:has-abbreviation "WELL" ;
+                         cm:has-abbreviation "WEL" ;
                          rdfs:label "Welding Support Group" .
 
 
@@ -1053,6 +1271,10 @@ cm:zone rdf:type owl:Class ;
                                                                        ] .
 
 
+###  http://org.semanticweb.owlapi/error#Error1
+<http://org.semanticweb.owlapi/error#Error1> rdf:type owl:Class .
+
+
 #################################################################
 #    Individuals
 #################################################################
@@ -1062,6 +1284,9 @@ cm:zone rdf:type owl:Class ;
                                                                   rdfs:comment "PLS PERFORM LUBRICATION OF LEADING EDGE IAW AMM 12-22-27-640-006-A AFTER TECHNICAL CLEANING" ;
                                                                   rdfs:label "4800160-wo-text" .
 
+
+[ owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+] .
 
 #################################################################
 #    Annotations
