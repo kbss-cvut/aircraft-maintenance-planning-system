@@ -67,7 +67,18 @@ WHERE {
     ] ;
   kbss-module:has-output-graph-constraint [
       a sp:Ask ;
-      sp:text """# 1.04 - column sequence has empty value
+      sp:text """# 1.04 - column type has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :type ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.05 - column sequence has empty value
 ASK
 WHERE {
     ?t csvw:row/csvw:describes ?rd .
@@ -78,7 +89,7 @@ WHERE {
     ] ;
   kbss-module:has-output-graph-constraint [
       a sp:Ask ;
-      sp:text """# 1.05 - column est-min has empty value
+      sp:text """# 1.06 - column est-min has empty value
 ASK
 WHERE {
     ?t csvw:row/csvw:describes ?rd .
@@ -98,7 +109,7 @@ WHERE {
     FILTER NOT EXISTS {
          ?maintenaceGroup rdfs:subClassOf* cm:maintenance-group ;
                 cm:has-abbreviation ?maintenaceGroupAbbr .
-    }    
+    }
 }""" ;
     ] ;
   km-tabular:data-prefix [
@@ -127,25 +138,24 @@ td:transform-data_Return
 CONSTRUCT {
     <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time-estimate-12345> a owl:Ontology ;
               owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
-        
+
     # workpackage description
     ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
               cm:id ?WP ;
               cm:has-client ?client .
-           
+
 
     ?task_executionIRI   a cm:complex-execution, owl:NamedIndividual ;
               cm:is-part-of-workpackage ?workpackageIRI ;
               cm:has-work-order-step ?task_step_executionIRI .     # TODO --- toto je urcite spravne ????
 
 
-   ?task_step_executionIRI a ?task_step_execution_typeIRI, owl:NamedIndividual;
-              cm:step-index ?workstepTyped . 
-
+    ?task_step_executionIRI a ?task_step_execution_typeIRI, owl:NamedIndividual;
+              cm:step-index ?workstepTyped .
 
     ?scoped_task_step_executionIRI a cm:scoped-task-step, ?scoped_task_step_execution_typeIRI, owl:NamedIndividual ;
               cm:is-part-of ?task_executionIRI ;
-              cm:has-scope ?maintenaceGroup . 
+              cm:has-scope ?maintenaceGroup .
 
     ?addEstimationEvent a cm:add-task-estimation, ufo:event ;
               cm:time-estimate-in-hours ?timeEstimateInHours ;
@@ -154,10 +164,10 @@ CONSTRUCT {
 
     ?maintenaceGroup a cm:maintenance-group ;
               cm:has-abbreviation ?scope .
-    
+
     ?client a cm:client, owl:NamedIndividual ;
               cm:id ?operator;
-    .   
+    .
 } WHERE {
     ?r a csvw:Row .
     ?r csvw:describes ?rd .
@@ -166,6 +176,7 @@ CONSTRUCT {
     ?rd :AC_registration ?AC_registration .
     ?rd :operator ?operator .
     ?rd :WP ?WP .
+    ?rd :type ?type .
     OPTIONAL {
       ?rd :WO ?WO .
     }
@@ -181,26 +192,26 @@ CONSTRUCT {
     }
     ?rd :est_min ?est_min  .
 
+
     ?maintenaceGroup rdfs:subClassOf+ cm:maintenance-group ;
           cm:has-abbreviation ?scope .
 
-     
+
     BIND(dl:instance(cm:workpackage, ?WP) as ?workpackageIRI)
 
     BIND(COALESCE(?WO, ?TC) as ?wo_or_tc)
     BIND(dl:instance(cm:complex-execution, dl:id-2(?WP, ?wo_or_tc)) as ?task_executionIRI)
 
-#    BIND(dl:id-2(?type, ?wo_or_tc) as ?taskTypeId)  # TODO pouzi na url ?type 
-    BIND(dl:normalize(?wo_or_tc) as ?taskTypeId)
+    BIND(dl:id-2(?type, ?wo_or_tc) as ?taskTypeId)
     BIND(dl:id-2(?taskTypeId, ?sequence) as ?taskStepExecutionTypeId)
 
     BIND(dl:instance(cm:task-step-execution-type, ?taskStepExecutionTypeId) as ?task_step_execution_typeIRI)
     BIND(dl:instance(cm:task-step-execution, dl:id-2(?WP, ?taskStepExecutionTypeId)) as ?task_step_executionIRI)
-   
+
     BIND(dl:id-2(?taskStepExecutionTypeId, ?scope) as ?scopedTaskStepExecutionTypeId)
     BIND(dl:instance(cm:scoped-task-step-execution-type, ?scopedTaskStepExecutionTypeId) as ?scoped_task_step_execution_typeIRI)
     BIND(dl:instance(cm:scoped-task-step-execution, dl:id-2(?WP, ?scopedTaskStepExecutionTypeId)) as ?scoped_task_step_executionIRI)
-    
+
     BIND(STRDT(str(?sequence), xsd:integer) as ?workstepTyped)
     BIND(xsd:decimal(?est_min) as ?timeEstimateInHours)
 
@@ -291,45 +302,45 @@ CONSTRUCT {
     cm:MECH-ENG-maintenance-group rdfs:subClassOf cm:maintenance-group ;
         cm:has-abbreviation \"MECH-ENG\" ;
         rdfs:label \"MECH-ENG Group\" ;
-    .   
+    .
     cm:CHEM-maintenance-group rdfs:subClassOf cm:maintenance-group ;
         cm:has-abbreviation \"CHEM\" ;
         rdfs:label \"CHEM Group\" ;
-    .   
+    .
     cm:MECH-maintenance-group rdfs:subClassOf cm:maintenance-group ;
         cm:has-abbreviation \"MECH\" ;
         rdfs:label \"MECH Group\" ;
-    .   
+    .
     cm:ENG-maintenance-group rdfs:subClassOf cm:maintenance-group ;
         cm:has-abbreviation \"ENG\" ;
         rdfs:label \"ENG Group\" ;
-    .   
+    .
     cm:GAL-maintenance-group rdfs:subClassOf cm:maintenance-group ;
         cm:has-abbreviation \"GAL\" ;
         rdfs:label \"GAL Group\" ;
-    .   
+    .
     cm:COM-maintenance-group rdfs:subClassOf cm:maintenance-group ;
         cm:has-abbreviation \"COM\" ;
         rdfs:label \"COM Group\" ;
-    .   
+    .
     cm:UPH-maintenance-group rdfs:subClassOf cm:maintenance-group ;
         cm:has-abbreviation \"UPH\" ;
         rdfs:label \"UPH Group\" ;
-    .   
+    .
     cm:LDG-maintenance-group rdfs:subClassOf cm:maintenance-group ;
         cm:has-abbreviation \"LDG\" ;
         rdfs:label \"LDG Group\" ;
-    . 
+    .
 
     cm:JOIN-maintenance-group rdfs:subClassOf cm:maintenance-group ;
         cm:has-abbreviation \"JOIN\" ;
         rdfs:label \"JOIN Group\" ;
-    . 
+    .
 
     cm:TRN-maintenance-group rdfs:subClassOf cm:maintenance-group ;
         cm:has-abbreviation \"TRN\" ;
         rdfs:label \"TRN Group\" ;
-    . 
+    .
 } WHERE {
 }""" ;
     ] ;

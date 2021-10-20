@@ -233,8 +233,7 @@ CONSTRUCT {
     BIND(?A_C_age as ?acAge)
     BIND(dl:instance(cm:aircraft, ?WP) as ?aircraftIRI)
 
-#    BIND(dl:id-2(?type, ?CSAT_WO_TC) as ?taskTypeId)  # TODO pouzi na url ?type 
-    BIND(dl:normalize(?CSAT_WO_TC) as ?taskTypeId)
+    BIND(dl:id-2(?type, ?CSAT_WO_TC) as ?taskTypeId)
     BIND(dl:id-2(?taskTypeId, ?sequence) as ?taskStepExecutionTypeId)
 
     BIND(dl:instance(cm:task-step-execution, dl:id-2(?WP, ?taskStepExecutionTypeId)) as ?task_step_executionIRI)
