@@ -489,7 +489,7 @@ cm:client-extra--order-task rdf:type owl:Class ;
 cm:composite-workshop-support-group rdf:type owl:Class ;
                                     rdfs:subClassOf cm:maintenance-support-group ;
                                     cm:has-abbreviation "COM"@en ,
-                                                        "KOM"@cz ;
+                                                        "KOM"@cs ;
                                     rdfs:label "Composite Workshop Support Group" .
 
 
@@ -679,7 +679,7 @@ cm:joiners-support-group rdf:type owl:Class ;
                          rdfs:subClassOf cm:heavy-maintenance-group ,
                                          cm:maintenance-support-group ;
                          cm:has-abbreviation "JOIN"@en ,
-                                             "TRH"@cz ;
+                                             "TRH"@cs ;
                          rdfs:label "Joiners Support Group" .
 
 
@@ -870,7 +870,7 @@ cm:operational-test rdf:type owl:Class ;
 cm:paintshop-support-group rdf:type owl:Class ;
                            rdfs:subClassOf cm:heavy-maintenance-group ,
                                            cm:maintenance-support-group ;
-                           cm:has-abbreviation "LAK"@cz ,
+                           cm:has-abbreviation "LAK"@cs ,
                                                "PAINT"@en ;
                            rdfs:label "Paintshop Support Group" .
 
@@ -1000,7 +1000,7 @@ cm:servising rdf:type owl:Class ;
 cm:sheetmetal-support-group rdf:type owl:Class ;
                             rdfs:subClassOf cm:heavy-maintenance-group ,
                                             cm:maintenance-support-group ;
-                            cm:has-abbreviation "KLE"@cz ,
+                            cm:has-abbreviation "KLE"@cs ,
                                                 "SHM"@en ;
                             rdfs:label "Sheetmetal  Support Group" .
 
@@ -1079,7 +1079,7 @@ cm:team-leader rdf:type owl:Class ;
 cm:technical-cleaning-support-group rdf:type owl:Class ;
                                     rdfs:subClassOf cm:heavy-maintenance-group ,
                                                     cm:maintenance-support-group ;
-                                    cm:has-abbreviation "MTL"@cz ,
+                                    cm:has-abbreviation "MTL"@cs ,
                                                         "WASH"@en ;
                                     rdfs:label "Technical Cleaning Support Group" .
 
@@ -1094,7 +1094,7 @@ cm:temporary-protection-syst rdf:type owl:Class ;
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/turner
 cm:turner rdf:type owl:Class ;
           rdfs:subClassOf cm:heavy-maintenance-group ;
-          cm:has-abbreviation "OBK"@cz ,
+          cm:has-abbreviation "OBK"@cs ,
                               "TRN"@en ;
           rdfs:label "Turner" .
 
@@ -1103,7 +1103,7 @@ cm:turner rdf:type owl:Class ;
 cm:upholsstery-support-group rdf:type owl:Class ;
                              rdfs:subClassOf cm:heavy-maintenance-group ,
                                              cm:maintenance-support-group ;
-                             cm:has-abbreviation "CAL"@cz ,
+                             cm:has-abbreviation "CAL"@cs ,
                                                  "UPH"@en ;
                              rdfs:label "Upholsstery Support Group" .
 
