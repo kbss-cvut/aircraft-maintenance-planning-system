@@ -1129,6 +1129,18 @@ cm:weighing rdf:type owl:Class ;
             rdfs:label "Weighing" .
 
 
+cm:line-maintenance-1 rdf:type owl:Class ;
+            rdfs:subClassOf cm:maintenance-group ;
+            cm:has-abbreviation "LM1"@en ;
+            rdfs:label "Line Maintenance 1" .
+
+
+cm:b1-licenced-engineer rdf:type owl:Class ;
+            rdfs:subClassOf cm:maintenance-group ;
+            cm:has-abbreviation "B1"@en ;
+            rdfs:label "B1 Licenced Engineer" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/welding-support-group
 cm:welding-support-group rdf:type owl:Class ;
                          rdfs:subClassOf cm:maintenance-support-group ;
