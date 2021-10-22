@@ -361,3 +361,36 @@ WHERE {
   rdfs:comment "Normalize literal for the usage in IRI." ;
   rdfs:subClassOf spin:Functions ;
 .
+
+dl:strEquals
+  a spin:Function ;
+  spin:body [
+      a sp:Select ;
+      sp:text """SELECT ?isSame
+WHERE {
+    BIND(
+       (
+	str(?arg1) = str(?arg2)
+        && (lang(?arg1) = "" || lang(?arg1) = ?arg3)
+        && (lang(?arg2) = "" || lang(?arg2) = ?arg3)
+       ) as ?isSame)
+}""" ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg1 ;
+      rdfs:comment "First plain literal or literal with language tag." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg2 ;
+      rdfs:comment "Second plain literal or literal with language tag." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg3 ;
+      rdfs:comment "Language tag." ;
+    ] ;
+  rdfs:comment "Returns if two literals match within provided language. Plain literals are interpreted as they would have correct language as well." ;
+  rdfs:subClassOf spin:Functions ;
+.
