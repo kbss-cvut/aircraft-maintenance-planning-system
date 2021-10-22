@@ -28,8 +28,14 @@
 @prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+td:construct-maintenance-group-abbreviations
+  sm:next td:rdfize-input-data ;
+.
 td:deploy-data_Return
   rdfs:label "deploy-time-estimate-data" ;
+.
+td:import-scheme
+  sm:next td:rdfize-input-data ;
 .
 td:rdfize-input-data
   kbss-module:has-output-graph-constraint [
@@ -104,11 +110,10 @@ WHERE {
 ASK
 WHERE {
     ?t csvw:row/csvw:describes ?rd .
-    ?rd :Scope ?maintenaceGroupAbbr .
+    ?rd :scope ?maintenanceGroupAbbr .
 
     FILTER NOT EXISTS {
-         ?maintenaceGroup rdfs:subClassOf* cm:maintenance-group ;
-                cm:has-abbreviation ?maintenaceGroupAbbr .
+         ?maintenanceGroup  dl:has-simple-abbreviation ?maintenanceGroupAbbr .
     }
 }""" ;
     ] ;
@@ -155,15 +160,15 @@ CONSTRUCT {
 
     ?scoped_task_step_executionIRI a cm:scoped-task-step, ?scoped_task_step_execution_typeIRI, owl:NamedIndividual ;
               cm:is-part-of ?task_executionIRI ;
-              cm:has-scope ?maintenaceGroup .
+              cm:has-scope ?maintenanceGroup .
 
     ?addEstimationEvent a cm:add-task-estimation, ufo:event ;
               cm:time-estimate-in-hours ?timeEstimateInHours ;
                ufo:has-participant ?scoped_task_step_executionIRI ;
     .
 
-    ?maintenaceGroup a cm:maintenance-group ;
-              cm:has-abbreviation ?scope .
+    ?maintenanceGroup a cm:maintenance-group ;
+              cm:has-abbreviation ?mainMaintenanceGroupAbbr .
 
     ?client a cm:client, owl:NamedIndividual ;
               cm:id ?operator;
@@ -192,10 +197,8 @@ CONSTRUCT {
     }
     ?rd :est_min ?est_min  .
 
-
-    ?maintenaceGroup rdfs:subClassOf+ cm:maintenance-group ;
-          cm:has-abbreviation ?scope .
-
+    ?maintenanceGroup  dl:has-simple-abbreviation ?scope .
+    ?maintenanceGroup dl:has-main-abbreviation ?mainMaintenanceGroupAbbr .
 
     BIND(dl:instance(cm:workpackage, ?WP) as ?workpackageIRI)
 
@@ -226,8 +229,8 @@ CONSTRUCT {
 :construct-event-based-attributes
   a sml:ApplyConstruct ;
   sm:next td:merge ;
-  sm:nodeX 1100 ;
-  sm:nodeY 444 ;
+  sm:nodeX 985 ;
+  sm:nodeY 350 ;
   sml:constructQuery [
       a sp:Construct ;
       sp:text """# 0 - time-estimate-in-hours
@@ -253,13 +256,6 @@ CONSTRUCT {
   a sm:Function ;
   sm:returnModule td:deploy-data_Return ;
   rdfs:subClassOf sm:Functions ;
-.
-:import-scheme
-  a sml:ImportRDFFromWorkspace ;
-  sm:next :workaround-fix-missing-groups ;
-  sml:baseURI "http://onto.fel.cvut.cz/ontologies/csat-maintenance" ;
-  sml:ignoreImports true ;
-  rdfs:label "import-scheme" ;
 .
 :transform
   a sml:ApplyConstruct ;
@@ -290,60 +286,4 @@ CONSTRUCT {
   a sm:Function ;
   sm:returnModule td:transform-data_Return ;
   rdfs:subClassOf sm:Functions ;
-.
-:workaround-fix-missing-groups
-  a sml:ApplyConstruct ;
-  sm:next td:rdfize-input-data ;
-  sml:constructQuery [
-      a sp:Construct ;
-      sp:text """#
-# TODO put to ontology
-CONSTRUCT {
-    cm:MECH-ENG-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"MECH-ENG\" ;
-        rdfs:label \"MECH-ENG Group\" ;
-    .
-    cm:CHEM-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"CHEM\" ;
-        rdfs:label \"CHEM Group\" ;
-    .
-    cm:MECH-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"MECH\" ;
-        rdfs:label \"MECH Group\" ;
-    .
-    cm:ENG-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"ENG\" ;
-        rdfs:label \"ENG Group\" ;
-    .
-    cm:GAL-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"GAL\" ;
-        rdfs:label \"GAL Group\" ;
-    .
-    cm:COM-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"COM\" ;
-        rdfs:label \"COM Group\" ;
-    .
-    cm:UPH-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"UPH\" ;
-        rdfs:label \"UPH Group\" ;
-    .
-    cm:LDG-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"LDG\" ;
-        rdfs:label \"LDG Group\" ;
-    .
-
-    cm:JOIN-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"JOIN\" ;
-        rdfs:label \"JOIN Group\" ;
-    .
-
-    cm:TRN-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"TRN\" ;
-        rdfs:label \"TRN Group\" ;
-    .
-} WHERE {
-}""" ;
-    ] ;
-  sml:replace false ;
-  rdfs:label "workaround-fix-missing-groups" ;
 .

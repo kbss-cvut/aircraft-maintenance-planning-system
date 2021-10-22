@@ -1,7 +1,7 @@
 # baseURI: http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/csat/data-lib
 # imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
 
-@prefix td: <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1/> .
 @prefix ata: <http://onto.fel.cvut.cz/voc/ata-100/> .
 @prefix cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
 @prefix cmd: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/> .
@@ -21,6 +21,7 @@
 @prefix spif: <http://spinrdf.org/spif#> .
 @prefix spin: <http://spinrdf.org/spin#> .
 @prefix spl: <http://spinrdf.org/spl#> .
+@prefix td: <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1/> .
 @prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -29,11 +30,73 @@
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat/data-lib> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
 .
-
+td:construct-maintenance-group-abbreviations
+  a sml:ApplyConstruct ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# there are two maintenance groups with same abbreviation
+ASK
+WHERE {
+      ?maintenanceGroup1  dl:has-simple-abbreviation ?maintenanceGroupAbbr .
+      ?maintenanceGroup2  dl:has-simple-abbreviation ?maintenanceGroupAbbr .
+       FILTER(?maintenanceGroup1 != ?maintenanceGroup2)
+}""" ;
+    ] ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - construct has-abbreviation mapping with preferred language tag
+CONSTRUCT {
+      ?maintenanceGroup  dl:has-main-abbreviation ?maintenanceGroupAbbrWithLang .
+}
+WHERE {
+       ?maintenanceGroup rdfs:subClassOf+ cm:maintenance-group ;
+                   cm:has-abbreviation ?maintenanceGroupAbbrWithLang .
+       FILTER(lang(?maintenanceGroupAbbrWithLang) = \"en\")
+}""" ;
+    ] ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 2 - construct has-abbreviation mapping with no language tag
+CONSTRUCT {
+      ?maintenanceGroup  dl:has-simple-abbreviation ?maintenanceGroupAbbr .
+}
+WHERE {
+       ?maintenanceGroup rdfs:subClassOf+ cm:maintenance-group ;
+                   cm:has-abbreviation ?maintenanceGroupAbbrWithLang .
+       BIND(str(?maintenanceGroupAbbrWithLang) as ?maintenanceGroupAbbr)
+}""" ;
+    ] ;
+  sml:replace true ;
+  rdfs:label "construct-maintenance-group-abbreviations" ;
+.
+td:deploy-data_Return
+  a sml:ReturnRDF ;
+  sml:serialization sml:Turtle ;
+.
 td:deploy-to-rdf4j-server
   a kbss-module:deploy ;
   sm:next td:deploy-data_Return ;
   rdfs:label "deploy" ;
+.
+td:import-scheme
+  a sml:ImportRDFFromWorkspace ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# there are two different scopes with same abbreviation
+ASK
+WHERE {
+         ?mg1 rdfs:subClassOf+ cm:maintenance-group ;
+                      cm:has-abbreviation ?mg1Abbr .
+         ?mg2 rdfs:subClassOf+ cm:maintenance-group ;
+                      cm:has-abbreviation ?mg2Abbr .
+         FILTER(str(?mg1Abbr) = str(?mg2Abbr))
+         FILTER(?mgr1 != ?mgr2)
+}""" ;
+    ] ;
+  sm:next td:construct-maintenance-group-abbreviations ;
+  sml:baseURI "http://onto.fel.cvut.cz/ontologies/csat-maintenance" ;
+  sml:ignoreImports true ;
+  rdfs:label "import-scheme" ;
 .
 td:merge
   a sml:Merge ;
@@ -48,13 +111,6 @@ td:rdfize-input-data
     ] ;
   rdfs:label "rdfize-input-data" ;
 .
-
-
-td:deploy-data_Return
-  a sml:ReturnRDF ;
-  sml:serialization sml:Turtle ;
-.
-
 td:transform-data_Return
   a sml:ReturnRDF ;
   sml:serialization sml:Turtle ;

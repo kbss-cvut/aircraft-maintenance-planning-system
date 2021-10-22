@@ -28,8 +28,14 @@
 @prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+td:construct-maintenance-group-abbreviations
+  sm:next td:rdfize-input-data ;
+.
 td:deploy-data_Return
   rdfs:label "deploy-time-analysis-data" ;
+.
+td:import-scheme
+  sm:next td:rdfize-input-data ;
 .
 td:rdfize-input-data
   kbss-module:has-output-graph-constraint [
@@ -161,12 +167,11 @@ WHERE {
 ASK
 WHERE {
     ?t csvw:row/csvw:describes ?rd .
-    ?rd :Scope ?maintenaceGroupAbbr .
+    ?rd :Scope ?maintenanceGroupAbbr .
 
     FILTER NOT EXISTS {
-         ?maintenaceGroup rdfs:subClassOf* cm:maintenance-group ;
-                cm:has-abbreviation ?maintenaceGroupAbbr .
-    }    
+         ?maintenanceGroup  dl:has-simple-abbreviation ?maintenanceGroupAbbr .
+    }
 }""" ;
     ] ;
   km-tabular:data-prefix [
@@ -205,7 +210,7 @@ ASK  {
 CONSTRUCT {
     <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time-analysis-12345> a owl:Ontology ;
               owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
-        
+
     # workpackage description
     ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
               cm:id ?Workpackage ;
@@ -221,17 +226,17 @@ CONSTRUCT {
     ?workSession a cm:work-session ;
               cm:is-part-of-maintenance-task ?taskExecution ;
               cm:duration-in-hours ?durationInHours ;
-              cm:has-scope ?maintenaceGroup .
+              cm:has-scope ?maintenanceGroup .
 
     ?mechanic a cm:mechanic ;
                cm:performs ?workSession .
 
-    ?maintenaceGroup a cm:maintenance-group ;
-              cm:has-abbreviation ?Scope .
-    
+    ?maintenanceGroup a cm:maintenance-group ;
+              cm:has-abbreviation ?mainMaintenanceGroupAbbr .
+
     ?client a cm:client, owl:NamedIndividual ;
               cm:id ?operator;
-    .   
+    .
 } WHERE {
      OPTIONAL {
         ?rd :AC ?AC .
@@ -298,8 +303,8 @@ CONSTRUCT {
         ?rd :operator ?operator    .
      }
 
-      ?maintenaceGroup rdfs:subClassOf+ cm:maintenance-group ;
-          cm:has-abbreviation ?Scope .
+    ?maintenanceGroup  dl:has-simple-abbreviation ?Scope .
+    ?maintenanceGroup dl:has-main-abbreviation ?mainMaintenanceGroupAbbr .
 
      BIND(dl:instance(cm:workpackage, ?Workpackage) as ?workpackageIRI)
      BIND(dl:instance(cm:complex-execution, dl:id-2(?Workpackage, ?WO_TC)) as ?taskExecution)
@@ -318,13 +323,6 @@ CONSTRUCT {
   a sm:Function ;
   sm:returnModule td:deploy-data_Return ;
   rdfs:subClassOf sm:Functions ;
-.
-:import-scheme
-  a sml:ImportRDFFromWorkspace ;
-  sm:next :workaround-fix-missing-groups ;
-  sml:baseURI "http://onto.fel.cvut.cz/ontologies/csat-maintenance" ;
-  sml:ignoreImports true ;
-  rdfs:label "import-scheme" ;
 .
 :transform
   a sml:ApplyConstruct ;
@@ -355,60 +353,4 @@ CONSTRUCT {
   a sm:Function ;
   sm:returnModule td:transform-data_Return ;
   rdfs:subClassOf sm:Functions ;
-.
-:workaround-fix-missing-groups
-  a sml:ApplyConstruct ;
-  sm:next td:rdfize-input-data ;
-  sml:constructQuery [
-      a sp:Construct ;
-      sp:text """#
-# TODO put to ontology
-CONSTRUCT {
-    cm:MECH-ENG-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"MECH-ENG\" ;
-        rdfs:label \"MECH-ENG Group\" ;
-    .   
-    cm:CHEM-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"CHEM\" ;
-        rdfs:label \"CHEM Group\" ;
-    .   
-    cm:MECH-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"MECH\" ;
-        rdfs:label \"MECH Group\" ;
-    .   
-    cm:ENG-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"ENG\" ;
-        rdfs:label \"ENG Group\" ;
-    .   
-    cm:GAL-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"GAL\" ;
-        rdfs:label \"GAL Group\" ;
-    .   
-    cm:COM-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"COM\" ;
-        rdfs:label \"COM Group\" ;
-    .   
-    cm:UPH-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"UPH\" ;
-        rdfs:label \"UPH Group\" ;
-    .   
-    cm:LDG-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"LDG\" ;
-        rdfs:label \"LDG Group\" ;
-    . 
-
-    cm:JOIN-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"JOIN\" ;
-        rdfs:label \"JOIN Group\" ;
-    . 
-
-    cm:TRN-maintenance-group rdfs:subClassOf cm:maintenance-group ;
-        cm:has-abbreviation \"TRN\" ;
-        rdfs:label \"TRN Group\" ;
-    . 
-} WHERE {
-}""" ;
-    ] ;
-  sml:replace false ;
-  rdfs:label "workaround-fix-missing-groups" ;
 .
