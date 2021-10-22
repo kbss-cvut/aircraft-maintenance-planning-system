@@ -225,6 +225,10 @@ CONSTRUCT {
 
     ?workSession a cm:work-session ;
               cm:is-part-of-maintenance-task ?taskExecution ;
+              cm:start-date ?startDate ;
+              cm:start-time ?startTime ;
+              cm:end-date ?endDate ;
+              cm:end-time ?endTime ;
               cm:duration-in-hours ?durationInHours ;
               cm:has-scope ?maintenanceGroup .
 
@@ -311,7 +315,12 @@ CONSTRUCT {
 
      BIND(dl:instance(cm:mechanic, ?Employee_No) as ?mechanic)
      BIND(dl:instance(cm:work-session, ?bookingno_i) as ?workSession)
+
      BIND(xsd:decimal(?Duration_Full) as ?durationInHours)
+     BIND(STRDT(?Start_Date, xsd:date) as ?startDate)
+     BIND(STRDT(?Start_Time, xsd:time) as ?startTime)
+     BIND(STRDT(?End_Date, xsd:date) as ?endDate)
+     BIND(STRDT(?End_Time, xsd:time) as ?endTime)
 
      BIND(dl:instance(cm:client, ?operator) as ?client)
 }""" ;
