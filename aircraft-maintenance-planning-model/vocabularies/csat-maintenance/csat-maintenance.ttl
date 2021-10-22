@@ -426,6 +426,13 @@ cm:avionics-mechanic-group rdf:type owl:Class ;
                            rdfs:label "Avionics Mechanic Group" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/b1-licenced-engineer
+cm:b1-licenced-engineer rdf:type owl:Class ;
+                        rdfs:subClassOf cm:maintenance-group ;
+                        cm:has-abbreviation "B1"@en ;
+                        rdfs:label "B1 Licenced Engineer" .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/blendoscopy-support-group
 cm:blendoscopy-support-group rdf:type owl:Class ;
                              rdfs:subClassOf cm:maintenance-group ;
@@ -695,6 +702,13 @@ cm:landing-gear-technician rdf:type owl:Class ;
                            rdfs:subClassOf cm:maintenance-group ;
                            cm:has-abbreviation "LDG"@en ;
                            rdfs:label "Landing Gear Technician" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/line-maintenance-1
+cm:line-maintenance-1 rdf:type owl:Class ;
+                      rdfs:subClassOf cm:maintenance-group ;
+                      cm:has-abbreviation "LM1"@en ;
+                      rdfs:label "Line Maintenance 1" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/line-manager
@@ -1127,18 +1141,6 @@ cm:weighing rdf:type owl:Class ;
             rdfs:subClassOf cm:maintenance-group ;
             cm:has-abbreviation "WGH"@en ;
             rdfs:label "Weighing" .
-
-
-cm:line-maintenance-1 rdf:type owl:Class ;
-            rdfs:subClassOf cm:maintenance-group ;
-            cm:has-abbreviation "LM1"@en ;
-            rdfs:label "Line Maintenance 1" .
-
-
-cm:b1-licenced-engineer rdf:type owl:Class ;
-            rdfs:subClassOf cm:maintenance-group ;
-            cm:has-abbreviation "B1"@en ;
-            rdfs:label "B1 Licenced Engineer" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/welding-support-group
