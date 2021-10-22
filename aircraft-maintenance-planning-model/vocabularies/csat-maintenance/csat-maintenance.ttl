@@ -30,6 +30,10 @@ cm:has-abbreviation rdf:type owl:AnnotationProperty ;
 xsd:date rdf:type rdfs:Datatype .
 
 
+###  http://www.w3.org/2001/XMLSchema#time
+xsd:time rdf:type rdfs:Datatype .
+
+
 #################################################################
 #    Object Properties
 #################################################################
@@ -172,9 +176,14 @@ cm:duration rdf:type owl:DatatypeProperty ;
             rdfs:label "duration" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/end-date
+cm:end-date rdf:type owl:DatatypeProperty ;
+            rdfs:range xsd:date .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/end-time
 cm:end-time rdf:type owl:DatatypeProperty ;
-            rdfs:range xsd:date ;
+            rdfs:range xsd:time ;
             rdfs:label "end time" .
 
 
@@ -251,6 +260,16 @@ cm:number-of-planned-tasks rdf:type owl:DatatypeProperty ;
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/order
 cm:order rdf:type owl:DatatypeProperty ;
          rdfs:label "order" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/start-date
+cm:start-date rdf:type owl:DatatypeProperty ;
+              rdfs:range xsd:date .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/start-time
+cm:start-time rdf:type owl:DatatypeProperty ;
+              rdfs:range xsd:time .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/step-index
@@ -584,6 +603,11 @@ cm:engineering rdf:type owl:Class ;
                rdfs:label "Engineering" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/event
+cm:event rdf:type owl:Class ;
+         rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/exterior-mechanic-group
 cm:exterior-mechanic-group rdf:type owl:Class ;
                            rdfs:subClassOf cm:heavy-maintenance-group ;
@@ -761,7 +785,7 @@ cm:maintenance-support-group rdf:type owl:Class ;
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance-task
 cm:maintenance-task rdf:type owl:Class ;
-                    rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> ,
+                    rdfs:subClassOf cm:event ,
                                     [ rdf:type owl:Restriction ;
                                       owl:onProperty cm:has-scope ;
                                       owl:someValuesFrom cm:maintenance-group
@@ -863,7 +887,7 @@ cm:non-planned-task rdf:type owl:Class ;
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/observation
 cm:observation rdf:type owl:Class ;
-               rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/complex-event> .
+               rdfs:subClassOf cm:event .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/operational-check
