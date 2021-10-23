@@ -12,6 +12,7 @@
 @prefix dl: <http://onto.fel.cvut.cz/ontologies/csat/data-lib/> .
 @prefix doc: <http://onto.fel.cvut.cz/ontologies/documentation/> .
 @prefix kbss-module: <http://onto.fel.cvut.cz/ontologies/lib/module/> .
+@prefix kbss-timef: <http://onto.fel.cvut.cz/ontologies/lib/function/time/> .
 @prefix km-sesame: <http://onto.fel.cvut.cz/ontologies/lib/module/sesame/> .
 @prefix km-tabular: <http://onto.fel.cvut.cz/ontologies/lib/module/tabular/> .
 @prefix ms: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
@@ -37,11 +38,10 @@
 :append-next
   a sml:ApplyConstruct ;
   sm:next :construct-events ;
-  sm:nodeX 1590 ;
-  sm:nodeY 169 ;
   sml:constructQuery [
       a sp:Construct ;
-      sp:text """CONSTRUCT {
+      sp:text """# 1 - one day events
+CONSTRUCT {
      ?rd1 :next  ?rd2 .
 } WHERE {
     ?rd1 :possibly-next ?rd2 .
@@ -53,19 +53,35 @@
     FILTER NOT EXISTS {
         ?rdNE :date ?date ;
             :end-time ?endTimeNE .
-        BIND(STRDT(?endTimeNE, xsd:time) as ?tNE)
         FILTER(?startTime < ?tNE)
         FILTER(?tNE < ?endTime)
     }
+}""" ;
+    ] ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 2 - two days events
+CONSTRUCT {
+     ?rd1 :next  ?rd2 .
+} WHERE {
+    ?rd1 a :can-form-two-days-event ;
+           :Employee_No ?Employee_No ;
+           :date ?date ;
+           :start-time ?startTime .
+
+    BIND(kbss-timef:add-days(?date, 1) as ?nextDay)
+
+    ?rd2 a :can-form-two-days-event ;
+            :Employee_No ?Employee_No ;
+            :date ?nextDay ;
+           :end-time ?endTime .
 }""" ;
     ] ;
   rdfs:label "append-next" ;
 .
 :append-possible-next
   a sml:ApplyConstruct ;
-  sm:next :append-next ;
-  sm:nodeX 1376 ;
-  sm:nodeY 124 ;
+  sm:next :identify-possible-two-days-events ;
   sml:constructQuery [
       a sp:Construct ;
       sp:text """CONSTRUCT {
@@ -87,8 +103,6 @@
 :append-start-end-times
   a sml:ApplyConstruct ;
   sm:next :append-possible-next ;
-  sm:nodeX 1133 ;
-  sm:nodeY 88 ;
   sml:constructQuery [
       a sp:Construct ;
       sp:text """# 1 - end time
@@ -146,42 +160,72 @@ CONSTRUCT {
 :construct-events
   a sml:ApplyConstruct ;
   sm:next :transform ;
-  sm:nodeX 1187 ;
-  sm:nodeY 208 ;
   sml:constructQuery [
       a sp:Construct ;
       sp:text """# 2 - extract events
 CONSTRUCT {
      ?presence a cm:presence ;
-         cm:start-date ?d ;
-         cm:end-date ?d ;
+         cm:start-date ?d1;
          cm:start-time ?t1 ;
+         cm:end-date ?d2 ;
          cm:end-time ?t2 ;
          cm:has-participant  ?mechanic .
      ?mechanic a cm:mechanic .
 } WHERE {
     ?rd1 :next ?rd2 .
     ?rd1 :Employee_No ?Employee_No ;
-        :date ?date ;
+        :date ?date1 ;
         :start-time ?t1 .
     ?rd2:Employee_No ?Employee_No ;
-        :date ?date ;
+        :date ?date2 ;
         :end-time ?t2 .
 
     ?r1 csvw:describes ?rd1 .
     ?r1 csvw:url ?r1Url .
 
-    BIND(STRDT(?date, xsd:date) as ?d)
-    BIND(dl:instance(cm:presence, dl:id-3(?Employee_No, ?date, md5(str(?r1Url)))) as ?presence)
+    BIND(STRDT(?date1, xsd:date) as ?d1)
+    BIND(STRDT(?date2, xsd:date) as ?d2)
+    BIND(dl:instance(cm:presence, dl:id-3(?Employee_No, ?date1, str(?t1))) as ?presence)
     BIND(dl:instance(cm:mechanic, ?Employee_No) as ?mechanic)
 }""" ;
     ] ;
+  sml:replace true ;
   rdfs:label "construct-events" ;
 .
 :deploy-presence-data
   a sm:Function ;
   sm:returnModule td:deploy-data_Return ;
   rdfs:subClassOf sm:Functions ;
+.
+:identify-possible-two-days-events
+  a sml:ApplyConstruct ;
+  sm:next :append-next ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - identify end of the day available event
+CONSTRUCT {
+     ?rd a :can-form-two-days-event .
+} WHERE {
+   ?rd  :start-time ?time .
+    FILTER NOT EXISTS {
+         ?rd :possibly-next ?rdNE .
+     }
+}""" ;
+    ] ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 2 - identify start of the day not available event
+CONSTRUCT {
+     ?rd a :can-form-two-days-event .
+} WHERE {
+   ?rd :end-time ?time .
+    FILTER NOT EXISTS {
+         ?rdNE  :possibly-next ?rd .
+     }
+}""" ;
+    ] ;
+  sml:replace false ;
+  rdfs:label "identify-possible-two-days-events" ;
 .
 :transform
   a sml:ApplyConstruct ;
