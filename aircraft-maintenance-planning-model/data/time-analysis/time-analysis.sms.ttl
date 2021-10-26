@@ -317,10 +317,15 @@ CONSTRUCT {
      BIND(dl:instance(cm:work-session, ?bookingno_i) as ?workSession)
 
      BIND(xsd:decimal(?Duration_Full) as ?durationInHours)
-     BIND(STRDT(?Start_Date, xsd:date) as ?startDate)
-     BIND(STRDT(?Start_Time, xsd:time) as ?startTime)
-     BIND(STRDT(?End_Date, xsd:date) as ?endDate)
-     BIND(STRDT(?End_Time, xsd:time) as ?endTime)
+# TODO fix xsd:date, xsd:time using spif:parseDate
+#     BIND(STRDT(?Start_Date, xsd:date) as ?startDate)
+#     BIND(STRDT(?Start_Time, xsd:time) as ?startTime)
+#     BIND(STRDT(?End_Date, xsd:date) as ?endDate)
+#     BIND(STRDT(?End_Time, xsd:time) as ?endTime)
+     BIND(?Start_Date as ?startDate)
+     BIND(?Start_Time as ?startTime)
+     BIND(?End_Date as ?endDate)
+     BIND(?End_Time as ?endTime)
 
      BIND(dl:instance(cm:client, ?operator) as ?client)
 }""" ;
