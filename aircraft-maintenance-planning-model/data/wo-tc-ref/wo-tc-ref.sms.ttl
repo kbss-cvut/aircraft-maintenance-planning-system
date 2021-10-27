@@ -32,7 +32,6 @@ td:deploy-data_Return
   rdfs:label "deploy-wo-tc-ref-data" ;
 .
 td:rdfize-input-data
-  km-tabular:delimiter "	" ;
   kbss-module:has-output-graph-constraint [
       a sp:Ask ;
       sp:text """# 1.01 column AC has empty value
@@ -143,10 +142,11 @@ WHERE {
     }
 }""" ;
     ] ;
-  <http://onto.fel.cvut.cz/ontologies/lib/module/tabular/data-prefix> [
+  km-tabular:data-prefix [
       a sp:str ;
       sp:arg1 : ;
     ] ;
+  km-tabular:delimiter "	" ;
   sm:next :construct-csat-maintenance-data ;
 .
 td:transform-data_Return
@@ -189,7 +189,7 @@ CONSTRUCT {
         cm:references-ata-code ?ataIRI;
     .
 
-    ?taskStepExecutionIRI a ?taskStepExecutionTypeIRI, owl:NamedIndividual;
+    ?taskStepExecutionIRI a ?taskStepExecutionTypeIRI, owl:NamedIndividual ;
         cm:step-index ?workstepTyped ;
         cm:work-order-text ?WO_text ;
         cm:work-order-action-text ?WO_action .
@@ -244,8 +244,8 @@ CONSTRUCT {
     BIND(IF(?type =  \"TC\", \"task-card\",  ?x) as ?tc)
     BIND(IF(?type =  \"S\", \"scheduled-work-order\",  ?x) as ?s)
     BIND(IF(?type =  \"M\", \"maintenance-work-order\",   ?x) as ?m)
-    BIND(COALESCE(?tc, ?s, ?m) as ?task_super_class)
-    BIND(IRI(concat(str(cm:), ?task_super_class)) as ?taskSuperClassIRI)
+    BIND(COALESCE(?tc, ?s, ?m) as ?taskSuperClassName)
+    BIND(IRI(concat(str(cm:), ?taskSuperClassName)) as ?taskSuperClassIRI)
     BIND(dl:instance(cm:task-step-execution-type, ?taskStepExecutionTypeId) as ?taskStepExecutionTypeIRI)
 
     BIND(STRDT(str(?sequence), xsd:integer) as ?workstepTyped)
