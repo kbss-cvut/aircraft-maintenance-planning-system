@@ -218,27 +218,27 @@ CONSTRUCT {
               cm:workpackage-scheduled-end-time ?WP_End_date___scheduled ;
               cm:workpackage-start-time ?WP_Start_date___real ;
               cm:workpackage-end-time ?WP_End_date___real ;
-              cm:has-client ?client .
+              cm:has-client ?clientIRI .
 
-    ?taskExecution a cm:complex-execution, owl:NamedIndividual ;
+    ?taskExecutionIRI a cm:complex-execution, owl:NamedIndividual ;
               cm:is-part-of-workpackage ?workpackageIRI .
 
-    ?workSession a cm:work-session ;
-              cm:is-part-of-maintenance-task ?taskExecution ;
+    ?workSessionIRI a cm:work-session ;
+              cm:is-part-of-maintenance-task ?taskExecutionIRI ;
               cm:start-date ?startDate ;
               cm:start-time ?startTime ;
               cm:end-date ?endDate ;
               cm:end-time ?endTime ;
               cm:duration-in-hours ?durationInHours ;
-              cm:has-scope ?maintenanceGroup .
+              cm:has-scope ?maintenanceGroupIRI .
 
-    ?mechanic a cm:mechanic ;
-               cm:performs ?workSession .
+    ?mechanicIRI a cm:mechanic ;
+               cm:performs ?workSessionIRI .
 
-    ?maintenanceGroup a cm:maintenance-group ;
+    ?maintenanceGroupIRI a cm:maintenance-group ;
               cm:has-abbreviation ?mainMaintenanceGroupAbbr .
 
-    ?client a cm:client, owl:NamedIndividual ;
+    ?clientIRI a cm:client, owl:NamedIndividual ;
               cm:id ?operator;
     .
 } WHERE {
@@ -307,14 +307,14 @@ CONSTRUCT {
         ?rd :operator ?operator    .
      }
 
-    ?maintenanceGroup  dl:has-simple-abbreviation ?Scope .
-    ?maintenanceGroup dl:has-main-abbreviation ?mainMaintenanceGroupAbbr .
+    ?maintenanceGroupIRI dl:has-simple-abbreviation ?Scope .
+    ?maintenanceGroupIRI dl:has-main-abbreviation ?mainMaintenanceGroupAbbr .
 
      BIND(dl:instance(cm:workpackage, ?Workpackage) as ?workpackageIRI)
-     BIND(dl:instance(cm:complex-execution, dl:id-2(?Workpackage, ?WO_TC)) as ?taskExecution)
+     BIND(dl:instance(cm:complex-execution, dl:id-2(?Workpackage, ?WO_TC)) as ?taskExecutionIRI)
 
-     BIND(dl:instance(cm:mechanic, ?Employee_No) as ?mechanic)
-     BIND(dl:instance(cm:work-session, ?bookingno_i) as ?workSession)
+     BIND(dl:instance(cm:mechanic, ?Employee_No) as ?mechanicIRI)
+     BIND(dl:instance(cm:work-session, ?bookingno_i) as ?workSessionIRI)
 
      BIND(xsd:decimal(?Duration_Full) as ?durationInHours)
 # TODO fix xsd:date, xsd:time using spif:parseDate
@@ -327,7 +327,7 @@ CONSTRUCT {
      BIND(?End_Date as ?endDate)
      BIND(?End_Time as ?endTime)
 
-     BIND(dl:instance(cm:client, ?operator) as ?client)
+     BIND(dl:instance(cm:client, ?operator) as ?clientIRI)
 }""" ;
     ] ;
   sml:replace true ;
