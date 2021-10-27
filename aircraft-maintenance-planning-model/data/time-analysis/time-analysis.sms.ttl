@@ -209,37 +209,43 @@ ASK  {
       sp:text """# 1 - extract ontology
 CONSTRUCT {
     <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time-analysis-12345> a owl:Ontology ;
-              owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
+        owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
 
     # workpackage description
     ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
-              cm:id ?Workpackage ;
-              cm:workpackage-scheduled-start-time ?WP_Start_date___scheduled ;
-              cm:workpackage-scheduled-end-time ?WP_End_date___scheduled ;
-              cm:workpackage-start-time ?WP_Start_date___real ;
-              cm:workpackage-end-time ?WP_End_date___real ;
-              cm:has-client ?clientIRI .
+        cm:id ?Workpackage ;
+        cm:workpackage-scheduled-start-time ?WP_Start_date___scheduled ;
+        cm:workpackage-scheduled-end-time ?WP_End_date___scheduled ;
+        cm:workpackage-start-time ?WP_Start_date___real ;
+        cm:workpackage-end-time ?WP_End_date___real ;
+        cm:has-client ?clientIRI ;
+    .
 
     ?taskExecutionIRI a cm:complex-execution, owl:NamedIndividual ;
-              cm:is-part-of-workpackage ?workpackageIRI .
+        cm:is-part-of-workpackage ?workpackageIRI ;
+    .
 
     ?workSessionIRI a cm:work-session ;
-              cm:is-part-of-maintenance-task ?taskExecutionIRI ;
-              cm:start-date ?startDate ;
-              cm:start-time ?startTime ;
-              cm:end-date ?endDate ;
-              cm:end-time ?endTime ;
-              cm:duration-in-hours ?durationInHours ;
-              cm:has-scope ?maintenanceGroupIRI .
+        cm:is-part-of-maintenance-task ?taskExecutionIRI ;
+        cm:start-date ?startDate ;
+        cm:start-time ?startTime ;
+        cm:end-date ?endDate ;
+        cm:end-time ?endTime ;
+        cm:duration-in-hours ?durationInHours ;
+        cm:has-scope ?maintenanceGroupIRI ;
+    .
 
     ?mechanicIRI a cm:mechanic ;
-               cm:performs ?workSessionIRI .
+        cm:performs ?workSessionIRI ;
+    .
+
 
     ?maintenanceGroupIRI a cm:maintenance-group ;
-              cm:has-abbreviation ?mainMaintenanceGroupAbbr .
+        cm:has-abbreviation ?mainMaintenanceGroupAbbr ;
+    .
 
     ?clientIRI a cm:client, owl:NamedIndividual ;
-              cm:id ?operator;
+        cm:id ?operator ;
     .
 } WHERE {
      OPTIONAL {
