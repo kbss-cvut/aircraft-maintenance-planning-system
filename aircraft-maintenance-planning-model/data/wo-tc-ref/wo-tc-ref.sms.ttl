@@ -170,7 +170,7 @@ CONSTRUCT {
     .
         
     ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
-        cm:id ?WP ;
+        cm:id ?workpackageId ;
         cm:is-repair-of ?aircraftIRI ;
     .
                     
@@ -207,9 +207,9 @@ CONSTRUCT {
 
     ?rd :AC ?acRegistration .
     ?rd :A_C_age ?A_C_age .
-    ?rd :WP ?WP .
+    ?rd :WP ?workpackageId .
     ?rd :CSAT_WO_TC ?CSAT_WO_TC .
-    ?rd :type ?type .
+    ?rd :type ?taskSuperTypeId .
     ?rd :state ?state .
     ?rd :ATA ?ATA .
     OPTIONAL {
@@ -228,28 +228,28 @@ CONSTRUCT {
         ?rd :WO_action ?WO_action .
     }
 
-    BIND(dl:instance(cm:workpackage, ?WP) as ?workpackageIRI)
-    BIND(dl:instance(cm:complex-execution, dl:id-2(?WP, ?CSAT_WO_TC)) as ?taskExecutionIRI)
+    BIND(dl:instance(cm:workpackage, ?workpackageId) as ?workpackageIRI)
+    BIND(dl:instance(cm:complex-execution, dl:id-2(?workpackageId, ?CSAT_WO_TC)) as ?taskExecutionIRI)
 
     BIND(?A_C_age as ?acAge)
-    BIND(dl:instance(cm:aircraft, ?WP) as ?aircraftIRI)
+    BIND(dl:instance(cm:aircraft, ?workpackageId) as ?aircraftIRI)
 
-    BIND(dl:id-2(?type, ?CSAT_WO_TC) as ?taskTypeId)
-    BIND(dl:id-2(?taskTypeId, ?sequence) as ?taskStepExecutionTypeId)
+    BIND(dl:id-2(?taskSuperTypeId, ?CSAT_WO_TC) as ?taskTypeNormalizedId)
+    BIND(dl:id-2(?taskTypeNormalizedId, ?sequence) as ?taskStepExecutionTypeId)
 
-    BIND(dl:instance(cm:task-step-execution, dl:id-2(?WP, ?taskStepExecutionTypeId)) as ?taskStepExecutionIRI)
+    BIND(dl:instance(cm:task-step-execution, dl:id-2(?workpackageId, ?taskStepExecutionTypeId)) as ?taskStepExecutionIRI)
 
-    BIND(dl:instance(cm:task-type, ?taskTypeId) as ?taskTypeIRI)
+    BIND(dl:instance(cm:task-type, ?taskTypeNormalizedId) as ?taskTypeIRI)
 
-    BIND(IF(?type =  \"TC\", \"task-card\",  ?x) as ?tc)
-    BIND(IF(?type =  \"S\", \"scheduled-work-order\",  ?x) as ?s)
-    BIND(IF(?type =  \"M\", \"maintenance-work-order\",   ?x) as ?m)
+    BIND(IF(?taskSuperTypeId =  \"TC\", \"task-card\",  ?x) as ?tc)
+    BIND(IF(?taskSuperTypeId =  \"S\", \"scheduled-work-order\",  ?x) as ?s)
+    BIND(IF(?taskSuperTypeId =  \"M\", \"maintenance-work-order\",   ?x) as ?m)
     BIND(COALESCE(?tc, ?s, ?m) as ?taskSuperClassName)
     BIND(IRI(concat(str(cm:), ?taskSuperClassName)) as ?taskSuperClassIRI)
     BIND(dl:instance(cm:task-step-execution-type, ?taskStepExecutionTypeId) as ?taskStepExecutionTypeIRI)
 
     BIND(STRDT(str(?sequence), xsd:integer) as ?workstepTyped)
-    BIND(dl:instance(cm:complex-execution, dl:id-2(?WP, ?TC_reference)) as ?referencedTaskExecutionIRI)
+    BIND(dl:instance(cm:complex-execution, dl:id-2(?workpackageId, ?TC_reference)) as ?referencedTaskExecutionIRI)
     BIND(IRI(concat(str(ata:), \"ata-\", ?ATA)) as ?ataIRI)
      
 }""" ;
