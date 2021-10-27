@@ -245,6 +245,10 @@ cm:model rdf:type owl:DatatypeProperty ;
          rdfs:range xsd:string ;
          rdfs:label "model" .
 
+cm:registration rdf:type owl:DatatypeProperty ;
+         rdfs:domain cm:aircraft ;
+         rdfs:range xsd:string ;
+         rdfs:label "registration" .
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/note
 cm:note rdf:type owl:DatatypeProperty ;
