@@ -192,7 +192,7 @@ CONSTRUCT {
     ?taskStepExecutionIRI a ?taskStepExecutionTypeIRI, owl:NamedIndividual ;
         cm:step-index ?workstepTyped ;
         cm:work-order-text ?WO_text ;
-        cm:work-order-action-text ?WO_action .
+        cm:work-order-action-text ?WO_action ;
     .
 	
     ?taskStepExecutionTypeIRI a owl:Class ;
