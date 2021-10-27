@@ -166,42 +166,43 @@ td:transform-data_Return
       sp:text """# 1 - extract ontology
 CONSTRUCT {
     <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wo-tc-ref-34567> a owl:Ontology ;
-              owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
+        owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
+    .
         
-    # workpackage description
     ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
-              cm:id ?WP ;
-              cm:is-repair-of ?aircraftIRI .
+        cm:id ?WP ;
+        cm:is-repair-of ?aircraftIRI ;
+    .
                     
-    # task execution description
-    ?taskExecutionIRI a cm:complex-execution, ?taskTypeIRI, owl:NamedIndividual;
-           a ?taskSuperClassIRI; # TODO can be done by inference
-           cm:issue-time ?issue_date;
-           cm:end-time ?closing_date;
-           cm:has-work-order-step ?taskStepExecutionIRI;
-           cm:is-part-of-workpackage ?workpackageIRI .
-    
-    ?taskExecutionIRI cm:references-task ?referencedTaskExecutionIRI .
+    ?taskExecutionIRI a cm:complex-execution, ?taskTypeIRI, owl:NamedIndividual ;
+        a ?taskSuperClassIRI; # TODO can be done by inference
+        cm:issue-time ?issue_date;
+        cm:end-time ?closing_date;
+        cm:has-work-order-step ?taskStepExecutionIRI;
+        cm:is-part-of-workpackage ?workpackageIRI ;
+        cm:references-task ?referencedTaskExecutionIRI ;
+    .
 
-    # task execution type
-    ?taskTypeIRI a owl:Class;
-           rdfs:subClassOf ?taskSuperClassIRI;
-           cm:references-ata-code ?ataIRI;
-			cm:id ?CSAT_WO_TC .
+    ?taskTypeIRI a owl:Class ;
+        cm:id ?CSAT_WO_TC ;
+        rdfs:subClassOf ?taskSuperClassIRI;
+        cm:references-ata-code ?ataIRI;
+    .
 
-    # task step execution
     ?taskStepExecutionIRI a ?taskStepExecutionTypeIRI, owl:NamedIndividual;
-     	   cm:step-index ?workstepTyped;
-           cm:work-order-text ?WO_text ;
-           cm:work-order-action-text ?WO_action .
+        cm:step-index ?workstepTyped ;
+        cm:work-order-text ?WO_text ;
+        cm:work-order-action-text ?WO_action .
+    .
 	
-    ?taskStepExecutionTypeIRI a owl:Class;
-           rdfs:subClassOf cm:work-order-step.
+    ?taskStepExecutionTypeIRI a owl:Class ;
+        rdfs:subClassOf cm:work-order-step ;
+    .
 			
-    # aircraft description
     ?aircraftIRI a cm:aircraft, owl:NamedIndividual;
-           cm:model ?acModel ;
-	   cm:age ?acAge .
+        cm:model ?acModel ;
+	cm:age ?acAge ;
+    .
 } WHERE {
 
     ?rd :AC ?AC .

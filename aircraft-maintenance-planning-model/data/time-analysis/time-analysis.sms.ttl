@@ -209,9 +209,9 @@ ASK  {
       sp:text """# 1 - extract ontology
 CONSTRUCT {
     <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time-analysis-12345> a owl:Ontology ;
-        owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
+        owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
+    .
 
-    # workpackage description
     ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
         cm:id ?Workpackage ;
         cm:workpackage-scheduled-start-time ?WP_Start_date___scheduled ;
