@@ -200,12 +200,12 @@ CONSTRUCT {
     .
 			
     ?aircraftIRI a cm:aircraft, owl:NamedIndividual;
-        cm:model ?acModel ;
+        cm:registration ?acRegistration ;
 	cm:age ?acAge ;
     .
 } WHERE {
 
-    ?rd :AC ?AC .
+    ?rd :AC ?acRegistration .
     ?rd :A_C_age ?A_C_age .
     ?rd :WP ?WP .
     ?rd :CSAT_WO_TC ?CSAT_WO_TC .
@@ -230,7 +230,7 @@ CONSTRUCT {
 
     BIND(dl:instance(cm:workpackage, ?WP) as ?workpackageIRI)
     BIND(dl:instance(cm:complex-execution, dl:id-2(?WP, ?CSAT_WO_TC)) as ?taskExecutionIRI)
-    BIND(?AC as ?acModel)
+
     BIND(?A_C_age as ?acAge)
     BIND(dl:instance(cm:aircraft, ?WP) as ?aircraftIRI)
 
