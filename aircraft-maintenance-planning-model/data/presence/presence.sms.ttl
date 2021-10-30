@@ -53,8 +53,8 @@ CONSTRUCT {
     FILTER NOT EXISTS {
         ?rdNE :date ?date ;
             :end-time ?endTimeNE .
-        FILTER(?startTime < ?tNE)
-        FILTER(?tNE < ?endTime)
+        FILTER(?startTime < ?endTimeNE)
+        FILTER(?endTimeNE < ?endTime)
     }
 }""" ;
     ] ;
@@ -159,6 +159,54 @@ CONSTRUCT {
 .
 :construct-events
   a sml:ApplyConstruct ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1 - there is a presence event with two start-date-s
+ASK
+WHERE {
+    ?presence a cm:presence ;
+         cm:start-date ?d1;
+         cm:start-date ?d2;
+     .
+     FILTER(?d1 != ?d2)
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 2 - there is a presence event with two start-time-s
+ASK
+WHERE {
+    ?presence a cm:presence ;
+         cm:start-time ?t1;
+         cm:start-time ?t2;
+     .
+     FILTER(?t1 != ?t2)
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 3 - there is a presence event with two end-date-s
+ASK
+WHERE {
+    ?presence a cm:presence ;
+         cm:end-date ?d1;
+         cm:end-date ?d2;
+     .
+     FILTER(?d1 != ?d2)
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 4 - there is a presence event with two end-time-s
+ASK
+WHERE {
+    ?presence a cm:presence ;
+         cm:end-time ?t1;
+         cm:end-time ?t2;
+     .
+     FILTER(?t1 != ?t2)
+}""" ;
+    ] ;
   sm:next :transform ;
   sml:constructQuery [
       a sp:Construct ;
@@ -179,9 +227,6 @@ CONSTRUCT {
     ?rd2:Employee_No ?Employee_No ;
         :date ?date2 ;
         :end-time ?t2 .
-
-    ?r1 csvw:describes ?rd1 .
-    ?r1 csvw:url ?r1Url .
 
     BIND(STRDT(?date1, xsd:date) as ?d1)
     BIND(STRDT(?date2, xsd:date) as ?d2)
@@ -206,10 +251,20 @@ CONSTRUCT {
 CONSTRUCT {
      ?rd a :can-form-two-days-event .
 } WHERE {
-   ?rd  :start-time ?time .
+    ?rd :Employee_No ?Employee_No ;
+        :date ?date ;
+        :start-time ?time .
+
     FILTER NOT EXISTS {
          ?rd :possibly-next ?rdNE .
      }
+
+     FILTER NOT EXISTS {
+         ?rd2NE :Employee_No ?Employee_No ;
+             :date ?date ;
+             :start-time ?time2 .
+         FILTER(?time2 > ?time)
+    }
 }""" ;
     ] ;
   sml:constructQuery [
@@ -218,10 +273,21 @@ CONSTRUCT {
 CONSTRUCT {
      ?rd a :can-form-two-days-event .
 } WHERE {
-   ?rd :end-time ?time .
+    ?rd :Employee_No ?Employee_No ;
+        :date ?date ;
+        :end-time ?time .
+
     FILTER NOT EXISTS {
          ?rdNE  :possibly-next ?rd .
      }
+
+    FILTER NOT EXISTS {
+         ?rd2NE :Employee_No ?Employee_No ;
+             :date ?date ;
+             :end-time ?time2 .
+         FILTER(?time2 < ?time)
+    }
+
 }""" ;
     ] ;
   sml:replace false ;
