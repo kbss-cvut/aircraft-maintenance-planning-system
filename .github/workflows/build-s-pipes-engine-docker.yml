@@ -1,4 +1,4 @@
-name: Build docker
+name: Build SPipes engine docker
 on:
   push:
     branches: [ main ]
