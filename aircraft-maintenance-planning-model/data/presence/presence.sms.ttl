@@ -207,6 +207,7 @@ WHERE {
      FILTER(?t1 != ?t2)
 }""" ;
     ] ;
+  sm:next :construct-one-day-presence ;
   sm:next :transform ;
   sml:constructQuery [
       a sp:Construct ;
@@ -236,6 +237,49 @@ CONSTRUCT {
     ] ;
   sml:replace true ;
   rdfs:label "construct-events" ;
+.
+:construct-one-day-presence
+  a sml:ApplyConstruct ;
+  sm:next :transform ;
+  sm:nodeX 873 ;
+  sm:nodeY 613 ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - split two day presence into one day prezences
+CONSTRUCT {
+    ?presenceFirstDay a cm:one-day-presence ;
+         cm:start-date ?d1;
+         cm:start-time ?t1 ;
+         cm:end-date ?d2 ;
+         cm:end-time ?midnight ;
+         cm:has-participant  ?mechanic ;
+         cm:is-part-of ?presence  ;
+     .
+    ?presenceSecondDay a cm:one-day-presence ;
+         cm:start-date ?d2;
+         cm:start-time ?midnight ;
+         cm:end-date ?d2 ;
+         cm:end-time ?t2 ;
+         cm:has-participant  ?mechanic ;
+         cm:is-part-of ?presence  ;
+     .
+}
+WHERE {
+     ?presence a cm:presence ;
+         cm:start-date ?d1;
+         cm:start-time ?t1 ;
+         cm:end-date ?d2 ;
+         cm:end-time ?t2 ;
+         cm:has-participant  ?mechanic .
+
+    FILTER(?d1 != ?d2)
+    BIND(iri(concat(str(?presence),\"-1\")) as ?presenceFirstDay)
+    BIND(iri(concat(str(?presence),\"-2\")) as ?presenceSecondDay)
+    BIND(\"00:00\"^^xsd:time as ?midnight)
+}""" ;
+    ] ;
+  sml:replace true ;
+  rdfs:label "construct-one-day-presence" ;
 .
 :deploy-presence-data
   a sm:Function ;
