@@ -30,6 +30,35 @@
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat/data-lib> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
 .
+td:construct-day-bound-event-duration
+  a sml:ApplyConstruct ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - construct day-bound-event durations
+CONSTRUCT {
+     ?dayBoundEvent cm:duration-in-hours ?durationInHours .
+}
+WHERE {
+   ?dayBoundEvent a cm:day-bound-event  ;
+         cm:start-time ?t1 ;
+         cm:end-time ?t2 ;
+    .
+    FILTER NOT EXISTS {
+          ?dayBoundEvent cm:duration-in-hours ?durationInHoursNE .
+    }
+
+    BIND(IF(str(?t2) = \"00:00:00\" || str(?t2) = \"00:00\" , \"24:00:00\"^^xsd:time, ?t2) as ?t2Normalized)
+    BIND(xsd:decimal(replace(str(?t1), \":.*\", \"\")) as ?t1Hours)
+    BIND(xsd:decimal(replace(str(?t1), \"(^..:|:..$)\", \"\")) as ?t1Minutes)
+    BIND(coalesce(xsd:decimal(replace(str(?t1), \".*:.*:\", \"\")),0) as ?t1Seconds)
+    BIND(xsd:decimal(replace(str(?t2Normalized), \":.*\", \"\")) as ?t2Hours)
+    BIND(xsd:decimal(replace(str(?t2Normalized), \"(^..:|:..$)\", \"\")) as ?t2Minutes)
+    BIND(coalesce(xsd:decimal(replace(str(?t2Normalized), \".*:.*:\", \"\")),0) as ?t2Seconds)
+    BIND((?t2Hours-?t1Hours)+(?t2Minutes-?t1Minutes)/60+(?t2Seconds-?t1Seconds)/3600 as ?durationInHours)
+}""" ;
+    ] ;
+  rdfs:label "construct-day-bound-event-duration" ;
+.
 td:construct-maintenance-group-abbreviations
   a sml:ApplyConstruct ;
   kbss-module:has-output-graph-constraint [
