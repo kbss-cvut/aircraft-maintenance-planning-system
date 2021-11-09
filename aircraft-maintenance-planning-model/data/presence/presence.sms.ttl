@@ -240,28 +240,43 @@ CONSTRUCT {
 .
 :construct-one-day-presence
   a sml:ApplyConstruct ;
-  sm:next :transform ;
   sm:nodeX 873 ;
   sm:nodeY 613 ;
+  sm:next td:construct-day-bound-event-duration ;
   sml:constructQuery [
       a sp:Construct ;
-      sp:text """# 1 - split two day presence into one day prezences
+      sp:text """# 1 - make one day presence of type day-boundary-event
 CONSTRUCT {
-    ?presenceFirstDay a cm:one-day-presence ;
+     ?presence a cm:day-bound-event .
+}
+WHERE {
+   ?presence a cm:presence ;
+         cm:start-date ?d1;
+         cm:end-date ?d2 ;
+         cm:end-time ?t2 ;
+    .
+    FILTER(?d1 = ?d2 || ?t2 = \"00:00:00\"^^xsd:time)
+}""" ;
+    ] ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 2 - split two day presence into one day presences
+CONSTRUCT {
+    ?presenceFirstDay a cm:day-bound-event ;
          cm:start-date ?d1;
          cm:start-time ?t1 ;
          cm:end-date ?d2 ;
          cm:end-time ?midnight ;
          cm:has-participant  ?mechanic ;
-         cm:is-part-of ?presence  ;
+         cm:is-day-bound-part-of ?presence  ;
      .
-    ?presenceSecondDay a cm:one-day-presence ;
+    ?presenceSecondDay a cm:day-bound-event ;
          cm:start-date ?d2;
          cm:start-time ?midnight ;
          cm:end-date ?d2 ;
          cm:end-time ?t2 ;
          cm:has-participant  ?mechanic ;
-         cm:is-part-of ?presence  ;
+         cm:is-day-bound-part-of ?presence  ;
      .
 }
 WHERE {
@@ -275,11 +290,11 @@ WHERE {
     FILTER(?d1 != ?d2)
     BIND(iri(concat(str(?presence),\"-1\")) as ?presenceFirstDay)
     BIND(iri(concat(str(?presence),\"-2\")) as ?presenceSecondDay)
-    BIND(\"00:00\"^^xsd:time as ?midnight)
+    BIND(\"00:00:00\"^^xsd:time as ?midnight)
 }""" ;
     ] ;
-  sml:replace true ;
-  rdfs:label "construct-one-day-presence" ;
+  sml:replace false ;
+  rdfs:label "construct-day-bound-presences" ;
 .
 :deploy-presence-data
   a sm:Function ;
@@ -353,6 +368,10 @@ CONSTRUCT {
   a sm:Function ;
   sm:returnModule td:transform-data_Return ;
   rdfs:subClassOf sm:Functions ;
+.
+td:construct-day-bound-event-duration
+  sm:next :transform ;
+  sml:replace false ;
 .
 td:deploy-data_Return
   rdfs:label "deploy-presence-data" ;
