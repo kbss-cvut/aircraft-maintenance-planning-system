@@ -245,10 +245,6 @@ cm:model rdf:type owl:DatatypeProperty ;
          rdfs:range xsd:string ;
          rdfs:label "model" .
 
-cm:registration rdf:type owl:DatatypeProperty ;
-         rdfs:domain cm:aircraft ;
-         rdfs:range xsd:string ;
-         rdfs:label "registration" .
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/note
 cm:note rdf:type owl:DatatypeProperty ;
@@ -264,6 +260,13 @@ cm:number-of-planned-tasks rdf:type owl:DatatypeProperty ;
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/order
 cm:order rdf:type owl:DatatypeProperty ;
          rdfs:label "order" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/registration
+cm:registration rdf:type owl:DatatypeProperty ;
+                rdfs:domain cm:aircraft ;
+                rdfs:range xsd:string ;
+                rdfs:label "registration" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/start-date
