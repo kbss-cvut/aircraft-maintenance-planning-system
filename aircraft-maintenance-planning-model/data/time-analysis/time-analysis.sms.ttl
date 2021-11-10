@@ -28,6 +28,10 @@
 @prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+td:construct-day-bound-event-duration
+  sm:next :transform ;
+  sml:replace false ;
+.
 td:construct-maintenance-group-abbreviations
   sm:next td:rdfize-input-data ;
 .
@@ -203,6 +207,7 @@ ASK  {
   FILTER(?t1 != ?t2)
 }""" ;
     ] ;
+  sm:next :construct-one-day-worksessions ;
   sm:next :transform ;
   sml:constructQuery [
       a sp:Construct ;
@@ -360,6 +365,60 @@ CONSTRUCT {
     ] ;
   sml:replace true ;
   rdfs:label "construct-csat-maintenance-data" ;
+.
+:construct-one-day-worksessions
+  a sml:ApplyConstruct ;
+  sm:next td:construct-day-bound-event-duration ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - make one day work-sessions of type day-boundary-event
+CONSTRUCT {
+     ?workSession a cm:day-bound-event .
+}
+WHERE {
+   ?workSession a cm:work-session ;
+         cm:start-date ?d1;
+         cm:end-date ?d2 ;
+         cm:end-time ?t2 ;
+    .
+    FILTER(?d1 = ?d2 || ?t2 = \"00:00:00\"^^xsd:time)
+}""" ;
+    ] ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 2 - split two day work-sessions into one day presences
+CONSTRUCT {
+     ?workSessionFirstDay a cm:day-bound-event ;
+         cm:start-date ?d1;
+         cm:start-time ?t1 ;
+         cm:end-date ?d2 ;
+         cm:end-time ?midnight ;
+         cm:is-day-bound-part-of ?workSession  ;
+     .
+     ?workSessionSecondDay a cm:day-bound-event ;
+         cm:start-date ?d2;
+         cm:start-time ?midnight ;
+         cm:end-date ?d2 ;
+         cm:end-time ?t2 ;
+         cm:is-day-bound-part-of ?workSession  ;
+     .
+}
+WHERE {
+   ?workSession a cm:work-session ;
+         cm:start-date ?d1;
+         cm:start-time ?t1 ;
+         cm:end-date ?d2 ;
+         cm:end-time ?t2 ;
+        cm:duration-in-hours ?durationInHours ;
+    .
+    FILTER(?d1 != ?d2)
+    BIND(iri(concat(str(?workSession),\"-1\")) as ?workSessionFirstDay)
+    BIND(iri(concat(str(?workSession),\"-2\")) as ?workSessionSecondDay)
+    BIND(\"00:00:00\"^^xsd:time as ?midnight)
+}""" ;
+    ] ;
+  sml:replace true ;
+  rdfs:label "construct-day-bound-worksessions" ;
 .
 :deploy-time-analysis-data
   a sm:Function ;
