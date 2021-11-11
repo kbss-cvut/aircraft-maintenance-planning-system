@@ -28,6 +28,10 @@
 @prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+td:construct-day-bound-event-duration
+  sm:next :transform ;
+  sml:replace false ;
+.
 td:construct-maintenance-group-abbreviations
   sm:next td:rdfize-input-data ;
 .
@@ -203,48 +207,65 @@ ASK  {
   FILTER(?t1 != ?t2)
 }""" ;
     ] ;
+  sm:next :construct-one-day-worksessions ;
   sm:next :transform ;
   sml:constructQuery [
       a sp:Construct ;
       sp:text """# 1 - extract ontology
 CONSTRUCT {
     <http://onto.fel.cvut.cz/ontologies/csat-maintenance/time-analysis-12345> a owl:Ontology ;
-              owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
+        owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
+    .
 
-    # workpackage description
     ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
-              cm:id ?Workpackage ;
-              cm:workpackage-scheduled-start-time ?WP_Start_date___scheduled ;
-              cm:workpackage-scheduled-end-time ?WP_End_date___scheduled ;
-              cm:workpackage-start-time ?WP_Start_date___real ;
-              cm:workpackage-end-time ?WP_End_date___real ;
-              cm:has-client ?client .
+        cm:id ?workpackageId ;
+        cm:workpackage-scheduled-start-time ?WP_Start_date___scheduled ;
+        cm:workpackage-scheduled-end-time ?WP_End_date___scheduled ;
+        cm:workpackage-start-time ?WP_Start_date___real ;
+        cm:workpackage-end-time ?WP_End_date___real ;
+        cm:has-client ?clientIRI ;
+        cm:is-repair-of ?aircraftIRI ;
+    .
 
-    ?taskExecution a cm:complex-execution, owl:NamedIndividual ;
-              cm:is-part-of-workpackage ?workpackageIRI .
+    ?taskExecutionIRI a cm:complex-execution, ?taskTypeIRI, owl:NamedIndividual ;
+        cm:is-part-of-workpackage ?workpackageIRI ;
+    .
 
-    ?workSession a cm:work-session ;
-              cm:is-part-of-maintenance-task ?taskExecution ;
-              cm:start-date ?startDate ;
-              cm:start-time ?startTime ;
-              cm:end-date ?endDate ;
-              cm:end-time ?endTime ;
-              cm:duration-in-hours ?durationInHours ;
-              cm:has-scope ?maintenanceGroup .
+    ?taskTypeIRI a owl:Class ;
+        cm:id ?WO_TC ;
+        rdfs:subClassOf ?taskSuperClassIRI;
+    .
 
-    ?mechanic a cm:mechanic ;
-               cm:performs ?workSession .
+    ?workSessionIRI a cm:work-session ;
+        cm:is-part-of-maintenance-task ?taskExecutionIRI ;
+        cm:start-date ?startDate ;
+        cm:start-time ?startTime ;
+        cm:end-date ?endDate ;
+        cm:end-time ?endTime ;
+        cm:duration-in-hours ?durationInHours ;
+        cm:task-description ?Description ;
+        cm:has-scope ?maintenanceGroupIRI ;
+    .
 
-    ?maintenanceGroup a cm:maintenance-group ;
-              cm:has-abbreviation ?mainMaintenanceGroupAbbr .
+    ?mechanicIRI a cm:mechanic ;
+        cm:id ?Employee_No ;
+        cm:performs ?workSessionIRI ;
+    .
 
-    ?client a cm:client, owl:NamedIndividual ;
-              cm:id ?operator;
+    ?maintenanceGroupIRI a cm:maintenance-group ;
+        cm:has-abbreviation ?mainMaintenanceGroupAbbr ;
+    .
+
+    ?clientIRI a cm:client, owl:NamedIndividual ;
+        cm:id ?operator ;
+    .
+
+    ?aircraftIRI a cm:aircraft, owl:NamedIndividual;
+        cm:registration ?acRegistration ;
+        cm:model ?acModel ;
+        cm:age ?acAge ;
     .
 } WHERE {
-     OPTIONAL {
-        ?rd :AC ?AC .
-     }
      ?rd :bookingno_i ?bookingno_i .
      OPTIONAL {
         ?rd :Employee_No ?Employee_No .
@@ -261,7 +282,7 @@ CONSTRUCT {
      OPTIONAL {
         ?rd :Shift_Group ?Shift_Group .
      }
-     ?rd :Type ?Type .
+     ?rd :Type ?taskSuperTypeId .
      ?rd :WO_TC ?WO_TC .
      OPTIONAL {
         ?rd :TC_reference ?TC_reference .
@@ -273,10 +294,10 @@ CONSTRUCT {
         ?rd :Description ?Description .
      }
      OPTIONAL {
-        ?rd :Workpackage ?Workpackage .
+        ?rd :Workpackage ?workpackageId .
      }
      OPTIONAL {
-        ?rd :A_C_model ?A_C_model .
+        ?rd :A_C_model ?acModel .
      }
      OPTIONAL {
         ?rd :A_C_age ?A_C_age .
@@ -301,32 +322,103 @@ CONSTRUCT {
         ?rd :project ?project .
      }
      OPTIONAL {
-        ?rd :AC_registration ?AC_registration .
+        ?rd :AC_registration ?acRegistration .
      }
      OPTIONAL {
         ?rd :operator ?operator    .
      }
 
-    ?maintenanceGroup  dl:has-simple-abbreviation ?Scope .
-    ?maintenanceGroup dl:has-main-abbreviation ?mainMaintenanceGroupAbbr .
+     ?maintenanceGroupIRI dl:has-simple-abbreviation ?Scope .
+     ?maintenanceGroupIRI dl:has-main-abbreviation ?mainMaintenanceGroupAbbr .
 
-     BIND(dl:instance(cm:workpackage, ?Workpackage) as ?workpackageIRI)
-     BIND(dl:instance(cm:complex-execution, dl:id-2(?Workpackage, ?WO_TC)) as ?taskExecution)
+     BIND(dl:instance(cm:workpackage, ?workpackageId) as ?workpackageIRI)
+     BIND(dl:instance(cm:complex-execution, dl:id-2(?workpackageId, ?WO_TC)) as ?taskExecutionIRI)
 
-     BIND(dl:instance(cm:mechanic, ?Employee_No) as ?mechanic)
-     BIND(dl:instance(cm:work-session, ?bookingno_i) as ?workSession)
+     BIND(?A_C_age as ?acAge)
+     BIND(dl:instance(cm:aircraft, ?workpackageId) as ?aircraftIRI)
+
+     BIND(dl:id-2(?taskSuperTypeId, ?WO_TC) as ?taskTypeNormalizedId)
+     BIND(dl:instance(cm:task-type, ?taskTypeNormalizedId) as ?taskTypeIRI)
+
+     BIND(IF(?taskSuperTypeId =  \"TC\", \"task-card\",  ?x) as ?tc)
+     BIND(IF(?taskSuperTypeId =  \"S\", \"scheduled-work-order\",  ?x) as ?s)
+     BIND(IF(?taskSuperTypeId =  \"M\", \"maintenance-work-order\",   ?x) as ?m)
+     BIND(COALESCE(?tc, ?s, ?m) as ?taskSuperClassName)
+     BIND(IRI(concat(str(cm:), ?taskSuperClassName)) as ?taskSuperClassIRI)
+
+     BIND(dl:instance(cm:mechanic, ?Employee_No) as ?mechanicIRI)
+     BIND(dl:instance(cm:work-session, ?bookingno_i) as ?workSessionIRI)
 
      BIND(xsd:decimal(?Duration_Full) as ?durationInHours)
-     BIND(STRDT(?Start_Date, xsd:date) as ?startDate)
-     BIND(STRDT(?Start_Time, xsd:time) as ?startTime)
-     BIND(STRDT(?End_Date, xsd:date) as ?endDate)
-     BIND(STRDT(?End_Time, xsd:time) as ?endTime)
+# TODO fix xsd:date, xsd:time using spif:parseDate
+#     BIND(STRDT(?Start_Date, xsd:date) as ?startDate)
+#     BIND(STRDT(?Start_Time, xsd:time) as ?startTime)
+#     BIND(STRDT(?End_Date, xsd:date) as ?endDate)
+#     BIND(STRDT(?End_Time, xsd:time) as ?endTime)
+     BIND(?Start_Date as ?startDate)
+     BIND(?Start_Time as ?startTime)
+     BIND(?End_Date as ?endDate)
+     BIND(?End_Time as ?endTime)
 
-     BIND(dl:instance(cm:client, ?operator) as ?client)
+     BIND(dl:instance(cm:client, ?operator) as ?clientIRI)
 }""" ;
     ] ;
   sml:replace true ;
   rdfs:label "construct-csat-maintenance-data" ;
+.
+:construct-one-day-worksessions
+  a sml:ApplyConstruct ;
+  sm:next td:construct-day-bound-event-duration ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - make one day work-sessions of type day-boundary-event
+CONSTRUCT {
+     ?workSession a cm:day-bound-event .
+}
+WHERE {
+   ?workSession a cm:work-session ;
+         cm:start-date ?d1;
+         cm:end-date ?d2 ;
+         cm:end-time ?t2 ;
+    .
+    FILTER(?d1 = ?d2 || ?t2 = \"00:00:00\"^^xsd:time)
+}""" ;
+    ] ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 2 - split two day work-sessions into one day presences
+CONSTRUCT {
+     ?workSessionFirstDay a cm:day-bound-event ;
+         cm:start-date ?d1;
+         cm:start-time ?t1 ;
+         cm:end-date ?d2 ;
+         cm:end-time ?midnight ;
+         cm:is-day-bound-part-of ?workSession  ;
+     .
+     ?workSessionSecondDay a cm:day-bound-event ;
+         cm:start-date ?d2;
+         cm:start-time ?midnight ;
+         cm:end-date ?d2 ;
+         cm:end-time ?t2 ;
+         cm:is-day-bound-part-of ?workSession  ;
+     .
+}
+WHERE {
+   ?workSession a cm:work-session ;
+         cm:start-date ?d1;
+         cm:start-time ?t1 ;
+         cm:end-date ?d2 ;
+         cm:end-time ?t2 ;
+        cm:duration-in-hours ?durationInHours ;
+    .
+    FILTER(?d1 != ?d2)
+    BIND(iri(concat(str(?workSession),\"-1\")) as ?workSessionFirstDay)
+    BIND(iri(concat(str(?workSession),\"-2\")) as ?workSessionSecondDay)
+    BIND(\"00:00:00\"^^xsd:time as ?midnight)
+}""" ;
+    ] ;
+  sml:replace true ;
+  rdfs:label "construct-day-bound-worksessions" ;
 .
 :deploy-time-analysis-data
   a sm:Function ;

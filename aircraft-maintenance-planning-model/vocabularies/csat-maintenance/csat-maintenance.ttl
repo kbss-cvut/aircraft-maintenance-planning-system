@@ -44,6 +44,14 @@ cm:has-damage rdf:type owl:ObjectProperty ;
               rdfs:label "has damage" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-day-bound-part
+cm:has-day-bound-part rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/has-event-part> ;
+                      owl:inverseOf cm:is-day-bound-part-of ;
+                      rdfs:domain cm:event ;
+                      rdfs:range cm:day-bound-event .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-fiding
 cm:has-fiding rdf:type owl:ObjectProperty .
 
@@ -59,6 +67,12 @@ cm:has-follow-up-actions rdf:type owl:ObjectProperty ;
                          rdfs:label "has follow up actions" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-participant
+cm:has-participant rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/has-participant> ;
+                   rdfs:domain cm:event .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-scope
 cm:has-scope rdf:type owl:ObjectProperty ;
              rdfs:domain cm:maintenance-task ;
@@ -71,6 +85,12 @@ cm:has-work-order-step rdf:type owl:ObjectProperty ;
                        rdfs:domain cm:work-order ;
                        rdfs:range cm:work-order-step ;
                        rdfs:label "has work order step" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/is-day-bound-part-of
+cm:is-day-bound-part-of rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/is-event-part-of> ;
+                        rdfs:comment "Temporal part of relation that splits event to parts bound by days respecting a local time ." .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/is-part-of-maintenance-task
@@ -260,6 +280,13 @@ cm:number-of-planned-tasks rdf:type owl:DatatypeProperty ;
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/order
 cm:order rdf:type owl:DatatypeProperty ;
          rdfs:label "order" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/registration
+cm:registration rdf:type owl:DatatypeProperty ;
+                rdfs:domain cm:aircraft ;
+                rdfs:range xsd:string ;
+                rdfs:label "registration" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/start-date
@@ -522,6 +549,12 @@ cm:composite-workshop-support-group rdf:type owl:Class ;
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/damage
 cm:damage rdf:type owl:Class ;
           rdfs:subClassOf ms:Failure_Event .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/day-bound-event
+cm:day-bound-event rdf:type owl:Class ;
+                   rdfs:subClassOf cm:event ;
+                   rdfs:comment "Event that is bound to one day related to some local time. Thus it starting point refers to any timepoint within the day while ending point references any other \"later\" timepoint of the day. The latest point possible to reference is the next day of time 00:00." .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/detail-visual-inspection
@@ -933,6 +966,21 @@ cm:planner rdf:type owl:Class ;
            rdfs:label "Planner" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/presence
+cm:presence rdf:type owl:Class ;
+            rdfs:subClassOf cm:event ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/has-participant> ;
+                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass cm:mechanic
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty cm:has-day-bound-part ;
+                              owl:maxCardinality "2"^^xsd:nonNegativeInteger
+                            ] ;
+            rdfs:comment "An event representing time spent at workplace (typically recoded using timecard)." .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/pressure-test-dot
 cm:pressure-test-dot rdf:type owl:Class ;
                      rdfs:subClassOf cm:maintenance-group ;
@@ -1207,7 +1255,11 @@ cm:work-order-step rdf:type owl:Class ;
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/work-session
 cm:work-session rdf:type owl:Class ;
-                rdfs:subClassOf ms:work_session .
+                rdfs:subClassOf ms:work_session ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty cm:has-day-bound-part ;
+                                  owl:maxCardinality "2"^^xsd:nonNegativeInteger
+                                ] .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage

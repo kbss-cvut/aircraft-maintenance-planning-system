@@ -32,7 +32,6 @@ td:deploy-data_Return
   rdfs:label "deploy-wo-tc-ref-data" ;
 .
 td:rdfize-input-data
-  km-tabular:delimiter "	" ;
   kbss-module:has-output-graph-constraint [
       a sp:Ask ;
       sp:text """# 1.01 column AC has empty value
@@ -143,10 +142,11 @@ WHERE {
     }
 }""" ;
     ] ;
-  <http://onto.fel.cvut.cz/ontologies/lib/module/tabular/data-prefix> [
+  km-tabular:data-prefix [
       a sp:str ;
       sp:arg1 : ;
     ] ;
+  km-tabular:delimiter "	" ;
   sm:next :construct-csat-maintenance-data ;
 .
 td:transform-data_Return
@@ -166,49 +166,50 @@ td:transform-data_Return
       sp:text """# 1 - extract ontology
 CONSTRUCT {
     <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wo-tc-ref-34567> a owl:Ontology ;
-              owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
+        owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
+    .
         
-    # workpackage description
     ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
-              cm:id ?WP ;
-              cm:is-repair-of ?aircraftIRI .
+        cm:id ?workpackageId ;
+        cm:is-repair-of ?aircraftIRI ;
+    .
                     
-    # task execution description
-    ?task_executionIRI a cm:complex-execution, ?task_typeIRI, owl:NamedIndividual;
-           a ?task_super_classIRI; # TODO can be done by inference
-           cm:issue-time ?issue_date;
-            cm:end-time ?closing_date;
-            cm:has-work-order-step ?task_step_executionIRI;
-			cm:is-part-of-workpackage ?workpackageIRI .
-    
-    ?task_executionIRI cm:references-task ?referenced_task_executionIRI .
+    ?taskExecutionIRI a cm:complex-execution, ?taskTypeIRI, owl:NamedIndividual ;
+        a ?taskSuperClassIRI; # TODO can be done by inference
+        cm:issue-time ?issue_date;
+        cm:end-time ?closing_date;
+        cm:has-work-order-step ?taskStepExecutionIRI;
+        cm:is-part-of-workpackage ?workpackageIRI ;
+        cm:references-task ?referencedTaskExecutionIRI ;
+    .
 
-    # task execution type
-    ?task_typeIRI a owl:Class;
-            rdfs:subClassOf ?task_super_classIRI;
-            cm:references-ata-code ?ataIRI;
-			cm:id ?CSAT_WO_TC .
+    ?taskTypeIRI a owl:Class ;
+        cm:id ?CSAT_WO_TC ;
+        rdfs:subClassOf ?taskSuperClassIRI;
+        cm:references-ata-code ?ataIRI;
+    .
 
-    # task step execution
-    ?task_step_executionIRI a ?task_step_execution_typeIRI, owl:NamedIndividual;
-     		cm:step-index ?workstepTyped;
-            cm:work-order-text ?WO_text ;
-            cm:work-order-action-text ?WO_action .
+    ?taskStepExecutionIRI a ?taskStepExecutionTypeIRI, owl:NamedIndividual ;
+        cm:step-index ?workstepTyped ;
+        cm:work-order-text ?WO_text ;
+        cm:work-order-action-text ?WO_action ;
+    .
 	
-    ?task_step_execution_typeIRI a owl:Class;
-            rdfs:subClassOf cm:work-order-step.
+    ?taskStepExecutionTypeIRI a owl:Class ;
+        rdfs:subClassOf cm:work-order-step ;
+    .
 			
-	# aircraft description
-	?aircraftIRI a cm:aircraft, owl:NamedIndividual;
-			cm:model ?acModel ;
-	        cm:age ?acAge .
+    ?aircraftIRI a cm:aircraft, owl:NamedIndividual;
+        cm:registration ?acRegistration ;
+	cm:age ?acAge ;
+    .
 } WHERE {
 
-    ?rd :AC ?AC .
+    ?rd :AC ?acRegistration .
     ?rd :A_C_age ?A_C_age .
-    ?rd :WP ?WP .
+    ?rd :WP ?workpackageId .
     ?rd :CSAT_WO_TC ?CSAT_WO_TC .
-    ?rd :type ?type .
+    ?rd :type ?taskSuperTypeId .
     ?rd :state ?state .
     ?rd :ATA ?ATA .
     OPTIONAL {
@@ -227,28 +228,28 @@ CONSTRUCT {
         ?rd :WO_action ?WO_action .
     }
 
-    BIND(dl:instance(cm:workpackage, ?WP) as ?workpackageIRI)
-    BIND(dl:instance(cm:complex-execution, dl:id-2(?WP, ?CSAT_WO_TC)) as ?task_executionIRI)
-    BIND(?AC as ?acModel)
+    BIND(dl:instance(cm:workpackage, ?workpackageId) as ?workpackageIRI)
+    BIND(dl:instance(cm:complex-execution, dl:id-2(?workpackageId, ?CSAT_WO_TC)) as ?taskExecutionIRI)
+
     BIND(?A_C_age as ?acAge)
-    BIND(dl:instance(cm:aircraft, ?WP) as ?aircraftIRI)
+    BIND(dl:instance(cm:aircraft, ?workpackageId) as ?aircraftIRI)
 
-    BIND(dl:id-2(?type, ?CSAT_WO_TC) as ?taskTypeId)
-    BIND(dl:id-2(?taskTypeId, ?sequence) as ?taskStepExecutionTypeId)
+    BIND(dl:id-2(?taskSuperTypeId, ?CSAT_WO_TC) as ?taskTypeNormalizedId)
+    BIND(dl:id-2(?taskTypeNormalizedId, ?sequence) as ?taskStepExecutionTypeId)
 
-    BIND(dl:instance(cm:task-step-execution, dl:id-2(?WP, ?taskStepExecutionTypeId)) as ?task_step_executionIRI)
+    BIND(dl:instance(cm:task-step-execution, dl:id-2(?workpackageId, ?taskStepExecutionTypeId)) as ?taskStepExecutionIRI)
 
-    BIND(dl:instance(cm:task-type, ?taskTypeId) as ?task_typeIRI)
+    BIND(dl:instance(cm:task-type, ?taskTypeNormalizedId) as ?taskTypeIRI)
 
-    BIND(IF(?type =  \"TC\", \"task-card\",  ?x) as ?tc)
-    BIND(IF(?type =  \"S\", \"scheduled-work-order\",  ?x) as ?s)
-    BIND(IF(?type =  \"M\", \"maintenance-work-order\",   ?x) as ?m)
-    BIND(COALESCE(?tc, ?s, ?m) as ?task_super_class)
-    BIND(IRI(concat(str(cm:), ?task_super_class)) as ?task_super_classIRI)
-    BIND(dl:instance(cm:task-step-execution-type, ?taskStepExecutionTypeId) as ?task_step_execution_typeIRI)
+    BIND(IF(?taskSuperTypeId =  \"TC\", \"task-card\",  ?x) as ?tc)
+    BIND(IF(?taskSuperTypeId =  \"S\", \"scheduled-work-order\",  ?x) as ?s)
+    BIND(IF(?taskSuperTypeId =  \"M\", \"maintenance-work-order\",   ?x) as ?m)
+    BIND(COALESCE(?tc, ?s, ?m) as ?taskSuperClassName)
+    BIND(IRI(concat(str(cm:), ?taskSuperClassName)) as ?taskSuperClassIRI)
+    BIND(dl:instance(cm:task-step-execution-type, ?taskStepExecutionTypeId) as ?taskStepExecutionTypeIRI)
 
     BIND(STRDT(str(?sequence), xsd:integer) as ?workstepTyped)
-    BIND(dl:instance(cm:complex-execution, dl:id-2(?WP, ?TC_reference)) as ?referenced_task_executionIRI)
+    BIND(dl:instance(cm:complex-execution, dl:id-2(?workpackageId, ?TC_reference)) as ?referencedTaskExecutionIRI)
     BIND(IRI(concat(str(ata:), \"ata-\", ?ATA)) as ?ataIRI)
      
 }""" ;

@@ -53,8 +53,8 @@ CONSTRUCT {
     FILTER NOT EXISTS {
         ?rdNE :date ?date ;
             :end-time ?endTimeNE .
-        FILTER(?startTime < ?tNE)
-        FILTER(?tNE < ?endTime)
+        FILTER(?startTime < ?endTimeNE)
+        FILTER(?endTimeNE < ?endTime)
     }
 }""" ;
     ] ;
@@ -159,6 +159,55 @@ CONSTRUCT {
 .
 :construct-events
   a sml:ApplyConstruct ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1 - there is a presence event with two start-date-s
+ASK
+WHERE {
+    ?presence a cm:presence ;
+         cm:start-date ?d1;
+         cm:start-date ?d2;
+     .
+     FILTER(?d1 != ?d2)
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 2 - there is a presence event with two start-time-s
+ASK
+WHERE {
+    ?presence a cm:presence ;
+         cm:start-time ?t1;
+         cm:start-time ?t2;
+     .
+     FILTER(?t1 != ?t2)
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 3 - there is a presence event with two end-date-s
+ASK
+WHERE {
+    ?presence a cm:presence ;
+         cm:end-date ?d1;
+         cm:end-date ?d2;
+     .
+     FILTER(?d1 != ?d2)
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 4 - there is a presence event with two end-time-s
+ASK
+WHERE {
+    ?presence a cm:presence ;
+         cm:end-time ?t1;
+         cm:end-time ?t2;
+     .
+     FILTER(?t1 != ?t2)
+}""" ;
+    ] ;
+  sm:next :construct-one-day-presence ;
   sm:next :transform ;
   sml:constructQuery [
       a sp:Construct ;
@@ -180,9 +229,6 @@ CONSTRUCT {
         :date ?date2 ;
         :end-time ?t2 .
 
-    ?r1 csvw:describes ?rd1 .
-    ?r1 csvw:url ?r1Url .
-
     BIND(STRDT(?date1, xsd:date) as ?d1)
     BIND(STRDT(?date2, xsd:date) as ?d2)
     BIND(dl:instance(cm:presence, dl:id-3(?Employee_No, ?date1, str(?t1))) as ?presence)
@@ -191,6 +237,64 @@ CONSTRUCT {
     ] ;
   sml:replace true ;
   rdfs:label "construct-events" ;
+.
+:construct-one-day-presence
+  a sml:ApplyConstruct ;
+  sm:nodeX 873 ;
+  sm:nodeY 613 ;
+  sm:next td:construct-day-bound-event-duration ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - make one day presence of type day-boundary-event
+CONSTRUCT {
+     ?presence a cm:day-bound-event .
+}
+WHERE {
+   ?presence a cm:presence ;
+         cm:start-date ?d1;
+         cm:end-date ?d2 ;
+         cm:end-time ?t2 ;
+    .
+    FILTER(?d1 = ?d2 || ?t2 = \"00:00:00\"^^xsd:time)
+}""" ;
+    ] ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 2 - split two day presence into one day presences
+CONSTRUCT {
+    ?presenceFirstDay a cm:day-bound-event ;
+         cm:start-date ?d1;
+         cm:start-time ?t1 ;
+         cm:end-date ?d2 ;
+         cm:end-time ?midnight ;
+         cm:has-participant  ?mechanic ;
+         cm:is-day-bound-part-of ?presence  ;
+     .
+    ?presenceSecondDay a cm:day-bound-event ;
+         cm:start-date ?d2;
+         cm:start-time ?midnight ;
+         cm:end-date ?d2 ;
+         cm:end-time ?t2 ;
+         cm:has-participant  ?mechanic ;
+         cm:is-day-bound-part-of ?presence  ;
+     .
+}
+WHERE {
+     ?presence a cm:presence ;
+         cm:start-date ?d1;
+         cm:start-time ?t1 ;
+         cm:end-date ?d2 ;
+         cm:end-time ?t2 ;
+         cm:has-participant  ?mechanic .
+
+    FILTER(?d1 != ?d2)
+    BIND(iri(concat(str(?presence),\"-1\")) as ?presenceFirstDay)
+    BIND(iri(concat(str(?presence),\"-2\")) as ?presenceSecondDay)
+    BIND(\"00:00:00\"^^xsd:time as ?midnight)
+}""" ;
+    ] ;
+  sml:replace false ;
+  rdfs:label "construct-day-bound-presences" ;
 .
 :deploy-presence-data
   a sm:Function ;
@@ -206,10 +310,20 @@ CONSTRUCT {
 CONSTRUCT {
      ?rd a :can-form-two-days-event .
 } WHERE {
-   ?rd  :start-time ?time .
+    ?rd :Employee_No ?Employee_No ;
+        :date ?date ;
+        :start-time ?time .
+
     FILTER NOT EXISTS {
          ?rd :possibly-next ?rdNE .
      }
+
+     FILTER NOT EXISTS {
+         ?rd2NE :Employee_No ?Employee_No ;
+             :date ?date ;
+             :start-time ?time2 .
+         FILTER(?time2 > ?time)
+    }
 }""" ;
     ] ;
   sml:constructQuery [
@@ -218,10 +332,21 @@ CONSTRUCT {
 CONSTRUCT {
      ?rd a :can-form-two-days-event .
 } WHERE {
-   ?rd :end-time ?time .
+    ?rd :Employee_No ?Employee_No ;
+        :date ?date ;
+        :end-time ?time .
+
     FILTER NOT EXISTS {
          ?rdNE  :possibly-next ?rd .
      }
+
+    FILTER NOT EXISTS {
+         ?rd2NE :Employee_No ?Employee_No ;
+             :date ?date ;
+             :end-time ?time2 .
+         FILTER(?time2 < ?time)
+    }
+
 }""" ;
     ] ;
   sml:replace false ;
@@ -243,6 +368,10 @@ CONSTRUCT {
   a sm:Function ;
   sm:returnModule td:transform-data_Return ;
   rdfs:subClassOf sm:Functions ;
+.
+td:construct-day-bound-event-duration
+  sm:next :transform ;
+  sml:replace false ;
 .
 td:deploy-data_Return
   rdfs:label "deploy-presence-data" ;
