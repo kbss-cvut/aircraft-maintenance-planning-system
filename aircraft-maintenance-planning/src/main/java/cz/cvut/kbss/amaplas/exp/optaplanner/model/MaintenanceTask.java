@@ -1,24 +1,26 @@
 package cz.cvut.kbss.amaplas.exp.optaplanner.model;
 
-
-import org.optaplanner.core.api.domain.entity.PlanningEntity;
+import org.optaplanner.core.api.domain.lookup.PlanningId;
 import org.optaplanner.core.api.domain.variable.PlanningVariable;
 
-@PlanningEntity
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class MaintenanceTask {
 
-    @PlanningVariable(valueRangeProviderRefs = {"availableIndices"})
-    protected Integer taskOrderIndex;
-
+    @PlanningId
     protected String name;
-    protected int val;
+    protected int timeSlotsRequired;
+
 
     public MaintenanceTask() {
     }
 
-    public MaintenanceTask(String name, int val) {
+    public MaintenanceTask(String name, int minimumRequiredTimeSlots) {
         this.name = name;
-        this.val = val;
+        this.timeSlotsRequired = minimumRequiredTimeSlots;
     }
 
     public String getName() {
@@ -29,26 +31,37 @@ public class MaintenanceTask {
         this.name = name;
     }
 
-    public int getVal() {
-        return val;
+    public int getTimeSlotsRequired() {
+        return timeSlotsRequired;
     }
 
-    public void setVal(int val) {
-        this.val = val;
-    }
-
-    public Integer getTaskOrderIndex() {
-        return taskOrderIndex;
-    }
-
-    public void setTaskOrderIndex(Integer taskOrderIndex) {
-        this.taskOrderIndex = taskOrderIndex;
+    public void setTimeSlotsRequired(int timeSlotsRequired) {
+        this.timeSlotsRequired = timeSlotsRequired;
     }
 
     @Override
     public String toString() {
         return "MaintenanceTask{" +
-                "taskOrderIndex=" + taskOrderIndex +
+                "name='" + name + '\'' +
+                ", timeSlotsRequired=" + timeSlotsRequired +
                 '}';
+    }
+
+    public boolean isUnassigned(List<MaintenanceTaskAssignment> assignmentList){
+        return isNullOrEmpty(assignmentList);
+    }
+
+    public boolean isCorrectlyAssigned(List<MaintenanceTaskAssignment> assignmentList){
+        int length = assignmentList != null ? assignmentList.size() : 0;
+        return length == this.getTimeSlotsRequired();
+    }
+
+    public boolean isCorrectlyAssigned(int assignments){
+        return assignments == this.getTimeSlotsRequired();
+    }
+
+
+    public static boolean isNullOrEmpty(Collection<?> in){
+        return in == null || in.isEmpty();
     }
 }

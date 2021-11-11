@@ -43,6 +43,8 @@ public class JGraphTUtils {
                     String name = f.getName();
                     if(!ret.containsKey(name)) {
                         Object val = f.get(t);
+                        if(val == null)
+                            continue;
                         AttributeType type = getType(f.getType());
                         if(!type.equals(AttributeType.UNKNOWN)) {
                             DefaultAttribute a = new DefaultAttribute(val, type);

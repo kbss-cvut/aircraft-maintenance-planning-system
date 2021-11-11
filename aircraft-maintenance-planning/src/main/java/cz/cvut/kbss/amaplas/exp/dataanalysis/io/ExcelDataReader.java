@@ -45,7 +45,7 @@ public class ExcelDataReader {
         }
 
         protected boolean isDataRow(Row row){
-            return row.getCell(0).getCellTypeEnum() == CellType.NUMERIC;
+            return row.getCell(0).getCellType() == CellType.NUMERIC;
 //        String id = getNumericCellValue();
 //        try{
 //            Long.parseLong(id);

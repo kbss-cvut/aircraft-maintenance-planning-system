@@ -1,16 +1,14 @@
 package cz.cvut.kbss.amaplas.exp.optaplanner2;
 
-import cz.cvut.kbss.amaplas.exp.optaplanner.model.MaintenanceJob;
-import cz.cvut.kbss.amaplas.exp.optaplanner.model.MaintenanceTask;
+import cz.cvut.kbss.amaplas.exp.optaplanner_old.model.MaintenanceJob;
+import cz.cvut.kbss.amaplas.exp.optaplanner_old.model.MaintenanceTask;
 import org.optaplanner.core.api.solver.Solver;
 import org.optaplanner.core.api.solver.SolverFactory;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * This is experiment that demonstrates the use of OptaPlanner https://www.optaplanner.org/.

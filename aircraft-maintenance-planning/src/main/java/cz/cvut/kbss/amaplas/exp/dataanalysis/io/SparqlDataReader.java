@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -23,9 +24,12 @@ public class SparqlDataReader {
     private static final Logger LOG = LoggerFactory.getLogger(SparqlDataReader.class);
 
     public static final String DA_TASK_SO_WITH_WP_SCOPE = "/queries/analysis/task-start-order-with-wp-and-scope.sparql";
+    public static final String WP = "/queries/analysis/wp.sparql";
     public static final String TASK_TYPES = "/queries/task-types.sparql";
     public static final String ALL_TASKS = "/queries/analysis/all-tasks-strat-order.sparql";
-    public static final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+    public static final String dateFormatPattern1 = "yyyy-MM-dd'T'HH:mm:ssZ";
+    public static final String dateFormatPattern2 = "dd.MM.yyyy'T'HH:mm";
+    public static final SimpleDateFormat df = new SimpleDateFormat(dateFormatPattern1);
     public static final SimpleDateFormat day = new SimpleDateFormat("yyyy-MM-dd");
 
     public List<TaskType> readTaskTypes(String endpoint){
@@ -132,7 +136,7 @@ public class SparqlDataReader {
             }
         }
 
-        return null;
+        return results;
     }
 
 //    public static TaskType convertToTaskType(QuerySolution qs){
@@ -150,5 +154,13 @@ public class SparqlDataReader {
 
     public static interface Converter<T>{
         T convert(QuerySolution qs) throws Exception;
+    }
+
+    public static void main(String[] args) throws ParseException {
+        String date = "08.02.2017";
+        String time = "06:47";
+//        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy'T'HH:mm");
+        Date d = df.parse(date + "T" + time );
+        System.out.println(d.toString());
     }
 }

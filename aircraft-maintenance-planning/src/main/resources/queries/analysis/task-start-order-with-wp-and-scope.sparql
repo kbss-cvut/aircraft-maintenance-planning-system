@@ -1,40 +1,52 @@
-PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX  mp:   <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
 PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX  ds:   <http://onto.fel.cvut.cz/dop2020-csat/example-schema/>
-PREFIX d: <http://onto.fel.cvut.cz/dop2020-csat/example-instance-data/>
 PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
 PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
 
 
 #SELECT ?wp ?acmodel ?type (sample(?ttLabel) as ?typeLabel) ?scope ?taskcat (spif:dateFormat(?st,"yyyy-MM-dd") as ?date) (str(?st) as ?start) (str(?et) as ?end) ( str(ofn:asMillis(?et - ?st)) as ?dur)
-SELECT ?wp ?acmodel ?type (?ttLabel as ?typeLabel) ?scope ?taskcat (spif:dateFormat(?st,"yyyy-MM-dd") as ?date) (str(?st) as ?start) (str(?et) as ?end) (str(ofn:asMillis(?et - ?st)) as ?dur)
+SELECT ?wp ?acmodel ?type (?ttLabel as ?typeLabel) ?scope ?scopeLabel ?taskcat (?sDate as ?date) (str(?st) as ?start) (str(?et) as ?end) (str(ofn:asMillis(?et - ?st)) as ?dur)
 WHERE
 {
-    ?tt mp:part_of_workpackage ?wpuri.
-    ?wpuri mp:has_id ?wp;
-        mp:repair_of ?ac.
-    ?ac mp:has_model ?acmodel.
+    ?tt cm:is-part-of-workpackage ?wpuri.
+    ?wpuri cm:id ?wp;
+        cm:is-repair-of ?ac.
+    ?ac cm:model ?acmodel.
 
-    ?tt a ?tType, mp:task_card;
-        mp:has_task_execution_part ?t.
+    ?t cm:is-part-of-maintenance-task ?tt;
+        cm:has-scope ?scopeGroup.
+    ?scopeGroup cm:has-abbreviation ?scope.
+    ?tt a ?tType.
+    BIND(cm:task-card as ?cls)
+    ?tType a owl:Class;
+        cm:id ?type;
+        rdfs:subClassOf ?cls.
+#    FILTER(?cls IN (cm:task-card, cm:scheduled-work-order, cm:maintenance-work-orde))
+
+
     OPTIONAL{
-        ?tType rdfs:label ?ttLabel.
+        ?t cm:task-description ?ttLabel.
     }
-    ?w mp:works_on ?t;
-        mp:member_of_group ?scopeGroup.
+    ?w cm:performs ?t.
 #    ?scopeGroup rdfs:label ?scope.
-    ?t mp:start_time ?st;
-        mp:end_time ?et.
-    ?tType rdfs:subClassOf ?cls.
+    ?t cm:start-date ?sDate;
+       cm:start-time ?sTime;
+       cm:end-date ?eDate;
+       cm:end-time ?eTime;
+    BIND(spif:parseDate(CONCAT(?sDate,"T", ?sTime),"dd.MM.yyyy'T'hh:mm") as ?st)
+    BIND(spif:parseDate(CONCAT(?eDate,"T", ?eTime),"dd.MM.yyyy'T'hh:mm") as ?et)
+
 
     # select specific aircraft
 #    FITER(?acmodel in ("738" "73G" "73H" "73J" "73W" "B735"))
 #    FILTER(!contains(?wp, "SICHR") ) # this workpackages do not contain TCs
 #    FILTER(!contains(?wp, "/L-") )
-    BIND(replace(str(?tType), "^.*/([^/]+)$", "$1") as ?type)
-    BIND(replace(str(?scopeGroup), "^.*/([^/]+)$", "$1") as ?scope)
+#    BIND(replace(str(?tType), "^.*/([^/]+)$", "$1") as ?type)
+    BIND(replace(str(?scopeGroup), "^.*/([^/]+)$", "$1") as ?scopeLabel)
     BIND(replace(str(?cls), "^.*/([^/]+)$", "$1") as ?taskcat)
 }
 #GROUP BY ?wp ?acmodel ?type ?scope ?taskcat ?st ?et - group by takes takes too long to calculate
-#ORDER BY ?st
+#ORDER BY ?start

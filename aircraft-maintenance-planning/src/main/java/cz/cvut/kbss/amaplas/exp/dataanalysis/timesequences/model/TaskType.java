@@ -1,14 +1,23 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TaskType extends EventType {
+
+    @JsonIgnore
     public String id;
+    @JsonProperty("id")
     public String type;
     public String label;
     public String scope;
+    @JsonProperty("task-category")
     public String taskcat;
+    @JsonIgnore
     public String viewLabel;
 
     public TaskType() {
@@ -60,6 +69,8 @@ public class TaskType extends EventType {
         return type;
     }
 
+    public static Map<String, TaskType> taskTypeMap;
+
     public static Map<String, TaskType> normalizeTaskTypes(List<TaskType> taskTypes){
         // normalize type codes
         taskTypes.forEach(t ->
@@ -74,8 +85,10 @@ public class TaskType extends EventType {
                 .collect(Collectors.groupingBy(t -> t.type)).entrySet().stream()
                 .forEach(e -> taskTypeMap.put(
                         e.getKey(),
-                        e.getValue().stream().sorted(Comparator.comparing(t -> t.label.length())).findFirst().get()
+                        // FIX bug - selecting longest task type label
+                        e.getValue().stream().sorted(Comparator.comparing((TaskType t) -> t.label.length()).reversed()).findFirst().get()
                 ));
+        TaskType.taskTypeMap = taskTypeMap;
         return  taskTypeMap;
     }
 }

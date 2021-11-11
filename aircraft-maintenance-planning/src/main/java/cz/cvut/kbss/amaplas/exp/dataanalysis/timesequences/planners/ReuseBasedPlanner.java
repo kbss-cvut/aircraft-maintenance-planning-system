@@ -1,15 +1,18 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.planners;
 
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.ExtractData;
+import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.ToGraphml;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.PatternType;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.Result;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.SequencePattern;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskType;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.seqalg.FilterTransitiveEdgesAlg;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.traverse.BreadthFirstIterator;
 
 import java.util.*;
-import java.util.function.BiFunction;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ReuseBasedPlanner {
@@ -17,17 +20,64 @@ public class ReuseBasedPlanner {
     public static final ReuseBasedPlanner planner = new ReuseBasedPlanner();
 
 
+    public List<TaskType> flattenPartialOrderBreadthFirst(List<SequencePattern> partialOrder){
+        DefaultDirectedGraph<TaskType,String> g = toGraph(partialOrder);
+        Set<TaskType> tts = g.vertexSet();
 
-    public List<SequencePattern> planDisconnected(Map<String, List<Result>> history, Set<TaskType> taskTypes, SimilarityMeasure similarityMeasure) {
-        return plan(history, taskTypes, DISCONNECTED_ORDER, similarityMeasure);
+        Iterator<Map.Entry<Integer, List<TaskType>>> taskTypesByDegree = tts.stream().collect(Collectors.groupingBy(g::inDegreeOf))
+                .entrySet().stream()
+                .sorted(Comparator.comparing(e -> e.getKey()))
+                .iterator();
+
+
+        Set<TaskType> visitedTaskTypes = new HashSet<>();
+        List<TaskType> result = new ArrayList();
+        while(tts.size() > visitedTaskTypes.size() && taskTypesByDegree.hasNext()){
+            List<TaskType> startingNodes = taskTypesByDegree.next().getValue();
+            if(startingNodes == null)
+                continue;
+            BreadthFirstIterator<TaskType, String> iter = new BreadthFirstIterator<>(g, startingNodes);
+            while(iter.hasNext()){
+                TaskType tt = iter.next();
+                if(visitedTaskTypes.add(tt))
+                    result.add(tt);
+            }
+        }
+
+        return result;
     }
-    public List<SequencePattern> planConnected(Map<String, List<Result>> history, Set<TaskType> taskTypes, SimilarityMeasure similarityMeasure){
-        return plan(history, taskTypes, CONNECTED_ORDER, similarityMeasure);
+
+    // TODO - consider method ToGraphml.toGraph
+    public static DefaultDirectedGraph<TaskType, String> toGraph(Collection<SequencePattern> patterns){
+        DefaultDirectedGraph<TaskType, String> g = new DefaultDirectedGraph<>(null, () -> new String(), true );
+        DefaultEdge de;
+
+        // add nodes and edges
+        int edgeId = 0;
+        for (SequencePattern pattern : patterns){
+            TaskType s = pattern.pattern.get(0);
+            TaskType t = pattern.pattern.get(1);
+            g.addVertex(s);
+            g.addVertex(t);
+            String edge = "" + edgeId++;
+            g.addEdge(s, t, edge);
+            g.setEdgeWeight(edge, pattern.instances.size());
+        }
+        return g;
+    }
+
+    public List<SequencePattern> planDisconnected(Map<String, List<Result>> history, Set<TaskType> taskTypes, SimilarityMeasure similarityMeasure, Predicate<String> ignoreHistoryEntry) {
+        return plan(history, taskTypes, DISCONNECTED_ORDER, similarityMeasure, ignoreHistoryEntry);
+    }
+    public List<SequencePattern> planConnected(Map<String, List<Result>> history, Set<TaskType> taskTypes, SimilarityMeasure similarityMeasure, Predicate<String> ignoreHistoryEntry){
+        return plan(history, taskTypes, CONNECTED_ORDER, similarityMeasure, ignoreHistoryEntry);
     }
 
     public List<SequencePattern> plan(Map<String, List<Result>> history, Set<TaskType> taskTypes,
                                                   UnacceptableOrder isUnacceptableOrder,
-                                                  SimilarityMeasure similarityMeasure){
+                                                  SimilarityMeasure similarityMeasure,
+                                                  Predicate<String> ignoreHistoryEntry
+                                      ){
         // order history wps according to similarity with taskTypes
         List<Pair<String, Set<TaskType>>> similarPlans = history.entrySet().stream().map(e -> Pair.of(
                 e.getKey(),
@@ -48,8 +98,15 @@ public class ReuseBasedPlanner {
         Set<TaskType> tasks = new HashSet<>();
 
         while(!remainder.isEmpty() && k < similarPlans.size()){ // revise condition
+            Pair<String,Set<TaskType>> similarPlan = similarPlans.get(k);
+            int similarPlanIndex = k;
+            k ++;
 
-            String key = similarPlans.get(k).getKey();
+            if(ignoreHistoryEntry != null && ignoreHistoryEntry.test(similarPlan.getKey()))
+                continue;
+
+            String key = similarPlan.getKey();
+
 //            Set<TaskType> sim = similarPlans.get(k).getValue(); // Error - tasks type set of the similar plan in history, may contain task types which are not part of the set of tasks to be planned
 
 //            Set<TaskType> sim = new HashSet<>(similarPlans.get(k).getValue());
@@ -77,7 +134,6 @@ public class ReuseBasedPlanner {
                     continue;
                 List<TaskType> pat = Arrays.asList(t1.taskType, t2.taskType);
                 List<Result> instances = Arrays.asList(t1, t2);
-
                 boolean planned = isUnacceptableOrder.isOrderAcceptable(instances, plannedByOtherWP, plan);
                 if(planned)
                     continue;
@@ -101,7 +157,6 @@ public class ReuseBasedPlanner {
             // prepare to plan for the next wp
             plannedByOtherWP.addAll(plannedByThisWP);
             plannedByThisWP = new HashSet<>();
-            k ++;
         }
 
         // combine tasks which start at the same time

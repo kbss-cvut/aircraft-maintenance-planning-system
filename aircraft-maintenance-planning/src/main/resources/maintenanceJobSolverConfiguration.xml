@@ -2,7 +2,7 @@
     <scanAnnotatedClasses/>
 
     <scoreDirectorFactory>
-        <easyScoreCalculatorClass>cz.cvut.kbss.amaplas.exp.optaplanner.model.MyHardSoftScoreCalculator</easyScoreCalculatorClass>
+        <easyScoreCalculatorClass>cz.cvut.kbss.amaplas.exp.optaplanner_old.model.MyHardSoftScoreCalculator</easyScoreCalculatorClass>
     </scoreDirectorFactory>
 
     <termination>
