@@ -51,6 +51,7 @@ CONSTRUCT {
         :end-time ?endTime .
 
     FILTER NOT EXISTS {
+        ?rd1 :possibly-next ?rdNE .
         ?rdNE :date ?date ;
             :end-time ?endTimeNE .
         FILTER(?startTime < ?endTimeNE)
@@ -240,9 +241,9 @@ CONSTRUCT {
 .
 :construct-one-day-presence
   a sml:ApplyConstruct ;
+  sm:next td:construct-day-bound-event-duration ;
   sm:nodeX 873 ;
   sm:nodeY 613 ;
-  sm:next td:construct-day-bound-event-duration ;
   sml:constructQuery [
       a sp:Construct ;
       sp:text """# 1 - make one day presence of type day-boundary-event
