@@ -1,4 +1,4 @@
-package cz.cvut.kbss.amaplas.exp.optaplanner.model;
+package cz.cvut.kbss.amaplas.exp.optaplanner_old.model;
 
 import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
 import org.optaplanner.core.api.domain.solution.PlanningScore;

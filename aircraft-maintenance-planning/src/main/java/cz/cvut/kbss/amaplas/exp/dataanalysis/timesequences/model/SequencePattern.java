@@ -1,8 +1,6 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 
 
-import org.apache.jena.rdf.model.Seq;
-
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;

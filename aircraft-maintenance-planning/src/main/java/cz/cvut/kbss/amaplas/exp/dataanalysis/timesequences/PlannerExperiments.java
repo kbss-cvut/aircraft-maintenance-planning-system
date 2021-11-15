@@ -43,7 +43,7 @@ public class PlannerExperiments extends ExtractData{
 //
 //        List<Result> results = SparqlDataReader.convertToTimeLog(rs);
         List<Result> results = new CSVDataReader().readData(inputDataFile).stream()
-                .filter(r -> r.scope != null && Scope.isPriority(r.scope) && "TC".equals(r.taskType.taskcat)) // filter loaded data
+                  .filter(r -> r.scope != null && Scope.isPriority(r.scope) && "TC".equals(r.taskType.taskcat)) // filter loaded data
                 .collect(Collectors.toList());
         Set<String> scopes = results.stream().map(r -> r.scope)
                 .filter(s -> s!= null).collect(Collectors.toSet());
@@ -61,8 +61,11 @@ public class PlannerExperiments extends ExtractData{
 //        writeMap(taskScopeMap, outputDir + "taskScopeMap.csv", "task type", "scope");
 
         // order
+        // MVD
         Function<Result, Long> orderBy = r -> r.start.getTime();
+        // MVD
         Comparator<Result> order = Comparator.comparing(orderBy);
+        // PARAM
         long minDistance = ((long) 2) * 24L * 60 * 60 * 1000; // milliseconds
 
         Map<String, List<Result>> plans = results.stream()
@@ -97,6 +100,7 @@ public class PlannerExperiments extends ExtractData{
 //        planExperiment(taskStartPlans, testPlan, testWP, taskTypes, outputDir, "");
 
         // do the same for each scope in history
+        // MVD
         Function<Result, Object> taskTypeScopeKey = r -> r.scope.equals(r.taskType.scope) ? r.taskType.type + r.scope : null;
         Map<String, List<Result>> filteredPlans = new HashMap<>();
         plans.entrySet().forEach(e ->
@@ -213,8 +217,8 @@ public class PlannerExperiments extends ExtractData{
 //        List<SequencePattern> naivePlan = NaivePlanner.planner.plan(plans, taskTypes);
 //        writeAsGraphml(naivePlan, outputDir + "plan-naive-" + testPlan.getKey().replaceAll("[\\/]", "_") + ".graphml");
 
-        List<SequencePattern> reusePlan = ReuseBasedPlanner.planner.planConnected(plans, taskTypes, ExtractData::calculateSetSimilarity);
-        List<SequencePattern> reusePlanD = ReuseBasedPlanner.planner.planDisconnected(plans, taskTypes, ExtractData::calculateSetSimilarity);
+        List<SequencePattern> reusePlan = ReuseBasedPlanner.planner.planConnected(plans, taskTypes, ExtractData::calculateSetSimilarity, null);
+        List<SequencePattern> reusePlanD = ReuseBasedPlanner.planner.planDisconnected(plans, taskTypes, ExtractData::calculateSetSimilarity, null);
 
         if(reusePlan.isEmpty() && reusePlanD.isEmpty()){
             planReports.println(String.format("Could not construct plan for plan \"%s\"", prefix));
@@ -290,6 +294,7 @@ public class PlannerExperiments extends ExtractData{
 
     }
 
+    // MVD
     /**
      * Create a task plan ordered by the order comparator taking the minimum element(s) of each groupId
      * @param plans
@@ -306,6 +311,7 @@ public class PlannerExperiments extends ExtractData{
         return planHistory;
     }
 
+    // MVD
     public List<Result> historyPlan(Collection<Result> plan, Function<Result, Long> orderBy, Function<Result, Object> groupId){
         Comparator<Result> order = Comparator.comparing(orderBy);
         return plan.stream()
@@ -511,9 +517,11 @@ public class PlannerExperiments extends ExtractData{
                 "#logs", "starting time%", "total duration",
                 "minDur", "maxDur", "avgDur"}
         );
-
+        // MVD - idWP_TaskTypeCode_ScopeCode
         Function<Result, String> taskScopeWp = r -> r.wp + "," + r.taskType.type + "," + r.scope;
+        // MVD - durationSec
         ToLongFunction<Result> durationF = r -> (r.end.getTime() - r.start.getTime())/1000;
+        // MVD - startTimeSec
         ToLongFunction<Result> startTime = r -> r.start.getTime()/1000;
 
         Map<String, List<Result>> wpTaskScopeGroups = results.stream().collect(Collectors.groupingBy(taskScopeWp));
@@ -583,13 +591,13 @@ public class PlannerExperiments extends ExtractData{
 
     public static void main(String[] args) {
         String root = "c:\\Users\\kostobog\\Documents\\skola\\projects\\2019-CSAT-doprava-2020\\code\\aircraft-maintenance-planning-system\\aircraft-maintenance-planning-model\\example-instance-data\\seqpats-scope\\";
-        String inputDir = "c:\\Users\\kostobog\\Documents\\skola\\projects\\2019-CSAT-doprava-2020\\input\\data_2020-02\\2017-2019.csv";
+        String historyData = "c:\\Users\\kostobog\\Documents\\skola\\projects\\2019-CSAT-doprava-2020\\input\\data_2020-02\\2017-2019.csv";
         String outputFolder = root + "d01-17-20-planning-001-f\\";
         File outDir = new File(outputFolder);
         if(!outDir.exists()){
             LOG.info("creating output folder \"{}\"", outDir.getAbsolutePath() );
             outDir.mkdirs();
         }
-        new PlannerExperiments().buildPlan(inputDir, outputFolder);
+        new PlannerExperiments().buildPlan(historyData, outputFolder);
     }
 }

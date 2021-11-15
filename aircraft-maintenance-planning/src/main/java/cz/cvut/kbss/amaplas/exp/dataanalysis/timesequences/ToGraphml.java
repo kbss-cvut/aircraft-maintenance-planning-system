@@ -1,22 +1,16 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences;
 
 import cz.cvut.kbss.amaplas.exp.common.JGraphTUtils;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.Result;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.SequencePattern;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskType;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.nio.Attribute;
-import org.jgrapht.nio.AttributeType;
-import org.jgrapht.nio.DefaultAttribute;
 import org.jgrapht.nio.graphml.GraphMLExporter;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 

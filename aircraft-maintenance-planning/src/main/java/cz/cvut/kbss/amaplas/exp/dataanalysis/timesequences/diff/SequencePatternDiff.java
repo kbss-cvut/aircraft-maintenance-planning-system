@@ -5,7 +5,6 @@ import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.SequencePattern
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskType;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class SequencePatternDiff {
 

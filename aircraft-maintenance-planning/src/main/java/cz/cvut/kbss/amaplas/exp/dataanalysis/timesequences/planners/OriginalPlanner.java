@@ -39,6 +39,10 @@ public class OriginalPlanner {
         return plan;
     }
 
+    public void validatePlan(){
+
+    }
+
     /**
      * It does not order the task types which start at the same time
      * @param wp

@@ -1,14 +1,14 @@
-package cz.cvut.kbss.amaplas.exp.optaplanner.model;
+package cz.cvut.kbss.amaplas.exp.optaplanner_old.model;
 
 import org.optaplanner.core.api.score.Score;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
-import org.optaplanner.core.impl.score.director.easy.EasyScoreCalculator;
+//import org.optaplanner.core.impl.score.director.easy.EasyScoreCalculator;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class MyHardSoftScoreCalculator implements EasyScoreCalculator<MaintenanceJob> {
+public class MyHardSoftScoreCalculator{ //} implements EasyScoreCalculator<MaintenanceJob, Score> {
 
     public Score calculateScore(MaintenanceJob maintenanceJob) {
         int hardScore = 0;

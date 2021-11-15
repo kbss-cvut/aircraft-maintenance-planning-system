@@ -1,6 +1,6 @@
 package cz.cvut.kbss.amaplas.exp.common;
 
-import com.sun.org.apache.xml.internal.utils.PrefixResolverDefault;
+import org.apache.xml.utils.PrefixResolverDefault;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
