@@ -24,9 +24,12 @@ public class SparqlDataReader {
     private static final Logger LOG = LoggerFactory.getLogger(SparqlDataReader.class);
 
     public static final String DA_TASK_SO_WITH_WP_SCOPE = "/queries/analysis/task-start-order-with-wp-and-scope.sparql";
+    public static final String DA_TASK_SO_WITH_WP_SCOPE_OLD = "/queries/analysis/task-start-order-with-wp-and-scope-old.sparql";
     public static final String WP = "/queries/analysis/wp.sparql";
     public static final String TASK_TYPES = "/queries/task-types.sparql";
     public static final String ALL_TASKS = "/queries/analysis/all-tasks-strat-order.sparql";
+    public static final String TASK_CARDS_FROM_HISTORY = "/queries/analysis/task-cards-from-history.sparql";
+    public static final String TASK_TYPES_DEFINITIONS = "/queries/analysis/task-types-definitions.sparql";
     public static final String dateFormatPattern1 = "yyyy-MM-dd'T'HH:mm:ssZ";
     public static final String dateFormatPattern2 = "dd.MM.yyyy'T'HH:mm";
     public static final SimpleDateFormat df = new SimpleDateFormat(dateFormatPattern1);
@@ -100,13 +103,14 @@ public class SparqlDataReader {
         TaskType taskType = new TaskType(
                 qs.get("type").toString(),
                 qs.get("typeLabel").toString(),
-                qs.get("taskcat").toString()
+                qs.get("taskcat").toString(),
+                qs.get("acmodel").toString()
         );
 
         Result t = new Result();
 
         t.wp = qs.get("wp").toString();
-        t.acmodel = qs.get("acmodel").toString();
+        t.acmodel = taskType.acmodel;
         t.acType = AircraftType.getTypeLabelForModel(t.acmodel);
         t.taskType = taskType;
 

@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  planning:
+#    image: docker.pkg.github.com/kbss-cvut/aircraft-maintenance-planning/aircraft-maintenance-planning:master
+    image: aircraft-maintenance-planning
+    container_name: aircraft-maintenance-planning
+    restart: always
+    depends_on:
+      - rdf4j
+    environment:
+      REPOSITORY_DATA_URL: ${REPOSITORY_DATA_URL:-http://rdf4j:8080/rdf4j-server/repositories/csat-planning-data}
+    ports:
+      - "8080:8080"
+
+  rdf4j:
+    image: eclipse/rdf4j-workbench:amd64-3.5.0
+    container_name: csat-planning-rdf4j
+    environment:
+      JAVA_OPTS: -Xms512m -Xmx768m
+    volumes:
+      - db-data:/var/rdf4j
+    ports:
+      - "9080:8080"
+
+
+volumes:
+  db-data:

@@ -32,7 +32,7 @@ WHERE
     }
     ?w cm:performs ?t.
 #    ?scopeGroup rdfs:label ?scope.
-    ?t cm:start-date ?sDate;
+    ?   t cm:start-date ?sDate;
        cm:start-time ?sTime;
        cm:end-date ?eDate;
        cm:end-time ?eTime;
