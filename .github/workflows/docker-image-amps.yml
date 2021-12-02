@@ -18,7 +18,7 @@ jobs:
 
       - name: Build image
         run: |
-          cd aircraft-maintenance-planning-system
+          cd aircraft-maintenance-planning
           docker build . --file ./deploy/Dockerfile --tag $IMAGE_NAME
 
       - name: Log into registry
