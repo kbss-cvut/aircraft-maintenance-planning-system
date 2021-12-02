@@ -1,9 +1,10 @@
 #server:
 #  port: 5000
+prop: asdf
 repository:
   data:
-    url: ${REPOSITORY_DATA_URL:http://graphdb.onto.fel.cvut.cz/repositories/csat-d20-data}
-#    url: ${REPOSITORY_DATA_URL:http://localhost:7200/repositories/csat-data-03}
+#    url: ${REPOSITORY_DATA_URL:http://graphdb.onto.fel.cvut.cz/repositories/csat-d20-data}
+    url: ${REPOSITORY_DATA_URL:http://laptop-40kv431f:7200/repositories/csat-data-03}
 #    username: ${REPOSITORY_DATA_USERNAME:}
 #    password: ${REPOSITORY_DATA_PASSWORD:}
 #  update:

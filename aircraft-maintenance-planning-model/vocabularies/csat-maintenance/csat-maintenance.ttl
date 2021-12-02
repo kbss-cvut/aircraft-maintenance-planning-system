@@ -145,13 +145,6 @@ cm:requires rdf:type owl:ObjectProperty ;
             rdfs:label "requires" .
 
 
-###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-type
-cm:task-type rdf:type owl:ObjectProperty ;
-             rdfs:domain cm:maintenance-task ;
-             rdfs:range cm:maintenance-task ;
-             rdfs:label "task type" .
-
-
 #################################################################
 #    Data properties
 #################################################################
@@ -819,13 +812,10 @@ cm:maintenance-support-group rdf:type owl:Class ;
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance-task
 cm:maintenance-task rdf:type owl:Class ;
                     rdfs:subClassOf cm:event ,
+                                    ms:Maintenance_task ,
                                     [ rdf:type owl:Restriction ;
                                       owl:onProperty cm:has-scope ;
                                       owl:someValuesFrom cm:maintenance-group
-                                    ] ,
-                                    [ rdf:type owl:Restriction ;
-                                      owl:onProperty cm:task-type ;
-                                      owl:someValuesFrom cm:maintenance-task
                                     ] ,
                                     [ rdf:type owl:Restriction ;
                                       owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-performed-by> ;
@@ -1335,11 +1325,6 @@ cm:zone rdf:type owl:Class ;
                                                                             rdfs:label "Discard/one Time Used" .
 
 
-###  http://onto.fel.cvut.cz/ontologies/ufo/complex-event
-<http://onto.fel.cvut.cz/ontologies/ufo/complex-event> rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                         owl:onProperty cm:task-type-identifier ;
-                                                                         owl:someValuesFrom xsd:integer
-                                                                       ] .
 
 
 #################################################################

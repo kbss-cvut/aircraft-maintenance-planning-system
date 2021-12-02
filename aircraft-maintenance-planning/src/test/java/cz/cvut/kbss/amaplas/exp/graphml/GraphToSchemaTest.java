@@ -8,8 +8,10 @@ import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.RDF;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class GraphToSchemaTest {
 
     public static final String NS = "http://example.com/";

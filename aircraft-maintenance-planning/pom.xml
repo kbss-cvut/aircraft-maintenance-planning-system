@@ -17,8 +17,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <graphdb.version>9.3.2</graphdb.version>
     </properties>
 
@@ -268,20 +268,25 @@
 
     <build>
         <plugins>
+            <!-- Spring Boot -->
             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.cmd.SequenceAnalysis</mainClass>
-                        </manifest>
-
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+<!--            <plugin>-->
+<!--                <artifactId>maven-assembly-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <archive>-->
+<!--                        <manifest>-->
+<!--                            <mainClass>cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.cmd.SequenceAnalysis</mainClass>-->
+<!--                        </manifest>-->
+
+<!--                    </archive>-->
+<!--                    <descriptorRefs>-->
+<!--                        <descriptorRef>jar-with-dependencies</descriptorRef>-->
+<!--                    </descriptorRefs>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
 
             <!-- generate scripts -->
             <plugin>
@@ -294,7 +299,7 @@
                         <phase>prepare-package</phase>
                         <goals><goal>build-classpath</goal></goals>
                         <configuration>
-                            <outputFile>${build.directory}/classpath.txt</outputFile>
+                            <outputFile>${project.build.directory}/classpath.txt</outputFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -341,6 +346,13 @@
 <!--            <id>ontotext-public</id>-->
 <!--            <url>http://maven.ontotext.com/repository/owlim-releases</url>-->
 <!--        </repository>-->
+
+        <repository>
+            <id>kbss</id>
+            <name>KBSS Maven Repository</name>
+            <!--            <url>ftp://ftp.topquadrant.com/public_html/repository/spin</url>-->
+            <url>https://kbss.felk.cvut.cz/m2repo/</url>
+        </repository>
         <repository>
             <id>tq-spin</id>
             <name>TopBraid SPIN Repository</name>

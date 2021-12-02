@@ -19,12 +19,17 @@ public class TaskType extends EventType {
     public String taskcat;
     @JsonIgnore
     public String viewLabel;
+    public String acmodel;
+    public String area;
+    public String mpdtask;
+    public String phase;
+    public String taskType;
 
     public TaskType() {
     }
 
     public TaskType(TaskType t){
-        this(t.type,t.label, t.taskcat);
+        this(t.type,t.label, t.taskcat, t.acmodel);
     }
 
     public TaskType(String type){
@@ -36,9 +41,106 @@ public class TaskType extends EventType {
         this.viewLabel = type + "\n" + label;
     }
 
-    public TaskType(String type, String label, String taskcat) {
+    public TaskType(String type, String label, String taskcat, String acmodel) {
         this(type, label);
         this.taskcat = taskcat;
+        this.acmodel = acmodel;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
+    }
+
+    public String getTaskcat() {
+        return taskcat;
+    }
+
+    public void setTaskcat(String taskcat) {
+        this.taskcat = taskcat;
+    }
+
+    public String getViewLabel() {
+        return viewLabel;
+    }
+
+    public void setViewLabel(String viewLabel) {
+        this.viewLabel = viewLabel;
+    }
+
+    public String getAcmodel() {
+        return acmodel;
+    }
+
+    public void setAcmodel(String acmodel) {
+        this.acmodel = acmodel;
+    }
+
+    public String getMpdtask() {
+        return mpdtask;
+    }
+
+    public void setMpdtask(String mpdtask) {
+        this.mpdtask = mpdtask;
+    }
+
+    public static Map<String, TaskType> getTaskTypeMap() {
+        return taskTypeMap;
+    }
+
+    public static void setTaskTypeMap(Map<String, TaskType> taskTypeMap) {
+        TaskType.taskTypeMap = taskTypeMap;
+    }
+
+    public String getPhase() {
+        return phase;
+    }
+
+    public void setPhase(String phase) {
+        this.phase = phase;
+    }
+
+    public String getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(String taskType) {
+        this.taskType = taskType;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     @Override
@@ -47,7 +149,7 @@ public class TaskType extends EventType {
     }
 
     @Override
-    public String typeLabel() {
+    public String typeLabel () {
         return type;
     }
 

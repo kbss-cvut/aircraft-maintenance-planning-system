@@ -1,0 +1,23 @@
+PREFIX mapper: <http://www.ontotext.com/mapper/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+
+SELECT ?taskCardCode ?MPDTASK ?description ?team ?phase ?taskType ?aircraftModel ?area {
+    GRAPH <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>{
+        ?taskCard a cm:task-card ;
+                  cm:id ?taskCardCode;
+                  cm:model ?aircraftModel.
+
+        OPTIONAL {?taskCard cm:has-type ?taskType}
+        OPTIONAL {?taskCard cm:has-scope ?team}
+        OPTIONAL {?taskCard cm:has-phase ?phase;}
+        OPTIONAL {?taskCard cm:mpdtask ?MPDTASK;}
+        OPTIONAL {?taskCard cm:description ?description;}
+        OPTIONAL {?taskCard cm:area ?area;}
+    }
+}

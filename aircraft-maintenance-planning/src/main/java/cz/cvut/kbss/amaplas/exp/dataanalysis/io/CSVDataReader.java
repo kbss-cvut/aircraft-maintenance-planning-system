@@ -76,13 +76,14 @@ public class CSVDataReader {
         TaskType taskType = new TaskType(
                 r[11], // WO/TC - the code of the task
                 r[14], // description
-                r[10]  // Type - task category
+                r[10], // Type - task category
+                r[16]  // aircraft model
         );
 
         Result res = new Result();
         res.id = r[0];
         res.wp = r[15];
-        res.acmodel = r[16];
+        res.acmodel = taskType.acmodel;
         res.acType = AircraftType.getTypeLabelForModel(res.acmodel);
         res.scope = r[8];// + "_group";
         res.shiftGroup = r[9];

@@ -1,0 +1,27 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+
+SELECT DISTINCT ?acmodel ?type ?description WHERE{
+    ?maintenanceTask cm:is-part-of-workpackage ?wpuri.
+    # fetch aricraft model
+    ?wpuri cm:id ?wp;
+        cm:is-repair-of ?ac.
+    ?ac cm:model ?acmodel.
+
+    ?session cm:is-part-of-maintenance-task ?maintenanceTask.
+    OPTIONAL{
+    	?session cm:task-description ?description.
+    }
+
+    # fetch task card
+    ?maintenanceTask a ?tType.
+    ?tType a owl:Class;
+        cm:id ?type;
+        rdfs:subClassOf ?cls.
+    FILTER(?cls = cm:task-card)
+}ORDER BY ?acmodel ?type

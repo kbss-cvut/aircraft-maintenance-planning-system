@@ -1,0 +1,40 @@
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  mp:   <http://onto.fel.cvut.cz/ontologies/maintenance-schema/>
+PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX  ds:   <http://onto.fel.cvut.cz/dop2020-csat/example-schema/>
+PREFIX d: <http://onto.fel.cvut.cz/dop2020-csat/example-instance-data/>
+PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+
+
+#SELECT ?wp ?acmodel ?type (sample(?ttLabel) as ?typeLabel) ?scope ?taskcat (spif:dateFormat(?st,"yyyy-MM-dd") as ?date) (str(?st) as ?start) (str(?et) as ?end) ( str(ofn:asMillis(?et - ?st)) as ?dur)
+SELECT ?wp ?acmodel ?type (?ttLabel as ?typeLabel) ?scope ?taskcat (spif:dateFormat(?st,"yyyy-MM-dd") as ?date) (str(?st) as ?start) (str(?et) as ?end) (str(ofn:asMillis(?et - ?st)) as ?dur)
+{
+    ?tt mp:part_of_workpackage ?wpuri.
+    ?wpuri mp:has_id ?wp;
+        mp:repair_of ?ac.
+    ?ac mp:has_model ?acmodel.
+
+    ?tt a ?tType, mp:task_card;
+        mp:has_task_execution_part ?t.
+    OPTIONAL{
+        ?tType rdfs:label ?ttLabel.
+    }
+    ?w ufo:performs ?t;
+        mp:member_of_group ?scopeGroup.
+#    ?scopeGroup rdfs:label ?scope.
+    ?t mp:start_time ?st;
+        mp:end_time ?et.
+    ?tType rdfs:subClassOf ?cls.
+
+    # select specific aircraft
+#    FITER(?acmodel in ("738" "73G" "73H" "73J" "73W" "B735"))
+#    FILTER(!contains(?wp, "SICHR") ) # this workpackages do not contain TCs
+#    FILTER(!contains(?wp, "/L-") )
+    BIND(replace(str(?tType), "^.*/([^/]+)$", "$1") as ?type)
+    BIND(replace(str(?scopeGroup), "^.*/([^/]+)$", "$1") as ?scope)
+    BIND(replace(str(?cls), "^.*/([^/]+)$", "$1") as ?taskcat)
+}
+#GROUP BY ?wp ?acmodel ?type ?scope ?taskcat ?st ?et - group by takes takes too long to calculate
+#ORDER BY ?st

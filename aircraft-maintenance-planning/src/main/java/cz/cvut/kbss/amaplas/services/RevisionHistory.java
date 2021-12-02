@@ -23,6 +23,13 @@ public class RevisionHistory {
     private Map<String, List<Result>> historyCache;
 
 
+    public String getRepositoryUrl() {
+        return repositoryUrl;
+    }
+
+    public void setRepositoryUrl(String repositoryUrl) {
+        this.repositoryUrl = repositoryUrl;
+    }
 
     public List<String> getAllRevisions(){
         return new SparqlDataReaderRDF4J().readRowsAsStrings(SparqlDataReader.WP, repositoryUrl);
@@ -48,7 +55,7 @@ public class RevisionHistory {
      */
     private Map<String, List<Result>> loadAllClosedRevisionsWorkLog(){
 //        LOG.info("fetching revision work log from {}", url);
-        List<Result> results = new SparqlDataReaderRDF4J().readDataNamedQuery(SparqlDataReader.DA_TASK_SO_WITH_WP_SCOPE, repositoryUrl);
+        List<Result> results = new SparqlDataReaderRDF4J().readSessionLogsWithNamedQuery(SparqlDataReader.DA_TASK_SO_WITH_WP_SCOPE_OLD, repositoryUrl);
         Map<String, List<Result>> closedRevisions = results.stream()
                 .collect(Collectors.groupingBy(r -> r.wp));
 
