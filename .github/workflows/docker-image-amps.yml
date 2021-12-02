@@ -17,7 +17,9 @@ jobs:
         run: mvn clean package -B
 
       - name: Build image
-        run: docker build . --file ./deploy/Dockerfile --tag $IMAGE_NAME
+        run: |
+          cd aircraft-maintenance-planning-system
+          docker build . --file ./deploy/Dockerfile --tag $IMAGE_NAME
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
