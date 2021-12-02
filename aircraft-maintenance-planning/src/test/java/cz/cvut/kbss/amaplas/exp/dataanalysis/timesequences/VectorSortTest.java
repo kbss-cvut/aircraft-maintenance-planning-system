@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 import static org.junit.Assert.assertTrue;
 
 //public class VectorSortTest extends TestCase {
+@Ignore
 public class VectorSortTest{
 //    @Test
 //    public void testSortWithDimMatchDistance(){
