@@ -250,7 +250,10 @@ CONSTRUCT {
     ?mechanicIRI a cm:mechanic ;
         cm:id ?Employee_No ;
         cm:performs ?workSessionIRI ;
+        cm:is-part-of-line ?lineIRI ;
     .
+
+    ?line a cm:line .
 
     ?maintenanceGroupIRI a cm:maintenance-group ;
         cm:has-abbreviation ?mainMaintenanceGroupAbbr ;
@@ -280,7 +283,7 @@ CONSTRUCT {
      ?rd :Duration_Full ?Duration_Full .
      ?rd :Scope ?Scope .
      OPTIONAL {
-        ?rd :Shift_Group ?Shift_Group .
+        ?rd :Shift_Group ?shiftGroupId .
      }
      ?rd :Type ?taskSuperTypeId .
      ?rd :WO_TC ?WO_TC .
@@ -361,6 +364,18 @@ CONSTRUCT {
      BIND(?End_Time as ?endTime)
 
      BIND(dl:instance(cm:client, ?operator) as ?clientIRI)
+
+     BIND(replace(
+            replace(
+                ?shiftGroupId, 
+                \"^[^_]*_L\", 
+                \"\"
+            ),
+            \"_.*\",
+            \"\"
+     )as ?lineId)
+
+     BIND(dl:instance(cm:line, ?lineId) as ?lineIRI)
 }""" ;
     ] ;
   sml:replace true ;

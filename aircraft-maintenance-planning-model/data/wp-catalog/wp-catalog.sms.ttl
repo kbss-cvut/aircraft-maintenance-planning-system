@@ -100,18 +100,7 @@ WHERE {
     ] ;
   kbss-module:has-output-graph-constraint [
       a sp:Ask ;
-      sp:text """# 1.07 - column End_date___real has empty value
-ASK
-WHERE {
-    ?t csvw:row/csvw:describes ?rd .
-    FILTER NOT EXISTS {
-          ?rd :End_date___real ?notExistValue .
-    }
-}""" ;
-    ] ;
-  kbss-module:has-output-graph-constraint [
-      a sp:Ask ;
-      sp:text """# 1.08 - column Delay__hours_ has empty value
+      sp:text """# 1.07 - column Delay__hours_ has empty value
 ASK
 WHERE {
     ?t csvw:row/csvw:describes ?rd .
@@ -122,7 +111,7 @@ WHERE {
     ] ;
   kbss-module:has-output-graph-constraint [
       a sp:Ask ;
-      sp:text """# 1.09 column WP_status has empty value
+      sp:text """# 1.08 column WP_status has empty value
 ASK
 WHERE {
     ?t csvw:row/csvw:describes ?rd .
@@ -164,8 +153,10 @@ CONSTRUCT {
         cm:workpackage-scheduled-end-time ?End_date___scheduled ;
         cm:workpackage-start-time ?Start_date___real ;
         cm:workpackage-end-time ?End_date___real ;
-        cm:responsible-line ?Line ;
+        cm:has-responsible-line ?lineIRI ;
     .
+
+    ?lineIRI a cm:line .
 
     ?aircraftIRI a cm:aircraft, owl:NamedIndividual;
         cm:registration ?acRegistration ;
@@ -180,7 +171,9 @@ CONSTRUCT {
     OPTIONAL {
         ?rd :Start_date___real ?Start_date___real .
     }
-    ?rd :End_date___real ?End_date___real .
+    OPTIONAL {
+        ?rd :End_date___real ?End_date___real .
+    }
     OPTIONAL {
         ?rd :TAT_real__days_ ?TAT_real__days_ .
     }
@@ -192,7 +185,7 @@ CONSTRUCT {
         ?rd :Delay_reasons ?Delay_reasons .
     }
     OPTIONAL {
-        ?rd :Line ?Line .
+        ?rd :Line ?lineId .
     }
     OPTIONAL {
         ?rd :Delay_reason ?Delay_reason .
@@ -243,6 +236,7 @@ CONSTRUCT {
 
      BIND(dl:instance(cm:workpackage, ?workpackageId) as ?workpackageIRI)
      BIND(dl:instance(cm:aircraft, ?workpackageId) as ?aircraftIRI)
+     BIND(dl:instance(cm:line, ?lineId) as ?lineIRI)
 }""" ;
     ] ;
   sml:replace true ;
