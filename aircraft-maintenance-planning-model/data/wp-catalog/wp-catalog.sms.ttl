@@ -1,0 +1,265 @@
+# baseURI: http://onto.fel.cvut.cz/ontologies/csat/wp-catalog-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/csat-maintenance
+# imports: http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
+
+@prefix : <http://onto.fel.cvut.cz/ontologies/csat/wp-catalog-0.1/> .
+@prefix ata: <http://onto.fel.cvut.cz/voc/ata-100/> .
+@prefix cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
+@prefix cmd: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/> .
+@prefix config: <http://onto.fel.cvut.cz/ontologies/csat/config/> .
+@prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix dl: <http://onto.fel.cvut.cz/ontologies/csat/data-lib/> .
+@prefix doc: <http://onto.fel.cvut.cz/ontologies/documentation/> .
+@prefix kbss-module: <http://onto.fel.cvut.cz/ontologies/lib/module/> .
+@prefix km-sesame: <http://onto.fel.cvut.cz/ontologies/lib/module/sesame/> .
+@prefix km-tabular: <http://onto.fel.cvut.cz/ontologies/lib/module/tabular/> .
+@prefix ms: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sm: <http://topbraid.org/sparqlmotion#> .
+@prefix sml: <http://topbraid.org/sparqlmotionlib#> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+@prefix spl: <http://spinrdf.org/spl#> .
+@prefix td: <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1/> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+td:deploy-data_Return
+  rdfs:label "deploy-wp-catalog-data" ;
+.
+td:rdfize-input-data
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.01 - column AC_owner has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :AC_owner ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.02 - column AC_registration has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :AC_registration ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.03 - column Workpackage has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :Workpackage ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.04 - column Start_date___scheduled has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :Start_date___scheduled ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.05 - column End_date___scheduled has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :End_date___scheduled ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.06 - column TAT_scheduled__days_ has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :TAT_scheduled__days_ ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.07 - column End_date___real has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :End_date___real ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.08 - column Delay__hours_ has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :Delay__hours_ ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.09 column WP_status has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :WP_status ?notExistValue .
+    }
+}""" ;
+    ] ;
+  km-tabular:data-prefix [
+      a sp:str ;
+      sp:arg1 : ;
+    ] ;
+  km-tabular:delimiter "	" ;
+  sm:next :construct-csat-maintenance-data ;
+.
+td:transform-data_Return
+  rdfs:label "transform-wp-catalog-data" ;
+.
+<http://onto.fel.cvut.cz/ontologies/csat/wp-catalog-0.1>
+  a owl:Ontology ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
+.
+:construct-csat-maintenance-data
+  a sml:ApplyConstruct ;
+  sm:next :transform ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - extract ontology
+CONSTRUCT {
+    <http://onto.fel.cvut.cz/ontologies/csat-maintenance/wp-catalog-12345> a owl:Ontology ;
+        owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
+    .
+
+    ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
+        cm:id ?workpackageId ;
+        cm:workpackage-scheduled-start-time ?Start_date___scheduled  ;
+        cm:workpackage-scheduled-end-time ?End_date___scheduled ;
+        cm:workpackage-start-time ?Start_date___real ;
+        cm:workpackage-end-time ?End_date___real ;
+        cm:responsible-line ?Line ;
+    .
+
+    ?aircraftIRI a cm:aircraft, owl:NamedIndividual;
+        cm:registration ?acRegistration ;
+    .
+} WHERE {
+    ?rd :AC_owner ?AC_owner .
+    ?rd :AC_registration ?acRegistration .
+    ?rd :Workpackage ?workpackageId .
+    ?rd :Start_date___scheduled ?Start_date___scheduled .
+    ?rd :End_date___scheduled ?End_date___scheduled .
+    ?rd :TAT_scheduled__days_ ?TAT_scheduled__days_ .
+    OPTIONAL {
+        ?rd :Start_date___real ?Start_date___real .
+    }
+    ?rd :End_date___real ?End_date___real .
+    OPTIONAL {
+        ?rd :TAT_real__days_ ?TAT_real__days_ .
+    }
+    OPTIONAL {
+        ?rd :TAT_difference__days_ ?TAT_difference__days_ .
+    }
+    ?rd :Delay__hours_ ?Delay__hours_ .
+    OPTIONAL {
+        ?rd :Delay_reasons ?Delay_reasons .
+    }
+    OPTIONAL {
+        ?rd :Line ?Line .
+    }
+    OPTIONAL {
+        ?rd :Delay_reason ?Delay_reason .
+    }
+    ?rd :WP_status ?WP_status .
+    OPTIONAL {
+        ?rd :MHrs_in_FIX ?MHrs_in_FIX .
+    }
+    OPTIONAL {
+        ?rd :MHrs_above_FIX ?MHrs_above_FIX .
+    }
+    OPTIONAL {
+        ?rd :Routine__customized_included__work ?Routine__customized_included__work .
+    }
+    OPTIONAL {
+        ?rd :Findings_Up_To_Limit ?Findings_Up_To_Limit .
+    }
+    OPTIONAL {
+        ?rd :Additional_Work__Mods__Sbs__Ads_Etc_ ?Additional_Work__Mods__Sbs__Ads_Etc_ .
+    }
+    OPTIONAL {
+        ?rd :Findings_Over_Limit___Estimation ?Findings_Over_Limit___Estimation .
+    }
+    OPTIONAL {
+        ?rd :Customer_Requests ?Customer_Requests .
+    }
+    OPTIONAL {
+        ?rd :Findings_MECH_EXT ?Findings_MECH_EXT .
+    }
+    OPTIONAL {
+        ?rd :Findings_MECH_INT ?Findings_MECH_INT .
+    }
+    OPTIONAL {
+        ?rd :Findings_MECH_ENG ?Findings_MECH_ENG .
+    }
+    OPTIONAL {
+        ?rd :Findings_MECH_LDG ?Findings_MECH_LDG .
+    }
+    OPTIONAL {
+        ?rd :Findings_AVIO ?Findings_AVIO .
+    }
+    OPTIONAL {
+        ?rd :Findings_SHM ?Findings_SHM .
+    }
+    OPTIONAL {
+        ?rd :Findings_Workshops ?Findings_Workshops .
+    }
+
+     BIND(dl:instance(cm:workpackage, ?workpackageId) as ?workpackageIRI)
+     BIND(dl:instance(cm:aircraft, ?workpackageId) as ?aircraftIRI)
+}""" ;
+    ] ;
+  sml:replace true ;
+  rdfs:label "construct-csat-maintenance-data" ;
+.
+:deploy-wp-catalog-data
+  a sm:Function ;
+  sm:returnModule td:deploy-data_Return ;
+  rdfs:subClassOf sm:Functions ;
+.
+:transform
+  a sml:ApplyConstruct ;
+  sm:next td:merge ;
+  sml:replace false ;
+.
+:transform-wp-catalog-data
+  a sm:Function ;
+  sm:returnModule td:transform-data_Return ;
+  rdfs:subClassOf sm:Functions ;
+.
