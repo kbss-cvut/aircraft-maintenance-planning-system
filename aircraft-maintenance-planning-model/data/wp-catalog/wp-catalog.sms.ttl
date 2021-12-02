@@ -156,7 +156,9 @@ CONSTRUCT {
         cm:has-responsible-line ?lineIRI ;
     .
 
-    ?lineIRI a cm:line .
+    ?lineIRI a cm:line ;
+        cm:id ?lineId ;
+    .
 
     ?aircraftIRI a cm:aircraft, owl:NamedIndividual;
         cm:registration ?acRegistration ;

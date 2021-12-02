@@ -253,7 +253,9 @@ CONSTRUCT {
         cm:is-part-of-line ?lineIRI ;
     .
 
-    ?line a cm:line .
+    ?lineIRI a cm:line ;
+        cm:id ?lineId ;
+    .
 
     ?maintenanceGroupIRI a cm:maintenance-group ;
         cm:has-abbreviation ?mainMaintenanceGroupAbbr ;
