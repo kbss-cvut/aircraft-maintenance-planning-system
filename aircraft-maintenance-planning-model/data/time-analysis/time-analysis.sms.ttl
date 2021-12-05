@@ -167,7 +167,28 @@ WHERE {
     ] ;
   kbss-module:has-output-graph-constraint [
       a sp:Ask ;
-      sp:text """# 2 - found scope that is not defined in schema ontology
+      sp:text """# 2 - duration full is not  0 when start time and end time are same
+ASK
+WHERE {
+   ?t csvw:row/csvw:describes ?rd .
+
+    FILTER NOT EXISTS  {
+          ?rd :End_Date ?endDateNE .
+    }
+
+    OPTIONAL  {
+         ?rd :Duration_Full ?durationFull .
+         ?rd :End_Time ?endTime .
+    }
+    FILTER(
+         ?durationFull != \"0.000000\"
+         || ?endTime != \"0:00\"
+    )
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 3 - found scope that is not defined in schema ontology
 ASK
 WHERE {
     ?t csvw:row/csvw:describes ?rd .
@@ -369,8 +390,8 @@ CONSTRUCT {
 
      BIND(replace(
             replace(
-                ?shiftGroupId, 
-                \"^[^_]*_L\", 
+                ?shiftGroupId,
+                \"^[^_]*_L\",
                 \"\"
             ),
             \"_.*\",
