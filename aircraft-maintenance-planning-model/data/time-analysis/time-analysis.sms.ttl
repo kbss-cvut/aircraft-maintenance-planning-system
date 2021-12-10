@@ -219,6 +219,17 @@ td:transform-data_Return
   a sml:ApplyConstruct ;
   kbss-module:has-output-graph-constraint [
       a sp:Ask ;
+      sp:text """# employee is part of multiple  maintenance lines
+ASK  {
+    ?mechanicIRI a cm:mechanic ;
+        cm:is-part-of-maintenance-line ?ml1 ;
+        cm:is-part-of-maintenance-line ?ml2 ;
+  .
+  FILTER(?ml1 != ?ml2)
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
       sp:text """# work-package has multiple scheduled-end-times
 ASK  {
  ?workpackageIRI a cm:workpackage  ;
@@ -226,6 +237,17 @@ ASK  {
         cm:workpackage-scheduled-end-time ?t2 ;
   .
   FILTER(?t1 != ?t2)
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# workpackage has multiple responsible maintenance lines
+ASK  {
+ ?workpackageIRI a cm:workpackage  ;
+        cm:has-responsible-maintenance-line ?ml1 ;
+        cm:has-responsible-maintenance-line ?ml2 ;
+  .
+  FILTER(?ml1 != ?ml2)
 }""" ;
     ] ;
   sm:next :construct-one-day-worksessions ;
@@ -246,6 +268,7 @@ CONSTRUCT {
         cm:workpackage-end-time ?WP_End_date___real ;
         cm:has-client ?clientIRI ;
         cm:is-repair-of ?aircraftIRI ;
+        cm:has-responsible-maintenance-line ?workpackageMaintenanceLineIRI ;
     .
 
     ?taskExecutionIRI a cm:complex-execution, ?taskTypeIRI, owl:NamedIndividual ;
@@ -271,11 +294,15 @@ CONSTRUCT {
     ?mechanicIRI a cm:mechanic ;
         cm:id ?Employee_No ;
         cm:performs ?workSessionIRI ;
-        cm:is-part-of-line ?lineIRI ;
+        cm:is-part-of-maintenance-line ?employeeMaintenanceLineIRI ;
     .
 
-    ?lineIRI a cm:line ;
-        cm:id ?lineId ;
+   ?employeeMaintenanceLineIRI a cm:maintenance-line ;
+        cm:id ?employeeMaintenanceLineId ;
+    .
+
+   ?workpackageMaintenanceLineIRI a cm:maintenance-line ;
+        cm:id ?workpackageMaintenanceLineId ;
     .
 
     ?maintenanceGroupIRI a cm:maintenance-group ;
@@ -341,7 +368,7 @@ CONSTRUCT {
         ?rd :WP_End_date___real ?WP_End_date___real .
      }
      OPTIONAL {
-        ?rd :Line ?Line .
+        ?rd :Line ?workpackageMaintenanceLineId .
      }
      ?rd :Real_date_of_booking_entry ?Real_date_of_booking_entry .
      OPTIONAL {
@@ -396,9 +423,10 @@ CONSTRUCT {
             ),
             \"_.*\",
             \"\"
-     )as ?lineId)
+     )as ?employeeMaintenanceLineId)
 
-     BIND(dl:instance(cm:line, ?lineId) as ?lineIRI)
+     BIND(dl:instance(cm:maintenance-line, ?workpackageMaintenanceLineId) as ?workpackageMaintenanceLineIRI)
+     BIND(dl:instance(cm:maintenance-line, ?employeeMaintenanceLineId) as ?employeeMaintenanceLineIRI)
 }""" ;
     ] ;
   sml:replace true ;

@@ -153,11 +153,11 @@ CONSTRUCT {
         cm:workpackage-scheduled-end-time ?End_date___scheduled ;
         cm:workpackage-start-time ?Start_date___real ;
         cm:workpackage-end-time ?End_date___real ;
-        cm:has-responsible-line ?lineIRI ;
+        cm:has-responsible-maintenance-line ?workpackageMaintenanceLineIRI ;
     .
 
-    ?lineIRI a cm:line ;
-        cm:id ?lineId ;
+    ?workpackageMaintenanceLineIRI a cm:maintenance-line ;
+        cm:id ?workpackageMaintenanceLineId ;
     .
 
     ?aircraftIRI a cm:aircraft, owl:NamedIndividual;
@@ -187,7 +187,7 @@ CONSTRUCT {
         ?rd :Delay_reasons ?Delay_reasons .
     }
     OPTIONAL {
-        ?rd :Line ?lineId .
+        ?rd :Line ?workpackageMaintenanceLineId .
     }
     OPTIONAL {
         ?rd :Delay_reason ?Delay_reason .
@@ -238,7 +238,7 @@ CONSTRUCT {
 
      BIND(dl:instance(cm:workpackage, ?workpackageId) as ?workpackageIRI)
      BIND(dl:instance(cm:aircraft, ?workpackageId) as ?aircraftIRI)
-     BIND(dl:instance(cm:line, ?lineId) as ?lineIRI)
+     BIND(dl:instance(cm:maintenance-line, ?workpackageMaintenanceLineId) as ?workpackageMaintenanceLineIRI)
 }""" ;
     ] ;
   sml:replace true ;
