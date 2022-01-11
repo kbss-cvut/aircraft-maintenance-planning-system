@@ -352,7 +352,7 @@
             <id>tq-spin</id>
             <name>TopBraid SPIN Repository</name>
 <!--            <url>ftp://ftp.topquadrant.com/public_html/repository/spin</url>-->
-            <url>https://www.topquadrant.com/repository/spin</url>
+            <url>http://www.topquadrant.com/repository/spin</url>
         </repository>
     </repositories>
 </project>

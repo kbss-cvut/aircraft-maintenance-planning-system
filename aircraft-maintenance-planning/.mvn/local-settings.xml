@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd">
+	<mirrors>
+		<!-- unblocking kbss http maven repo -->
+		<mirror>
+			  <id>topquadrant-spin-repository-unblocker</id>
+			  <mirrorOf>tq-spin</mirrorOf>
+			  <name>Mirror of TopBraid SPIN Repository</name>
+			  <url>http://www.topquadrant.com/repository/spin</url>
+			  <blocked>false</blocked>
+		</mirror>
+	</mirrors>
+</settings>
