@@ -342,22 +342,11 @@
     </build>
 
     <repositories>
-<!--        <repository>-->
-<!--            <id>ontotext-public</id>-->
-<!--            <url>http://maven.ontotext.com/repository/owlim-releases</url>-->
-<!--        </repository>-->
-
         <repository>
             <id>kbss</id>
             <name>KBSS Maven Repository</name>
             <!--            <url>ftp://ftp.topquadrant.com/public_html/repository/spin</url>-->
             <url>https://kbss.felk.cvut.cz/m2repo/</url>
-        </repository>
-        <repository>
-            <id>tq-spin</id>
-            <name>TopBraid SPIN Repository</name>
-<!--            <url>ftp://ftp.topquadrant.com/public_html/repository/spin</url>-->
-            <url>http://www.topquadrant.com/repository/spin</url>
         </repository>
     </repositories>
 </project>
