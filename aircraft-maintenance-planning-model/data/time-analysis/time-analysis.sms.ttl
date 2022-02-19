@@ -196,7 +196,7 @@ WHERE {
     }
     FILTER(
          ?durationFull != \"0.000000\"
-         || ?endTime != \"0:00\"
+         || ?endTime != \"00:00\"
     )
 }""" ;
     ] ;
