@@ -28,6 +28,9 @@
 @prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+td:check-input-data-schema
+  sm:next :construct-csat-maintenance-data ;
+.
 td:construct-day-bound-event-duration
   sm:next :transform ;
   sml:replace false ;
@@ -37,6 +40,16 @@ td:construct-maintenance-group-abbreviations
 .
 td:deploy-data_Return
   rdfs:label "deploy-time-analysis-data" ;
+.
+td:import-input-data-schema
+  sml:baseURI [
+      a sp:concat ;
+      sp:arg1 [
+          a sp:str ;
+          sp:arg1 : ;
+        ] ;
+      sp:arg2 "input-data-schema" ;
+    ] ;
 .
 td:import-scheme
   sm:next td:rdfize-input-data ;
@@ -214,6 +227,7 @@ td:transform-data_Return
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
+  owl:imports :input-data-schema ;
 .
 :construct-csat-maintenance-data
   a sml:ApplyConstruct ;
