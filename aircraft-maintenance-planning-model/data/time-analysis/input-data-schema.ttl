@@ -1,0 +1,127 @@
+@prefix : <http://onto.fel.cvut.cz/ontologies/csat/time-analysis-0.1/> .
+@prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+:input-data-schema a owl:Ontology .
+
+:input-table-schema a csvw:TableSchema ;
+                    csvw:column
+                        [ csvw:name "bookingno_i" ;
+                            csvw:property :bookingno_i ;
+                            csvw:title "bookingno_i" ],
+                        [ csvw:name "Employee_No" ;
+                            csvw:property :Employee_No ;
+                            csvw:title "Employee No" ],
+                        [ csvw:name "user_sign" ;
+                            csvw:property :user_sign ;
+                            csvw:title "user_sign" ],
+                        [ csvw:name "Start_Date" ;
+                            csvw:property :Start_Date ;
+                            csvw:title "Start Date" ],
+                        [ csvw:name "Start_Time" ;
+                            csvw:property :Start_Time ;
+                            csvw:title "Start Time" ],
+                        [ csvw:name "End_Date" ;
+                            csvw:property :End_Date ;
+                            csvw:title "End Date" ],
+                        [ csvw:name "End_Time" ;
+                            csvw:property :End_Time ;
+                            csvw:title "End Time" ],
+                        [ csvw:name "Duration_Full" ;
+                            csvw:property :Duration_Full ;
+                            csvw:title "Duration Full" ],
+                        [ csvw:name "Scope" ;
+                            csvw:property :Scope ;
+                            csvw:title "Scope" ],
+                        [ csvw:name "Shift_Group" ;
+                            csvw:property :Shift_Group ;
+                            csvw:title "Shift Group" ],
+                        [ csvw:name "Type" ;
+                            csvw:property :Type ;
+                            csvw:title "Type" ],
+                        [ csvw:name "WO_TC" ;
+                            csvw:property :WO_TC ;
+                            csvw:title "WO/TC" ],
+                        [ csvw:name "TC_reference" ;
+                            csvw:property :TC_reference ;
+                            csvw:title "TC reference" ],
+                        [ csvw:name "Closing_date" ;
+                            csvw:property :Closing_date ;
+                            csvw:title "Closing date" ],
+                        [ csvw:name "Description" ;
+                            csvw:property :Description ;
+                            csvw:title "Description" ],
+                        [ csvw:name "Workpackage" ;
+                            csvw:property :Workpackage ;
+                            csvw:title "Workpackage" ],
+                        [ csvw:name "A_C_model" ;
+                            csvw:property :A_C_model ;
+                            csvw:title "A/C model" ],
+                        [ csvw:name "A_C_age" ;
+                            csvw:property :A_C_age ;
+                            csvw:title "A/C age" ],
+                        [ csvw:name "Start_date___scheduled" ;
+                            csvw:property :Start_date___scheduled ;
+                            csvw:title "Start date - scheduled" ],
+                        [ csvw:name "End_date___scheduled" ;
+                            csvw:property :End_date___scheduled ;
+                            csvw:title "End date - scheduled" ],
+			[ csvw:name "Start_date___real" ;
+                            csvw:property :Start_date___real ;
+                            csvw:title "Start date - real" ],
+                        [ csvw:name "End_date___real" ;
+                            csvw:property :End_date___real ;
+                            csvw:title "End date - real" ],
+                        [ csvw:name "Line" ;
+                            csvw:property :Line ;
+                            csvw:title "Line" ],
+                        [ csvw:name "Real_date_of_booking_entry" ;
+                            csvw:property :Real_date_of_booking_entry ;
+                            csvw:title "Real date of booking entry" ],
+                        [ csvw:name "project" ;
+                            csvw:property :project ;
+                            csvw:title "project" ],
+                        [ csvw:name "AC_registration" ;
+                            csvw:property :AC_registration ;
+                            csvw:title "AC registration" ],
+                        [ csvw:name "operator" ;
+                            csvw:property :operator ;
+                            csvw:title "operator" ],
+                        [ csvw:name "defect_class" ;
+                            csvw:property :defect_class ;
+                            csvw:title "defect class" ]
+.
+
+csvw:property a rdf:Property .
+csvw:property rdfs:range rdf:Property .
+
+:bookingno_i a rdf:Property .
+:Employee_No a rdf:Property .
+:user_sign a rdf:Property .
+:Start_Date a rdf:Property .
+:Start_Time a rdf:Property .
+:End_Date a rdf:Property .
+:End_Time a rdf:Property .
+:Duration_Full a rdf:Property .
+:Scope a rdf:Property .
+:Shift_Group a rdf:Property .
+:Type a rdf:Property .
+:WO_TC a rdf:Property .
+:TC_reference a rdf:Property .
+:Closing_date a rdf:Property .
+:Description a rdf:Property .
+:Workpackage a rdf:Property .
+:A_C_model a rdf:Property .
+:A_C_age a rdf:Property .
+:Start_date___scheduled a rdf:Property .
+:End_date___scheduled a rdf:Property .
+:Start_date___real a rdf:Property .
+:End_date___real a rdf:Property .
+:Line a rdf:Property .
+:Real_date_of_booking_entry a rdf:Property .
+:project a rdf:Property .
+:AC_registration a rdf:Property .
+:operator a rdf:Property .
+:defect_class a rdf:Property .

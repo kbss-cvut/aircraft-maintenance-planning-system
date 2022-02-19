@@ -30,6 +30,66 @@
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat/data-lib> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
 .
+td:bind-expected-table-schema
+  a sml:BindBySelect ;
+  sm:next td:check-input-data-schema ;
+  sml:selectQuery [
+      a sp:Select ;
+      sp:text """SELECT ?expectedTableSchema
+WHERE {
+     ?expectedTableSchema a csvw:TableSchema .
+}""" ;
+    ] ;
+  rdfs:label "bind-expected-table-schema" ;
+.
+td:check-input-data-schema
+  a sml:ApplyConstruct ;
+  kbss-module:has-input-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1 - there is a missing column compared to expected input data schema
+ASK
+WHERE {
+     ?actualTableSchema  a  csvw:TableSchema .
+     ?expectedTableSchema  a  csvw:TableSchema .
+     FILTER( ?actualTableSchema != ?expectedTableSchema)
+
+     ?actualTableSchema csvw:column/csvw:propertyUrl ?actualColumn .
+     BIND(iri(?actualColumn) as ?actualColumnIRI)
+
+     FILTER NOT EXISTS {
+          ?expectedTableSchema csvw:column/csvw:property ?actualColumnIRI .
+     }
+}""" ;
+    ] ;
+  kbss-module:has-input-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 2 - there is an additional column compared to expected input data schema
+ASK
+WHERE {
+     ?actualTableSchema  a  csvw:TableSchema .
+     ?expectedTableSchema  a  csvw:TableSchema .
+     FILTER( ?actualTableSchema != ?expectedTableSchema)
+
+     ?expectedTableSchema csvw:column/csvw:property ?expectedColumnIRI .
+
+     FILTER NOT EXISTS {
+          ?actualTableSchema csvw:column/csvw:propertyUrl ?actualColumn .
+          FILTER(str(?expectedColumnIRI) = ?actualColumn)
+     }
+}""" ;
+    ] ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """CONSTRUCT {
+
+}
+WHERE {
+
+}""" ;
+    ] ;
+  sml:replace true ;
+  rdfs:label "check-input-data-schema" ;
+.
 td:construct-day-bound-event-duration
   a sml:ApplyConstruct ;
   sml:constructQuery [
@@ -107,6 +167,11 @@ td:deploy-to-rdf4j-server
   sm:next td:deploy-data_Return ;
   rdfs:label "deploy" ;
 .
+td:import-input-data-schema
+  a sml:ImportRDFFromWorkspace ;
+  sm:next td:bind-expected-table-schema ;
+  sml:ignoreImports true ;
+  rdfs:label "import-input-data-schema" ;
 td:fix-unsupported-datatypes
   a sml:ApplyConstruct ;
   sm:next td:transform-data_Return ;
@@ -171,6 +236,7 @@ td:rdfize-input-data
   km-tabular:source-resource-uri [
       sp:varName "datasetResource" ;
     ] ;
+  sm:next td:check-input-data-schema ;
   rdfs:label "rdfize-input-data" ;
 .
 td:transform-data_Return
