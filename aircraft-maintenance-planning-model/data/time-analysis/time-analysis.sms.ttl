@@ -352,6 +352,7 @@ CONSTRUCT {
      }
      ?rd :Type ?taskSuperTypeId .
      ?rd :WO_TC ?WO_TC .
+     ?rd :defect_class ?defect_class .
      OPTIONAL {
         ?rd :TC_reference ?TC_reference .
      }

@@ -44,6 +44,9 @@
                         [ csvw:name "WO_TC" ;
                             csvw:property :WO_TC ;
                             csvw:title "WO/TC" ],
+                        [ csvw:name "defect_class" ;
+                            csvw:property :defect_class ;
+                            csvw:title "defect class" ],
                         [ csvw:name "TC_reference" ;
                             csvw:property :TC_reference ;
                             csvw:title "TC reference" ],
@@ -88,10 +91,7 @@
                             csvw:title "AC registration" ],
                         [ csvw:name "operator" ;
                             csvw:property :operator ;
-                            csvw:title "operator" ],
-                        [ csvw:name "defect_class" ;
-                            csvw:property :defect_class ;
-                            csvw:title "defect class" ]
+                            csvw:title "operator" ]
 .
 
 csvw:property a rdf:Property .
