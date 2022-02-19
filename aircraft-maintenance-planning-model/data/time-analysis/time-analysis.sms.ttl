@@ -1,6 +1,7 @@
 # baseURI: http://onto.fel.cvut.cz/ontologies/csat/time-analysis-0.1
 # imports: http://onto.fel.cvut.cz/ontologies/csat-maintenance
 # imports: http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/csat/time-analysis-0.1/input-data-schema
 # imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
 
 @prefix : <http://onto.fel.cvut.cz/ontologies/csat/time-analysis-0.1/> .
@@ -226,8 +227,8 @@ td:transform-data_Return
   a owl:Ontology ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
-  owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
   owl:imports :input-data-schema ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
 .
 :construct-csat-maintenance-data
   a sml:ApplyConstruct ;
@@ -416,16 +417,11 @@ CONSTRUCT {
      BIND(dl:instance(cm:mechanic, ?Employee_No) as ?mechanicIRI)
      BIND(dl:instance(cm:work-session, ?bookingno_i) as ?workSessionIRI)
 
-     BIND(xsd:decimal(?Duration_Full) as ?durationInHours)
-# TODO fix xsd:date, xsd:time using spif:parseDate
-#     BIND(STRDT(?Start_Date, xsd:date) as ?startDate)
-#     BIND(STRDT(?Start_Time, xsd:time) as ?startTime)
-#     BIND(STRDT(?End_Date, xsd:date) as ?endDate)
-#     BIND(STRDT(?End_Time, xsd:time) as ?endTime)
-     BIND(?Start_Date as ?startDate)
-     BIND(?Start_Time as ?startTime)
-     BIND(?End_Date as ?endDate)
-     BIND(?End_Time as ?endTime)
+     BIND(IF(?endDate,xsd:decimal(?Duration_Full), ?notBound) as ?durationInHours)
+     BIND(spif:parseDate(?Start_Date, \"dd.MM.yyyy\") as ?startDate)
+     BIND(spif:parseDate(?Start_Time, \"HH:m\") as ?startTime)
+     BIND(spif:parseDate(?End_Date, \"dd.MM.yyyy\") as ?endDate)
+     BIND(IF(?endDate, spif:parseDate(?End_Time, \"HH:m\"), ?notBound) as ?endTime)
 
      BIND(dl:instance(cm:client, ?operator) as ?clientIRI)
 
