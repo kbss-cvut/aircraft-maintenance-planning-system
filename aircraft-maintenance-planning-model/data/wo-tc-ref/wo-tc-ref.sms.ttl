@@ -176,17 +176,17 @@ CONSTRUCT {
                     
     ?taskExecutionIRI a cm:complex-execution, ?taskTypeIRI, owl:NamedIndividual ;
         a ?taskSuperClassIRI; # TODO can be done by inference
-        cm:issue-time ?issue_date;
-        cm:end-time ?closing_date;
-        cm:has-work-order-step ?taskStepExecutionIRI;
+        cm:issue-time ?issueDate ;
+        cm:end-time ?closingDate ;
+        cm:has-work-order-step ?taskStepExecutionIRI ;
         cm:is-part-of-workpackage ?workpackageIRI ;
         cm:references-task ?referencedTaskExecutionIRI ;
     .
 
     ?taskTypeIRI a owl:Class ;
         cm:id ?CSAT_WO_TC ;
-        rdfs:subClassOf ?taskSuperClassIRI;
-        cm:references-ata-code ?ataIRI;
+        rdfs:subClassOf ?taskSuperClassIRI ;
+        cm:references-ata-code ?ataIRI ;
     .
 
     ?taskStepExecutionIRI a ?taskStepExecutionTypeIRI, owl:NamedIndividual ;
@@ -199,7 +199,7 @@ CONSTRUCT {
         rdfs:subClassOf cm:work-order-step ;
     .
 			
-    ?aircraftIRI a cm:aircraft, owl:NamedIndividual;
+    ?aircraftIRI a cm:aircraft, owl:NamedIndividual ;
         cm:registration ?acRegistration ;
 	cm:age ?acAge ;
     .
@@ -251,6 +251,9 @@ CONSTRUCT {
     BIND(STRDT(str(?sequence), xsd:integer) as ?workstepTyped)
     BIND(dl:instance(cm:complex-execution, dl:id-2(?workpackageId, ?TC_reference)) as ?referencedTaskExecutionIRI)
     BIND(IRI(concat(str(ata:), \"ata-\", ?ATA)) as ?ataIRI)
+
+    BIND(spif:parseDate(?issue_date, \"dd.MM.yyyy\") as ?issueDate)
+    BIND(spif:parseDate(?closing_date, \"dd.MM.yyyy\") as ?closingDate)
      
 }""" ;
     ] ;
