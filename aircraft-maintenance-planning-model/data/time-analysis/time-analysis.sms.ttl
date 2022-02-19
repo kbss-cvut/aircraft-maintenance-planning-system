@@ -262,10 +262,10 @@ CONSTRUCT {
 
     ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
         cm:id ?workpackageId ;
-        cm:workpackage-scheduled-start-time ?WP_Start_date___scheduled ;
-        cm:workpackage-scheduled-end-time ?WP_End_date___scheduled ;
-        cm:workpackage-start-time ?WP_Start_date___real ;
-        cm:workpackage-end-time ?WP_End_date___real ;
+        cm:workpackage-scheduled-start-time ?Start_date___scheduled ;
+        cm:workpackage-scheduled-end-time ?End_date___scheduled ;
+        cm:workpackage-start-time ?Start_date___real ;
+        cm:workpackage-end-time ?End_date___real ;
         cm:has-client ?clientIRI ;
         cm:is-repair-of ?aircraftIRI ;
         cm:has-responsible-maintenance-line ?workpackageMaintenanceLineIRI ;
@@ -356,16 +356,16 @@ CONSTRUCT {
         ?rd :A_C_age ?A_C_age .
      }
      OPTIONAL {
-        ?rd :WP_Start_date___scheduled ?WP_Start_date___scheduled .
+        ?rd :Start_date___scheduled ?Start_date___scheduled .
      }
      OPTIONAL {
-        ?rd :WP_End_date___scheduled ?WP_End_date___scheduled .
+        ?rd :End_date___scheduled ?End_date___scheduled .
      }
      OPTIONAL {
-        ?rd :WP_Start_date___real ?WP_Start_date___real .
+        ?rd :Start_date___real ?Start_date___real .
      }
      OPTIONAL {
-        ?rd :WP_End_date___real ?WP_End_date___real .
+        ?rd :End_date___real ?End_date___real .
      }
      OPTIONAL {
         ?rd :Line ?workpackageMaintenanceLineId .
