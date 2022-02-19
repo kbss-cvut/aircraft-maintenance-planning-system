@@ -173,39 +173,6 @@ td:import-input-data-schema
   sml:ignoreImports true ;
   rdfs:label "import-input-data-schema" ;
 .
-td:fix-unsupported-datatypes
-  a sml:ApplyConstruct ;
-  sm:next td:transform-data_Return ;
-  sm:nodeX 596 ;
-  sm:nodeY 824 ;
-  sml:constructQuery [
-      a sp:Construct ;
-      sp:text """# 1 - apply workaround for unsupported axioms
-CONSTRUCT {
-     ?s ?p ?oStr .
-}
-WHERE {
-     ?s ?p ?o  .
-     FILTER(datatype(?o) in (xsd:date, xsd:time) )
-     BIND(str(?o) as ?oStr)
-}""" ;
-    ] ;
-  sml:constructQuery [
-      a sp:Construct ;
-      sp:text """#2 - copy supported axioms
-CONSTRUCT {
-     ?s ?p ?o .
-}
-WHERE {
-    ?s ?p ?o  .
-    FILTER NOT EXISTS {
-           FILTER(datatype(?o) in (xsd:date, xsd:time) )
-    }
-}""" ;
-    ] ;
-  sml:replace true ;
-  rdfs:label "fix-unsupported-datatypes" ;
-.
 td:import-scheme
   a sml:ImportRDFFromWorkspace ;
   kbss-module:has-output-graph-constraint [
@@ -229,7 +196,7 @@ WHERE {
 td:merge
   a sml:Merge ;
   sm:next td:deploy-to-rdf4j-server ;
-  sm:next td:fix-unsupported-datatypes ;
+  sm:next td:transform-data_Return ;
   rdfs:label "merge" ;
 .
 td:rdfize-input-data
