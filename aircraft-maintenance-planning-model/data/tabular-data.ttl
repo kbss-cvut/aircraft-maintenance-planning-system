@@ -172,6 +172,7 @@ td:import-input-data-schema
   sm:next td:bind-expected-table-schema ;
   sml:ignoreImports true ;
   rdfs:label "import-input-data-schema" ;
+.
 td:fix-unsupported-datatypes
   a sml:ApplyConstruct ;
   sm:next td:transform-data_Return ;
