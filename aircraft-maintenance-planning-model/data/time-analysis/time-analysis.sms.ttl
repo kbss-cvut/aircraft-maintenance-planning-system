@@ -420,11 +420,11 @@ CONSTRUCT {
      BIND(dl:instance(cm:mechanic, ?Employee_No) as ?mechanicIRI)
      BIND(dl:instance(cm:work-session, ?bookingno_i) as ?workSessionIRI)
 
-     BIND(IF(?endDate,xsd:decimal(?Duration_Full), ?notBound) as ?durationInHours)
      BIND(spif:parseDate(?Start_Date, \"dd.MM.yyyy\") as ?startDate)
      BIND(spif:parseDate(?Start_Time, \"HH:m\") as ?startTime)
      BIND(spif:parseDate(?End_Date, \"dd.MM.yyyy\") as ?endDate)
-     BIND(IF(?endDate, spif:parseDate(?End_Time, \"HH:m\"), ?notBound) as ?endTime)
+     BIND(IF(?End_Date, spif:parseDate(?End_Time, \"HH:m\"), ?notBound) as ?endTime)
+     BIND(IF(?End_Date, xsd:decimal(?Duration_Full), ?notBound) as ?durationInHours)
 
      BIND(dl:instance(cm:client, ?operator) as ?clientIRI)
 
