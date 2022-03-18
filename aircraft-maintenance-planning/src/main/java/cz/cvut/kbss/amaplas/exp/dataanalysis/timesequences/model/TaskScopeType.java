@@ -1,5 +1,8 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
 public class TaskScopeType extends EventType {

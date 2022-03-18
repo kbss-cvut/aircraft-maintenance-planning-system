@@ -27,10 +27,15 @@ import java.util.stream.Collectors;
 public class SparqlDataReaderRDF4J {
 
     private static final Logger LOG = LoggerFactory.getLogger(SparqlDataReaderRDF4J.class);
-
-
-    public List<String> readRowsAsStrings(String queryName, String endpoint){
+    public static HTTPRepository createRepo(String endpoint, String username, String password){
         HTTPRepository r = new HTTPRepository(endpoint);
+        if(username != null && password != null && !username.isEmpty() && !password.isEmpty());
+            r.setUsernameAndPassword(username, password);
+        return r;
+    }
+
+    public List<String> readRowsAsStrings(String queryName, String endpoint, String username, String password){
+        HTTPRepository r = createRepo(endpoint, username, password);
 
         RepositoryConnection c = r.getConnection();
         String query = ResourceUtils.loadResource(queryName);
@@ -48,8 +53,8 @@ public class SparqlDataReaderRDF4J {
         return ret;
     }
 
-    public static <T> List<T> executeQuery(String query, String endpoint, SparqlDataReaderRDF4J.Converter converter){
-        HTTPRepository r = new HTTPRepository(endpoint);
+    public static <T> List<T> executeQuery(String query, String endpoint, String username, String password, SparqlDataReaderRDF4J.Converter converter){
+        HTTPRepository r = createRepo(endpoint, username, password);
 
         RepositoryConnection c = r.getConnection();
         TupleQuery q = c.prepareTupleQuery(query);
@@ -114,12 +119,22 @@ public class SparqlDataReaderRDF4J {
      * @param endpoint
      * @return
      */
-    public List<TaskType> readTaskTypes(String queryName, String endpoint, SparqlDataReaderRDF4J.Converter<TaskType> converter){
+    public List<TaskType> readTaskTypes(String queryName, String endpoint, String username, String password, SparqlDataReaderRDF4J.Converter<TaskType> converter){
         LOG.debug("executing query \"{}\" at endpoint <{}>...", queryName, endpoint);
         String query = ResourceUtils.loadResource(queryName);
-        List<TaskType> results = executeQuery(query, endpoint, converter);
+        List<TaskType> results = executeQuery(query, endpoint, username, password, converter);
         return results;
     }
+
+    public List<TaskType> readTaskDefinitions(String queryName, String endpoint, String graph, String username, String password, SparqlDataReaderRDF4J.Converter<TaskType> converter){
+        LOG.debug("executing query \"{}\" at endpoint <{}>...", queryName, endpoint);
+        String query = ResourceUtils.loadResource(queryName);
+        // Set graph parameter in query
+        query = query.replaceAll("\\?taskTypeDefinitionGraph", String.format("<%s>",graph));
+        List<TaskType> results = executeQuery(query, endpoint, username, password, converter);
+        return results;
+    }
+
 
     public static TaskType convertToTaskType(BindingSet bs) throws ParseException {
         // ?acmodel ?type ?description ?wpuri
@@ -130,9 +145,9 @@ public class SparqlDataReaderRDF4J {
                 manValue(bs, "acmodel")
         );
 
-        taskType.type = taskType.type.replaceFirst("[A-Z]+-]", "");
-        taskType.type = taskType.type.replaceFirst("[A-Z]+-]", "");
-        taskType.acmodel = taskType.type.replaceFirst("[A-Z]+-]", "");
+        taskType.id = taskType.id.replaceFirst("[A-Z]+-]", "");
+        taskType.id = taskType.id.replaceFirst("[A-Z]+-]", "");
+        taskType.acmodel = taskType.id.replaceFirst("[A-Z]+-]", "");
 
         return taskType;
     }
@@ -179,10 +194,10 @@ public class SparqlDataReaderRDF4J {
         return Optional.ofNullable(bs.getValue(name)).map(Value::stringValue).orElse(def);
     }
 
-    public List<Result> readSessionLogsWithNamedQuery(String queryName, String endpoint){
+    public List<Result> readSessionLogsWithNamedQuery(String queryName, String endpoint, String username, String password){
         LOG.debug("executing query \"{}\" at endpoint <{}>...", queryName, endpoint);
         String query = ResourceUtils.loadResource(queryName);
-        List<Result> results = executeQuery(query, endpoint, SparqlDataReaderRDF4J::convertToTimeLog);
+        List<Result> results = executeQuery(query, endpoint, username, password, SparqlDataReaderRDF4J::convertToTimeLog);
 
         // fix data alignment
         Result.normalizeTaskTypes(results);
@@ -334,7 +349,7 @@ public class SparqlDataReaderRDF4J {
     public static void main(String[] args) {
         List<Result> results = new SparqlDataReaderRDF4J().readSessionLogsWithNamedQuery(
                 SparqlDataReader.DA_TASK_SO_WITH_WP_SCOPE,
-                "http://localhost:7200/repositories/csat-data-02"
+                "http://localhost:7200/repositories/csat-data-02", null, null
         );
 
     }

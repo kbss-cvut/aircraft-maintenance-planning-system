@@ -8,7 +8,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
 
 SELECT ?taskCardCode ?MPDTASK ?description ?team ?phase ?taskType ?aircraftModel ?area {
-    GRAPH <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>{
+    GRAPH ?taskTypeDefinitionGraph{
         ?taskCard a cm:task-card ;
                   cm:id ?taskCardCode;
                   cm:model ?aircraftModel.

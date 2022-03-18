@@ -1,6 +1,7 @@
 package cz.cvut.kbss.amaplas.controller;
 
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.Result;
+import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.RevisionPlan;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskPlan;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskType;
 import cz.cvut.kbss.amaplas.services.AircraftRevisionPlannerService;
@@ -49,6 +50,13 @@ public class PlanController {
 //        }
 //        return ret;
     }
+
+    @GetMapping(path = "/api/plan-revision2", produces = MediaType.APPLICATION_JSON_VALUE)
+    public RevisionPlan planRevision2(@RequestParam String revisionId){
+        return plannerService.createRevisionPlanScheduleDeducedFromRevisionExecution(revisionId);
+    }
+
+
 
     @GetMapping(path = "/api/tmp", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Result> tmpController() {

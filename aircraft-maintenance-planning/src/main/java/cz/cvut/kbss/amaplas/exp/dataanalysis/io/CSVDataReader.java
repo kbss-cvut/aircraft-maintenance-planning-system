@@ -13,7 +13,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 public class CSVDataReader {
 
@@ -96,8 +95,8 @@ public class CSVDataReader {
     protected boolean isValidRecord(Result r){
         return r.wp != null && r.acmodel != null && r.start != null && r.scope != null &&
                 r.taskType != null &&
-                r.taskType.type != null &&
-                !r.taskType.type.isEmpty();
+                r.taskType.id != null &&
+                !r.taskType.id.isEmpty();
     }
 
     public static void main(String[] args) {

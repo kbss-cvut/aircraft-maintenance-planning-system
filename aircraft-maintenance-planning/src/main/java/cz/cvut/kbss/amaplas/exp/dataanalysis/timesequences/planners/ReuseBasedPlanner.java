@@ -19,9 +19,36 @@ public class ReuseBasedPlanner {
 
     public static final ReuseBasedPlanner planner = new ReuseBasedPlanner();
 
+    public List<SequencePattern> flattenPartialOrderBreadthFirst1(List<SequencePattern> partialOrder){
+        DefaultDirectedGraph<TaskType, SequencePattern> g = ToGraphml.toGraph(partialOrder);
+        Set<TaskType> tts = g.vertexSet();
+
+        Iterator<Map.Entry<Integer, List<TaskType>>> taskTypesByDegree = tts.stream().collect(Collectors.groupingBy(g::inDegreeOf))
+                .entrySet().stream()
+                .sorted(Comparator.comparing(e -> e.getKey()))
+                .iterator();
+
+
+        Set<TaskType> visitedTaskTypes = new HashSet<>();
+        List<TaskType> result = new ArrayList();
+        while(tts.size() > visitedTaskTypes.size() && taskTypesByDegree.hasNext()){
+            List<TaskType> startingNodes = taskTypesByDegree.next().getValue();
+            if(startingNodes == null)
+                continue;
+            BreadthFirstIterator<TaskType, SequencePattern> iter = new BreadthFirstIterator<>(g, startingNodes);
+            while(iter.hasNext()){
+                TaskType tt = iter.next();
+                if(visitedTaskTypes.add(tt))
+                    result.add(tt);
+            }
+        }
+
+        return null;
+    }
+
 
     public List<TaskType> flattenPartialOrderBreadthFirst(List<SequencePattern> partialOrder){
-        DefaultDirectedGraph<TaskType,String> g = toGraph(partialOrder);
+        DefaultDirectedGraph<TaskType, String> g = toGraph(partialOrder);
         Set<TaskType> tts = g.vertexSet();
 
         Iterator<Map.Entry<Integer, List<TaskType>>> taskTypesByDegree = tts.stream().collect(Collectors.groupingBy(g::inDegreeOf))

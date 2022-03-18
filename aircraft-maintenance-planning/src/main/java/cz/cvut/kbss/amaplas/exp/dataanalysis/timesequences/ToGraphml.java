@@ -16,11 +16,30 @@ import java.util.function.Function;
 
 public class ToGraphml {
     public static void write(Collection<SequencePattern> patterns, String file){
-        DefaultDirectedGraph<String, String> g = toGraph(patterns);
+        DefaultDirectedGraph<String, String> g = toStringGraph(patterns);
         write(g, file);
     }
 
-    public static DefaultDirectedGraph<String, String> toGraph(Collection<SequencePattern> patterns){
+    public static DefaultDirectedGraph<TaskType, SequencePattern> toGraph(Collection<SequencePattern> patterns){
+        DefaultDirectedGraph<TaskType, SequencePattern> g = new DefaultDirectedGraph<>(() -> new TaskType(), () -> new SequencePattern(), true );
+
+        DefaultEdge de;
+
+        // add nodes and edges
+        int edgeId = 0;
+        for (SequencePattern pattern : patterns){
+            TaskType s = pattern.pattern.get(0);
+            TaskType t = pattern.pattern.get(1);
+            g.addVertex(s);
+            g.addVertex(t);
+//            String edge = "" + edgeId++;
+            g.addEdge(s, t, pattern);
+            g.setEdgeWeight(pattern, pattern.instances.size());
+        }
+        return g;
+    }
+
+    public static DefaultDirectedGraph<String, String> toStringGraph(Collection<SequencePattern> patterns){
         DefaultDirectedGraph<String, String> g = new DefaultDirectedGraph<>(() -> new String(), () -> new String(), true );
 
         DefaultEdge de;
@@ -30,10 +49,10 @@ public class ToGraphml {
         for (SequencePattern pattern : patterns){
             TaskType s = pattern.pattern.get(0);
             TaskType t = pattern.pattern.get(1);
-            g.addVertex(s.type);
-            g.addVertex(t.type);
+            g.addVertex(s.id);
+            g.addVertex(t.id);
             String edge = "" + edgeId++;
-            g.addEdge(s.type, t.type, edge);
+            g.addEdge(s.id, t.id, edge);
             g.setEdgeWeight(edge, pattern.instances.size());
         }
         return g;

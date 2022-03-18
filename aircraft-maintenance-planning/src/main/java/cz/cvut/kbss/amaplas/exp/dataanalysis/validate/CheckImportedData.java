@@ -18,6 +18,7 @@ public class CheckImportedData {
 
         // read data from graph db
         System.out.println("reading data from SPARQL endpoint...");
+        // TODO - this method has changed, it does not set the Result.id .
         List<Result> allR = readDataFromEndpoint(endpoint);//.stream().filter(r -> r.wp.equals("OH-LZC/H-17 HMV3+WIFI+CABMOD")).collect(Collectors.toList());;
 
         // read data from excel

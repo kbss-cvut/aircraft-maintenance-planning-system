@@ -132,7 +132,7 @@ public class ExtractData {
         for (int i = 0; i < sup.size(); i++) {
             Pair<TaskType, Set<String>> p1 = sup.get(i);
             if (p1.getValue().isEmpty()) {
-                System.out.println(String.format("The task type (%s) does not have assigned a package", p1.getKey().type));
+                System.out.println(String.format("The task type (%s) does not have assigned a package", p1.getKey().id));
                 Arrays.fill(copr[i], 0);
                 continue; // the result is zero
             }
@@ -171,7 +171,7 @@ public class ExtractData {
 
         // csv or copr
         GMatrix gMatrix = new GMatrix(copr);
-        Function<Integer, String> taskLabel = i -> sup.get(i).getKey().type;
+        Function<Integer, String> taskLabel = i -> sup.get(i).getKey().id;
         GMatrix.linearTable(file + ".csv",
                 "Task Type", "Task Type", "CondProb",
                 taskLabel, taskLabel, gMatrix
@@ -242,7 +242,7 @@ public class ExtractData {
         // ordered taskTypes
         List<TaskType> tcs = results.stream().map(r -> r.taskType)
                 .distinct()
-                .sorted(Comparator.comparing(t -> supportMap.get(t)).reversed().thenComparing(t -> ((TaskType)t).type))
+                .sorted(Comparator.comparing(t -> supportMap.get(t)).reversed().thenComparing(t -> ((TaskType)t).id))
                 .collect(Collectors.toList());
         IntDictionary<TaskType> dict = new IntDictionary<>(tcs);
         List<Pair<String, BitSet>> pkgs = results.stream()
@@ -257,7 +257,7 @@ public class ExtractData {
                 i -> (j) -> pkgs.get(i).getValue().get(j) ? 1f : 0f,
                 new Rectangle(dict.getElements().size(), pkgs.size()));
         GMatrix gMatrix = first.transpose();
-        GMatrix.toTable(file + ".csv", i -> pkgs.get(i).getKey(), i -> dict.elements.get(i).type, gMatrix);
+        GMatrix.toTable(file + ".csv", i -> pkgs.get(i).getKey(), i -> dict.elements.get(i).id, gMatrix);
 // TODO fix ordering
 //        pkgs.sort((p1, p2) -> VectorSo/rt.bitsetComp(p1.getValue(), p2.getValue(), 2, 2));
 
@@ -367,7 +367,7 @@ public class ExtractData {
     public static List<Pair<String, Set<String>>> toPackageTasks(List<Result> results){
         return results.stream()
                 .collect(Collectors.groupingBy( r -> r.wp)).entrySet().stream()
-                .map(e -> Pair.of(e.getKey(), e.getValue().stream().map(r -> r.taskType.type).collect(Collectors.toSet())))
+                .map(e -> Pair.of(e.getKey(), e.getValue().stream().map(r -> r.taskType.id).collect(Collectors.toSet())))
                 .collect(Collectors.toList());
     }
 
@@ -455,7 +455,7 @@ public class ExtractData {
         // frequencies of task types
         System.out.println("frequencies of task types");
         results.stream().collect(Collectors.groupingBy(r -> r.taskType, Collectors.counting()))
-                .entrySet().forEach(e -> System.out.println(String.format("%s;%d", e.getKey().type, e.getValue())));
+                .entrySet().forEach(e -> System.out.println(String.format("%s;%d", e.getKey().id, e.getValue())));
 
         System.out.println();
         System.out.println();
@@ -776,9 +776,9 @@ public class ExtractData {
         FilterTransitiveEdgesAlg filterEdgeResult = FilterTransitiveEdgesAlg.filterTransitiveEdges(supportedPatterns);
         supportedPatterns = filterEdgeResult.filteredSequencePatterns;
 
-        DefaultDirectedGraph<String, String> g = ToGraphml.toGraph(supportedPatterns);
-        DefaultDirectedGraph<String, String> gNoCommonTasks = ToGraphml.toGraph(supportedPatterns);
-        DefaultDirectedGraph<String, String> gOnlyCommonTasks = ToGraphml.toGraph(supportedPatterns);
+        DefaultDirectedGraph<String, String> g = ToGraphml.toStringGraph(supportedPatterns);
+        DefaultDirectedGraph<String, String> gNoCommonTasks = ToGraphml.toStringGraph(supportedPatterns);
+        DefaultDirectedGraph<String, String> gOnlyCommonTasks = ToGraphml.toStringGraph(supportedPatterns);
 
 
 
@@ -1126,7 +1126,7 @@ public class ExtractData {
         for(int i = 0; i < results.size() - 1; i ++){
             Result r1 = results.get(i);
 //            if(visitedType.contains(r1.type))
-            String wpAndType = r1.wp + r1.taskType.type;
+            String wpAndType = r1.wp + r1.taskType.id;
             if(!visitedWpAndType.add(wpAndType))
                 continue;
 
@@ -1159,7 +1159,7 @@ public class ExtractData {
         System.out.println("------------------------------------------------------------------------------------------");
         System.out.println("------------------------------------------------------------------------------------------");
         System.out.println("t1,t2");
-        pairs.forEach(l -> System.out.println(l.stream().map(t -> t.type).collect(Collectors.joining(","))));
+        pairs.forEach(l -> System.out.println(l.stream().map(t -> t.id).collect(Collectors.joining(","))));
     }
 
 
@@ -1271,7 +1271,7 @@ public class ExtractData {
 
         public WPTask(Result r) {
             wp = r.wp;
-            type = r.taskType.type;
+            type = r.taskType.id;
         }
 
         public WPTask(String wp, String type) {

@@ -3,13 +3,10 @@ package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.Result;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.SequencePattern;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskType;
-import org.apache.jena.rdf.model.Seq;
 
-import java.net.Inet4Address;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
-import java.util.stream.Collectors;
 
 public class TimeSequenceMatrix extends Index<TaskType> {
 
@@ -177,6 +174,6 @@ public class TimeSequenceMatrix extends Index<TaskType> {
     }
 
     protected void prepareIndex(List<List<Result>> sequences){
-        prepareIndex(sequences, r -> r.taskType, Comparator.comparing(t -> t.type));
+        prepareIndex(sequences, r -> r.taskType, Comparator.comparing(t -> t.id));
     }
 }

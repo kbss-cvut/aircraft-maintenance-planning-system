@@ -1,12 +1,8 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences;
 
-import com.opencsv.CSVWriter;
 import com.opencsv.CSVWriterBuilder;
 import com.opencsv.ICSVWriter;
-import cz.cvut.kbss.amaplas.exp.common.Checker;
-import cz.cvut.kbss.amaplas.exp.common.ResourceUtils;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.io.CSVDataReader;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.io.SparqlDataReader;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.diff.SequencePatternDiff;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.*;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.planners.OriginalPlanner;
@@ -17,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.ToLongFunction;
@@ -101,7 +96,7 @@ public class PlannerExperiments extends ExtractData{
 
         // do the same for each scope in history
         // MVD
-        Function<Result, Object> taskTypeScopeKey = r -> r.scope.equals(r.taskType.scope) ? r.taskType.type + r.scope : null;
+        Function<Result, Object> taskTypeScopeKey = r -> r.scope.equals(r.taskType.scope) ? r.taskType.id + r.scope : null;
         Map<String, List<Result>> filteredPlans = new HashMap<>();
         plans.entrySet().forEach(e ->
             filteredPlans.put(e.getKey(), e.getValue().stream().filter(r -> taskTypeScopeKey.apply(r) != null).collect(Collectors.toList()))
@@ -479,7 +474,7 @@ public class PlannerExperiments extends ExtractData{
                 "min#wp", "max#wp", "avg#wp",
                 "minTime", "maxTime", "avgTime"});
 
-        Function<Result, String> taskScope = r -> r.taskType.type + "," + r.scope;
+        Function<Result, String> taskScope = r -> r.taskType.id + "," + r.scope;
         ToLongFunction<Result> durationF = r -> (r.end.getTime() - r.start.getTime())/1000;
 
         Function<Collection<Result>, Stream<Map.Entry<String, List<Result>>>> groupByWP = l ->  l.stream()
@@ -493,7 +488,7 @@ public class PlannerExperiments extends ExtractData{
             LongSummaryStatistics tWPStats = groupByWP.apply(e.getValue()).mapToLong(en -> en.getValue().stream()
                     .mapToLong(durationF).sum()).summaryStatistics();
             String[] row = new String[]{
-                    s.taskType.type,
+                    s.taskType.id,
                     s.scope,
                     e.getValue().size() + "",
                     e.getValue().stream().map(r -> r.wp).distinct().count() + "",
@@ -518,7 +513,7 @@ public class PlannerExperiments extends ExtractData{
                 "minDur", "maxDur", "avgDur"}
         );
         // MVD - idWP_TaskTypeCode_ScopeCode
-        Function<Result, String> taskScopeWp = r -> r.wp + "," + r.taskType.type + "," + r.scope;
+        Function<Result, String> taskScopeWp = r -> r.wp + "," + r.taskType.id + "," + r.scope;
         // MVD - durationSec
         ToLongFunction<Result> durationF = r -> (r.end.getTime() - r.start.getTime())/1000;
         // MVD - startTimeSec
@@ -531,7 +526,7 @@ public class PlannerExperiments extends ExtractData{
                     .mapToLong(durationF).summaryStatistics();
             String[] row = new String[]{
                     s.wp,
-                    s.taskType.type,
+                    s.taskType.id,
                     s.scope,
                     e.getValue().size() + "",
                     e.getValue().stream().mapToLong(startTime).min().getAsLong() + "",

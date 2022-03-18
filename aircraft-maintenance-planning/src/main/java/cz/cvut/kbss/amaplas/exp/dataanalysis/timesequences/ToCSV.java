@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ToCSV {
 
@@ -81,7 +80,7 @@ public class ToCSV {
     }
 
     public static String codePath(SequencePattern sp){
-        return sp.pattern.stream().map(tt -> tt.type).collect(Collectors.joining(";"));
+        return sp.pattern.stream().map(tt -> tt.id).collect(Collectors.joining(";"));
     }
 
     public static String labelPath(SequencePattern sp){
@@ -97,7 +96,7 @@ public class ToCSV {
                 ps.print(pathId + ";");
                 ps.print(edgeList.size() + ";");
                 ps.print(path.getEdgeList().stream()
-                        .map(sp -> sp.pattern.get(0).type)
+                        .map(sp -> sp.pattern.get(0).id)
                         .collect(Collectors.joining(";"))
                 );
                 ps.println(";" + edgeList.get(edgeList.size() - 1).pattern.get(1));
@@ -139,7 +138,7 @@ public class ToCSV {
             List<List<Result>> instances = sp.instances;
             Result exampleSupport = instances.get(0).get(i);
             Map<String, String> map = new HashMap<>();
-            map.put("task type", tt.type);
+            map.put("task type", tt.id);
             map.put("task type label", tt.label);
             map.put("acModel", exampleSupport.acmodel);
             map.put("acType", exampleSupport.acType);

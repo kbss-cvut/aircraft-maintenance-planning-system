@@ -11,6 +11,9 @@ repository:
 #    url: ${REPOSITORY_UPDATE_URL:https://graphdb.onto.fel.cvut.cz/repositories/csat-dev}
 #    username: ${REPOSITORY_UPDATE_USERNAME:}
 #    password: ${REPOSITORY_UPDATE_PASSWORD:}
+
+    task_definitions_graph: ${TASK_DEFINITIONS_GRAPH:http://onto.fel.cvut.cz/ontologies/csat-maintenance}
+
 persistence:
   driver: cz.cvut.kbss.ontodriver.sesame.SesameDataSource
   language: cs

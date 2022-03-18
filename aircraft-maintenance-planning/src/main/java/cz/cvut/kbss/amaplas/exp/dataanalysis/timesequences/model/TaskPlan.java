@@ -1,35 +1,40 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
-public class TaskPlan {
+@Getter
+@Setter
+public class TaskPlan extends AbstractComplexPlan<SessionPlan>{
     public static long counter = 0;
 
-    public long id;
+//    private long id;
     @JsonProperty("task-type")
-    public TaskType taskType;
+    private TaskType taskType;
+//
+//    @JsonProperty("start-time")
+//    private Date startTime;
 
-    @JsonProperty("start-time")
-    public Date startTime;
+//    private double duration;
 
-    public double duration;
+//    @JsonProperty("work-time")
+//    private double workTime;
+//
+//    @JsonProperty("work-done")
+//    private double workDone;
 
-    @JsonProperty("work-time")
-    public double workTime;
-
-    @JsonProperty("work-done")
-    public double workDone;
-
-    public TaskPlan(TaskType taskType, Date startTime, double duration, double workTime, double workDone) {
-        this.id = counter ++;
-        this.taskType = taskType;
-        this.startTime = startTime;
-        this.duration = duration;
-        this.workTime = workTime;
-        this.workDone = workDone;
-    }
+//    public TaskPlan(TaskType taskType, Date startTime, long duration, long workTime, long workDone) {
+//        this.id = counter ++;
+//        this.taskType = taskType;
+//        this.startTime = startTime;
+//        this.duration = duration;
+//        this.workTime = workTime;
+////        this.workDone = workDone;
+//    }
 
     public TaskPlan(TaskType taskType) {
         this.id = counter ++;

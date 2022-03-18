@@ -1,6 +1,7 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 
 import cz.cvut.kbss.amaplas.exp.dataanalysis.io.SparqlDataReader;
+import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.base.LongIntervalImpl;
 
 import java.util.*;
 import java.util.function.Function;
@@ -9,7 +10,11 @@ import java.util.function.ToLongFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Task based
+ */
 public class Result{
+    /** The id of the work session log */
     public String id;
     public String wp;
     public String acType = "NONE";
@@ -21,6 +26,7 @@ public class Result{
     public Date start;
     public Date end;
     public Long dur;
+    public Mechanic mechanic;
 //    public int removed;
 
     public Result() {
@@ -39,20 +45,32 @@ public class Result{
         this.acType = at != null ? at.getType() : "NONE";
     }
 
-    public long startTime() {
+    public Result getWrapped(){
+        return this;
+    }
+
+    public long getStart() {
         return start.getTime();
     }
 
-    public long endTime(){
+    public long getEnd(){
         return end.getTime();
     }
 
-    public long time(){
-        return endTime() - startTime();
+    public long getLength(){
+        return getEnd() - getStart();
+    }
+
+    public Mechanic getMechanic() {
+        return mechanic;
+    }
+
+    public void setMechanic(Mechanic mechanic) {
+        this.mechanic = mechanic;
     }
 
     public String taskType(){
-        return taskType.type;
+        return taskType.id;
     }
 
     public boolean isMainScopeSession(){
@@ -77,7 +95,7 @@ public class Result{
     }
 
     public String toString(String sep) {
-        return Stream.of(wp, acmodel, taskType.type, taskType.label, taskType.taskcat, scope, date, start.toString(), end.toString(), dur.toString()).collect(Collectors.joining(sep));
+        return Stream.of(wp, acmodel, taskType.id, taskType.label, taskType.taskcat, scope, date, start.toString(), end.toString(), dur.toString()).collect(Collectors.joining(sep));
     }
 
     @Override
@@ -98,7 +116,7 @@ public class Result{
      * @return id from wp, scope, shiftGroup, taskType.type, start and end
      */
     public String form0(){
-        return String.join(",", wp, scope, shiftGroup, taskType.type, SparqlDataReader.df.format(start), SparqlDataReader.df.format(end));
+        return String.join(",", wp, scope, shiftGroup, taskType.id, SparqlDataReader.df.format(start), SparqlDataReader.df.format(end));
     }
 
     /**
@@ -106,7 +124,7 @@ public class Result{
      * @return id from wp, scope, taskType.type, start and end
      */
     public String form1(){
-        return String.join(",", wp, scope, taskType.type, SparqlDataReader.df.format(start), SparqlDataReader.df.format(end));
+        return String.join(",", wp, scope, taskType.id, SparqlDataReader.df.format(start), SparqlDataReader.df.format(end));
     }
 
     /**
@@ -114,11 +132,11 @@ public class Result{
      * @return id from wp, scope, taskType.type and start
      */
     public String form2(){
-        return String.join(",", wp, scope, taskType.type, SparqlDataReader.df.format(start));
+        return String.join(",", wp, scope, taskType.id, SparqlDataReader.df.format(start));
     }
 
-    public LongInterval asDateInterval(){
-        return new LongInterval(start, end);
+    private LongIntervalImpl asDateInterval(){
+        return new LongIntervalImpl(start, end);
     }
 
 
@@ -130,7 +148,7 @@ public class Result{
      * < 0 the shortest distance between the two intervals' bounds
      */
     public static long overlap(Result s1, Result s2){
-        return Math.min(s1.endTime(), s2.endTime()) - Math.max(s1.startTime(), s2.startTime());
+        return Math.min(s1.getEnd(), s2.getEnd()) - Math.max(s1.getStart(), s2.getStart());
 //        return s1.endTime() - s2.startTime();
     }
 
@@ -139,12 +157,12 @@ public class Result{
      * @param sessions assumes the sessions are ordered by start
      * @return
      */
-    public static List<LongInterval> mergeOverlaps(List<Result> sessions){
-        List<LongInterval> intervals = new ArrayList<>(sessions.size());
+    public static List<LongIntervalImpl> mergeOverlaps(List<Result> sessions){
+        List<LongIntervalImpl> intervals = new ArrayList<>(sessions.size());
         for(Result s: sessions){
             intervals.add(s.asDateInterval());
         }
-        return LongInterval.mergeOverlaps(intervals);
+        return LongIntervalImpl.mergeOverlaps(intervals);
     }
 
 
@@ -186,7 +204,7 @@ public class Result{
         // DEBUG
         List<Result> resultsNoTaskTypes = results.stream().filter(r -> r.taskType == null).collect(Collectors.toList());
         // fix records using the same taskTypeInstance
-        results.forEach(r -> r.taskType = taskTypeMap.get(r.taskType.type));
+        results.forEach(r -> r.taskType = taskTypeMap.get(r.taskType.id));
         // DEBUG
         List<Result> resultsNoTaskTypes2 = results.stream().filter(r -> r.taskType == null).collect(Collectors.toList());
         if(resultsNoTaskTypes2.size() != resultsNoTaskTypes.size()){
@@ -198,10 +216,10 @@ public class Result{
     public static Function<Result, Long> startTimeMilSec = r -> r.start.getTime();
     public static ToLongFunction<Result> startTimeSec = r -> r.start.getTime()/1000;
     public static Comparator<Result> startComparator = Comparator.comparing(startTimeMilSec);
-    public static Function<Result, String> key_WP_TaskTypeCode_ScopeCode = r -> r.wp + "," + r.taskType.type + "," + r.scope;
+    public static Function<Result, String> key_WP_TaskTypeCode_ScopeCode = r -> r.wp + "," + r.taskType.id + "," + r.scope;
     public static Predicate<Result> isMainScopeSession =
-            r -> r.taskType != null && r.taskType.scope != null && r.taskType.type != null && r.scope.equals(r.taskType.scope);
-    public static Function<Result, Object> key_TaskTypeCode_ScopeCode = r -> r.taskType.type + r.scope;
+            r -> r.taskType != null && r.taskType.scope != null && r.taskType.id != null && r.scope.equals(r.taskType.scope);
+    public static Function<Result, Object> key_TaskTypeCode_ScopeCode = r -> r.taskType.id + r.scope;
     public static Function<Result, Object> mainScopeKey_TaskTypeCode_ScopeCode = r -> isMainScopeSession.test(r) ? key_TaskTypeCode_ScopeCode.apply(r) : null;
     public static ToLongFunction<Result> durationMilSec = r -> (r.end.getTime() - r.start.getTime());
     public static ToLongFunction<Result> durationSec = r -> (r.end.getTime() - r.start.getTime())/1000;

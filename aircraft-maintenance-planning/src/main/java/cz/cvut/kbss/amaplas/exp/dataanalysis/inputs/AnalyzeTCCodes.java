@@ -2,6 +2,7 @@ package cz.cvut.kbss.amaplas.exp.dataanalysis.inputs;
 
 import com.opencsv.CSVWriterBuilder;
 import com.opencsv.ICSVWriter;
+import cz.cvut.kbss.amaplas.config.DataRepositoryConfig;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.io.SparqlDataReader;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.io.SparqlDataReaderRDF4J;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.Result;
@@ -19,12 +20,17 @@ public class AnalyzeTCCodes {
 
     public void run(){
         List<TaskType> taskTypes =  __loadTCDefinitionsFromWorkSessionData();
-        List<TaskType> taskTypesDefinitions =  __loadTCDefinitions();
+        List<TaskType> taskTypesDefinitions =  __loadTCDefinitions(
+                "http://localhost:7200/repositories/csat-data-03",
+                "<http://onto.fel.cvut.cz/ontologies/csat-maintenance/>",
+                null,
+                null
+                );
         // compare the results
         String resultDir = "c:\\Users\\kostobog\\Documents\\skola\\projects\\2019-CSAT-doprava-2020\\input\\data_2021-04\\normalized\\";
         compareTCDefs(taskTypesDefinitions, taskTypes, (tdL, tdR) ->
                 {
-                    return is_TCCode_Match_v3(tdL.type, tdR.type);
+                    return is_TCCode_Match_v3(tdL.id, tdR.id);
                 },
                 resultDir,
                 "prefix-based"
@@ -32,7 +38,7 @@ public class AnalyzeTCCodes {
 
         compareTCDefs(taskTypesDefinitions, taskTypes, (tdL, tdR) ->
                 {
-                    return is_TCCode_Match_v2(tdL.type, tdR.type);
+                    return is_TCCode_Match_v2(tdL.id, tdR.id);
                 },
                 resultDir,
                 "equality"
@@ -66,7 +72,14 @@ public class AnalyzeTCCodes {
         return sr.startsWith(sl);
     }
 
+    /**
+     * Checks if sl is a prefix of sr and if the character after the prefix is not alphanumeric.
+     * @param sl
+     * @param sr
+     * @return
+     */
     public static boolean isStrMatch_v3(String sl, String sr){
+        // TODO - this is a simplified match, implement with split and test that it does not fail
         return sr.startsWith(sl) && (sr.length() == sl.length() || (
                     !Character.isDigit(sr.charAt(sl.length())) &&
                     !Character.isAlphabetic(sr.charAt(sl.length()))
@@ -80,11 +93,11 @@ public class AnalyzeTCCodes {
      * @return
      */
     public static boolean hasUniqueMatchWithLongestLeft(List<Match> matches){
-        List<Match> maxMatches = getMatchesMaxLength(matches,  m -> m.left().type.length());
+        List<Match> maxMatches = getMatchesMaxLength(matches,  m -> m.left().id.length());
         return  maxMatches.size() == 1;
     }
     public static boolean hasUniqueMatchWithShortestRight(List<Match> matches){
-        List<Match> maxMatches = getMatchesMaxLength(matches,  m -> m.right().type.length());
+        List<Match> maxMatches = getMatchesMaxLength(matches,  m -> m.right().id.length());
         return  maxMatches.size() == 1;
     }
 
@@ -152,14 +165,14 @@ public class AnalyzeTCCodes {
 //            noMatchR = new ArrayList<>(notMatchedR);
 //
 //            // find matches with common left or right sides
-            allMatches.stream().collect(Collectors.groupingBy(m -> m.left().type)).values()
+            allMatches.stream().collect(Collectors.groupingBy(m -> m.left().id)).values()
                     .stream()
                     .filter(l -> l.size() > 1)
 //                    .filter(l -> !hasUniqueMatchWithShortestRight(l))
                     .flatMap(c -> c.stream())
                     .forEach(m -> m.multiMatchL = true);
 //                    .sorted(Comparator.comparing(m -> m.left().type)).collect(Collectors.toList());
-            allMatches.stream().collect(Collectors.groupingBy(m -> m.right().type)).values()
+            allMatches.stream().collect(Collectors.groupingBy(m -> m.right().id)).values()
                     .stream()
                     .filter(l -> l.size() > 1)
                     .filter(l -> !hasUniqueMatchWithLongestLeft(l))
@@ -191,8 +204,8 @@ public class AnalyzeTCCodes {
 
         public String[] toRow(Match m){
             Function<Boolean, String> b2s = (b) -> b ? "T" : "F";
-            String c1 = Optional.ofNullable(m.left()).map(t -> t.type).orElse("");
-            String c2 = Optional.ofNullable(m.right()).map(t -> t.type).orElse("");
+            String c1 = Optional.ofNullable(m.left()).map(t -> t.id).orElse("");
+            String c2 = Optional.ofNullable(m.right()).map(t -> t.id).orElse("");
             return new String[]{c1, c2, b2s.apply(m.singleMatch), b2s.apply(m.multiMatchL) , b2s.apply(m.multiMatchR) };
         }
     }
@@ -231,9 +244,10 @@ public class AnalyzeTCCodes {
 //                "http://localhost:7200/repositories/csat-data-02",
 //                SparqlDataReaderRDF4J::convertToTaskType
 //                );
-
-        RevisionHistory service = new RevisionHistory();
-        service.setRepositoryUrl("http://localhost:7200/repositories/csat-data-02");
+        DataRepositoryConfig repoConfig = new DataRepositoryConfig();
+        repoConfig.setUrl("http://localhost:7200/repositories/csat-data-02");
+        RevisionHistory service = new RevisionHistory(repoConfig);
+//        service.setRepositoryUrl("http://localhost:7200/repositories/csat-data-02");
         Map<String, List<Result>> map =  service.getAllClosedRevisionsWorkLog(false);
         List<TaskType> taskTypes = map.values().stream()
                 .flatMap(l -> l.stream())
@@ -241,19 +255,20 @@ public class AnalyzeTCCodes {
                 .distinct()
                 .filter(t -> "task_card".equals(t.taskcat))
                 .collect(Collectors.toList());
-        taskTypes.forEach(t -> t.type = t.type.replaceFirst("[A-Z]+-",""));
+        taskTypes.forEach(t -> t.id = t.id.replaceFirst("[A-Z]+-",""));
         taskTypes.forEach(t -> t.scope = t.scope.replaceFirst("_group",""));
 
 //        taskTypes.forEach(t -> System.out.println(Stream.of(t.acmodel, t.type, t.label).collect(Collectors.joining(", "))));
         return taskTypes;
     }
 
-    public List<TaskType> __loadTCDefinitions(){
-
+    public static List<TaskType> __loadTCDefinitions(String url, String graph, String username, String password){
         SparqlDataReaderRDF4J reader = new SparqlDataReaderRDF4J();
-        List<TaskType> taskTypes = reader.readTaskTypes(
+        List<TaskType> taskTypes = reader.readTaskDefinitions(
                 SparqlDataReader.TASK_TYPES_DEFINITIONS,
-                "http://localhost:7200/repositories/csat-data-03",
+                url,
+                graph,
+                username, password,
                 SparqlDataReaderRDF4J::convertToTaskTypeDefinition
                 );
 //        taskTypes.forEach(t -> t.type = t.type.replaceFirst("/1.0",""));

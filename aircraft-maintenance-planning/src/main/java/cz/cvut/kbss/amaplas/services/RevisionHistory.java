@@ -1,5 +1,6 @@
 package cz.cvut.kbss.amaplas.services;
 
+import cz.cvut.kbss.amaplas.config.DataRepositoryConfig;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.io.SparqlDataReader;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.io.SparqlDataReaderRDF4J;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.Result;
@@ -17,22 +18,26 @@ import java.util.stream.Collectors;
 public class RevisionHistory {
     private static final Logger LOG = LoggerFactory.getLogger(RevisionHistory.class);
 
-    @Value("${repository.data.url}")
-    private String repositoryUrl;
+//    @Value("${repository.data.url}")
+//    private String repositoryUrl;
+    private DataRepositoryConfig repoConfig;
 
     private Map<String, List<Result>> historyCache;
 
-
-    public String getRepositoryUrl() {
-        return repositoryUrl;
+    public RevisionHistory(DataRepositoryConfig repoConfig) {
+        this.repoConfig = repoConfig;
     }
 
-    public void setRepositoryUrl(String repositoryUrl) {
-        this.repositoryUrl = repositoryUrl;
-    }
+//    public String getRepositoryUrl() {
+//        return repositoryUrl;
+//    }
+//
+//    public void setRepositoryUrl(String repositoryUrl) {
+//        this.repositoryUrl = repositoryUrl;
+//    }
 
     public List<String> getAllRevisions(){
-        return new SparqlDataReaderRDF4J().readRowsAsStrings(SparqlDataReader.WP, repositoryUrl);
+        return new SparqlDataReaderRDF4J().readRowsAsStrings(SparqlDataReader.WP, repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword());
     }
     /**
      *
@@ -54,8 +59,10 @@ public class RevisionHistory {
      * @return
      */
     private Map<String, List<Result>> loadAllClosedRevisionsWorkLog(){
+        // TODO load task card definitions
 //        LOG.info("fetching revision work log from {}", url);
-        List<Result> results = new SparqlDataReaderRDF4J().readSessionLogsWithNamedQuery(SparqlDataReader.DA_TASK_SO_WITH_WP_SCOPE_OLD, repositoryUrl);
+        List<Result> results = new SparqlDataReaderRDF4J().readSessionLogsWithNamedQuery(SparqlDataReader.DA_TASK_SO_WITH_WP_SCOPE,
+                repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword());
         Map<String, List<Result>> closedRevisions = results.stream()
                 .collect(Collectors.groupingBy(r -> r.wp));
 
