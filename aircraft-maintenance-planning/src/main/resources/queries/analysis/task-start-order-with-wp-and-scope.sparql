@@ -36,8 +36,8 @@ WHERE
        cm:start-time ?sTime;
        cm:end-date ?eDate;
        cm:end-time ?eTime;
-    BIND(spif:parseDate(CONCAT(?sDate,"T", ?sTime),"dd.MM.yyyy'T'hh:mm") as ?st)
-    BIND(spif:parseDate(CONCAT(?eDate,"T", ?eTime),"dd.MM.yyyy'T'hh:mm") as ?et)
+    BIND(spif:parseDate(CONCAT(?sDate,"T", ?sTime),"yyyy-MM-dd'T'hh:mm") as ?st)
+    BIND(spif:parseDate(CONCAT(?eDate,"T", ?eTime),"yyyy-MM-dd'T'hh:mm") as ?et)
 
 
     # select specific aircraft
