@@ -45,9 +45,9 @@ WHERE {
 td:check-input-data-schema
   a sml:ApplyConstruct ;
   kbss-module:has-input-graph-constraint [
-      a sp:Ask ;
-      sp:text """# 1 - there is a missing column compared to expected input data schema
-ASK
+      a sp:Select ;
+      sp:text """# 1 - there is an additional column in retrieved input data schema compared to expected one
+SELECT ?actualColumn
 WHERE {
      ?actualTableSchema  a  csvw:TableSchema .
      ?expectedTableSchema  a  csvw:TableSchema .
@@ -62,9 +62,9 @@ WHERE {
 }""" ;
     ] ;
   kbss-module:has-input-graph-constraint [
-      a sp:Ask ;
-      sp:text """# 2 - there is an additional column compared to expected input data schema
-ASK
+      a sp:Select ;
+      sp:text """# 2 - there is missing column in retrieved input data compared to expected one
+SELECT ?expectedColumnIRI
 WHERE {
      ?actualTableSchema  a  csvw:TableSchema .
      ?expectedTableSchema  a  csvw:TableSchema .
