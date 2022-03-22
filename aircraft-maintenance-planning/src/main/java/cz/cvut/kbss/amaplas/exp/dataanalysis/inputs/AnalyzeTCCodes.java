@@ -30,7 +30,7 @@ public class AnalyzeTCCodes {
         String resultDir = "c:\\Users\\kostobog\\Documents\\skola\\projects\\2019-CSAT-doprava-2020\\input\\data_2021-04\\normalized\\";
         compareTCDefs(taskTypesDefinitions, taskTypes, (tdL, tdR) ->
                 {
-                    return is_TCCode_Match_v3(tdL.id, tdR.id);
+                    return is_TCCode_Match_v3(tdL.code, tdR.code);
                 },
                 resultDir,
                 "prefix-based"
@@ -38,7 +38,7 @@ public class AnalyzeTCCodes {
 
         compareTCDefs(taskTypesDefinitions, taskTypes, (tdL, tdR) ->
                 {
-                    return is_TCCode_Match_v2(tdL.id, tdR.id);
+                    return is_TCCode_Match_v2(tdL.code, tdR.code);
                 },
                 resultDir,
                 "equality"
@@ -93,11 +93,11 @@ public class AnalyzeTCCodes {
      * @return
      */
     public static boolean hasUniqueMatchWithLongestLeft(List<Match> matches){
-        List<Match> maxMatches = getMatchesMaxLength(matches,  m -> m.left().id.length());
+        List<Match> maxMatches = getMatchesMaxLength(matches,  m -> m.left().code.length());
         return  maxMatches.size() == 1;
     }
     public static boolean hasUniqueMatchWithShortestRight(List<Match> matches){
-        List<Match> maxMatches = getMatchesMaxLength(matches,  m -> m.right().id.length());
+        List<Match> maxMatches = getMatchesMaxLength(matches,  m -> m.right().code.length());
         return  maxMatches.size() == 1;
     }
 
@@ -165,14 +165,14 @@ public class AnalyzeTCCodes {
 //            noMatchR = new ArrayList<>(notMatchedR);
 //
 //            // find matches with common left or right sides
-            allMatches.stream().collect(Collectors.groupingBy(m -> m.left().id)).values()
+            allMatches.stream().collect(Collectors.groupingBy(m -> m.left().code)).values()
                     .stream()
                     .filter(l -> l.size() > 1)
 //                    .filter(l -> !hasUniqueMatchWithShortestRight(l))
                     .flatMap(c -> c.stream())
                     .forEach(m -> m.multiMatchL = true);
 //                    .sorted(Comparator.comparing(m -> m.left().type)).collect(Collectors.toList());
-            allMatches.stream().collect(Collectors.groupingBy(m -> m.right().id)).values()
+            allMatches.stream().collect(Collectors.groupingBy(m -> m.right().code)).values()
                     .stream()
                     .filter(l -> l.size() > 1)
                     .filter(l -> !hasUniqueMatchWithLongestLeft(l))
@@ -204,8 +204,8 @@ public class AnalyzeTCCodes {
 
         public String[] toRow(Match m){
             Function<Boolean, String> b2s = (b) -> b ? "T" : "F";
-            String c1 = Optional.ofNullable(m.left()).map(t -> t.id).orElse("");
-            String c2 = Optional.ofNullable(m.right()).map(t -> t.id).orElse("");
+            String c1 = Optional.ofNullable(m.left()).map(t -> t.code).orElse("");
+            String c2 = Optional.ofNullable(m.right()).map(t -> t.code).orElse("");
             return new String[]{c1, c2, b2s.apply(m.singleMatch), b2s.apply(m.multiMatchL) , b2s.apply(m.multiMatchR) };
         }
     }
@@ -255,7 +255,7 @@ public class AnalyzeTCCodes {
                 .distinct()
                 .filter(t -> "task_card".equals(t.taskcat))
                 .collect(Collectors.toList());
-        taskTypes.forEach(t -> t.id = t.id.replaceFirst("[A-Z]+-",""));
+        taskTypes.forEach(t -> t.code = t.code.replaceFirst("[A-Z]+-",""));
         taskTypes.forEach(t -> t.scope = t.scope.replaceFirst("_group",""));
 
 //        taskTypes.forEach(t -> System.out.println(Stream.of(t.acmodel, t.type, t.label).collect(Collectors.joining(", "))));

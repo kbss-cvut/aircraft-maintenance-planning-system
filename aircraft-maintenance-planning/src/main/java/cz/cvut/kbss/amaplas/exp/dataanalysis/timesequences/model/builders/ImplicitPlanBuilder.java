@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 public class ImplicitPlanBuilder {
 
@@ -19,6 +18,15 @@ public class ImplicitPlanBuilder {
         Aircraft aircraft = results.stream().map(r -> getAircraft(r)).filter(a -> a != null).findFirst().orElse(null);
         // create bottom part of hierarchical plan -  create to task plans
         RevisionPlan revisionPlan = new RevisionPlan();
+        String revisionCode = results.stream()
+                .map(r -> r.wp)
+                .filter(s -> s != null && !s.isEmpty())
+                .findFirst().orElse(null);
+
+        Long revisionId = revisionCode != null ? (long)revisionCode.hashCode() : null;
+        revisionPlan.setTitle(revisionCode);
+        revisionPlan.setId(revisionId);
+
         revisionPlan.setResource(aircraft);
 //        List<TaskPlan> taskPlans = new ArrayList<>();
         PlanningResult result = new PlanningResult(revisionPlan);
@@ -131,7 +139,7 @@ public class ImplicitPlanBuilder {
 
         TaskPlan taskPlan = null;
         if(taskTypeCode != null)
-            taskPlan = getEntity(taskTypeCode.id, "task-plan", () -> {
+            taskPlan = getEntity(taskTypeCode.code, "task-plan", () -> {
                 TaskPlan p = modelFactory.newTaskPlan(taskTypeCode);
                 MaintenanceGroup group = getMaintenanceGroupInCtx(r, area);
                 p.setResource(group);
@@ -190,7 +198,7 @@ public class ImplicitPlanBuilder {
 
     // this is a simplification
     public String getMechanicLabel(Result r){
-        return Optional.ofNullable(r.getMechanic()).map(Mechanic::getTitle).orElse("");
+        return Optional.ofNullable(r.getMechanic()).map(Mechanic::getTitle).orElse(modelFactory.generateId() + "");
     }
 
     public String getAircraftModelLabel(Result r){

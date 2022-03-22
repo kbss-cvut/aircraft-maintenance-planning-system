@@ -68,7 +68,7 @@ public class SparqlDataReader {
                 qs.get("typeId").toString(),
                 qs.get("typeLabel").toString()
         );
-        taskType.id = qs.get("id").toString();
+        taskType.code = qs.get("id").toString();
         if(qs.contains("taskcat")){
             taskType.taskcat = qs.get("taskcat").toString();
         }

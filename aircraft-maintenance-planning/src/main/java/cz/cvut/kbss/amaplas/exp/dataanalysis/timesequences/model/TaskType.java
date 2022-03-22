@@ -3,19 +3,17 @@ package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.inputs.AnalyzeTCCodes;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
-public class TaskType extends EventType {
+public class TaskType extends EventType<String> {
 //    public String type = TaskType.class.getSimpleName();
 
 //    @JsonProperty("id")
-    public String id; // the code of the task
+    public String code; // the code of the task
     public String label;
     public String scope;
     @JsonProperty("task-category")
@@ -35,20 +33,22 @@ public class TaskType extends EventType {
     }
 
     public TaskType(TaskType t){
-        this(t.id,t.label, t.taskcat, t.acmodel);
+        this(t.code,t.label, t.taskcat, t.acmodel);
     }
 
-    public TaskType(String id){
-        this(id, id);
+    public TaskType(String code){
+        this(code, code);
     }
-    public TaskType(String id, String label) {
-        this.id = id;
+    public TaskType(String code, String label) {
+        setCode(code);
+        this.id = code;
         this.label = label;
-        this.viewLabel = id + "\n" + label;
+        this.title = label;
+        this.viewLabel = code + "\n" + label;
     }
 
-    public TaskType(String id, String label, String taskcat, String acmodel) {
-        this(id, label);
+    public TaskType(String code, String label, String taskcat, String acmodel) {
+        this(code, label);
         this.taskcat = taskcat;
         this.acmodel = acmodel;
     }
@@ -57,8 +57,8 @@ public class TaskType extends EventType {
 //        return id;
 //    }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getLabel() {
@@ -142,13 +142,13 @@ public class TaskType extends EventType {
     }
 
     @Override
-    public String id() {
-        return id;
+    public String getCode() {
+        return code;
     }
 
     @Override
     public String typeLabel () {
-        return id;
+        return code;
     }
 
     @Override
@@ -156,17 +156,17 @@ public class TaskType extends EventType {
         if (this == o) return true;
         if (!(o instanceof TaskType)) return false;
         TaskType taskType = (TaskType) o;
-        return id.equals(taskType.id);
+        return code.equals(taskType.code);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(code);
     }
 
     @Override
     public String toString() {
-        return id;
+        return code;
     }
 
     public static Map<String, TaskType> taskTypeMap;
@@ -174,15 +174,15 @@ public class TaskType extends EventType {
     public static Map<String, TaskType> normalizeTaskTypes(List<TaskType> taskTypes){
         // normalize type codes
         taskTypes.forEach(t ->
-                t.id = Optional
-                        .of(t.id)
+                t.code = Optional
+                        .of(t.code)
                         .map(l -> l.replace("%20", " "))
                         .orElse(null)
         );
 
         Map<String, TaskType> taskTypeMap = new HashMap<>();
         taskTypes.stream()
-                .collect(Collectors.groupingBy(t -> t.id)).entrySet().stream()
+                .collect(Collectors.groupingBy(t -> t.code)).entrySet().stream()
                 .forEach(e -> taskTypeMap.put(
                         e.getKey(),
                         // FIX bug - selecting longest task type label
@@ -208,19 +208,19 @@ public class TaskType extends EventType {
         taskTCCode2TCDefinitionMap = new HashMap<>();
         results.stream()
                 .map(r -> r.taskType)
-                .filter(t -> t != null && t.id != null)
-                .forEach(t -> taskTCCode2TCDefinitionMap.put(t.id, findMatchingTCDef(t)));
+                .filter(t -> t != null && t.code != null)
+                .forEach(t -> taskTCCode2TCDefinitionMap.put(t.code, findMatchingTCDef(t)));
 
     }
 
     protected static List<TaskType> findMatchingTCDef(TaskType tt){
-        List<TaskType> matches = findMatchingTCDef(tt.id, TaskType::id);
+        List<TaskType> matches = findMatchingTCDef(tt.code, TaskType::getCode);
 
         if(matches.isEmpty()) {
-            matches = findMatchingTCDef(tt.id, TaskType::getMpdtask);
+            matches = findMatchingTCDef(tt.code, TaskType::getMpdtask);
             matches.sort(Comparator.comparing(t -> t.getMpdtask().length()));
         }else{
-            matches.sort(Comparator.comparing(t -> t.id.length()));
+            matches.sort(Comparator.comparing(t -> t.code.length()));
         }
 
         return matches;
@@ -240,10 +240,10 @@ public class TaskType extends EventType {
     }
 
     public static TaskType getTaskTypeDefinition(TaskType tt){
-        if(tt == null || tt.id == null)
+        if(tt == null || tt.code == null)
             return null;
 
-        List<TaskType> res = taskTCCode2TCDefinitionMap.get(tt.id);
+        List<TaskType> res = taskTCCode2TCDefinitionMap.get(tt.code);
         return Optional.ofNullable(res).map(l -> l.isEmpty() ? null : l.get(0)).orElse(null);
     }
 }

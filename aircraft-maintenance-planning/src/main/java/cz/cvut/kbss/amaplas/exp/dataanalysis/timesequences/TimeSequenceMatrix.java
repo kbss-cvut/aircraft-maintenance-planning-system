@@ -174,6 +174,6 @@ public class TimeSequenceMatrix extends Index<TaskType> {
     }
 
     protected void prepareIndex(List<List<Result>> sequences){
-        prepareIndex(sequences, r -> r.taskType, Comparator.comparing(t -> t.id));
+        prepareIndex(sequences, r -> r.taskType, Comparator.comparing(t -> t.code));
     }
 }
