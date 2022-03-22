@@ -209,10 +209,10 @@ public class SparqlDataReaderRDF4J {
 
     public static Result convertToTimeLog(BindingSet bs) throws ParseException {
         TaskType taskType = new TaskType(
-                bs.getValue("type").stringValue(),
-                bs.getValue("typeLabel").stringValue(),
-                bs.getValue("taskcat").stringValue(),
-                bs.getValue("acmodel").stringValue()
+                manValue(bs,"type"),
+                optValue(bs, "typeLabel"),
+                optValue(bs, "taskcat"),
+                optValue(bs,"acmodel")
         );
 
         Result t = new Result();
