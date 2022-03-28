@@ -1,2 +1,7 @@
-**/trash
 example-instance-data
+
+data/data-sample-*
+data/example-data-*
+
+**/trash
+**/private
