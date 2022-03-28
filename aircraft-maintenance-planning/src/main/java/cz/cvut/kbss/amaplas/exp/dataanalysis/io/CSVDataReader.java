@@ -95,8 +95,8 @@ public class CSVDataReader {
     protected boolean isValidRecord(Result r){
         return r.wp != null && r.acmodel != null && r.start != null && r.scope != null &&
                 r.taskType != null &&
-                r.taskType.id != null &&
-                !r.taskType.id.isEmpty();
+                r.taskType.code != null &&
+                !r.taskType.code.isEmpty();
     }
 
     public static void main(String[] args) {

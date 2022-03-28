@@ -6,9 +6,9 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class AbstractEntity {
+public class AbstractEntity<ID> {
     protected String type = this.getClass().getSimpleName();
 
-    protected Long id;
+    protected ID id;
     protected String title;
 }

@@ -19,7 +19,7 @@ jobs:
       - name: Build image
         run: |
           cd aircraft-maintenance-planning-model
-          docker build . --file ./scripts/Dockerfile --tag $IMAGE_NAME
+          docker build . --file ./Dockerfile --tag $IMAGE_NAME
 
       - name: Push image
         run: |

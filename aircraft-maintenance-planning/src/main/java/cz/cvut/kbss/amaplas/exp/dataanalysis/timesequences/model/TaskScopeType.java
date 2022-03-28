@@ -1,8 +1,5 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Objects;
 
 public class TaskScopeType extends EventType {
@@ -14,7 +11,7 @@ public class TaskScopeType extends EventType {
     public TaskScopeType(TaskType taskType, String scope) {
         this.taskType = taskType;
         this.scope = scope;
-        this.id = taskType.id + "-" + scope;
+        this.id = taskType.code + "-" + scope;
         this.typeLabel = taskType.typeLabel() + "-" + scope;
     }
 
@@ -41,7 +38,7 @@ public class TaskScopeType extends EventType {
     }
 
     @Override
-    public String id() {
+    public String getCode() {
         return id;
     }
 

@@ -132,7 +132,7 @@ public class ExtractData {
         for (int i = 0; i < sup.size(); i++) {
             Pair<TaskType, Set<String>> p1 = sup.get(i);
             if (p1.getValue().isEmpty()) {
-                System.out.println(String.format("The task type (%s) does not have assigned a package", p1.getKey().id));
+                System.out.println(String.format("The task type (%s) does not have assigned a package", p1.getKey().code));
                 Arrays.fill(copr[i], 0);
                 continue; // the result is zero
             }
@@ -171,7 +171,7 @@ public class ExtractData {
 
         // csv or copr
         GMatrix gMatrix = new GMatrix(copr);
-        Function<Integer, String> taskLabel = i -> sup.get(i).getKey().id;
+        Function<Integer, String> taskLabel = i -> sup.get(i).getKey().code;
         GMatrix.linearTable(file + ".csv",
                 "Task Type", "Task Type", "CondProb",
                 taskLabel, taskLabel, gMatrix
@@ -242,7 +242,7 @@ public class ExtractData {
         // ordered taskTypes
         List<TaskType> tcs = results.stream().map(r -> r.taskType)
                 .distinct()
-                .sorted(Comparator.comparing(t -> supportMap.get(t)).reversed().thenComparing(t -> ((TaskType)t).id))
+                .sorted(Comparator.comparing(t -> supportMap.get(t)).reversed().thenComparing(t -> ((TaskType)t).code))
                 .collect(Collectors.toList());
         IntDictionary<TaskType> dict = new IntDictionary<>(tcs);
         List<Pair<String, BitSet>> pkgs = results.stream()
@@ -257,7 +257,7 @@ public class ExtractData {
                 i -> (j) -> pkgs.get(i).getValue().get(j) ? 1f : 0f,
                 new Rectangle(dict.getElements().size(), pkgs.size()));
         GMatrix gMatrix = first.transpose();
-        GMatrix.toTable(file + ".csv", i -> pkgs.get(i).getKey(), i -> dict.elements.get(i).id, gMatrix);
+        GMatrix.toTable(file + ".csv", i -> pkgs.get(i).getKey(), i -> dict.elements.get(i).code, gMatrix);
 // TODO fix ordering
 //        pkgs.sort((p1, p2) -> VectorSo/rt.bitsetComp(p1.getValue(), p2.getValue(), 2, 2));
 
@@ -367,7 +367,7 @@ public class ExtractData {
     public static List<Pair<String, Set<String>>> toPackageTasks(List<Result> results){
         return results.stream()
                 .collect(Collectors.groupingBy( r -> r.wp)).entrySet().stream()
-                .map(e -> Pair.of(e.getKey(), e.getValue().stream().map(r -> r.taskType.id).collect(Collectors.toSet())))
+                .map(e -> Pair.of(e.getKey(), e.getValue().stream().map(r -> r.taskType.code).collect(Collectors.toSet())))
                 .collect(Collectors.toList());
     }
 
@@ -455,7 +455,7 @@ public class ExtractData {
         // frequencies of task types
         System.out.println("frequencies of task types");
         results.stream().collect(Collectors.groupingBy(r -> r.taskType, Collectors.counting()))
-                .entrySet().forEach(e -> System.out.println(String.format("%s;%d", e.getKey().id, e.getValue())));
+                .entrySet().forEach(e -> System.out.println(String.format("%s;%d", e.getKey().code, e.getValue())));
 
         System.out.println();
         System.out.println();
@@ -1126,7 +1126,7 @@ public class ExtractData {
         for(int i = 0; i < results.size() - 1; i ++){
             Result r1 = results.get(i);
 //            if(visitedType.contains(r1.type))
-            String wpAndType = r1.wp + r1.taskType.id;
+            String wpAndType = r1.wp + r1.taskType.code;
             if(!visitedWpAndType.add(wpAndType))
                 continue;
 
@@ -1159,7 +1159,7 @@ public class ExtractData {
         System.out.println("------------------------------------------------------------------------------------------");
         System.out.println("------------------------------------------------------------------------------------------");
         System.out.println("t1,t2");
-        pairs.forEach(l -> System.out.println(l.stream().map(t -> t.id).collect(Collectors.joining(","))));
+        pairs.forEach(l -> System.out.println(l.stream().map(t -> t.code).collect(Collectors.joining(","))));
     }
 
 
@@ -1271,7 +1271,7 @@ public class ExtractData {
 
         public WPTask(Result r) {
             wp = r.wp;
-            type = r.taskType.id;
+            type = r.taskType.code;
         }
 
         public WPTask(String wp, String type) {

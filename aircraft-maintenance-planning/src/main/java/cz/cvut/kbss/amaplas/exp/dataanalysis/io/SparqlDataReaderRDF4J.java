@@ -145,9 +145,9 @@ public class SparqlDataReaderRDF4J {
                 manValue(bs, "acmodel")
         );
 
-        taskType.id = taskType.id.replaceFirst("[A-Z]+-]", "");
-        taskType.id = taskType.id.replaceFirst("[A-Z]+-]", "");
-        taskType.acmodel = taskType.id.replaceFirst("[A-Z]+-]", "");
+        taskType.code = taskType.code.replaceFirst("[A-Z]+-]", "");
+        taskType.code = taskType.code.replaceFirst("[A-Z]+-]", "");
+        taskType.acmodel = taskType.code.replaceFirst("[A-Z]+-]", "");
 
         return taskType;
     }
@@ -209,10 +209,10 @@ public class SparqlDataReaderRDF4J {
 
     public static Result convertToTimeLog(BindingSet bs) throws ParseException {
         TaskType taskType = new TaskType(
-                bs.getValue("type").stringValue(),
-                bs.getValue("typeLabel").stringValue(),
-                bs.getValue("taskcat").stringValue(),
-                bs.getValue("acmodel").stringValue()
+                manValue(bs,"type"),
+                optValue(bs, "typeLabel"),
+                optValue(bs, "taskcat"),
+                optValue(bs,"acmodel")
         );
 
         Result t = new Result();

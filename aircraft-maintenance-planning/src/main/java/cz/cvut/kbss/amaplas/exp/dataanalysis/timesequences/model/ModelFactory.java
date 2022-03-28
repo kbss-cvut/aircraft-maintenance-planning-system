@@ -1,10 +1,7 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.*;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
-import java.util.Optional;
 
 
 /**
@@ -13,9 +10,11 @@ import java.util.Optional;
  */
 public class ModelFactory {
 
+    protected Long lastId = null;
+
     public TaskType newTaskType(String code, String label, String area, String taskType, String scope, String phase, String taskCat){
         TaskType tt = new TaskType(code, label);
-        tt.id = tt.id;
+        tt.code = tt.code;
         tt.area = area;
         tt.taskType = taskType;
         tt.scope = scope;
@@ -114,7 +113,7 @@ public class ModelFactory {
     public <T extends AbstractEntity> T newEntity(Class<T> cls, String label){
         try {
             T entity = cls.getConstructor().newInstance();
-            entity.setId(System.currentTimeMillis());
+            entity.setId(generateId());
 //            Thread.sleep(1);
             entity.setTitle(label);
             return entity;
@@ -144,8 +143,22 @@ public class ModelFactory {
         plan.setPlannedWorkTime(plannedWorkTime);
         plan.setWorkTime(workTime);
 
-        plan.setId(System.currentTimeMillis());
+        plan.setId(generateId());
         return plan;
+    }
+
+    public Long generateId(){
+        long newId = System.currentTimeMillis();
+        while(lastId != null && newId <= lastId) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            newId = System.currentTimeMillis();
+        }
+        lastId = newId;
+        return newId;
     }
 
     public Long duration(Date from, Date to){
