@@ -1,7 +1,5 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 
-import lombok.Data;
-
 import java.awt.geom.Area;
 import java.util.Date;
 import java.util.HashMap;

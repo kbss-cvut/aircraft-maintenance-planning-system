@@ -1,10 +1,11 @@
-package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
+ package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.base.LongInterval;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.base.LongIntervalImpl;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import cz.cvut.kbss.amplas.util.Vocabulary;
+import cz.cvut.kbss.jopa.model.annotations.MappedSuperclass;
+import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+
 
 import javax.servlet.Filter;
 import java.util.Date;
@@ -16,13 +17,22 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Setter
-@Getter
-public abstract class AbstractComplexPlan<T extends AbstractPlan> extends AbstractPlan {
+
+@MappedSuperclass
+public abstract class AbstractComplexPlan<T extends AbstractPlan> extends AbstractPlan<Long> {
 //    @Transient
 //    @JsonIgnore
 //    private Class<T> planPartClass;
+    @OWLObjectProperty(iri = Vocabulary.s_p_has_part)
     private Set<T> planParts = new HashSet<>();
+
+    public Set<T> getPlanParts() {
+        return planParts;
+    }
+
+    public void setPlanParts(Set<T> planParts) {
+        this.planParts = planParts;
+    }
 
     // calculate attributes from plan parts
     public void updateTemporalAttributes() {

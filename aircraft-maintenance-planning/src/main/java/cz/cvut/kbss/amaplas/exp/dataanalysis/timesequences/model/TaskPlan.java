@@ -1,19 +1,19 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import cz.cvut.kbss.amplas.util.Vocabulary;
+import cz.cvut.kbss.jopa.model.annotations.OWLClass;
+import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@OWLClass(iri = Vocabulary.s_c_task_plan)
 public class TaskPlan extends AbstractComplexPlan<SessionPlan>{
     public static long counter = 0;
 
 //    private long id;
-    @JsonProperty("task-type")
+//    @JsonProperty("task-type")
+    @OWLObjectProperty(iri = Vocabulary.s_p_task_type)
     private TaskType taskType;
 //
 //    @JsonProperty("start-time")
@@ -42,5 +42,13 @@ public class TaskPlan extends AbstractComplexPlan<SessionPlan>{
     }
 
     public TaskPlan() {
+    }
+
+    public TaskType getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(TaskType taskType) {
+        this.taskType = taskType;
     }
 }

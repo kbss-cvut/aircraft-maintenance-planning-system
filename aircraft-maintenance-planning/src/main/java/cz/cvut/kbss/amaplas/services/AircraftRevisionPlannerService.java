@@ -2,7 +2,6 @@ package cz.cvut.kbss.amaplas.services;
 
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.ExtractData;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.ToGraphml;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.ModelFactory;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.*;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.builders.ImplicitPlanBuilder;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.planners.OriginalPlanner;
@@ -229,7 +228,7 @@ public class AircraftRevisionPlannerService {
             if(r.taskType == null)
                 continue;
             TaskType tt = taskTypeService.getMatchingTaskTypeDefinition(r.taskType);
-            r.taskType.definition = tt;
+            r.taskType.setDefinition(tt);
         }
 
         // build a RevisionPlan, i.e. a hierarchical object model of the plan
