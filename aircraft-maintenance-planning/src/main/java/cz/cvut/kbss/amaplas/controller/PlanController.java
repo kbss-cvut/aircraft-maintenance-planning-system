@@ -40,7 +40,7 @@ public class PlanController {
         return tts;
     }
 
-    @GetMapping(path = "plan-revision2", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE} )
+    @GetMapping(path = "plan-induced-by-revision-execution", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE} )
     public RevisionPlan planRevision2(@RequestParam String revisionId){
         return plannerService.createRevisionPlanScheduleDeducedFromRevisionExecution(revisionId);
     }
