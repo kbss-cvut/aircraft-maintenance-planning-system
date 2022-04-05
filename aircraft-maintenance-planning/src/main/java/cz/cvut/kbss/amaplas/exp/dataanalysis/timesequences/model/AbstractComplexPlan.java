@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 
 
 @MappedSuperclass
-public abstract class AbstractComplexPlan<T extends AbstractPlan> extends AbstractPlan<Long> {
+public abstract class AbstractComplexPlan<T extends AbstractPlan> extends AbstractPlan {
 //    @Transient
 //    @JsonIgnore
 //    private Class<T> planPartClass;

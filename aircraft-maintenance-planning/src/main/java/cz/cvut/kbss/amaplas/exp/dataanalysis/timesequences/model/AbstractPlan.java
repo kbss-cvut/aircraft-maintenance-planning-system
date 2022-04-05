@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @MappedSuperclass
-public abstract class AbstractPlan<ID> extends AbstractEntity<ID>{
+public abstract class AbstractPlan extends AbstractEntity<Long>{
 //    protected EventType eventType;
 //    protected String description;
     protected Resource resource;
