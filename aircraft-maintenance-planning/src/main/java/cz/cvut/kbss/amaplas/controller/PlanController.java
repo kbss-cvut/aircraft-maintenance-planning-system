@@ -34,13 +34,13 @@ public class PlanController {
     }
 
 
-    @GetMapping(path = "plan-revision", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
+    @GetMapping(path = "revision-plans", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
     public List<TaskPlan> planRevision(@RequestParam String revisionId) {
         List<TaskPlan> tts = plannerService.planRevision(revisionId);
         return tts;
     }
 
-    @GetMapping(path = "plan-induced-by-revision-execution", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE} )
+    @GetMapping(path = "revision-plans-induced-by-revision-execution", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE} )
     public RevisionPlan planRevision2(@RequestParam String revisionId){
         return plannerService.createRevisionPlanScheduleDeducedFromRevisionExecution(revisionId);
     }
