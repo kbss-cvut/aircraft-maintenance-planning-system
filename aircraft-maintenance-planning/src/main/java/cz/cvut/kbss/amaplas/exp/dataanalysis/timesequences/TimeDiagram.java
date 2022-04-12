@@ -192,7 +192,7 @@ public class TimeDiagram {
 
     protected void drawRectShape(Graphics2D g, Result r, int x, int y, int w, int h){
          drawRectShape(g, x, y, w, h,
-                borderColorMap.get(r.taskType.taskcat),
+                borderColorMap.get(r.taskType.getTaskcat()),
                 colorMap.get(r.wp));
     }
 

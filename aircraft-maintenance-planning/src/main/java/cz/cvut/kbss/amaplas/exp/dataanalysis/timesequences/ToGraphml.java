@@ -49,10 +49,10 @@ public class ToGraphml {
         for (SequencePattern pattern : patterns){
             TaskType s = pattern.pattern.get(0);
             TaskType t = pattern.pattern.get(1);
-            g.addVertex(s.code);
-            g.addVertex(t.code);
+            g.addVertex(s.getCode());
+            g.addVertex(t.getCode());
             String edge = "" + edgeId++;
-            g.addEdge(s.code, t.code, edge);
+            g.addEdge(s.getCode(), t.getCode(), edge);
             g.setEdgeWeight(edge, pattern.instances.size());
         }
         return g;

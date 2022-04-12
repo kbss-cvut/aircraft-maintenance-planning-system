@@ -2,16 +2,15 @@ package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 
 import java.util.Objects;
 
-public class TaskScopeType extends EventType {
+public class TaskScopeType extends EventType<String> {
     public TaskType taskType;
     public String scope;
-    public String id;
     public String typeLabel;
 
     public TaskScopeType(TaskType taskType, String scope) {
         this.taskType = taskType;
         this.scope = scope;
-        this.id = taskType.code + "-" + scope;
+        this.id = taskType.getCode() + "-" + scope;
         this.typeLabel = taskType.typeLabel() + "-" + scope;
     }
 
@@ -32,12 +31,13 @@ public class TaskScopeType extends EventType {
     }
 
 
-    @Override
+//    @Override
     public String typeLabel() {
         return typeLabel;
     }
 
-    @Override
+//    @Override
+
     public String getCode() {
         return id;
     }

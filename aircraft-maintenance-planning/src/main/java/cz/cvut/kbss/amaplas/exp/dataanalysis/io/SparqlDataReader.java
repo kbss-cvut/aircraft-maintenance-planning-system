@@ -68,9 +68,9 @@ public class SparqlDataReader {
                 qs.get("typeId").toString(),
                 qs.get("typeLabel").toString()
         );
-        taskType.code = qs.get("id").toString();
+        taskType.setCode(qs.get("id").toString());
         if(qs.contains("taskcat")){
-            taskType.taskcat = qs.get("taskcat").toString();
+            taskType.setTaskcat(qs.get("taskcat").toString());
         }
         return taskType;
     }
@@ -108,7 +108,7 @@ public class SparqlDataReader {
         Result t = new Result();
 
         t.wp = qs.get("wp").toString();
-        t.acmodel = taskType.acmodel;
+        t.acmodel = taskType.getAcmodel();
         t.acType = AircraftType.getTypeLabelForModel(t.acmodel);
         t.taskType = taskType;
 

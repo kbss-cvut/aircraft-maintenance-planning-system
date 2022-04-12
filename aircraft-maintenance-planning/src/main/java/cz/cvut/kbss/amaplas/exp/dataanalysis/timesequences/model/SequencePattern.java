@@ -165,7 +165,7 @@ public class SequencePattern {
     }
 
     public String patternId(){
-        return pattern.stream().map(tt -> tt.code).collect(Collectors.joining(";"));
+        return pattern.stream().map(tt -> tt.getCode()).collect(Collectors.joining(";"));
     }
 
     @Override

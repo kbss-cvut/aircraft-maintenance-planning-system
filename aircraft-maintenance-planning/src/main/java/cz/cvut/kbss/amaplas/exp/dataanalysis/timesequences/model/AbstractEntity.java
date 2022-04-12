@@ -1,14 +1,70 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import cz.cvut.kbss.amplas.util.Vocabulary;
+import cz.cvut.kbss.jopa.model.annotations.*;
 
-@Setter
-@Getter
-public class AbstractEntity<ID> {
-    protected String type = this.getClass().getSimpleName();
+import java.io.Serializable;
+import java.net.URI;
+import java.util.Set;
 
+@MappedSuperclass
+public class AbstractEntity<ID> implements Serializable {
+
+    // contains all types of the
+    @Types
+    protected Set<String> types;
+
+    // property that specifies what is the main type of the entity. It also corresponds to a specific class from the object model
+
+    @OWLDataProperty(iri = Vocabulary.s_p_application_type)
+    protected String applicationType = this.getClass().getSimpleName();
+
+    @Id
+    protected URI entityURI;
+
+    @OWLDataProperty(iri = Vocabulary.s_p_id)
     protected ID id;
+
+    @OWLDataProperty(iri = Vocabulary.s_p_label)
     protected String title;
+
+    public Set<String> getTypes() {
+        return types;
+    }
+
+    public void setTypes(Set<String> types) {
+        this.types = types;
+    }
+
+    public String getApplicationType() {
+        return applicationType;
+    }
+
+    public void setApplicationType(String applicationType) {
+        this.applicationType = applicationType;
+    }
+
+    public URI getEntityURI() {
+        return entityURI;
+    }
+
+    public void setEntityURI(URI entityURI) {
+        this.entityURI = entityURI;
+    }
+
+    public ID getId() {
+        return id;
+    }
+
+    public void setId(ID id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

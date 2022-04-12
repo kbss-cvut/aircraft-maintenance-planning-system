@@ -145,9 +145,9 @@ public class SparqlDataReaderRDF4J {
                 manValue(bs, "acmodel")
         );
 
-        taskType.code = taskType.code.replaceFirst("[A-Z]+-]", "");
-        taskType.code = taskType.code.replaceFirst("[A-Z]+-]", "");
-        taskType.acmodel = taskType.code.replaceFirst("[A-Z]+-]", "");
+        taskType.setCode(taskType.getCode().replaceFirst("[A-Z]+-]", ""));
+        taskType.setCode(taskType.getCode().replaceFirst("[A-Z]+-]", ""));
+        taskType.setAcmodel(taskType.getCode().replaceFirst("[A-Z]+-]", ""));
 
         return taskType;
     }
@@ -218,7 +218,7 @@ public class SparqlDataReaderRDF4J {
         Result t = new Result();
 
         t.wp = bs.getValue("wp").stringValue();
-        t.acmodel = taskType.acmodel;
+        t.acmodel = taskType.getAcmodel();
         t.acType = AircraftType.getTypeLabelForModel(t.acmodel);
         t.taskType = taskType;
 

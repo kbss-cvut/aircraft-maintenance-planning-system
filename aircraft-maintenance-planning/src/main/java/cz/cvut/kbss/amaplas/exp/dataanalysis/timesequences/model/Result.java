@@ -70,11 +70,11 @@ public class Result{
     }
 
     public String taskType(){
-        return taskType.code;
+        return taskType.getCode();
     }
 
     public boolean isMainScopeSession(){
-        return scope.equals(taskType.scope);
+        return scope.equals(taskType.getScope());
     }
 
     public static List<String> cols() {
@@ -95,7 +95,7 @@ public class Result{
     }
 
     public String toString(String sep) {
-        return Stream.of(wp, acmodel, taskType.code, taskType.label, taskType.taskcat, scope, date, start.toString(), end.toString(), dur.toString()).collect(Collectors.joining(sep));
+        return Stream.of(wp, acmodel, taskType.getCode(), taskType.getTitle(), taskType.getTaskcat(), scope, date, start.toString(), end.toString(), dur.toString()).collect(Collectors.joining(sep));
     }
 
     @Override
@@ -116,7 +116,7 @@ public class Result{
      * @return id from wp, scope, shiftGroup, taskType.type, start and end
      */
     public String form0(){
-        return String.join(",", wp, scope, shiftGroup, taskType.code, SparqlDataReader.df.format(start), SparqlDataReader.df.format(end));
+        return String.join(",", wp, scope, shiftGroup, taskType.getCode(), SparqlDataReader.df.format(start), SparqlDataReader.df.format(end));
     }
 
     /**
@@ -124,7 +124,7 @@ public class Result{
      * @return id from wp, scope, taskType.type, start and end
      */
     public String form1(){
-        return String.join(",", wp, scope, taskType.code, SparqlDataReader.df.format(start), SparqlDataReader.df.format(end));
+        return String.join(",", wp, scope, taskType.getCode(), SparqlDataReader.df.format(start), SparqlDataReader.df.format(end));
     }
 
     /**
@@ -132,7 +132,7 @@ public class Result{
      * @return id from wp, scope, taskType.type and start
      */
     public String form2(){
-        return String.join(",", wp, scope, taskType.code, SparqlDataReader.df.format(start));
+        return String.join(",", wp, scope, taskType.getCode(), SparqlDataReader.df.format(start));
     }
 
     private LongIntervalImpl asDateInterval(){
@@ -204,7 +204,7 @@ public class Result{
         // DEBUG
         List<Result> resultsNoTaskTypes = results.stream().filter(r -> r.taskType == null).collect(Collectors.toList());
         // fix records using the same taskTypeInstance
-        results.forEach(r -> r.taskType = taskTypeMap.get(r.taskType.code));
+        results.forEach(r -> r.taskType = taskTypeMap.get(r.taskType.getCode()));
         // DEBUG
         List<Result> resultsNoTaskTypes2 = results.stream().filter(r -> r.taskType == null).collect(Collectors.toList());
         if(resultsNoTaskTypes2.size() != resultsNoTaskTypes.size()){
@@ -216,10 +216,10 @@ public class Result{
     public static Function<Result, Long> startTimeMilSec = r -> r.start.getTime();
     public static ToLongFunction<Result> startTimeSec = r -> r.start.getTime()/1000;
     public static Comparator<Result> startComparator = Comparator.comparing(startTimeMilSec);
-    public static Function<Result, String> key_WP_TaskTypeCode_ScopeCode = r -> r.wp + "," + r.taskType.code + "," + r.scope;
+    public static Function<Result, String> key_WP_TaskTypeCode_ScopeCode = r -> r.wp + "," + r.taskType.getCode() + "," + r.scope;
     public static Predicate<Result> isMainScopeSession =
-            r -> r.taskType != null && r.taskType.scope != null && r.taskType.code != null && r.scope.equals(r.taskType.scope);
-    public static Function<Result, Object> key_TaskTypeCode_ScopeCode = r -> r.taskType.code + r.scope;
+            r -> r.taskType != null && r.taskType.getScope() != null && r.taskType.getCode() != null && r.scope.equals(r.taskType.getScope());
+    public static Function<Result, Object> key_TaskTypeCode_ScopeCode = r -> r.taskType.getCode() + r.scope;
     public static Function<Result, Object> mainScopeKey_TaskTypeCode_ScopeCode = r -> isMainScopeSession.test(r) ? key_TaskTypeCode_ScopeCode.apply(r) : null;
     public static ToLongFunction<Result> durationMilSec = r -> (r.end.getTime() - r.start.getTime());
     public static ToLongFunction<Result> durationSec = r -> (r.end.getTime() - r.start.getTime())/1000;

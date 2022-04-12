@@ -82,7 +82,7 @@ public class CSVDataReader {
         Result res = new Result();
         res.id = r[0];
         res.wp = r[15];
-        res.acmodel = taskType.acmodel;
+        res.acmodel = taskType.getAcmodel();
         res.acType = AircraftType.getTypeLabelForModel(res.acmodel);
         res.scope = r[8];// + "_group";
         res.shiftGroup = r[9];
@@ -95,8 +95,8 @@ public class CSVDataReader {
     protected boolean isValidRecord(Result r){
         return r.wp != null && r.acmodel != null && r.start != null && r.scope != null &&
                 r.taskType != null &&
-                r.taskType.code != null &&
-                !r.taskType.code.isEmpty();
+                r.taskType.getCode() != null &&
+                !r.taskType.getCode().isEmpty();
     }
 
     public static void main(String[] args) {
