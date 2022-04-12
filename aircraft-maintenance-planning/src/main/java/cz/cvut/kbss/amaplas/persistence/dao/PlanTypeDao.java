@@ -44,6 +44,10 @@ public class PlanTypeDao {
         return supportedPlanTypes.contains(planType);
     }
 
+    public boolean isSupportedPlanType(Set<URI> planTypes){
+        return planTypes.stream().filter(supportedPlanTypes::contains).findFirst().isPresent();
+    }
+
     public AbstractPlan getNewPlanTypeInstance(String planType){
         Class<? extends AbstractPlan> planClass = entityClassMap.get(planType);
         if(planClass == null)
