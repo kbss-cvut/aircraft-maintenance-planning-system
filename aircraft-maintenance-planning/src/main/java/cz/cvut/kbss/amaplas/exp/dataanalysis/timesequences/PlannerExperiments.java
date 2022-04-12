@@ -38,7 +38,7 @@ public class PlannerExperiments extends ExtractData{
 //
 //        List<Result> results = SparqlDataReader.convertToTimeLog(rs);
         List<Result> results = new CSVDataReader().readData(inputDataFile).stream()
-                  .filter(r -> r.scope != null && Scope.isPriority(r.scope) && "TC".equals(r.taskType.taskcat)) // filter loaded data
+                  .filter(r -> r.scope != null && Scope.isPriority(r.scope) && "TC".equals(r.taskType.getTaskcat())) // filter loaded data
                 .collect(Collectors.toList());
         Set<String> scopes = results.stream().map(r -> r.scope)
                 .filter(s -> s!= null).collect(Collectors.toSet());
@@ -96,7 +96,7 @@ public class PlannerExperiments extends ExtractData{
 
         // do the same for each scope in history
         // MVD
-        Function<Result, Object> taskTypeScopeKey = r -> r.scope.equals(r.taskType.scope) ? r.taskType.code + r.scope : null;
+        Function<Result, Object> taskTypeScopeKey = r -> r.scope.equals(r.taskType.getScope()) ? r.taskType.getCode() + r.scope : null;
         Map<String, List<Result>> filteredPlans = new HashMap<>();
         plans.entrySet().forEach(e ->
             filteredPlans.put(e.getKey(), e.getValue().stream().filter(r -> taskTypeScopeKey.apply(r) != null).collect(Collectors.toList()))
@@ -463,7 +463,7 @@ public class PlannerExperiments extends ExtractData{
 
     public static Map<TaskType, String> findBestScopeForTaskTypes(List<Result> results){
         Map<TaskType, String> taskScopeMap = new HashMap<>();
-        results.stream().map(r -> r.taskType).forEach(t -> taskScopeMap.put(t, t.scope));
+        results.stream().map(r -> r.taskType).forEach(t -> taskScopeMap.put(t, t.getScope()));
         return taskScopeMap;
     }
 
@@ -474,7 +474,7 @@ public class PlannerExperiments extends ExtractData{
                 "min#wp", "max#wp", "avg#wp",
                 "minTime", "maxTime", "avgTime"});
 
-        Function<Result, String> taskScope = r -> r.taskType.code + "," + r.scope;
+        Function<Result, String> taskScope = r -> r.taskType.getCode() + "," + r.scope;
         ToLongFunction<Result> durationF = r -> (r.end.getTime() - r.start.getTime())/1000;
 
         Function<Collection<Result>, Stream<Map.Entry<String, List<Result>>>> groupByWP = l ->  l.stream()
@@ -488,7 +488,7 @@ public class PlannerExperiments extends ExtractData{
             LongSummaryStatistics tWPStats = groupByWP.apply(e.getValue()).mapToLong(en -> en.getValue().stream()
                     .mapToLong(durationF).sum()).summaryStatistics();
             String[] row = new String[]{
-                    s.taskType.code,
+                    s.taskType.getCode(),
                     s.scope,
                     e.getValue().size() + "",
                     e.getValue().stream().map(r -> r.wp).distinct().count() + "",
@@ -513,7 +513,7 @@ public class PlannerExperiments extends ExtractData{
                 "minDur", "maxDur", "avgDur"}
         );
         // MVD - idWP_TaskTypeCode_ScopeCode
-        Function<Result, String> taskScopeWp = r -> r.wp + "," + r.taskType.code + "," + r.scope;
+        Function<Result, String> taskScopeWp = r -> r.wp + "," + r.taskType.getCode() + "," + r.scope;
         // MVD - durationSec
         ToLongFunction<Result> durationF = r -> (r.end.getTime() - r.start.getTime())/1000;
         // MVD - startTimeSec
@@ -526,7 +526,7 @@ public class PlannerExperiments extends ExtractData{
                     .mapToLong(durationF).summaryStatistics();
             String[] row = new String[]{
                     s.wp,
-                    s.taskType.code,
+                    s.taskType.getCode(),
                     s.scope,
                     e.getValue().size() + "",
                     e.getValue().stream().mapToLong(startTime).min().getAsLong() + "",

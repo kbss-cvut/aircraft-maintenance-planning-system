@@ -10,16 +10,22 @@
         <version>2.4.5</version>
         <relativePath/>
     </parent>
+
     <groupId>cz.cvut.kbss.amaplas</groupId>
     <artifactId>aircraft-maintenance-planning</artifactId>
     <version>1.0-SNAPSHOT</version>
 
 
     <properties>
+        <java.version>11</java.version>
+        <org.aspectj.version>1.9.7</org.aspectj.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <graphdb.version>9.3.2</graphdb.version>
+        <cz.cvut.kbss.jopa.version>0.17.2</cz.cvut.kbss.jopa.version>
+        <com.github.ledsoft.version>0.1.1</com.github.ledsoft.version>
+        <cz.cvut.kbss.jsonld.version>0.8.9</cz.cvut.kbss.jsonld.version>
     </properties>
 
     <dependencies>
@@ -41,12 +47,33 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+        </dependency>
 
         <!-- JSON-LD -->
         <dependency>
             <groupId>cz.cvut.kbss.jsonld</groupId>
             <artifactId>jb4jsonld-jackson</artifactId>
-            <version>0.8.8</version>
+            <version>${cz.cvut.kbss.jsonld.version}</version>
+        </dependency>
+
+        <!-- JOPA -->
+        <dependency>
+            <groupId>com.github.ledsoft</groupId>
+            <artifactId>jopa-spring-transaction</artifactId>
+            <version>${com.github.ledsoft.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cz.cvut.kbss.jopa</groupId>
+            <artifactId>jopa-impl</artifactId>
+            <version>${cz.cvut.kbss.jopa.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cz.cvut.kbss.jopa</groupId>
+            <artifactId>ontodriver-sesame</artifactId>
+            <version>${cz.cvut.kbss.jopa.version}</version>
         </dependency>
 
 
@@ -111,6 +138,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.22</version>
+            <optional>true</optional>
         </dependency>
 
 <!--        <dependency>-->
@@ -338,6 +366,115 @@
 <!--                    </archive>-->
 <!--                </configuration>-->
 <!--            </plugin>-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.10</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/generated-sources</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- Generate entity classes from OWL integrity constraints -->
+                <groupId>cz.cvut.kbss.jopa</groupId>
+                <artifactId>jopa-maven-plugin</artifactId>
+                <version>${cz.cvut.kbss.jopa.version}</version>
+                <configuration>
+                    <package>cz.cvut.kbss.amplas.util</package>
+                    <output-directory>${project.basedir}/src/main/generated-sources</output-directory>
+                    <ontology-iri>http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning</ontology-iri>
+                    <mapping-file>${project.basedir}/src/main/resources/mapping</mapping-file>
+                    <whole-ontology-as-ics>true</whole-ontology-as-ics>
+                    <vocabulary-only>true</vocabulary-only>
+                    <ignore-failed-imports>true</ignore-failed-imports>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-vocabulary</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>owl2java-transform</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <version>1.14.0</version>
+                <configuration>
+                    <complianceLevel>${java.version}</complianceLevel>
+
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <aspectLibraries>
+                        <aspectLibrary>
+                            <groupId>cz.cvut.kbss.jopa</groupId>
+                            <artifactId>jopa-impl</artifactId>
+                        </aspectLibrary>
+                        <aspectLibrary>
+                            <groupId>org.springframework</groupId>
+                            <artifactId>spring-aspects</artifactId>
+                        </aspectLibrary>
+                    </aspectLibraries>
+                    <excludes>
+                        <exclude>**/exp/common/*.java</exclude>
+                        <exclude>**/graphml/**/*.java</exclude>
+                    </excludes>
+<!--                    <sources>-->
+<!--                        <source>-->
+<!--                            <basedir>src/main/java</basedir>-->
+<!--                            <excludes>-->
+<!--                                <exclude>src/main/java/cz/cvut/kbss/amaplas/exp/common/JaxbUtils.java</exclude>-->
+<!--                            </excludes>-->
+<!--                        </source>-->
+<!--                        <source>-->
+<!--                            <basedir>src/main/generated-sources</basedir>-->
+<!--                        </source>-->
+<!--                    </sources>-->
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjtools</artifactId>
+                        <version>${org.aspectj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjrt</artifactId>
+                        <version>${org.aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>main</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>compile</goal>
+                            <!-- use this goal to weave all your main classes -->
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test</id>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                            <!-- use this goal to weave all your test classes -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

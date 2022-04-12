@@ -80,11 +80,11 @@ public class ToCSV {
     }
 
     public static String codePath(SequencePattern sp){
-        return sp.pattern.stream().map(tt -> tt.code).collect(Collectors.joining(";"));
+        return sp.pattern.stream().map(tt -> tt.getCode()).collect(Collectors.joining(";"));
     }
 
     public static String labelPath(SequencePattern sp){
-        return sp.instances.get(0).stream().map(r -> r.taskType.label).collect(Collectors.joining(";"));
+        return sp.instances.get(0).stream().map(r -> r.taskType.getTitle()).collect(Collectors.joining(";"));
     }
 
     public static void writePathsPerRow(Collection<GraphPath<TaskType, SequencePattern>> paths, String fileName){
@@ -96,7 +96,7 @@ public class ToCSV {
                 ps.print(pathId + ";");
                 ps.print(edgeList.size() + ";");
                 ps.print(path.getEdgeList().stream()
-                        .map(sp -> sp.pattern.get(0).code)
+                        .map(sp -> sp.pattern.get(0).getCode())
                         .collect(Collectors.joining(";"))
                 );
                 ps.println(";" + edgeList.get(edgeList.size() - 1).pattern.get(1));
@@ -138,8 +138,8 @@ public class ToCSV {
             List<List<Result>> instances = sp.instances;
             Result exampleSupport = instances.get(0).get(i);
             Map<String, String> map = new HashMap<>();
-            map.put("task type", tt.code);
-            map.put("task type label", tt.label);
+            map.put("task type", tt.getCode());
+            map.put("task type label", tt.getTitle());
             map.put("acModel", exampleSupport.acmodel);
             map.put("acType", exampleSupport.acType);
             ret.add(map);

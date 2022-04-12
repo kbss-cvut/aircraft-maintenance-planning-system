@@ -24,7 +24,7 @@ public class RevisionController {
         this.revisionHistoryService = revisionHistoryService;
     }
 
-    @GetMapping(path = "/api/revisions/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "revisions/", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getAllRevisions(){
         LOG.info("Retrieving all revisions");
         return revisionHistoryService.getAllRevisions();

@@ -1,10 +1,8 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.base;
 
-import lombok.Data;
 
 import java.util.*;
 
-@Data
 public class LongIntervalImpl implements LongInterval{
     private Long start;
     private Long end;
@@ -20,6 +18,24 @@ public class LongIntervalImpl implements LongInterval{
 
     public LongIntervalImpl(Date d1, Date d2){
         this(d1.getTime(), d2.getTime());
+    }
+
+    @Override
+    public Long getStart() {
+        return start;
+    }
+
+    public void setStart(Long start) {
+        this.start = start;
+    }
+
+    @Override
+    public Long getEnd() {
+        return end;
+    }
+
+    public void setEnd(Long end) {
+        this.end = end;
     }
 
     public void setAs(LongInterval i){

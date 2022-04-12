@@ -3,17 +3,16 @@ package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.base.LongInterval;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.base.LongIntervalWrapper;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import cz.cvut.kbss.amplas.util.Vocabulary;
+import cz.cvut.kbss.jopa.model.annotations.MappedSuperclass;
+import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 
 import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;
 
-@Getter
-@Setter
-public abstract class AbstractPlan<T extends AbstractPlan> extends AbstractEntity{
+@MappedSuperclass
+public abstract class AbstractPlan extends AbstractEntity<Long>{
 //    protected EventType eventType;
 //    protected String description;
     protected Resource resource;
@@ -38,6 +37,78 @@ public abstract class AbstractPlan<T extends AbstractPlan> extends AbstractEntit
 
     @JsonProperty("work-time")
     protected Long workTime;
+
+    public Resource getResource() {
+        return resource;
+    }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
+    }
+
+    public Date getPlannedStartTime() {
+        return plannedStartTime;
+    }
+
+    public void setPlannedStartTime(Date plannedStartTime) {
+        this.plannedStartTime = plannedStartTime;
+    }
+
+    public Date getPlannedEndTime() {
+        return plannedEndTime;
+    }
+
+    public void setPlannedEndTime(Date plannedEndTime) {
+        this.plannedEndTime = plannedEndTime;
+    }
+
+    public Long getPlannedDuration() {
+        return plannedDuration;
+    }
+
+    public void setPlannedDuration(Long plannedDuration) {
+        this.plannedDuration = plannedDuration;
+    }
+
+    public Long getPlannedWorkTime() {
+        return plannedWorkTime;
+    }
+
+    public void setPlannedWorkTime(Long plannedWorkTime) {
+        this.plannedWorkTime = plannedWorkTime;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
+    }
+
+    public Long getWorkTime() {
+        return workTime;
+    }
+
+    public void setWorkTime(Long workTime) {
+        this.workTime = workTime;
+    }
 
     public void updateTemporalAttributes(Date toDate){
         // do nothing, used for complex tasks to calculate their temporal properties from their parts.
