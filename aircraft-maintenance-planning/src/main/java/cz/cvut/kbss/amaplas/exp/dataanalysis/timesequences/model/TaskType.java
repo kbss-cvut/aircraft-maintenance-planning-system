@@ -35,7 +35,11 @@ public class TaskType extends EventType<String> {
     // TODO - this is a category (type) of the task. One way to fix this is to use different jopa classes to represent
     //  each task category, i.e. task card, maintenance work order and scheduled work order
     @JsonProperty("task-category")
+//    @OWLDataProperty(iri = Vocabulary.s_c_category)
+    @Transient
     protected String taskcat;
+
+    @Transient
     @JsonIgnore
     protected String viewLabel;
     @OWLDataProperty(iri = Vocabulary.s_p_task_for_model)
@@ -54,6 +58,7 @@ public class TaskType extends EventType<String> {
     @OWLDataProperty(iri = Vocabulary.s_p_has_general_task_type)
     protected String taskType;
 
+    @Transient
     @JsonIgnore
     protected TaskType definition;
 
@@ -69,7 +74,7 @@ public class TaskType extends EventType<String> {
     }
     public TaskType(String code, String title) {
         this.code = code;
-        this.id = code;
+        this.setId(code);
         this.title = title;
         this.viewLabel = code + "\n" + title;
     }
@@ -83,6 +88,15 @@ public class TaskType extends EventType<String> {
 //    public String getId() {
 //        return id;
 //    }
+
+
+    public Set<URI> getScopes() {
+        return scopes;
+    }
+
+    public void setScopes(Set<URI> scopes) {
+        this.scopes = scopes;
+    }
 
     public void setCode(String code) {
         this.code = code;
@@ -194,6 +208,7 @@ public class TaskType extends EventType<String> {
         return getCode();
     }
 
+    @Transient
     public static Map<String, TaskType> taskTypeMap;
 
     public static Map<String, TaskType> normalizeTaskTypes(List<TaskType> taskTypes){
@@ -217,7 +232,9 @@ public class TaskType extends EventType<String> {
         return  taskTypeMap;
     }
 
+    @Transient
     public static List<TaskType> taskTypeDefinitions;
+    @Transient
     public static Map<String, List<TaskType>> taskTCCode2TCDefinitionMap;
 
 

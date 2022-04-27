@@ -10,7 +10,7 @@ public class TaskScopeType extends EventType<String> {
     public TaskScopeType(TaskType taskType, String scope) {
         this.taskType = taskType;
         this.scope = scope;
-        this.id = taskType.getCode() + "-" + scope;
+        this.setId(taskType.getCode() + "-" + scope);
         this.typeLabel = taskType.typeLabel() + "-" + scope;
     }
 
@@ -39,7 +39,7 @@ public class TaskScopeType extends EventType<String> {
 //    @Override
 
     public String getCode() {
-        return id;
+        return getId();
     }
 
     @Override
