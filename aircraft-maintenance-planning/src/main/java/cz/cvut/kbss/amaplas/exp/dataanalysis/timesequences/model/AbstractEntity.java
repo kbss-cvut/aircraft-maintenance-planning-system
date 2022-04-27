@@ -23,7 +23,7 @@ public class AbstractEntity<ID> implements Serializable {
     protected URI entityURI;
 
     @OWLDataProperty(iri = Vocabulary.s_p_id)
-    protected ID id;
+    private Object id;
 
     @OWLDataProperty(iri = Vocabulary.s_p_label)
     protected String title;
@@ -53,7 +53,7 @@ public class AbstractEntity<ID> implements Serializable {
     }
 
     public ID getId() {
-        return id;
+        return (ID)id;
     }
 
     public void setId(ID id) {

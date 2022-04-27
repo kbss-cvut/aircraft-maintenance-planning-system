@@ -1,11 +1,8 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.amplas.util.Vocabulary;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-
-import java.util.Date;
 
 @OWLClass(iri = Vocabulary.s_c_task_plan)
 public class TaskPlan extends AbstractComplexPlan<SessionPlan>{
@@ -37,7 +34,7 @@ public class TaskPlan extends AbstractComplexPlan<SessionPlan>{
 //    }
 
     public TaskPlan(TaskType taskType) {
-        this.id = counter ++;
+        this.setId(counter ++);
         this.taskType = taskType;
     }
 
