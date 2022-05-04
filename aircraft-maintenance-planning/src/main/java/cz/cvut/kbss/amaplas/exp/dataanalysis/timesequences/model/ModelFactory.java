@@ -14,12 +14,11 @@ public class ModelFactory {
 
     public TaskType newTaskType(String code, String label, String area, String taskType, String scope, String phase, String taskCat){
         TaskType tt = new TaskType(code, label);
-        tt.code = tt.code;
-        tt.area = area;
-        tt.taskType = taskType;
-        tt.scope = scope;
-        tt.phase = phase;
-        tt.taskcat = taskCat;
+        tt.setArea(area);
+        tt.setTaskType(taskType);
+        tt.setScope(scope);
+        tt.setPhase(phase);
+        tt.setTaskcat(taskCat);
         return tt;
     }
 

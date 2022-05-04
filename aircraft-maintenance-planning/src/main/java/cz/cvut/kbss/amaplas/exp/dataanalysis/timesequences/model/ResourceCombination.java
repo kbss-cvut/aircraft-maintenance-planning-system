@@ -11,6 +11,7 @@ import java.util.List;
  */
 @Getter
 @Setter
+// NOT USED
 public class ResourceCombination extends Resource {
     protected List<Resource> resources;
 

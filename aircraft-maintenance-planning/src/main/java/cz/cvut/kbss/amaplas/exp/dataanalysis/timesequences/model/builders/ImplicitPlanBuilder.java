@@ -139,7 +139,7 @@ public class ImplicitPlanBuilder {
 
         TaskPlan taskPlan = null;
         if(taskTypeCode != null)
-            taskPlan = getEntity(taskTypeCode.code, "task-plan", () -> {
+            taskPlan = getEntity(taskTypeCode.getCode(), "task-plan", () -> {
                 TaskPlan p = modelFactory.newTaskPlan(taskTypeCode);
                 MaintenanceGroup group = getMaintenanceGroupInCtx(r, area);
                 p.setResource(group);
@@ -226,7 +226,7 @@ public class ImplicitPlanBuilder {
     }
 
     public Optional<TaskType> getTaskTypeDefinition(Result r){
-        return getTaskType(r).map(tt -> tt.definition);
+        return getTaskType(r).map(tt -> tt.getDefinition());
     }
 
 

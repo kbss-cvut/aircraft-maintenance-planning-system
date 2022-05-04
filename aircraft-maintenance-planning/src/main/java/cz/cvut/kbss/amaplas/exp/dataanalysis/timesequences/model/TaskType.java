@@ -3,52 +3,79 @@ package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.inputs.AnalyzeTCCodes;
+import cz.cvut.kbss.amplas.util.Vocabulary;
+import cz.cvut.kbss.jopa.model.annotations.OWLClass;
+import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
+import cz.cvut.kbss.jopa.model.annotations.Transient;
 
+import java.net.URI;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
+@OWLClass(iri = Vocabulary.s_c_Maintenance_task)
 public class TaskType extends EventType<String> {
 //    public String type = TaskType.class.getSimpleName();
 
 //    @JsonProperty("id")
-    public String code; // the code of the task
-    public String label;
-    public String scope;
+    // TODO - decide if we need both id and code?
+    @Transient
+    protected String code; // the code of the task
+
+    // TODO - there should be a scopes collection because each task type can have work sessions performed by mechanics from different scope groups.
+    @OWLDataProperty(iri = Vocabulary.s_p_has_scope)
+    protected Set<URI> scopes;
+    // TODO - the type should be URI and it should point to maintenance group
+    // This is the main scope of the task type
+    @OWLDataProperty(iri = Vocabulary.s_p_has_main_scope)
+    protected String scope;
+
+
+    // TODO - this is a category (type) of the task. One way to fix this is to use different jopa classes to represent
+    //  each task category, i.e. task card, maintenance work order and scheduled work order
     @JsonProperty("task-category")
-    public String taskcat;
+    protected String taskcat;
     @JsonIgnore
-    public String viewLabel;
-    public String acmodel;
-    public String area;
-    public String mpdtask;
-    public String phase;
-    public String taskType;
+    protected String viewLabel;
+    @OWLDataProperty(iri = Vocabulary.s_p_task_for_model)
+    protected String acmodel;
+    @OWLDataProperty(iri = Vocabulary.s_p_task_for_area)
+    protected String area;
+    // This is a property alternative to the id of the task card
+    // - is this field required for work orders?
+    // - is it the id of some other type?
+    // task defined in a Maintenance planning document (MPD)
+    @OWLDataProperty(iri = Vocabulary.s_p_has_mpdtask)
+    protected String mpdtask;
+    @OWLDataProperty(iri = Vocabulary.s_p_task_for_phase)
+    protected String phase;
+
+    @OWLDataProperty(iri = Vocabulary.s_p_has_general_task_type)
+    protected String taskType;
 
     @JsonIgnore
-    public TaskType definition;
+    protected TaskType definition;
 
     public TaskType() {
     }
 
     public TaskType(TaskType t){
-        this(t.code,t.label, t.taskcat, t.acmodel);
+        this(t.getCode(), t.getTitle(), t.getTaskcat(), t.getAcmodel());
     }
 
     public TaskType(String code){
         this(code, code);
     }
-    public TaskType(String code, String label) {
-        setCode(code);
+    public TaskType(String code, String title) {
+        this.code = code;
         this.id = code;
-        this.label = label;
-        this.title = label;
-        this.viewLabel = code + "\n" + label;
+        this.title = title;
+        this.viewLabel = code + "\n" + title;
     }
 
-    public TaskType(String code, String label, String taskcat, String acmodel) {
-        this(code, label);
+    public TaskType(String code, String title, String taskcat, String acmodel) {
+        this(code, title);
         this.taskcat = taskcat;
         this.acmodel = acmodel;
     }
@@ -59,14 +86,6 @@ public class TaskType extends EventType<String> {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
     }
 
     public String getScope() {
@@ -141,14 +160,20 @@ public class TaskType extends EventType<String> {
         this.area = area;
     }
 
-    @Override
     public String getCode() {
         return code;
     }
 
-    @Override
     public String typeLabel () {
-        return code;
+        return getCode();
+    }
+
+    public void setDefinition(TaskType definition) {
+        this.definition = definition;
+    }
+
+    public TaskType getDefinition() {
+        return definition;
     }
 
     @Override
@@ -156,17 +181,17 @@ public class TaskType extends EventType<String> {
         if (this == o) return true;
         if (!(o instanceof TaskType)) return false;
         TaskType taskType = (TaskType) o;
-        return code.equals(taskType.code);
+        return getCode().equals(taskType.getCode());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(code);
+        return Objects.hash(getCode());
     }
 
     @Override
     public String toString() {
-        return code;
+        return getCode();
     }
 
     public static Map<String, TaskType> taskTypeMap;
@@ -175,18 +200,18 @@ public class TaskType extends EventType<String> {
         // normalize type codes
         taskTypes.forEach(t ->
                 t.code = Optional
-                        .of(t.code)
+                        .of(t.getCode())
                         .map(l -> l.replace("%20", " "))
                         .orElse(null)
         );
 
         Map<String, TaskType> taskTypeMap = new HashMap<>();
         taskTypes.stream()
-                .collect(Collectors.groupingBy(t -> t.code)).entrySet().stream()
+                .collect(Collectors.groupingBy(t -> t.getCode())).entrySet().stream()
                 .forEach(e -> taskTypeMap.put(
                         e.getKey(),
-                        // FIX bug - selecting longest task type label
-                        e.getValue().stream().sorted(Comparator.comparing((TaskType t) -> t.label.length()).reversed()).findFirst().get()
+                        // FIX bug - selecting longest task type title
+                        e.getValue().stream().sorted(Comparator.comparing((TaskType t) -> t.getTitle().length()).reversed()).findFirst().get()
                 ));
         TaskType.taskTypeMap = taskTypeMap;
         return  taskTypeMap;
@@ -208,19 +233,19 @@ public class TaskType extends EventType<String> {
         taskTCCode2TCDefinitionMap = new HashMap<>();
         results.stream()
                 .map(r -> r.taskType)
-                .filter(t -> t != null && t.code != null)
-                .forEach(t -> taskTCCode2TCDefinitionMap.put(t.code, findMatchingTCDef(t)));
+                .filter(t -> t != null && t.getCode() != null)
+                .forEach(t -> taskTCCode2TCDefinitionMap.put(t.getCode(), findMatchingTCDef(t)));
 
     }
 
     protected static List<TaskType> findMatchingTCDef(TaskType tt){
-        List<TaskType> matches = findMatchingTCDef(tt.code, TaskType::getCode);
+        List<TaskType> matches = findMatchingTCDef(tt.getCode(), TaskType::getCode);
 
         if(matches.isEmpty()) {
-            matches = findMatchingTCDef(tt.code, TaskType::getMpdtask);
+            matches = findMatchingTCDef(tt.getCode(), TaskType::getMpdtask);
             matches.sort(Comparator.comparing(t -> t.getMpdtask().length()));
         }else{
-            matches.sort(Comparator.comparing(t -> t.code.length()));
+            matches.sort(Comparator.comparing(t -> t.getCode().length()));
         }
 
         return matches;
@@ -240,10 +265,10 @@ public class TaskType extends EventType<String> {
     }
 
     public static TaskType getTaskTypeDefinition(TaskType tt){
-        if(tt == null || tt.code == null)
+        if(tt == null || tt.getCode() == null)
             return null;
 
-        List<TaskType> res = taskTCCode2TCDefinitionMap.get(tt.code);
+        List<TaskType> res = taskTCCode2TCDefinitionMap.get(tt.getCode());
         return Optional.ofNullable(res).map(l -> l.isEmpty() ? null : l.get(0)).orElse(null);
     }
 }
