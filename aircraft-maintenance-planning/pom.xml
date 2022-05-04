@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.5</version>
+        <version>2.5.4</version>
         <relativePath/>
     </parent>
 
@@ -26,6 +26,10 @@
         <cz.cvut.kbss.jopa.version>0.17.2</cz.cvut.kbss.jopa.version>
         <com.github.ledsoft.version>0.1.1</com.github.ledsoft.version>
         <cz.cvut.kbss.jsonld.version>0.8.9</cz.cvut.kbss.jsonld.version>
+        <org.springframework.boot.version>2.6.3</org.springframework.boot.version>
+        <org.junit.jupiter.version>5.8.2</org.junit.jupiter.version>
+        <org.mockito.version>4.3.1</org.mockito.version>
+        <org.eclipse.rdf4j.version>3.7.3</org.eclipse.rdf4j.version>
     </properties>
 
     <dependencies>
@@ -208,25 +212,34 @@
 <!--            <artifactId>blueprints-core</artifactId>-->
 <!--            <version>2.6.0</version>-->
 <!--        </dependency>-->
+
+        <!-- RDF4J -->
         <dependency>
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-http-client</artifactId>
-            <version>3.7.3</version>
+            <version>${org.eclipse.rdf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-repository-api</artifactId>
-            <version>3.7.3</version>
+            <version>${org.eclipse.rdf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-repository-manager</artifactId>
-            <version>3.7.3</version>
+            <version>${org.eclipse.rdf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-query</artifactId>
-            <version>3.7.3</version>
+            <version>${org.eclipse.rdf4j.version}</version>
+        </dependency>
+
+        <!-- RDF4J Rio parsers for importing vocabularies -->
+        <dependency>
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-rio-rdfxml</artifactId>
+            <version>${org.eclipse.rdf4j.version}</version>
         </dependency>
 
         <dependency>
@@ -260,10 +273,11 @@
             <version>1.2.6</version>
         </dependency>
 
-        <!-- testing dependencies -->
+        <!-- Test dependencies -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>2.2</version>
             <scope>test</scope>
         </dependency>
 <!--        <dependency>-->
@@ -271,6 +285,12 @@
 <!--            <artifactId>ufo-validator</artifactId>-->
 <!--            <version>1.0</version>-->
 <!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${org.springframework.boot.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.topbraid</groupId>
             <artifactId>shacl</artifactId>
