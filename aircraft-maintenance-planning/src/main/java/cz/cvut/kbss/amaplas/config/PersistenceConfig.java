@@ -35,25 +35,6 @@ public class PersistenceConfig {
         return new DelegatingEntityManager();
     }
 
-
-    @Bean(destroyMethod = "close")
-    @Primary
-    public EntityManagerFactory entityManagerFactory(@Value(value = "${repository.data.url}") String repositoryUrl,
-                                                     @Value(value = "${repository.data.username:#{null}}") String repositoryUsername,
-                                                     @Value(value = "${repository.data.password:#{null}}") String repositoryPassword,
-                                                     @Value(value = "${persistence.driver}") String driver) {
-        return createEntityManagerFactory(repositoryUrl, repositoryUsername, repositoryPassword, driver);
-    }
-
-
-
-    private EntityManagerFactory createEntityManagerFactory(String repositoryUrl, String repositoryUsername,
-                                                            String repositoryPassword, String driver) {
-        log.info("Using repository: {}", repositoryUrl);
-        final Map<String, String> properties = PersistenceConfigUtils.createEntityManagerConfiguration(repositoryUrl, repositoryUsername, repositoryPassword, driver);
-        return Persistence.createEntityManagerFactory("emf", properties);
-    }
-
     @Bean
     @Primary
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf,
