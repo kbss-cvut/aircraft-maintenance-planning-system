@@ -1,5 +1,6 @@
 package cz.cvut.kbss.amaplas.persistence.dao;
 
+import cz.cvut.kbss.amaplas.exceptions.PersistenceException;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,21 +51,16 @@ public class PlanTypeDao {
 
     public AbstractPlan getNewPlanTypeInstance(String planType){
         Class<? extends AbstractPlan> planClass = entityClassMap.get(planType);
-        if(planClass == null)
-            return null;
 
         try {
             return planClass.getDeclaredConstructor().newInstance();
-        } catch (InstantiationException e) {
-            log.error("", e);
-        } catch (IllegalAccessException e) {
-            log.error("", e);
-        } catch (InvocationTargetException e) {
-            log.error("", e);
-        } catch (NoSuchMethodException e) {
-            log.error("", e);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException
+                | NoSuchMethodException | NullPointerException e) {
+            throw new PersistenceException(
+                    String.format("Could not create a plan instance for type <%s> using java reflections.", planType),
+                    e
+            );
         }
-        return null;
     }
 
     public AbstractPlan getNewPlanTypeInstance(URI planType){
