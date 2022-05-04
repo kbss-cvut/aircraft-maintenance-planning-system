@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
- @MappedSuperclass
+@MappedSuperclass
 public abstract class AbstractComplexPlan<T extends AbstractPlan> extends AbstractPlan {
 
     @OWLObjectProperty(iri = Vocabulary.s_p_has_part)

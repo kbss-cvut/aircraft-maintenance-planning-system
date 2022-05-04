@@ -67,4 +67,26 @@ public class AbstractEntity<ID> implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    @Override
+    public int hashCode() {
+        if(getEntityURI() == null)
+            return super.hashCode();
+        return getEntityURI().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if(obj == null)
+            return false;
+
+        if(!(obj instanceof AbstractEntity))
+            return false;
+
+        if(getEntityURI() == null)
+            return super.equals(obj);
+
+        return getEntityURI().equals(((AbstractEntity)obj).getEntityURI());
+    }
 }
