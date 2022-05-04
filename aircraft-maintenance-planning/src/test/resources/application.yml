@@ -1,0 +1,11 @@
+server.servlet.context-path: /api
+
+planning:
+
+  repository:
+    url: mem:plannig
+    task_definitions_graph: ${TASK_DEFINITIONS_GRAPH:http://onto.fel.cvut.cz/ontologies/csat-maintenance}
+
+  persistence:
+    driver: cz.cvut.kbss.ontodriver.sesame.SesameDataSource
+    language: en
