@@ -7,17 +7,17 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
 
-SELECT ?taskCardCode ?MPDTASK ?description ?team ?phase ?taskType ?aircraftModel ?area {
+SELECT ?taskCardCode ?MPDTASK ?title ?team ?phase ?taskType ?aircraftModel ?area {
     GRAPH ?taskTypeDefinitionGraph{
         ?taskCard rdfs:subClassOf cm:task-card ;
                   cm:id ?taskCardCode;
-                  cm:model ?aircraftModel.
+                  cm:task-for-model ?aircraftModel.
 
-        OPTIONAL {?taskCard cm:has-type ?taskType}
-        OPTIONAL {?taskCard cm:has-scope ?team}
-        OPTIONAL {?taskCard cm:has-phase ?phase;}
-        OPTIONAL {?taskCard cm:mpdtask ?MPDTASK;}
-        OPTIONAL {?taskCard cm:description ?description;}
-        OPTIONAL {?taskCard cm:area ?area;}
+        OPTIONAL {?taskCard cm:has-general-task-type ?taskType}
+        OPTIONAL {?taskCard cm:has-main-scope ?team}
+        OPTIONAL {?taskCard cm:task-for-phase ?phase;}
+        OPTIONAL {?taskCard cm:has-mpdtask ?MPDTASK;}
+        OPTIONAL {?taskCard rdfs:label ?title;}
+        OPTIONAL {?taskCard cm:task-for-area ?area;}
     }
 }
