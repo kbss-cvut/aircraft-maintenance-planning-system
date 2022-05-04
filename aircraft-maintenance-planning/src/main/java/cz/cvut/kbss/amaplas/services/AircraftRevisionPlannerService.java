@@ -1,5 +1,6 @@
 package cz.cvut.kbss.amaplas.services;
 
+import cz.cvut.kbss.amaplas.exceptions.InvalidParameterException;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.ExtractData;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.ToGraphml;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.*;
@@ -7,10 +8,14 @@ import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.builders.Implic
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.planners.OriginalPlanner;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.planners.ReuseBasedPlanner;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.planners.TaskTypePlanValidator;
+import cz.cvut.kbss.amaplas.persistence.dao.GenericPlanDao;
+import cz.cvut.kbss.amaplas.persistence.dao.PlanTypeDao;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.traverse.BreadthFirstIterator;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.net.URI;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -19,19 +24,21 @@ public class AircraftRevisionPlannerService {
 
     private final RevisionHistory revisionHistory;
     private final TaskTypeService taskTypeService;
+    private final PlanTypeDao planTypeDao;
+    private final GenericPlanDao planDao;
 
 
-    public AircraftRevisionPlannerService(RevisionHistory revisionHistory, TaskTypeService taskTypeService) {
+    public AircraftRevisionPlannerService(RevisionHistory revisionHistory, TaskTypeService taskTypeService, PlanTypeDao planTypeDao, GenericPlanDao planDao) {
         this.revisionHistory = revisionHistory;
         this.taskTypeService = taskTypeService;
+        this.planTypeDao = planTypeDao;
+        this.planDao = planDao;
     }
 
     public List<SequencePattern> planTaskTypeCodes(List<String> toPlan){
         List<TaskType> taskTypes = taskTypeService.getTaskTypes(toPlan);
         return planTaskTypes(taskTypes, Collections.EMPTY_LIST);
     }
-
-
 
     public List<TaskPlan> planRevision(String revisionId){
         List<Result> workLog = revisionHistory.getClosedRevisionWorkLog(revisionId);
@@ -253,6 +260,32 @@ public class AircraftRevisionPlannerService {
      */
     public SessionPlan toAverageSessionPlan(){
         return null;
+    }
+
+    @Transactional
+    public AbstractPlan createPlan(URI planType){
+        verifyPlanType(planType);
+        AbstractPlan p = planTypeDao.getNewPlanTypeInstance(planType);
+        planDao.persist(p);
+        return p;
+    }
+
+    @Transactional
+    public AbstractPlan createPlan(AbstractPlan plan){
+        assert plan != null;
+        verifyPlanType(plan.getTypes());
+        planDao.persist(plan);
+        return plan;
+    }
+
+    protected void verifyPlanType(URI planType){
+        if(!planTypeDao.isSupportedPlanType(planType))
+            throw new InvalidParameterException(String.format("Wrong plan type, creating plan with plan type which is not supported <%s>", planType.toString()));
+    }
+
+    protected void verifyPlanType(Set<URI> planTypes){
+        if(!planTypeDao.isSupportedPlanType(planTypes))
+            throw new InvalidParameterException(String.format("Wrong plan type, creating plan with plan type which is not supported <%s>", planTypes.toString()));
     }
 
 //    public static void main(String[] args) {

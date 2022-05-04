@@ -12,7 +12,7 @@ public class AbstractEntity<ID> implements Serializable {
 
     // contains all types of the
     @Types
-    protected Set<String> types;
+    protected Set<URI> types;
 
     // property that specifies what is the main type of the entity. It also corresponds to a specific class from the object model
 
@@ -28,11 +28,11 @@ public class AbstractEntity<ID> implements Serializable {
     @OWLDataProperty(iri = Vocabulary.s_p_label)
     protected String title;
 
-    public Set<String> getTypes() {
+    public Set<URI> getTypes() {
         return types;
     }
 
-    public void setTypes(Set<String> types) {
+    public void setTypes(Set<URI> types) {
         this.types = types;
     }
 

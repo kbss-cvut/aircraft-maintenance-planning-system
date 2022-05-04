@@ -24,6 +24,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <graphdb.version>9.3.2</graphdb.version>
         <cz.cvut.kbss.jopa.version>0.17.2</cz.cvut.kbss.jopa.version>
+        <com.github.ledsoft.version>0.1.1</com.github.ledsoft.version>
         <cz.cvut.kbss.jsonld.version>0.8.9</cz.cvut.kbss.jsonld.version>
     </properties>
 
@@ -59,6 +60,11 @@
         </dependency>
 
         <!-- JOPA -->
+        <dependency>
+            <groupId>com.github.ledsoft</groupId>
+            <artifactId>jopa-spring-transaction</artifactId>
+            <version>${com.github.ledsoft.version}</version>
+        </dependency>
         <dependency>
             <groupId>cz.cvut.kbss.jopa</groupId>
             <artifactId>jopa-impl</artifactId>

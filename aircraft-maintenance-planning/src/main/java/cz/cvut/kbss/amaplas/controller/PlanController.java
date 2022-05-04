@@ -1,18 +1,22 @@
 package cz.cvut.kbss.amaplas.controller;
 
+import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.AbstractPlan;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.RevisionPlan;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskPlan;
 import cz.cvut.kbss.amaplas.services.AircraftRevisionPlannerService;
+import cz.cvut.kbss.amplas.util.Vocabulary;
 import cz.cvut.kbss.jsonld.JsonLd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 
 @RestController
+@RequestMapping("/plans")
 public class PlanController {
     private static final Logger LOG = LoggerFactory.getLogger(PlanController.class);
 
@@ -43,5 +47,28 @@ public class PlanController {
     @GetMapping(path = "revision-plans-induced-by-revision-execution", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE} )
     public RevisionPlan planRevision2(@RequestParam String revisionId){
         return plannerService.createRevisionPlanScheduleDeducedFromRevisionExecution(revisionId);
+    }
+
+    /**
+     * Create a new plan based on plan type fragment, no other information is required. Accepted plan type fragments are :
+     * workpackage-plan, phase-plan, general-task-plan, task-plan, work-session-plan.
+     *
+     * @param planTypeFragment
+     * @return
+     */
+    @PostMapping(path="/{plantTypeFragment}", consumes = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
+    public AbstractPlan createPlan(@PathVariable String planTypeFragment){
+        URI planTypeURI = URI.create(String.format("%s/%s", Vocabulary.ONTOLOGY_IRI_aircraft_maintenance_planning, planTypeFragment));
+        return plannerService.createPlan(planTypeURI);
+    }
+
+    /**
+     * Create a new plan from the plan object passed in the request body.
+     * @param plan
+     * @return
+     */
+    @PostMapping(path="/", consumes = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
+    public AbstractPlan createPlan(@RequestBody AbstractPlan plan){
+        return plannerService.createPlan(plan);
     }
 }
