@@ -2,7 +2,7 @@ package cz.cvut.kbss.amaplas.exp.dataanalysis.inputs;
 
 import com.opencsv.CSVWriterBuilder;
 import com.opencsv.ICSVWriter;
-import cz.cvut.kbss.amaplas.config.DataRepositoryConfig;
+import cz.cvut.kbss.amaplas.config.ConfigProperties;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.io.SparqlDataReader;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.io.SparqlDataReaderRDF4J;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.Result;
@@ -244,9 +244,11 @@ public class AnalyzeTCCodes {
 //                "http://localhost:7200/repositories/csat-data-02",
 //                SparqlDataReaderRDF4J::convertToTaskType
 //                );
-        DataRepositoryConfig repoConfig = new DataRepositoryConfig();
+        ConfigProperties.Repository repoConfig = new ConfigProperties.Repository();
+        ConfigProperties configProps = new ConfigProperties();
+        configProps.setRepository(repoConfig);
         repoConfig.setUrl("http://localhost:7200/repositories/csat-data-02");
-        RevisionHistory service = new RevisionHistory(repoConfig);
+        RevisionHistory service = new RevisionHistory(configProps);
 //        service.setRepositoryUrl("http://localhost:7200/repositories/csat-data-02");
         Map<String, List<Result>> map =  service.getAllClosedRevisionsWorkLog(false);
         List<TaskType> taskTypes = map.values().stream()
