@@ -19,7 +19,7 @@ public class AbstractEntity<ID> implements Serializable {
     @OWLDataProperty(iri = Vocabulary.s_p_application_type)
     protected String applicationType = this.getClass().getSimpleName();
 
-    @Id
+    @Id(generated = true)
     protected URI entityURI;
 
     @OWLDataProperty(iri = Vocabulary.s_p_id)
@@ -88,5 +88,16 @@ public class AbstractEntity<ID> implements Serializable {
             return super.equals(obj);
 
         return getEntityURI().equals(((AbstractEntity)obj).getEntityURI());
+    }
+
+    @Override
+    public String toString() {
+
+        return applicationType + "{" +
+                "types=" + types +
+                ", entityURI=" + entityURI +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                '}';
     }
 }
