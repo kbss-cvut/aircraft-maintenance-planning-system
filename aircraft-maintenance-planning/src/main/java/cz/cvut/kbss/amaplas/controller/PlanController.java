@@ -1,5 +1,7 @@
 package cz.cvut.kbss.amaplas.controller;
 
+import cz.cvut.kbss.amaplas.controller.dto.EntityReferenceDTO;
+import cz.cvut.kbss.amaplas.controller.dto.RelationDTO;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.AbstractPlan;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.RevisionPlan;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskPlan;
@@ -8,6 +10,7 @@ import cz.cvut.kbss.amplas.util.Vocabulary;
 import cz.cvut.kbss.jsonld.JsonLd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,4 +74,28 @@ public class PlanController {
     public AbstractPlan createPlan(@RequestBody AbstractPlan plan){
         return plannerService.createPlan(plan);
     }
+
+    @GetMapping(path="/", consumes = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
+    public AbstractPlan getPlan(@RequestBody EntityReferenceDTO planReference){
+        return plannerService.getPlan(planReference);
+    }
+
+
+    /**
+     * Updates basic properties (i.e. properties of primitive type and String or URI/IRI) without the entityUri field
+     * for the specified plan.
+     * @param plan The updated plan
+     */
+    @PutMapping(path = "/", consumes = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@RequestBody AbstractPlan plan) {
+        plannerService.updatePlanSimpleProperties(plan);
+        LOG.debug("Basic properties of plan {} updated.", plan);
+    }
+
+    @PostMapping(path = "/part", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public void addPlanPart(@RequestBody RelationDTO relationDTO){
+        plannerService.addPlanPart(relationDTO);
+    }
+
 }
