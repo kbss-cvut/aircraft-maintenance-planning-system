@@ -6,7 +6,6 @@ import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.AbstractPlan;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskPlan;
 import cz.cvut.kbss.jopa.exceptions.OWLPersistenceException;
 import cz.cvut.kbss.jopa.model.EntityManager;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +26,8 @@ class GenericPlanDaoTest extends BaseDaoTestRunner {
 
     @Autowired
     private EntityManager em;
-
+    @Autowired
     private GenericPlanDao sut;
-
-    @BeforeEach
-    void setUp() {
-        this.sut = new GenericPlanDao(em);
-    }
 
     @Test
     void findAllRetrievesAllExistingInstances() {
