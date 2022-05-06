@@ -45,7 +45,12 @@ public class PlanTypeDao {
         return supportedPlanTypes.contains(planType);
     }
 
-    public boolean isSupportedPlanType(Set<URI> planTypes){
+
+    public boolean containsSupportedPlanType(AbstractPlan plan){
+        return containsSupportedPlanType(getTypes(plan));
+    }
+
+    public boolean containsSupportedPlanType(Set<String> planTypes){
         return planTypes.stream().filter(supportedPlanTypes::contains).findFirst().isPresent();
     }
 
@@ -65,5 +70,30 @@ public class PlanTypeDao {
 
     public AbstractPlan getNewPlanTypeInstance(URI planType){
         return getNewPlanTypeInstance(planType.toString());
+    }
+
+    public URI getType(AbstractEntity e){
+        Class cls = e.getClass();
+        while(cls != null) {
+            String uri = EntityToOwlClassMapper.getOwlClassForEntity(cls);
+            if(uri != null)
+                return URI.create(uri);
+            cls = cls.getSuperclass();
+        }
+        return null;
+    }
+
+    public Set<String> getTypes(AbstractEntity e){
+        Set<String> types = new HashSet<>();
+        Class cls = e.getClass();
+
+        while(cls != null) {
+            String uri = EntityToOwlClassMapper.getOwlClassForEntity(cls);
+            if(uri != null) {
+                types.add(uri);
+            }
+            cls = cls.getSuperclass();
+        }
+        return types;
     }
 }
