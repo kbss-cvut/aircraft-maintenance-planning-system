@@ -6,6 +6,7 @@ import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.AbstractPlan;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.RevisionPlan;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskPlan;
 import cz.cvut.kbss.amaplas.services.AircraftRevisionPlannerService;
+import cz.cvut.kbss.amaplas.services.IdentifierService;
 import cz.cvut.kbss.amplas.util.Vocabulary;
 import cz.cvut.kbss.jsonld.JsonLd;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -24,9 +26,11 @@ public class PlanController {
     private static final Logger LOG = LoggerFactory.getLogger(PlanController.class);
 
     private final AircraftRevisionPlannerService plannerService;
+    private final IdentifierService identifierService;
 
-    public PlanController(AircraftRevisionPlannerService plannerService) {
+    public PlanController(AircraftRevisionPlannerService plannerService, IdentifierService identifierService) {
         this.plannerService = plannerService;
+        this.identifierService = identifierService;
     }
 
     @PostMapping(path = "plan-tasks",consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -93,9 +97,66 @@ public class PlanController {
         LOG.debug("Basic properties of plan {} updated.", plan);
     }
 
-    @PostMapping(path = "/part", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(path = "/planParts", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public void addPlanPart(@RequestBody RelationDTO relationDTO){
         plannerService.addPlanPart(relationDTO);
+    }
+
+
+    @GetMapping(path = "/planParts")
+    public Collection<? extends AbstractPlan> getPlanParts(@RequestBody EntityReferenceDTO planReference){
+        return plannerService.getPlanParts(planReference);
+    }
+
+    @DeleteMapping(path = "/planParts")
+    public void deletePlanPart(@RequestBody RelationDTO relationDTO){
+        plannerService.deletePlanPart(relationDTO);
+    }
+
+    @DeleteMapping(path = "/", consumes = {MediaType.APPLICATION_JSON_VALUE} )
+    public void deletePlan(@RequestBody EntityReferenceDTO entityReferenceDTO){
+        plannerService.deletePlan(entityReferenceDTO);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //// Fragment based api ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @GetMapping(path="/{planFragment}", consumes = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
+    public AbstractPlan getPlan(@PathVariable  String planFragment){
+        URI planUri = getPlanUri(planFragment);
+        return plannerService.getPlan(planUri);
+    }
+
+    @GetMapping(path = "/{planFragment}/planParts")
+    public Collection<? extends AbstractPlan> getPlanParts(@PathVariable String planFragment){
+        URI planUri = getPlanUri(planFragment);
+        return plannerService.getPlanParts(planUri);
+    }
+
+    @PostMapping(path = "/{planFragment}/planParts/{planPartFragment}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public void addPlanPart(@PathVariable String planFragment, @PathVariable String planPartFragment){
+        URI planUri = getPlanUri(planFragment);
+        URI planPartUri = getPlanUri(planPartFragment);
+        plannerService.addPlanPart(planUri, planPartUri);
+    }
+
+
+    @DeleteMapping(path = "/{planFragment}/planParts/{planPartFragment}", consumes = {MediaType.APPLICATION_JSON_VALUE} )
+    public void deletePlan(@PathVariable String planFragment, @PathVariable String planPartFragment){
+        URI planUri = getPlanUri(planFragment);
+        URI planPartUri = getPlanUri(planPartFragment);
+        plannerService.deletePlanPart(planUri, planPartUri);
+    }
+
+    @DeleteMapping(path = "/{planFragment}", consumes = {MediaType.APPLICATION_JSON_VALUE} )
+    public void deletePlan(@PathVariable String planFragment){
+        URI planUri = getPlanUri(planFragment);
+        plannerService.deletePlan(planUri);
+    }
+
+    protected URI getPlanUri(String planFragment){
+        return identifierService.composeIdentifier(Vocabulary.s_c_event_plan, planFragment);
     }
 
 }
