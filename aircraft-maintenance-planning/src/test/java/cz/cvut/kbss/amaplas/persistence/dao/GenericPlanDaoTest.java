@@ -1,24 +1,18 @@
 package cz.cvut.kbss.amaplas.persistence.dao;
 
 import cz.cvut.kbss.amaplas.environment.Generator;
-import cz.cvut.kbss.amaplas.exceptions.PersistenceException;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.AbstractPlan;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskPlan;
-import cz.cvut.kbss.jopa.exceptions.OWLPersistenceException;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("dao")
@@ -121,33 +115,6 @@ class GenericPlanDaoTest extends BaseDaoTestRunner {
     }
 
     @Test
-    void exceptionDuringPersistIsWrappedInPersistenceException() {
-        final PersistenceException e = assertThrows(PersistenceException.class, () -> {
-            final TaskPlan taskPlan = Generator.generatePlan();
-            transactional(() -> sut.persist(taskPlan));
-        });
-        assertThat(e.getCause(), is(instanceOf(OWLPersistenceException.class)));
-    }
-
-    @Test
-    void exceptionDuringCollectionPersistIsWrappedInPersistenceException() {
-        final List<AbstractPlan> terms = Collections.singletonList(Generator.generatePlanWithId());
-        transactional(() -> sut.persist(terms));
-
-        final PersistenceException e = assertThrows(PersistenceException.class,
-                () -> transactional(() -> sut.persist(terms)));
-        assertThat(e.getCause(), is(instanceOf(OWLPersistenceException.class)));
-    }
-
-    @Test
-    void exceptionDuringUpdateIsWrappedInPersistenceException() {
-        final TaskPlan taskPlan = Generator.generatePlan();
-        final PersistenceException e = assertThrows(PersistenceException.class,
-                () -> transactional(() -> sut.update(taskPlan)));
-        assertThat(e.getCause(), is(instanceOf(OWLPersistenceException.class)));
-    }
-
-    @Test
     void getReferenceRetrievesReferenceToMatchingInstance() {
         final TaskPlan taskPlan = Generator.generatePlanWithId();
         transactional(() -> sut.persist(taskPlan));
@@ -163,5 +130,14 @@ class GenericPlanDaoTest extends BaseDaoTestRunner {
         assertFalse(result.isPresent());
     }
 
-
+//    @Disabled
+//    @Test
+//    void typesAreInferred(){
+//        final TaskPlan taskPlan = Generator.generatePlanWithId();
+//        transactional(() -> sut.persist(taskPlan));
+//        final TaskPlan foundTaskType = sut.find(taskPlan.getEntityURI(), TaskPlan.class).get();
+//        assertNotNull(foundTaskType.getTypes());
+//        assertNotNull(taskPlan.getTypes());
+//        assertTrue(taskPlan.getTypes().contains(URI.create(EntityToOwlClassMapper.getOwlClassForEntity(taskPlan.getClass()))));
+//    }
 }
