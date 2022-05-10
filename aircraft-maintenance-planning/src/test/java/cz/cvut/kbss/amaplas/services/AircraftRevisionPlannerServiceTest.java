@@ -3,22 +3,22 @@ package cz.cvut.kbss.amaplas.services;
 import cz.cvut.kbss.amaplas.controller.dto.EntityReferenceDTO;
 import cz.cvut.kbss.amaplas.controller.dto.RelationDTO;
 import cz.cvut.kbss.amaplas.environment.Generator;
+import cz.cvut.kbss.amaplas.exceptions.NotFoundException;
+import cz.cvut.kbss.amaplas.exceptions.UndefinedModelCRUDException;
+import cz.cvut.kbss.amaplas.exceptions.ValidationException;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.AbstractPlan;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.SessionPlan;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskPlan;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.ops.CopySimplePlanProperties;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.net.URI;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AircraftRevisionPlannerServiceTest extends BaseServiceTestRunner{
@@ -113,6 +113,60 @@ class AircraftRevisionPlannerServiceTest extends BaseServiceTestRunner{
         assertTrue(retrievedPlan.getPlanParts().contains(splan1));
         assertFalse(retrievedPlan.getPlanParts().contains(splan2));
 
+    }
+
+    @Disabled
+    @Test
+    void getPlanPartsReturnsPersistedPlanParts(){
+        TaskPlan plan = Generator.generatePlan(TaskPlan.class);
+        SessionPlan splan1 = Generator.generatePlan(SessionPlan.class);
+        SessionPlan splan2 = Generator.generatePlan(SessionPlan.class);
+        sut.createPlan(splan1);
+        sut.createPlan(splan2);
+        sut.createPlan(plan);
+        sut.addPlanPart(plan, splan1);
+        sut.addPlanPart(plan, splan2);
+
+        Collection<AbstractPlan> planParts = sut.getPlanParts(plan.getEntityURI());
+        assertEquals(2, planParts.size());
+        assertTrue(planParts.contains(splan1));
+        assertTrue(planParts.contains(splan2));
+    }
+
+    @Test
+    void getPlanPartsOnNonComplexPlanThrowsUndefinedModelCRUDException(){
+        final SessionPlan plan = Generator.generatePlan(SessionPlan.class);
+        sut.createPlan(plan);
+        final UndefinedModelCRUDException e = assertThrows(UndefinedModelCRUDException.class,
+                () -> sut.getPlanParts(plan.getEntityURI()));
+    }
+
+    @Test
+    void getPlanThrowsNotFoundExceptionIfThereIsNoPlanWithGivenUri(){
+        URI uri = Generator.generateUri();
+        assertThrows(NotFoundException.class, () -> sut.getPlan(uri));
+    }
+
+    @Test
+    void updatePlanThrowsValidationExceptionIfTheUpdatePlanHasNoUri(){
+        TaskPlan plan = Generator.generatePlan(TaskPlan.class);
+        plan.setTitle("plan title");
+        plan.setStartTime(new Date());
+        sut.createPlan(plan);
+        // prepare update
+        plan.setEntityURI(null);
+        plan.setTitle("plan title change");
+
+        // update
+        assertThrows( ValidationException.class, () -> sut.updatePlanSimpleProperties(plan));
+    }
+
+    @Test
+    void updatePlanThrowsNotFoundExceptionIfThereIsNoPlanWithGivenUri(){
+        TaskPlan plan = Generator.generatePlanWithId(TaskPlan.class);
+        plan.setTitle("plan title");
+        plan.setStartTime(new Date());
+        assertThrows( NotFoundException.class, () -> sut.updatePlanSimpleProperties(plan));
     }
 
 }
