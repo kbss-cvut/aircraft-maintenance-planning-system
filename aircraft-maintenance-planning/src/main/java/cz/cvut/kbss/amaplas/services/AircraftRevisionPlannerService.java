@@ -2,6 +2,7 @@ package cz.cvut.kbss.amaplas.services;
 
 import cz.cvut.kbss.amaplas.controller.dto.EntityReferenceDTO;
 import cz.cvut.kbss.amaplas.controller.dto.RelationDTO;
+import cz.cvut.kbss.amaplas.exceptions.NotFoundException;
 import cz.cvut.kbss.amaplas.exceptions.UndefinedModelCRUDException;
 import cz.cvut.kbss.amaplas.exceptions.ValidationException;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.ExtractData;
@@ -289,7 +290,7 @@ public class AircraftRevisionPlannerService extends BaseService{
 
     @Transactional
     public AbstractPlan getPlan(URI uri){
-        return planDao.find(uri).get();
+        return planDao.find(uri).orElseThrow(() -> NotFoundException.create("plan", uri));
     }
 
     @Transactional
@@ -320,10 +321,11 @@ public class AircraftRevisionPlannerService extends BaseService{
 
     @Transactional
     public void addPlanPart(URI planWholeUri, URI planPartUri) {
-        AbstractComplexPlan planWhole = (AbstractComplexPlan)planDao.find(planWholeUri).get();
-        AbstractPlan planPart = planDao.find(planPartUri).get();
+        AbstractComplexPlan planWhole = (AbstractComplexPlan)getPlan(planWholeUri);
+        AbstractPlan planPart = getPlan(planPartUri);
         addPlanPart(planWhole, planPart);
     }
+
     @Transactional
     public void addPlanPart(AbstractComplexPlan planWhole, AbstractPlan planPart){
         if(planWhole.getPlanParts() == null)
@@ -342,8 +344,8 @@ public class AircraftRevisionPlannerService extends BaseService{
 
     @Transactional
     public void deletePlanPart(URI planWholeUri, URI planPartUri) {
-        AbstractComplexPlan planWhole = (AbstractComplexPlan)planDao.find(planWholeUri).get();
-        AbstractPlan planPart = planDao.find(planPartUri).get();
+        AbstractComplexPlan planWhole = (AbstractComplexPlan)getPlan(planWholeUri);
+        AbstractPlan planPart = getPlan(planPartUri);
         deletePlanPart(planWhole, planPart);
     }
 
@@ -364,7 +366,7 @@ public class AircraftRevisionPlannerService extends BaseService{
 
     @Transactional
     public void deletePlan(URI planUri){
-        AbstractPlan plan = planDao.find(planUri).get();
+        AbstractPlan plan = getPlan(planUri);
         if(plan != null)
             planDao.remove(plan);
     }
@@ -375,7 +377,7 @@ public class AircraftRevisionPlannerService extends BaseService{
         verifyPlanType(plan);
 
         // update only simple properties.
-        AbstractPlan oldPlan = planDao.find(plan.getEntityURI()).orElse(null);
+        AbstractPlan oldPlan = getPlan(plan.getEntityURI());
 
         copySimpleProperty.copyTo(plan, oldPlan);
         planDao.update(oldPlan);
