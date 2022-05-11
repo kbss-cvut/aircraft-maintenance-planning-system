@@ -50,11 +50,5 @@ public class CopySimplePlanProperties{
         if(fromValue != toValue)
             toSetter.accept(fromValue);
     }
-
-
-    public static void main(String[] args) {
-        AbstractPlan ap = new RevisionPlan();
-        Supplier s = ap::getPlannedStartTime;
-    }
 }
 
