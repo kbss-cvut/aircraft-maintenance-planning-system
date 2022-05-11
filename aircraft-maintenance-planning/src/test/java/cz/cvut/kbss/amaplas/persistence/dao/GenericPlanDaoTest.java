@@ -4,7 +4,6 @@ import cz.cvut.kbss.amaplas.environment.Generator;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.AbstractPlan;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskPlan;
 import cz.cvut.kbss.jopa.model.EntityManager;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,7 +14,6 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Tag("dao")
 class GenericPlanDaoTest extends BaseDaoTestRunner {
 
     @Autowired
