@@ -1,10 +1,15 @@
 package cz.cvut.kbss.amaplas.services;
 
-import cz.cvut.kbss.amaplas.exceptions.InvalidParameterException;
+import cz.cvut.kbss.amaplas.controller.dto.EntityReferenceDTO;
+import cz.cvut.kbss.amaplas.controller.dto.RelationDTO;
+import cz.cvut.kbss.amaplas.exceptions.NotFoundException;
+import cz.cvut.kbss.amaplas.exceptions.UnsupportedOperationException;
+import cz.cvut.kbss.amaplas.exceptions.ValidationException;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.ExtractData;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.ToGraphml;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.*;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.builders.ImplicitPlanBuilder;
+import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.ops.CopySimplePlanProperties;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.planners.OriginalPlanner;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.planners.ReuseBasedPlanner;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.planners.TaskTypePlanValidator;
@@ -20,13 +25,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class AircraftRevisionPlannerService {
+public class AircraftRevisionPlannerService extends BaseService{
 
     private final RevisionHistory revisionHistory;
     private final TaskTypeService taskTypeService;
     private final PlanTypeDao planTypeDao;
     private final GenericPlanDao planDao;
-
+    private final CopySimplePlanProperties copySimpleProperty = new CopySimplePlanProperties();
 
     public AircraftRevisionPlannerService(RevisionHistory revisionHistory, TaskTypeService taskTypeService, PlanTypeDao planTypeDao, GenericPlanDao planDao) {
         this.revisionHistory = revisionHistory;
@@ -273,19 +278,126 @@ public class AircraftRevisionPlannerService {
     @Transactional
     public AbstractPlan createPlan(AbstractPlan plan){
         assert plan != null;
-        verifyPlanType(plan.getTypes());
+        verifyPlanType(plan);
         planDao.persist(plan);
         return plan;
     }
 
-    protected void verifyPlanType(URI planType){
-        if(!planTypeDao.isSupportedPlanType(planType))
-            throw new InvalidParameterException(String.format("Wrong plan type, creating plan with plan type which is not supported <%s>", planType.toString()));
+    @Transactional
+    public AbstractPlan getPlan(EntityReferenceDTO entityReferenceDTO){
+        return getPlan(entityReferenceDTO.getEntityURI());
     }
 
-    protected void verifyPlanType(Set<URI> planTypes){
-        if(!planTypeDao.isSupportedPlanType(planTypes))
-            throw new InvalidParameterException(String.format("Wrong plan type, creating plan with plan type which is not supported <%s>", planTypes.toString()));
+    @Transactional
+    public AbstractPlan getPlan(URI uri){
+        return planDao.find(uri).orElseThrow(() -> NotFoundException.create("plan", uri));
+    }
+
+    @Transactional
+    public Collection<AbstractPlan> getPlanParts(EntityReferenceDTO planReferenceDTO){
+        return getPlanParts(planReferenceDTO.getEntityURI());
+    }
+
+    @Transactional
+    public Collection<AbstractPlan> getPlanParts(URI planURI){
+        AbstractPlan plan = getPlan(planURI);
+        return getPlanParts(plan);
+    }
+
+    @Transactional
+    public Collection<AbstractPlan> getPlanParts(AbstractPlan plan){
+        if(!(plan instanceof AbstractComplexPlan)){
+            throw new UnsupportedOperationException(String.format("Plan is atomic and does not have parts, plan %s", plan));
+        }
+        return (Set<AbstractPlan>)((AbstractComplexPlan<?>) plan).getPlanParts();
+    }
+
+    @Transactional
+    public void addPlanPart(RelationDTO relationDTO) {
+        URI planWholeUri = relationDTO.getLeft();
+        URI planPartUri = relationDTO.getRight();
+        addPlanPart(planWholeUri, planPartUri);
+    }
+
+    @Transactional
+    public void addPlanPart(URI planWholeUri, URI planPartUri) {
+        AbstractComplexPlan planWhole = (AbstractComplexPlan)getPlan(planWholeUri);
+        AbstractPlan planPart = getPlan(planPartUri);
+        addPlanPart(planWhole, planPart);
+    }
+
+    @Transactional
+    public void addPlanPart(AbstractComplexPlan planWhole, AbstractPlan planPart){
+        if(planWhole.getPlanParts() == null)
+            planWhole.setPlanParts(new HashSet());
+        planWhole.getPlanParts().add(planPart);
+
+        planDao.update(planWhole);
+    }
+
+    @Transactional
+    public void deletePlanPart(RelationDTO relationDTO){
+        URI planWholeUri = relationDTO.getLeft();
+        URI planPartUri = relationDTO.getRight();
+        deletePlanPart(planWholeUri, planPartUri);
+    }
+
+    @Transactional
+    public void deletePlanPart(URI planWholeUri, URI planPartUri) {
+        AbstractComplexPlan planWhole = (AbstractComplexPlan)getPlan(planWholeUri);
+        AbstractPlan planPart = getPlan(planPartUri);
+        deletePlanPart(planWhole, planPart);
+    }
+
+    @Transactional
+    public void deletePlanPart(AbstractComplexPlan planWhole, AbstractPlan planPart){
+        if(planWhole.getPlanParts() != null) {
+            planWhole.getPlanParts().remove(planPart);
+        }
+
+        planDao.update(planWhole);
+    }
+
+    @Transactional
+    public void deletePlan(EntityReferenceDTO entityReferenceDTO){
+        URI planUri = entityReferenceDTO.getEntityURI();
+        deletePlan(planUri);
+    }
+
+    @Transactional
+    public void deletePlan(URI planUri){
+        AbstractPlan plan = getPlan(planUri);
+        if(plan != null)
+            planDao.remove(plan);
+    }
+
+    @Transactional
+    public void updatePlanSimpleProperties(AbstractPlan plan){
+        verifyEntityHasId(plan);
+        verifyPlanType(plan);
+
+        // update only simple properties.
+        AbstractPlan oldPlan = getPlan(plan.getEntityURI());
+
+        copySimpleProperty.copyTo(plan, oldPlan);
+        planDao.update(oldPlan);
+    }
+
+    protected void verifyPlanType(URI planType){
+        if(!planTypeDao.isSupportedPlanType(planType))
+            throw new ValidationException(String.format(
+                    "Invalid plan type, plan type not supported <%s>",
+                    planType.toString())
+            );
+    }
+
+    protected void verifyPlanType(AbstractPlan plan){
+        Set<String> planTypes = planTypeDao.getTypes(plan);
+        if(!planTypeDao.containsSupportedPlanType(planTypes))
+            throw new ValidationException(String.format(
+                    "Invalid plan types, non of the plan types is supported,\n %s",
+                    planTypes)
+            );
     }
 
 //    public static void main(String[] args) {

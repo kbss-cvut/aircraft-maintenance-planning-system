@@ -16,12 +16,12 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @Repository
-public class GenericPlanDao<T extends AbstractPlan> extends BaseDao<T>{
+public class GenericPlanDao extends BaseDao<AbstractPlan>{
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public GenericPlanDao(Class<T> type, EntityManager em) {
-        super(type, em);
+    public GenericPlanDao(EntityManager em) {
+        super(AbstractPlan.class, em);
     }
 
     public <P extends AbstractPlan> Stream<P> stream(Class<P> type) {

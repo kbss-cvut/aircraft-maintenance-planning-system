@@ -4,13 +4,14 @@ import cz.cvut.kbss.amaplas.exp.common.ResourceUtils;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.AircraftType;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.Result;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskType;
+import cz.cvut.kbss.amaplas.utils.RepositoryUtils;
 import org.eclipse.rdf4j.model.Literal;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQuery;
 import org.eclipse.rdf4j.query.TupleQueryResult;
+import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
-import org.eclipse.rdf4j.repository.http.HTTPRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,18 +28,27 @@ import java.util.stream.Collectors;
 public class SparqlDataReaderRDF4J {
 
     private static final Logger LOG = LoggerFactory.getLogger(SparqlDataReaderRDF4J.class);
-    public static HTTPRepository createRepo(String endpoint, String username, String password){
-        HTTPRepository r = new HTTPRepository(endpoint);
-        if(username != null && password != null && !username.isEmpty() && !password.isEmpty());
-            r.setUsernameAndPassword(username, password);
-        return r;
+//    public static HTTPRepository createRepo(String endpoint, String username, String password){
+//
+//        HTTPRepository r = new HTTPRepository(endpoint);
+//        if(username != null && password != null && !username.isEmpty() && !password.isEmpty());
+//            r.setUsernameAndPassword(username, password);
+//        return r;
+//    }
+
+    public List<String> readRowsAsStrings(String queryName, String endpoint, String username, String password) {
+        Repository r = RepositoryUtils.createRepo(endpoint, username, password);
+
+
+        List<String> results = readRowsAsStrings(queryName, r);
+        // shutdown the repository
+        r.shutDown();
+        return results;
     }
 
-    public List<String> readRowsAsStrings(String queryName, String endpoint, String username, String password){
-        HTTPRepository r = createRepo(endpoint, username, password);
-
-        RepositoryConnection c = r.getConnection();
+    public List<String> readRowsAsStrings(String queryName, Repository r){
         String query = ResourceUtils.loadResource(queryName);
+        RepositoryConnection c = r.getConnection();
         TupleQuery q = c.prepareTupleQuery(query);
         TupleQueryResult rs = q.evaluate();
 //        res.
@@ -49,13 +59,17 @@ public class SparqlDataReaderRDF4J {
                 ).collect(Collectors.toList());
         // close connection
         c.close();
-        r.shutDown();
         return ret;
     }
 
-    public static <T> List<T> executeQuery(String query, String endpoint, String username, String password, SparqlDataReaderRDF4J.Converter converter){
-        HTTPRepository r = createRepo(endpoint, username, password);
+    public static <T> List<T> executeQuery(String query, String endpoint, String username, String password, SparqlDataReaderRDF4J.Converter converter) {
+        Repository r = RepositoryUtils.createRepo(endpoint, username, password);
+        List<T> result = executeQuery(query, r, converter);
+        r.shutDown();
+        return result;
+    }
 
+    public static <T> List<T> executeQuery(String query, Repository r, SparqlDataReaderRDF4J.Converter converter){
         RepositoryConnection c = r.getConnection();
         TupleQuery q = c.prepareTupleQuery(query);
         TupleQueryResult rs = q.evaluate();
@@ -63,7 +77,6 @@ public class SparqlDataReaderRDF4J {
         LOG.debug("converting query results ...");
         List<T> ret = convert(rs, converter);
         c.close();
-        r.shutDown();
         return ret;
     }
 
@@ -126,6 +139,13 @@ public class SparqlDataReaderRDF4J {
         return results;
     }
 
+    public List<TaskType> readTaskTypes(String queryName, Repository r, SparqlDataReaderRDF4J.Converter<TaskType> converter){
+        LOG.debug("executing query \"{}\" on repository with datadir \"{}\"", queryName, r.getDataDir());
+        String query = ResourceUtils.loadResource(queryName);
+        List<TaskType> results = executeQuery(query, r, converter);
+        return results;
+    }
+
     public List<TaskType> readTaskDefinitions(String queryName, String endpoint, String graph, String username, String password, SparqlDataReaderRDF4J.Converter<TaskType> converter){
         LOG.debug("executing query \"{}\" at endpoint <{}>...", queryName, endpoint);
         String query = ResourceUtils.loadResource(queryName);
@@ -135,6 +155,14 @@ public class SparqlDataReaderRDF4J {
         return results;
     }
 
+    public List<TaskType> readTaskDefinitions(String queryName, Repository r, String graph, SparqlDataReaderRDF4J.Converter<TaskType> converter){
+        LOG.debug("executing query \"{}\"  on repository with datadir \"{}\"", queryName, r.getDataDir());
+        String query = ResourceUtils.loadResource(queryName);
+        // Set graph parameter in query
+        query = query.replaceAll("\\?taskTypeDefinitionGraph", String.format("<%s>", graph));
+        List<TaskType> results = executeQuery(query, r, converter);
+        return results;
+    }
 
     public static TaskType convertToTaskType(BindingSet bs) throws ParseException {
         // ?acmodel ?type ?description ?wpuri

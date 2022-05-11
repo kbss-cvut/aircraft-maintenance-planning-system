@@ -6,14 +6,12 @@ import org.jgrapht.nio.Attribute;
 import org.jgrapht.nio.AttributeType;
 import org.jgrapht.nio.DefaultAttribute;
 import org.jgrapht.nio.graphml.GraphMLExporter;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-@Ignore
 public class JGraphT2GraphMlExp {
 
 
@@ -52,7 +50,7 @@ public class JGraphT2GraphMlExp {
 //        e.exportGraph(g, new File(out));
 //    }
 
-    @Test
+//    @Test
     public void experimentJGraphT2Graphml() {
         String out = "out.graphml";
 
