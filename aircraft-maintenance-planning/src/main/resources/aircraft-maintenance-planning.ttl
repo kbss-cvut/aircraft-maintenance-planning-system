@@ -38,6 +38,26 @@
              rdfs:comment "adhock - the code of the task defined in a Maintenance planning document (MPD)."@en .
 
 
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/planned-duration
+:planned-duration rdf:type owl:DatatypeProperty ;
+                  rdfs:comment "Planned duration from start to end of the plan."@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/planned-end-time
+:planned-end-time rdf:type owl:DatatypeProperty ;
+                  rdfs:comment "the planned end time of a plan."@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/planned-start-time
+:planned-start-time rdf:type owl:DatatypeProperty ;
+                    rdfs:comment "the planned start time of a plan"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/planned-work-time
+:planned-work-time rdf:type owl:DatatypeProperty ;
+                   rdfs:comment "the planned work time, e.g. person/hours."@en .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/task-for-area
 :task-for-area rdf:type owl:DatatypeProperty ;
                rdfs:comment "specifies which task is for which area of an aircraft."@en .
@@ -53,9 +73,19 @@
                 rdfs:comment "specifies which task is for which maintenance phase."@en .
 
 
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/work-time
+:work-time rdf:type owl:DatatypeProperty ;
+           rdfs:comment "The actual work time spent on a plan (measured in person/hours)"@en .
+
+
 #################################################################
 #    Classes
 #################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/complex-plan
+:complex-plan rdf:type owl:Class ;
+              rdfs:subClassOf :event-plan .
+
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/event-plan
 :event-plan rdf:type owl:Class ;

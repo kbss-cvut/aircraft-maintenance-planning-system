@@ -4,6 +4,7 @@ import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.base.LongInterv
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.base.LongIntervalImpl;
 import cz.cvut.kbss.amplas.util.Vocabulary;
 import cz.cvut.kbss.jopa.model.annotations.MappedSuperclass;
+import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
 
 
@@ -20,18 +21,16 @@ import java.util.stream.Stream;
 
 @MappedSuperclass
 public abstract class AbstractComplexPlan<T extends AbstractPlan> extends AbstractPlan {
-//    @Transient
-//    @JsonIgnore
-//    private Class<T> planPartClass;
+
     @OWLObjectProperty(iri = Vocabulary.s_p_has_part)
-    private Set<T> planParts = new HashSet<>();
+    private Set<AbstractPlan> planParts = new HashSet<>();
 
     public Set<T> getPlanParts() {
-        return planParts;
+        return (Set<T>)planParts;
     }
 
     public void setPlanParts(Set<T> planParts) {
-        this.planParts = planParts;
+        this.planParts = (Set<AbstractPlan>)planParts;
     }
 
     // calculate attributes from plan parts

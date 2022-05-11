@@ -23,7 +23,7 @@ public class AbstractEntity<ID> implements Serializable {
     protected URI entityURI;
 
     @OWLDataProperty(iri = Vocabulary.s_p_id)
-    protected ID id;
+    private Object id;
 
     @OWLDataProperty(iri = Vocabulary.s_p_label)
     protected String title;
@@ -53,7 +53,7 @@ public class AbstractEntity<ID> implements Serializable {
     }
 
     public ID getId() {
-        return id;
+        return (ID)id;
     }
 
     public void setId(ID id) {
@@ -66,5 +66,27 @@ public class AbstractEntity<ID> implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public int hashCode() {
+        if(getEntityURI() == null)
+            return super.hashCode();
+        return getEntityURI().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if(obj == null)
+            return false;
+
+        if(!(obj instanceof AbstractEntity))
+            return false;
+
+        if(getEntityURI() == null)
+            return super.equals(obj);
+
+        return getEntityURI().equals(((AbstractEntity)obj).getEntityURI());
     }
 }

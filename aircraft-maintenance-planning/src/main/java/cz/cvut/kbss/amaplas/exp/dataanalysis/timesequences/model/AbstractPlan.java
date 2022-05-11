@@ -1,41 +1,42 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.base.LongInterval;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.base.LongIntervalWrapper;
+import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.visit.PlanVisitor;
 import cz.cvut.kbss.amplas.util.Vocabulary;
-import cz.cvut.kbss.jopa.model.annotations.MappedSuperclass;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
+import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
+import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
 
 import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;
 
-@MappedSuperclass
+@OWLClass(iri = Vocabulary.s_c_event_plan)
 public abstract class AbstractPlan extends AbstractEntity<Long>{
-//    protected EventType eventType;
-//    protected String description;
+    @OWLObjectProperty(iri=Vocabulary.s_p_has_participant)
     protected Resource resource;
 
     // planned temporal properties
-    @JsonProperty("planned-start-time")
+    @OWLDataProperty(iri = Vocabulary.s_p_planned_start_time)
     protected Date plannedStartTime;
-    @JsonProperty("planned-end-time")
+    @OWLDataProperty(iri = Vocabulary.s_p_planned_end_time)
     protected Date plannedEndTime;
-    @JsonProperty("planned-duration")
+    @OWLDataProperty(iri = Vocabulary.s_p_planned_duration)
     protected Long plannedDuration;
 
-    @JsonProperty("planned-work-time")
+    @OWLDataProperty(iri = Vocabulary.s_p_planned_work_time)
     protected Long plannedWorkTime;
 
     // actual temporal properties
-    @JsonProperty("start-time")
+    @OWLDataProperty(iri = Vocabulary.s_p_start_time)
     protected Date startTime;
-    @JsonProperty("end-time")
+    @OWLDataProperty(iri = Vocabulary.s_p_end_time)
     protected Date endTime;
+    @OWLDataProperty(iri = Vocabulary.s_p_duration)
     protected Long duration;
 
-    @JsonProperty("work-time")
+    @OWLDataProperty(iri = Vocabulary.s_p_work_time)
     protected Long workTime;
 
     public Resource getResource() {
@@ -114,6 +115,9 @@ public abstract class AbstractPlan extends AbstractEntity<Long>{
         // do nothing, used for complex tasks to calculate their temporal properties from their parts.
     }
 
+    public void accept(PlanVisitor visitor){
+        visitor.visit(this);
+    }
 
     public LongInterval convertPlannedTimeInterval(Long startMissing, Long endMissing){
         return convertToInterval(
@@ -167,14 +171,4 @@ public abstract class AbstractPlan extends AbstractEntity<Long>{
             }
         };
     }
-
-//    public static void main(String[] args) {
-//        Function<AbstractPlan, Long> safeStartTimeFunction = getTimeFunctionSafe(AbstractPlan::getStartTime, null);
-//        Function<AbstractPlan, Long> startTimeFunction = getTimeFunction(AbstractPlan::getStartTime);
-//        SessionPlan p = new SessionPlan();
-//        Long l1 = safeStartTimeFunction.apply(p);
-//        System.out.println(l1);
-//        Long l2 = startTimeFunction.apply(p);
-//        System.out.println(l2);
-//    }
 }
