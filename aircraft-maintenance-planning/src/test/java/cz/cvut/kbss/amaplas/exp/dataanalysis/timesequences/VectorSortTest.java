@@ -2,19 +2,20 @@ package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences;
 
 //import org.eclipse.rdf4j.query.algebra.In;
 //import org.eclipse.rdf4j.query.algebra.evaluation.function.numeric.Rand;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+//import org.junit.Assert;
+//import org.junit.Ignore;
+//import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-//public class VectorSortTest extends TestCase {
-@Ignore
+//public class VectorSortTest extends TestCase {s
 public class VectorSortTest{
 //    @Test
 //    public void testSortWithDimMatchDistance(){
@@ -32,8 +33,6 @@ public class VectorSortTest{
 //        assertTrue(Arrays.equals(sorted, toSort));
 //    }
 
-    @Ignore
-    @Test
     public void testBruteSortWithDimMatchDistance(){
 
         double[][] sorted = new double[1<<10][10];
@@ -52,8 +51,6 @@ public class VectorSortTest{
         assertTrue(true);
     }
 
-    @Ignore
-    @Test
     public void testBruteSortWithDimMatchDistance2(){
         double[][] sorted = new double[1<<10][10];
         Random r = new Random(0);
@@ -71,7 +68,7 @@ public class VectorSortTest{
         assertTrue(true);
     }
 
-    @Test
+    // @Test
     public void bitsetCompTest_FindSeedsThatShuffleListToThrowExceptionWhenSorted() {
         Random r = new Random(0);
         List<Integer> allAsInt = IntStream.range(0, 32).map(i -> i | 8).mapToObj(i -> i).collect(Collectors.toList());
@@ -88,7 +85,7 @@ public class VectorSortTest{
         }
     }
 
-    @Test
+    // @Test
     public void bitsetCompTest_CheckSeedShufflesListToThrowExceptionWhenSorted() {
         Random r = new Random(6427218635535763657L);
         List<Integer> allAsInt = IntStream.range(0, 32).map(i -> i | 32).mapToObj(i -> i).collect(Collectors.toList());
@@ -104,7 +101,7 @@ public class VectorSortTest{
 
     }
 
-    @Test
+    // @Test
     public void bitsetCompTest(){
 
         Random r = new Random(6427218635535763657L);
