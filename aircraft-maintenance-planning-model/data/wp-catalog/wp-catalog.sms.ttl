@@ -149,10 +149,10 @@ CONSTRUCT {
 
     ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
         cm:id ?workpackageId ;
-        cm:workpackage-scheduled-start-time ?Start_date___scheduled  ;
-        cm:workpackage-scheduled-end-time ?End_date___scheduled ;
-        cm:workpackage-start-time ?Start_date___real ;
-        cm:workpackage-end-time ?End_date___real ;
+        cm:workpackage-scheduled-start-time ?wpStartDateScheduled ;
+        cm:workpackage-scheduled-end-time ?wpEndDateScheduled ;
+        cm:workpackage-start-time ?wpStartDateReal ;
+        cm:workpackage-end-time ?wpEndDateReal ;
         cm:has-responsible-maintenance-line ?workpackageMaintenanceLineIRI ;
     .
 
@@ -239,6 +239,11 @@ CONSTRUCT {
      BIND(dl:instance(cm:workpackage, ?workpackageId) as ?workpackageIRI)
      BIND(dl:instance(cm:aircraft, ?workpackageId) as ?aircraftIRI)
      BIND(dl:instance(cm:maintenance-line, ?workpackageMaintenanceLineId) as ?workpackageMaintenanceLineIRI)
+
+     BIND(spif:parseDate( ?Start_date___scheduled, \"dd.MM.yyyy\") as ?wpStartDateScheduled)
+     BIND(spif:parseDate(?End_date___scheduled, \"dd.MM.yyyy\") as ?wpEndDateScheduled)
+     BIND(spif:parseDate(?Start_date___real, \"dd.MM.yyyy\") as ?wpStartDateReal)
+     BIND(spif:parseDate(?End_date___real, \"dd.MM.yyyy\") as ?wpEndDateReal)
 }""" ;
     ] ;
   sml:replace true ;
