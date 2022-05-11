@@ -4,7 +4,7 @@ import cz.cvut.kbss.amaplas.controller.dto.EntityReferenceDTO;
 import cz.cvut.kbss.amaplas.controller.dto.RelationDTO;
 import cz.cvut.kbss.amaplas.environment.Generator;
 import cz.cvut.kbss.amaplas.exceptions.NotFoundException;
-import cz.cvut.kbss.amaplas.exceptions.UndefinedModelCRUDException;
+import cz.cvut.kbss.amaplas.exceptions.UnsupportedOperationException;
 import cz.cvut.kbss.amaplas.exceptions.ValidationException;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.AbstractPlan;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.SessionPlan;
@@ -137,7 +137,7 @@ class AircraftRevisionPlannerServiceTest extends BaseServiceTestRunner{
     void getPlanPartsOnNonComplexPlanThrowsUndefinedModelCRUDException(){
         final SessionPlan plan = Generator.generatePlan(SessionPlan.class);
         sut.createPlan(plan);
-        final UndefinedModelCRUDException e = assertThrows(UndefinedModelCRUDException.class,
+        final UnsupportedOperationException e = assertThrows(UnsupportedOperationException.class,
                 () -> sut.getPlanParts(plan.getEntityURI()));
     }
 

@@ -3,7 +3,7 @@ package cz.cvut.kbss.amaplas.services;
 import cz.cvut.kbss.amaplas.controller.dto.EntityReferenceDTO;
 import cz.cvut.kbss.amaplas.controller.dto.RelationDTO;
 import cz.cvut.kbss.amaplas.exceptions.NotFoundException;
-import cz.cvut.kbss.amaplas.exceptions.UndefinedModelCRUDException;
+import cz.cvut.kbss.amaplas.exceptions.UnsupportedOperationException;
 import cz.cvut.kbss.amaplas.exceptions.ValidationException;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.ExtractData;
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.ToGraphml;
@@ -307,7 +307,7 @@ public class AircraftRevisionPlannerService extends BaseService{
     @Transactional
     public Collection<AbstractPlan> getPlanParts(AbstractPlan plan){
         if(!(plan instanceof AbstractComplexPlan)){
-            throw new UndefinedModelCRUDException(String.format("Plan is atomic and does not have parts, plan %s", plan));
+            throw new UnsupportedOperationException(String.format("Plan is atomic and does not have parts, plan %s", plan));
         }
         return (Set<AbstractPlan>)((AbstractComplexPlan<?>) plan).getPlanParts();
     }
