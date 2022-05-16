@@ -64,7 +64,7 @@ public class PlanController {
      */
     @PostMapping(path="/{plantTypeFragment}", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
     public AbstractPlan createPlan(@PathVariable String planTypeFragment, @RequestParam(required = false) Optional<String> ns){
-        URI planTypeURI = expandUri(planTypeFragment, ns);
+        URI planTypeURI = expandFragment(planTypeFragment, ns);
         return plannerService.createPlan(planTypeURI);
     }
 
@@ -78,10 +78,10 @@ public class PlanController {
         return plannerService.createPlan(plan);
     }
 
-    @GetMapping(path="/{planUriFragment}", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
-    public AbstractPlan getPlanUri(@PathVariable String planUriFragment,
+    @GetMapping(path= "/{planFragment}", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
+    public AbstractPlan getPlanUri(@PathVariable String planFragment,
                                    @RequestParam(required = false) Optional<String> ns){
-        URI planUri = expandUri(planUriFragment, ns);
+        URI planUri = expandFragment(planFragment, ns);
         return plannerService.getPlan(planUri);
     }
 
@@ -101,49 +101,49 @@ public class PlanController {
     //// Fragment based api ////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @GetMapping(path= "/{planUriFragment}", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
-    public AbstractPlan getPlanFragment(@PathVariable  String planUriFragment,
+    @GetMapping(path= "/{planFragment}", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
+    public AbstractPlan getPlanFragment(@PathVariable  String planFragment,
                                         @RequestParam(required = false) Optional<String> ns){
-        URI planUri = expandUri(planUriFragment, ns);
+        URI planUri = expandFragment(planFragment, ns);
         return plannerService.getPlan(planUri);
     }
 
-    @GetMapping(path = "/{planUriFragment}/planParts", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
-    public Collection<? extends AbstractPlan> getPlanParts(@PathVariable String planUriFragment,
+    @GetMapping(path = "/{planFragment}/planParts", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
+    public Collection<? extends AbstractPlan> getPlanParts(@PathVariable String planFragment,
                                                            @RequestParam(required = false) Optional<String> ns){
-        URI planUri = expandUri(planUriFragment, ns);
+        URI planUri = expandFragment(planFragment, ns);
         return plannerService.getPlanParts(planUri);
     }
 
-    @PostMapping(path = "/{planUriFragment}/planParts/{planPartFragment}")
-    public void addPlanPart(@PathVariable String planUriFragment, @PathVariable String planPartFragment,
+    @PostMapping(path = "/{planFragment}/planParts/{planPartFragment}")
+    public void addPlanPart(@PathVariable String planFragment, @PathVariable String planPartFragment,
                             @RequestParam(required = false) Optional<String> ns1,
                             @RequestParam(required = false) Optional<String> ns2,
                             @RequestParam(required = false) Optional<String> ns){
-        URI planUri = expandUri(planUriFragment, ns1.isPresent() ? ns1 : ns);
-        URI planPartUri = expandUri(planPartFragment, ns2.isPresent() ? ns2 : ns);
+        URI planUri = expandFragment(planFragment, ns1.isPresent() ? ns1 : ns);
+        URI planPartUri = expandFragment(planPartFragment, ns2.isPresent() ? ns2 : ns);
         plannerService.addPlanPart(planUri, planPartUri);
     }
 
 
-    @DeleteMapping(path = "/{planUriFragment}/planParts/{planPartFragment}")
-    public void deletePlanPart(@PathVariable String planUriFragment, @PathVariable String planPartFragment,
+    @DeleteMapping(path = "/{planFragment}/planParts/{planPartFragment}")
+    public void deletePlanPart(@PathVariable String planFragment, @PathVariable String planPartFragment,
                                @RequestParam(required = false) Optional<String> ns1,
                                @RequestParam(required = false) Optional<String> ns2,
                                @RequestParam(required = false) Optional<String> ns){
-        URI planUri = expandUri(planUriFragment, ns1.isPresent() ? ns1 : ns);
-        URI planPartUri = expandUri(planPartFragment, ns2.isPresent() ? ns2 : ns);
+        URI planUri = expandFragment(planFragment, ns1.isPresent() ? ns1 : ns);
+        URI planPartUri = expandFragment(planPartFragment, ns2.isPresent() ? ns2 : ns);
         plannerService.deletePlanPart(planUri, planPartUri);
     }
 
-    @DeleteMapping(path = "/{planUriFragment}")
-    public void deletePlan(@PathVariable String planUriFragment,
+    @DeleteMapping(path = "/{planFragment}")
+    public void deletePlan(@PathVariable String planFragment,
                            @RequestParam(required = false) Optional<String> ns){
-        URI planUri = expandUri(planUriFragment, ns);
+        URI planUri = expandFragment(planFragment, ns);
         plannerService.deletePlan(planUri);
     }
 
-    protected URI expandUri(String planFragment, Optional<String> namespace){
+    protected URI expandFragment(String planFragment, Optional<String> namespace){
         String ns = namespace.orElse(Vocabulary.s_c_event_plan);
         return identifierService.composeIdentifier(ns, planFragment);
     }
