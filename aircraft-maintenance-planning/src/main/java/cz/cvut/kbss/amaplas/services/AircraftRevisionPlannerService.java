@@ -1,7 +1,5 @@
 package cz.cvut.kbss.amaplas.services;
 
-import cz.cvut.kbss.amaplas.controller.dto.EntityReferenceDTO;
-import cz.cvut.kbss.amaplas.controller.dto.RelationDTO;
 import cz.cvut.kbss.amaplas.exceptions.NotFoundException;
 import cz.cvut.kbss.amaplas.exceptions.UnsupportedOperationException;
 import cz.cvut.kbss.amaplas.exceptions.ValidationException;
@@ -284,18 +282,8 @@ public class AircraftRevisionPlannerService extends BaseService{
     }
 
     @Transactional
-    public AbstractPlan getPlan(EntityReferenceDTO entityReferenceDTO){
-        return getPlan(entityReferenceDTO.getEntityURI());
-    }
-
-    @Transactional
     public AbstractPlan getPlan(URI uri){
         return planDao.find(uri).orElseThrow(() -> NotFoundException.create("plan", uri));
-    }
-
-    @Transactional
-    public Collection<AbstractPlan> getPlanParts(EntityReferenceDTO planReferenceDTO){
-        return getPlanParts(planReferenceDTO.getEntityURI());
     }
 
     @Transactional
@@ -310,13 +298,6 @@ public class AircraftRevisionPlannerService extends BaseService{
             throw new UnsupportedOperationException(String.format("Plan is atomic and does not have parts, plan %s", plan));
         }
         return (Set<AbstractPlan>)((AbstractComplexPlan<?>) plan).getPlanParts();
-    }
-
-    @Transactional
-    public void addPlanPart(RelationDTO relationDTO) {
-        URI planWholeUri = relationDTO.getLeft();
-        URI planPartUri = relationDTO.getRight();
-        addPlanPart(planWholeUri, planPartUri);
     }
 
     @Transactional
@@ -336,13 +317,6 @@ public class AircraftRevisionPlannerService extends BaseService{
     }
 
     @Transactional
-    public void deletePlanPart(RelationDTO relationDTO){
-        URI planWholeUri = relationDTO.getLeft();
-        URI planPartUri = relationDTO.getRight();
-        deletePlanPart(planWholeUri, planPartUri);
-    }
-
-    @Transactional
     public void deletePlanPart(URI planWholeUri, URI planPartUri) {
         AbstractComplexPlan planWhole = (AbstractComplexPlan)getPlan(planWholeUri);
         AbstractPlan planPart = getPlan(planPartUri);
@@ -356,12 +330,6 @@ public class AircraftRevisionPlannerService extends BaseService{
         }
 
         planDao.update(planWhole);
-    }
-
-    @Transactional
-    public void deletePlan(EntityReferenceDTO entityReferenceDTO){
-        URI planUri = entityReferenceDTO.getEntityURI();
-        deletePlan(planUri);
     }
 
     @Transactional
@@ -399,22 +367,4 @@ public class AircraftRevisionPlannerService extends BaseService{
                     planTypes)
             );
     }
-
-//    public static void main(String[] args) {
-//        List<Result> results = new ArrayList<>();
-//        results.add(new Result());
-//        results.add(new Result());
-//        results.add(new Result());
-//        results.get(0).wp = "1";
-//        results.get(1).wp = "2";
-//        results.get(2).wp = "3";
-//        List<Result> resultCopy = new ArrayList(results);
-//        results.sort(Comparator.comparing((Result r) -> r.wp).reversed());
-//        for(Result r : results){
-//            System.out.println(r.wp);
-//        }
-//        for(Result r : resultCopy){
-//            System.out.println(r.wp);
-//        }
-//    }
 }

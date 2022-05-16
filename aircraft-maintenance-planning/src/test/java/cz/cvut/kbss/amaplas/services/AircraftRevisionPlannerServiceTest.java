@@ -1,7 +1,5 @@
 package cz.cvut.kbss.amaplas.services;
 
-import cz.cvut.kbss.amaplas.controller.dto.EntityReferenceDTO;
-import cz.cvut.kbss.amaplas.controller.dto.RelationDTO;
 import cz.cvut.kbss.amaplas.environment.Generator;
 import cz.cvut.kbss.amaplas.exceptions.NotFoundException;
 import cz.cvut.kbss.amaplas.exceptions.UnsupportedOperationException;
@@ -30,7 +28,7 @@ class AircraftRevisionPlannerServiceTest extends BaseServiceTestRunner{
     void createdPlanCanBeRetrievedViaGetPlan(){
         TaskPlan plan = Generator.generatePlanWithId(TaskPlan.class);
         sut.createPlan(plan);
-        AbstractPlan persistedPlan = sut.getPlan(new EntityReferenceDTO(plan.getEntityURI()));
+        AbstractPlan persistedPlan = sut.getPlan(plan.getEntityURI());
         assertEquals(plan, persistedPlan);
     }
 
@@ -82,8 +80,8 @@ class AircraftRevisionPlannerServiceTest extends BaseServiceTestRunner{
         sut.createPlan(splan1);
         sut.createPlan(splan2);
         sut.createPlan(plan);
-        sut.addPlanPart(RelationDTO.asDTO(plan, splan1));
-        sut.addPlanPart(RelationDTO.asDTO(plan, splan2));
+        sut.addPlanPart(plan, splan1);
+        sut.addPlanPart(plan, splan2);
 
         TaskPlan retrievedPlan = (TaskPlan)sut.getPlan(plan.getEntityURI());
         assertNotNull(retrievedPlan.getPlanParts());
@@ -104,7 +102,7 @@ class AircraftRevisionPlannerServiceTest extends BaseServiceTestRunner{
         sut.addPlanPart(plan, splan1);
         sut.addPlanPart(plan, splan2);
 
-        sut.deletePlanPart(new RelationDTO(plan.getEntityURI(), splan2.getEntityURI()));
+        sut.deletePlanPart(plan.getEntityURI(), splan2.getEntityURI());
 
         TaskPlan retrievedPlan = (TaskPlan)sut.getPlan(plan.getEntityURI());
 
