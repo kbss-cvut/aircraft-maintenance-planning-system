@@ -78,13 +78,6 @@ public class PlanController {
         return plannerService.createPlan(plan);
     }
 
-    @GetMapping(path= "/{planFragment}", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
-    public AbstractPlan getPlanUri(@PathVariable String planFragment,
-                                   @RequestParam(required = false) Optional<String> ns){
-        URI planUri = expandFragment(planFragment, ns);
-        return plannerService.getPlan(planUri);
-    }
-
     /**
      * Updates basic properties (i.e. properties of primitive type and String or URI/IRI) without the entityUri field
      * for the specified plan.
@@ -102,7 +95,7 @@ public class PlanController {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @GetMapping(path= "/{planFragment}", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
-    public AbstractPlan getPlanFragment(@PathVariable  String planFragment,
+    public AbstractPlan getPlan(@PathVariable  String planFragment,
                                         @RequestParam(required = false) Optional<String> ns){
         URI planUri = expandFragment(planFragment, ns);
         return plannerService.getPlan(planUri);
