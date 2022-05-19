@@ -192,7 +192,7 @@ public class SparqlDataReaderRDF4J {
     public static TaskType convertToTaskTypeDefinition(BindingSet bs){
         TaskType taskType = new TaskType(
                 manValue(bs,"taskCardCode"),
-                optValue(bs, "description"),
+                optValue(bs, "title"),
                 "task_card",
                 optValue(bs,"aircraftModel")
         );
