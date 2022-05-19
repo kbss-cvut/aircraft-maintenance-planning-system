@@ -111,14 +111,18 @@ public class SparqlDataReaderRDF4J {
 
     public static <T> List<T> convert(TupleQueryResult rs, SparqlDataReaderRDF4J.Converter converter){
         List<T> results = new ArrayList<>();
+        long numberOfIgnoredRecords = 0;
         while(rs.hasNext()){
             BindingSet bs = rs.next();
             try {
                 results.add(((Converter<T>)converter).convert(bs));
             } catch (Exception e) {
-                e.printStackTrace();
+                numberOfIgnoredRecords ++;
+                LOG.trace("record is missing mandatory fields",e);
             }
         }
+        if(numberOfIgnoredRecords > 0)
+            LOG.warn("{} records where ignored due to missing mandatory fields");
         return results;
     }
 
