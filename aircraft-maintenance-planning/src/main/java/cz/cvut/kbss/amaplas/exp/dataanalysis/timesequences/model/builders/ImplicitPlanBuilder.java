@@ -1,6 +1,7 @@
 package cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.builders;
 
 import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.*;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,10 +36,12 @@ public class ImplicitPlanBuilder {
             PhasePlan phasePlan = getPhasePlan(r);
             revisionPlan.getPlanParts().add(phasePlan);
 
-            GeneralTaskPlan generalTaskPlan = getGeneralTaskPlanInCtx(r, phasePlan);
+            AircraftArea area = getAircraftArea(r);
+            Pair generalTaskPlanContext = Pair.of(phasePlan, area);
+            GeneralTaskPlan generalTaskPlan = getGeneralTaskPlanInCtx(r, generalTaskPlanContext);
             phasePlan.getPlanParts().add(generalTaskPlan);
 
-            TaskPlan taskPlan = getTaskPlan(r);
+            TaskPlan taskPlan = getTaskPlan(r, generalTaskPlan);
             generalTaskPlan.getPlanParts().add(taskPlan);
 
             SessionPlan sessionPlan = getSessionPlan(r);
@@ -97,7 +100,8 @@ public class ImplicitPlanBuilder {
 
     public MaintenanceGroup getMaintenanceGroupInCtx(Result r, AircraftArea area){
         String maintenanceGroupLabel = getMaintenanceGroupLabel(r);
-        MaintenanceGroup maintenanceGroup = getEntity(maintenanceGroupLabel, area, () -> modelFactory.newMaintenanceGroup(maintenanceGroupLabel));
+        Pair pair = Pair.of("group", area);
+        MaintenanceGroup maintenanceGroup = getEntity(maintenanceGroupLabel, pair, () -> modelFactory.newMaintenanceGroup(maintenanceGroupLabel));
         return maintenanceGroup;
     }
 
@@ -132,14 +136,14 @@ public class ImplicitPlanBuilder {
         return getEntity(aircraftModel, "aircraft", () -> modelFactory.newEntity(Aircraft.class, aircraftModel));
     }
 
-    public TaskPlan getTaskPlan(Result r){
+    public TaskPlan getTaskPlan(final Result r, GeneralTaskPlan gp){
         TaskType taskTypeCode = getTaskType(r).orElse(null);
 
-        AircraftArea area = getAircraftArea(r);
+        final AircraftArea area = getAircraftArea(r);
 
         TaskPlan taskPlan = null;
         if(taskTypeCode != null)
-            taskPlan = getEntity(taskTypeCode.getCode(), "task-plan", () -> {
+            taskPlan = getEntity(taskTypeCode.getCode(), gp, () -> {
                 TaskPlan p = modelFactory.newTaskPlan(taskTypeCode);
                 MaintenanceGroup group = getMaintenanceGroupInCtx(r, area);
                 p.setResource(group);
@@ -166,12 +170,12 @@ public class ImplicitPlanBuilder {
         return generalTaskPlan;
     }
 
-    public GeneralTaskPlan getGeneralTaskPlanInCtx(Result r, PhasePlan phasePlan){
+    public GeneralTaskPlan getGeneralTaskPlanInCtx(Result r, Object context){
         // general task plan <=> different session.type.type per session.type.area
         String generalTaskType = getGeneralTaskTypeLabel(r);
         GeneralTaskPlan generalTaskPlan = getEntity(
                 generalTaskType,
-                phasePlan,
+                context,
                 () -> createGeneralTasPlan(r, generalTaskType));
         return generalTaskPlan;
     }
