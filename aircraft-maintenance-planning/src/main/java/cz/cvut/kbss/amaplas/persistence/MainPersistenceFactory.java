@@ -3,7 +3,6 @@ package cz.cvut.kbss.amaplas.persistence;
 import cz.cvut.kbss.amaplas.config.ConfigProperties;
 import cz.cvut.kbss.amaplas.config.PersistenceConfigUtils;
 import cz.cvut.kbss.jopa.Persistence;
-import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.EntityManagerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

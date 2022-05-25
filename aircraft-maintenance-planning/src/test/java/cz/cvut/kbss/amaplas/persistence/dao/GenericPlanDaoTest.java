@@ -1,8 +1,8 @@
 package cz.cvut.kbss.amaplas.persistence.dao;
 
 import cz.cvut.kbss.amaplas.environment.Generator;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.AbstractPlan;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskPlan;
+import cz.cvut.kbss.amaplas.model.AbstractPlan;
+import cz.cvut.kbss.amaplas.model.TaskPlan;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

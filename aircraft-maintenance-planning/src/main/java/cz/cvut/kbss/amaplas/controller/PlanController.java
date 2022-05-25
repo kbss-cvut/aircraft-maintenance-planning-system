@@ -1,11 +1,11 @@
 package cz.cvut.kbss.amaplas.controller;
 
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.AbstractPlan;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.RevisionPlan;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskPlan;
+import cz.cvut.kbss.amaplas.model.AbstractPlan;
+import cz.cvut.kbss.amaplas.model.RevisionPlan;
+import cz.cvut.kbss.amaplas.model.TaskPlan;
 import cz.cvut.kbss.amaplas.services.AircraftRevisionPlannerService;
 import cz.cvut.kbss.amaplas.services.IdentifierService;
-import cz.cvut.kbss.amplas.util.Vocabulary;
+import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.jsonld.JsonLd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

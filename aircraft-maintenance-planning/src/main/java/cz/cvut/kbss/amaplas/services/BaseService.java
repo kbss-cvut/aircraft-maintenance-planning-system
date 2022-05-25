@@ -1,7 +1,7 @@
 package cz.cvut.kbss.amaplas.services;
 
 import cz.cvut.kbss.amaplas.exceptions.ValidationException;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.AbstractEntity;
+import cz.cvut.kbss.amaplas.model.AbstractEntity;
 
 public class BaseService {
     void verifyEntityHasId(AbstractEntity e) {

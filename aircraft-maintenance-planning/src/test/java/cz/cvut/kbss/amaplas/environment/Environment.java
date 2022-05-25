@@ -2,7 +2,7 @@ package cz.cvut.kbss.amaplas.environment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.cvut.kbss.amaplas.config.JacksonConfig;
-import cz.cvut.kbss.amplas.util.Vocabulary;
+import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jsonld.JsonLd;
 import org.eclipse.rdf4j.repository.Repository;

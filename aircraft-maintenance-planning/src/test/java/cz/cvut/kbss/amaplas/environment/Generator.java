@@ -1,6 +1,6 @@
 package cz.cvut.kbss.amaplas.environment;
 
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.*;
+import cz.cvut.kbss.amaplas.model.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;

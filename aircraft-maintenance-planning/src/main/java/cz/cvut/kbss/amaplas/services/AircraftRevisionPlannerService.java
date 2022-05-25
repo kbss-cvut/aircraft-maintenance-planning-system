@@ -3,16 +3,16 @@ package cz.cvut.kbss.amaplas.services;
 import cz.cvut.kbss.amaplas.exceptions.NotFoundException;
 import cz.cvut.kbss.amaplas.exceptions.UnsupportedOperationException;
 import cz.cvut.kbss.amaplas.exceptions.ValidationException;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.ExtractData;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.ToGraphml;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.*;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.builders.ImplicitPlanBuilder;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.ops.CopySimplePlanProperties;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.planners.OriginalPlanner;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.planners.ReuseBasedPlanner;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.planners.TaskTypePlanValidator;
+import cz.cvut.kbss.amaplas.model.*;
+import cz.cvut.kbss.amaplas.utils.GraphmlUtils;
+import cz.cvut.kbss.amaplas.model.builders.ImplicitPlanBuilder;
+import cz.cvut.kbss.amaplas.model.ops.CopySimplePlanProperties;
+import cz.cvut.kbss.amaplas.planners.OriginalPlanner;
+import cz.cvut.kbss.amaplas.planners.ReuseBasedPlanner;
+import cz.cvut.kbss.amaplas.planners.TaskTypePlanValidator;
 import cz.cvut.kbss.amaplas.persistence.dao.GenericPlanDao;
 import cz.cvut.kbss.amaplas.persistence.dao.PlanTypeDao;
+import cz.cvut.kbss.amaplas.algs.SimilarityUtils;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.traverse.BreadthFirstIterator;
 import org.springframework.stereotype.Service;
@@ -71,7 +71,7 @@ public class AircraftRevisionPlannerService extends BaseService{
 //        // remove
 //        revisionsToIgnore.forEach(historyPlans::remove);
         List<SequencePattern> rawPlan = ReuseBasedPlanner.planner.planConnected(historyPlans, new HashSet<>(toPlan),
-                ExtractData::calculateSetSimilarity,
+                SimilarityUtils::calculateSetSimilarity,
                 revisionId -> revsToIgnoreSet.contains(revisionId));
         return rawPlan;
     }
@@ -213,11 +213,11 @@ public class AircraftRevisionPlannerService extends BaseService{
         Set<String> revisionToIgnore = new HashSet<>();
         revisionToIgnore.add(revisionId);
         List<SequencePattern> rawPlan = ReuseBasedPlanner.planner.planConnected(historyPlans, new HashSet<>(taskTypes),
-                ExtractData::calculateSetSimilarity,
+                SimilarityUtils::calculateSetSimilarity,
                 rid -> revisionToIgnore.contains(rid));
         // distance between task cards
 
-        DefaultDirectedGraph<TaskType, SequencePattern> dg = ToGraphml.toGraph(rawPlan);
+        DefaultDirectedGraph<TaskType, SequencePattern> dg = GraphmlUtils.toGraph(rawPlan);
         Set<TaskType> roots = taskTypes.stream().filter(t -> dg.inDegreeOf(t) == 0).collect(Collectors.toSet());
         BreadthFirstIterator<TaskType, SequencePattern> breadthFirstIterator = new BreadthFirstIterator(dg, roots);
         while(breadthFirstIterator.hasNext()){

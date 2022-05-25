@@ -12,7 +12,7 @@ public class PersistenceConfigUtils {
     public static Map<String, String> createEntityManagerConfiguration(String repositoryUrl, String repositoryUsername,
                                                                 String repositoryPassword, String driver){
         final Map<String, String> properties = new HashMap<>();
-        properties.put(JOPAPersistenceProperties.SCAN_PACKAGE, "cz.cvut.kbss.amaplas");
+        properties.put(JOPAPersistenceProperties.SCAN_PACKAGE, "cz.cvut.kbss.amaplas.model");
         properties.put(JOPAPersistenceProperties.JPA_PERSISTENCE_PROVIDER, JOPAPersistenceProvider.class.getName());
         properties.put(JOPAPersistenceProperties.ONTOLOGY_PHYSICAL_URI_KEY, repositoryUrl);
         properties.put(JOPAPersistenceProperties.DATA_SOURCE_CLASS, driver);

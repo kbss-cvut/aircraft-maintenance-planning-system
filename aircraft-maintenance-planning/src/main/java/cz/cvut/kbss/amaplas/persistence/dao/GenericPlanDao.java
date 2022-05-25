@@ -1,7 +1,7 @@
 package cz.cvut.kbss.amaplas.persistence.dao;
 
 import cz.cvut.kbss.amaplas.exceptions.PersistenceException;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.AbstractPlan;
+import cz.cvut.kbss.amaplas.model.AbstractPlan;
 import cz.cvut.kbss.jopa.exceptions.NoResultException;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import org.slf4j.Logger;

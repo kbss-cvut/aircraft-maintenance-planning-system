@@ -1,9 +1,9 @@
 package cz.cvut.kbss.amaplas.services;
 
 import cz.cvut.kbss.amaplas.config.ConfigProperties;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.io.SparqlDataReader;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.io.SparqlDataReaderRDF4J;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.Result;
+import cz.cvut.kbss.amaplas.io.SparqlDataReader;
+import cz.cvut.kbss.amaplas.io.SparqlDataReaderRDF4J;
+import cz.cvut.kbss.amaplas.model.Result;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
