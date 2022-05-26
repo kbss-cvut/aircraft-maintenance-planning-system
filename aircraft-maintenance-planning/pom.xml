@@ -17,18 +17,15 @@
 
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <org.aspectj.version>1.9.7</org.aspectj.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <graphdb.version>9.3.2</graphdb.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <cz.cvut.kbss.jopa.version>0.17.2</cz.cvut.kbss.jopa.version>
         <com.github.ledsoft.version>0.1.1</com.github.ledsoft.version>
         <cz.cvut.kbss.jsonld.version>0.8.9</cz.cvut.kbss.jsonld.version>
         <org.springframework.boot.version>2.6.3</org.springframework.boot.version>
-        <org.junit.jupiter.version>5.8.2</org.junit.jupiter.version>
-        <org.mockito.version>4.3.1</org.mockito.version>
         <org.eclipse.rdf4j.version>3.7.3</org.eclipse.rdf4j.version>
     </properties>
 
@@ -147,6 +144,21 @@
 
     <build>
         <plugins>
+            <!-- Disable default compiler as crashes the build when using java 11 and aspectj-maven-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -195,15 +207,21 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Execution may fail if target not cleaned (e.g. mvn clean ...). Alternatively, replace
+            <phase>generate-sources</phase>
+             with
+            <phase>none</phase>
+            This will help compile and test the project without clean. This will work properly if the ontology
+            src/main/resources/aircraft-maintenance-planning.ttl does not change or changes in the ontology are not used
+            in code via the ...util.Vocabulary class -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
                 <version>1.14.0</version>
                 <configuration>
+                    <encoding>UTF-8</encoding>
                     <complianceLevel>${java.version}</complianceLevel>
-
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
                     <aspectLibraries>
                         <aspectLibrary>
                             <groupId>cz.cvut.kbss.jopa</groupId>
@@ -214,10 +232,6 @@
                             <artifactId>spring-aspects</artifactId>
                         </aspectLibrary>
                     </aspectLibraries>
-                    <excludes>
-                        <exclude>**/exp/common/*.java</exclude>
-                        <exclude>**/graphml/**/*.java</exclude>
-                    </excludes>
                 </configuration>
                 <dependencies>
                     <dependency>
