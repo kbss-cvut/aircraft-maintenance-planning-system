@@ -1,13 +1,12 @@
 package cz.cvut.kbss.amaplas.services;
 
-import cz.cvut.kbss.amaplas.config.DataRepositoryConfig;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.io.SparqlDataReader;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.io.SparqlDataReaderRDF4J;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.Result;
+import cz.cvut.kbss.amaplas.config.ConfigProperties;
+import cz.cvut.kbss.amaplas.io.SparqlDataReader;
+import cz.cvut.kbss.amaplas.io.SparqlDataReaderRDF4J;
+import cz.cvut.kbss.amaplas.model.Result;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -20,12 +19,14 @@ public class RevisionHistory {
 
 //    @Value("${repository.data.url}")
 //    private String repositoryUrl;
-    private DataRepositoryConfig repoConfig;
+    protected final ConfigProperties config;
+    protected ConfigProperties.Repository repoConfig;
 
     private Map<String, List<Result>> historyCache;
 
-    public RevisionHistory(DataRepositoryConfig repoConfig) {
-        this.repoConfig = repoConfig;
+    public RevisionHistory(ConfigProperties config) {
+        this.config = config;
+        this.repoConfig = config.getRepository();
     }
 
 //    public String getRepositoryUrl() {

@@ -1,7 +1,7 @@
 package cz.cvut.kbss.amaplas.persistence.dao;
 
 import cz.cvut.kbss.amaplas.exceptions.PersistenceException;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.*;
+import cz.cvut.kbss.amaplas.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Repository
@@ -45,7 +44,12 @@ public class PlanTypeDao {
         return supportedPlanTypes.contains(planType);
     }
 
-    public boolean isSupportedPlanType(Set<URI> planTypes){
+
+    public boolean containsSupportedPlanType(AbstractPlan plan){
+        return containsSupportedPlanType(getTypes(plan));
+    }
+
+    public boolean containsSupportedPlanType(Set<String> planTypes){
         return planTypes.stream().filter(supportedPlanTypes::contains).findFirst().isPresent();
     }
 
@@ -65,5 +69,30 @@ public class PlanTypeDao {
 
     public AbstractPlan getNewPlanTypeInstance(URI planType){
         return getNewPlanTypeInstance(planType.toString());
+    }
+
+    public URI getType(AbstractEntity e){
+        Class cls = e.getClass();
+        while(cls != null) {
+            String uri = EntityToOwlClassMapper.getOwlClassForEntity(cls);
+            if(uri != null)
+                return URI.create(uri);
+            cls = cls.getSuperclass();
+        }
+        return null;
+    }
+
+    public Set<String> getTypes(AbstractEntity e){
+        Set<String> types = new HashSet<>();
+        Class cls = e.getClass();
+
+        while(cls != null) {
+            String uri = EntityToOwlClassMapper.getOwlClassForEntity(cls);
+            if(uri != null) {
+                types.add(uri);
+            }
+            cls = cls.getSuperclass();
+        }
+        return types;
     }
 }

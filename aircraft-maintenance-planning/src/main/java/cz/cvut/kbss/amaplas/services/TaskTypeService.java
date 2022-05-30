@@ -1,10 +1,9 @@
 package cz.cvut.kbss.amaplas.services;
 
-import cz.cvut.kbss.amaplas.config.DataRepositoryConfig;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.inputs.AnalyzeTCCodes;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.Result;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.TaskType;
-import org.springframework.beans.factory.annotation.Autowired;
+import cz.cvut.kbss.amaplas.config.ConfigProperties;
+import cz.cvut.kbss.amaplas.io.SparqlDataReaderRDF4J;
+import cz.cvut.kbss.amaplas.model.Result;
+import cz.cvut.kbss.amaplas.model.TaskType;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -16,21 +15,22 @@ import java.util.stream.Collectors;
 @Service
 public class TaskTypeService {
 
-    private RevisionHistory revisionHistory;
-    private DataRepositoryConfig repoConfig;
+    private final RevisionHistory revisionHistory;
+    private final ConfigProperties config;
+    private ConfigProperties.Repository repoConfig;
 
-    public TaskTypeService(RevisionHistory revisionHistory, DataRepositoryConfig repoConfig) {
+    public TaskTypeService(RevisionHistory revisionHistory, ConfigProperties config) {
         this.revisionHistory = revisionHistory;
-        this.repoConfig = repoConfig;
+        this.config = config;
+        this.repoConfig = config.getRepository();
     }
 
-    @Autowired
     @PostConstruct
     public void init(){
         // read task type definitions initialize a map from session task type code to task types definition codes.
         Map<String, List<Result>> revisions = revisionHistory.getAllClosedRevisionsWorkLog(false);
         List<Result> sessions = revisions.values().stream().flatMap(l -> l.stream()).collect(Collectors.toList());
-        List<TaskType> taskTypeDefinitions = AnalyzeTCCodes.__loadTCDefinitions(
+        List<TaskType> taskTypeDefinitions = SparqlDataReaderRDF4J.__loadTCDefinitions(
                 repoConfig.getUrl(), repoConfig.getTaskDefinitionsGraph(),
                 repoConfig.getUsername(), repoConfig.getPassword());
         TaskType.setTaskTypeDefinitions(taskTypeDefinitions);

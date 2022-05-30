@@ -1,34 +1,13 @@
-#server:
-#  port: 5000
 server.servlet.context-path: /api
 
-repository:
-  data:
-    #    url: ${REPOSITORY_DATA_URL:http://graphdb.onto.fel.cvut.cz/repositories/csat-d20-data}
-    url: ${REPOSITORY_DATA_URL:http://localhost:7200/repositories/csat-data-03}
-    #    username: ${REPOSITORY_DATA_USERNAME:}
-    #    password: ${REPOSITORY_DATA_PASSWORD:}
-    #  update:
-    #    url: ${REPOSITORY_UPDATE_URL:https://graphdb.onto.fel.cvut.cz/repositories/csat-dev}
-    #    username: ${REPOSITORY_UPDATE_USERNAME:}
-    #    password: ${REPOSITORY_UPDATE_PASSWORD:}
+planning:
+  repository:
+    url: ${REPOSITORY_DATA_URL:}
+    username: ${REPOSITORY_DATA_USERNAME:}
+    password: ${REPOSITORY_DATA_PASSWORD:}
 
-    task_definitions_graph: ${TASK_DEFINITIONS_GRAPH:http://onto.fel.cvut.cz/ontologies/csat-maintenance}
+    task_definitions_graph: ${TASK_DEFINITIONS_GRAPH:http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-card-definitions}
 
-persistence:
-  driver: cz.cvut.kbss.ontodriver.sesame.SesameDataSource
-  language: cs
-#sftp:
-#  enabled: true
-#  host: ${SFTP_HOST:ftp.cah.cz}
-#  user: ${SFTP_USERNAME}
-#  password: ${SFTP_PASSWORD}
-#  sftpSkipHostKeyChecking: true
-#  convert-csv-delimiter-to-comma: false
-#  local-storage:
-#    path: ${LOCAL_STORAGE_PATH:}
-#s-pipes:
-#  wo-tc-ref:
-#    url: ${SPIPES_WOTCREF_URL:https://kbss.felk.cvut.cz/s-pipes-csat/service?_pId=transform-wo-tc-ref-data&datasetResource=@}
-#  time-analysis:
-#    url: ${SPIPES_TIMEANALYSIS_URL:https://kbss.felk.cvut.cz/s-pipes-csat/service?_pId=transform-time-analysis-data&datasetResource=@}
+  persistence:
+    driver: cz.cvut.kbss.ontodriver.sesame.SesameDataSource
+    language: en

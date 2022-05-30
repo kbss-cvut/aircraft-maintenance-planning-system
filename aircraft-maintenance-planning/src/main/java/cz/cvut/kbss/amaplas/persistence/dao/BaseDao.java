@@ -1,7 +1,7 @@
 package cz.cvut.kbss.amaplas.persistence.dao;
 
-import cz.cvut.kbss.amaplas.exceptions.DaoException;
-import cz.cvut.kbss.amaplas.exp.dataanalysis.timesequences.model.AbstractEntity;
+import cz.cvut.kbss.amaplas.exceptions.PersistenceException;
+import cz.cvut.kbss.amaplas.model.AbstractEntity;
 import cz.cvut.kbss.jopa.exceptions.NoResultException;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.query.TypedQuery;
@@ -35,8 +35,7 @@ public abstract class BaseDao<T extends AbstractEntity> implements GenericDao<T>
         try {
             return selectAll(type, typeUri).getResultStream();
         } catch (RuntimeException e) {
-            getLogger().error("Exception occurred", e);
-            throw new DaoException(e);
+            throw new PersistenceException(e);
         }
     }
 
@@ -45,8 +44,7 @@ public abstract class BaseDao<T extends AbstractEntity> implements GenericDao<T>
         try {
             return selectAll(type, typeUri).getResultList();
         } catch (RuntimeException e) {
-            getLogger().error("Exception occurred", e);
-            throw new DaoException(e);
+            throw new PersistenceException(e);
         }
     }
 
@@ -57,54 +55,84 @@ public abstract class BaseDao<T extends AbstractEntity> implements GenericDao<T>
 
     protected <E extends AbstractEntity> TypedQuery<E> selectAll(Class<E> type, URI typeUri){
         return em.createNativeQuery("SELECT DISTINCT ?x WHERE { ?x a ?type . }", type)
-                .setParameter("type", EntityToOwlClassMapper.getOwlClassForEntity(type));
+                .setParameter("type", typeUri);
     }
 
     @Override
     public Optional<T> find(URI id) {
         Objects.requireNonNull(id);
-        return Optional.ofNullable(em.find(type, id));
+        try {
+            return Optional.ofNullable(em.find(type, id));
+        } catch (RuntimeException e) {
+            throw new PersistenceException(e);
+        }
     }
 
     @Override
     public Optional<T> getReference(URI id) {
         Objects.requireNonNull(id);
-        return Optional.ofNullable(em.getReference(type, id));
+        try {
+            return Optional.ofNullable(em.getReference(type, id));
+        } catch (RuntimeException e) {
+            throw new PersistenceException(e);
+        }
     }
 
     @Override
     @Transactional
     public void persist(T entity) {
         Objects.requireNonNull(entity);
-        em.persist(entity);
+        try {
+            em.persist(entity);
+        } catch (RuntimeException e) {
+            throw new PersistenceException(e);
+        }
     }
 
     @Override
     @Transactional
     public void persist(Collection<T> entities) {
         Objects.requireNonNull(entities);
-        entities.forEach(em::persist);
+        try {
+            entities.forEach(em::persist);
+        } catch (RuntimeException e) {
+            throw new PersistenceException(e);
+        }
     }
 
     @Override
     @Transactional
     public T update(T entity) {
         Objects.requireNonNull(entity);
-        return em.merge(entity);
+        try {
+            return em.merge(entity);
+        } catch (RuntimeException e) {
+            throw new PersistenceException(e);
+        }
     }
 
     @Override
     @Transactional
     public void remove(T entity) {
-        final Optional<T> reference = getReference(entity.getEntityURI());
-        reference.ifPresent(em::remove);
+        Objects.requireNonNull(entity);
+        Objects.requireNonNull(entity.getEntityURI());
+        try {
+            final Optional<T> reference = getReference(entity.getEntityURI());
+            reference.ifPresent(em::remove);
+        } catch (RuntimeException e) {
+            throw new PersistenceException(e);
+        }
     }
 
     @Override
     @Transactional
     public void removeById(URI id) {
-        final Optional<T> reference = getReference(id);
-        reference.ifPresent(em::remove);
+        try {
+            final Optional<T> reference = getReference(id);
+            reference.ifPresent(em::remove);
+        } catch (RuntimeException e) {
+            throw new PersistenceException(e);
+        }
     }
 
     @Override
@@ -116,7 +144,7 @@ public abstract class BaseDao<T extends AbstractEntity> implements GenericDao<T>
                     .setParameter("type", typeUri)
                     .getSingleResult();
         } catch (NoResultException e) {
-            return false;
+            throw new PersistenceException(e);
         }
     }
 
