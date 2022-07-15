@@ -1,142 +1,265 @@
-@prefix : <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning#> .
+@prefix : <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/> .
+@prefix amp: <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix csat-p: <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/> .
 @base <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning> .
 
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning> rdf:type owl:Ontology ;
-                                                                    owl:versionIRI csat-p:v0.0.1 .
+                                                                    owl:versionIRI amp:v0.0.1 ;
+                                                                    owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> .
 
 #################################################################
 #    Object Properties
 #################################################################
 
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/application-type
+amp:application-type rdf:type owl:ObjectProperty ;
+                     rdfs:comment "Used to specify the name of the entity class (in object orientied programming languages, e.g. java) in the application stored as rdf resource."@en .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/damage_of
-csat-p:damage_of rdf:type owl:ObjectProperty ;
-                 rdfs:domain csat-p:damage ;
-                 rdfs:range csat-p:object .
+amp:damage_of rdf:type owl:ObjectProperty ;
+              rdfs:domain amp:damage ;
+              rdfs:range amp:object .
 
 
-###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/discobered-during-task
-csat-p:discovered-during-task rdf:type owl:ObjectProperty ;
-                              rdfs:domain csat-p:maintenance_task ;
-                              rdfs:range csat-p:maintenance_task .
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/discovered-during-task
+amp:discovered-during-task rdf:type owl:ObjectProperty ;
+                           rdfs:domain amp:maintenance_task ;
+                           rdfs:range amp:maintenance_task .
+
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/finding_of
-csat-p:finding_of rdf:type owl:ObjectProperty ;
-                  rdfs:domain csat-p:finding ;
-                  rdfs:range csat-p:damage .
+amp:finding_of rdf:type owl:ObjectProperty ;
+               rdfs:domain amp:finding ;
+               rdfs:range amp:damage .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/finding_resolved_by
-csat-p:finding_resolved_by rdf:type owl:ObjectProperty ;
-                           rdfs:domain csat-p:finding ;
-                           rdfs:range csat-p:repair_task_discovered_during_planned_maintenance_task .
+amp:finding_resolved_by rdf:type owl:ObjectProperty ;
+                        rdfs:domain amp:finding ;
+                        rdfs:range amp:repair_task_discovered_during_planned_maintenance_task .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has-event-type-particpant
+amp:has-event-type-particpant rdf:type owl:ObjectProperty ;
+                              rdfs:domain amp:event-plan .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has-main-scope
+amp:has-main-scope rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-scope> ;
+                   rdfs:comment "this specifies the main maintenance group (scope) resposible for a particualr maintenance task."@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has-mandatory-plan-part
+amp:has-mandatory-plan-part rdf:type owl:ObjectProperty ;
+                            rdfs:subPropertyOf amp:has-plan-part .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has-plan-part
+amp:has-plan-part rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/has-part> ;
+                  owl:inverseOf amp:is-plan-part-of .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has-recommended-plan-part
+amp:has-recommended-plan-part rdf:type owl:ObjectProperty ;
+                              rdfs:subPropertyOf amp:has-plan-part .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has_additional_tasks
-csat-p:has_additional_tasks rdf:type owl:ObjectProperty ;
-                            rdfs:domain csat-p:maintenance_task ;
-                            rdfs:range csat-p:maintenance_task .
+amp:has_additional_tasks rdf:type owl:ObjectProperty ;
+                         rdfs:domain amp:maintenance_task ;
+                         rdfs:range amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has_component
-csat-p:has_component rdf:type owl:ObjectProperty ;
-                     rdfs:domain csat-p:aircraft ;
-                     rdfs:range csat-p:aircraft_part .
+amp:has_component rdf:type owl:ObjectProperty ;
+                  rdfs:domain amp:aircraft ;
+                  rdfs:range amp:aircraft_part .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has_group_part
-csat-p:has_group_part rdf:type owl:ObjectProperty .
+amp:has_group_part rdf:type owl:ObjectProperty .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has_maintenance_task_part
-csat-p:has_maintenance_task_part rdf:type owl:ObjectProperty ;
-                                 rdfs:domain csat-p:maintenance_job ;
-                                 rdfs:range csat-p:planned_task .
+amp:has_maintenance_task_part rdf:type owl:ObjectProperty ;
+                              rdfs:domain amp:maintenance_job ;
+                              rdfs:range amp:planned_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has_task_execution_part
-csat-p:has_task_execution_part rdf:type owl:ObjectProperty .
+amp:has_task_execution_part rdf:type owl:ObjectProperty .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has_work_order_step
-csat-p:has_work_order_step rdf:type owl:ObjectProperty ;
-                           rdfs:domain csat-p:work_order ;
-                           rdfs:range csat-p:work_order_step .
+amp:has_work_order_step rdf:type owl:ObjectProperty ;
+                        rdfs:domain amp:work_order ;
+                        rdfs:range amp:work_order_step .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/is-plan-part-of
+amp:is-plan-part-of rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/is-temporally-related-types
+amp:is-temporally-related-types rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/located-in-zone
+amp:located-in-zone rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf amp:has-event-type-particpant ;
+                    rdfs:domain amp:event-plan ;
+                    rdfs:range <http://onto.fel.cvut.cz/ontologies/csat-maintenance/zone> ;
+                    rdfs:comment "use to specify that a maintenance task is performed in a specific aircraft zone."@en .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/member_of_group
-csat-p:member_of_group rdf:type owl:ObjectProperty .
+amp:member_of_group rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/next
+amp:next rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf amp:is-temporally-related-types ;
+         rdfs:domain amp:event-plan ;
+         rdfs:range amp:event-plan ;
+         rdfs:comment "Description - relation is between event types, e.g. plans"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/operates-on
+amp:operates-on rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf amp:has-event-type-particpant ;
+                rdfs:range amp:panel ;
+                rdfs:comment "use to specify that a maintenance plan operates on a panel"@en .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/part_of_workpackage
-csat-p:part_of_workpackage rdf:type owl:ObjectProperty ;
-                           rdfs:domain [ rdf:type owl:Class ;
-                                         owl:unionOf ( csat-p:task_card
-                                                       csat-p:work_order
-                                                     )
-                                       ] ;
-                           rdfs:range csat-p:workpackage .
+amp:part_of_workpackage rdf:type owl:ObjectProperty ;
+                        rdfs:domain [ rdf:type owl:Class ;
+                                      owl:unionOf ( amp:task_card
+                                                    amp:work_order
+                                                  )
+                                    ] ;
+                        rdfs:range amp:workpackage .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/references_ata_code
-csat-p:references_ata_code rdf:type owl:ObjectProperty .
+amp:references_ata_code rdf:type owl:ObjectProperty .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/references_task
-csat-p:references_task rdf:type owl:ObjectProperty .
+amp:references_task rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/uses-equipment
+amp:uses-equipment rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf amp:has-event-type-particpant ;
+                   rdfs:range amp:equipment ;
+                   rdfs:comment "use to specify that a maintenance task uses equipment"@en .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/works_on
-csat-p:works_on rdf:type owl:ObjectProperty .
+amp:works_on rdf:type owl:ObjectProperty .
 
 
 #################################################################
 #    Data properties
 #################################################################
 
-###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning#has_duration
-:has_duration rdf:type owl:DatatypeProperty ;
-              rdfs:comment "duration of an atomic or complex event calcuated as the difference between the end and the start of the event."@en .
-
-
-###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning#work_duration
-:work_duration rdf:type owl:DatatypeProperty ;
-               rdfs:comment """the time spent working in a complex event. A task execution event can have several work sessions. This property refers to the sum of the times of the individual work sessions on the task. 
-
-This property should not be confused with the has_duration property which specifies the duration between the start and the end of the complex event."""@en .
-
-
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/end_time
-csat-p:end_time rdf:type owl:DatatypeProperty .
+amp:end_time rdf:type owl:DatatypeProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has-general-task-type
+amp:has-general-task-type rdf:type owl:DatatypeProperty ;
+                          rdfs:comment "task type used to classify maintenance tasks in general categories, e.g. clean and check."@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has-mpdtask
+amp:has-mpdtask rdf:type owl:DatatypeProperty ;
+                rdfs:comment "adhock - the code of the task defined in a Maintenance planning document (MPD)."@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has_duration
+amp:has_duration rdf:type owl:DatatypeProperty ;
+                 rdfs:comment "duration of an atomic or complex event calcuated as the difference between the end and the start of the event."@en .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has_id
-csat-p:has_id rdf:type owl:DatatypeProperty .
+amp:has_id rdf:type owl:DatatypeProperty .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has_step_index
-csat-p:has_step_index rdf:type owl:DatatypeProperty .
+amp:has_step_index rdf:type owl:DatatypeProperty .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has_workorder_action
-csat-p:has_workorder_action rdf:type owl:DatatypeProperty .
+amp:has_workorder_action rdf:type owl:DatatypeProperty .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has_workorder_description
-csat-p:has_workorder_description rdf:type owl:DatatypeProperty .
+amp:has_workorder_description rdf:type owl:DatatypeProperty .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/issue_time
-csat-p:issue_time rdf:type owl:DatatypeProperty .
+amp:issue_time rdf:type owl:DatatypeProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/planned-duration
+amp:planned-duration rdf:type owl:DatatypeProperty ;
+                     rdfs:comment "Planned duration from start to end of the plan."@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/planned-end-time
+amp:planned-end-time rdf:type owl:DatatypeProperty ;
+                     rdfs:comment "the planned end time of a plan."@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/planned-start-time
+amp:planned-start-time rdf:type owl:DatatypeProperty ;
+                       rdfs:comment "the planned start time of a plan"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/planned-work-time
+amp:planned-work-time rdf:type owl:DatatypeProperty ;
+                      rdfs:comment "the planned work time, e.g. person/hours."@en .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/start_time
-csat-p:start_time rdf:type owl:DatatypeProperty .
+amp:start_time rdf:type owl:DatatypeProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/task-for-area
+amp:task-for-area rdf:type owl:DatatypeProperty ;
+                  rdfs:comment "specifies which task is for which area of an aircraft."@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/task-for-model
+amp:task-for-model rdf:type owl:DatatypeProperty ;
+                   rdfs:comment "specifies which task is for which model of aircraft."@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/task-for-phase
+amp:task-for-phase rdf:type owl:DatatypeProperty ;
+                   rdfs:comment "specifies which task is for which maintenance phase."@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/work-time
+amp:work-time rdf:type owl:DatatypeProperty ;
+              rdfs:comment "The actual work time spent on a plan (measured in person/hours)"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/work_duration
+amp:work_duration rdf:type owl:DatatypeProperty ;
+                  rdfs:comment """the time spent working in a complex event. A task execution event can have several work sessions. This property refers to the sum of the times of the individual work sessions on the task. 
+
+This property should not be confused with the has_duration property which specifies the duration between the start and the end of the complex event."""@en .
 
 
 #################################################################
@@ -144,320 +267,365 @@ csat-p:start_time rdf:type owl:DatatypeProperty .
 #################################################################
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/AVIO_group
-csat-p:AVIO_group rdf:type owl:Class ;
-                  rdfs:subClassOf csat-p:heavy_maintenance_group ;
-                  rdfs:label "avionics (AVIO) mechanic group" .
+amp:AVIO_group rdf:type owl:Class ;
+               rdfs:subClassOf amp:heavy_maintenance_group ;
+               rdfs:label "avionics (AVIO) mechanic group" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/BSI_group
-csat-p:BSI_group rdf:type owl:Class ;
-                 rdfs:subClassOf csat-p:maintenance_task ;
-                 rdfs:label "bore-scope inspection (BSI)" .
+amp:BSI_group rdf:type owl:Class ;
+              rdfs:subClassOf amp:maintenance_task ;
+              rdfs:label "bore-scope inspection (BSI)" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/COMP_group
-csat-p:COMP_group rdf:type owl:Class .
+amp:COMP_group rdf:type owl:Class .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/COM_group
-csat-p:COM_group rdf:type owl:Class ;
-                 rdfs:subClassOf csat-p:maintenance_support_group ;
-                 rdfs:label "(COM) composite workshop support group" .
+amp:COM_group rdf:type owl:Class ;
+              rdfs:subClassOf amp:maintenance_support_group ;
+              rdfs:label "(COM) composite workshop support group" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/ENG_group
-csat-p:ENG_group rdf:type owl:Class ;
-                 rdfs:subClassOf csat-p:heavy_maintenance_group ;
-                 rdfs:label "engine (ENG) mechanic group" .
+amp:ENG_group rdf:type owl:Class ;
+              rdfs:subClassOf amp:heavy_maintenance_group ;
+              rdfs:label "engine (ENG) mechanic group" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/EXT_group
-csat-p:EXT_group rdf:type owl:Class ;
-                 rdfs:subClassOf csat-p:heavy_maintenance_group ;
-                 rdfs:label "exterior (EXT) mechanic group" .
+amp:EXT_group rdf:type owl:Class ;
+              rdfs:subClassOf amp:heavy_maintenance_group ;
+              rdfs:label "exterior (EXT) mechanic group" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/INT_group
-csat-p:INT_group rdf:type owl:Class ;
-                 rdfs:subClassOf csat-p:heavy_maintenance_group ;
-                 rdfs:label "interior (INT) mechanic group" .
+amp:INT_group rdf:type owl:Class ;
+              rdfs:subClassOf amp:heavy_maintenance_group ;
+              rdfs:label "interior (INT) mechanic group" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/JOIN_group
-csat-p:JOIN_group rdf:type owl:Class ;
-                  rdfs:subClassOf csat-p:maintenance_support_group ;
-                  rdfs:label "joiners (JOIN) support group" .
+amp:JOIN_group rdf:type owl:Class ;
+               rdfs:subClassOf amp:maintenance_support_group ;
+               rdfs:label "joiners (JOIN) support group" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/LDG_group
-csat-p:LDG_group rdf:type owl:Class ;
-                 rdfs:subClassOf csat-p:heavy_maintenance_group ;
-                 rdfs:label "landing gear (LDG) mechanic_group" .
+amp:LDG_group rdf:type owl:Class ;
+              rdfs:subClassOf amp:heavy_maintenance_group ;
+              rdfs:label "landing gear (LDG) mechanic_group" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/Line_manager
-csat-p:Line_manager rdf:type owl:Class ;
-                    rdfs:subClassOf csat-p:maintenance_manager ;
-                    owl:disjointWith csat-p:team_leader .
+amp:Line_manager rdf:type owl:Class ;
+                 rdfs:subClassOf amp:maintenance_manager ;
+                 owl:disjointWith amp:team_leader .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/NDT_group
-csat-p:NDT_group rdf:type owl:Class ;
-                 rdfs:subClassOf csat-p:maintenance_support_group ;
-                 rdfs:label "NDT (non-destructive testing) support group" .
+amp:NDT_group rdf:type owl:Class ;
+              rdfs:subClassOf amp:maintenance_support_group ;
+              rdfs:label "NDT (non-destructive testing) support group" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/PAINT_group
-csat-p:PAINT_group rdf:type owl:Class ;
-                   rdfs:subClassOf csat-p:maintenance_support_group ;
-                   rdfs:label "PAINT Paintshop support group" .
+amp:PAINT_group rdf:type owl:Class ;
+                rdfs:subClassOf amp:maintenance_support_group ;
+                rdfs:label "PAINT Paintshop support group" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/SEAT_group
-csat-p:SEAT_group rdf:type owl:Class ;
-                  rdfs:subClassOf csat-p:maintenance_support_group ;
-                  rdfs:label "seat workshop (SEAT) support group" .
+amp:SEAT_group rdf:type owl:Class ;
+               rdfs:subClassOf amp:maintenance_support_group ;
+               rdfs:label "seat workshop (SEAT) support group" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/SHM_group
-csat-p:SHM_group rdf:type owl:Class ;
-                 rdfs:subClassOf csat-p:maintenance_support_group ;
-                 rdfs:label "sheetmetal (SHM) support group" .
+amp:SHM_group rdf:type owl:Class ;
+              rdfs:subClassOf amp:maintenance_support_group ;
+              rdfs:label "sheetmetal (SHM) support group" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/UPH_group
-csat-p:UPH_group rdf:type owl:Class ;
-                 rdfs:subClassOf csat-p:maintenance_support_group ;
-                 rdfs:label "upholistery (UPH) support group" .
+amp:UPH_group rdf:type owl:Class ;
+              rdfs:subClassOf amp:maintenance_support_group ;
+              rdfs:label "upholistery (UPH) support group" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/WASH_group
-csat-p:WASH_group rdf:type owl:Class ;
-                  rdfs:subClassOf csat-p:maintenance_support_group ;
-                  rdfs:label "(WASH) technical cleaning support group" .
+amp:WASH_group rdf:type owl:Class ;
+               rdfs:subClassOf amp:maintenance_support_group ;
+               rdfs:label "(WASH) technical cleaning support group" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/WEL_group
-csat-p:WEL_group rdf:type owl:Class ;
-                 rdfs:subClassOf csat-p:maintenance_support_group ;
-                 rdfs:label "WEL Welding support group" .
+amp:WEL_group rdf:type owl:Class ;
+              rdfs:subClassOf amp:maintenance_support_group ;
+              rdfs:label "WEL Welding support group" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/additional_task
-csat-p:additional_task rdf:type owl:Class ;
-                       rdfs:subClassOf csat-p:maintenance_task .
+amp:additional_task rdf:type owl:Class ;
+                    rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/additional_task_suggested_by_manufacturer_maintenance_manual
-csat-p:additional_task_suggested_by_manufacturer_maintenance_manual rdf:type owl:Class ;
-                                                                    rdfs:subClassOf csat-p:additional_task .
+amp:additional_task_suggested_by_manufacturer_maintenance_manual rdf:type owl:Class ;
+                                                                 rdfs:subClassOf amp:additional_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/aircraft
-csat-p:aircraft rdf:type owl:Class ;
-                rdfs:subClassOf csat-p:maintenance_subject .
+amp:aircraft rdf:type owl:Class ;
+             rdfs:subClassOf amp:maintenance_subject .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/aircraft_part
-csat-p:aircraft_part rdf:type owl:Class ;
-                     rdfs:subClassOf csat-p:maintenance_subject .
+amp:aircraft_part rdf:type owl:Class ;
+                  rdfs:subClassOf amp:maintenance_subject .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/assemble_task
-csat-p:assemble_task rdf:type owl:Class ;
-                     rdfs:subClassOf csat-p:maintenance_task .
+amp:assemble_task rdf:type owl:Class ;
+                  rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/atomic_execution
-csat-p:atomic_execution rdf:type owl:Class ;
-                        rdfs:subClassOf csat-p:task_execution ;
-                        owl:disjointWith csat-p:complex_execution .
+amp:atomic_execution rdf:type owl:Class ;
+                     rdfs:subClassOf amp:task_execution ;
+                     owl:disjointWith amp:complex_execution .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/avionics_team_leader
-csat-p:avionics_team_leader rdf:type owl:Class ;
-                            rdfs:subClassOf csat-p:team_leader .
+amp:avionics_team_leader rdf:type owl:Class ;
+                         rdfs:subClassOf amp:team_leader .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/check_task
-csat-p:check_task rdf:type owl:Class ;
-                  rdfs:subClassOf csat-p:maintenance_task .
+amp:check_task rdf:type owl:Class ;
+               rdfs:subClassOf amp:maintenance_task .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/complex-plan
+amp:complex-plan rdf:type owl:Class ;
+                 rdfs:subClassOf amp:event-plan .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/complex_execution
-csat-p:complex_execution rdf:type owl:Class ;
-                         rdfs:subClassOf csat-p:task_execution ,
-                                         [ rdf:type owl:Restriction ;
-                                           owl:onProperty csat-p:has_task_execution_part ;
-                                           owl:someValuesFrom csat-p:task_execution
-                                         ] .
+amp:complex_execution rdf:type owl:Class ;
+                      rdfs:subClassOf amp:task_execution ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty amp:has_task_execution_part ;
+                                        owl:someValuesFrom amp:task_execution
+                                      ] .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/damage
-csat-p:damage rdf:type owl:Class .
+amp:damage rdf:type owl:Class .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/disasemble_task
-csat-p:disasemble_task rdf:type owl:Class ;
-                       rdfs:subClassOf csat-p:maintenance_task .
+amp:disasemble_task rdf:type owl:Class ;
+                    rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/engine_team_leader
-csat-p:engine_team_leader rdf:type owl:Class ;
-                          rdfs:subClassOf csat-p:team_leader .
+amp:engine_team_leader rdf:type owl:Class ;
+                       rdfs:subClassOf amp:team_leader .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/equipment
+amp:equipment rdf:type owl:Class ;
+              rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/physical-object> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/event-plan
+amp:event-plan rdf:type owl:Class ;
+               rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/event> .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/exterior_team_leader
-csat-p:exterior_team_leader rdf:type owl:Class ;
-                            rdfs:subClassOf csat-p:team_leader .
+amp:exterior_team_leader rdf:type owl:Class ;
+                         rdfs:subClassOf amp:team_leader .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/finding
-csat-p:finding rdf:type owl:Class .
+amp:finding rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/general-task-plan
+amp:general-task-plan rdf:type owl:Class ;
+                      rdfs:subClassOf amp:event-plan .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/heavy_maintenance_group
-csat-p:heavy_maintenance_group rdf:type owl:Class ;
-                               rdfs:subClassOf csat-p:maintenance_group .
+amp:heavy_maintenance_group rdf:type owl:Class ;
+                            rdfs:subClassOf amp:maintenance_group .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/interior_team_leader
-csat-p:interior_team_leader rdf:type owl:Class ;
-                            rdfs:subClassOf csat-p:team_leader .
+amp:interior_team_leader rdf:type owl:Class ;
+                         rdfs:subClassOf amp:team_leader .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/landing_gear_team_leader
-csat-p:landing_gear_team_leader rdf:type owl:Class ;
-                                rdfs:subClassOf csat-p:team_leader .
+amp:landing_gear_team_leader rdf:type owl:Class ;
+                             rdfs:subClassOf amp:team_leader .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/maintenance_group
-csat-p:maintenance_group rdf:type owl:Class .
+amp:maintenance_group rdf:type owl:Class .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/maintenance_job
-csat-p:maintenance_job rdf:type owl:Class .
+amp:maintenance_job rdf:type owl:Class .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/maintenance_manager
-csat-p:maintenance_manager rdf:type owl:Class .
+amp:maintenance_manager rdf:type owl:Class .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/maintenance_subject
-csat-p:maintenance_subject rdf:type owl:Class ;
-                           rdfs:subClassOf csat-p:object .
+amp:maintenance_subject rdf:type owl:Class ;
+                        rdfs:subClassOf amp:object .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/maintenance_support_group
-csat-p:maintenance_support_group rdf:type owl:Class ;
-                                 rdfs:subClassOf csat-p:maintenance_group .
+amp:maintenance_support_group rdf:type owl:Class ;
+                              rdfs:subClassOf amp:maintenance_group .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/maintenance_task
-csat-p:maintenance_task rdf:type owl:Class .
+amp:maintenance_task rdf:type owl:Class .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/maintenance_work_order
-csat-p:maintenance_work_order rdf:type owl:Class ;
-                              rdfs:subClassOf csat-p:work_order .
+amp:maintenance_work_order rdf:type owl:Class ;
+                           rdfs:subClassOf amp:work_order .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/mechanic
-csat-p:mechanic rdf:type owl:Class ;
-                rdfs:subClassOf csat-p:worker .
+amp:mechanic rdf:type owl:Class ;
+             rdfs:subClassOf amp:worker .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/non-planned_task
-csat-p:non-planned_task rdf:type owl:Class ;
-                        rdfs:subClassOf csat-p:maintenance_task .
+amp:non-planned_task rdf:type owl:Class ;
+                     rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/object
-csat-p:object rdf:type owl:Class .
+amp:object rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/panel
+amp:panel rdf:type owl:Class ;
+          rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/physical-object> .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/phase-plan
+amp:phase-plan rdf:type owl:Class ;
+               rdfs:subClassOf amp:event-plan .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/planned_task
-csat-p:planned_task rdf:type owl:Class ;
-                    rdfs:subClassOf csat-p:maintenance_task .
+amp:planned_task rdf:type owl:Class ;
+                 rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/repair_task
-csat-p:repair_task rdf:type owl:Class ;
-                   rdfs:subClassOf csat-p:maintenance_task .
+amp:repair_task rdf:type owl:Class ;
+                rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/repair_task_discovered_during_planned_maintenance_task
-csat-p:repair_task_discovered_during_planned_maintenance_task rdf:type owl:Class ;
-                                                              rdfs:subClassOf csat-p:maintenance_task .
+amp:repair_task_discovered_during_planned_maintenance_task rdf:type owl:Class ;
+                                                           rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/scheduled_work_order
-csat-p:scheduled_work_order rdf:type owl:Class ;
-                            rdfs:subClassOf csat-p:work_order .
+amp:scheduled_work_order rdf:type owl:Class ;
+                         rdfs:subClassOf amp:work_order .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/task-plan
+amp:task-plan rdf:type owl:Class ;
+              rdfs:subClassOf amp:event-plan .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/task_card
-csat-p:task_card rdf:type owl:Class ;
-                 rdfs:subClassOf csat-p:complex_execution ;
-                 rdfs:comment "task card refers to a task execution of a planned tasl. Planned tasks can be executed multiple times in the context of a workpackage."@en .
+amp:task_card rdf:type owl:Class ;
+              rdfs:subClassOf amp:complex_execution ;
+              rdfs:comment "task card refers to a task execution of a planned tasl. Planned tasks can be executed multiple times in the context of a workpackage."@en .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/task_execution
-csat-p:task_execution rdf:type owl:Class ;
-                      rdfs:comment "Modeling artifact"@en .
+amp:task_execution rdf:type owl:Class ;
+                   rdfs:comment "Modeling artifact"@en .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/task_required_by_client
-csat-p:task_required_by_client rdf:type owl:Class ;
-                               rdfs:subClassOf csat-p:planned_task .
+amp:task_required_by_client rdf:type owl:Class ;
+                            rdfs:subClassOf amp:planned_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/team_leader
-csat-p:team_leader rdf:type owl:Class ;
-                   rdfs:subClassOf csat-p:maintenance_manager .
+amp:team_leader rdf:type owl:Class ;
+                rdfs:subClassOf amp:maintenance_manager .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/work-session-plan
+amp:work-session-plan rdf:type owl:Class ;
+                      rdfs:subClassOf amp:event-plan .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/work_order
-csat-p:work_order rdf:type owl:Class ;
-                  rdfs:subClassOf csat-p:complex_execution .
+amp:work_order rdf:type owl:Class ;
+               rdfs:subClassOf amp:complex_execution .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/work_order_step
-csat-p:work_order_step rdf:type owl:Class ;
-                       rdfs:subClassOf csat-p:complex_execution .
+amp:work_order_step rdf:type owl:Class ;
+                    rdfs:subClassOf amp:complex_execution .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/worker
-csat-p:worker rdf:type owl:Class .
+amp:worker rdf:type owl:Class .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/workpackage
-csat-p:workpackage rdf:type owl:Class .
+amp:workpackage rdf:type owl:Class .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/workpackage-plan
+amp:workpackage-plan rdf:type owl:Class ;
+                     rdfs:subClassOf amp:event-plan .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/Check_(CHK)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/Check_(CHK)> rdf:type owl:Class ;
-                                                                               rdfs:subClassOf csat-p:maintenance_task .
+                                                                               rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/Functional_test_(FNC)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/Functional_test_(FNC)> rdf:type owl:Class ;
-                                                                                         rdfs:subClassOf csat-p:maintenance_task .
+                                                                                         rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/General_visual_inspection_(GVI)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/General_visual_inspection_(GVI)> rdf:type owl:Class ;
-                                                                                                   rdfs:subClassOf csat-p:maintenance_task .
+                                                                                                   rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/Operational_test_(OPC)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/Operational_test_(OPC)> rdf:type owl:Class ;
-                                                                                          rdfs:subClassOf csat-p:maintenance_task .
+                                                                                          rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/adjusting_(ADJ)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/adjusting_(ADJ)> rdf:type owl:Class ;
-                                                                                   rdfs:subClassOf csat-p:maintenance_task .
+                                                                                   rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/borescope_inspection_(BSI)
@@ -466,67 +634,67 @@ csat-p:workpackage rdf:type owl:Class .
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/change_(CHG)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/change_(CHG)> rdf:type owl:Class ;
-                                                                                rdfs:subClassOf csat-p:maintenance_task .
+                                                                                rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/detail_visual_inspection_(DVI)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/detail_visual_inspection_(DVI)> rdf:type owl:Class ;
-                                                                                                  rdfs:subClassOf csat-p:maintenance_task .
+                                                                                                  rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/detailed_inspection_(DET)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/detailed_inspection_(DET)> rdf:type owl:Class ;
-                                                                                             rdfs:subClassOf csat-p:maintenance_task .
+                                                                                             rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/discard/one_time_used_(DIS)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/discard/one_time_used_(DIS)> rdf:type owl:Class ;
-                                                                                               rdfs:subClassOf csat-p:maintenance_task .
+                                                                                               rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/general_(GEN)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/general_(GEN)> rdf:type owl:Class ;
-                                                                                 rdfs:subClassOf csat-p:maintenance_task .
+                                                                                 rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/lubrication_(LUB)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/lubrication_(LUB)> rdf:type owl:Class ;
-                                                                                     rdfs:subClassOf csat-p:maintenance_task .
+                                                                                     rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/operational_check_(OPS)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/operational_check_(OPS)> rdf:type owl:Class ;
-                                                                                           rdfs:subClassOf csat-p:maintenance_task .
+                                                                                           rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/repair_(REP)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/repair_(REP)> rdf:type owl:Class ;
-                                                                                rdfs:subClassOf csat-p:maintenance_task .
+                                                                                rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/restoration_(RST)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/restoration_(RST)> rdf:type owl:Class ;
-                                                                                     rdfs:subClassOf csat-p:maintenance_task .
+                                                                                     rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/servising_(SVC)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/servising_(SVC)> rdf:type owl:Class ;
-                                                                                   rdfs:subClassOf csat-p:maintenance_task .
+                                                                                   rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/special_detailed_inspection_(SDI)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/special_detailed_inspection_(SDI)> rdf:type owl:Class ;
-                                                                                                     rdfs:subClassOf csat-p:maintenance_task .
+                                                                                                     rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/temporary_protection_syst._(TPS)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/temporary_protection_syst._(TPS)> rdf:type owl:Class ;
-                                                                                                    rdfs:subClassOf csat-p:maintenance_task .
+                                                                                                    rdfs:subClassOf amp:maintenance_task .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/visual_check_(VCK)
 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/visual_check_(VCK)> rdf:type owl:Class ;
-                                                                                      rdfs:subClassOf csat-p:maintenance_task .
+                                                                                      rdfs:subClassOf amp:maintenance_task .
 
 
 #################################################################
@@ -534,38 +702,38 @@ csat-p:workpackage rdf:type owl:Class .
 #################################################################
 
 [ rdf:type owl:AllDisjointClasses ;
-  owl:members ( csat-p:AVIO_group
-                csat-p:ENG_group
-                csat-p:EXT_group
-                csat-p:INT_group
-                csat-p:LDG_group
+  owl:members ( amp:AVIO_group
+                amp:ENG_group
+                amp:EXT_group
+                amp:INT_group
+                amp:LDG_group
               )
 ] .
 
 
 [ rdf:type owl:AllDisjointClasses ;
-  owl:members ( csat-p:COMP_group
-                csat-p:JOIN_group
-                csat-p:NDT_group
-                csat-p:PAINT_group
-                csat-p:SEAT_group
-                csat-p:SHM_group
-                csat-p:UPH_group
-                csat-p:WASH_group
-                csat-p:WEL_group
+  owl:members ( amp:COMP_group
+                amp:JOIN_group
+                amp:NDT_group
+                amp:PAINT_group
+                amp:SEAT_group
+                amp:SHM_group
+                amp:UPH_group
+                amp:WASH_group
+                amp:WEL_group
               )
 ] .
 
 
 [ rdf:type owl:AllDisjointClasses ;
-  owl:members ( csat-p:additional_task
-                csat-p:assemble_task
-                csat-p:check_task
-                csat-p:disasemble_task
-                csat-p:planned_task
-                csat-p:repair_task
-                csat-p:repair_task_discovered_during_planned_maintenance_task
-                csat-p:workpackage
+  owl:members ( amp:additional_task
+                amp:assemble_task
+                amp:check_task
+                amp:disasemble_task
+                amp:planned_task
+                amp:repair_task
+                amp:repair_task_discovered_during_planned_maintenance_task
+                amp:workpackage
                 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/Check_(CHK)>
                 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/Functional_test_(FNC)>
                 <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/General_visual_inspection_(GVI)>
@@ -590,23 +758,23 @@ csat-p:workpackage rdf:type owl:Class .
 
 
 [ rdf:type owl:AllDisjointClasses ;
-  owl:members ( csat-p:avionics_team_leader
-                csat-p:engine_team_leader
-                csat-p:exterior_team_leader
-                csat-p:interior_team_leader
-                csat-p:landing_gear_team_leader
+  owl:members ( amp:avionics_team_leader
+                amp:engine_team_leader
+                amp:exterior_team_leader
+                amp:interior_team_leader
+                amp:landing_gear_team_leader
               )
 ] .
 
 
 [ rdf:type owl:AllDisjointClasses ;
-  owl:members ( csat-p:damage
-                csat-p:finding
-                csat-p:maintenance_group
-                csat-p:maintenance_job
-                csat-p:maintenance_manager
-                csat-p:maintenance_task
-                csat-p:object
+  owl:members ( amp:damage
+                amp:finding
+                amp:maintenance_group
+                amp:maintenance_job
+                amp:maintenance_manager
+                amp:maintenance_task
+                amp:object
               )
 ] .
 
