@@ -33,6 +33,7 @@
 td:bind-expected-table-schema
   a sml:BindBySelect ;
   sm:next td:check-input-data-schema ;
+  sm:next td:rdfize-input-data;
   sml:selectQuery [
       a sp:Select ;
       sp:text """SELECT ?expectedTableSchema
