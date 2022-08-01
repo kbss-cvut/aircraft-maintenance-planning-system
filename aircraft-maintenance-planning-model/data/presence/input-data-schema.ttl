@@ -18,24 +18,19 @@
 
 :Column_1   a csvw:Column;
     csvw:name "Employee_No" ;
-    csvw:title "Employee_No"
 .
 :Column_2   a csvw:Column;
     csvw:name "status_1" ;
-    csvw:title "status_1"
 .
 :Column_3   a csvw:Column;
     csvw:name "status_2" ;
-    csvw:title "status_2"
 .
 :Column_4   a csvw:Column;
     csvw:name "date" ;
-    csvw:title "date"
 .
 
 :Column_5  a csvw:Column;
   csvw:name "time" ;
-  csvw:title "time"
 .
 
 csvw:property a rdf:Property .
