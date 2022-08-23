@@ -5,7 +5,10 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class ImplicitPlanBuilder {
@@ -17,7 +20,9 @@ public class ImplicitPlanBuilder {
     protected Defaults defaults = new Defaults();
 
     public PlanningResult createRevision(List<Result> results){
-        Aircraft aircraft = results.stream().map(r -> getAircraft(r)).filter(a -> a != null).findFirst().orElse(null);
+        Aircraft aircraft = results.stream().map(r -> getAircraft(r)).filter(a -> !defaults.isDefault(a)).findFirst().orElse(null);
+        if(aircraft == null)
+            aircraft = results.stream().map(r -> getAircraft(r)).findFirst().orElse(null);
         // create bottom part of hierarchical plan -  create to task plans
         RevisionPlan revisionPlan = new RevisionPlan();
         String revisionCode = results.stream()
@@ -38,7 +43,7 @@ public class ImplicitPlanBuilder {
             //  TC fields according to the work sessions, e.g. title, spent time,
             //      - task title based on r.taskType.title
             //      - -
-            PhasePlan phasePlan = getPhasePlan(r);
+            PhasePlan phasePlan = getPhasePlan(r, aircraft);
             revisionPlan.getPlanParts().add(phasePlan);
 
             AircraftArea area = getAircraftArea(r);
@@ -192,12 +197,12 @@ public class ImplicitPlanBuilder {
         return p;
     }
 
-    public PhasePlan getPhasePlan(Result r){
+    public PhasePlan getPhasePlan(Result r, final Aircraft aircraft){
         String phaseLabel = getPhaseLabel(r);
         PhasePlan phasePlan = getEntity(phaseLabel, "phase", () -> {
             PhasePlan p = modelFactory.newPhasePlan(phaseLabel);
-            Aircraft aircraft = getAircraft(r);
-            p.setResource(aircraft);
+            Aircraft ac = getAircraft(r);
+            p.setResource(defaults.isDefault(ac) ? aircraft : ac);
             return p;
         });
         return phasePlan;
@@ -309,6 +314,18 @@ public class ImplicitPlanBuilder {
         public String areaLabel = DEFAULT;
         public String maintenanceGroupLabel = DEFAULT;
         public String generalTaskTypeLabel = DEFAULT;
+        public String taskTypeCode = DEFAULT;
         public String mechanicLabel = DEFAULT;
+        public boolean isDefault(Aircraft ac){
+            return aircraftModelLabel.equals(ac.getTitle());
+        }
+
+        public boolean isDefault(AircraftArea aa){
+            return areaLabel.equals(aa.getTitle());
+        }
+
+        public boolean isDefault(MaintenanceGroup mg){
+            return maintenanceGroupLabel.equals(mg.getTitle());
+        }
     }
 }
