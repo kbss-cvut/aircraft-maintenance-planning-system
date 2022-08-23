@@ -16,10 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -240,32 +237,46 @@ public class SparqlDataReaderRDF4J {
     }
 
     public static Result convertToTimeLog(BindingSet bs) throws ParseException {
+        // TODO - do not create task type with null type string.
+        String def = "unknown";
+        String wp = bs.getValue("wp").stringValue();
+        String tt = optValue(bs, "tt", null);
+        String defaultTaskType = def;
+        if(tt != null){
+            tt.lastIndexOf("--");
+            String[] parts = tt.split("--");
+            if(parts.length > 2 )
+                defaultTaskType = parts[parts.length - 1];
+        }
         TaskType taskType = new TaskType(
-                manValue(bs,"type"),
-                optValue(bs, "typeLabel"),
-                optValue(bs, "taskcat"),
-                optValue(bs,"acmodel")
+                optValue(bs,"type", defaultTaskType),
+                optValue(bs, "typeLabel", defaultTaskType),
+                optValue(bs, "taskcat", def),
+                optValue(bs,"acmodel", def)
         );
 
         Result t = new Result();
 
-        t.wp = bs.getValue("wp").stringValue();
+        t.wp = wp;
         t.acmodel = taskType.getAcmodel();
         t.acType = AircraftType.getTypeLabelForModel(t.acmodel);
         t.taskType = taskType;
 
 
-        t.scope = bs.getValue("scope").stringValue();
-        t.date = bs.getValue("date").stringValue();
+        t.scope = optValue(bs, "scope", def);
+        t.date = optValue(bs, "date", def);
 
-        String start = bs.getValue("start").stringValue();
+        String start = optValue(bs, "start", null);
 //        start = start.substring(0, start.length()-1);
-        String end = bs.getValue("end").stringValue();
+        String end = optValue(bs, "end", null);
 //        end = end.substring(0, end.length()-1);
-        t.start = SparqlDataReader.df.parse(start.substring(0, start.length() -1) + "+0200");
-        t.end = SparqlDataReader.df.parse(end.substring(0, end.length() -1) + "+0200");
+        if(start != null )
+            t.start = SparqlDataReader.df.parse(start.substring(0, start.length() -1) + "+0200");
+        if(end != null)
+            t.end = SparqlDataReader.df.parse(end.substring(0, end.length() -1) + "+0200");
 //        Value v = new
-        t.dur = ((Literal)bs.getValue("dur")).longValue();
+
+        t.dur = Optional.ofNullable(bs.getValue("dur")).map(v -> ((Literal)v).longValue()).orElse(null);
         return t;
     }
 

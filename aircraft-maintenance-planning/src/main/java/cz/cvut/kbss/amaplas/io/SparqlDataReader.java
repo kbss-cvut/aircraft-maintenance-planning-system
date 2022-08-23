@@ -33,6 +33,10 @@ public class SparqlDataReader {
     public static final SimpleDateFormat df = new SimpleDateFormat(dateFormatPattern1);
     public static final SimpleDateFormat day = new SimpleDateFormat("yyyy-MM-dd");
 
+    public static String formatDate(SimpleDateFormat sdf, Date d){
+        return d != null ? sdf.format(d) : "";
+    }
+
     public List<TaskType> readTaskTypes(String endpoint){
         String queryName = TASK_TYPES;
         LOG.debug("executing query \"{}\" at endpoint <{}>...", queryName, endpoint);
