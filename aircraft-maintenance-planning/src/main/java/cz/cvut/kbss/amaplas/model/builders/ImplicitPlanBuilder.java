@@ -14,6 +14,7 @@ public class ImplicitPlanBuilder {
 
     private final ModelFactory modelFactory = new ModelFactory();
     protected Map<Object, Map<String, AbstractEntity>> entityMaps = new HashMap<>();
+    protected Defaults defaults = new Defaults();
 
     public PlanningResult createRevision(List<Result> results){
         Aircraft aircraft = results.stream().map(r -> getAircraft(r)).filter(a -> a != null).findFirst().orElse(null);
@@ -33,6 +34,10 @@ public class ImplicitPlanBuilder {
         PlanningResult result = new PlanningResult(revisionPlan);
 
         for(Result r : results) {
+            // TODO - make sure that task with no definition have an ad-hock definition. The task definition should specify
+            //  TC fields according to the work sessions, e.g. title, spent time,
+            //      - task title based on r.taskType.title
+            //      - -
             PhasePlan phasePlan = getPhasePlan(r);
             revisionPlan.getPlanParts().add(phasePlan);
 
@@ -202,27 +207,33 @@ public class ImplicitPlanBuilder {
 
     // this is a simplification
     public String getMechanicLabel(Result r){
-        return Optional.ofNullable(r.getMechanic()).map(Mechanic::getTitle).orElse(modelFactory.generateId() + "");
+        return Optional.ofNullable(r.getMechanic()).map(Mechanic::getTitle)
+                .map(this::mapNull).orElse(modelFactory.generateId() + "");
     }
 
     public String getAircraftModelLabel(Result r){
-        return getTaskTypeDefinition(r).map(TaskType::getAcmodel).orElse("");
+        return getTaskTypeDefinition(r).map(TaskType::getAcmodel)
+                .map(this::mapNull).orElse(defaults.aircraftModelLabel);
     }
 
     public String getAreaLabel(Result r){
-        return getTaskTypeDefinition(r).map(TaskType::getArea).orElse("");
+        return getTaskTypeDefinition(r).map(TaskType::getArea)
+                .map(this::mapNull).orElse(defaults.areaLabel);
     }
 
     public String getMaintenanceGroupLabel(Result r){
-        return getTaskTypeDefinition(r).map(TaskType::getScope).orElse("");
+        return getTaskTypeDefinition(r).map(TaskType::getScope)
+                .map(this::mapNull).orElse(defaults.maintenanceGroupLabel);
     }
 
     public String getGeneralTaskTypeLabel(Result r){
-        return getTaskTypeDefinition(r).map(TaskType::getTaskType).orElse("");
+        return getTaskTypeDefinition(r).map(TaskType::getTaskType)
+                .map(this::mapNull).orElse(defaults.generalTaskTypeLabel);
     }
 
     public String getPhaseLabel(Result r){
-        return getTaskTypeDefinition(r).map(TaskType::getPhase).orElse("");
+        return getTaskTypeDefinition(r).map(TaskType::getPhase)
+                .map(this::mapNull).orElse(defaults.phaseLabel);
     }
 
     public Optional<TaskType> getTaskType(Result r){
@@ -281,5 +292,23 @@ public class ImplicitPlanBuilder {
         public void setSessionPlans(Map<Result, SessionPlan> sessionPlans) {
             this.sessionPlans = sessionPlans;
         }
+    }
+
+    private String mapNull(String s){
+        return isEmpty(s) ? null : s;
+    }
+
+    private boolean isEmpty(String s){
+        return s == null || s.trim().isEmpty();
+    }
+
+    public static String DEFAULT = "unknown";
+    public static class Defaults{
+        public String aircraftModelLabel = DEFAULT;
+        public String phaseLabel = DEFAULT;
+        public String areaLabel = DEFAULT;
+        public String maintenanceGroupLabel = DEFAULT;
+        public String generalTaskTypeLabel = DEFAULT;
+        public String mechanicLabel = DEFAULT;
     }
 }
