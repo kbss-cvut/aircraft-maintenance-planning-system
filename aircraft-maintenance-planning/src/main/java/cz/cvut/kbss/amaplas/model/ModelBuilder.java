@@ -52,8 +52,8 @@ public class ModelBuilder {
         return factory.newMechanic(label);
     }
 
-    public <T extends Resource> T newResource(Class<T> resourceClass, String name) {
-        return factory.newResource(resourceClass, name);
+    public <T extends Resource> T newResource(Supplier<T> entityFactory, String name) {
+        return factory.newResource(entityFactory, name);
     }
 
     public RevisionPlan newRevisionPlan(String label) {
@@ -72,12 +72,12 @@ public class ModelBuilder {
         return factory.newSessionPlan(mechanic, taskPlan, startTime, endTime);
     }
 
-    public <T extends AbstractEntity> T newEntity(Class<T> cls, String label) {
-        return factory.newEntity(cls, label);
+    public <T extends AbstractEntity> T newEntity(Supplier<T> entityFactory, String label) {
+        return factory.newEntity(entityFactory, label);
     }
 
-    public <T extends AbstractPlan> T newPlan(Class<T> cls, Date plannedStart, Date plannedEnd, Date start, Date end, Long plannedWorkTime, Long workTime) {
-        return factory.newPlan(cls, plannedStart, plannedEnd, start, end, plannedWorkTime, workTime);
+    public <T extends AbstractPlan> T newPlan(Supplier<T> entityFactory, Date plannedStart, Date plannedEnd, Date start, Date end, Long plannedWorkTime, Long workTime) {
+        return factory.newPlan(entityFactory, plannedStart, plannedEnd, start, end, plannedWorkTime, workTime);
     }
 
     public Long duration(Date from, Date to) {

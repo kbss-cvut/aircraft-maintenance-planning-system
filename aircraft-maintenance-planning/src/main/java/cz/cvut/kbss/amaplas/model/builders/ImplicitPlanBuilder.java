@@ -143,7 +143,7 @@ public class ImplicitPlanBuilder {
 
     public Aircraft getAircraft(Result r){
         String aircraftModel = getAircraftModelLabel(r);
-        return getEntity(aircraftModel, "aircraft", () -> modelFactory.newEntity(Aircraft.class, aircraftModel));
+        return getEntity(aircraftModel, "aircraft", () -> modelFactory.newEntity(() -> new Aircraft(), aircraftModel));
     }
 
     public TaskPlan getTaskPlan(final Result r, GeneralTaskPlan gp){
