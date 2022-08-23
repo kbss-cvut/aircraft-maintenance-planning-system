@@ -114,14 +114,12 @@ public class AircraftRevisionPlannerService extends BaseService{
                         e.getKey(),
                         Result.mergeOverlaps(e.getValue().stream().sorted(Comparator.comparing(r -> r.start)).collect(Collectors.toList()))
                                 .stream().mapToLong(i -> i.getLength()).sum()) // in milli seconds
-//                                .stream().mapToDouble(i -> i.getLength()).sum()/1000/3600) // in hours
         );
 
         tes.entrySet().forEach(e ->
                 workTime.put(
                         e.getKey(),
                         e.getValue().stream().mapToLong(r -> r.dur).sum()) // in milli seconds
-//                        e.getValue().stream().mapToDouble(r -> r.dur).sum()/ 1000/3600) // in hours
         );
 
         int c = 0;
@@ -180,17 +178,8 @@ public class AircraftRevisionPlannerService extends BaseService{
                     sp.setPlannedDuration(duration);
                     sp.setPlannedWorkTime(duration);
                 });
-//        // 1.b Create session schedules - fix non defined session logs
-//        revisionPlan.streamPlanParts()
-//                .filter(p -> p instanceof SessionPlan)
         // 2. update plan parts bottom up
         revisionPlan.applyOperationBottomUp( p -> p.updateTemporalAttributes());
-
-        // 3. simplify plan
-//        revisionPlan.applyOperationBottomUp( p -> {
-//            if(p instanceof TaskPlan)
-//                p.setPlanParts(new HashSet<>());
-//        });
         return revisionPlan;
     }
 

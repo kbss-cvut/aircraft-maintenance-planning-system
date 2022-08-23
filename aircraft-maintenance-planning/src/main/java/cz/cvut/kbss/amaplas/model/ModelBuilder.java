@@ -35,11 +35,6 @@ public class ModelBuilder {
         return getEntity(phase, label, () -> factory.newGeneralTaskPlan(label));
     }
 
-//    public ResourceCombination getResourceCombination(AircraftArea aircraftArea, Resource resource) {
-////        return null;//factory.newResourceCombination(aircraftArea, resource);
-//        return getEntity(aircraftArea.title, resource.getTitle(), () -> factory.newR(aircraftArea, resource));
-//    }
-
     public AircraftArea getAircraftArea(String name) {
         return factory.newAircraftArea(name);
     }
@@ -92,14 +87,9 @@ public class ModelBuilder {
         }
         AbstractEntity r = entityMap.get(id);
         if(r == null) {
-//                r = newResource(resourceClass, name);
             r = generator.get();
             entityMap.put(id, r);
         }
         return (T)r;
     }
-
-//    public interface ResourceFactoryMethod<T>{
-//        T createResource(Class<T> resourceClass, String name);
-//    }
 }

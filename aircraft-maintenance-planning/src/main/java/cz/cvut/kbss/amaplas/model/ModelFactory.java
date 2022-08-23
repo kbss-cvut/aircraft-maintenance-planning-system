@@ -50,17 +50,6 @@ public class ModelFactory {
         GeneralTaskPlan generalTaskPlan = newEntity(() -> new GeneralTaskPlan(), label);
         return generalTaskPlan;
     }
-//
-//    public PhasePlan newPhasePlan(){
-//
-//    }
-
-
-//    public ResourceCombination newResourceCombination(AircraftArea aircraftArea, Resource resource){
-//        String label = resource.getTitle();
-//        ResourceCombination resourceCombination = newResource(ResourceCombination.class, label);
-//        return resourceCombination;
-//    }
 
     public AircraftArea newAircraftArea(String name){
         AircraftArea aircraftArea = newResource(() -> new AircraftArea(), name);

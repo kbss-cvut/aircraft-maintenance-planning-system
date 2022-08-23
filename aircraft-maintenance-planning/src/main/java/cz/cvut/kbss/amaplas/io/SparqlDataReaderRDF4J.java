@@ -25,13 +25,6 @@ import java.util.stream.Collectors;
 public class SparqlDataReaderRDF4J {
 
     private static final Logger LOG = LoggerFactory.getLogger(SparqlDataReaderRDF4J.class);
-//    public static HTTPRepository createRepo(String endpoint, String username, String password){
-//
-//        HTTPRepository r = new HTTPRepository(endpoint);
-//        if(username != null && password != null && !username.isEmpty() && !password.isEmpty());
-//            r.setUsernameAndPassword(username, password);
-//        return r;
-//    }
 
     public List<String> readRowsAsStrings(String queryName, String endpoint, String username, String password) {
         Repository r = RepositoryUtils.createRepo(endpoint, username, password);
@@ -48,7 +41,7 @@ public class SparqlDataReaderRDF4J {
         RepositoryConnection c = r.getConnection();
         TupleQuery q = c.prepareTupleQuery(query);
         TupleQueryResult rs = q.evaluate();
-//        res.
+
         LOG.debug("converting time log instances ...");
         List<String> names = rs.getBindingNames();
         List<String> ret = rs.stream().map(bs ->
@@ -80,35 +73,6 @@ public class SparqlDataReaderRDF4J {
         LOG.info("query executed in {} seconds", ((double)(System.currentTimeMillis() - time)/1000.0));
         return ret;
     }
-
-
-//    public List<Result> readData(String query, String endpoint){
-//        HTTPRepository r = new HTTPRepository(endpoint);
-//
-//        RepositoryConnection c = r.getConnection();
-//        TupleQuery q = c.prepareTupleQuery(query);
-//        TupleQueryResult rs = q.evaluate();
-////        res.
-//        LOG.debug("converting time log instances ...");
-//        List<Result> ret = convertToTimeLog(rs);
-//        // close connection
-//        c.close();
-//        r.shutDown();
-//        return ret;
-//    }
-
-//
-//    private List<Result> convertToTimeLog(TupleQueryResult rs){
-//
-//        List<Result> results = convert(rs, SparqlDataReaderRDF4J::convertToTimeLog);
-////        Result.normalizeTaskTypeLabels(results);
-//        Result.normalizeTaskTypes(results);
-//        return results.stream().collect(Collectors.groupingBy(Result::form0))
-//                .entrySet().stream()
-//                .map(e -> e.getValue().get(0))
-//                .collect(Collectors.toList());
-//    }
-//
 
     public static <T> List<T> convert(TupleQueryResult rs, SparqlDataReaderRDF4J.Converter converter){
         List<T> results = new ArrayList<>();
@@ -273,49 +237,15 @@ public class SparqlDataReaderRDF4J {
         t.date = optValue(bs, "date", def);
 
         String start = optValue(bs, "start", null);
-//        start = start.substring(0, start.length()-1);
         String end = optValue(bs, "end", null);
-//        end = end.substring(0, end.length()-1);
         if(start != null )
             t.start = SparqlDataReader.df.parse(start.substring(0, start.length() -1) + "+0200");
         if(end != null)
             t.end = SparqlDataReader.df.parse(end.substring(0, end.length() -1) + "+0200");
-//        Value v = new
 
         t.dur = Optional.ofNullable(bs.getValue("dur")).map(v -> ((Literal)v).longValue()).orElse(null);
         return t;
     }
-
-//    public static <T> List<T> process(TupleQueryResult rs, QueryResultConsumer<T> queryResultConsumer) throws ParseException {
-//        List<String> names = rs.getBindingNames();
-//        while(rs.hasNext()){
-//            BindingSet bs = rs.next();
-//            queryResultConsumer.consume();
-//            process(bs, names, consumers);
-//        }
-//    }
-//
-//    public static void process(BindingSet bs, List<String> names, ValueConsumer... consumers) throws ParseException {
-//
-//        int l = names.size();
-//        if(l > consumers.length)
-//            l = consumers.length;
-//
-//        for(int i = 0; i < l; i++){
-//            String name = names.get(i);
-//            Value value = bs.getValue(name);
-//            ValueConsumer c = consumers[i];
-//            process(value, name, c);
-//        }
-//    }
-//
-//    public static void process(Value val, String name, ValueConsumer c) throws ParseException{
-//        if(c == null)
-//            return;
-//        String strVal = val.stringValue();
-//        c.consume(strVal, name);
-//    }
-
 
     public interface Converter<T>{
         T convert(BindingSet bs) throws Exception;
@@ -344,16 +274,7 @@ public class SparqlDataReaderRDF4J {
         private Supplier<T> generator;
         private Function<T, List<ValueConsumer>> consumersGenerator;
 
-
-        public QueryResultConsumer() {
-//            new QueryResultConsumer<TaskType>(() -> new TaskType(), t ->
-//                    valueConsumers(
-//                            t::setType, t::setMpdtask, t::setLabel,
-//                            t::setScope, t::setPhase, t::setTaskType,
-//                            t::setAcmodel, t::setArea
-//                    )
-//            );
-        }
+        public QueryResultConsumer() {}
 
         public QueryResultConsumer(Supplier<T> generator, Function<T, List<ValueConsumer>> consumersGenerator) {
             this.generator = generator;
@@ -404,8 +325,6 @@ public class SparqlDataReaderRDF4J {
                 username, password,
                 SparqlDataReaderRDF4J::convertToTaskTypeDefinition
         );
-//        taskTypes.forEach(t -> t.type = t.type.replaceFirst("/1.0",""));
-//        taskTypes.forEach(t -> System.out.println(Stream.of(t.type, t.mpdtask, t.label, t.acmodel, t.area, t.phase, t.scope).collect(Collectors.joining(", "))));
         return taskTypes;
     }
 }

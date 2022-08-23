@@ -20,8 +20,6 @@ import java.util.stream.Collectors;
 public class RevisionHistory {
     private static final Logger LOG = LoggerFactory.getLogger(RevisionHistory.class);
 
-//    @Value("${repository.data.url}")
-//    private String repositoryUrl;
     protected final ConfigProperties config;
     protected ConfigProperties.Repository repoConfig;
 
@@ -31,14 +29,6 @@ public class RevisionHistory {
         this.config = config;
         this.repoConfig = config.getRepository();
     }
-
-//    public String getRepositoryUrl() {
-//        return repositoryUrl;
-//    }
-//
-//    public void setRepositoryUrl(String repositoryUrl) {
-//        this.repositoryUrl = repositoryUrl;
-//    }
 
     public List<String> getAllRevisions(){
         return new SparqlDataReaderRDF4J().readRowsAsStrings(SparqlDataReader.WP, repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword());
@@ -53,7 +43,7 @@ public class RevisionHistory {
      * @return
      */
     public Map<String, List<Result>> getAllClosedRevisionsWorkLog(boolean refreshCash){
-//        LOG.info("fetching revision work log from {}", url);
+        LOG.info("fetching revision work log from {}", repoConfig.getUrl());
         if(refreshCash || historyCache == null){
             historyCache = loadAllClosedRevisionsWorkLog();
         }
@@ -67,7 +57,7 @@ public class RevisionHistory {
      * @return
      */
     private Map<String, List<Result>> loadAllClosedRevisionsWorkLog(){
-        // TODO load task card definitions
+        // load task card definitions
         LOG.info("fetching revision work log from {}", repoConfig.getUrl());
         List<String> revisionIds = getRevisionIds();
         ValueFactory vf = SimpleValueFactory.getInstance();
@@ -117,7 +107,6 @@ public class RevisionHistory {
      */
     public Map<String, List<Result>> toRevisionPlans(Map<String, List<Result>> plans, Function<Result, Long> orderBy, Function<Result, Object> groupId){
         Map<String, List<Result>> planHistory = new HashMap<>();
-//        Function<Result, Object> fullGroupId = r -> Arrays.asList(orderBy.apply(r), groupId.apply(r));
         plans.entrySet().stream()
                 // leave only starts of different tasks types executed by different scope groups in each plan
                 .map(e -> Pair.of(e.getKey(), toRevisionPlan(e.getValue(), orderBy, groupId)))
@@ -129,23 +118,11 @@ public class RevisionHistory {
     public List<Result> toRevisionPlan(Collection<Result> plan, Function<Result, Long> orderBy, Function<Result, Object> groupId){
         Comparator<Result> order = Comparator.comparing(orderBy);
         return plan.stream()
-//                                .collect(Collectors.groupingBy(r -> new TaskScopeType(r.taskType, r.scope)))
                 .collect(Collectors.groupingBy(groupId))
                 .entrySet().stream()
                 .map(pe -> pe.getValue().stream()
-//                                        .collect(Collectors.groupingBy(orderBy)).entrySet().stream()
                         .collect(Collectors.minBy(order)).orElse(null))
-//                                .map(pe -> pe.getValue().stream().collect(Collectors.minBy(order)).orElse(null))
-//                                .filter(r -> r != null)
                 .sorted(order)
                 .collect(Collectors.toList());
-    }
-
-    /**
-     * Loads data from csv file into KB. Existing revisions in the KB are removed and replaced by the revision histories
-     * from the csv.
-     */
-    public void loadRevisionHistory(){
-
     }
 }

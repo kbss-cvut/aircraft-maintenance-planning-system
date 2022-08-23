@@ -82,17 +82,7 @@ public class SparqlDataReader {
 
 
     public static List<Result> convertToTimeLog(ResultSet rs){
-//        List<Result> results = new ArrayList<>();
-//        while(rs.hasNext()){
-//            QuerySolution qs = rs.next();
-//            try {
-//                results.add(convertToTimeLog(qs));
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//        }
         List<Result> results = convert(rs, SparqlDataReader::convertToTimeLog);
-//        Result.normalizeTaskTypeLabels(results);
         Result.normalizeTaskTypes(results);
         return results.stream().collect(Collectors.groupingBy(Result::form0))
                 .entrySet().stream()
@@ -145,19 +135,6 @@ public class SparqlDataReader {
 
         return results;
     }
-
-//    public static TaskType convertToTaskType(QuerySolution qs){
-//        TaskType taskType = new TaskType(
-//                qs.get("typeId").toString(),
-//                qs.get("typeLabel").toString()
-//        );
-//        taskType.id = qs.get("id").toString();
-//        if(qs.contains("taskcat")){
-//            taskType.taskcat = qs.get("taskcat").toString();
-//        }
-//
-//        return taskType;
-//    }
 
     public static interface Converter<T>{
         T convert(QuerySolution qs) throws Exception;

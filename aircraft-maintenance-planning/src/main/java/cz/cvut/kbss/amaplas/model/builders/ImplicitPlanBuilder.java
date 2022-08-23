@@ -35,14 +35,10 @@ public class ImplicitPlanBuilder {
         revisionPlan.setId(revisionId);
 
         revisionPlan.setResource(aircraft);
-//        List<TaskPlan> taskPlans = new ArrayList<>();
+
         PlanningResult result = new PlanningResult(revisionPlan);
 
         for(Result r : results) {
-            // TODO - make sure that task with no definition have an ad-hock definition. The task definition should specify
-            //  TC fields according to the work sessions, e.g. title, spent time,
-            //      - task title based on r.taskType.title
-            //      - -
             PhasePlan phasePlan = getPhasePlan(r, aircraft);
             revisionPlan.getPlanParts().add(phasePlan);
 
@@ -60,32 +56,6 @@ public class ImplicitPlanBuilder {
         }
         return result;
     }
-//    public RevisionPlan createRevisionBottomUp(List<Result> results){
-//
-//        // create bottom part of hierarchical plan -  create to task plans
-//        RevisionPlan revisionPlan = new RevisionPlan();
-////        List<TaskPlan> taskPlans = new ArrayList<>();
-//        for(Result r : results) {
-//            SessionPlan sessionPlan = getSessionPlan(r);
-//
-//            TaskPlan taskPlan = getTaskPlan(r);
-//            taskPlan.getPlanParts().add(sessionPlan);
-//
-//            GeneralTaskPlan generalTaskPlan = getGeneralTaskPlan(r);
-//            generalTaskPlan.getPlanParts().add(taskPlan);
-//
-//            PhasePlan phasePlan = getPhasePlan(r);
-//            phasePlan.getPlanParts().add(generalTaskPlan);
-//            revisionPlan.getPlanParts().add(phasePlan);
-//        }
-//
-//        return revisionPlan;
-//    }
-
-//    public RevisionPlan groupRevisionPla(RevisionPlan revisionPlan){
-//        // break - mechanics, scopes,
-//        return null;
-//    }
 
     public SessionPlan getSessionPlan(Result r){
         SessionPlan sessionPlan = modelFactory.newSessionPlan(r.start, r.end);
@@ -263,7 +233,6 @@ public class ImplicitPlanBuilder {
         }
         AbstractEntity r = entityMap.get(id);
         if(r == null) {
-//                r = newResource(resourceClass, name);
             r = generator.get();
             entityMap.put(id, r);
         }
