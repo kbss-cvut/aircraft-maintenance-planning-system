@@ -12,6 +12,7 @@ import java.util.function.Supplier;
 public class ModelFactory {
 
     protected Long lastId = null;
+    protected Long lastIdSlot = -1l;
 
     public TaskType newTaskType(String code, String label, String area, String taskType, String scope, String phase, String taskCat){
         TaskType tt = new TaskType(code, label);
@@ -128,20 +129,18 @@ public class ModelFactory {
 
         plan.setPlannedWorkTime(plannedWorkTime);
         plan.setWorkTime(workTime);
-
-        plan.setId(generateId());
         return plan;
     }
 
     public Long generateId(){
-        long newId = System.currentTimeMillis();
-        while(lastId != null && newId <= lastId) {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            newId = System.currentTimeMillis();
+        long idSlot = System.currentTimeMillis();
+        long newId = -1;
+        // create multiple ids per millisecond to speed up id generation
+        if(lastIdSlot != idSlot){
+            lastIdSlot = idSlot;
+            newId = lastIdSlot*10000;
+        }else{
+            newId = lastId + 1;
         }
         lastId = newId;
         return newId;
