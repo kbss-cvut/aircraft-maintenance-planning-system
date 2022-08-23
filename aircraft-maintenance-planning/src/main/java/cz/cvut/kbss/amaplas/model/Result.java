@@ -116,7 +116,7 @@ public class Result{
      * @return id from wp, scope, shiftGroup, taskType.type, start and end
      */
     public String form0(){
-        return String.join(",", wp, scope, shiftGroup, taskType.getCode(), SparqlDataReader.df.format(start), SparqlDataReader.df.format(end));
+        return String.join(",", wp, scope, shiftGroup, taskType.getCode(), SparqlDataReader.formatDate(SparqlDataReader.df, start), SparqlDataReader.formatDate(SparqlDataReader.df, end));
     }
 
     /**
@@ -124,7 +124,7 @@ public class Result{
      * @return id from wp, scope, taskType.type, start and end
      */
     public String form1(){
-        return String.join(",", wp, scope, taskType.getCode(), SparqlDataReader.df.format(start), SparqlDataReader.df.format(end));
+        return String.join(",", wp, scope, taskType.getCode(), SparqlDataReader.formatDate(SparqlDataReader.df, start), SparqlDataReader.formatDate(SparqlDataReader.df, end));
     }
 
     /**
@@ -132,7 +132,7 @@ public class Result{
      * @return id from wp, scope, taskType.type and start
      */
     public String form2(){
-        return String.join(",", wp, scope, taskType.getCode(), SparqlDataReader.df.format(start));
+        return String.join(",", wp, scope, taskType.getCode(), SparqlDataReader.formatDate(SparqlDataReader.df, start));
     }
 
     private LongIntervalImpl asDateInterval(){
