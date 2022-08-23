@@ -5,6 +5,9 @@ import cz.cvut.kbss.amaplas.io.SparqlDataReader;
 import cz.cvut.kbss.amaplas.io.SparqlDataReaderRDF4J;
 import cz.cvut.kbss.amaplas.model.Result;
 import org.apache.commons.lang3.tuple.Pair;
+import org.eclipse.rdf4j.model.Value;
+import org.eclipse.rdf4j.model.ValueFactory;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -40,6 +43,10 @@ public class RevisionHistory {
     public List<String> getAllRevisions(){
         return new SparqlDataReaderRDF4J().readRowsAsStrings(SparqlDataReader.WP, repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword());
     }
+
+    public List<String> getRevisionIds(){
+        return new SparqlDataReaderRDF4J().readRowsAsStrings(SparqlDataReader.WP_IDS, repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword());
+    }
     /**
      *
      * @param refreshCash - if true cache is refreshed
@@ -61,14 +68,21 @@ public class RevisionHistory {
      */
     private Map<String, List<Result>> loadAllClosedRevisionsWorkLog(){
         // TODO load task card definitions
-//        LOG.info("fetching revision work log from {}", url);
-        List<Result> results = new SparqlDataReaderRDF4J().readSessionLogsWithNamedQuery(SparqlDataReader.DA_TASK_SO_WITH_WP_SCOPE,
-                repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword());
-        Map<String, List<Result>> closedRevisions = results.stream()
-                .collect(Collectors.groupingBy(r -> r.wp));
-
+        LOG.info("fetching revision work log from {}", repoConfig.getUrl());
+        List<String> revisionIds = getRevisionIds();
+        ValueFactory vf = SimpleValueFactory.getInstance();
+        Map<String, List<Result>> closedRevisions = new HashMap<>();
+        for(String wpId : revisionIds) {
+            Map<String, Value> bindings = new HashMap<>();
+            bindings.put("wp", vf.createLiteral(wpId));
+            List<Result> results = new SparqlDataReaderRDF4J().readSessionLogsWithNamedQuery(SparqlDataReader.DA_TASK_SO_WITH_WP_SCOPE,
+                    bindings,
+                    repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword());
+            closedRevisions.put(wpId, results);
+        }
+        LOG.debug("sorting fetched revisions");
         // make sure the work sessions are ordered by start time
-        closedRevisions.entrySet().forEach(e -> e.getValue().sort(Comparator.comparing(Result.startTimeMilSec)));
+        closedRevisions.entrySet().forEach(e -> e.getValue().sort(Comparator.comparing(r -> r.start != null ? r.start.getTime() : -1L)));
         return closedRevisions;
     }
 
