@@ -147,26 +147,22 @@ public class ImplicitPlanBuilder {
     }
 
     public TaskPlan getTaskPlan(final Result r, GeneralTaskPlan gp){
-        TaskType taskTypeCode = getTaskType(r).orElse(null);
+        TaskType taskType = getTaskType(r).orElse(null);
 
         final AircraftArea area = getAircraftArea(r);
-
         TaskPlan taskPlan = null;
-        if(taskTypeCode != null)
-            taskPlan = getEntity(taskTypeCode.getCode(), gp, () -> {
-                TaskPlan p = modelFactory.newTaskPlan(taskTypeCode);
+        Object context = gp;
+        if (taskType != null){
+            String taskTypeCode = taskType.getCode();
+            taskPlan = getEntity(taskTypeCode, context, () -> {
+                TaskPlan p = modelFactory.newTaskPlan(taskType);
                 MaintenanceGroup group = getMaintenanceGroupInCtx(r, area);
                 p.setResource(group);
                 return p;
             });
-        else
-            taskPlan = getEntity("", "task-plan", () -> {
-                TaskPlan p = modelFactory.newTaskPlan("");
-                MaintenanceGroup group = getMaintenanceGroupInCtx(r, area);
-                p.setResource(group);
-                return p;
-            });
-
+        }else {
+            LOG.warn("TaskType is null!!!");
+        }
         return  taskPlan;
     }
 
