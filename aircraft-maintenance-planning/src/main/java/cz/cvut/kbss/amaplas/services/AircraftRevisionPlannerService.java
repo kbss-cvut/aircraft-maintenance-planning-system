@@ -15,6 +15,8 @@ import cz.cvut.kbss.amaplas.persistence.dao.PlanTypeDao;
 import cz.cvut.kbss.amaplas.algs.SimilarityUtils;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.traverse.BreadthFirstIterator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class AircraftRevisionPlannerService extends BaseService{
+    private static final Logger LOG = LoggerFactory.getLogger(AircraftRevisionPlannerService.class);
 
     private final RevisionHistory revisionHistory;
     private final TaskTypeService taskTypeService;
@@ -139,15 +142,21 @@ public class AircraftRevisionPlannerService extends BaseService{
      * @return
      */
     public RevisionPlan createRevisionPlanScheduleDeducedFromRevisionExecution(String revisionId){
+        LOG.info("creating plan \"createRevisionPlanScheduleDeducedFromRevisionExecution\" for revision with id \"{}\"", revisionId);
         // get all work sessions of the planned revision
         List<Result> results = revisionHistory.getClosedRevisionWorkLog(revisionId);
 
         // find the start date-time of the first work session of the revision
-        OptionalLong startTimeStamp = results.stream().mapToLong(r -> r.getStart())
+        OptionalLong startTimeStamp = results.stream().filter(r -> r.start != null).mapToLong(r -> r.getStart())
                 .min();
-        Date revisionStartDate = null;
-        if(startTimeStamp.isPresent())
-            revisionStartDate = new Date(startTimeStamp.getAsLong());
+        OptionalLong endTimeStamp = results.stream().filter(r -> r.end != null).mapToLong(r -> r.getEnd())
+                .max();
+        Date revisionStartDate = startTimeStamp.stream().mapToObj(t -> new Date(t)).findFirst().orElse(new Date());
+        Date revisionEndDate = endTimeStamp.stream().mapToObj(t -> new Date(t)).findFirst().orElse(new Date(revisionStartDate.getTime() + 7 * 24 * 60 * 60 * 1000));
+        long tmpDuration = 3*60*60*1000l;
+        Long defaultDuration = tmpDuration > revisionEndDate.getTime() - revisionStartDate.getTime() ?
+                (int)((revisionEndDate.getTime() - revisionStartDate.getTime()) * 0.1)  : tmpDuration;
+        Date defaultTaskPlanEnd = new Date(revisionStartDate.getTime() + defaultDuration);
 
         // create and return revision plan
         RevisionPlan revisionPlan = createRevision(revisionId, results, revisionStartDate);
@@ -158,6 +167,11 @@ public class AircraftRevisionPlannerService extends BaseService{
                 .filter(p -> p instanceof SessionPlan)
                 .map(p -> (SessionPlan)p)
                 .forEach(sp -> {
+                    if(sp.getStartTime() == null)
+                        sp.setStartTime(revisionStartDate);
+
+                    if(sp.getEndTime() == null)
+                        sp.setEndTime(defaultTaskPlanEnd);
                     long duration = sp.getEndTime().getTime() - sp.getStartTime().getTime();
                     sp.setDuration(duration);
                     sp.setWorkTime(duration);
