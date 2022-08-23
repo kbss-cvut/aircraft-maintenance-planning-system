@@ -59,21 +59,25 @@ public class SparqlDataReaderRDF4J {
         return ret;
     }
 
-    public static <T> List<T> executeQuery(String query, String endpoint, String username, String password, SparqlDataReaderRDF4J.Converter converter) {
+    public static <T> List<T> executeQuery(String query, Map<String, Value> bindings, String endpoint, String username, String password, SparqlDataReaderRDF4J.Converter converter) {
         Repository r = RepositoryUtils.createRepo(endpoint, username, password);
-        List<T> result = executeQuery(query, r, converter);
+        List<T> result = executeQuery(query, bindings, r, converter);
         r.shutDown();
         return result;
     }
 
-    public static <T> List<T> executeQuery(String query, Repository r, SparqlDataReaderRDF4J.Converter converter){
+    public static <T> List<T> executeQuery(String query, Map<String, Value> bindings, Repository r, SparqlDataReaderRDF4J.Converter converter){
+        long time = System.currentTimeMillis();
         RepositoryConnection c = r.getConnection();
         TupleQuery q = c.prepareTupleQuery(query);
+        if(bindings != null)
+            bindings.entrySet().stream().forEach(b -> q.setBinding(b.getKey(), b.getValue()));
         TupleQueryResult rs = q.evaluate();
 
         LOG.debug("converting query results ...");
         List<T> ret = convert(rs, converter);
         c.close();
+        LOG.info("query executed in {} seconds", ((double)(System.currentTimeMillis() - time)/1000.0));
         return ret;
     }
 
@@ -133,35 +137,35 @@ public class SparqlDataReaderRDF4J {
      * @param endpoint
      * @return
      */
-    public List<TaskType> readTaskTypes(String queryName, String endpoint, String username, String password, SparqlDataReaderRDF4J.Converter<TaskType> converter){
-        LOG.debug("executing query \"{}\" at endpoint <{}>...", queryName, endpoint);
+    public List<TaskType> readTaskTypes(String queryName, Map<String, Value> bindings, String endpoint, String username, String password, SparqlDataReaderRDF4J.Converter<TaskType> converter){
+        LOG.debug("executing query \"{}\" at endpoint <{}> with bindings {}", queryName, endpoint, bindings);
         String query = ResourceUtils.loadResource(queryName);
-        List<TaskType> results = executeQuery(query, endpoint, username, password, converter);
+        List<TaskType> results = executeQuery(query, bindings, endpoint, username, password, converter);
         return results;
     }
 
-    public List<TaskType> readTaskTypes(String queryName, Repository r, SparqlDataReaderRDF4J.Converter<TaskType> converter){
-        LOG.debug("executing query \"{}\" on repository with datadir \"{}\"", queryName, r.getDataDir());
+    public List<TaskType> readTaskTypes(String queryName, Map<String, Value> bindings, Repository r, SparqlDataReaderRDF4J.Converter<TaskType> converter){
+        LOG.debug("executing query \"{}\" at endpoint <{}> with bindings {}", queryName, r.getDataDir(), bindings);
         String query = ResourceUtils.loadResource(queryName);
-        List<TaskType> results = executeQuery(query, r, converter);
+        List<TaskType> results = executeQuery(query, bindings, r, converter);
         return results;
     }
 
-    public List<TaskType> readTaskDefinitions(String queryName, String endpoint, String graph, String username, String password, SparqlDataReaderRDF4J.Converter<TaskType> converter){
-        LOG.debug("executing query \"{}\" at endpoint <{}>...", queryName, endpoint);
+    public List<TaskType> readTaskDefinitions(String queryName, Map<String, Value> bindings, String endpoint, String graph, String username, String password, SparqlDataReaderRDF4J.Converter<TaskType> converter){
+        LOG.debug("executing query \"{}\" at endpoint <{}> with bindings {}", queryName, endpoint, bindings);
         String query = ResourceUtils.loadResource(queryName);
         // Set graph parameter in query
         query = query.replaceAll("\\?taskTypeDefinitionGraph", String.format("<%s>",graph));
-        List<TaskType> results = executeQuery(query, endpoint, username, password, converter);
+        List<TaskType> results = executeQuery(query, bindings, endpoint, username, password, converter);
         return results;
     }
 
-    public List<TaskType> readTaskDefinitions(String queryName, Repository r, String graph, SparqlDataReaderRDF4J.Converter<TaskType> converter){
-        LOG.debug("executing query \"{}\"  on repository with datadir \"{}\"", queryName, r.getDataDir());
+    public List<TaskType> readTaskDefinitions(String queryName, Map<String, Value> bindings, Repository r, String graph, SparqlDataReaderRDF4J.Converter<TaskType> converter){
+        LOG.debug("executing query \"{}\" at endpoint <{}> with bindings {}", queryName, r.getDataDir(), bindings);
         String query = ResourceUtils.loadResource(queryName);
         // Set graph parameter in query
         query = query.replaceAll("\\?taskTypeDefinitionGraph", String.format("<%s>", graph));
-        List<TaskType> results = executeQuery(query, r, converter);
+        List<TaskType> results = executeQuery(query, bindings, r, converter);
         return results;
     }
 
@@ -223,10 +227,12 @@ public class SparqlDataReaderRDF4J {
         return Optional.ofNullable(bs.getValue(name)).map(Value::stringValue).orElse(def);
     }
 
-    public List<Result> readSessionLogsWithNamedQuery(String queryName, String endpoint, String username, String password){
-        LOG.info("executing query \"{}\" at endpoint <{}>...", queryName, endpoint);
+
+
+    public List<Result> readSessionLogsWithNamedQuery(String queryName, Map<String, Value> bindings, String endpoint, String username, String password){
+        LOG.info("executing query \"{}\" at endpoint <{}> with bindings {}", queryName, endpoint, bindings);;
         String query = ResourceUtils.loadResource(queryName);
-        List<Result> results = executeQuery(query, endpoint, username, password, SparqlDataReaderRDF4J::convertToTimeLog);
+        List<Result> results = executeQuery(query, bindings, endpoint, username, password, SparqlDataReaderRDF4J::convertToTimeLog);
 
         // fix data alignment
         Result.normalizeTaskTypes(results);
@@ -392,6 +398,7 @@ public class SparqlDataReaderRDF4J {
         SparqlDataReaderRDF4J reader = new SparqlDataReaderRDF4J();
         List<TaskType> taskTypes = reader.readTaskDefinitions(
                 SparqlDataReader.TASK_TYPES_DEFINITIONS,
+                null,
                 url,
                 graph,
                 username, password,
