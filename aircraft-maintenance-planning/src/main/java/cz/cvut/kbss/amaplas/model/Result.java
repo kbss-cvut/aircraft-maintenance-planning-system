@@ -27,7 +27,6 @@ public class Result{
     public Date end;
     public Long dur;
     public Mechanic mechanic;
-//    public int removed;
 
     public Result() {
     }
@@ -116,7 +115,7 @@ public class Result{
      * @return id from wp, scope, shiftGroup, taskType.type, start and end
      */
     public String form0(){
-        return String.join(",", wp, scope, shiftGroup, taskType.getCode(), SparqlDataReader.df.format(start), SparqlDataReader.df.format(end));
+        return String.join(",", wp, scope, shiftGroup, taskType.getCode(), SparqlDataReader.formatDate(SparqlDataReader.df, start), SparqlDataReader.formatDate(SparqlDataReader.df, end));
     }
 
     /**
@@ -124,7 +123,7 @@ public class Result{
      * @return id from wp, scope, taskType.type, start and end
      */
     public String form1(){
-        return String.join(",", wp, scope, taskType.getCode(), SparqlDataReader.df.format(start), SparqlDataReader.df.format(end));
+        return String.join(",", wp, scope, taskType.getCode(), SparqlDataReader.formatDate(SparqlDataReader.df, start), SparqlDataReader.formatDate(SparqlDataReader.df, end));
     }
 
     /**
@@ -132,7 +131,7 @@ public class Result{
      * @return id from wp, scope, taskType.type and start
      */
     public String form2(){
-        return String.join(",", wp, scope, taskType.getCode(), SparqlDataReader.df.format(start));
+        return String.join(",", wp, scope, taskType.getCode(), SparqlDataReader.formatDate(SparqlDataReader.df, start));
     }
 
     private LongIntervalImpl asDateInterval(){
@@ -149,7 +148,6 @@ public class Result{
      */
     public static long overlap(Result s1, Result s2){
         return Math.min(s1.getEnd(), s2.getEnd()) - Math.max(s1.getStart(), s2.getStart());
-//        return s1.endTime() - s2.startTime();
     }
 
     /**
@@ -186,31 +184,9 @@ public class Result{
                         .map(r -> r.taskType)
                         .filter(t -> t != null).collect(Collectors.toList())
         );
-//        results.forEach(r ->
-//                r.taskType.type = Optional
-//                        .of(r.taskType.type)
-//                        .map(l -> l.replace("%20", " "))
-//                        .orElse(null)
-//        );
-//
-//        results.stream()
-//                .map(r -> r.taskType)
-//                .collect(Collectors.groupingBy(t -> t.type)).entrySet().stream()
-//                .map(e -> taskTypeMap.put(
-//                        e.getKey(),
-//                        e.getValue().stream().sorted(Comparator.comparing(t -> t.label.length())).findFirst().get()
-//                ));
 
-        // DEBUG
-        List<Result> resultsNoTaskTypes = results.stream().filter(r -> r.taskType == null).collect(Collectors.toList());
         // fix records using the same taskTypeInstance
         results.forEach(r -> r.taskType = taskTypeMap.get(r.taskType.getCode()));
-        // DEBUG
-        List<Result> resultsNoTaskTypes2 = results.stream().filter(r -> r.taskType == null).collect(Collectors.toList());
-        if(resultsNoTaskTypes2.size() != resultsNoTaskTypes.size()){
-            throw new RuntimeException("error in normalizeTaskTypeLabels!");
-        }
-
     }
 
     public static Function<Result, Long> startTimeMilSec = r -> r.start.getTime();
@@ -224,7 +200,4 @@ public class Result{
     public static ToLongFunction<Result> durationMilSec = r -> (r.end.getTime() - r.start.getTime());
     public static ToLongFunction<Result> durationSec = r -> (r.end.getTime() - r.start.getTime())/1000;
 
-
-    // is function applicable, e.g. is the input in the domain?
-    //
 }

@@ -250,15 +250,16 @@ public class TaskType extends EventType<String> {
         results.stream()
                 .map(r -> r.taskType)
                 .filter(t -> t != null && t.getCode() != null)
-                .forEach(t -> taskTCCode2TCDefinitionMap.put(t.getCode(), findMatchingTCDef(t)));
-
+                .map(t -> t.getCode())
+                .distinct()
+                .forEach(code -> taskTCCode2TCDefinitionMap.put(code, findMatchingTCDef(code)));
     }
 
-    protected static List<TaskType> findMatchingTCDef(TaskType tt){
-        List<TaskType> matches = findMatchingTCDef(tt.getCode(), TaskType::getCode);
+    protected static List<TaskType> findMatchingTCDef(String code){
+        List<TaskType> matches = findMatchingTCDef(code, TaskType::getCode);
 
         if(matches.isEmpty()) {
-            matches = findMatchingTCDef(tt.getCode(), TaskType::getMpdtask);
+            matches = findMatchingTCDef(code, TaskType::getMpdtask);
             matches.sort(Comparator.comparing(t -> t.getMpdtask().length()));
         }else{
             matches.sort(Comparator.comparing(t -> t.getCode().length()));

@@ -5,7 +5,10 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class ImplicitPlanBuilder {
@@ -17,7 +20,9 @@ public class ImplicitPlanBuilder {
     protected Defaults defaults = new Defaults();
 
     public PlanningResult createRevision(List<Result> results){
-        Aircraft aircraft = results.stream().map(r -> getAircraft(r)).filter(a -> a != null).findFirst().orElse(null);
+        Aircraft aircraft = results.stream().map(r -> getAircraft(r)).filter(a -> !defaults.isDefault(a)).findFirst().orElse(null);
+        if(aircraft == null)
+            aircraft = results.stream().map(r -> getAircraft(r)).findFirst().orElse(null);
         // create bottom part of hierarchical plan -  create to task plans
         RevisionPlan revisionPlan = new RevisionPlan();
         String revisionCode = results.stream()
@@ -30,15 +35,11 @@ public class ImplicitPlanBuilder {
         revisionPlan.setId(revisionId);
 
         revisionPlan.setResource(aircraft);
-//        List<TaskPlan> taskPlans = new ArrayList<>();
+
         PlanningResult result = new PlanningResult(revisionPlan);
 
         for(Result r : results) {
-            // TODO - make sure that task with no definition have an ad-hock definition. The task definition should specify
-            //  TC fields according to the work sessions, e.g. title, spent time,
-            //      - task title based on r.taskType.title
-            //      - -
-            PhasePlan phasePlan = getPhasePlan(r);
+            PhasePlan phasePlan = getPhasePlan(r, aircraft);
             revisionPlan.getPlanParts().add(phasePlan);
 
             AircraftArea area = getAircraftArea(r);
@@ -55,32 +56,6 @@ public class ImplicitPlanBuilder {
         }
         return result;
     }
-//    public RevisionPlan createRevisionBottomUp(List<Result> results){
-//
-//        // create bottom part of hierarchical plan -  create to task plans
-//        RevisionPlan revisionPlan = new RevisionPlan();
-////        List<TaskPlan> taskPlans = new ArrayList<>();
-//        for(Result r : results) {
-//            SessionPlan sessionPlan = getSessionPlan(r);
-//
-//            TaskPlan taskPlan = getTaskPlan(r);
-//            taskPlan.getPlanParts().add(sessionPlan);
-//
-//            GeneralTaskPlan generalTaskPlan = getGeneralTaskPlan(r);
-//            generalTaskPlan.getPlanParts().add(taskPlan);
-//
-//            PhasePlan phasePlan = getPhasePlan(r);
-//            phasePlan.getPlanParts().add(generalTaskPlan);
-//            revisionPlan.getPlanParts().add(phasePlan);
-//        }
-//
-//        return revisionPlan;
-//    }
-
-//    public RevisionPlan groupRevisionPla(RevisionPlan revisionPlan){
-//        // break - mechanics, scopes,
-//        return null;
-//    }
 
     public SessionPlan getSessionPlan(Result r){
         SessionPlan sessionPlan = modelFactory.newSessionPlan(r.start, r.end);
@@ -138,30 +113,26 @@ public class ImplicitPlanBuilder {
 
     public Aircraft getAircraft(Result r){
         String aircraftModel = getAircraftModelLabel(r);
-        return getEntity(aircraftModel, "aircraft", () -> modelFactory.newEntity(Aircraft.class, aircraftModel));
+        return getEntity(aircraftModel, "aircraft", () -> modelFactory.newEntity(() -> new Aircraft(), aircraftModel));
     }
 
     public TaskPlan getTaskPlan(final Result r, GeneralTaskPlan gp){
-        TaskType taskTypeCode = getTaskType(r).orElse(null);
+        TaskType taskType = getTaskType(r).orElse(null);
 
         final AircraftArea area = getAircraftArea(r);
-
         TaskPlan taskPlan = null;
-        if(taskTypeCode != null)
-            taskPlan = getEntity(taskTypeCode.getCode(), gp, () -> {
-                TaskPlan p = modelFactory.newTaskPlan(taskTypeCode);
+        Object context = gp;
+        if (taskType != null){
+            String taskTypeCode = taskType.getCode();
+            taskPlan = getEntity(taskTypeCode, context, () -> {
+                TaskPlan p = modelFactory.newTaskPlan(taskType);
                 MaintenanceGroup group = getMaintenanceGroupInCtx(r, area);
                 p.setResource(group);
                 return p;
             });
-        else
-            taskPlan = getEntity("", "task-plan", () -> {
-                TaskPlan p = modelFactory.newTaskPlan("");
-                MaintenanceGroup group = getMaintenanceGroupInCtx(r, area);
-                p.setResource(group);
-                return p;
-            });
-
+        }else {
+            LOG.warn("TaskType is null!!!");
+        }
         return  taskPlan;
     }
 
@@ -192,12 +163,12 @@ public class ImplicitPlanBuilder {
         return p;
     }
 
-    public PhasePlan getPhasePlan(Result r){
+    public PhasePlan getPhasePlan(Result r, final Aircraft aircraft){
         String phaseLabel = getPhaseLabel(r);
         PhasePlan phasePlan = getEntity(phaseLabel, "phase", () -> {
             PhasePlan p = modelFactory.newPhasePlan(phaseLabel);
-            Aircraft aircraft = getAircraft(r);
-            p.setResource(aircraft);
+            Aircraft ac = getAircraft(r);
+            p.setResource(defaults.isDefault(ac) ? aircraft : ac);
             return p;
         });
         return phasePlan;
@@ -262,7 +233,6 @@ public class ImplicitPlanBuilder {
         }
         AbstractEntity r = entityMap.get(id);
         if(r == null) {
-//                r = newResource(resourceClass, name);
             r = generator.get();
             entityMap.put(id, r);
         }
@@ -309,6 +279,18 @@ public class ImplicitPlanBuilder {
         public String areaLabel = DEFAULT;
         public String maintenanceGroupLabel = DEFAULT;
         public String generalTaskTypeLabel = DEFAULT;
+        public String taskTypeCode = DEFAULT;
         public String mechanicLabel = DEFAULT;
+        public boolean isDefault(Aircraft ac){
+            return aircraftModelLabel.equals(ac.getTitle());
+        }
+
+        public boolean isDefault(AircraftArea aa){
+            return areaLabel.equals(aa.getTitle());
+        }
+
+        public boolean isDefault(MaintenanceGroup mg){
+            return maintenanceGroupLabel.equals(mg.getTitle());
+        }
     }
 }

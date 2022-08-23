@@ -2,6 +2,7 @@ package cz.cvut.kbss.amaplas.model;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
+import java.util.function.Supplier;
 
 
 /**
@@ -11,6 +12,7 @@ import java.util.Date;
 public class ModelFactory {
 
     protected Long lastId = null;
+    protected Long lastIdSlot = -1l;
 
     public TaskType newTaskType(String code, String label, String area, String taskType, String scope, String phase, String taskCat){
         TaskType tt = new TaskType(code, label);
@@ -33,7 +35,7 @@ public class ModelFactory {
     }
 
     public TaskPlan newTaskPlan(TaskType type, Date plannedStart, Date plannedEnd, Date start, Date end, Long plannedWorkTime, Long workTime ){
-        TaskPlan p = newPlan(TaskPlan.class, plannedStart, plannedEnd, start, end, plannedWorkTime, workTime);
+        TaskPlan p = newPlan(() -> new TaskPlan(), plannedStart, plannedEnd, start, end, plannedWorkTime, workTime);
         if(type != null) {
             p.setTaskType(type);
             p.setTitle(type.getViewLabel());
@@ -41,58 +43,47 @@ public class ModelFactory {
         return p;
     }
     public TaskPlan newTaskPlan(String label){
-        return newPlan(TaskPlan.class, null, null, null, null, null, null);
+        return newPlan(() -> new TaskPlan(), null, null, null, null, null, null);
     }
 
     public GeneralTaskPlan newGeneralTaskPlan(String label){
-        GeneralTaskPlan generalTaskPlan = newEntity(GeneralTaskPlan.class, label);
+        GeneralTaskPlan generalTaskPlan = newEntity(() -> new GeneralTaskPlan(), label);
         return generalTaskPlan;
     }
-//
-//    public PhasePlan newPhasePlan(){
-//
-//    }
-
-
-//    public ResourceCombination newResourceCombination(AircraftArea aircraftArea, Resource resource){
-//        String label = resource.getTitle();
-//        ResourceCombination resourceCombination = newResource(ResourceCombination.class, label);
-//        return resourceCombination;
-//    }
 
     public AircraftArea newAircraftArea(String name){
-        AircraftArea aircraftArea = newResource(AircraftArea.class, name);
+        AircraftArea aircraftArea = newResource(() -> new AircraftArea(), name);
         return aircraftArea;
     }
 
     public MaintenanceGroup newMaintenanceGroup(String name){
-        MaintenanceGroup maintenanceGroup = newResource(MaintenanceGroup.class, name);
+        MaintenanceGroup maintenanceGroup = newResource(() -> new MaintenanceGroup(), name);
         return maintenanceGroup;
     }
 
 
     public Mechanic newMechanic(String label){
-        Mechanic mechanic = newResource(Mechanic.class, label);
+        Mechanic mechanic = newResource(() -> new Mechanic(), label);
         return mechanic;
     }
 
-    public <T extends Resource> T newResource(Class<T> resourceClass, String name){
-        T resource = newEntity(resourceClass, name);
+    public <T extends Resource> T newResource(Supplier<T> entityFactory, String name){
+        T resource = newEntity(entityFactory, name);
         return resource;
     }
 
     public RevisionPlan newRevisionPlan(String label){
-        RevisionPlan revisionPlan = newEntity(RevisionPlan.class, label);
+        RevisionPlan revisionPlan = newEntity(() -> new RevisionPlan(), label);
         return revisionPlan;
     }
 
     public PhasePlan newPhasePlan(String label){
-        PhasePlan phasePlan = newEntity(PhasePlan.class, label);
+        PhasePlan phasePlan = newEntity(() -> new PhasePlan(), label);
         return phasePlan;
     }
 
     public SessionPlan newSessionPlan(Date startTime, Date endTime){
-        SessionPlan p = newPlan(SessionPlan.class, null, null, startTime, endTime, null, null);
+        SessionPlan p = newPlan(() -> new SessionPlan(), null, null, startTime, endTime, null, null);
         return p;
     }
 
@@ -109,29 +100,15 @@ public class ModelFactory {
         return p;
     }
 
-    public <T extends AbstractEntity> T newEntity(Class<T> cls, String label){
-        try {
-            T entity = cls.getConstructor().newInstance();
-            entity.setId(generateId());
-//            Thread.sleep(1);
-            entity.setTitle(label);
-            return entity;
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-        }
-        return null;
+    public <T extends AbstractEntity> T newEntity(Supplier<T> entityFactory, String label){
+        T entity = entityFactory.get();
+        entity.setId(generateId());
+        entity.setTitle(label);
+        return entity;
     }
 
-    public <T extends AbstractPlan>  T newPlan(Class<T> cls, Date plannedStart, Date plannedEnd, Date start, Date end, Long plannedWorkTime, Long workTime ){
-        T plan = newEntity(cls, null);
+    public <T extends AbstractPlan>  T newPlan(Supplier<T> entityFactory, Date plannedStart, Date plannedEnd, Date start, Date end, Long plannedWorkTime, Long workTime ){
+        T plan = newEntity(entityFactory, null);
         plan.setPlannedStartTime(plannedStart);
         plan.setPlannedEndTime(plannedEnd);
         plan.setDuration(duration(plan.getPlannedStartTime(), plan.getPlannedEndTime()));
@@ -141,20 +118,18 @@ public class ModelFactory {
 
         plan.setPlannedWorkTime(plannedWorkTime);
         plan.setWorkTime(workTime);
-
-        plan.setId(generateId());
         return plan;
     }
 
     public Long generateId(){
-        long newId = System.currentTimeMillis();
-        while(lastId != null && newId <= lastId) {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            newId = System.currentTimeMillis();
+        long idSlot = System.currentTimeMillis();
+        long newId = -1;
+        // create multiple ids per millisecond to speed up id generation
+        if(lastIdSlot != idSlot){
+            lastIdSlot = idSlot;
+            newId = lastIdSlot*10000;
+        }else{
+            newId = lastId + 1;
         }
         lastId = newId;
         return newId;
