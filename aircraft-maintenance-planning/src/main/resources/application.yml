@@ -1,4 +1,16 @@
-server.servlet.context-path: /api
+server:
+  custom.proxy.basePath: ${SERVER_BASEPATH:}
+  servlet.context-path: /api
+
+security:
+  oauth2:
+    disabled: ${SECURITY_OAUTH2_DISABLED:true}
+
+keycloak:
+  auth-server-url: ${SECURITY_KEYCLOAK_URL:https://keycloak:8080/}
+  realm: ${SECURITY_KEYCLOAK_REALM:csat-planning}
+  resource: ${SECURITY_KEYCLOAK_CLIENT_ID:planning}
+  public-client: true
 
 planning:
   repository:
