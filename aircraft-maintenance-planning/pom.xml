@@ -18,6 +18,7 @@
 
     <properties>
         <java.version>11</java.version>
+        <org.keycloak.version>18.0.0</org.keycloak.version>
         <org.aspectj.version>1.9.7</org.aspectj.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
@@ -45,12 +46,23 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
+        </dependency>
+
+        <!-- Keycloak Spring Boot -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-spring-boot-starter</artifactId>
+            <version>${org.keycloak.version}</version>
         </dependency>
 
         <!-- JSON-LD -->
