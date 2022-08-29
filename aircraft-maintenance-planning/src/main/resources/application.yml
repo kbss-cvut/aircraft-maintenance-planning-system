@@ -4,7 +4,7 @@ server:
 
 security:
   oauth2:
-    disabled: ${SECURITY_OAUTH2_DISABLED:true}
+    disabled: ${SECURITY_OAUTH2_DISABLED:false}
 
 keycloak:
   auth-server-url: ${SECURITY_KEYCLOAK_URL:https://keycloak:8080/}
