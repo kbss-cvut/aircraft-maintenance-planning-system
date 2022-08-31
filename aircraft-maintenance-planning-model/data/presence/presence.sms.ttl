@@ -35,6 +35,18 @@
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
 .
+
+td:import-input-data-schema
+  sml:baseURI [
+      a sp:concat ;
+      sp:arg1 [
+          a sp:str ;
+          sp:arg1 : ;
+        ] ;
+      sp:arg2 "input-data-schema" ;
+    ] ;
+.
+
 :append-next
   a sml:ApplyConstruct ;
   sm:next :construct-events ;
@@ -438,6 +450,7 @@ WHERE {
       sp:arg1 : ;
     ] ;
   km-tabular:delimiter ";" ;
+  km-tabular:skip-header "true";
   sm:next :append-start-end-times ;
   sm:next :construct-csat-maintenance-data ;
 .

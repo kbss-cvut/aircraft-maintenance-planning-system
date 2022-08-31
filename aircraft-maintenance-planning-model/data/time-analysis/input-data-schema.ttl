@@ -1,5 +1,6 @@
 @prefix : <http://onto.fel.cvut.cz/ontologies/csat/time-analysis-0.1/> .
 @prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix kbss-csvw: <https://onto.fel.cvut.cz/ontologies/extension/csvw/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -8,94 +9,122 @@
 
 :input-table-schema a csvw:TableSchema ;
                     csvw:column
-                        [ csvw:name "bookingno_i" ;
-                            csvw:property :bookingno_i ;
+                        [ a csvw:Column; 
+                            csvw:name "bookingno_i" ;
+                            kbss-csvw:property  :bookingno_i ;
                             csvw:title "bookingno_i" ],
-                        [ csvw:name "Employee_No" ;
-                            csvw:property :Employee_No ;
+                        [ a csvw:Column;
+                            csvw:name "Employee_No" ;
+                            kbss-csvw:property  :Employee_No ;
                             csvw:title "Employee No" ],
-                        [ csvw:name "user_sign" ;
-                            csvw:property :user_sign ;
+                        [ a csvw:Column;
+                            csvw:name "user_sign" ;
+                            kbss-csvw:property  :user_sign ;
                             csvw:title "user_sign" ],
-                        [ csvw:name "Start_Date" ;
-                            csvw:property :Start_Date ;
+                        [ a csvw:Column; 
+                            csvw:name "Start_Date" ;
+                            kbss-csvw:property  :Start_Date ;
                             csvw:title "Start Date" ],
-                        [ csvw:name "Start_Time" ;
-                            csvw:property :Start_Time ;
+                        [ a csvw:Column; 
+                            csvw:name "Start_Time" ;
+                            kbss-csvw:property  :Start_Time ;
                             csvw:title "Start Time" ],
-                        [ csvw:name "End_Date" ;
-                            csvw:property :End_Date ;
+                        [ a csvw:Column; 
+                            csvw:name "End_Date" ;
+                            kbss-csvw:property  :End_Date ;
                             csvw:title "End Date" ],
-                        [ csvw:name "End_Time" ;
-                            csvw:property :End_Time ;
+                        [ a csvw:Column; 
+                            csvw:name "End_Time" ;
+                            kbss-csvw:property  :End_Time ;
                             csvw:title "End Time" ],
-                        [ csvw:name "Duration_Full" ;
-                            csvw:property :Duration_Full ;
+                        [ a csvw:Column; 
+                            csvw:name "Duration_Full" ;
+                            kbss-csvw:property  :Duration_Full ;
                             csvw:title "Duration Full" ],
-                        [ csvw:name "Scope" ;
-                            csvw:property :Scope ;
+                        [ a csvw:Column; 
+                            csvw:name "Scope" ;
+                            kbss-csvw:property  :Scope ;
                             csvw:title "Scope" ],
-                        [ csvw:name "Shift_Group" ;
-                            csvw:property :Shift_Group ;
+                        [ a csvw:Column; 
+                            csvw:name "Shift_Group" ;
+                            kbss-csvw:property  :Shift_Group ;
                             csvw:title "Shift Group" ],
-                        [ csvw:name "Type" ;
-                            csvw:property :Type ;
+                        [ a csvw:Column; 
+                            csvw:name "Type" ;
+                            kbss-csvw:property  :Type ;
                             csvw:title "Type" ],
-                        [ csvw:name "WO_TC" ;
-                            csvw:property :WO_TC ;
+                        [ a csvw:Column; 
+                            csvw:name "WO_TC" ;
+                            kbss-csvw:property  :WO_TC ;
                             csvw:title "WO/TC" ],
-                        [ csvw:name "defect_class" ;
-                            csvw:property :defect_class ;
+                        [ a csvw:Column; 
+                            csvw:name "defect_class" ;
+                            kbss-csvw:property  :defect_class ;
                             csvw:title "defect class" ],
-                        [ csvw:name "TC_reference" ;
-                            csvw:property :TC_reference ;
+                        [ a csvw:Column; 
+                            csvw:name "TC_reference" ;
+                            kbss-csvw:property  :TC_reference ;
                             csvw:title "TC reference" ],
-                        [ csvw:name "Closing_date" ;
-                            csvw:property :Closing_date ;
+                        [ a csvw:Column; 
+                            csvw:name "Closing_date" ;
+                            kbss-csvw:property  :Closing_date ;
                             csvw:title "Closing date" ],
-                        [ csvw:name "Description" ;
-                            csvw:property :Description ;
+                        [ a csvw:Column; 
+                            csvw:name "Description" ;
+                            kbss-csvw:property  :Description ;
                             csvw:title "Description" ],
-                        [ csvw:name "Workpackage" ;
-                            csvw:property :Workpackage ;
+                        [ a csvw:Column; 
+                            csvw:name "Workpackage" ;
+                            kbss-csvw:property  :Workpackage ;
                             csvw:title "Workpackage" ],
-                        [ csvw:name "A_C_model" ;
-                            csvw:property :A_C_model ;
+                        [ a csvw:Column; 
+                            csvw:name "A_C_model" ;
+                            kbss-csvw:property  :A_C_model ;
                             csvw:title "A/C model" ],
-                        [ csvw:name "A_C_age" ;
-                            csvw:property :A_C_age ;
+                        [ a csvw:Column; 
+                            csvw:name "A_C_age" ;
+                            kbss-csvw:property  :A_C_age ;
                             csvw:title "A/C age" ],
-                        [ csvw:name "Start_date___scheduled" ;
-                            csvw:property :Start_date___scheduled ;
+                        [ a csvw:Column; 
+                            csvw:name "Start_date___scheduled" ;
+                            kbss-csvw:property  :Start_date___scheduled ;
                             csvw:title "Start date - scheduled" ],
-                        [ csvw:name "End_date___scheduled" ;
-                            csvw:property :End_date___scheduled ;
+                        [ a csvw:Column; 
+                            csvw:name "End_date___scheduled" ;
+                            kbss-csvw:property  :End_date___scheduled ;
                             csvw:title "End date - scheduled" ],
-			[ csvw:name "Start_date___real" ;
-                            csvw:property :Start_date___real ;
+			            [ a csvw:Column; 
+                            csvw:name "Start_date___real" ;
+                            kbss-csvw:property  :Start_date___real ;
                             csvw:title "Start date - real" ],
-                        [ csvw:name "End_date___real" ;
-                            csvw:property :End_date___real ;
+                        [ a csvw:Column; 
+                            csvw:name "End_date___real" ;
+                            kbss-csvw:property  :End_date___real ;
                             csvw:title "End date - real" ],
-                        [ csvw:name "Line" ;
-                            csvw:property :Line ;
+                        [ a csvw:Column; 
+                            csvw:name "Line" ;
+                            kbss-csvw:property  :Line ;
                             csvw:title "Line" ],
-                        [ csvw:name "Real_date_of_booking_entry" ;
-                            csvw:property :Real_date_of_booking_entry ;
+                        [ a csvw:Column; 
+                            csvw:name "Real_date_of_booking_entry" ;
+                            kbss-csvw:property  :Real_date_of_booking_entry ;
                             csvw:title "Real date of booking entry" ],
-                        [ csvw:name "project" ;
-                            csvw:property :project ;
+                        [ a csvw:Column; 
+                            csvw:name "project" ;
+                            kbss-csvw:property  :project ;
                             csvw:title "project" ],
-                        [ csvw:name "AC_registration" ;
-                            csvw:property :AC_registration ;
+                        [ a csvw:Column; 
+                            csvw:name "AC_registration" ;
+                            kbss-csvw:property  :AC_registration ;
                             csvw:title "AC registration" ],
-                        [ csvw:name "operator" ;
-                            csvw:property :operator ;
+                        [ a csvw:Column; 
+                            csvw:name "operator" ;
+                            kbss-csvw:property  :operator ;
                             csvw:title "operator" ]
 .
 
-csvw:property a rdf:Property .
-csvw:property rdfs:range rdf:Property .
+kbss-csvw:property  a rdf:Property .
+kbss-csvw:property  rdfs:range rdf:Property .
 
 :bookingno_i a rdf:Property .
 :Employee_No a rdf:Property .

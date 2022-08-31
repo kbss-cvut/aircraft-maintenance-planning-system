@@ -9,6 +9,7 @@
 @prefix csvw: <http://www.w3.org/ns/csvw#> .
 @prefix doc: <http://onto.fel.cvut.cz/ontologies/documentation/> .
 @prefix kbss-module: <http://onto.fel.cvut.cz/ontologies/lib/module/> .
+@prefix kbss-csvw: <https://onto.fel.cvut.cz/ontologies/extension/csvw/> .
 @prefix km-sesame: <http://onto.fel.cvut.cz/ontologies/lib/module/sesame/> .
 @prefix km-tabular: <http://onto.fel.cvut.cz/ontologies/lib/module/tabular/> .
 @prefix ms: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
@@ -33,6 +34,7 @@
 td:bind-expected-table-schema
   a sml:BindBySelect ;
   sm:next td:check-input-data-schema ;
+  sm:next td:rdfize-input-data;
   sml:selectQuery [
       a sp:Select ;
       sp:text """SELECT ?expectedTableSchema
@@ -57,7 +59,7 @@ WHERE {
      BIND(iri(?actualColumn) as ?actualColumnIRI)
 
      FILTER NOT EXISTS {
-          ?expectedTableSchema csvw:column/csvw:property ?actualColumnIRI .
+          ?expectedTableSchema csvw:column/kbss-csvw:property ?actualColumnIRI .
      }
 }""" ;
     ] ;
@@ -70,7 +72,7 @@ WHERE {
      ?expectedTableSchema  a  csvw:TableSchema .
      FILTER( ?actualTableSchema != ?expectedTableSchema)
 
-     ?expectedTableSchema csvw:column/csvw:property ?expectedColumnIRI .
+     ?expectedTableSchema csvw:column/kbss-csvw:property ?expectedColumnIRI .
 
      FILTER NOT EXISTS {
           ?actualTableSchema csvw:column/csvw:propertyUrl ?actualColumn .
