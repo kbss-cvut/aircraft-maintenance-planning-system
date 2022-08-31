@@ -1,5 +1,6 @@
 @prefix : <http://onto.fel.cvut.cz/ontologies/csat/time-analysis-0.1/> .
 @prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix kbss-csvw: <https://onto.fel.cvut.cz/ontologies/extension/csvw/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -10,120 +11,120 @@
                     csvw:column
                         [ a csvw:Column; 
                             csvw:name "bookingno_i" ;
-                            csvw:propertyUrl :bookingno_i ;
+                            kbss-csvw:property  :bookingno_i ;
                             csvw:title "bookingno_i" ],
                         [ a csvw:Column;
                             csvw:name "Employee_No" ;
-                            csvw:propertyUrl :Employee_No ;
+                            kbss-csvw:property  :Employee_No ;
                             csvw:title "Employee No" ],
                         [ a csvw:Column;
                             csvw:name "user_sign" ;
-                            csvw:propertyUrl :user_sign ;
+                            kbss-csvw:property  :user_sign ;
                             csvw:title "user_sign" ],
                         [ a csvw:Column; 
                             csvw:name "Start_Date" ;
-                            csvw:propertyUrl :Start_Date ;
+                            kbss-csvw:property  :Start_Date ;
                             csvw:title "Start Date" ],
                         [ a csvw:Column; 
                             csvw:name "Start_Time" ;
-                            csvw:propertyUrl :Start_Time ;
+                            kbss-csvw:property  :Start_Time ;
                             csvw:title "Start Time" ],
                         [ a csvw:Column; 
                             csvw:name "End_Date" ;
-                            csvw:propertyUrl :End_Date ;
+                            kbss-csvw:property  :End_Date ;
                             csvw:title "End Date" ],
                         [ a csvw:Column; 
                             csvw:name "End_Time" ;
-                            csvw:propertyUrl :End_Time ;
+                            kbss-csvw:property  :End_Time ;
                             csvw:title "End Time" ],
                         [ a csvw:Column; 
                             csvw:name "Duration_Full" ;
-                            csvw:propertyUrl :Duration_Full ;
+                            kbss-csvw:property  :Duration_Full ;
                             csvw:title "Duration Full" ],
                         [ a csvw:Column; 
                             csvw:name "Scope" ;
-                            csvw:propertyUrl :Scope ;
+                            kbss-csvw:property  :Scope ;
                             csvw:title "Scope" ],
                         [ a csvw:Column; 
                             csvw:name "Shift_Group" ;
-                            csvw:propertyUrl :Shift_Group ;
+                            kbss-csvw:property  :Shift_Group ;
                             csvw:title "Shift Group" ],
                         [ a csvw:Column; 
                             csvw:name "Type" ;
-                            csvw:propertyUrl :Type ;
+                            kbss-csvw:property  :Type ;
                             csvw:title "Type" ],
                         [ a csvw:Column; 
                             csvw:name "WO_TC" ;
-                            csvw:propertyUrl :WO_TC ;
+                            kbss-csvw:property  :WO_TC ;
                             csvw:title "WO/TC" ],
                         [ a csvw:Column; 
                             csvw:name "defect_class" ;
-                            csvw:propertyUrl :defect_class ;
+                            kbss-csvw:property  :defect_class ;
                             csvw:title "defect class" ],
                         [ a csvw:Column; 
                             csvw:name "TC_reference" ;
-                            csvw:propertyUrl :TC_reference ;
+                            kbss-csvw:property  :TC_reference ;
                             csvw:title "TC reference" ],
                         [ a csvw:Column; 
                             csvw:name "Closing_date" ;
-                            csvw:propertyUrl :Closing_date ;
+                            kbss-csvw:property  :Closing_date ;
                             csvw:title "Closing date" ],
                         [ a csvw:Column; 
                             csvw:name "Description" ;
-                            csvw:propertyUrl :Description ;
+                            kbss-csvw:property  :Description ;
                             csvw:title "Description" ],
                         [ a csvw:Column; 
                             csvw:name "Workpackage" ;
-                            csvw:propertyUrl :Workpackage ;
+                            kbss-csvw:property  :Workpackage ;
                             csvw:title "Workpackage" ],
                         [ a csvw:Column; 
                             csvw:name "A_C_model" ;
-                            csvw:propertyUrl :A_C_model ;
+                            kbss-csvw:property  :A_C_model ;
                             csvw:title "A/C model" ],
                         [ a csvw:Column; 
                             csvw:name "A_C_age" ;
-                            csvw:propertyUrl :A_C_age ;
+                            kbss-csvw:property  :A_C_age ;
                             csvw:title "A/C age" ],
                         [ a csvw:Column; 
                             csvw:name "Start_date___scheduled" ;
-                            csvw:propertyUrl :Start_date___scheduled ;
+                            kbss-csvw:property  :Start_date___scheduled ;
                             csvw:title "Start date - scheduled" ],
                         [ a csvw:Column; 
                             csvw:name "End_date___scheduled" ;
-                            csvw:propertyUrl :End_date___scheduled ;
+                            kbss-csvw:property  :End_date___scheduled ;
                             csvw:title "End date - scheduled" ],
 			            [ a csvw:Column; 
                             csvw:name "Start_date___real" ;
-                            csvw:propertyUrl :Start_date___real ;
+                            kbss-csvw:property  :Start_date___real ;
                             csvw:title "Start date - real" ],
                         [ a csvw:Column; 
                             csvw:name "End_date___real" ;
-                            csvw:propertyUrl :End_date___real ;
+                            kbss-csvw:property  :End_date___real ;
                             csvw:title "End date - real" ],
                         [ a csvw:Column; 
                             csvw:name "Line" ;
-                            csvw:propertyUrl :Line ;
+                            kbss-csvw:property  :Line ;
                             csvw:title "Line" ],
                         [ a csvw:Column; 
                             csvw:name "Real_date_of_booking_entry" ;
-                            csvw:propertyUrl :Real_date_of_booking_entry ;
+                            kbss-csvw:property  :Real_date_of_booking_entry ;
                             csvw:title "Real date of booking entry" ],
                         [ a csvw:Column; 
                             csvw:name "project" ;
-                            csvw:propertyUrl :project ;
+                            kbss-csvw:property  :project ;
                             csvw:title "project" ],
                         [ a csvw:Column; 
                             csvw:name "AC_registration" ;
-                            csvw:propertyUrl :AC_registration ;
+                            kbss-csvw:property  :AC_registration ;
                             csvw:title "AC registration" ],
                         [ a csvw:Column; 
                             csvw:name "operator" ;
-                            csvw:propertyUrl :operator ;
+                            kbss-csvw:property  :operator ;
                             csvw:title "operator" ]
 .
 
-csvw:propertyUrl a rdf:Property .
-csvw:propertyUrl rdfs:range rdf:Property .
+kbss-csvw:property  a rdf:Property .
+kbss-csvw:property  rdfs:range rdf:Property .
 
 :bookingno_i a rdf:Property .
 :Employee_No a rdf:Property .
