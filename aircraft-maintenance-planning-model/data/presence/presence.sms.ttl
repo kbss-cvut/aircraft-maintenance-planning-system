@@ -46,7 +46,9 @@ td:import-input-data-schema
       sp:arg2 "input-data-schema" ;
     ] ;
 .
-
+td:bind-expected-table-schema
+  sm:next td:rdfize-input-data;
+.
 :append-next
   a sml:ApplyConstruct ;
   sm:next :construct-events ;
