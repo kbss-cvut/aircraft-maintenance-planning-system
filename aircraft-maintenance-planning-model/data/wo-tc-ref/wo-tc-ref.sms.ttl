@@ -260,11 +260,6 @@ CONSTRUCT {
   sml:replace true ;
   rdfs:label "construct-csat-maintenance-data" ;
 .
-:deploy-to-rdf4j-server
-  a kbss-module:deploy ;
-  sm:next :deploy-wo-tc-ref_Return ;
-  rdfs:label "deploy" ;
-.
 :deploy-wo-tc-ref-data
   a sm:Function ;
   sm:returnModule td:deploy-data_Return ;
