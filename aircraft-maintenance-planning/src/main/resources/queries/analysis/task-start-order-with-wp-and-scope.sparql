@@ -50,40 +50,39 @@ WHERE
                         rdfs:subClassOf ?cls.
             }
         }
-    }
 
+        # session
+        OPTIONAL{
+            ?t cm:is-part-of-maintenance-task ?tt.
+            OPTIONAL{
+                ?t cm:task-description ?ttLabel.
+            }
+    #        OPTIONAL{
+    #            ?t cm:time-estimate-in-hours ?tDurH
+    #        }
+            OPTIONAL{
+                ?t cm:start-date ?sDate.
+                ?t cm:start-time ?sTime.
+                BIND(spif:parseDate(CONCAT(str(?sDate),"T", str(?sTime)),"yyyy-MM-dd'T'hh:mm") as ?st)
+            }
 
-    # session
-    OPTIONAL{
-        ?t cm:is-part-of-maintenance-task ?tt.
-        OPTIONAL{
-            ?t cm:task-description ?ttLabel.
-        }
-#        OPTIONAL{
-#            ?t cm:time-estimate-in-hours ?tDurH
-#        }
-        OPTIONAL{
-            ?t cm:start-date ?sDate.
-            ?t cm:start-time ?sTime.
-            BIND(spif:parseDate(CONCAT(str(?sDate),"T", str(?sTime)),"yyyy-MM-dd'T'hh:mm") as ?st)
-        }
+            OPTIONAL{
+                ?t cm:end-date ?eDate.
+                ?t cm:end-time ?eTime.
+                BIND(spif:parseDate(CONCAT(str(?eDate),"T", str(?eTime)),"yyyy-MM-dd'T'hh:mm") as ?et)
+            }
 
-        OPTIONAL{
-            ?t cm:end-date ?eDate.
-            ?t cm:end-time ?eTime.
-            BIND(spif:parseDate(CONCAT(str(?eDate),"T", str(?eTime)),"yyyy-MM-dd'T'hh:mm") as ?et)
-        }
-
-        # task group
-        OPTIONAL{
-            ?t cm:has-scope ?scopeGroup.
-            ?scopeGroup cm:has-abbreviation ?scope.
-            BIND(replace(str(?scopeGroup), "^.*/([^/]+)$", "$1") as ?scopeLabel)
-        #    ?scopeGroup rdfs:label ?scope.
-        }
-        # mechanic
-        OPTIONAL{
-          ?w cm:performs ?t.
+            # task group
+            OPTIONAL{
+                ?t cm:has-scope ?scopeGroup.
+                ?scopeGroup cm:has-abbreviation ?scope.
+                BIND(replace(str(?scopeGroup), "^.*/([^/]+)$", "$1") as ?scopeLabel)
+            #    ?scopeGroup rdfs:label ?scope.
+            }
+            # mechanic
+            OPTIONAL{
+              ?w cm:performs ?t.
+            }
         }
     }
 #    FILTER(!bound(?st))
