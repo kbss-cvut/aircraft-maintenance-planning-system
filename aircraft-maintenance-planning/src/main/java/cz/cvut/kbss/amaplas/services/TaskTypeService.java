@@ -1,17 +1,20 @@
 package cz.cvut.kbss.amaplas.services;
 
 import cz.cvut.kbss.amaplas.config.ConfigProperties;
+import cz.cvut.kbss.amaplas.io.SparqlDataReader;
 import cz.cvut.kbss.amaplas.io.SparqlDataReaderRDF4J;
 import cz.cvut.kbss.amaplas.model.Result;
 import cz.cvut.kbss.amaplas.model.TaskType;
+import org.apache.commons.lang3.tuple.Pair;
+import org.eclipse.rdf4j.model.Value;
+import org.eclipse.rdf4j.model.ValueFactory;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -84,7 +87,12 @@ public class TaskTypeService {
         TaskType.setTaskTypeDefinitions(taskTypeDefinitions);
         LOG.debug("Map task type definitions to session log task types");
         TaskType.initTC2TCDefMap(sessions);
-        LOG.debug("Initializing the TaskTypeService done.");
+        Map<String, List<TaskType>> map = TaskType.getTaskTCCode2TCDefinitionMap();
+        SparqlDataReaderRDF4J.persistStatements(
+                SparqlDataReaderRDF4J.convertTaskCardAsStatement(map),
+                repoConfig.getTaskMappingGraph(),
+                repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword()
+        );
     }
 //
     public TaskType getMatchingTaskTypeDefinition(TaskType taskType){
