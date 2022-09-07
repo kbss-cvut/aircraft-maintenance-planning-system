@@ -31,7 +31,50 @@ public class TaskTypeService {
 
     @PostConstruct
     public void init(){
-        LOG.debug("Initializing the TaskTypeService");
+        Map<String, List<Result>> revisions = revisionHistory.getAllClosedRevisionsWorkLog(false);
+        List<TaskType> taskTypeDefinitions = SparqlDataReaderRDF4J.__loadTCDefinitions(
+                repoConfig.getUrl(), repoConfig.getTaskDefinitionsGraph(),
+                repoConfig.getUsername(), repoConfig.getPassword());
+        TaskType.setTaskTypeDefinitions(taskTypeDefinitions);
+        // TODO load mapping for task type definitions
+        LOG.debug("Initializing the TaskTypeService done.");
+        loadTaskMappings();
+    }
+
+    public void loadTaskMappings(){
+        ValueFactory f = SimpleValueFactory.getInstance();
+        Map<String, Value> bindings = new HashMap();
+        bindings.put("taskTypeDefinitionGraph", f.createIRI(repoConfig.getTaskDefinitionsGraph()));
+        bindings.put("taskCardMappingGraph", f.createIRI(repoConfig.getTaskMappingGraph()));
+        List<Pair<String, String>> taskTypeDefinitions = SparqlDataReaderRDF4J.executeNamedQuery(
+                SparqlDataReader.TASK_CARD_MAPPINGS,
+                bindings,
+                repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword(), SparqlDataReaderRDF4J::convertToPair);
+
+        Map<String, List<TaskType>> map = new HashMap<>();
+        Map<String, TaskType> defs = new HashMap<>();
+        TaskType.getTaskTypeDefinitions().forEach(t -> defs.put(t.getCode(), t));
+        analyzeTaskTypeDefinitionDuplicates();
+        taskTypeDefinitions.forEach(
+                p -> map.put(p.getKey(), Arrays.asList(defs.get(p.getValue())))
+        );
+        TaskType.setTaskTCCode2TCDefinitionMap(map);
+    }
+
+    public void analyzeTaskTypeDefinitionDuplicates(){
+        List<Map.Entry<String, List<TaskType>>> codeMap = TaskType.getTaskTypeDefinitions().stream()
+                .collect(Collectors.groupingBy(t -> t.getCode()))
+                .entrySet().stream()
+                .sorted(Comparator.comparing(e -> e.getValue().size())).collect(Collectors.toList());
+        for(Map.Entry<String, List<TaskType>> codeMappings : codeMap){
+            if(codeMappings.getValue().size() > 1){
+                LOG.warn("There are multiple definitions with the same code {} , {}", codeMappings.getKey(), codeMappings.getValue());
+            }
+        }
+    }
+
+    public void updateTaskTypeMapping(){
+        LOG.info("update task type mapping to task definitions");
         // read task type definitions initialize a map from session task type code to task types definition codes.
         Map<String, List<Result>> revisions = revisionHistory.getAllClosedRevisionsWorkLog(false);
         List<Result> sessions = revisions.values().stream().flatMap(l -> l.stream()).collect(Collectors.toList());
