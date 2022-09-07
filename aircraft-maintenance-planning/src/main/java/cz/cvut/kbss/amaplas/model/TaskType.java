@@ -241,6 +241,18 @@ public class TaskType extends EventType<String> {
         TaskType.taskTypeDefinitions = taskTypeDefinitions;
     }
 
+    public static List<TaskType> getTaskTypeDefinitions() {
+        return taskTypeDefinitions;
+    }
+
+    public static Map<String, List<TaskType>> getTaskTCCode2TCDefinitionMap() {
+        return taskTCCode2TCDefinitionMap;
+    }
+
+    public static void setTaskTCCode2TCDefinitionMap(Map<String, List<TaskType>> taskTCCode2TCDefinitionMap) {
+        TaskType.taskTCCode2TCDefinitionMap = taskTCCode2TCDefinitionMap;
+    }
+
     /**
      * taskTypeDefinitions should be set first
      * @param results
@@ -249,7 +261,7 @@ public class TaskType extends EventType<String> {
         taskTCCode2TCDefinitionMap = new HashMap<>();
         results.stream()
                 .map(r -> r.taskType)
-                .filter(t -> t != null && t.getCode() != null)
+                .filter(t -> t != null && t.getCode() != null && "task-card".equals(t.getTaskcat()))
                 .map(t -> t.getCode())
                 .distinct()
                 .forEach(code -> taskTCCode2TCDefinitionMap.put(code, findMatchingTCDef(code)));

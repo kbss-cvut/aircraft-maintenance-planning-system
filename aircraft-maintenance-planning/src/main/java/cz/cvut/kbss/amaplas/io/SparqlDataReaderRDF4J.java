@@ -55,6 +55,13 @@ public class SparqlDataReaderRDF4J {
         return ret;
     }
 
+    public static <T> List<T> executeNamedQuery(String queryName, Map<String, Value> bindings, String endpoint, String username, String password, SparqlDataReaderRDF4J.Converter converter) {
+        LOG.debug("executing query \"{}\" at endpoint <{}> with bindings {}", queryName, endpoint, bindings);
+        String query = ResourceUtils.loadResource(queryName);
+        List<T> results = executeQuery(query, bindings, endpoint, username, password, converter);
+        return results;
+    }
+
     public static <T> List<T> executeQuery(String query, Map<String, Value> bindings, String endpoint, String username, String password, SparqlDataReaderRDF4J.Converter converter) {
         Repository r = RepositoryUtils.createRepo(endpoint, username, password);
         List<T> result = executeQuery(query, bindings, r, converter);
@@ -282,6 +289,10 @@ public class SparqlDataReaderRDF4J {
 
         t.dur = Optional.ofNullable(bs.getValue("dur")).map(v -> ((Literal)v).longValue()).orElse(null);
         return t;
+    }
+
+    public static Pair<String, String> convertToPair(BindingSet bs) {
+        return Pair.of(manValue(bs, "tcId"), manValue(bs, "tcdId"));
     }
 
     public interface Converter<T>{
