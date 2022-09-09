@@ -79,7 +79,7 @@ public class TaskTypeService {
     public void updateTaskTypeMapping(){
         LOG.info("update task type mapping to task definitions");
         // read task type definitions initialize a map from session task type code to task types definition codes.
-        Map<String, List<Result>> revisions = revisionHistory.getAllClosedRevisionsWorkLog(false);
+        Map<String, List<Result>> revisions = revisionHistory.getAllClosedRevisionsWorkLog(true);
         List<Result> sessions = revisions.values().stream().flatMap(l -> l.stream()).collect(Collectors.toList());
         List<TaskType> taskTypeDefinitions = SparqlDataReaderRDF4J.__loadTCDefinitions(
                 repoConfig.getUrl(), repoConfig.getTaskDefinitionsGraph(),
