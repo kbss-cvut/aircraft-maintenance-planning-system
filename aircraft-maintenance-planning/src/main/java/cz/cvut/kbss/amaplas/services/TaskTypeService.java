@@ -44,6 +44,9 @@ public class TaskTypeService {
         loadTaskMappings();
     }
 
+    /**
+     * Loads mappings from the repository into memory cache.
+     */
     public void loadTaskMappings(){
         ValueFactory f = SimpleValueFactory.getInstance();
         Map<String, Value> bindings = new HashMap();
@@ -78,6 +81,9 @@ public class TaskTypeService {
         TaskType.setTaskTCCode2TCDefinitionMap(map);
     }
 
+    /**
+     * Check if different task type definitions use the same code
+     */
     public void analyzeTaskTypeDefinitionDuplicates(){
         List<Map.Entry<String, List<TaskType>>> codeMap = TaskType.getTaskTypeDefinitions().stream()
                 .collect(Collectors.groupingBy(t -> t.getCode()))
@@ -90,6 +96,10 @@ public class TaskTypeService {
         }
     }
 
+    /**
+     * Calculates the mappings from the data in the repository and writes the new mappings in the repository and
+     * refreshes the mapping memory cache.
+     */
     public void updateTaskTypeMapping(){
         LOG.info("update task type mapping to task definitions");
         // read task type definitions initialize a map from session task type code to task types definition codes.
