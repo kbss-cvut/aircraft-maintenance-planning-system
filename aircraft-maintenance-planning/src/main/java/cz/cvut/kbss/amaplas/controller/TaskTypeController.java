@@ -2,7 +2,6 @@ package cz.cvut.kbss.amaplas.controller;
 
 
 import cz.cvut.kbss.amaplas.services.TaskTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +16,7 @@ public class TaskTypeController {
         this.taskTypeService = taskTypeService;
     }
 
-    @GetMapping(path="update")
+    @GetMapping(path="update-definition-mappings")
     public void updateTaskTypeMapping(){
         taskTypeService.updateTaskTypeMapping();
     }
