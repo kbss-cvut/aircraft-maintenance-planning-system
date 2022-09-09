@@ -55,11 +55,25 @@ public class TaskTypeService {
                 repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword(), SparqlDataReaderRDF4J::convertToPair);
 
         Map<String, List<TaskType>> map = new HashMap<>();
-        Map<String, TaskType> defs = new HashMap<>();
-        TaskType.getTaskTypeDefinitions().forEach(t -> defs.put(t.getCode(), t));
+        Map<String, List<TaskType>> defs = TaskType.getTaskTypeDefinitions().stream()
+                .collect(Collectors.groupingBy(t -> t.getCode()));
         analyzeTaskTypeDefinitionDuplicates();
-        taskTypeDefinitions.forEach(
-                p -> map.put(p.getKey(), Arrays.asList(defs.get(p.getValue())))
+
+        // init the lists containing mapped task card definitions
+        taskTypeDefinitions.stream().map(p -> p.getKey()).distinct().forEach(s -> map.put(s , new ArrayList<>()));
+        // add the task card definitions
+        taskTypeDefinitions.forEach(p -> map.get(p.getKey()).addAll(defs.get(p.getValue())));
+
+        // normalize the list of mapped definitions, e.i. remove duplicates and sort them correctly using ad-hock approach
+        // with the method TaskType.findMatchingTCDef
+        map.entrySet().forEach(e ->
+                e.setValue(
+                        // NOTE - the method searches for duplicates in the second argument which is redundant as the
+                        // mapping is already calculated. Calling to correctly sort the list of definitions.
+                        TaskType.findMatchingTCDef(e.getKey(),
+                            e.getValue().stream().distinct().collect(Collectors.toList())
+                        )
+                )
         );
         TaskType.setTaskTCCode2TCDefinitionMap(map);
     }
