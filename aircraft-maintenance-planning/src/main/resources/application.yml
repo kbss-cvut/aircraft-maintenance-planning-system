@@ -12,6 +12,9 @@ keycloak:
   resource: ${SECURITY_KEYCLOAK_CLIENT_ID:planning}
   public-client: true
 
+keycloak-other.rewrite-redirect-uri-parameter: ${KEYCLOAK_REWRITE_REDIRECT_URI_PARAMETER:false}
+
+
 planning:
   repository:
     url: ${REPOSITORY_DATA_URL:}
