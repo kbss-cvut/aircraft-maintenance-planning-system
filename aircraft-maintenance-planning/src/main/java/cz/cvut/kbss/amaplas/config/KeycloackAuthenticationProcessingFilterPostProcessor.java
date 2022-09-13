@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 public class KeycloackAuthenticationProcessingFilterPostProcessor implements BeanPostProcessor {
     private static final Logger LOG = LoggerFactory.getLogger(KeycloackAuthenticationProcessingFilterPostProcessor.class);
 
-//    @Value("#{Boolean.valueOf('${keycloak.should-rewrite-redirect-uri}')}")
     @Value("${keycloak-other.rewrite-redirect-uri-parameter:false}")
     private boolean shouldRewriteRedirectUri;
 
@@ -48,8 +47,8 @@ public class KeycloackAuthenticationProcessingFilterPostProcessor implements Bea
                         return new OAuthRequestAuthenticator(this, facade, deployment, sslRedirectPort, tokenStore) {
 
                             @Override
-                            protected String getRedirectUri(String state) {
-                                return rewriteRedirectURI(super.getRedirectUri(state));
+                            protected String getRequestUrl() {
+                                return super.getRequestUrl().replaceFirst("^http([^s])", "https$1");
                             }
                         };
                     }
@@ -69,24 +68,5 @@ public class KeycloackAuthenticationProcessingFilterPostProcessor implements Bea
     private String rewriteRedirectURI(String redirect){
         // replace the header
         return redirect.replaceFirst(redirectUriRegexp, redirectUriReplacement);
-    }
-
-
-    /**
-     * Get the KeycloakAuthenticationProcessingFilter instance after initialization and changed as required.
-     * @param bean the new bean instance
-     * @param beanName the name of the bean
-     * @return
-     * @throws BeansException
-     */
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if(shouldRewriteRedirectUri) {
-            if (bean instanceof KeycloakAuthenticationProcessingFilter) {
-                LOG.info("Injecting Custom handler...");
-                process(((KeycloakAuthenticationProcessingFilter) bean));
-            }
-        }
-        return bean;
     }
 }
