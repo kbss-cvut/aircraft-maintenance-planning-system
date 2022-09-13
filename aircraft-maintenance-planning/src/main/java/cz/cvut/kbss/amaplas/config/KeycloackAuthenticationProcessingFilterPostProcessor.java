@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 public class KeycloackAuthenticationProcessingFilterPostProcessor implements BeanPostProcessor {
     private static final Logger LOG = LoggerFactory.getLogger(KeycloackAuthenticationProcessingFilterPostProcessor.class);
 
-//    @Value("#{Boolean.valueOf('${keycloak.should-rewrite-redirect-uri}')}")
     @Value("${keycloak-other.rewrite-redirect-uri-parameter:false}")
     private boolean shouldRewriteRedirectUri;
 
@@ -48,8 +47,8 @@ public class KeycloackAuthenticationProcessingFilterPostProcessor implements Bea
                         return new OAuthRequestAuthenticator(this, facade, deployment, sslRedirectPort, tokenStore) {
 
                             @Override
-                            protected String getRedirectUri(String state) {
-                                return rewriteRedirectURI(super.getRedirectUri(state));
+                            protected String getRequestUrl() {
+                                return super.getRequestUrl().replaceFirst("^http([^s])", "https$1");
                             }
                         };
                     }
@@ -57,20 +56,6 @@ public class KeycloackAuthenticationProcessingFilterPostProcessor implements Bea
             }
         });
     }
-
-    private String redirectUriRegexp = String.format("([&?]%s=)http([^s][^&]+&)", OAuth2Constants.REDIRECT_URI);
-    private String redirectUriReplacement = "$1https$2";
-
-    /**
-     * Change the protocol scheme from http to https for the uri value of the redirect_uri request parameter in the input.
-     * @param redirect
-     * @return
-     */
-    private String rewriteRedirectURI(String redirect){
-        // replace the header
-        return redirect.replaceFirst(redirectUriRegexp, redirectUriReplacement);
-    }
-
 
     /**
      * Get the KeycloakAuthenticationProcessingFilter instance after initialization and changed as required.
@@ -89,4 +74,11 @@ public class KeycloackAuthenticationProcessingFilterPostProcessor implements Bea
         }
         return bean;
     }
+//
+//    public static void main(String[] args) {
+//        String uri = "http://localhost:8080/api/revisions/";
+//
+//        System.out.println(uri);
+//        System.out.println(uri.replaceFirst("^http([^s])", "https$1"));
+//    }
 }
