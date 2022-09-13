@@ -57,16 +57,28 @@ public class KeycloackAuthenticationProcessingFilterPostProcessor implements Bea
         });
     }
 
-    private String redirectUriRegexp = String.format("([&?]%s=)http([^s][^&]+&)", OAuth2Constants.REDIRECT_URI);
-    private String redirectUriReplacement = "$1https$2";
-
     /**
-     * Change the protocol scheme from http to https for the uri value of the redirect_uri request parameter in the input.
-     * @param redirect
+     * Get the KeycloakAuthenticationProcessingFilter instance after initialization and changed as required.
+     * @param bean the new bean instance
+     * @param beanName the name of the bean
      * @return
+     * @throws BeansException
      */
-    private String rewriteRedirectURI(String redirect){
-        // replace the header
-        return redirect.replaceFirst(redirectUriRegexp, redirectUriReplacement);
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        if(shouldRewriteRedirectUri) {
+            if (bean instanceof KeycloakAuthenticationProcessingFilter) {
+                LOG.info("Injecting Custom handler...");
+                process(((KeycloakAuthenticationProcessingFilter) bean));
+            }
+        }
+        return bean;
     }
+//
+//    public static void main(String[] args) {
+//        String uri = "http://localhost:8080/api/revisions/";
+//
+//        System.out.println(uri);
+//        System.out.println(uri.replaceFirst("^http([^s])", "https$1"));
+//    }
 }
