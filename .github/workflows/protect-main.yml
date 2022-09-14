@@ -24,4 +24,4 @@ jobs:
 
     # Runs a set of commands using the runners shell
     - name: Test
-      run: mvn test
+      run: cd aircraft-maintenance-planning && mvn test
