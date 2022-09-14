@@ -21,6 +21,7 @@ public class SparqlDataReader {
 
     private static final Logger LOG = LoggerFactory.getLogger(SparqlDataReader.class);
 
+    public static final String TASK_CARD_MAPPINGS = "/queries/analysis/task-card-mappings.sparql";
     public static final String DA_TASK_SO_WITH_WP_SCOPE = "/queries/analysis/task-start-order-with-wp-and-scope.sparql";
     public static final String DA_TASK_SO_WITH_WP_SCOPE_OLD = "/queries/analysis/task-start-order-with-wp-and-scope-old.sparql";
     public static final String WP = "/queries/analysis/wp.sparql";

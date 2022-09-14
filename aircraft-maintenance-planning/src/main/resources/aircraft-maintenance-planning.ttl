@@ -77,6 +77,9 @@
 :work-time rdf:type owl:DatatypeProperty ;
            rdfs:comment "The actual work time spent on a plan (measured in person/hours)"@en .
 
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has-specific-task-with-id
+:has-specific-task-with-id rdf:type owl:DatatypeProperty ;
+           rdfs:comment "Use to specify the id of the a task type specializing a task type definition."@en .
 
 #################################################################
 #    Classes

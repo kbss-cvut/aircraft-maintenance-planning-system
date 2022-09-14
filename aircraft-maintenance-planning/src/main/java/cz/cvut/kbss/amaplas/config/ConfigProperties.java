@@ -77,6 +77,7 @@ public class ConfigProperties {
         String username;
         String password;
         String taskDefinitionsGraph;
+        String taskMappingGraph;
 
         public String getUrl() {
             return url;
@@ -108,6 +109,14 @@ public class ConfigProperties {
 
         public void setTaskDefinitionsGraph(String taskDefinitionsGraph) {
             this.taskDefinitionsGraph = taskDefinitionsGraph;
+        }
+
+        public String getTaskMappingGraph() {
+            return taskMappingGraph;
+        }
+
+        public void setTaskMappingGraph(String taskMappingGraph) {
+            this.taskMappingGraph = taskMappingGraph;
         }
     }
 }
