@@ -34,7 +34,6 @@ public class TaskTypeService {
 
     @PostConstruct
     public void init(){
-        Map<String, List<Result>> revisions = revisionHistory.getAllClosedRevisionsWorkLog(false);
         List<TaskType> taskTypeDefinitions = SparqlDataReaderRDF4J.__loadTCDefinitions(
                 repoConfig.getUrl(), repoConfig.getTaskDefinitionsGraph(),
                 repoConfig.getUsername(), repoConfig.getPassword());

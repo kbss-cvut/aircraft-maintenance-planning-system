@@ -23,6 +23,8 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class SparqlDataReaderRDF4J {
@@ -250,22 +252,33 @@ public class SparqlDataReaderRDF4J {
                 .collect(Collectors.toList());
     }
 
+    protected static HashMap<String, String > taskCategories = new HashMap<>(){
+        {
+            put("TC", "task-card");
+            put("M", "maintenance-work-order");
+            put("S", "scheduled-work-order");
+        }
+    };
+    protected static Pattern taskTypeIRIPattern = Pattern.compile("task-type--([^-]+)--(.+)");
     public static Result convertToTimeLog(BindingSet bs) throws ParseException {
         // TODO - do not create task type with null type string.
         String def = "unknown";
         String wp = bs.getValue("wp").stringValue();
         String tt = optValue(bs, "tt", null);
+        String tType = optValue(bs, "tType", null);
         String defaultTaskType = def;
-        if(tt != null){
-            tt.lastIndexOf("--");
-            String[] parts = tt.split("--");
-            if(parts.length > 2 )
-                defaultTaskType = parts[parts.length - 1];
+        String defaultTaskCategory = def;
+        if(tType != null){
+            Matcher m = taskTypeIRIPattern.matcher(tType);
+            if(m.find()) {
+                defaultTaskCategory = taskCategories.getOrDefault(m.group(1), def);
+                defaultTaskType = m.group(2);
+            }
         }
         TaskType taskType = new TaskType(
                 optValue(bs,"type", defaultTaskType),
                 optValue(bs, "typeLabel", defaultTaskType),
-                optValue(bs, "taskcat", def),
+                optValue(bs, "taskcat", defaultTaskCategory),
                 optValue(bs,"acmodel", def)
         );
 
