@@ -241,6 +241,18 @@ public class TaskType extends EventType<String> {
         TaskType.taskTypeDefinitions = taskTypeDefinitions;
     }
 
+    public static List<TaskType> getTaskTypeDefinitions() {
+        return taskTypeDefinitions;
+    }
+
+    public static Map<String, List<TaskType>> getTaskTCCode2TCDefinitionMap() {
+        return taskTCCode2TCDefinitionMap;
+    }
+
+    public static void setTaskTCCode2TCDefinitionMap(Map<String, List<TaskType>> taskTCCode2TCDefinitionMap) {
+        TaskType.taskTCCode2TCDefinitionMap = taskTCCode2TCDefinitionMap;
+    }
+
     /**
      * taskTypeDefinitions should be set first
      * @param results
@@ -249,17 +261,17 @@ public class TaskType extends EventType<String> {
         taskTCCode2TCDefinitionMap = new HashMap<>();
         results.stream()
                 .map(r -> r.taskType)
-                .filter(t -> t != null && t.getCode() != null)
+                .filter(t -> t != null && t.getCode() != null && "task-card".equals(t.getTaskcat()))
                 .map(t -> t.getCode())
                 .distinct()
-                .forEach(code -> taskTCCode2TCDefinitionMap.put(code, findMatchingTCDef(code)));
+                .forEach(code -> taskTCCode2TCDefinitionMap.put(code, findMatchingTCDef(code, taskTypeDefinitions)));
     }
 
-    protected static List<TaskType> findMatchingTCDef(String code){
-        List<TaskType> matches = findMatchingTCDef(code, TaskType::getCode);
+    public static List<TaskType> findMatchingTCDef(String code, List<TaskType> taskTypeDefinitions){
+        List<TaskType> matches = findMatchingTCDef(code, TaskType::getCode, taskTypeDefinitions);
 
         if(matches.isEmpty()) {
-            matches = findMatchingTCDef(code, TaskType::getMpdtask);
+            matches = findMatchingTCDef(code, TaskType::getMpdtask, taskTypeDefinitions);
             matches.sort(Comparator.comparing(t -> t.getMpdtask().length()));
         }else{
             matches.sort(Comparator.comparing(t -> t.getCode().length()));
@@ -268,7 +280,7 @@ public class TaskType extends EventType<String> {
         return matches;
     }
 
-    protected static List<TaskType> findMatchingTCDef(String tcCode, Function<TaskType, String> idfunc){
+    protected static List<TaskType> findMatchingTCDef(String tcCode, Function<TaskType, String> idfunc, List<TaskType> taskTypeDefinitions){
         return taskTypeDefinitions.stream()
                 .filter(t -> is_TCCode_Match_v3(idfunc.apply(t), tcCode))
                 .collect(Collectors.toList());

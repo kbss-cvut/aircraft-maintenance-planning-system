@@ -7,7 +7,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
 
-SELECT ?taskCardCode ?MPDTASK ?title ?team ?phase ?taskType ?aircraftModel ?area {
+SELECT ?taskCard ?taskCardCode ?MPDTASK ?title ?team ?phase ?taskType ?aircraftModel ?area {
     GRAPH ?taskTypeDefinitionGraph{
         ?taskCard rdfs:subClassOf cm:task-card ;
                   cm:id ?taskCardCode;

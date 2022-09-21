@@ -22,6 +22,7 @@ planning:
     password: ${REPOSITORY_DATA_PASSWORD:}
 
     task_definitions_graph: ${TASK_DEFINITIONS_GRAPH:http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-card-definitions}
+    task_mapping_graph: ${TASK_MAPPING_GRAPH:http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-mapping-graph}
 
   persistence:
     driver: cz.cvut.kbss.ontodriver.sesame.SesameDataSource

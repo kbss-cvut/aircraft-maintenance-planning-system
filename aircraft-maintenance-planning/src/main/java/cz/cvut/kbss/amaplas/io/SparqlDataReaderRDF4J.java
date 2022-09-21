@@ -1,12 +1,14 @@
 package cz.cvut.kbss.amaplas.io;
 
+import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.amaplas.utils.ResourceUtils;
 import cz.cvut.kbss.amaplas.model.AircraftType;
 import cz.cvut.kbss.amaplas.model.Result;
 import cz.cvut.kbss.amaplas.model.TaskType;
 import cz.cvut.kbss.amaplas.utils.RepositoryUtils;
-import org.eclipse.rdf4j.model.Literal;
-import org.eclipse.rdf4j.model.Value;
+import org.apache.commons.lang3.tuple.Pair;
+import org.eclipse.rdf4j.model.*;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQuery;
 import org.eclipse.rdf4j.query.TupleQueryResult;
@@ -15,11 +17,14 @@ import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URI;
 import java.text.ParseException;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class SparqlDataReaderRDF4J {
@@ -52,6 +57,13 @@ public class SparqlDataReaderRDF4J {
         return ret;
     }
 
+    public static <T> List<T> executeNamedQuery(String queryName, Map<String, Value> bindings, String endpoint, String username, String password, SparqlDataReaderRDF4J.Converter converter) {
+        LOG.debug("executing query \"{}\" at endpoint <{}> with bindings {}", queryName, endpoint, bindings);
+        String query = ResourceUtils.loadResource(queryName);
+        List<T> results = executeQuery(query, bindings, endpoint, username, password, converter);
+        return results;
+    }
+
     public static <T> List<T> executeQuery(String query, Map<String, Value> bindings, String endpoint, String username, String password, SparqlDataReaderRDF4J.Converter converter) {
         Repository r = RepositoryUtils.createRepo(endpoint, username, password);
         List<T> result = executeQuery(query, bindings, r, converter);
@@ -72,6 +84,38 @@ public class SparqlDataReaderRDF4J {
         c.close();
         LOG.info("query executed in {} seconds", ((double)(System.currentTimeMillis() - time)/1000.0));
         return ret;
+    }
+
+    public static void persistStatements(Collection<Statement> statements, String graphURL, String endpoint, String username, String password){
+        LOG.info("persisting {} statements  to graph <{}> in endpoint <{}>", statements.size(), graphURL, endpoint);
+        long time = System.currentTimeMillis();
+
+        Repository r = RepositoryUtils.createRepo(endpoint, username, password);
+        RepositoryConnection c = r.getConnection();
+        c.begin();
+        if (graphURL != null) {
+            Resource graph = r.getValueFactory().createIRI(graphURL);
+            c.add(statements, graph);
+        } else {
+            c.add(statements);
+        }
+        c.commit();
+        c.close();
+        r.shutDown();
+        LOG.info("statements persisted in {} seconds", ((double)(System.currentTimeMillis() - time)/1000.0));
+    }
+
+    public static List<Statement> convertTaskCardAsStatement(Map<String, List<TaskType>> map){
+        ValueFactory f = SimpleValueFactory.getInstance();
+        IRI hasSpecificTaskWithId = f.createIRI(Vocabulary.s_p_has_specific_task_with_id);
+        return map.entrySet().stream().
+                filter(e -> !e.getValue().isEmpty()).
+                map(e -> f.createStatement(
+                        f.createIRI(e.getValue().get(0).getEntityURI().toString()),
+                        hasSpecificTaskWithId,
+                        f.createLiteral(e.getKey())
+                        )
+                ).collect(Collectors.toList());
     }
 
     public static <T> List<T> convert(TupleQueryResult rs, SparqlDataReaderRDF4J.Converter converter){
@@ -161,6 +205,8 @@ public class SparqlDataReaderRDF4J {
                 "task_card",
                 optValue(bs,"aircraftModel")
         );
+
+        mandatory(bs, "taskCard", s -> taskType.setEntityURI(URI.create(s)));
         optional(bs, "MPDTASK", taskType::setMpdtask);
         optional(bs, "team", taskType::setScope);
         optional(bs, "phase", taskType::setPhase);
@@ -194,7 +240,7 @@ public class SparqlDataReaderRDF4J {
 
 
     public List<Result> readSessionLogsWithNamedQuery(String queryName, Map<String, Value> bindings, String endpoint, String username, String password){
-        LOG.info("executing query \"{}\" at endpoint <{}> with bindings {}", queryName, endpoint, bindings);;
+        LOG.info("executing query \"{}\" at endpoint <{}> with bindings {}", queryName, endpoint, bindings);
         String query = ResourceUtils.loadResource(queryName);
         List<Result> results = executeQuery(query, bindings, endpoint, username, password, SparqlDataReaderRDF4J::convertToTimeLog);
 
@@ -206,22 +252,33 @@ public class SparqlDataReaderRDF4J {
                 .collect(Collectors.toList());
     }
 
+    protected static HashMap<String, String > taskCategories = new HashMap<>(){
+        {
+            put("TC", "task-card");
+            put("M", "maintenance-work-order");
+            put("S", "scheduled-work-order");
+        }
+    };
+    protected static Pattern taskTypeIRIPattern = Pattern.compile("task-type--([^-]+)--(.+)");
     public static Result convertToTimeLog(BindingSet bs) throws ParseException {
         // TODO - do not create task type with null type string.
         String def = "unknown";
         String wp = bs.getValue("wp").stringValue();
         String tt = optValue(bs, "tt", null);
+        String tType = optValue(bs, "tType", null);
         String defaultTaskType = def;
-        if(tt != null){
-            tt.lastIndexOf("--");
-            String[] parts = tt.split("--");
-            if(parts.length > 2 )
-                defaultTaskType = parts[parts.length - 1];
+        String defaultTaskCategory = def;
+        if(tType != null){
+            Matcher m = taskTypeIRIPattern.matcher(tType);
+            if(m.find()) {
+                defaultTaskCategory = taskCategories.getOrDefault(m.group(1), def);
+                defaultTaskType = m.group(2);
+            }
         }
         TaskType taskType = new TaskType(
                 optValue(bs,"type", defaultTaskType),
                 optValue(bs, "typeLabel", defaultTaskType),
-                optValue(bs, "taskcat", def),
+                optValue(bs, "taskcat", defaultTaskCategory),
                 optValue(bs,"acmodel", def)
         );
 
@@ -245,6 +302,10 @@ public class SparqlDataReaderRDF4J {
 
         t.dur = Optional.ofNullable(bs.getValue("dur")).map(v -> ((Literal)v).longValue()).orElse(null);
         return t;
+    }
+
+    public static Pair<String, String> convertToPair(BindingSet bs) {
+        return Pair.of(manValue(bs, "tcId"), manValue(bs, "tcdId"));
     }
 
     public interface Converter<T>{

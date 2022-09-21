@@ -1,0 +1,18 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+PREFIX amp: <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/>
+
+SELECT ?tcd ?tcdId ?tcId {
+    GRAPH ?taskTypeDefinitionGraph{
+        ?tcd rdfs:subClassOf cm:task-card;
+             cm:id ?tcdId.
+    }
+    GRAPH ?taskCardMappingGraph{
+        ?tcd amp:has-specific-task-with-id ?tcId.
+    }
+}
