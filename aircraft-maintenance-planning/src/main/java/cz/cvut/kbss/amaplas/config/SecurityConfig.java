@@ -87,8 +87,6 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                             location = sb
                                     .append("https://")
                                     .append(request.getServerName())
-                                    .append(":")
-                                    .append(request.getServerPort())
                                     .append(location).toString();
                         }
                         super.sendRedirect(location);
