@@ -1,6 +1,12 @@
 server:
   custom.proxy.basePath: ${SERVER_BASEPATH:}
   servlet.context-path: /api
+  ssl:
+    enabled: ${SERVER_SSL_ENABLED:false}
+    key-store-type: ${SERVER_SSL_KEY_STORE_TYPE:PKCS12}
+    key-store: ${SERVER_SSL_KEY_STORE:classpath:keystore/keystore.p12}
+    key-store-password: ${SERVER_SSL_KEY_STORE_PASSWORD:RDP1PiT3oBl5pD1}
+    key-alias: ${SERVER_SSL_KEY_ALIAS:dashboard}
 
 security:
   oauth2:
