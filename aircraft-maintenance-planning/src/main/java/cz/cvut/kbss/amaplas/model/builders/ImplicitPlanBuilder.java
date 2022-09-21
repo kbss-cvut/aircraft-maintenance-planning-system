@@ -65,11 +65,11 @@ public class ImplicitPlanBuilder {
     }
 
     public Mechanic getMechanic(Result r){
-        String mechanicTitle = getMechanicLabel(r);
+        Mechanic m = r.getMechanic();
         return getEntity(
-                mechanicTitle,
+                (String)m.getId(),
                 "mechanic",
-                () -> modelFactory.newMechanic(mechanicTitle)
+                () -> m
         );
     }
 
