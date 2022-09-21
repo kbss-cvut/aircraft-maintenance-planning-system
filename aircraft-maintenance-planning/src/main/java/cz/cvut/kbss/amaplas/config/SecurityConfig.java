@@ -1,5 +1,8 @@
 package cz.cvut.kbss.amaplas.config;
 
+import org.apache.http.Header;
+import org.apache.http.HttpHeaders;
+import org.apache.http.client.utils.URIBuilder;
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
@@ -25,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.IOException;
+import java.net.URI;
 import java.util.HashMap;
 
 @KeycloakConfiguration
