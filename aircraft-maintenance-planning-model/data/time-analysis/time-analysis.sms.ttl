@@ -306,7 +306,8 @@ CONSTRUCT {
         cm:is-part-of-workpackage ?workpackageIRI ;
     .
 
-    ?taskTypeIRI a owl:Class ;
+# TODO either add cm:task-type to csat-maintenance ontology or remove from here
+    ?taskTypeIRI a owl:Class,  owl:NamedIndividual, cm:task-type  ;
         cm:id ?WO_TC ;
         rdfs:subClassOf ?taskSuperClassIRI;
     .
