@@ -1,0 +1,209 @@
+# baseURI: http://onto.fel.cvut.cz/ontologies/csat/project-numbers-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/csat-maintenance
+# imports: http://onto.fel.cvut.cz/ontologies/csat/project-numbers-0.1/input-data-schema
+# imports: http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
+
+@prefix : <http://onto.fel.cvut.cz/ontologies/csat/project-numbers-0.1/> .
+@prefix ata: <http://onto.fel.cvut.cz/voc/ata-100/> .
+@prefix cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
+@prefix cmd: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/> .
+@prefix config: <http://onto.fel.cvut.cz/ontologies/csat/config/> .
+@prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix dl: <http://onto.fel.cvut.cz/ontologies/csat/data-lib/> .
+@prefix doc: <http://onto.fel.cvut.cz/ontologies/documentation/> .
+@prefix kbss-module: <http://onto.fel.cvut.cz/ontologies/lib/module/> .
+@prefix km-sesame: <http://onto.fel.cvut.cz/ontologies/lib/module/sesame/> .
+@prefix km-tabular: <http://onto.fel.cvut.cz/ontologies/lib/module/tabular/> .
+@prefix ms: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sm: <http://topbraid.org/sparqlmotion#> .
+@prefix sml: <http://topbraid.org/sparqlmotionlib#> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+@prefix spl: <http://spinrdf.org/spl#> .
+@prefix td: <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1/> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://onto.fel.cvut.cz/ontologies/csat/project-numbers-0.1>
+  a owl:Ontology ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
+  owl:imports :input-data-schema ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
+.
+:construct-csat-maintenance-data
+  a sml:ApplyConstruct ;
+  sm:next :transform ;
+  sm:nodeX 657 ;
+  sm:nodeY 248 ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - extract ontology
+CONSTRUCT {
+    <http://onto.fel.cvut.cz/ontologies/csat-maintenance/project-numbers-12345> a owl:Ontology ;
+        owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
+    .
+
+     ?mainProjectIRI a cm:main-project, owl:NamedIndividual ;
+           cm:id ?MainProject ;
+           cm:has-part ?subProjectIRI ;
+     .
+     ?subProjectIRI a cm:sub-project, owl:NamedIndividual ;
+           cm:id ?Project ;
+           dc:description ?Description ;
+           cm:has-task-group ?taskGroupIRI ;
+     .
+     ?taskGroupIRI a cm:task-group ;
+         cm:id ?JobGroup ;
+     .
+
+     ?billingContractIRI a ?billingContractTypeIRI, owl:NamedIndividual ;
+           cm:has-sub-project ?subProjectIRI ;
+           cm:has-charging-method ?chargingMethodIRI ;
+     .
+     ?billingContractTypeIRI a owl:Class ;
+           cm:id ?LimitType ;
+     .
+     ?chargingMethodIRI a ?chargingMethodTypeIRI, owl:NamedIndividual ;
+           cm:cap-limit ?capLimitTyped ;
+     .
+
+     ?chargingMethodTypeIRI a owl:Class ;
+           cm:id ?BillingGroup ;
+     .
+} WHERE {
+     ?rd :MainProject ?MainProject .
+     ?rd :Project ?Project .
+     ?rd :Description ?Description .
+     ?rd :BillingGroup ?BillingGroup .
+     OPTIONAL {
+       ?rd :CapLimit ?CapLimit .
+     }
+     OPTIONAL {
+       ?rd :LimitType ?LimitType .
+     }
+     ?rd :JobGroup ?JobGroup .
+
+
+     BIND(dl:normalize(?MainProject) as ?mainProjectNormalizedId)
+     BIND(dl:instance(cm:main-project, ?mainProjectNormalizedId) as ?mainProjectIRI)
+
+     BIND(dl:normalize(?Project) as ?subProjectNormalizedId)
+     BIND(dl:instance(cm:sub-project, ?subProjectNormalizedId) as ?subProjectIRI)
+
+     BIND(IF(?BillingGroup =  \"FIX\", cm:fixed-price-charging,  ?x) as ?fixedPriceCharging)
+     BIND(IF(?BillingGroup =  \"NON-FIX\", cm:extra-charging,  ?x) as ?extraCharging)
+     BIND(IF(?BillingGroup =  \"CAP\", cm:cap-limit-charging,   ?x) as ?capLimitCharging)
+     BIND(COALESCE(?fixedPriceCharging, ?extraCharging, ?capLimitCharging) as ?chargingMethodTypeIRI)
+
+     BIND(STRDT(str(?CapLimit), xsd:integer) as ?capLimitTyped)
+
+     BIND(IF(?LimitType =  \"Finding\", cm:finding-based-billing-contract,  ?x) as ?findingBasedBC)
+     BIND(IF(?LimitType =  \"Taskcard\", cm:planned-task-based-billing-contract,  ?x) as ?plannedTaskBasedBC)
+     BIND(COALESCE(?findingBasedBC, ?plannedTaskBasedBC) as ?billingContractTypeIRI)
+
+     BIND(dl:instance(cm:billing-contract, ?subProjectNormalizedId) as ?billingContractIRI)
+
+     BIND(dl:instance(cm:charging-method, ?subProjectNormalizedId) as ?chargingMethodIRI)
+
+     BIND(dl:instance(cm:task-group, lcase(?JobGroup)) as ?taskGroupIRI)
+}""" ;
+    ] ;
+  sml:replace true ;
+  rdfs:label "construct-csat-maintenance-data" ;
+.
+:deploy-project-numbers-data
+  a sm:Function ;
+  sm:returnModule td:deploy-data_Return ;
+  rdfs:subClassOf sm:Functions ;
+.
+:transform
+  a sml:ApplyConstruct ;
+  sm:next td:merge ;
+  sml:replace false ;
+.
+:transform-project-numbers-data
+  a sm:Function ;
+  sm:returnModule td:transform-data_Return ;
+  rdfs:subClassOf sm:Functions ;
+.
+td:bind-expected-table-schema
+  sm:next td:rdfize-input-data ;
+.
+td:deploy-data_Return
+  rdfs:label "deploy-project-numbers-data" ;
+.
+td:import-input-data-schema
+  sml:baseURI [
+      a sp:concat ;
+      sp:arg1 [
+          a sp:str ;
+          sp:arg1 : ;
+        ] ;
+      sp:arg2 "input-data-schema" ;
+    ] ;
+.
+td:import-scheme
+  sm:next td:rdfize-input-data ;
+.
+td:rdfize-input-data
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.01 - column MainProject has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :MainProject ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.02 - column Project has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :Project ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.03 - column Description has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :Description ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.04 - column BillingGroup has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :BillingGroup ?notExistValue .
+    }
+}""" ;
+    ] ;
+  km-tabular:data-prefix [
+      a sp:str ;
+      sp:arg1 : ;
+    ] ;
+  km-tabular:delimiter "	" ;
+  sm:next :construct-csat-maintenance-data ;
+.
+td:transform-data_Return
+  rdfs:label "transform-project-numbers-data" ;
+.

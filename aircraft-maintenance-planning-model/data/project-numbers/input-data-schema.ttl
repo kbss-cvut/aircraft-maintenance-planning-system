@@ -1,0 +1,53 @@
+@prefix : <http://onto.fel.cvut.cz/ontologies/csat/project-numbers-0.1/> .
+@prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix kbss-csvw: <https://onto.fel.cvut.cz/ontologies/extension/csvw/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+:input-data-schema a owl:Ontology .
+
+
+
+:input-table-schema a csvw:TableSchema ;
+                    csvw:column
+                        [ a csvw:Column; 
+                            csvw:name "MainProject" ;
+                            kbss-csvw:property  :MainProject ;
+                            csvw:title "MainProject" ],
+                        [ a csvw:Column;
+                            csvw:name "Project" ;
+                            kbss-csvw:property  :Project ;
+                            csvw:title "Project" ],
+                        [ a csvw:Column;
+                            csvw:name "Description" ;
+                            kbss-csvw:property  :Description ;
+                            csvw:title "Description" ],
+                        [ a csvw:Column; 
+                            csvw:name "BillingGroup" ;
+                            kbss-csvw:property  :BillingGroup ;
+                            csvw:title "BillingGroup" ],
+                        [ a csvw:Column; 
+                            csvw:name "CapLimit" ;
+                            kbss-csvw:property  :CapLimit ;
+                            csvw:title "CapLimit" ],
+                        [ a csvw:Column; 
+                            csvw:name "LimitType" ;
+                            kbss-csvw:property  :LimitType ;
+                            csvw:title "LimitType" ],
+                        [ a csvw:Column; 
+                            csvw:name "JobGroup" ;
+                            kbss-csvw:property  :JobGroup ;
+                            csvw:title "JobGroup" ]
+.
+
+kbss-csvw:property  a rdf:Property .
+kbss-csvw:property  rdfs:range rdf:Property .
+
+:MainProject a rdf:Property .
+:Project a rdf:Property .
+:Description a rdf:Property .
+:BillingGroup a rdf:Property .
+:CapLimit a rdf:Property .
+:LimitType a rdf:Property .
+:JobGroup a rdf:Property .
