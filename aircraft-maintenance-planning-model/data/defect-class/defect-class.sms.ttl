@@ -1,0 +1,208 @@
+# baseURI: http://onto.fel.cvut.cz/ontologies/csat/defect-class-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/csat-maintenance
+# imports: http://onto.fel.cvut.cz/ontologies/csat/defect-class-0.1/input-data-schema
+# imports: http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
+
+@prefix : <http://onto.fel.cvut.cz/ontologies/csat/defect-class-0.1/> .
+@prefix ata: <http://onto.fel.cvut.cz/voc/ata-100/> .
+@prefix cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
+@prefix cmd: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/> .
+@prefix config: <http://onto.fel.cvut.cz/ontologies/csat/config/> .
+@prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix dl: <http://onto.fel.cvut.cz/ontologies/csat/data-lib/> .
+@prefix doc: <http://onto.fel.cvut.cz/ontologies/documentation/> .
+@prefix kbss-module: <http://onto.fel.cvut.cz/ontologies/lib/module/> .
+@prefix km-sesame: <http://onto.fel.cvut.cz/ontologies/lib/module/sesame/> .
+@prefix km-tabular: <http://onto.fel.cvut.cz/ontologies/lib/module/tabular/> .
+@prefix ms: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sm: <http://topbraid.org/sparqlmotion#> .
+@prefix sml: <http://topbraid.org/sparqlmotionlib#> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+@prefix spl: <http://spinrdf.org/spl#> .
+@prefix td: <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1/> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://onto.fel.cvut.cz/ontologies/csat/defect-class-0.1>
+  a owl:Ontology ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
+  owl:imports :input-data-schema ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
+.
+:construct-csat-maintenance-data
+  a sml:ApplyConstruct ;
+  sm:next :transform ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - extract ontology
+CONSTRUCT {
+    <http://onto.fel.cvut.cz/ontologies/csat-maintenance/defect-class-12345> a owl:Ontology ;
+        owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
+    .
+
+     ?mainProjectIRI a cm:main-project, owl:NamedIndividual ;
+           cm:id ?MainProject ;
+     .
+     ?billingContractIRI a cm:defect-class-based-billing-contract, owl:NamedIndividual ;
+           cm:has-main-project ?mainProjectIRI ;
+           cm:has-charging-method ?chargingMethodIRI ;
+           cm:has-billing-contract-defect-class ?defectClasstIRI ;
+     .
+     ?chargingMethodIRI a ?chargingMethodTypeIRI, owl:NamedIndividual ;
+           cm:cap-limit ?capLimitTyped ;
+     .
+     ?chargingMethodTypeIRI a owl:Class ;
+           cm:id ?BillingGroup ;
+     .
+     ?defectClasstIRI a cm:defect-class, owl:NamedIndividual ;
+           cm:id ?DefectClass ;
+           dc:description ?DefectClassification ;
+     .
+} WHERE {
+     ?rd :MainProject ?MainProject .
+     ?rd :DefectClassification ?DefectClassification .
+     ?rd :DefectClass ?DefectClass .
+     ?rd :BillingGroup ?BillingGroup .
+     OPTIONAL {
+       ?rd :CapLimit ?CapLimit .
+     }
+
+     BIND(dl:normalize(?MainProject) as ?mainProjectNormalizedId)
+     BIND(dl:instance(cm:main-project, ?mainProjectNormalizedId) as ?mainProjectIRI)
+
+     BIND(lcase(?DefectClass) as ?defectClassId)
+     BIND(dl:instance(cm:defect-class, ?defectClassId) as ?defectClasstIRI)
+
+     BIND(IF(?BillingGroup =  \"FIX\", cm:fixed-price-charging,  ?x) as ?fixedPriceCharging)
+     BIND(IF(?BillingGroup =  \"NON-FIX\", cm:extra-charging,  ?x) as ?extraCharging)
+     BIND(IF(?BillingGroup =  \"CAP\", cm:cap-limit-charging,   ?x) as ?capLimitCharging)
+     BIND(COALESCE(?fixedPriceCharging, ?extraCharging, ?capLimitCharging) as ?chargingMethodTypeIRI)
+
+     BIND(dl:id-2(?mainProjectNormalizedId, ?defectClassId) as ?mainProjectDefectClassId)
+     BIND(dl:instance(cm:charging-method, ?mainProjectDefectClassId) as ?chargingMethodIRI)
+
+     BIND(dl:instance(cm:billing-contract, ?mainProjectDefectClassId) as ?billingContractIRI)
+
+     BIND(STRDT(str(?CapLimit), xsd:integer) as ?capLimitTyped)
+}""" ;
+    ] ;
+  sml:replace true ;
+  rdfs:label "construct-csat-maintenance-data" ;
+.
+:deploy-defect-class-data
+  a sm:Function ;
+  sm:returnModule td:deploy-data_Return ;
+  rdfs:subClassOf sm:Functions ;
+.
+:transform
+  a sml:ApplyConstruct ;
+  sm:next td:merge ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - convert endDate
+CONSTRUCT {
+     ?s  cm:end-time ?endDate .
+} WHERE {
+     ?s  cm:end-timeX ?endDateNotParsed .
+#      BIND(spif:parseDate(?endDateNotParsed ,\"dd.MM.yyyy\") as ?endDate)
+}""" ;
+    ] ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - convert issueDate
+CONSTRUCT {
+     ?s  cm:issue-time ?issueDate .
+} WHERE {
+     ?s  cm:issue-timeX ?issueDateNotParsed .
+#      BIND(spif:parseDate(?issueDateNotParsed ,\"dd.MM.yyyy\") as ?issueDate)
+}""" ;
+    ] ;
+  sml:replace false ;
+.
+:transform-defect-class-data
+  a sm:Function ;
+  sm:returnModule td:transform-data_Return ;
+  rdfs:subClassOf sm:Functions ;
+.
+td:bind-expected-table-schema
+  sm:next td:rdfize-input-data ;
+.
+td:deploy-data_Return
+  rdfs:label "deploy-defect-class-data" ;
+.
+td:import-input-data-schema
+  sml:baseURI [
+      a sp:concat ;
+      sp:arg1 [
+          a sp:str ;
+          sp:arg1 : ;
+        ] ;
+      sp:arg2 "input-data-schema" ;
+    ] ;
+.
+td:import-scheme
+  sm:next td:rdfize-input-data ;
+.
+td:rdfize-input-data
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.01 - column MainProject has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :MainProject ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.02 - column DefectClassification has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :DefectClassification ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.03 - column DefectClass has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :DefectClass ?notExistValue .
+    }
+}""" ;
+    ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.04 - column BillingGroup has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :BillingGroup ?notExistValue .
+    }
+}""" ;
+    ] ;
+  km-tabular:data-prefix [
+      a sp:str ;
+      sp:arg1 : ;
+    ] ;
+  km-tabular:delimiter "	" ;
+  sm:next :construct-csat-maintenance-data ;
+.
+td:transform-data_Return
+  rdfs:label "transform-defect-class-data" ;
+.
