@@ -29,11 +29,24 @@
 @prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+td:bind-expected-table-schema
+  sm:next td:rdfize-input-data ;
+.
 td:construct-maintenance-group-abbreviations
   sm:next td:rdfize-input-data ;
 .
 td:deploy-data_Return
   rdfs:label "deploy-time-estimate-data" ;
+.
+td:import-input-data-schema
+  sml:baseURI [
+      a sp:concat ;
+      sp:arg1 [
+          a sp:str ;
+          sp:arg1 : ;
+        ] ;
+      sp:arg2 "input-data-schema" ;
+    ] ;
 .
 td:import-scheme
   sm:next td:rdfize-input-data ;
