@@ -1,0 +1,169 @@
+@prefix : <http://onto.fel.cvut.cz/ontologies/csat/wp-catalog-0.1/> .
+@prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix kbss-csvw: <https://onto.fel.cvut.cz/ontologies/extension/csvw/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+:input-data-schema a owl:Ontology .
+
+
+
+:input-table-schema a csvw:TableSchema ;
+                    csvw:column
+                        [ a csvw:Column ;
+                            csvw:name "AC_owner" ;
+                            kbss-csvw:property :AC_owner ;
+                            csvw:title "AC owner" ],
+                        [ a csvw:Column ;
+                            csvw:name "AC_registration" ;
+                            kbss-csvw:property :AC_registration ;
+                            csvw:title "AC registration" ],
+                        [ a csvw:Column ;
+                            csvw:name "Workpackage" ;
+                            kbss-csvw:property :Workpackage ;
+                            csvw:title "Workpackage" ],
+                        [ a csvw:Column ;
+                            csvw:name "Start_date___scheduled" ;
+                            kbss-csvw:property :Start_date___scheduled ;
+                            csvw:title "Start date - scheduled" ],
+                        [ a csvw:Column ;
+                            csvw:name "End_date___scheduled" ;
+                            kbss-csvw:property :End_date___scheduled ;
+                            csvw:title "End date - scheduled" ],
+                        [ a csvw:Column ;
+                            csvw:name "TAT_scheduled__days_" ;
+                            kbss-csvw:property :TAT_scheduled__days_ ;
+                            csvw:title "TAT scheduled [days]" ],
+                        [ a csvw:Column ;
+                            csvw:name "Start_date___real" ;
+                            kbss-csvw:property :Start_date___real ;
+                            csvw:title "Start date - real" ],
+                        [ a csvw:Column ;
+                            csvw:name "End_date___real" ;
+                            kbss-csvw:property :End_date___real ;
+                            csvw:title "End date - real" ],
+                        [ a csvw:Column ;
+                            csvw:name "TAT_real__days_" ;
+                            kbss-csvw:property :TAT_real__days_ ;
+                            csvw:title "TAT real [days]" ],
+                        [ a csvw:Column ;
+                            csvw:name "TAT_difference__days_" ;
+                            kbss-csvw:property :TAT_difference__days_ ;
+                            csvw:title "TAT difference [days]" ],
+                        [ a csvw:Column ;
+                            csvw:name "Delay__hours_" ;
+                            kbss-csvw:property :Delay__hours_ ;
+                            csvw:title "Delay [hours]" ],
+                        [ a csvw:Column ;
+                            csvw:name "Delay_reasons" ;
+                            kbss-csvw:property :Delay_reasons ;
+                            csvw:title "Delay reasons" ],
+                        [ a csvw:Column ;
+                            csvw:name "Line" ;
+                            kbss-csvw:property :Line ;
+                            csvw:title "Line" ],
+                        [ a csvw:Column ;
+                            csvw:name "Delay_reason" ;
+                            kbss-csvw:property :Delay_reason ;
+                            csvw:title "Delay reason" ],
+                        [ a csvw:Column ;
+                            csvw:name "WP_status" ;
+                            kbss-csvw:property :WP_status ;
+                            csvw:title "WP status" ],
+                        [ a csvw:Column ;
+                            csvw:name "MHrs_in_FIX" ;
+                            kbss-csvw:property :MHrs_in_FIX ;
+                            csvw:title "MHrs in FIX" ],
+                        [ a csvw:Column ;
+                            csvw:name "MHrs_above_FIX" ;
+                            kbss-csvw:property :MHrs_above_FIX ;
+                            csvw:title "MHrs above FIX" ],
+                        [ a csvw:Column ;
+                            csvw:name "Routine__customized_included__work" ;
+                            kbss-csvw:property :Routine__customized_included__work ;
+                            csvw:title "Routine (customized included) work" ],
+                        [ a csvw:Column ;
+                            csvw:name "Findings_Up_To_Limit" ;
+                            kbss-csvw:property :Findings_Up_To_Limit ;
+                            csvw:title "Findings Up To Limit" ],
+                        [ a csvw:Column ;
+                            csvw:name "Additional_Work__Mods__Sbs__Ads_Etc_" ;
+                            kbss-csvw:property :Additional_Work__Mods__Sbs__Ads_Etc_ ;
+                            csvw:title "Additional Work, Mods, Sbs, Ads Etc." ],
+                        [ a csvw:Column ;
+                            csvw:name "Findings_Over_Limit___Estimation" ;
+                            kbss-csvw:property :Findings_Over_Limit___Estimation ;
+                            csvw:title "Findings Over Limit - Estimation" ],
+                        [ a csvw:Column ;
+                            csvw:name "Customer_Requests" ;
+                            kbss-csvw:property :Customer_Requests ;
+                            csvw:title "Customer Requests" ],
+                        [ a csvw:Column ;
+                            csvw:name "Findings_MECH_EXT" ;
+                            kbss-csvw:property :Findings_MECH_EXT ;
+                            csvw:title "Findings MECH-EXT" ],
+                        [ a csvw:Column ;
+                            csvw:name "Findings_MECH_INT" ;
+                            kbss-csvw:property :Findings_MECH_INT ;
+                            csvw:title "Findings MECH-INT" ],
+                        [ a csvw:Column ;
+                            csvw:name "Findings_MECH_ENG" ;
+                            kbss-csvw:property :Findings_MECH_ENG ;
+                            csvw:title "Findings MECH-ENG" ],
+                        [ a csvw:Column ;
+                            csvw:name "Findings_MECH_LDG" ;
+                            kbss-csvw:property :Findings_MECH_LDG ;
+                            csvw:title "Findings MECH-LDG" ],
+                        [ a csvw:Column ;
+                            csvw:name "Findings_AVIO" ;
+                            kbss-csvw:property :Findings_AVIO ;
+                            csvw:title "Findings AVIO" ],
+                        [ a csvw:Column ;
+                            csvw:name "Findings_SHM" ;
+                            kbss-csvw:property :Findings_SHM ;
+                            csvw:title "Findings SHM" ],
+                        [ a csvw:Column ;
+                            csvw:name "Findings_Workshops" ;
+                            kbss-csvw:property :Findings_Workshops ;
+                            csvw:title "Findings Workshops" ],
+                        [ a csvw:Column ;
+                            csvw:name "MainProject" ;
+                            kbss-csvw:property :MainProject ;
+                            csvw:title "MainProject" ]
+.
+
+
+kbss-csvw:property  a rdf:Property .
+kbss-csvw:property  rdfs:range rdf:Property .
+
+:AC_owner a rdf:Property .
+:AC_registration a rdf:Property .
+:Workpackage a rdf:Property .
+:Start_date___scheduled a rdf:Property .
+:End_date___scheduled a rdf:Property .
+:TAT_scheduled__days_ a rdf:Property .
+:Start_date___real a rdf:Property .
+:End_date___real a rdf:Property .
+:TAT_real__days_ a rdf:Property .
+:TAT_difference__days_ a rdf:Property .
+:Delay__hours_ a rdf:Property .
+:Delay_reasons a rdf:Property .
+:Line a rdf:Property .
+:Delay_reason a rdf:Property .
+:WP_status a rdf:Property .
+:MHrs_in_FIX a rdf:Property .
+:MHrs_above_FIX a rdf:Property .
+:Routine__customized_included__work a rdf:Property .
+:Findings_Up_To_Limit a rdf:Property .
+:Additional_Work__Mods__Sbs__Ads_Etc_ a rdf:Property .
+:Findings_Over_Limit___Estimation a rdf:Property .
+:Customer_Requests a rdf:Property .
+:Findings_MECH_EXT a rdf:Property .
+:Findings_MECH_INT a rdf:Property .
+:Findings_MECH_ENG a rdf:Property .
+:Findings_MECH_LDG a rdf:Property .
+:Findings_AVIO a rdf:Property .
+:Findings_SHM a rdf:Property .
+:Findings_Workshops a rdf:Property .
+:MainProject a rdf:Property .

@@ -1,6 +1,7 @@
 # baseURI: http://onto.fel.cvut.cz/ontologies/csat/wp-catalog-0.1
 # imports: http://onto.fel.cvut.cz/ontologies/csat-maintenance
 # imports: http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/csat/wp-catalog-0.1/input-data-schema
 # imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
 
 @prefix : <http://onto.fel.cvut.cz/ontologies/csat/wp-catalog-0.1/> .
@@ -28,8 +29,21 @@
 @prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+td:bind-expected-table-schema
+  sm:next td:rdfize-input-data ;
+.
 td:deploy-data_Return
   rdfs:label "deploy-wp-catalog-data" ;
+.
+td:import-input-data-schema
+  sml:baseURI [
+      a sp:concat ;
+      sp:arg1 [
+          a sp:str ;
+          sp:arg1 : ;
+        ] ;
+      sp:arg2 "input-data-schema" ;
+    ] ;
 .
 td:rdfize-input-data
   kbss-module:has-output-graph-constraint [
@@ -120,6 +134,17 @@ WHERE {
     }
 }""" ;
     ] ;
+  kbss-module:has-output-graph-constraint [
+      a sp:Ask ;
+      sp:text """# 1.09 column MainProject has empty value
+ASK
+WHERE {
+    ?t csvw:row/csvw:describes ?rd .
+    FILTER NOT EXISTS {
+          ?rd :MainProject ?notExistValue .
+    }
+}""" ;
+    ] ;
   km-tabular:data-prefix [
       a sp:str ;
       sp:arg1 : ;
@@ -134,6 +159,7 @@ td:transform-data_Return
   a owl:Ontology ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
+  owl:imports :input-data-schema ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
 .
 :construct-csat-maintenance-data
@@ -154,6 +180,7 @@ CONSTRUCT {
         cm:workpackage-start-time ?wpStartDateReal ;
         cm:workpackage-end-time ?wpEndDateReal ;
         cm:has-responsible-maintenance-line ?workpackageMaintenanceLineIRI ;
+        cm:has-workpackage-main-project ?mainProjectIRI ;
     .
 
     ?workpackageMaintenanceLineIRI a cm:maintenance-line ;
@@ -163,6 +190,9 @@ CONSTRUCT {
     ?aircraftIRI a cm:aircraft, owl:NamedIndividual;
         cm:registration ?acRegistration ;
     .
+
+    ?mainProjectIRI a cm:main-project, owl:NamedIndividual ;
+           cm:id ?MainProject ;
 } WHERE {
     ?rd :AC_owner ?AC_owner .
     ?rd :AC_registration ?acRegistration .
@@ -235,6 +265,7 @@ CONSTRUCT {
     OPTIONAL {
         ?rd :Findings_Workshops ?Findings_Workshops .
     }
+    ?rd :MainProject ?MainProject .
 
      BIND(dl:instance(cm:workpackage, ?workpackageId) as ?workpackageIRI)
      BIND(dl:instance(cm:aircraft, ?workpackageId) as ?aircraftIRI)
@@ -244,6 +275,9 @@ CONSTRUCT {
      BIND(spif:parseDate(?End_date___scheduled, \"dd.MM.yyyy\") as ?wpEndDateScheduled)
      BIND(spif:parseDate(?Start_date___real, \"dd.MM.yyyy\") as ?wpStartDateReal)
      BIND(spif:parseDate(?End_date___real, \"dd.MM.yyyy\") as ?wpEndDateReal)
+
+     BIND(dl:normalize(?MainProject) as ?mainProjectNormalizedId)
+     BIND(dl:instance(cm:main-project, ?mainProjectNormalizedId) as ?mainProjectIRI)
 }""" ;
     ] ;
   sml:replace true ;
