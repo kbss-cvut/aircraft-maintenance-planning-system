@@ -1,6 +1,7 @@
 # baseURI: http://onto.fel.cvut.cz/ontologies/csat/time-estimate-0.1
 # imports: http://onto.fel.cvut.cz/ontologies/csat-maintenance
 # imports: http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/csat/time-estimate-0.1/input-data-schema
 # imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
 
 @prefix : <http://onto.fel.cvut.cz/ontologies/csat/time-estimate-0.1/> .
@@ -131,6 +132,7 @@ td:transform-data_Return
   a owl:Ontology ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
+  owl:imports :input-data-schema ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
 .
 :construct-csat-maintenance-data
@@ -152,6 +154,7 @@ CONSTRUCT {
     ?taskExecutionIRI   a cm:complex-execution, owl:NamedIndividual ;
         cm:is-part-of-workpackage ?workpackageIRI ;
         cm:has-work-order-step ?taskStepExecutionIRI ;     # TODO --- toto je urcite spravne ????
+        cm:has-complex-execution-defect-class ?defectClasstIRI ;
     .
 
     ?taskStepExecutionIRI a ?taskStepExecutionTypeIRI, owl:NamedIndividual;
@@ -176,6 +179,10 @@ CONSTRUCT {
         cm:id ?operator;
     .
 
+     ?defectClasstIRI a cm:defect-class, owl:NamedIndividual ;
+           cm:id ?DefectClass ;
+     .
+
 } WHERE {
     ?r a csvw:Row .
     ?r csvw:describes ?rd .
@@ -190,6 +197,9 @@ CONSTRUCT {
     }
     OPTIONAL {
       ?rd :TC ?TC .
+    }
+    OPTIONAL {
+      ?rd :defect_class ?DefectClass .
     }
     OPTIONAL {
       ?rd :project ?project .
@@ -224,6 +234,9 @@ CONSTRUCT {
     BIND(dl:instance(cm:client, ?operator) as ?clientIRI)
 
     BIND(dl:instance(cm:add-task-estimation, dl:id-3(?WP, ?taskStepExecutionTypeId,md5(str(?rUrl)))) as ?addEstimationEventIRI)
+
+    BIND(lcase(?DefectClass) as ?defectClassId)
+    BIND(dl:instance(cm:defect-class, ?defectClassId) as ?defectClasstIRI)
 }""" ;
     ] ;
   sml:replace true ;
