@@ -86,7 +86,7 @@ WHERE
                 ?w cm:id ?wId.
               }
               OPTIONAL{
-                ?w rdfs:label ?wLabel.
+                ?w cm:user-sign ?wLabel.
               }
             }
         }
