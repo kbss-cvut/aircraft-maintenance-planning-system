@@ -212,6 +212,9 @@ public class SparqlDataReaderRDF4J {
         optional(bs, "phase", taskType::setPhase);
         optional(bs, "taskType", taskType::setTaskType);
         optional(bs, "area", taskType::setArea);
+        optional(bs, "elPower", taskType::setElPowerRestrictions);//?elPower ?hydPower ?jacks
+        optional(bs, "hydPower", taskType::setHydPowerRestrictions);
+        optional(bs, "jacks", taskType::setJackRestrictions);
         return taskType;
     }
 

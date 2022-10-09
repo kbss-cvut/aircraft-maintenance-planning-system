@@ -1,4 +1,5 @@
 @prefix : <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/> .
+@prefix cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
@@ -26,7 +27,7 @@
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has-main-scope
 :has-main-scope rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-scope> ;
+                rdfs:subPropertyOf cm:has-scope ;
                 rdfs:comment "this specifies the main maintenance group (scope) resposible for a particualr maintenance task."@en .
 
 
@@ -36,7 +37,7 @@
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/requirement-on
 :requirement-on rdf:type owl:ObjectProperty ;
-                rdfs:domain <http://onto.fel.cvut.cz/ontologies/csat-maintenance/requirement> ;
+                rdfs:domain cm:requirement ;
                 rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/entity> .
 
 
@@ -99,6 +100,18 @@
            rdfs:comment "The actual work time spent on a plan (measured in person/hours)"@en .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/required-el-power-restrictions
+cm:required-el-power-restrictions rdf:type owl:DatatypeProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/required-hyd-power-restrictions
+cm:required-hyd-power-restrictions rdf:type owl:DatatypeProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/required-jack-restrictions
+cm:required-jack-restrictions rdf:type owl:DatatypeProperty .
+
+
 #################################################################
 #    Classes
 #################################################################
@@ -115,7 +128,7 @@
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/el.-power-off
 :el.-power-off rdf:type owl:Class ;
-               rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/el.-power> .
+               rdfs:subClassOf cm:el.-power .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/event-plan
@@ -130,25 +143,25 @@
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/hyd.-power-off
 :hyd.-power-off rdf:type owl:Class ;
-                rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/hyd.-power> ;
+                rdfs:subClassOf cm:hyd.-power ;
                 rdfs:label "Hyd. Power off"@en .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/hyd.-power-on
 :hyd.-power-on rdf:type owl:Class ;
-               rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/hyd.-power> ;
+               rdfs:subClassOf cm:hyd.-power ;
                rdfs:label "Hyd. Power on"@en .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/jack-off
 :jack-off rdf:type owl:Class ;
-          rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/jack> ;
+          rdfs:subClassOf cm:jack ;
           rdfs:label "Jack off"@en .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/jack-on
 :jack-on rdf:type owl:Class ;
-         rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/jack> ;
+         rdfs:subClassOf cm:jack ;
          rdfs:label "Jack on"@en .
 
 
@@ -183,9 +196,9 @@
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/el.-power-on
-<http://onto.fel.cvut.cz/ontologies/csat-maintenance/el.-power-on> rdf:type owl:Class ;
-                                                                   rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/el.-power> ;
-                                                                   rdfs:label "El. Power on"@en .
+cm:el.-power-on rdf:type owl:Class ;
+                rdfs:subClassOf cm:el.-power ;
+                rdfs:label "El. Power on"@en .
 
 
 ###  http://www.w3.org/2002/07/owl#DatatypeProperty
