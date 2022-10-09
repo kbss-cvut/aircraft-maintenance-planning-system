@@ -38,6 +38,23 @@ xsd:time rdf:type rdfs:Datatype .
 #    Object Properties
 #################################################################
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-billing-contract-defect-class
+cm:has-billing-contract-defect-class rdf:type owl:ObjectProperty ;
+                                     rdfs:domain cm:billing-contract .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-charging-method
+cm:has-charging-method rdf:type owl:ObjectProperty ;
+                       rdfs:domain cm:billing-contract ;
+                       rdfs:range cm:charging-method .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-client
+cm:has-client rdf:type owl:ObjectProperty ;
+              rdfs:domain cm:workpackage ;
+              rdfs:range cm:client .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-damage
 cm:has-damage rdf:type owl:ObjectProperty ;
               rdfs:domain cm:planned-task ;
@@ -67,10 +84,27 @@ cm:has-follow-up-actions rdf:type owl:ObjectProperty ;
                          rdfs:label "has follow up actions" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-main-project
+cm:has-main-project rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf cm:has-project ;
+                    rdfs:domain cm:defect-class-based-billing-contract ;
+                    rdfs:range cm:main-project .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-participant
 cm:has-participant rdf:type owl:ObjectProperty ;
                    rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/ufo/has-participant> ;
                    rdfs:domain cm:event .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-project
+cm:has-project rdf:type owl:ObjectProperty ;
+               rdfs:domain cm:billing-contract .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-responsible-maintenance-line
+cm:has-responsible-maintenance-line rdf:type owl:ObjectProperty ;
+                                    rdfs:domain cm:workpackage .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-scope
@@ -78,6 +112,19 @@ cm:has-scope rdf:type owl:ObjectProperty ;
              rdfs:domain cm:maintenance-task ;
              rdfs:range cm:maintenance-group ;
              rdfs:label "has scope" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-sub-project
+cm:has-sub-project rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf cm:has-project ;
+                   rdfs:domain cm:sub-project-based-billing-contract ;
+                   rdfs:range cm:sub-project .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-task-group
+cm:has-task-group rdf:type owl:ObjectProperty ;
+                  rdfs:domain cm:sub-project ;
+                  rdfs:range cm:task-group .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-work-order-step
@@ -93,10 +140,22 @@ cm:is-day-bound-part-of rdf:type owl:ObjectProperty ;
                         rdfs:comment "Temporal part of relation that splits event to parts bound by days respecting a local time ." .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/is-part-of-maintenance-line
+cm:is-part-of-maintenance-line rdf:type owl:ObjectProperty ;
+                               rdfs:domain cm:mechanic ;
+                               rdfs:range cm:maintenance-line .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/is-part-of-maintenance-task
 cm:is-part-of-maintenance-task rdf:type owl:ObjectProperty ;
                                rdfs:range cm:maintenance-task ;
                                rdfs:label "is part of maintenance task" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/is-part-of-project
+cm:is-part-of-project rdf:type owl:ObjectProperty ;
+                      rdfs:domain cm:sub-project ;
+                      rdfs:range cm:main-project .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/is-part-of-workpackage
@@ -121,6 +180,11 @@ cm:leads rdf:type owl:ObjectProperty ;
 cm:member-of-group rdf:type owl:ObjectProperty ;
                    rdfs:range cm:maintenance-group ;
                    rdfs:label "member of group" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/performs
+cm:performs rdf:type owl:ObjectProperty ;
+            rdfs:domain cm:mechanic .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/references-ata-code
@@ -178,15 +242,25 @@ cm:ata-code rdf:type owl:DatatypeProperty ;
             rdfs:label "ATA code" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/cap-limit
+cm:cap-limit rdf:type owl:DatatypeProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:range xsd:integer .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/date
 cm:date rdf:type owl:DatatypeProperty ;
-        rdfs:range xsd:dateTimeStamp ;
+        rdfs:range xsd:date ;
         rdfs:label "date" .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/duration
 cm:duration rdf:type owl:DatatypeProperty ;
             rdfs:label "duration" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/duration-in-hours
+cm:duration-in-hours rdf:type owl:DatatypeProperty .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/end-date
@@ -314,7 +388,7 @@ cm:time rdf:type owl:DatatypeProperty ;
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/time-estimate-in-hours
 cm:time-estimate-in-hours rdf:type owl:DatatypeProperty ;
-                          rdfs:range xsd:decimal .
+                          rdfs:range xsd:float .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/work-order-action-text
@@ -343,6 +417,16 @@ cm:workpackage-end-time rdf:type owl:DatatypeProperty ;
                         rdfs:label "workpackage end time" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage-scheduled-end-time
+cm:workpackage-scheduled-end-time rdf:type owl:DatatypeProperty ;
+                                  rdfs:domain cm:workpackage .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage-scheduled-start-time
+cm:workpackage-scheduled-start-time rdf:type owl:DatatypeProperty ;
+                                    rdfs:domain cm:workpackage .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage-scheduled-time
 cm:workpackage-scheduled-time rdf:type owl:DatatypeProperty ;
                               rdfs:subPropertyOf cm:time ;
@@ -359,6 +443,11 @@ cm:workpackage-start--time rdf:type owl:DatatypeProperty ;
 cm:workpackage-start-date rdf:type owl:DatatypeProperty ;
                           rdfs:subPropertyOf cm:date ;
                           rdfs:label "workpackage start date" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage-start-time
+cm:workpackage-start-time rdf:type owl:DatatypeProperty ;
+                          rdfs:domain cm:workpackage .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/worksession-end-date
@@ -472,6 +561,10 @@ cm:b1-licenced-engineer rdf:type owl:Class ;
                         rdfs:label "B1 Licenced Engineer" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/billing-contract
+cm:billing-contract rdf:type owl:Class .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/blendoscopy-support-group
 cm:blendoscopy-support-group rdf:type owl:Class ;
                              rdfs:subClassOf cm:maintenance-group ;
@@ -493,11 +586,20 @@ cm:borescopic-inspection rdf:type owl:Class ;
                          rdfs:label "Borescopic Inspection" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/cap-limit-charging
+cm:cap-limit-charging rdf:type owl:Class ;
+                      rdfs:subClassOf cm:charging-method .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/change
 cm:change rdf:type owl:Class ;
           rdfs:subClassOf cm:task-card ;
           cm:has-abbreviation "CHG" ,
                               "Change" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/charging-method
+cm:charging-method rdf:type owl:Class .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/check
@@ -531,6 +633,10 @@ cm:client-extra--order-task rdf:type owl:Class ;
                             rdfs:label "Client Extra Order task" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/complex-execution
+cm:complex-execution rdf:type owl:Class .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/composite-workshop-support-group
 cm:composite-workshop-support-group rdf:type owl:Class ;
                                     rdfs:subClassOf cm:maintenance-support-group ;
@@ -548,6 +654,19 @@ cm:damage rdf:type owl:Class ;
 cm:day-bound-event rdf:type owl:Class ;
                    rdfs:subClassOf cm:event ;
                    rdfs:comment "Event that is bound to one day related to some local time. Thus it starting point refers to any timepoint within the day while ending point references any other \"later\" timepoint of the day. The latest point possible to reference is the next day of time 00:00." .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/defect-class
+cm:defect-class rdf:type owl:Class ;
+                rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                  owl:onProperty cm:id ;
+                                  owl:cardinality "1"^^xsd:nonNegativeInteger
+                                ] .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/defect-class-based-billing-contract
+cm:defect-class-based-billing-contract rdf:type owl:Class ;
+                                       rdfs:subClassOf cm:billing-contract .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/detail-visual-inspection
@@ -641,6 +760,11 @@ cm:exterior-mechanic-group rdf:type owl:Class ;
                            rdfs:label "Exterior Mechanic Group" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/extra-charging
+cm:extra-charging rdf:type owl:Class ;
+                  rdfs:subClassOf cm:charging-method .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/final-step
 cm:final-step rdf:type owl:Class ;
               rdfs:subClassOf cm:task-steps ;
@@ -662,6 +786,16 @@ cm:finding--damage rdf:type owl:Class ;
                                      owl:someValuesFrom cm:non-planned-task
                                    ] ;
                    rdfs:label "Finding  Damage" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/finding-based-billing-contract
+cm:finding-based-billing-contract rdf:type owl:Class ;
+                                  rdfs:subClassOf cm:sub-project-based-billing-contract .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/fixed-price-charging
+cm:fixed-price-charging rdf:type owl:Class ;
+                        rdfs:subClassOf cm:charging-method .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/functional-ttest
@@ -778,6 +912,11 @@ cm:lubrication rdf:type owl:Class ;
                rdfs:label "Lubrication" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/main-project
+cm:main-project rdf:type owl:Class ;
+                rdfs:subClassOf cm:project .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/main-step
 cm:main-step rdf:type owl:Class ;
              rdfs:subClassOf cm:task-steps ;
@@ -788,6 +927,10 @@ cm:main-step rdf:type owl:Class ;
 cm:maintenance-group rdf:type owl:Class ;
                      rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/physical-agent> ;
                      rdfs:label "Maintenance Group" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance-line
+cm:maintenance-line rdf:type owl:Class .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/maintenance-manager
@@ -949,6 +1092,11 @@ cm:planned-task rdf:type owl:Class ;
                 rdfs:label "Planned Task" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/planned-task-based-billing-contract
+cm:planned-task-based-billing-contract rdf:type owl:Class ;
+                                       rdfs:subClassOf cm:sub-project-based-billing-contract .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/planner
 cm:planner rdf:type owl:Class ;
            rdfs:subClassOf cm:heavy-maintenance-group ;
@@ -976,6 +1124,10 @@ cm:pressure-test-dot rdf:type owl:Class ;
                      rdfs:subClassOf cm:maintenance-group ;
                      cm:has-abbreviation "PTD"@en ;
                      rdfs:label "Pressure Test - Dot" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/project
+cm:project rdf:type owl:Class .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/quality-assurance
@@ -1039,15 +1191,17 @@ cm:scheduled-work-order rdf:type owl:Class ;
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/scoped-task-step
 cm:scoped-task-step rdf:type owl:Class ;
-                    rdfs:subClassOf cm:maintenance-task ,
+                    rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                      owl:onProperty cm:has-scope ;
+                                      owl:someValuesFrom cm:maintenance-group
+                                    ] ,
                                     [ rdf:type owl:Restriction ;
-                                      owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
-                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                      owl:onClass cm:work-order-step
+                                      owl:onProperty cm:is-part-of ;
+                                      owl:allValuesFrom cm:work-order-step
                                     ] ,
                                     [ rdf:type owl:Restriction ;
                                       owl:onProperty cm:time-estimate-in-hours ;
-                                      owl:cardinality "1"^^xsd:nonNegativeInteger
+                                      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
                                     ] .
 
 
@@ -1111,10 +1265,28 @@ cm:structure-damage-assesment rdf:type owl:Class ;
                               rdfs:label "Structure Damage Assesment" .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/sub-project
+cm:sub-project rdf:type owl:Class ;
+               rdfs:subClassOf cm:project .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/sub-project-based-billing-contract
+cm:sub-project-based-billing-contract rdf:type owl:Class ;
+                                      rdfs:subClassOf cm:billing-contract .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-card
 cm:task-card rdf:type owl:Class ;
              rdfs:subClassOf cm:planned-task ;
              rdfs:label "Task Card" .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-group
+cm:task-group rdf:type owl:Class ;
+              rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                owl:onProperty cm:id ;
+                                owl:cardinality "1"^^xsd:nonNegativeInteger
+                              ] .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-steps
@@ -1237,7 +1409,7 @@ cm:work-order-step rdf:type owl:Class ;
                                      owl:someValuesFrom cm:wos-action
                                    ] ,
                                    [ rdf:type owl:Restriction ;
-                                     owl:onProperty <http://onto.fel.cvut.cz/ontologies/ufo/is-part-of> ;
+                                     owl:onProperty cm:is-part-of ;
                                      owl:allValuesFrom cm:work-order
                                    ] ;
                    rdfs:label "Work Order Step" .
@@ -1245,7 +1417,22 @@ cm:work-order-step rdf:type owl:Class ;
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/work-session
 cm:work-session rdf:type owl:Class ;
-                rdfs:subClassOf ms:work_session ,
+                rdfs:subClassOf cm:event ,
+                                ms:work_session ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty cm:has-scope ;
+                                  owl:someValuesFrom cm:maintenance-group
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty cm:is-part-of-maintenance-task ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass cm:maintenance-task
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty cm:duration-in-hours ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onDataRange xsd:float
+                                ] ,
                                 [ rdf:type owl:Restriction ;
                                   owl:onProperty cm:has-day-bound-part ;
                                   owl:maxCardinality "2"^^xsd:nonNegativeInteger
@@ -1255,9 +1442,18 @@ cm:work-session rdf:type owl:Class ;
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage
 cm:workpackage rdf:type owl:Class ;
                rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                 owl:onProperty cm:has-client ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               ] ,
+                               [ rdf:type owl:Restriction ;
                                  owl:onProperty cm:id ;
                                  owl:cardinality "1"^^xsd:nonNegativeInteger
-                               ] .
+                               ], 
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty cm:is-repair-of ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               ] 
+.
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage-information-content
@@ -1323,8 +1519,6 @@ cm:zone rdf:type owl:Class ;
                                                                             rdfs:subClassOf cm:task-card ;
                                                                             cm:has-abbreviation "DIS" ;
                                                                             rdfs:label "Discard/one Time Used" .
-
-
 
 
 #################################################################
