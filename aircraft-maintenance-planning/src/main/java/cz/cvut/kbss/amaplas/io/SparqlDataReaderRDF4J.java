@@ -1,5 +1,6 @@
 package cz.cvut.kbss.amaplas.io;
 
+import cz.cvut.kbss.amaplas.model.Mechanic;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.amaplas.utils.ResourceUtils;
 import cz.cvut.kbss.amaplas.model.AircraftType;
@@ -260,6 +261,7 @@ public class SparqlDataReaderRDF4J {
         }
     };
     protected static Pattern taskTypeIRIPattern = Pattern.compile("task-type--([^-]+)--(.+)");
+    protected static Pattern mechanicIRI_IDPattern = Pattern.compile("^.+/mechanic--(.+)$");
     public static Result convertToTimeLog(BindingSet bs) throws ParseException {
         // TODO - do not create task type with null type string.
         String def = "unknown";
@@ -282,13 +284,35 @@ public class SparqlDataReaderRDF4J {
                 optValue(bs,"acmodel", def)
         );
 
+        // create mechanic
+        String mechanicIRI = optValue(bs, "w", null);
+        String mechanicID = optValue(bs, "wId", null);
+        String mechanicLabel = optValue(bs, "wLabel", null);
+        Mechanic mechanic = null;
+        if(mechanicIRI != null){
+            mechanic = new Mechanic();
+            mechanic.setEntityURI(URI.create(mechanicIRI));
+            if(mechanicID == null){
+                Matcher m = mechanicIRI_IDPattern.matcher(mechanicIRI);
+                if(m.matches()){
+                    mechanicID = m.group(1);
+                }
+            }
+            mechanic.setId(mechanicID);
+            if(mechanicID != null){
+                mechanic.setTitle(mechanicID);
+            }
+            mechanic.setTitle(mechanicLabel != null ? mechanicLabel : mechanicID);
+        }
+
+        // create a work session record
         Result t = new Result();
 
         t.wp = wp;
         t.acmodel = taskType.getAcmodel();
         t.acType = AircraftType.getTypeLabelForModel(t.acmodel);
         t.taskType = taskType;
-
+        t.setMechanic(mechanic);
 
         t.scope = optValue(bs, "scope", def);
         t.date = optValue(bs, "date", def);
