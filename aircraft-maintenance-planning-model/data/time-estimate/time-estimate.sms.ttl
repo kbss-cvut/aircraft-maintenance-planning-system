@@ -164,10 +164,15 @@ CONSTRUCT {
         cm:has-client ?clientIRI ;
     .
 
+    ?subProjectIRI a cm:sub-project, owl:NamedIndividual ;
+           cm:id ?project ;           
+    .
+
     ?taskExecutionIRI   a cm:complex-execution, owl:NamedIndividual ;
         cm:is-part-of-workpackage ?workpackageIRI ;
         cm:has-work-order-step ?taskStepExecutionIRI ;     # TODO --- toto je urcite spravne ????
-        cm:has-complex-execution-defect-class ?defectClasstIRI ;
+        cm:is-task-of-defect-class ?defectClasstIRI ;
+        cm:is-task-of-sub-project ?subProjectIRI ;
     .
 
     ?taskStepExecutionIRI a ?taskStepExecutionTypeIRI, owl:NamedIndividual;
@@ -227,6 +232,10 @@ CONSTRUCT {
     ?maintenanceGroupIRI dl:has-main-abbreviation ?mainMaintenanceGroupAbbr .
 
     BIND(dl:instance(cm:workpackage, ?WP) as ?workpackageIRI)
+
+    BIND(dl:normalize(?project) as ?subProjectNormalizedId)
+    BIND(dl:instance(cm:sub-project, ?subProjectNormalizedId) as ?subProjectIRI)
+
 
     BIND(COALESCE(?WO, ?TC) as ?wo_or_tc)
     BIND(dl:instance(cm:complex-execution, dl:id-2(?WP, ?wo_or_tc)) as ?taskExecutionIRI)

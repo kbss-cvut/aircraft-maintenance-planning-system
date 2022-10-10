@@ -181,6 +181,22 @@ CONSTRUCT {
         cm:workpackage-end-time ?wpEndDateReal ;
         cm:has-responsible-maintenance-line ?workpackageMaintenanceLineIRI ;
         cm:has-workpackage-main-project ?mainProjectIRI ;
+        cm:turn-around-time-scheduled-in-days ?turnAroundTimeScheduledDays ;
+        cm:turn-around-time-real-in-days ?turnAroundTimeRealDays ;
+        cm:fixed-price-in-man-hours ?fixedPriceMhs ;
+        cm:above-fixed-price-estimation-in-man-hours ?aboveFixedPriceEstimationMhs ;
+        cm:rutine-works-estimation-in-man-hours ?rutineWorksEstimationMhs ;
+        cm:findings-up-to-limit-estimation-in-man-hours ?findingsUpToLimitEstimationMhs ;
+        cm:additional-works-in-hours ?additionalWorksMhs ;
+        cm:findings-over-limit-estimation-in-hours ?findingsOverLimitDstimationMhs ;
+        cm:customer-request-in-man-hours ?CustomerRequestsMhs ;
+        cm:findings-mech-ext-in-man-hours ?findingsMechEXTMhs ;
+        cm:findings-mech-int-in-man-hours ?findingsMechINTMhs ;
+        cm:findings-mech-eng-in-man-hours ?findingsMechENGMhs ;
+        cm:findings-mech-ldg-in-man-hours ?findingsMechLDGMhs ;
+        cm:findings-avio-in-man-hours ?findingsAVIOMhs ;
+        cm:findings-shm-in-man-hours ?findingsSHMMhs ;
+        cm:findings-workshops-in-man-hours ?findingsWorkshopsMhs ;
     .
 
     ?workpackageMaintenanceLineIRI a cm:maintenance-line ;
@@ -278,6 +294,25 @@ CONSTRUCT {
 
      BIND(dl:normalize(?MainProject) as ?mainProjectNormalizedId)
      BIND(dl:instance(cm:main-project, ?mainProjectNormalizedId) as ?mainProjectIRI)
+
+
+     BIND(STRDT(str(?TAT_scheduled__days_), xsd:integer) as ?turnAroundTimeScheduledDays)
+     BIND(STRDT(str(?TAT_real__days_), xsd:integer) as ?turnAroundTimeRealDays)
+     BIND(STRDT(str(?MHrs_in_FIX), xsd:integer) as ?fixedPriceMhs)
+     BIND(STRDT(str(?MHrs_above_FIX), xsd:integer) as ?aboveFixedPriceEstimationMhs)
+     BIND(STRDT(str(?Routine__customized_included__work), xsd:integer) as ?rutineWorksEstimationMhs)
+     BIND(STRDT(str(?Findings_Up_To_Limit), xsd:integer) as ?findingsUpToLimitEstimationMhs)
+     BIND(STRDT(str(?Additional_Work__Mods__Sbs__Ads_Etc_), xsd:integer) as ?additionalWorksMhs)
+     BIND(STRDT(str(?Findings_Over_Limit___Estimation), xsd:integer) as ?findingsOverLimitDstimationMhs)
+     BIND(STRDT(str(?Customer_Requests), xsd:integer) as ?CustomerRequestsMhs)
+     BIND(STRDT(str(?Findings_MECH_EXT), xsd:integer) as ?findingsMechEXTMhs)
+     BIND(STRDT(str(?Findings_MECH_INT), xsd:integer) as ?findingsMechINTMhs)
+     BIND(STRDT(str(?Findings_MECH_ENG), xsd:integer) as ?findingsMechENGMhs)
+     BIND(STRDT(str(?Findings_MECH_LDG), xsd:integer) as ?findingsMechLDGMhs)
+     BIND(STRDT(str(?Findings_AVIO), xsd:integer) as ?findingsAVIOMhs)
+     BIND(STRDT(str(?Findings_SHM), xsd:integer) as ?findingsSHMMhs)
+     BIND(STRDT(str(?Findings_Workshops), xsd:integer) as ?findingsWorkshopsMhs)
+
 }""" ;
     ] ;
   sml:replace true ;
