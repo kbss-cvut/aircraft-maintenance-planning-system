@@ -157,7 +157,9 @@ public class AircraftRevisionPlannerService extends BaseService{
         Date defaultTaskPlanEnd = new Date(revisionStartDate.getTime() + defaultDuration);
 
         // create and return revision plan
-        RevisionPlan revisionPlan = createRevision(revisionId, results, revisionStartDate);
+        ImplicitPlanBuilder builder = new ImplicitPlanBuilder();
+        ImplicitPlanBuilder.PlanningResult planningResult = builder.createRevision(results);
+        RevisionPlan revisionPlan = planningResult.getRevisionPlan();
 
         // deduce schedule from revision work sessions
         // 1.a Create session schedules - from session logs
@@ -180,6 +182,8 @@ public class AircraftRevisionPlannerService extends BaseService{
                 });
         // 2. update plan parts bottom up
         revisionPlan.applyOperationBottomUp( p -> p.updateTemporalAttributes());
+        builder.addRestrictionPlans(revisionPlan);
+
         return revisionPlan;
     }
 
@@ -187,7 +191,10 @@ public class AircraftRevisionPlannerService extends BaseService{
         List<Result> results = revisionHistory.getClosedRevisionWorkLog(revisionId);
 
         // create sessionPlans
-        RevisionPlan revisionPlan = createRevision(revisionId, results, startDate);
+        ImplicitPlanBuilder builder = new ImplicitPlanBuilder();
+        ImplicitPlanBuilder.PlanningResult planningResult = builder.createRevision(results);
+        RevisionPlan revisionPlan = planningResult.getRevisionPlan();
+
         Set<TaskPlan> taskPlans = revisionPlan.getPlanParts().stream().flatMap(
                 pp -> pp.getPlanParts().stream()
                         .flatMap(gtp -> gtp.getPlanParts().stream()
@@ -231,23 +238,6 @@ public class AircraftRevisionPlannerService extends BaseService{
         // calculate temporal parameters of the plan
 
         return revisionPlan;
-    }
-
-
-    public RevisionPlan createRevision(String revisionId, List<Result> results, Date startDate){
-        // TODO - move to loading task type definitions
-        // set the task card definition for each task card.
-        for(Result r : results) {
-            if(r.taskType == null)
-                continue;
-            TaskType tt = taskTypeService.getMatchingTaskTypeDefinition(r.taskType);
-            r.taskType.setDefinition(tt);
-        }
-
-        // build a RevisionPlan, i.e. a hierarchical object model of the plan
-        ImplicitPlanBuilder builder = new ImplicitPlanBuilder();
-        ImplicitPlanBuilder.PlanningResult planningResult = builder.createRevision(results);
-        return planningResult.getRevisionPlan();
     }
 
     public void setTemporalParameters(RevisionPlan revisionPlan, List<SequencePattern> sequencePatterns){

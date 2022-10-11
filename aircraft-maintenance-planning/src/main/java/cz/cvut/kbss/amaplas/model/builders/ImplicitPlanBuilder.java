@@ -1,15 +1,18 @@
 package cz.cvut.kbss.amaplas.model.builders;
 
 import cz.cvut.kbss.amaplas.model.*;
+import cz.cvut.kbss.amaplas.util.Vocabulary;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.net.URI;
+import java.util.*;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ImplicitPlanBuilder {
 
@@ -18,6 +21,155 @@ public class ImplicitPlanBuilder {
     private final ModelFactory modelFactory = new ModelFactory();
     protected Map<Object, Map<String, AbstractEntity>> entityMaps = new HashMap<>();
     protected Defaults defaults = new Defaults();
+
+    /**
+     * Add implicit plan restrictions to the provided revisionPlan.
+     *
+     * For each TaskPlan and its corresponding TaskType
+     * definitions a 0 to 3 task restrictionPlans are constructed. The restrictionPlans' schedule corresponds to the
+     * schedule of the TaskPlan and restrictions and their subject corresponds to those defined in the TaskType
+     * definition.
+     *
+     * Each set of restriction plans with the same subject (i.e. El. power, Hyd. power and Jack) is reduced by
+     * merging adjacent plans with identical restrictions, e.g. OFF and OFF. Finally, the reduced sets are added to the
+     * revisionPlan.
+     *
+     * @param revisionPlan
+     */
+    public void addRestrictionPlans(RevisionPlan revisionPlan){
+        // create atomic restriction types
+        List<RestrictionPlan> restrictionPlans = revisionPlan.streamPlanParts()
+                .filter(p -> p instanceof TaskPlan)
+                .map(p -> (TaskPlan)p)
+                .filter(p -> p.getTaskType() != null && p.getTaskType().getDefinition() != null)
+                .flatMap(
+                        p -> getRestrictionPlans(p, p.getTaskType().getDefinition()).stream()
+                ).collect(Collectors.toList());
+
+        // group restriction plans according to subject
+        Map<URI, List<RestrictionPlan>> map = restrictionPlans.stream().collect(Collectors.groupingBy(p -> p.getRestrictions().iterator().next().getSubject()));
+        // sort each of the lists in the map according to
+        map.entrySet().forEach(e -> e.getValue().sort(
+                Comparator
+                        .comparing((RestrictionPlan p) -> p.getStartTime().getTime())
+                        .thenComparing((RestrictionPlan p) -> p.getEndTime().getTime())
+        ));
+        // simplify restriction plans
+        map.values().stream().flatMap(p -> {
+            List<RestrictionPlan> l = simplifyPlans(p);
+            System.out.println(String.format("simplify restriction plans - # non simplified %d, # simplified %d ", p.size(), l.size()));
+            return l.stream();
+        }).forEach(revisionPlan::addPlanPart);
+    }
+
+    /**
+     * This method reduces a list of plan restrictions by merging adjacent plans with identical restrictions.
+     *
+     * This method assumes that originalPlans list is ordered according to startTime and then to endTime.
+     * @param originalPlans
+     * @return
+     */
+    protected List<RestrictionPlan> simplifyPlans(List<RestrictionPlan> originalPlans){
+        List<RestrictionPlan> plans = new ArrayList<>();
+        boolean simplified = false;
+        while(!simplified){
+            simplified = false;
+            int i = 0, j = 0;
+            RestrictionPlan p1 = null, p2 = null;
+            for(; i < originalPlans.size(); i = j){
+                p1 = originalPlans.get(i);
+                for(j = i + 1; j < originalPlans.size(); j ++) {
+                    p2 = originalPlans.get(j);
+                    // check if plans can be merged
+                    boolean propositionMatches = p1.getTitle().equals(p2.getTitle());
+                    if(!propositionMatches)
+                        break;
+
+                    if(p1.getEndTime().getTime() < p2.getEndTime().getTime()) {
+                        simplified = true;
+                        p1.setEndTime(p2.getEndTime());
+                    }
+
+                }
+                plans.add(p1);
+            }
+            if(originalPlans.size() > j && p2 != null)
+                plans.add(p2);
+
+        }
+        return plans;
+    }
+
+    /**
+     * Constructs a list of restrictionPlans for the given taskPlan and its corresponding taskType. The list is filled
+     * with restriction plan for each available subject restriction in the TaskType.
+     *
+     * @param taskPlan
+     * @param taskType
+     * @return
+     */
+    public List<RestrictionPlan> getRestrictionPlans(TaskPlan taskPlan, TaskType taskType){
+        return Stream.<Pair<String, Function<TaskType, String>>>of(
+                Pair.of(Vocabulary.s_c_el_dot__power, TaskType::getElPowerRestrictions),
+                Pair.of(Vocabulary.s_c_hyd_dot__power, TaskType::getHydPowerRestrictions),
+                Pair.of(Vocabulary.s_c_jack, TaskType::getJackRestrictions))
+                .filter(p -> p.getValue().apply(taskType) != null && !p.getValue().apply(taskType).isBlank())
+                .map(
+                        p -> getRestrictionPlan(taskPlan, taskType, p.getValue().apply(taskType), URI.create(p.getKey()))
+                )
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Construct restrictionPlan for the given arguments
+     * @param taskPlan
+     * @param taskType
+     * @param restrictionProposition
+     * @param restrictionSubject
+     * @return
+     */
+    public RestrictionPlan getRestrictionPlan(TaskPlan taskPlan, TaskType taskType, String restrictionProposition, URI restrictionSubject){
+        Restriction restriction = getRestriction(restrictionProposition, restrictionSubject);
+        RestrictionPlan restrictionPlan = new RestrictionPlan();
+        restrictionPlan.setId(modelFactory.generateId());
+        restrictionPlan.setTitle(restrictionProposition);
+        restrictionPlan.setRestrictions(new HashSet<>());
+        restrictionPlan.getRestrictions().add(restriction);
+        applyTemporalValues(taskPlan, restrictionPlan);
+
+        return restrictionPlan;
+    }
+
+    /**
+     * Set temporal fields from <code>from</code>  to <code>to</code>
+     * @param from
+     * @param to
+     */
+    public void applyTemporalValues(AbstractPlan from, AbstractPlan to){
+        to.setStartTime(from.getStartTime());
+        to.setEndTime(from.getEndTime());
+        to.setDuration(from.getDuration());
+        to.setPlannedStartTime(from.getPlannedStartTime());
+        to.setPlannedEndTime(from.getPlannedEndTime());
+        to.setPlannedDuration(from.getPlannedDuration());
+    }
+
+    /**
+     * Construct a restriction from the given restrictionProposition and restrictionSubject
+     * @param restrictionProposition
+     * @param restrictionSubject
+     * @return
+     */
+    public Restriction getRestriction(String restrictionProposition, URI restrictionSubject){
+        String restrictionId = DigestUtils.md5Hex(restrictionSubject.toString() + restrictionProposition);
+        return getEntity(restrictionId, "restriction", () -> {
+            Restriction restriction = new Restriction();
+            restriction.setId(restrictionId);
+            restriction.setSubject(restrictionSubject);
+            restriction.setTitle(restrictionProposition);
+            return restriction;
+        });
+    }
 
     public PlanningResult createRevision(List<Result> results){
         Aircraft aircraft = results.stream().map(r -> getAircraft(r)).filter(a -> !defaults.isDefault(a)).findFirst().orElse(null);
@@ -208,7 +360,7 @@ public class ImplicitPlanBuilder {
     }
 
     public Optional<TaskType> getTaskType(Result r){
-        return Optional.of(r.taskType);
+        return Optional.ofNullable(r.taskType);
     }
 
     public Optional<TaskType> getTaskTypeDefinition(Result r){
@@ -293,4 +445,25 @@ public class ImplicitPlanBuilder {
             return maintenanceGroupLabel.equals(mg.getTitle());
         }
     }
+
+//    public static void main(String[] args) {
+////        List<Pair<Integer, Integer>> l = Stream.of(
+////                Pair.of(2,4),
+////                Pair.of(2,3),
+////                Pair.of(1,2)
+////                ).collect(Collectors.toList());
+////
+////        l.sort(Comparator
+////                .comparing((Pair<Integer, Integer> p) -> p.getLeft())
+////                .thenComparing((Pair<Integer, Integer> p) -> p.getRight())
+////        );
+////        System.out.println(l);
+//
+//        for(int i = 0; i < 10; i++) {
+//            for (int j = i + 1; j < 10; j++) {
+//                System.out.println(String.format("%d, %d", i, j));
+//            }
+//            System.out.println(String.format("%d, %d", i, j));
+//        }
+//    }
 }
