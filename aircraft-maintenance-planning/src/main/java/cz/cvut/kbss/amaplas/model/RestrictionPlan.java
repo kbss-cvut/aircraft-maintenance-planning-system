@@ -11,15 +11,15 @@ import java.util.Set;
  * ResourceStatus plans are direct part of revision plan
  */
 @OWLClass(iri = Vocabulary.s_c_resource_status_plan)
-public class ResourceStatusPlan extends AbstractPlan{
+public class RestrictionPlan extends AbstractPlan{
     @OWLObjectProperty(iri = Vocabulary.s_p_requires)
-    protected Set<ResourceRestriction> resourceRestrictions;
+    protected Set<Restriction> restrictions;
 
-    public Set<ResourceRestriction> getResourceRestrictions() {
-        return resourceRestrictions;
+    public Set<Restriction> getRestrictions() {
+        return restrictions;
     }
 
-    public void setResourceRestrictions(Set<ResourceRestriction> resourceRestrictions) {
-        this.resourceRestrictions = resourceRestrictions;
+    public void setRestrictions(Set<Restriction> restrictions) {
+        this.restrictions = restrictions;
     }
 }
