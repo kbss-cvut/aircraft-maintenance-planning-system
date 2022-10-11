@@ -21,13 +21,15 @@ public class RevisionHistory {
     private static final Logger LOG = LoggerFactory.getLogger(RevisionHistory.class);
 
     protected final ConfigProperties config;
+    protected final TaskTypeService taskTypeService;
     protected ConfigProperties.Repository repoConfig;
 
     private Map<String, List<Result>> historyCache;
 
-    public RevisionHistory(ConfigProperties config) {
+    public RevisionHistory(ConfigProperties config, TaskTypeService taskTypeService) {
         this.config = config;
         this.repoConfig = config.getRepository();
+        this.taskTypeService = taskTypeService;
     }
 
     public List<String> getAllRevisions(){
@@ -70,6 +72,11 @@ public class RevisionHistory {
                     repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword());
             closedRevisions.put(wpId, results);
         }
+
+        List<Result> workSessions = closedRevisions.values().stream().flatMap(l -> l.stream()).collect(Collectors.toList());
+        Result.normalizeTaskTypes(workSessions);
+        workSessions.stream().filter(r -> r.taskType != null && "task-card".equals(r.taskType.getTaskcat())).forEach(r -> r.taskType.setDefinition(taskTypeService.getMatchingTaskTypeDefinition(r.taskType)));
+
         LOG.debug("sorting fetched revisions");
         // make sure the work sessions are ordered by start time
         closedRevisions.entrySet().forEach(e -> e.getValue().sort(Comparator.comparing(r -> r.start != null ? r.start.getTime() : -1L)));

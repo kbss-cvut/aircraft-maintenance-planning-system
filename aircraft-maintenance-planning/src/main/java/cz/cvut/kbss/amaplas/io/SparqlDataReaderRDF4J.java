@@ -247,8 +247,6 @@ public class SparqlDataReaderRDF4J {
         String query = ResourceUtils.loadResource(queryName);
         List<Result> results = executeQuery(query, bindings, endpoint, username, password, SparqlDataReaderRDF4J::convertToTimeLog);
 
-        // fix data alignment
-        Result.normalizeTaskTypes(results);
         return results.stream().collect(Collectors.groupingBy(Result::form0))
                 .entrySet().stream()
                 .map(e -> e.getValue().get(0))
