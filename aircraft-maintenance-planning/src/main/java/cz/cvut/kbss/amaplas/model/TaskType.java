@@ -241,6 +241,14 @@ public class TaskType extends EventType<String> {
     @Transient
     public static Map<String, TaskType> taskTypeMap;
 
+    /**
+     * Normalize the codes (ids), labels/titles of TaskTypes. Creates a TaskType.code -> TaskType map and stores it in
+     * TaskType.taskTypeMap static variable to be used by other t
+     * - for codes "%20" is replaced with " "
+     * - for labels the longest label is used for all task cards using the same code
+     * @param taskTypes
+     * @return
+     */
     public static Map<String, TaskType> normalizeTaskTypes(List<TaskType> taskTypes){
         // normalize type codes
         taskTypes.forEach(t ->
