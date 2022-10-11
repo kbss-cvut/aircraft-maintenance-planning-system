@@ -18,10 +18,26 @@
                   rdfs:comment "Used to specify the name of the entity class (in object orientied programming languages, e.g. java) in the application stored as rdf resource."@en .
 
 
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/depends-on
+:depends-on rdf:type owl:ObjectProperty ;
+            rdfs:domain :event-plan ;
+            rdfs:range :event-plan .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has-main-scope
 :has-main-scope rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-scope> ;
                 rdfs:comment "this specifies the main maintenance group (scope) resposible for a particualr maintenance task."@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has-requirement
+:has-requirement rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/requirement-on
+:requirement-on rdf:type owl:ObjectProperty ;
+                rdfs:domain <http://onto.fel.cvut.cz/ontologies/csat-maintenance/requirement> ;
+                rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/entity> .
 
 
 #################################################################
@@ -36,6 +52,11 @@
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has-mpdtask
 :has-mpdtask rdf:type owl:DatatypeProperty ;
              rdfs:comment "adhock - the code of the task defined in a Maintenance planning document (MPD)."@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has-specific-task-with-id
+:has-specific-task-with-id rdf:type owl:DatatypeProperty ;
+                           rdfs:comment "Use to specify the id of the a task type specializing a task type definition."@en .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/planned-duration
@@ -77,9 +98,6 @@
 :work-time rdf:type owl:DatatypeProperty ;
            rdfs:comment "The actual work time spent on a plan (measured in person/hours)"@en .
 
-###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has-specific-task-with-id
-:has-specific-task-with-id rdf:type owl:DatatypeProperty ;
-           rdfs:comment "Use to specify the id of the a task type specializing a task type definition."@en .
 
 #################################################################
 #    Classes
@@ -88,6 +106,16 @@
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/complex-plan
 :complex-plan rdf:type owl:Class ;
               rdfs:subClassOf :event-plan .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/deadline-plan
+:deadline-plan rdf:type owl:Class ;
+               rdfs:subClassOf :event-plan .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/el.-power-off
+:el.-power-off rdf:type owl:Class ;
+               rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/el.-power> .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/event-plan
@@ -100,9 +128,43 @@
                    rdfs:subClassOf :event-plan .
 
 
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/hyd.-power-off
+:hyd.-power-off rdf:type owl:Class ;
+                rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/hyd.-power> ;
+                rdfs:label "Hyd. Power off"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/hyd.-power-on
+:hyd.-power-on rdf:type owl:Class ;
+               rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/hyd.-power> ;
+               rdfs:label "Hyd. Power on"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/jack-off
+:jack-off rdf:type owl:Class ;
+          rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/jack> ;
+          rdfs:label "Jack off"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/jack-on
+:jack-on rdf:type owl:Class ;
+         rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/jack> ;
+         rdfs:label "Jack on"@en .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/milestone-plan
+:milestone-plan rdf:type owl:Class ;
+                rdfs:subClassOf :deadline-plan .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/phase-plan
 :phase-plan rdf:type owl:Class ;
             rdfs:subClassOf :event-plan .
+
+
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/resource-status-plan
+:resource-status-plan rdf:type owl:Class ;
+                      rdfs:subClassOf :event-plan .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/task-plan
@@ -118,6 +180,12 @@
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/workpackage-plan
 :workpackage-plan rdf:type owl:Class ;
                   rdfs:subClassOf :event-plan .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/el.-power-on
+<http://onto.fel.cvut.cz/ontologies/csat-maintenance/el.-power-on> rdf:type owl:Class ;
+                                                                   rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/csat-maintenance/el.-power> ;
+                                                                   rdfs:label "El. Power on"@en .
 
 
 ###  http://www.w3.org/2002/07/owl#DatatypeProperty
