@@ -66,11 +66,13 @@ public class ImplicitPlanBuilder {
 
     public Mechanic getMechanic(Result r){
         Mechanic m = r.getMechanic();
-        return getEntity(
-                (String)m.getId(),
-                "mechanic",
-                () -> m
-        );
+        return m == null ?
+                null :
+                getEntity(
+                    (String)m.getId(),
+                    "mechanic",
+                    () -> m
+                );
     }
 
     public MaintenanceGroup getMaintenanceGroup(Result r){
