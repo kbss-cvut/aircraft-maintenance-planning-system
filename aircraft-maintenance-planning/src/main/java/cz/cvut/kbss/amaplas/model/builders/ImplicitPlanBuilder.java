@@ -66,6 +66,7 @@ public class ImplicitPlanBuilder {
 
     public Mechanic getMechanic(Result r){
         Mechanic m = r.getMechanic();
+        LOG.debug("is mechanic null {}", m == null);
         return m == null ?
                 null :
                 getEntity(
