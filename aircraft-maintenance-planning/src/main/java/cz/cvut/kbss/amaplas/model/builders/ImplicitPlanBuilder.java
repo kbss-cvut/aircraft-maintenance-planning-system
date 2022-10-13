@@ -37,6 +37,7 @@ public class ImplicitPlanBuilder {
      * @param revisionPlan
      */
     public void addRestrictionPlans(RevisionPlan revisionPlan){
+        LOG.debug("addRestrictionPlans to \"{}\"", revisionPlan.getTitle());
         // create atomic restriction types
         List<RestrictionPlan> restrictionPlans = revisionPlan.streamPlanParts()
                 .filter(p -> p instanceof TaskPlan)
@@ -70,12 +71,10 @@ public class ImplicitPlanBuilder {
      * @return
      */
     protected List<RestrictionPlan> simplifyPlans(List<RestrictionPlan> originalPlans){
+        LOG.debug("merge list of restriction plans");
         List<RestrictionPlan> plans = new ArrayList<>();
-        boolean simplified = false;
-        while(!simplified){
-            simplified = false;
             int i = 0, j = 0;
-            RestrictionPlan p1 = null, p2 = null;
+            RestrictionPlan p1, p2 = null;
             for(; i < originalPlans.size(); i = j){
                 p1 = originalPlans.get(i);
                 for(j = i + 1; j < originalPlans.size(); j ++) {
@@ -84,19 +83,16 @@ public class ImplicitPlanBuilder {
                     boolean propositionMatches = p1.getTitle().equals(p2.getTitle());
                     if(!propositionMatches)
                         break;
-
                     if(p1.getEndTime().getTime() < p2.getEndTime().getTime()) {
-                        simplified = true;
+                        // merge plans
+                        p1.getRequiringPlans().addAll(p2.getRequiringPlans());
                         p1.setEndTime(p2.getEndTime());
                     }
-
                 }
                 plans.add(p1);
             }
             if(originalPlans.size() > j && p2 != null)
                 plans.add(p2);
-
-        }
         return plans;
     }
 
@@ -113,7 +109,7 @@ public class ImplicitPlanBuilder {
                 Pair.of(Vocabulary.s_c_el_dot__power, TaskType::getElPowerRestrictions),
                 Pair.of(Vocabulary.s_c_hyd_dot__power, TaskType::getHydPowerRestrictions),
                 Pair.of(Vocabulary.s_c_jack, TaskType::getJackRestrictions))
-                .filter(p -> p.getValue().apply(taskType) != null && !p.getValue().apply(taskType).isBlank())
+                .filter(p -> p.getValue().apply(taskType) != null && !p.getValue().apply(taskType).isBlank() && !p.getValue().apply(taskType).trim().equals("/"))
                 .map(
                         p -> getRestrictionPlan(taskPlan, taskType, p.getValue().apply(taskType), URI.create(p.getKey()))
                 )
@@ -135,6 +131,8 @@ public class ImplicitPlanBuilder {
         restrictionPlan.setTitle(restrictionProposition);
         restrictionPlan.setRestrictions(new HashSet<>());
         restrictionPlan.getRestrictions().add(restriction);
+        restrictionPlan.setRequiringPlans(new HashSet<>());
+        restrictionPlan.getRequiringPlans().add(taskPlan);
         applyTemporalValues(taskPlan, restrictionPlan);
 
         return restrictionPlan;

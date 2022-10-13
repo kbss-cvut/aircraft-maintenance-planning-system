@@ -41,6 +41,10 @@
                 rdfs:range <http://onto.fel.cvut.cz/ontologies/ufo/entity> .
 
 
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/requiring-plan
+:requiring-plan rdf:type owl:ObjectProperty .
+
+
 #################################################################
 #    Data properties
 #################################################################
