@@ -38,6 +38,17 @@ public class SparqlDataReader {
     public static String formatDate(SimpleDateFormat sdf, Date d){
         return d != null ? sdf.format(d) : "";
     }
+    public static Date parseDate(SimpleDateFormat df, String dateTimeString){
+        if(dateTimeString.isBlank())
+            return null;
+        
+        try {
+            return df.parse(dateTimeString);
+        } catch (ParseException e) {
+            LOG.warn("Could not parse date time string \"{}\"", dateTimeString);
+        }
+        return null;
+    }
 
     public List<TaskType> readTaskTypes(String endpoint){
         String queryName = TASK_TYPES;

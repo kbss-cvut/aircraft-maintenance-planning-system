@@ -52,11 +52,11 @@ CONSTRUCT {
 
      ?mainProjectIRI a cm:main-project, owl:NamedIndividual ;
            cm:id ?MainProject ;
-           cm:has-part ?subProjectIRI ;
      .
      ?subProjectIRI a cm:sub-project, owl:NamedIndividual ;
            cm:id ?Project ;
            dc:description ?Description ;
+           cm:is-part-of-project ?mainProjectIRI ;
            cm:has-task-group ?taskGroupIRI ;
      .
      ?taskGroupIRI a cm:task-group ;

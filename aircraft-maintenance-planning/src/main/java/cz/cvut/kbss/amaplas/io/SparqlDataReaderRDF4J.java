@@ -1,5 +1,6 @@
 package cz.cvut.kbss.amaplas.io;
 
+import cz.cvut.kbss.amaplas.model.Mechanic;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.amaplas.utils.ResourceUtils;
 import cz.cvut.kbss.amaplas.model.AircraftType;
@@ -261,6 +262,7 @@ public class SparqlDataReaderRDF4J {
         }
     };
     protected static Pattern taskTypeIRIPattern = Pattern.compile("task-type--([^-]+)--(.+)");
+    protected static Pattern mechanicIRI_IDPattern = Pattern.compile("^.+/mechanic--(.+)$");
     public static Result convertToTimeLog(BindingSet bs) throws ParseException {
         // TODO - do not create task type with null type string.
         String def = "unknown";
@@ -283,13 +285,35 @@ public class SparqlDataReaderRDF4J {
                 optValue(bs,"acmodel", def)
         );
 
+        // create mechanic
+        String mechanicIRI = optValue(bs, "w", null);
+        String mechanicID = optValue(bs, "wId", null);
+        String mechanicLabel = optValue(bs, "wLabel", null);
+        Mechanic mechanic = null;
+        if(mechanicIRI != null){
+            mechanic = new Mechanic();
+            mechanic.setEntityURI(URI.create(mechanicIRI));
+            if(mechanicID == null){
+                Matcher m = mechanicIRI_IDPattern.matcher(mechanicIRI);
+                if(m.matches()){
+                    mechanicID = m.group(1);
+                }
+            }
+            mechanic.setId(mechanicID);
+            if(mechanicID != null){
+                mechanic.setTitle(mechanicID);
+            }
+            mechanic.setTitle(mechanicLabel != null ? mechanicLabel : mechanicID);
+        }
+
+        // create a work session record
         Result t = new Result();
 
         t.wp = wp;
         t.acmodel = taskType.getAcmodel();
         t.acType = AircraftType.getTypeLabelForModel(t.acmodel);
         t.taskType = taskType;
-
+        t.setMechanic(mechanic);
 
         t.scope = optValue(bs, "scope", def);
         t.date = optValue(bs, "date", def);
@@ -297,9 +321,9 @@ public class SparqlDataReaderRDF4J {
         String start = optValue(bs, "start", null);
         String end = optValue(bs, "end", null);
         if(start != null )
-            t.start = SparqlDataReader.df.parse(start.substring(0, start.length() -1) + "+0200");
+            t.start = SparqlDataReader.parseDate(SparqlDataReader.df, start.substring(0, start.length() -1) + "+0200");
         if(end != null)
-            t.end = SparqlDataReader.df.parse(end.substring(0, end.length() -1) + "+0200");
+            t.end = SparqlDataReader.parseDate(SparqlDataReader.df, end.substring(0, end.length() -1) + "+0200");
 
         t.dur = Optional.ofNullable(bs.getValue("dur")).map(v -> ((Literal)v).longValue()).orElse(null);
         return t;

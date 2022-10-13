@@ -1,4 +1,4 @@
-@prefix : <http://onto.fel.cvut.cz/ontologies/csat/wp-catalog-0.1/> .
+@prefix : <http://onto.fel.cvut.cz/ontologies/csat/time-estimate-0.1/> .
 @prefix csvw: <http://www.w3.org/ns/csvw#> .
 @prefix kbss-csvw: <https://onto.fel.cvut.cz/ontologies/extension/csvw/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .

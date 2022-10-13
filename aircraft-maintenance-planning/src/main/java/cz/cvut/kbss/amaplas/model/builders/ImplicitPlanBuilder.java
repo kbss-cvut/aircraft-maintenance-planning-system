@@ -217,12 +217,15 @@ public class ImplicitPlanBuilder {
     }
 
     public Mechanic getMechanic(Result r){
-        String mechanicTitle = getMechanicLabel(r);
-        return getEntity(
-                mechanicTitle,
-                "mechanic",
-                () -> modelFactory.newMechanic(mechanicTitle)
-        );
+        Mechanic m = r.getMechanic();
+        LOG.debug("is mechanic null {}", m == null);
+        return m == null ?
+                null :
+                getEntity(
+                    (String)m.getId(),
+                    "mechanic",
+                    () -> m
+                );
     }
 
     public MaintenanceGroup getMaintenanceGroup(Result r){

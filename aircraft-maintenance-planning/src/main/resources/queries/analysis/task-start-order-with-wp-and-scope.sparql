@@ -6,7 +6,7 @@ PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
 PREFIX spif: <http://spinrdf.org/spif#>
 PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
 
-SELECT ?wp ?acmodel ?tt ?tType ?type (?ttLabel as ?typeLabel) ?scope ?scopeLabel ?taskcat (?sDate as ?date) ?sTime ?eDate ?eTime (str(?st) as ?start) (str(?et) as ?end) (str(ofn:asMillis(?et - ?st)) as ?dur)
+SELECT ?wp ?acmodel ?tt ?tType ?type (?ttLabel as ?typeLabel) ?scope ?scopeLabel ?w ?wId ?wLabel ?taskcat (?sDate as ?date) ?sTime ?eDate ?eTime (str(?st) as ?start) (str(?et) as ?end) (str(ofn:asMillis(?et - ?st)) as ?dur)
 WHERE
 {
     ?wpuri a cm:workpackage.
@@ -82,6 +82,12 @@ WHERE
             # mechanic
             OPTIONAL{
               ?w cm:performs ?t.
+              OPTIONAL{
+                ?w cm:id ?wId.
+              }
+              OPTIONAL{
+                ?w cm:user-sign ?wLabel.
+              }
             }
         }
     }
