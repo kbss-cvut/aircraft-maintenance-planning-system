@@ -67,14 +67,14 @@ CONSTRUCT {
            cm:has-sub-project ?subProjectIRI ;
            cm:has-charging-method ?chargingMethodIRI ;
      .
-     ?billingContractTypeIRI a owl:Class ;
+     ?billingContractTypeIRI a owl:Class, owl:NamedIndividual, cm:billing-contract-type  ;
            cm:id ?LimitType ;
      .
      ?chargingMethodIRI a ?chargingMethodTypeIRI, owl:NamedIndividual ;
            cm:cap-limit ?capLimitTyped ;
      .
 
-     ?chargingMethodTypeIRI a owl:Class ;
+     ?chargingMethodTypeIRI a owl:Class, owl:NamedIndividual, cm:charging-method-type ;
            cm:id ?BillingGroup ;
      .
 } WHERE {

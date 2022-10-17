@@ -59,7 +59,7 @@ CONSTRUCT {
      ?chargingMethodIRI a ?chargingMethodTypeIRI, owl:NamedIndividual ;
            cm:cap-limit ?capLimitTyped ;
      .
-     ?chargingMethodTypeIRI a owl:Class ;
+     ?chargingMethodTypeIRI a owl:Class, owl:NamedIndividual, cm:charging-method-type ;
            cm:id ?BillingGroup ;
      .
      ?defectClasstIRI a cm:defect-class, owl:NamedIndividual ;
