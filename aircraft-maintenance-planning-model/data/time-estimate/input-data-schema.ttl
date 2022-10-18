@@ -10,49 +10,49 @@
 :input-table-schema a csvw:TableSchema ;
                     csvw:column
                         [ a csvw:Column ;
-                            csvw:name ":AC_registration" ;
+                            csvw:name "AC_registration" ;
                             kbss-csvw:property :AC_registration ;
                             csvw:title "AC registration" ],
                         [ a csvw:Column ;
-                            csvw:name ":operator" ;
+                            csvw:name "operator" ;
                             kbss-csvw:property :operator ;
                             csvw:title "operator" ],
                         [ a csvw:Column ;
-                            csvw:name ":WP" ;
+                            csvw:name "WP" ;
                             kbss-csvw:property :WP ;
                             csvw:title "WP" ],
                         [ a csvw:Column ;
-                            csvw:name ":type" ;
+                            csvw:name "type" ;
                             kbss-csvw:property :type ;
                             csvw:title "type" ],
                         [ a csvw:Column ;
-                            csvw:name ":WO" ;
+                            csvw:name "WO" ;
                             kbss-csvw:property :WO ;
                             csvw:title "WO" ],
                         [ a csvw:Column ;
-                            csvw:name ":TC" ;
+                            csvw:name "TC" ;
                             kbss-csvw:property :TC ;
                             csvw:title "TC" ],
                         [ a csvw:Column ;
-                            csvw:name ":defect_class" ;
+                            csvw:name "defect_class" ;
                             kbss-csvw:property :defect_class ;
                             csvw:title "defect class" ],
                         [ a csvw:Column ;
-                            csvw:name ":project" ;
+                            csvw:name "project" ;
                             kbss-csvw:property :project ;
                             csvw:title "project" ],
                         [ a csvw:Column ;
-                            csvw:name ":sequence" ;
+                            csvw:name "sequence" ;
                             kbss-csvw:property :sequence ;
                             csvw:title "sequence" ],
                         [ a csvw:Column ;
-                            csvw:name ":scope" ;
+                            csvw:name "scope" ;
                             kbss-csvw:property :scope ;
                             csvw:title "scope" ],
                         [ a csvw:Column ;
-                            csvw:name ":est_min" ;
+                            csvw:name "est_min" ;
                             kbss-csvw:property :est_min ;
-                            csvw:title "est-min" ]
+                            csvw:title "est_min" ]
 .
 
 kbss-csvw:property  a rdf:Property .
