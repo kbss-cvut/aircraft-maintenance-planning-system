@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-INPUT_FILE_NAME=input.tsv
+INPUT_FILE_NAME=input.csv
 INPUT_FILE=./target/$INPUT_FILE_NAME
 
 if [ ! "$#" -eq 1 ]; then
