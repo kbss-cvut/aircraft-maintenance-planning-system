@@ -23,7 +23,7 @@ $(echo "sshpass -p $CREDENTIALS sftp $HOSTNAME:$INPUT_FILE_NAME")
 # create output directory if does not exists
 mkdir -p $(dirname $OUTPUT_FILE_PATH)
 
-echo INFO: Downloading file to $OUTPUT_FILE_PATH
+echo INFO: Writing file to $OUTPUT_FILE_PATH
 cat $INPUT_FILE_NAME > $OUTPUT_FILE_PATH
 
 rm $INPUT_FILE_NAME
