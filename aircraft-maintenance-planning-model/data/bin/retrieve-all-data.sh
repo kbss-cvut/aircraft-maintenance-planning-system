@@ -17,5 +17,5 @@ for index in ${!DATA_DIRS[*]}; do
 	# retrieve data
 	./bin/retrieve-data.sh
 
-	cd
+	cd -
 done
