@@ -36,8 +36,11 @@ URL="$SPIPES_SERVICE/service?_pId=$FUNCTION_ID&datasetResource=@$INPUT_FILE_NAME
 INPUT_FILE_ABSOLUTE="`realpath $INPUT_FILE`"
 
 set -x
+set -e
 
-curl --location --request POST  \
+# TODO use --fail-with-body when having curl 7.76
+# rerun without --fail to see the error from the server
+curl --fail --location --request POST  \
 	--header 'Accept: text/turtle' \
 	--form 'files=@"'${INPUT_FILE_ABSOLUTE}'"' \
 	"$URL" > $OUTPUT_FILE

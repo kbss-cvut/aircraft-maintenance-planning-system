@@ -1,19 +1,21 @@
-#!/bin/bash
+#!/bin/bash -e
 # If the parameter is equal to "--download", the script automatically download files from ftp
 DOWNLOAD=$1
 SCRIPT_DIR=$(dirname $(readlink -m $0))
 
 source "$SCRIPT_DIR/data-dirs"
 
-for index in ${!FILE_NAMES[*]}; do
-	FILE_NAME=${FILE_NAMES[$index]}
- 	DATA_DIR=${DATA_DIRS[$index]}
+for index in ${!DATA_DIRS[*]}; do
+	DATA_DIR_NAME=${DATA_DIRS[$index]}
+	cd $DATA_DIR_NAME
 
 	if [[ $# -eq 1 && "$1" == "--download" ]]; then
 		# download ftp files
-		$(echo "$(echo $SCRIPT_DIR/download-ftp-file.sh) $FILE_NAME $DATA_DIR")  
+		./bin/get-input-from-ftp.sh
 	fi
 	
 	# retrieve data
-	$(echo "$(echo $SCRIPT_DIR/../$DATA_DIR/bin/retrieve-data.sh)") 	
+	./bin/retrieve-data.sh
+
+	cd
 done

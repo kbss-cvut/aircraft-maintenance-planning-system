@@ -7,13 +7,3 @@ DATA_DIRS=(
     time-estimate
     wp-catalog
 )
-
-FILE_NAMES=(
-    pritomnost.csv
-    Dashboard2_project-numbers.csv
-    Dashboard2_time-analysis.csv
-    Dashboard2_WO-TC-ref.csv
-    Dashboard2_defect-class.csv
-    Dashboard2_time-estimate.csv
-    Dashboard2_WP-catalog.csv
-)
