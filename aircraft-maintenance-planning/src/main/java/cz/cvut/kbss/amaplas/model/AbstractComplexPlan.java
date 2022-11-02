@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 public abstract class AbstractComplexPlan<T extends AbstractPlan> extends AbstractPlan {
 
     @OWLObjectProperty(iri = Vocabulary.s_p_has_part)
-    private Set<AbstractPlan> planParts = new HashSet<>();
+    protected Set<AbstractPlan> planParts = new HashSet<>();
 
     public Set<T> getPlanParts() {
         return (Set<T>)planParts;

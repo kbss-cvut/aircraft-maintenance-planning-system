@@ -213,6 +213,9 @@ public class SparqlDataReaderRDF4J {
         optional(bs, "phase", taskType::setPhase);
         optional(bs, "taskType", taskType::setTaskType);
         optional(bs, "area", taskType::setArea);
+        optional(bs, "elPower", taskType::setElPowerRestrictions);//?elPower ?hydPower ?jacks
+        optional(bs, "hydPower", taskType::setHydPowerRestrictions);
+        optional(bs, "jacks", taskType::setJackRestrictions);
         return taskType;
     }
 
@@ -245,8 +248,6 @@ public class SparqlDataReaderRDF4J {
         String query = ResourceUtils.loadResource(queryName);
         List<Result> results = executeQuery(query, bindings, endpoint, username, password, SparqlDataReaderRDF4J::convertToTimeLog);
 
-        // fix data alignment
-        Result.normalizeTaskTypes(results);
         return results.stream().collect(Collectors.groupingBy(Result::form0))
                 .entrySet().stream()
                 .map(e -> e.getValue().get(0))

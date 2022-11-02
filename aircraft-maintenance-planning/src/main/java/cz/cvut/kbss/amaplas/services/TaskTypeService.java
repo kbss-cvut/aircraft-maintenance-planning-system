@@ -22,24 +22,24 @@ public class TaskTypeService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TaskTypeService.class);
 
-    private final RevisionHistory revisionHistory;
     private final ConfigProperties config;
     private ConfigProperties.Repository repoConfig;
 
-    public TaskTypeService(RevisionHistory revisionHistory, ConfigProperties config) {
-        this.revisionHistory = revisionHistory;
+    public TaskTypeService(ConfigProperties config) {
         this.config = config;
         this.repoConfig = config.getRepository();
     }
 
     @PostConstruct
     public void init(){
+        // Load taskTypeDefinitions
         List<TaskType> taskTypeDefinitions = SparqlDataReaderRDF4J.__loadTCDefinitions(
                 repoConfig.getUrl(), repoConfig.getTaskDefinitionsGraph(),
                 repoConfig.getUsername(), repoConfig.getPassword());
         TaskType.setTaskTypeDefinitions(taskTypeDefinitions);
-        // TODO load mapping for task type definitions
+        // TODO - load task card types from data repository
         LOG.debug("Initializing the TaskTypeService done.");
+        // load taskType to TaskType definition mappings
         loadTaskMappings();
     }
 
@@ -96,20 +96,25 @@ public class TaskTypeService {
     }
 
     /**
-     * Calculates the mappings from the data in the repository and writes the new mappings in the repository and
-     * refreshes the mapping memory cache.
+     * Calculates the mappings from the data in the repository and refreshes the mapping memory cache.
      */
-    public void updateTaskTypeMapping(){
+    public void updateTaskTypeMappingInMemory(List<Result> sessions){
         LOG.info("update task type mapping to task definitions");
         // read task type definitions initialize a map from session task type code to task types definition codes.
-        Map<String, List<Result>> revisions = revisionHistory.getAllClosedRevisionsWorkLog(true);
-        List<Result> sessions = revisions.values().stream().flatMap(l -> l.stream()).collect(Collectors.toList());
         List<TaskType> taskTypeDefinitions = SparqlDataReaderRDF4J.__loadTCDefinitions(
                 repoConfig.getUrl(), repoConfig.getTaskDefinitionsGraph(),
                 repoConfig.getUsername(), repoConfig.getPassword());
         TaskType.setTaskTypeDefinitions(taskTypeDefinitions);
         LOG.debug("Map task type definitions to session log task types");
         TaskType.initTC2TCDefMap(sessions);
+    }
+
+    /**
+     * Calculates the mappings from the data in the repository and writes the new mappings in the repository and
+     * refreshes the mapping memory cache.
+     */
+    public void updateTaskTypeMapping(List<Result> sessions){
+        updateTaskTypeMappingInMemory(sessions);
         Map<String, List<TaskType>> map = TaskType.getTaskTCCode2TCDefinitionMap();
         SparqlDataReaderRDF4J.persistStatements(
                 SparqlDataReaderRDF4J.convertTaskCardAsStatement(map),

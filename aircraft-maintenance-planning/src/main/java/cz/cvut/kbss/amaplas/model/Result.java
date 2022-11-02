@@ -169,6 +169,11 @@ public class Result{
         normalizeScopes(results);
     }
 
+    /**
+     * Set the scope of  each Result (work session) to the main scope of the task card using the heuristic that the main
+     * scope is the one which is used the most.
+     * @param results
+     */
     public static void normalizeScopes(List<Result> results){
         results.stream().collect(Collectors.groupingBy(r -> r.taskType)).entrySet().stream()
                 .forEach(e ->
@@ -178,6 +183,12 @@ public class Result{
                 );
     }
 
+    /**
+     * Create a normalized set of unique task types with normalized codes, labels and scopes (main scopes) using the
+     * method TaskType.normalizeTaskTypes. Replace references to task types in results with the normalized the task types.
+     *
+     * @param results
+     */
     public static void normalizeTaskTypeLabels(List<Result> results){
         Map<String, TaskType> taskTypeMap = TaskType.normalizeTaskTypes(
                 results.stream()

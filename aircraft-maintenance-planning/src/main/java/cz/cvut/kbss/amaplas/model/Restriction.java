@@ -9,18 +9,22 @@ import java.net.URI;
 import java.util.Set;
 
 @OWLClass(iri = Vocabulary.s_c_restriction)
-public class ResourceRestriction extends AbstractEntity<String>{
+public class Restriction extends AbstractEntity<String>{
+
     @OWLObjectProperty(iri = Vocabulary.s_p_requirement_on)
-    protected Resource resource;
+    protected URI subject;
     @OWLObjectProperty(iri = Vocabulary.s_p_has_requirement)
     protected Set<URI> requiredResourceState;
 
-    public Resource getResource() {
-        return resource;
+
+
+
+    public URI getSubject() {
+        return subject;
     }
 
-    public void setResource(Resource resource) {
-        this.resource = resource;
+    public void setSubject(URI subject) {
+        this.subject = subject;
     }
 
     public Set<URI> getRequiredResourceState() {
