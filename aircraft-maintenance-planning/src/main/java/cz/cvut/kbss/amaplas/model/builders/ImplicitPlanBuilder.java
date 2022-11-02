@@ -128,7 +128,7 @@ public class ImplicitPlanBuilder {
         Restriction restriction = getRestriction(restrictionProposition, restrictionSubject);
         RestrictionPlan restrictionPlan = new RestrictionPlan();
         restrictionPlan.setId(modelFactory.generateId());
-        restrictionPlan.setTitle(restrictionProposition);
+        restrictionPlan.setTitle(getRestrictionSubjectLabel(restrictionSubject) + " " + restrictionProposition);
         restrictionPlan.setRestrictions(new HashSet<>());
         restrictionPlan.getRestrictions().add(restriction);
         restrictionPlan.setRequiringPlans(new HashSet<>());
@@ -167,6 +167,15 @@ public class ImplicitPlanBuilder {
             restriction.setTitle(restrictionProposition);
             return restriction;
         });
+    }
+
+    protected String getRestrictionSubjectLabel(URI restrictionSubject){
+        switch (restrictionSubject.toString()){
+            case Vocabulary.s_c_el_dot__power: return "el. power";
+            case Vocabulary.s_c_hyd_dot__power: return "hyd. power";
+            case Vocabulary.s_c_jack: return "jack";
+            default : return null;
+        }
     }
 
     public PlanningResult createRevision(List<Result> results){
