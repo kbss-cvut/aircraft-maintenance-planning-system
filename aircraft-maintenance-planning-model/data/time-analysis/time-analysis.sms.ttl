@@ -326,6 +326,7 @@ CONSTRUCT {
 
     ?mechanicIRI a cm:mechanic ;
         cm:id ?Employee_No ;
+		cm:user-sign ?user_sign ;
         cm:performs ?workSessionIRI ;
         cm:is-part-of-maintenance-line ?employeeMaintenanceLineIRI ;
     .
