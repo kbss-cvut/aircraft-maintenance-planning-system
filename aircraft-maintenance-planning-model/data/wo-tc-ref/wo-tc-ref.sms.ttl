@@ -200,7 +200,7 @@ CONSTRUCT {
     .
 			
     ?aircraftIRI a cm:aircraft, owl:NamedIndividual ;
-        cm:registration ?acRegistration ;
+#       cm:registration ?acRegistration ; # TODO temporarily disabled due to https://github.com/kbss-cvut/aircraft-maintenance-planning-system/issues/115 
 	cm:age ?acAge ;
     .
 } WHERE {
