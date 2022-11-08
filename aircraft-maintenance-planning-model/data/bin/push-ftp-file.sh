@@ -1,12 +1,12 @@
 #!/bin/bash
 
 INPUT_FILE_PATH=$1
-OUTPUT_FILE_PATH=$2
+OUTPUT_FILE_NAME=$2
 
 SCRIPT_DIR=$(dirname $(readlink -m $0))
 
-#INPUT_FILE_PATH=Dashboard2_time-analysis.csv
-#OUTPUT_FILE_PATH=./target/input.tsv
+#INPUT_FILE_PATH=./target/input.tsv
+#OUTPUT_FILE_NAME=Dashboard2_time-analysis.csv
 
 INPUT_FILE_NAME=$(echo $INPUT_FILE_PATH | sed 's|.*/||')
 
@@ -19,7 +19,4 @@ if [[ -z $CREDENTIALS || -z $HOSTNAME ]]; then
   exit
 fi
 
-# create output directory if does not exists
-mkdir -p $(dirname $OUTPUT_FILE_PATH)
-
-echo get $INPUT_FILE_PATH $OUTPUT_FILE_PATH | sshpass -p $CREDENTIALS sftp $HOSTNAME
+echo put $INPUT_FILE_PATH $OUTPUT_FILE_NAME | sshpass -p $CREDENTIALS sftp $HOSTNAME
