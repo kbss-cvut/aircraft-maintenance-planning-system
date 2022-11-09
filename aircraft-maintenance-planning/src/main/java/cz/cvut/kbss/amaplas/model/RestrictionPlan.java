@@ -6,6 +6,7 @@ import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
 
+import java.net.URI;
 import java.util.Set;
 
 /**
@@ -17,7 +18,7 @@ public class RestrictionPlan extends AbstractPlan{
     protected Set<Restriction> restrictions;
 
     @OWLDataProperty(iri = Vocabulary.s_p_requiring_plan)
-    protected Set<AbstractPlan> requiringPlans;
+    protected Set<Long> requiringPlans;
 
     public Set<Restriction> getRestrictions() {
         return restrictions;
@@ -27,11 +28,11 @@ public class RestrictionPlan extends AbstractPlan{
         this.restrictions = restrictions;
     }
 
-    public Set<AbstractPlan> getRequiringPlans() {
+    public Set<Long> getRequiringPlans() {
         return requiringPlans;
     }
 
-    public void setRequiringPlans(Set<AbstractPlan> requiringPlans) {
+    public void setRequiringPlans(Set<Long> requiringPlans) {
         this.requiringPlans = requiringPlans;
     }
 }

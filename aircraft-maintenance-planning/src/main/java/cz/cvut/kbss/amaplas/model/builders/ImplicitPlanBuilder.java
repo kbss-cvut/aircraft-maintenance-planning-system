@@ -54,6 +54,7 @@ public class ImplicitPlanBuilder {
                 Comparator
                         .comparing((RestrictionPlan p) -> p.getStartTime().getTime())
                         .thenComparing((RestrictionPlan p) -> p.getEndTime().getTime())
+                        .thenComparing((RestrictionPlan p) -> p.getRestrictions().iterator().next().getTitle())
         ));
         // simplify restriction plans
         map.values().stream().flatMap(p -> {
@@ -73,26 +74,26 @@ public class ImplicitPlanBuilder {
     protected List<RestrictionPlan> simplifyPlans(List<RestrictionPlan> originalPlans){
         LOG.debug("merge list of restriction plans");
         List<RestrictionPlan> plans = new ArrayList<>();
-            int i = 0, j = 0;
-            RestrictionPlan p1, p2 = null;
-            for(; i < originalPlans.size(); i = j){
-                p1 = originalPlans.get(i);
-                for(j = i + 1; j < originalPlans.size(); j ++) {
-                    p2 = originalPlans.get(j);
-                    // check if plans can be merged
-                    boolean propositionMatches = p1.getTitle().equals(p2.getTitle());
-                    if(!propositionMatches)
-                        break;
-                    if(p1.getEndTime().getTime() < p2.getEndTime().getTime()) {
-                        // merge plans
-                        p1.getRequiringPlans().addAll(p2.getRequiringPlans());
-                        p1.setEndTime(p2.getEndTime());
-                    }
+        int i = 0, j = 0;
+        RestrictionPlan p1, p2 = null;
+        for(; i < originalPlans.size(); i = j) {
+            p1 = originalPlans.get(i);
+            for(j = i + 1; j < originalPlans.size(); j ++) {
+                p2 = originalPlans.get(j);
+                // check if plans can be merged
+                boolean propositionMatches = p1.getTitle().equals(p2.getTitle());
+                if(!propositionMatches)
+                    break;
+                if(p1.getEndTime().getTime() < p2.getEndTime().getTime()) {
+                    // merge plans
+                    p1.getRequiringPlans().addAll(p2.getRequiringPlans());
+                    p1.setEndTime(p2.getEndTime());
                 }
-                plans.add(p1);
             }
-            if(originalPlans.size() > j && p2 != null)
-                plans.add(p2);
+            plans.add(p1);
+        }
+        if(originalPlans.size() > j && p2 != null)
+            plans.add(p2);
         return plans;
     }
 
@@ -105,14 +106,9 @@ public class ImplicitPlanBuilder {
      * @return
      */
     public List<RestrictionPlan> getRestrictionPlans(TaskPlan taskPlan, TaskType taskType){
-        return Stream.<Pair<String, Function<TaskType, String>>>of(
-                Pair.of(Vocabulary.s_c_el_dot__power, TaskType::getElPowerRestrictions),
-                Pair.of(Vocabulary.s_c_hyd_dot__power, TaskType::getHydPowerRestrictions),
-                Pair.of(Vocabulary.s_c_jack, TaskType::getJackRestrictions))
-                .filter(p -> p.getValue().apply(taskType) != null && !p.getValue().apply(taskType).isBlank() && !p.getValue().apply(taskType).trim().equals("/"))
-                .map(
-                        p -> getRestrictionPlan(taskPlan, taskType, p.getValue().apply(taskType), URI.create(p.getKey()))
-                )
+        return taskType.getRestrictions().stream()
+                .filter(p -> !p.getValue().trim().equals("/"))
+                .map(p -> getRestrictionPlan(taskPlan, taskType, p.getValue(), p.getKey()))
                 .collect(Collectors.toList());
     }
 
@@ -124,7 +120,7 @@ public class ImplicitPlanBuilder {
      * @param restrictionSubject
      * @return
      */
-    public RestrictionPlan getRestrictionPlan(TaskPlan taskPlan, TaskType taskType, String restrictionProposition, URI restrictionSubject){
+    public RestrictionPlan getRestrictionPlan(TaskPlan taskPlan, TaskType taskType, String restrictionProposition, String restrictionSubject){
         Restriction restriction = getRestriction(restrictionProposition, restrictionSubject);
         RestrictionPlan restrictionPlan = new RestrictionPlan();
         restrictionPlan.setId(modelFactory.generateId());
@@ -132,7 +128,7 @@ public class ImplicitPlanBuilder {
         restrictionPlan.setRestrictions(new HashSet<>());
         restrictionPlan.getRestrictions().add(restriction);
         restrictionPlan.setRequiringPlans(new HashSet<>());
-        restrictionPlan.getRequiringPlans().add(taskPlan);
+        restrictionPlan.getRequiringPlans().add(taskPlan.getId());
         applyTemporalValues(taskPlan, restrictionPlan);
 
         return restrictionPlan;
@@ -158,18 +154,18 @@ public class ImplicitPlanBuilder {
      * @param restrictionSubject
      * @return
      */
-    public Restriction getRestriction(String restrictionProposition, URI restrictionSubject){
-        String restrictionId = DigestUtils.md5Hex(restrictionSubject.toString() + restrictionProposition);
+    public Restriction getRestriction(String restrictionProposition, String restrictionSubject){
+        String restrictionId = DigestUtils.md5Hex(restrictionSubject + restrictionProposition);
         return getEntity(restrictionId, "restriction", () -> {
             Restriction restriction = new Restriction();
             restriction.setId(restrictionId);
-            restriction.setSubject(restrictionSubject);
+            restriction.setSubject(URI.create(restrictionSubject));
             restriction.setTitle(restrictionProposition);
             return restriction;
         });
     }
 
-    protected String getRestrictionSubjectLabel(URI restrictionSubject){
+    protected String getRestrictionSubjectLabel(String restrictionSubject){
         switch (restrictionSubject.toString()){
             case Vocabulary.s_c_el_dot__power: return "el. power";
             case Vocabulary.s_c_hyd_dot__power: return "hyd. power";
