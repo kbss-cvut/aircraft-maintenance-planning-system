@@ -131,6 +131,13 @@ public class ImplicitPlanBuilder {
         restrictionPlan.getRequiringPlans().add(taskPlan.getId());
         applyTemporalValues(taskPlan, restrictionPlan);
 
+        // add resource
+        Resource resource = getEntity(restrictionSubject, "restriction-subject", () -> {
+            Resource r = new Resource();
+            r.setEntityURI(URI.create(restrictionSubject));
+            r.setTitle(getRestrictionSubjectLabel(restrictionSubject));
+            return r;
+        });
         return restrictionPlan;
     }
 
