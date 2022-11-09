@@ -6,11 +6,13 @@ import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
 import cz.cvut.kbss.jopa.model.annotations.Transient;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.net.URI;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @OWLClass(iri = Vocabulary.s_c_Maintenance_task)
@@ -118,6 +120,16 @@ public class TaskType extends EventType<String> {
 
     public void setJackRestrictions(String jackRestrictions) {
         this.jackRestrictions = jackRestrictions;
+    }
+
+    public List<Pair<String,String>> getRestrictions(){
+        return Stream.<Pair<String, Function<TaskType, String>>>of(
+                        Pair.of(Vocabulary.s_c_el_dot__power, TaskType::getElPowerRestrictions),
+                        Pair.of(Vocabulary.s_c_hyd_dot__power, TaskType::getHydPowerRestrictions),
+                        Pair.of(Vocabulary.s_c_jack, TaskType::getJackRestrictions))
+                .map(p -> Pair.of(p.getKey(), p.getValue().apply(this)))
+                .filter(p -> p.getValue() != null)
+                .collect(Collectors.toList());
     }
 
     public Set<URI> getScopes() {
