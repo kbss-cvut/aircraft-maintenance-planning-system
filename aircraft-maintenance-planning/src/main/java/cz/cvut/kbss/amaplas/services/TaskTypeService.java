@@ -136,4 +136,10 @@ public class TaskTypeService {
             return null;
         return TaskType.taskTypeMap.get(taskTypeCode);
     }
+
+    public List<TaskType> getTaskTypes(){
+        if(TaskType.taskTypeMap == null)
+            return null;
+        return new ArrayList<>(TaskType.taskTypeMap.values());
+    }
 }
