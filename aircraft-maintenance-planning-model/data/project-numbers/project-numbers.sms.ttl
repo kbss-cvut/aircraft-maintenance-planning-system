@@ -63,14 +63,14 @@ CONSTRUCT {
          cm:id ?JobGroup ;
      .
 
-     ?billingContractIRI a ?billingContractTypeIRI, owl:NamedIndividual ;
+     ?billingContractIRI a cm:billing-contract, ?billingContractTypeIRI, owl:NamedIndividual ;
            cm:has-sub-project ?subProjectIRI ;
            cm:has-charging-method ?chargingMethodIRI ;
      .
      ?billingContractTypeIRI a owl:Class, owl:NamedIndividual, cm:billing-contract-type  ;
            cm:id ?LimitType ;
      .
-     ?chargingMethodIRI a ?chargingMethodTypeIRI, owl:NamedIndividual ;
+     ?chargingMethodIRI a cm:charging-method, ?chargingMethodTypeIRI, owl:NamedIndividual ;
            cm:cap-limit ?capLimitTyped ;
      .
 
