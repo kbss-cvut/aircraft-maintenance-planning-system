@@ -42,7 +42,8 @@ public class ImplicitPlanBuilder {
         List<RestrictionPlan> restrictionPlans = revisionPlan.streamPlanParts()
                 .filter(p -> p instanceof TaskPlan)
                 .map(p -> (TaskPlan)p)
-                .filter(p -> p.getTaskType() != null && p.getTaskType().getDefinition() != null)
+                .filter(p -> p.getTaskType() != null && p.getTaskType().getDefinition() != null
+                        && p.getStartTime() != null && p.getEndTime() != null)
                 .flatMap(
                         p -> getRestrictionPlans(p, p.getTaskType().getDefinition()).stream()
                 ).collect(Collectors.toList());
