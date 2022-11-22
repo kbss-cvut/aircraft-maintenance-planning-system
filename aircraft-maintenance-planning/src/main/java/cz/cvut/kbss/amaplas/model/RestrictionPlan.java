@@ -18,7 +18,7 @@ public class RestrictionPlan extends AbstractPlan{
     protected Set<Restriction> restrictions;
 
     @OWLDataProperty(iri = Vocabulary.s_p_requiring_plan)
-    protected Set<Long> requiringPlans;
+    protected Set<AbstractPlan> requiringPlans;
 
     public Set<Restriction> getRestrictions() {
         return restrictions;
@@ -28,11 +28,11 @@ public class RestrictionPlan extends AbstractPlan{
         this.restrictions = restrictions;
     }
 
-    public Set<Long> getRequiringPlans() {
+    public Set<AbstractPlan> getRequiringPlans() {
         return requiringPlans;
     }
 
-    public void setRequiringPlans(Set<Long> requiringPlans) {
+    public void setRequiringPlans(Set<AbstractPlan> requiringPlans) {
         this.requiringPlans = requiringPlans;
     }
 }
