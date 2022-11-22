@@ -228,7 +228,7 @@ WHERE {
     ] ;
   km-tabular:delimiter "	" ;
   km-tabular:quote-character "\"" ;
-  km-tabular:use-custom-tokenizer "true" ;
+  km-tabular:accept-invalid-quoting "true" ;
   sm:next :construct-csat-maintenance-data ;
 .
 td:transform-data_Return
