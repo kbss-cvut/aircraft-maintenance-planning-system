@@ -124,11 +124,12 @@ public class ImplicitPlanBuilder {
         Restriction restriction = getRestriction(restrictionProposition, restrictionSubject);
         RestrictionPlan restrictionPlan = new RestrictionPlan();
         restrictionPlan.setId(modelFactory.generateId());
+        restrictionPlan.setEntityURI(modelFactory.createURI(restrictionPlan.getId() + ""));
         restrictionPlan.setTitle(getRestrictionSubjectLabel(restrictionSubject) + " " + restrictionProposition);
         restrictionPlan.setRestrictions(new HashSet<>());
         restrictionPlan.getRestrictions().add(restriction);
         restrictionPlan.setRequiringPlans(new HashSet<>());
-        restrictionPlan.getRequiringPlans().add(taskPlan.getId());
+        restrictionPlan.getRequiringPlans().add(taskPlan);
         applyTemporalValues(taskPlan, restrictionPlan);
 
         // add the restrictionSubject as a resource in the restriction Plan
@@ -168,6 +169,7 @@ public class ImplicitPlanBuilder {
         return getEntity(restrictionId, "restriction", () -> {
             Restriction restriction = new Restriction();
             restriction.setId(restrictionId);
+            restriction.setEntityURI(modelFactory.createURI(restrictionId));
             restriction.setSubject(URI.create(restrictionSubject));
             restriction.setTitle(restrictionProposition);
             return restriction;
@@ -197,6 +199,7 @@ public class ImplicitPlanBuilder {
         Long revisionId = revisionCode != null ? (long)revisionCode.hashCode() : null;
         revisionPlan.setTitle(revisionCode);
         revisionPlan.setId(revisionId);
+        revisionPlan.setEntityURI(modelFactory.createURI(revisionId + ""));
 
         revisionPlan.setResource(aircraft);
 

@@ -1,6 +1,7 @@
 package cz.cvut.kbss.amaplas.model;
 
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
 import java.util.Date;
 import java.util.function.Supplier;
 
@@ -13,6 +14,7 @@ public class ModelFactory {
 
     protected Long lastId = null;
     protected Long lastIdSlot = -1l;
+    protected String uriNamespace = "http://onto.fel.cvut.cz/ontologies/csat-maintenance/";
 
     public TaskType newTaskType(String code, String label, String area, String taskType, String scope, String phase, String taskCat){
         TaskType tt = new TaskType(code, label);
@@ -102,7 +104,9 @@ public class ModelFactory {
 
     public <T extends AbstractEntity> T newEntity(Supplier<T> entityFactory, String label){
         T entity = entityFactory.get();
-        entity.setId(generateId());
+        Long id = generateId();
+        entity.setEntityURI(createURI(id + ""));
+        entity.setId(id);
         entity.setTitle(label);
         return entity;
     }
@@ -120,6 +124,19 @@ public class ModelFactory {
         plan.setWorkTime(workTime);
         return plan;
     }
+
+    public String getUriNamespace() {
+        return uriNamespace;
+    }
+
+    public void setUriNamespace(String uriNamespace) {
+        this.uriNamespace = uriNamespace;
+    }
+
+    public URI createURI(String fragment){
+        return URI.create(uriNamespace + fragment);
+    }
+
 
     public Long generateId(){
         long idSlot = System.currentTimeMillis();
