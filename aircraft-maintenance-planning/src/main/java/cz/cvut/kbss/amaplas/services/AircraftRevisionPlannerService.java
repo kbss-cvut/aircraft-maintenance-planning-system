@@ -167,18 +167,16 @@ public class AircraftRevisionPlannerService extends BaseService{
                 .filter(p -> p instanceof SessionPlan)
                 .map(p -> (SessionPlan)p)
                 .forEach(sp -> {
-                    if(sp.getStartTime() == null)
-                        sp.setStartTime(revisionStartDate);
-
-                    if(sp.getEndTime() == null)
-                        sp.setEndTime(defaultTaskPlanEnd);
-                    long duration = sp.getEndTime().getTime() - sp.getStartTime().getTime();
-                    sp.setDuration(duration);
-                    sp.setWorkTime(duration);
                     sp.setPlannedStartTime(sp.getStartTime());
                     sp.setPlannedEndTime(sp.getEndTime());
-                    sp.setPlannedDuration(duration);
-                    sp.setPlannedWorkTime(duration);
+
+                    if(sp.getStartTime() != null && sp.getEndTime() != null){
+                        long duration = sp.getEndTime().getTime() - sp.getStartTime().getTime();
+                        sp.setDuration(duration);
+                        sp.setWorkTime(duration);
+                        sp.setPlannedDuration(duration);
+                        sp.setPlannedWorkTime(duration);
+                    }
                 });
         // 2. update plan parts bottom up
         revisionPlan.applyOperationBottomUp( p -> p.updateTemporalAttributes());

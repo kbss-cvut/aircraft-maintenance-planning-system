@@ -65,7 +65,7 @@ public abstract class AbstractComplexPlan<T extends AbstractPlan> extends Abstra
         // start time is the min of all start times
         List<LongInterval> intervals = planParts.stream()
                 .map(p -> p.convertPlannedTimeInterval(null, null))
-                .filter(DEFINED_INTERVAL)
+                .filter(DEFINED_INTERVAL) // TODO - filter is too restrictive, there might partial intervals where only one bound is set.
                 .collect(Collectors.toList());
         LongInterval unionInterval = LongIntervalImpl.union(intervals);
 
@@ -77,7 +77,9 @@ public abstract class AbstractComplexPlan<T extends AbstractPlan> extends Abstra
     }
 
     public void updatePlannedWorkTimeFromPlanParts(){
-        long plannedWorkTime = planParts.stream().mapToLong(AbstractPlan::getPlannedWorkTime).sum();
+        long plannedWorkTime = planParts.stream()
+                .filter(p -> p.getPlannedWorkTime() != null)
+                .mapToLong(AbstractPlan::getPlannedWorkTime).sum();
         setPlannedWorkTime(plannedWorkTime);
     }
 
@@ -91,20 +93,21 @@ public abstract class AbstractComplexPlan<T extends AbstractPlan> extends Abstra
 
         List<LongInterval> intervals = planParts.stream()
                 .map(p -> p.convertActualTimeInterval(fromDate, toDate))
-                .filter(DEFINED_INTERVAL)
+                .filter(DEFINED_INTERVAL) // TODO - filter is too restrictive, there might partial intervals where only one bound is set.
                 .collect(Collectors.toList());
 
         LongInterval unionInterval = LongIntervalImpl.union(intervals);
         if(unionInterval != null) {
             setStartTime(new Date(unionInterval.getStart()));
-//            setEndTime(new Date(unionInterval.getEnd()));
             setEndTime(new Date(unionInterval.getEnd()));
             setDuration(unionInterval.getLength());
         }
     }
 
     public void updateActualWorkTimeFromPlanParts(){
-        long plannedWorkTime = planParts.stream().mapToLong(AbstractPlan::getWorkTime).sum();
+        long plannedWorkTime = planParts.stream()
+                .filter(p -> p.getWorkTime() != null)
+                .mapToLong(AbstractPlan::getWorkTime).sum();
         setWorkTime(plannedWorkTime);
     }
 
