@@ -51,12 +51,12 @@ CONSTRUCT {
      ?mainProjectIRI a cm:main-project, owl:NamedIndividual ;
            cm:id ?MainProject ;
      .
-     ?billingContractIRI a cm:defect-class-based-billing-contract, owl:NamedIndividual ;
+     ?billingContractIRI a cm:billing-contract, cm:defect-class-based-billing-contract, owl:NamedIndividual ;
            cm:has-main-project ?mainProjectIRI ;
            cm:has-charging-method ?chargingMethodIRI ;
            cm:has-billing-contract-defect-class ?defectClasstIRI ;
      .
-     ?chargingMethodIRI a ?chargingMethodTypeIRI, owl:NamedIndividual ;
+     ?chargingMethodIRI a cm:charging-method, ?chargingMethodTypeIRI, owl:NamedIndividual ;
            cm:cap-limit ?capLimitTyped ;
      .
      ?chargingMethodTypeIRI a owl:Class, owl:NamedIndividual, cm:charging-method-type ;
