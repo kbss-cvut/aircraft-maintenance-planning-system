@@ -173,7 +173,7 @@ CONSTRUCT {
         owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
     .
 
-    ?workpackageIRI a cm:workpackage, owl:NamedIndividual, ?workpackageWithStatus ;
+    ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
         cm:id ?workpackageId ;
         cm:workpackage-scheduled-start-time ?wpStartDateScheduled ;
         cm:workpackage-scheduled-end-time ?wpEndDateScheduled ;
@@ -197,6 +197,7 @@ CONSTRUCT {
         cm:findings-avio-in-man-hours ?findingsAVIOMhs ;
         cm:findings-shm-in-man-hours ?findingsSHMMhs ;
         cm:findings-workshops-in-man-hours ?findingsWorkshopsMhs ;
+        cm:workpackage-open-status ?isWorkpackageStatusOpen ;
     .
 
     ?workpackageMaintenanceLineIRI a cm:maintenance-line ;
@@ -311,7 +312,7 @@ CONSTRUCT {
      BIND(STRDT(str(?Findings_AVIO), xsd:integer) as ?findingsAVIOMhs)
      BIND(STRDT(str(?Findings_SHM), xsd:integer) as ?findingsSHMMhs)
      BIND(STRDT(str(?Findings_Workshops), xsd:integer) as ?findingsWorkshopsMhs)
-     BIND(if(?WP_status = "open", cm:open-workpackage, if(?WP_status = "closed", cm:closed-workpackage, ?notDefined)) as ?workpackageWithStatus)
+     BIND(if(?WP_status = "open", true, if(?WP_status = "closed", false, ?notDefined)) as ?isWorkpackageStatusOpen)
 
 }""" ;
     ] ;
