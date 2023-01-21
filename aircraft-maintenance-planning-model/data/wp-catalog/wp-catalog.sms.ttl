@@ -173,7 +173,7 @@ CONSTRUCT {
         owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
     .
 
-    ?workpackageIRI a cm:workpackage, owl:NamedIndividual ;
+    ?workpackageIRI a cm:workpackage, owl:NamedIndividual, ?workpackageWithStatus ;
         cm:id ?workpackageId ;
         cm:workpackage-scheduled-start-time ?wpStartDateScheduled ;
         cm:workpackage-scheduled-end-time ?wpEndDateScheduled ;
@@ -295,7 +295,6 @@ CONSTRUCT {
      BIND(dl:normalize(?MainProject) as ?mainProjectNormalizedId)
      BIND(dl:instance(cm:main-project, ?mainProjectNormalizedId) as ?mainProjectIRI)
 
-
      BIND(STRDT(str(?TAT_scheduled__days_), xsd:integer) as ?turnAroundTimeScheduledDays)
      BIND(STRDT(str(?TAT_real__days_), xsd:integer) as ?turnAroundTimeRealDays)
      BIND(STRDT(str(?MHrs_in_FIX), xsd:integer) as ?fixedPriceMhs)
@@ -312,6 +311,7 @@ CONSTRUCT {
      BIND(STRDT(str(?Findings_AVIO), xsd:integer) as ?findingsAVIOMhs)
      BIND(STRDT(str(?Findings_SHM), xsd:integer) as ?findingsSHMMhs)
      BIND(STRDT(str(?Findings_Workshops), xsd:integer) as ?findingsWorkshopsMhs)
+     BIND(if(?WP_status = "open", cm:open-workpackage, if(?WP_status = "closed", cm:closed-workpackage, ?notDefined)) as ?workpackageWithStatus)
 
 }""" ;
     ] ;
