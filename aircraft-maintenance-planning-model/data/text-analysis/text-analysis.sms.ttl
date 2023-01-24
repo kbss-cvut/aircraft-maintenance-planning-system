@@ -1,0 +1,443 @@
+# baseURI: http://onto.fel.cvut.cz/ontologies/csat/text-analysis-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/csat-maintenance
+# imports: http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
+
+@prefix : <http://onto.fel.cvut.cz/ontologies/csat/text-analysis-0.1/> .
+@prefix ata: <http://onto.fel.cvut.cz/voc/ata-100/> .
+@prefix cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
+@prefix cmd: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/> .
+@prefix config: <http://onto.fel.cvut.cz/ontologies/csat/config/> .
+@prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix dl: <http://onto.fel.cvut.cz/ontologies/csat/data-lib/> .
+@prefix doc: <http://onto.fel.cvut.cz/ontologies/documentation/> .
+@prefix kbss-module: <http://onto.fel.cvut.cz/ontologies/lib/module/> .
+@prefix km-rdf4j: <http://onto.fel.cvut.cz/ontologies/lib/module/rdf4j/> .
+@prefix km-sesame: <http://onto.fel.cvut.cz/ontologies/lib/module/sesame/> .
+@prefix km-tabular: <http://onto.fel.cvut.cz/ontologies/lib/module/tabular/> .
+@prefix km-convert: <http://onto.fel.cvut.cz/ontologies/lib/module/RDF2CSV/> .
+@prefix km-terms: <http://onto.fel.cvut.cz/ontologies/lib/module/extract-term-occurrences/> .
+@prefix ms: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sm: <http://topbraid.org/sparqlmotion#> .
+@prefix sml: <http://topbraid.org/sparqlmotionlib#> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+@prefix spl: <http://spinrdf.org/spl#> .
+@prefix td: <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1/> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://onto.fel.cvut.cz/ontologies/csat/text-analysis-0.1>
+  a owl:Ontology ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
+.
+
+
+:convert-html
+  a kbss-module:tabular;
+  sm:next :extract-term-occurrences;
+  km-tabular:source-resource-uri [
+      sp:varName "datasetResource" ;
+    ] ;
+  km-tabular:process-html-file true;
+  km-tabular:data-prefix "http://onto.fel.cvut.cz/ontologies/csat/text-analysis-0.1/";
+  rdfs:label "Convert HTML to RDF representation."
+.
+
+
+:extract-term-occurrences
+  a kbss-module:extract-term-occurrences;
+  sm:next :construct-row-triples ;
+  km-terms:source-resource-uri [
+      sp:varName "datasetResource" ;
+    ] ;
+  km-terms:data-prefix "http://onto.fel.cvut.cz/ontologies/csat/text-analysis-0.1/";
+  rdfs:label "Extract term occurences from RDF representation" ;
+  sml:replace false;
+.
+
+:import-vocabulary
+  a sml:ImportRDFFromWorkspace ;
+  sm:next :construct-row-triples ;
+  sm:next :apply-part-of-rule;
+  sml:baseURI ""; # Fill with vocabulary URI (example "http://onto.fel.cvut.cz/ontologies/slovník/agendový/popis-dat/pojem/glosář/instance1755087557" )
+  sml:ignoreImports true ;
+  rdfs:label "Import vocabulary" ;
+.
+
+:construct-row-triples
+  a sml:ApplyConstruct ;
+  sm:next :transform-to-output-format ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - Apply algorithm 
+PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
+PREFIX vocabulary: <http://onto.fel.cvut.cz/ontologies/slovnik/slovnik-komponent-a-zavad---novy/pojem/>
+      
+CONSTRUCT {
+  ?row
+    :WorkOrderId    ?woTc ;
+    :No_            ?rowNumber ;
+    :TaskCardId     ?tcRef ;
+    :WO_text        ?woText;
+    :failureMode    ?failMode;
+    :mulFailures         ?mulFailures;
+    :component      ?component;
+    :mulComponents  ?mulComponents;
+    :hasoccurrence  ?selectedoccurrence;
+    :occurrences    ?occurrence;
+    :references-text ?text.
+
+  ?occurrence a ?type;
+      :references-annotation ?annotation;
+      :references-text ?text ;
+      :whole-text ?wholeText ;
+      termit:je-výskytem-termu   ?term ;
+      termit:má-koncovou-pozici  ?endIndex ;
+      termit:property ?property;
+      termit:resource ?resource;
+      termit:typeof ?typeof;
+      :score ?finalScore;
+      :resourceIri ?resourceIri;
+      termit:má-startovní-pozici ?startIndex.
+
+} WHERE {
+
+  ?occurrence
+    :references-annotation ?annotation;
+    :references-text ?text ;
+    :whole-text ?wholeText ;
+
+    termit:je-výskytem-termu   ?term ;
+    termit:má-koncovou-pozici  ?endIndex ;
+    termit:má-startovní-pozici ?startIndex.
+
+  OPTIONAL {?occurrence :score ?score;}
+  BIND(IF(BOUND(?score), ?score, "10.0"^^xsd:float) AS ?finalScore) # this is workaround for better score comparing
+
+  ?row 
+    :CSAT_WO_TC    ?woTc ;
+    :No_           ?rowNumber ;
+    :TC_reference  ?tcRef ;
+    :WO_text       ?woText.
+
+  FILTER(?woText = ?wholeText)
+  BIND(STRBEFORE(STRAFTER(STR(?annotation), "resource=\\""), "\\"") as ?resource)
+  BIND(STRBEFORE(STRAFTER(STR(?annotation), "property=\\""), "\\"") as ?property)
+  BIND(STRBEFORE(STRAFTER(STR(?annotation), "typeof=\\""  ), "\\"") as ?typeof)
+  BIND(IRI(?resource) AS ?resourceIri)
+
+  ?resourceIri a skos:Concept;
+        skos:broader ?type.
+
+  OPTIONAL{
+    ?mulComponents a skos:Concept;
+        skos:broader vocabulary:component .
+    FILTER(?mulComponents = ?resourceIri)
+  }
+  
+  OPTIONAL{
+    ?mulFailures a skos:Concept;
+       skos:broader vocabulary:failure.
+    FILTER(?mulFailures = ?resourceIri)
+  }
+}""" ;
+    ] ;
+  sml:replace true ;
+  rdfs:label "Construct row triples" ;
+.
+
+:transform-to-output-format
+  a sml:ApplyConstruct ;
+  sm:next :select-final-component;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 
+PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
+PREFIX vocabulary: <http://onto.fel.cvut.cz/ontologies/slovnik/slovnik-komponent-a-zavad---novy/pojem/>
+
+CONSTRUCT{
+
+  ?row  rdf:type :Row;
+        :DocumentLineNumber           ?rowNumber ;
+        :WorkOrderId      ?woTC ;
+        :TaskCardId    ?TCref ; 
+        :OriginalText ?originalText;
+        :AnnotatedText ?annotatedText;
+        :finalComp ?finalComp;
+        :finalFailure ?finalFailure.
+
+}WHERE{
+  ?row 
+      :No_              ?no ;
+      :WorkOrderId      ?woTC ;
+      :TaskCardId       ?TCref ;  
+      :references-text  ?originalText;
+      :WO_text          ?annotatedText;
+      :occurrences      ?occurrence.
+  
+  BIND(STRBEFORE(?no, ".") AS ?rowNumber)
+
+  OPTIONAL{
+    ?occurrence a vocabulary:component;
+                :score ?componentScore;
+                termit:je-výskytem-termu ?t1.
+
+    BIND(?occurrence AS ?finalComp)
+    BIND(?t1 AS ?compLabel)
+  }
+
+  OPTIONAL{
+    ?occurrence a vocabulary:failure;
+            termit:je-výskytem-termu ?t;
+            :score ?failScore.
+    BIND(?failScore AS ?failureScore)
+    BIND(?occurrence AS ?finalFailure)
+    BIND(?t AS ?failureLabel)
+  }
+}""" ;
+    ] ;
+  sml:replace false ;
+.
+
+:select-final-component
+  a sml:ApplyConstruct ;
+  sm:next :select-final-failure;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
+
+  CONSTRUCT{
+    ?row
+        :ComponentUri ?resource;
+        :selectedComponentNode ?selectedComponent;
+        :componentScore ?maxScore;
+        :compUri ?chosenComp;
+        :compLabel ?chosenCompLabel;
+        :res ?possibleComps;
+        :resource ?resource;
+  
+   }WHERE{
+    ?row rdf:type :Row;
+        :finalComp ?chosenComp .
+
+    ?chosenComp :score ?maxScore;
+        :resourceIri ?resource.
+    
+    FILTER NOT EXISTS {
+       ?row :finalComp ?otherComp .
+       ?otherComp :score ?otherScore.
+       FILTER(?chosenComp != ?otherComp)
+       FILTER(?maxScore <= ?otherScore)
+    }
+
+}""" ;
+    ] ;
+  sml:replace false ;
+  rdfs:label "Select final component" ;
+.
+
+:select-final-failure
+  a sml:ApplyConstruct ;
+  sm:next :apply-part-of-rule ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
+PREFIX vocabulary: <http://onto.fel.cvut.cz/ontologies/slovnik/slovnik-komponent-a-zavad---novy/pojem/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
+
+  CONSTRUCT{
+    ?row
+        :FailureUri ?resource;
+        :FailureLabel ?chosenFailureLabel;
+        :failureScore ?maxScore;
+        :selectedFailureNode ?selectedFailure;
+  
+  }WHERE{
+   ?row rdf:type :Row;
+        :finalFailure ?chosenFailure .
+
+    ?chosenFailure :score ?maxScore;
+        :resourceIri ?resource.
+    
+  FILTER NOT EXISTS {
+       ?row :finalFailure ?otherFailure .
+       ?otherFailure :score ?otherScore.
+       FILTER(?chosenFailure != ?otherFailure)
+       FILTER(?maxScore <= ?otherScore)
+    }
+}""" ;
+    ] ;
+  sml:replace false ;
+  rdfs:label "Select final Failure ." ;
+.
+
+:apply-part-of-rule
+  a sml:ApplyConstruct ;
+  sm:next :construct-multiple-components-and-failures ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
+PREFIX vocabulary: <http://onto.fel.cvut.cz/ontologies/slovnik/slovnik-komponent-a-zavad---novy/pojem/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
+
+  CONSTRUCT{
+    ?row  :ruledComponent ?compA;
+
+  }WHERE{
+    ?row  a :Row;
+          :finalComp ?compA;
+          :finalComp ?compB.
+    
+    OPTIONAL { ?row :ComponentUri ?componentUri }
+    
+    ?compA  a vocabulary:component;
+            :resourceIri/termit:part-of ?componentResourceB;
+            :resourceIri/skos:prefLabel ?label.
+
+    ?compB  a vocabulary:component;
+            :resourceIri ?componentResourceB.
+
+    FILTER (!BOUND(?componentUri))
+    FILTER( ?compA != ?compB )
+  }
+""" ;
+    ] ;
+  sml:replace false ;
+.
+
+
+:construct-multiple-components-and-failures
+  a sml:ApplyConstruct ;
+  # sm:next :check-is-confirmed-and-labels ;
+  sm:next :convert-to-csv ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
+PREFIX vocabulary: <http://onto.fel.cvut.cz/ontologies/slovnik/slovnik-komponent-a-zavad---novy/pojem/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
+
+  CONSTRUCT{
+    ?row  a :Row;
+          :AggregateScore ?aggregateScore;
+          :IsConfirmed ?isConfirmed;
+          :FailureScore ?finalFailureScore;
+          :FailureLabel ?failureLabel;
+          :FailureLabel ?failureLabel;
+          :FailureUri   ?failureUri;
+          :ComponentUri ?componentUri;
+          :ComponentLabel ?componentLabel;
+          :ComponentScore ?finalComponentScore;
+          :MultipleComponents ?mulComponentsLabel;
+          :MultipleComponents ?otherComponentLabel;
+          :MultipleFailures ?tmpFailureLabel;
+          :MultipleFailures ?otherFailureLabel;
+          :DocumentLineNumber ?lineNumber ;
+          :WorkOrderId        ?woID ;
+          :WO_text            ?woText;
+          :AnnotatedText      ?annotatedText;
+          :OriginalText       ?originalText;
+          :TaskCardId           ?taskCardId.
+
+  }WHERE{
+    ?row  a :Row;
+          :DocumentLineNumber   ?lineNumber;
+          :WorkOrderId          ?woID;
+          :WO_text              ?woText;
+          :AnnotatedText        ?annotatedText;
+          :OriginalText         ?originalText;
+          :TaskCardId           ?taskCardId.
+
+    OPTIONAL { ?row :componentScore ?compScore   } 
+    OPTIONAL { ?row :failureScore ?failureScore  }
+    OPTIONAL { ?row :FailureUri ?failureUri      }
+    OPTIONAL { ?row :FailureUri/skos:prefLabel ?failureLabel}
+
+    OPTIONAL{ 
+      ?row :ComponentUri ?compUri.
+      ?compUri skos:prefLabel ?chosenComponentLabel.
+    }
+    
+    OPTIONAL{
+      ?row :ruledComponent ?ruledComp.
+      ?ruledComp  :score ?ruledCompScore;
+                  :resourceIri ?componentResource.
+      ?componentResource skos:prefLabel ?ruledComponentLabel.
+    }
+
+    BIND(IF(BOUND(?ruledComponentLabel), ?ruledComponentLabel, ?chosenComponentLabel) AS ?componentLabel)
+    BIND(IF(BOUND(?componentResource), ?componentResource, ?compUri) AS ?componentUri)
+
+    OPTIONAL{ 
+      ?row  :finalFailure ?failure;
+            :finalFailure ?otherFailure.
+        
+      ?failure :resourceIri/skos:prefLabel ?tmpFailureLabel;
+                      :score ?tmpFailureScore.
+      ?otherFailure :resourceIri/skos:prefLabel ?otherFailureLabel;
+                      :score ?otherFailureScore.
+      FILTER(?failure != ?otherFailure)
+    }
+
+    OPTIONAL{ 
+      ?row  :finalComp ?mulComponents;
+            :finalComp ?otherComponent.
+        
+      ?mulComponents :resourceIri/skos:prefLabel ?mulComponentsLabel;
+                      :score ?tmpCompScore.
+      ?otherComponent :resourceIri/skos:prefLabel ?otherComponentLabel;
+                      :score ?otherCompScore.
+      FILTER(?mulComponents != ?otherComponent)
+    }
+    
+    BIND((?compScore * ?failureScore) AS ?tmpScore)
+    BIND(IF(?compScore = "10.0"^^xsd:float || ?failureScore = "10.0"^^xsd:float, "TRUE", "FALSE") AS ?tmpIsConfirmed)
+    BIND(IF(!BOUND(?tmpIsConfirmed), "FALSE", ?tmpIsConfirmed) AS ?isConfirmed)
+    BIND(IF(BOUND(?ruledCompScore), ?ruledCompScore, ?compScore) AS ?tmpComponentScore)
+    BIND(IF(?tmpComponentScore = "10"^^xsd:float, "1.0"^^xsd:float, ?tmpComponentScore) AS ?finalComponentScore)
+    BIND(IF(?failureScore = "10"^^xsd:float, "1.0"^^xsd:float, ?failureScore) AS ?finalFailureScore)
+    
+    BIND(
+      (IF(BOUND(?finalComponentScore), ?finalComponentScore, "1.0"^^xsd:float) 
+        * IF(BOUND(?finalFailureScore), ?finalFailureScore, "1.0"^^xsd:float)
+      ) AS ?aggregateScore)
+  }
+""" ;
+    ] ;
+  sml:replace true ;
+.
+
+:convert-to-csv
+  a kbss-module:RDF2CSV;
+  sm:next :transform-text-analysis-data_Return ;
+  km-convert:data-prefix "http://onto.fel.cvut.cz/ontologies/csat/text-analysis-0.1/";
+      km-convert:source-resource-uri [
+      sp:varName "datasetResource" ;
+  ] ;
+  km-convert:file-output-path "output.csv";
+  rdfs:label "Convert to CSV"
+.
+
+:transform-text-analysis-data
+  a sm:Function ;
+  sm:returnModule :transform-text-analysis-data_Return ;
+  rdfs:subClassOf sm:Functions ;
+.
+
+
+:transform-text-analysis-data_Return
+  a sml:ReturnRDF ;
+  sml:serialization sml:Turtle ;
+  rdfs:label "Return greeting statement" ;
+.
