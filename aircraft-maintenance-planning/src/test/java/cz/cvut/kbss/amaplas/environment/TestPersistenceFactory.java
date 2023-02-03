@@ -2,14 +2,8 @@ package cz.cvut.kbss.amaplas.environment;
 
 import cz.cvut.kbss.amaplas.config.PersistenceConfigUtils;
 import cz.cvut.kbss.jopa.Persistence;
-import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.EntityManagerFactory;
-import cz.cvut.kbss.jopa.model.EntityManagerImpl;
-import cz.cvut.kbss.jopa.sessions.UnitOfWork;
-import cz.cvut.kbss.jopa.sessions.UnitOfWorkImpl;
-import cz.cvut.kbss.ontodriver.sesame.config.SesameOntoDriverProperties;
-import org.eclipse.rdf4j.repository.Repository;
-import org.eclipse.rdf4j.repository.RepositoryConnection;
+import cz.cvut.kbss.ontodriver.rdf4j.config.Rdf4jOntoDriverProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +15,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.Map;
 
-import static cz.cvut.kbss.jopa.model.JOPAPersistenceProperties.*;
+import static cz.cvut.kbss.jopa.model.JOPAPersistenceProperties.LANG;
+import static cz.cvut.kbss.jopa.model.JOPAPersistenceProperties.PREFER_MULTILINGUAL_STRING;
 
 @Configuration
 @EnableConfigurationProperties(cz.cvut.kbss.amaplas.config.ConfigProperties.class)
@@ -50,7 +45,7 @@ public class TestPersistenceFactory {
                 null, null,
                 config.getPersistence().getDriver()
         );
-        properties.put(SesameOntoDriverProperties.SESAME_USE_VOLATILE_STORAGE, Boolean.TRUE.toString());
+        properties.put(Rdf4jOntoDriverProperties.USE_VOLATILE_STORAGE, Boolean.TRUE.toString());
         properties.put(LANG, config.getPersistence().getLanguage());
         properties.put(PREFER_MULTILINGUAL_STRING, Boolean.TRUE.toString());
         this.emf = Persistence.createEntityManagerFactory("planningTestPU", properties);
