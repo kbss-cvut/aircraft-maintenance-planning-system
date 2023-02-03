@@ -30,22 +30,46 @@ public class SparqlDataReader {
     public static final String ALL_TASKS = "/queries/analysis/all-tasks-strat-order.sparql";
     public static final String TASK_CARDS_FROM_HISTORY = "/queries/analysis/task-cards-from-history.sparql";
     public static final String TASK_TYPES_DEFINITIONS = "/queries/analysis/task-types-definitions.sparql";
+    public static final String dateFormatPattern = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String dateFormatPattern1 = "yyyy-MM-dd'T'HH:mm:ssZ";
     public static final String dateFormatPattern2 = "dd.MM.yyyy'T'HH:mm";
-    public static final SimpleDateFormat df = new SimpleDateFormat(dateFormatPattern1);
+
+    public static final ThreadLocal<SimpleDateFormat> dateFormat = new ThreadLocal<SimpleDateFormat>(){
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat(dateFormatPattern);
+        }
+    };
+    public static final ThreadLocal<SimpleDateFormat> df = new ThreadLocal<SimpleDateFormat>(){
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat(dateFormatPattern1);
+        }
+    };
+
     public static final SimpleDateFormat day = new SimpleDateFormat("yyyy-MM-dd");
 
-    public static String formatDate(SimpleDateFormat sdf, Date d){
-        return d != null ? sdf.format(d) : "";
+    public static String formatDate(Date d){
+        return formatDate(dateFormat.get(), d);
     }
+
+    public static String formatDate(SimpleDateFormat sdf, Date d){
+        try {
+            return d != null ? sdf.format(d) : "";
+        }catch (Exception e){
+            LOG.error("Could not format date {}", d, e);// TODO - adhoc DEBUG try-catch
+        }
+        return "";
+    }
+
     public static Date parseDate(SimpleDateFormat df, String dateTimeString){
         if(dateTimeString.isBlank())
             return null;
-        
+
         try {
             return df.parse(dateTimeString);
-        } catch (ParseException e) {
-            LOG.warn("Could not parse date time string \"{}\"", dateTimeString);
+        } catch (ParseException | NumberFormatException e) {
+            LOG.warn("Could not parse date time string \"{}\"", dateTimeString, e);
         }
         return null;
     }
@@ -127,8 +151,8 @@ public class SparqlDataReader {
         start = start.substring(0,start.length()-1);
         String end = qs.get("end").toString();
         end = end.substring(0,end.length()-1);
-        t.start = df.parse(start + "+0200");
-        t.end = df.parse(end + "+0200");
+        t.start = df.get().parse(start + "+0200");
+        t.end = df.get().parse(end + "+0200");
 
         t.dur = qs.get("dur").asLiteral().getLong();
         return t;
