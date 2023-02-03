@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Date;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 /**
@@ -135,6 +137,16 @@ public class ModelFactory {
 
     public URI createURI(String fragment){
         return URI.create(uriNamespace + fragment);
+    }
+
+    public URI createURI(String prefix, String id, AbstractEntity ... entities){
+        String context = Stream.of(entities)
+                .map(e -> e.getEntityURI() == null
+                        ? e.getId() + "" :
+                        e.getEntityURI().toString().replaceFirst("^.*/([^/]+)", "$1")
+                )
+                .collect(Collectors.joining("--"));
+        return createURI(String.format("%s-%s--%s", prefix, id, context));
     }
 
 

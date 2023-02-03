@@ -218,29 +218,35 @@ public class ImplicitPlanBuilder {
             TaskPlan taskPlan = getTaskPlan(r, generalTaskPlan);
             generalTaskPlan.getPlanParts().add(taskPlan);
 
-            SessionPlan sessionPlan = getSessionPlan(r);
+            SessionPlan sessionPlan = getSessionPlan(r, taskPlan.getResource());
             taskPlan.getPlanParts().add(sessionPlan);
 
         }
         return result;
     }
 
-    public SessionPlan getSessionPlan(Result r){
+    public SessionPlan getSessionPlan(Result r, Resource groupInArea) {
         SessionPlan sessionPlan = modelFactory.newSessionPlan(r.start, r.end);
-        Mechanic mechanic = getMechanic(r);
+        Mechanic mechanic = getMechanic(r, groupInArea);
         sessionPlan.setResource(mechanic);
         return sessionPlan;
     }
 
-    public Mechanic getMechanic(Result r){
+    public Mechanic getMechanic(Result r, Resource groupInArea) {
         Mechanic m = r.getMechanic();
-        LOG.debug("is mechanic null {}", m == null);
+//        LOG.debug("is mechanic null {}", m == null);
         return m == null ?
                 null :
                 getEntity(
-                    (String)m.getId(),
-                    "mechanic",
-                    () -> m
+                        (String)m.getId(),
+                        groupInArea,
+                        () -> {
+                            Mechanic mech = new Mechanic();
+                            mech.setId(m.getId());
+                            mech.setEntityURI(modelFactory.createURI("mechanic", Objects.toString(m.getId()), groupInArea));
+                            mech.setTitle(Objects.toString(m.getId()));
+                            return mech;
+                        }
                 );
     }
 
