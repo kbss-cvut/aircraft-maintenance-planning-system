@@ -3,7 +3,7 @@ package cz.cvut.kbss.amaplas.config;
 import cz.cvut.kbss.jopa.model.JOPAPersistenceProperties;
 import cz.cvut.kbss.jopa.model.JOPAPersistenceProvider;
 import cz.cvut.kbss.ontodriver.config.OntoDriverProperties;
-import cz.cvut.kbss.ontodriver.sesame.config.SesameOntoDriverProperties;
+import cz.cvut.kbss.ontodriver.rdf4j.config.Rdf4jOntoDriverProperties;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ public class PersistenceConfigUtils {
         properties.put(JOPAPersistenceProperties.DATA_SOURCE_CLASS, driver);
 //        properties.put(JOPAPersistenceProperties.LANG, "en");
         properties.put(JOPAPersistenceProperties.PREFER_MULTILINGUAL_STRING, Boolean.FALSE.toString());
-        properties.put(SesameOntoDriverProperties.SESAME_LOAD_ALL_THRESHOLD, "1");
+        properties.put(Rdf4jOntoDriverProperties.LOAD_ALL_THRESHOLD, "1");
         properties.put(OntoDriverProperties.USE_TRANSACTIONAL_ONTOLOGY, Boolean.TRUE.toString());
         if (repositoryUsername != null) {
             properties.put(OntoDriverProperties.DATA_SOURCE_USERNAME, repositoryUsername);

@@ -23,7 +23,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <cz.cvut.kbss.jopa.version>0.17.2</cz.cvut.kbss.jopa.version>
+        <cz.cvut.kbss.jopa.version>0.19.3</cz.cvut.kbss.jopa.version>
         <com.github.ledsoft.version>0.1.1</com.github.ledsoft.version>
         <cz.cvut.kbss.jsonld.version>0.8.9</cz.cvut.kbss.jsonld.version>
         <org.springframework.boot.version>2.6.3</org.springframework.boot.version>
@@ -80,12 +80,17 @@
         </dependency>
         <dependency>
             <groupId>cz.cvut.kbss.jopa</groupId>
+            <artifactId>jopa-api</artifactId>
+            <version>${cz.cvut.kbss.jopa.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cz.cvut.kbss.jopa</groupId>
             <artifactId>jopa-impl</artifactId>
             <version>${cz.cvut.kbss.jopa.version}</version>
         </dependency>
         <dependency>
             <groupId>cz.cvut.kbss.jopa</groupId>
-            <artifactId>ontodriver-sesame</artifactId>
+            <artifactId>ontodriver-rdf4j</artifactId>
             <version>${cz.cvut.kbss.jopa.version}</version>
         </dependency>
 

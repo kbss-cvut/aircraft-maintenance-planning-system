@@ -29,5 +29,5 @@ planning:
     task_mapping_graph: ${TASK_MAPPING_GRAPH:http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-mapping-graph}
 
   persistence:
-    driver: cz.cvut.kbss.ontodriver.sesame.SesameDataSource
+    driver: cz.cvut.kbss.ontodriver.rdf4j.Rdf4jDataSource
     language: en
