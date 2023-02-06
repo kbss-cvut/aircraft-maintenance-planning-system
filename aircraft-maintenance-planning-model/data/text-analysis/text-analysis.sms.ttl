@@ -150,7 +150,7 @@ CONSTRUCT {
   sm:next :select-final-component;
   sml:constructQuery [
       a sp:Construct ;
-      sp:text """# 
+      sp:text """
 
 CONSTRUCT{
 
