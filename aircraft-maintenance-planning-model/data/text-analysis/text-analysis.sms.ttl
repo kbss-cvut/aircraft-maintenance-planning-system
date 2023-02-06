@@ -30,6 +30,9 @@
 @prefix td: <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1/> .
 @prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
 
 <http://onto.fel.cvut.cz/ontologies/csat/text-analysis-0.1>
   a owl:Ontology ;
@@ -45,7 +48,6 @@
     ] ;
   km-tabular:process-html-file true;
   km-tabular:data-prefix "http://onto.fel.cvut.cz/ontologies/csat/text-analysis-0.1/";
-  rdfs:label "Convert HTML to RDF representation."
 .
 
 
@@ -56,7 +58,6 @@
       sp:varName "datasetResource" ;
     ] ;
   km-terms:data-prefix "http://onto.fel.cvut.cz/ontologies/csat/text-analysis-0.1/";
-  rdfs:label "Extract term occurences from RDF representation" ;
   sml:replace false;
 .
 
@@ -66,7 +67,6 @@
   sm:next :apply-part-of-rule;
   sml:baseURI ""; # Fill with vocabulary URI (example "http://onto.fel.cvut.cz/ontologies/slovník/agendový/popis-dat/pojem/glosář/instance1755087557" )
   sml:ignoreImports true ;
-  rdfs:label "Import vocabulary" ;
 .
 
 :construct-row-triples
@@ -75,9 +75,6 @@
   sml:constructQuery [
       a sp:Construct ;
       sp:text """# 1 - Apply algorithm 
-PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
-PREFIX vocabulary: <http://onto.fel.cvut.cz/ontologies/slovnik/slovnik-komponent-a-zavad---novy/pojem/>
       
 CONSTRUCT {
   ?row
@@ -89,7 +86,6 @@ CONSTRUCT {
     :mulFailures         ?mulFailures;
     :component      ?component;
     :mulComponents  ?mulComponents;
-    :hasoccurrence  ?selectedoccurrence;
     :occurrences    ?occurrence;
     :references-text ?text.
 
@@ -137,19 +133,18 @@ CONSTRUCT {
 
   OPTIONAL{
     ?mulComponents a skos:Concept;
-        skos:broader+ vocabulary:component .
+        skos:broader+ cm:component .
     FILTER(?mulComponents = ?resourceIri)
   }
   
   OPTIONAL{
     ?mulFailures a skos:Concept;
-       skos:broader+ vocabulary:failure.
+       skos:broader+ cm:failure.
     FILTER(?mulFailures = ?resourceIri)
   }
 }""" ;
     ] ;
   sml:replace true ;
-  rdfs:label "Construct row triples" ;
 .
 
 :transform-to-output-format
@@ -158,9 +153,6 @@ CONSTRUCT {
   sml:constructQuery [
       a sp:Construct ;
       sp:text """# 
-PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
-PREFIX vocabulary: <http://onto.fel.cvut.cz/ontologies/slovnik/slovnik-komponent-a-zavad---novy/pojem/>
 
 CONSTRUCT{
 
@@ -185,7 +177,7 @@ CONSTRUCT{
   BIND(STRBEFORE(?no, ".") AS ?rowNumber)
 
   OPTIONAL{
-    ?occurrence a vocabulary:component;
+    ?occurrence a cm:component;
                 :score ?componentScore;
                 termit:je-výskytem-termu ?t1.
 
@@ -194,7 +186,7 @@ CONSTRUCT{
   }
 
   OPTIONAL{
-    ?occurrence a vocabulary:failure;
+    ?occurrence a cm:failure;
             termit:je-výskytem-termu ?t;
             :score ?failScore.
     BIND(?failScore AS ?failureScore)
@@ -212,8 +204,6 @@ CONSTRUCT{
   sml:constructQuery [
       a sp:Construct ;
       sp:text """
-PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
 
   CONSTRUCT{
     ?row
@@ -222,7 +212,6 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
         :componentScore ?maxScore;
         :compUri ?chosenComp;
         :compLabel ?chosenCompLabel;
-        :res ?possibleComps;
         :resource ?resource;
   
    }WHERE{
@@ -242,7 +231,6 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 }""" ;
     ] ;
   sml:replace false ;
-  rdfs:label "Select final component" ;
 .
 
 :select-final-failure
@@ -251,9 +239,6 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
   sml:constructQuery [
       a sp:Construct ;
       sp:text """
-PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
-PREFIX vocabulary: <http://onto.fel.cvut.cz/ontologies/slovnik/slovnik-komponent-a-zavad---novy/pojem/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
 
   CONSTRUCT{
     ?row
@@ -278,7 +263,6 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 }""" ;
     ] ;
   sml:replace false ;
-  rdfs:label "Select final Failure ." ;
 .
 
 :apply-part-of-rule
@@ -287,9 +271,6 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
   sml:constructQuery [
       a sp:Construct ;
       sp:text """
-PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
-PREFIX vocabulary: <http://onto.fel.cvut.cz/ontologies/slovnik/slovnik-komponent-a-zavad---novy/pojem/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
 
   CONSTRUCT{
     ?row  :ruledComponent ?compA;
@@ -301,11 +282,11 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
     
     OPTIONAL { ?row :ComponentUri ?componentUri }
     
-    ?compA  a vocabulary:component;
+    ?compA  a cm:component;
             :resourceIri/termit:part-of ?componentResourceB;
             :resourceIri/skos:prefLabel ?label.
 
-    ?compB  a vocabulary:component;
+    ?compB  a cm:component;
             :resourceIri ?componentResourceB.
 
     FILTER (!BOUND(?componentUri))
@@ -324,9 +305,6 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
   sml:constructQuery [
       a sp:Construct ;
       sp:text """
-PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
-PREFIX vocabulary: <http://onto.fel.cvut.cz/ontologies/slovnik/slovnik-komponent-a-zavad---novy/pojem/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
 
   CONSTRUCT{
     ?row  a :Row;
@@ -422,11 +400,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
   a kbss-module:RDF2CSV;
   sm:next :transform-text-analysis-data_Return ;
   km-convert:data-prefix "http://onto.fel.cvut.cz/ontologies/csat/text-analysis-0.1/";
-      km-convert:source-resource-uri [
-      sp:varName "datasetResource" ;
-  ] ;
   km-convert:file-output-path "output.csv";
-  rdfs:label "Convert to CSV"
 .
 
 :transform-text-analysis-data
@@ -439,5 +413,4 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 :transform-text-analysis-data_Return
   a sml:ReturnRDF ;
   sml:serialization sml:Turtle ;
-  rdfs:label "Return greeting statement" ;
 .
