@@ -143,7 +143,7 @@ CONSTRUCT {
   
   OPTIONAL{
     ?mulFailures a skos:Concept;
-       skos:broader vocabulary:failure.
+       skos:broader+ vocabulary:failure.
     FILTER(?mulFailures = ?resourceIri)
   }
 }""" ;
