@@ -309,7 +309,7 @@ WHERE {
   sm:nodeY 442 ;
   sml:constructQuery [
       a sp:Construct ;
-      sp:text """# filter only last 150000 rows ordered by date
+      sp:text """# filter only last 5000 rows ordered by date
 CONSTRUCT {
     ?lastRd ?column ?value .
 }
@@ -320,7 +320,7 @@ WHERE {
             ?lastRd :date ?date .
         }
         ORDER BY DESC(?date)
-        LIMIT 150000
+        LIMIT 5000
     }
 
     ?lastRd ?column ?value .
