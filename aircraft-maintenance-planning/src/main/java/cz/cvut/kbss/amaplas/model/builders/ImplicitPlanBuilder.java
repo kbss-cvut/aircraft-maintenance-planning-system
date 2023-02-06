@@ -244,7 +244,7 @@ public class ImplicitPlanBuilder {
                             Mechanic mech = new Mechanic();
                             mech.setId(m.getId());
                             mech.setEntityURI(modelFactory.createURI("mechanic", Objects.toString(m.getId()), groupInArea));
-                            mech.setTitle(Objects.toString(m.getId()));
+                            mech.setTitle(Objects.toString(m.getTitle() == null ? m.getId() : m.getTitle()));
                             return mech;
                         }
                 );

@@ -44,6 +44,9 @@
 ###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/requiring-plan
 :requiring-plan rdf:type owl:ObjectProperty .
 
+###  http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/has-task-type
+:has-task-type rdf:type owl:ObjectProperty .
+
 
 #################################################################
 #    Data properties
