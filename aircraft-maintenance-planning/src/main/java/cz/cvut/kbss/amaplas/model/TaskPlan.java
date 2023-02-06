@@ -10,7 +10,7 @@ public class TaskPlan extends AbstractComplexPlan<SessionPlan>{
 
 //    private long id;
 //    @JsonProperty("task-type")
-    @OWLObjectProperty(iri = Vocabulary.s_p_task_type)
+    @OWLObjectProperty(iri = Vocabulary.s_p_has_task_type)// has task type
     private TaskType taskType;
 //
 //    @JsonProperty("start-time")
