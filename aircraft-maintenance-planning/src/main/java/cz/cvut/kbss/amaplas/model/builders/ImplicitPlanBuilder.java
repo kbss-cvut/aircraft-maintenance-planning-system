@@ -125,7 +125,7 @@ public class ImplicitPlanBuilder {
         Restriction restriction = getRestriction(restrictionProposition, restrictionSubject);
         RestrictionPlan restrictionPlan = new RestrictionPlan();
         restrictionPlan.setId(modelFactory.generateId());
-        restrictionPlan.setEntityURI(modelFactory.createURI(restrictionPlan.getId() + ""));
+        restrictionPlan.setEntityURI(modelFactory.createURI(restrictionPlan.getId()));
         restrictionPlan.setTitle(getRestrictionSubjectLabel(restrictionSubject) + " " + restrictionProposition);
         restrictionPlan.setRestrictions(new HashSet<>());
         restrictionPlan.getRestrictions().add(restriction);
@@ -238,7 +238,7 @@ public class ImplicitPlanBuilder {
         return m == null ?
                 null :
                 getEntity(
-                        (String)m.getId(),
+                        m.getId(),
                         groupInArea,
                         () -> {
                             Mechanic mech = new Mechanic();

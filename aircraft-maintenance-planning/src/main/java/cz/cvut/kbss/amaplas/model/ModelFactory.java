@@ -107,8 +107,8 @@ public class ModelFactory {
     public <T extends AbstractEntity> T newEntity(Supplier<T> entityFactory, String label){
         T entity = entityFactory.get();
         Long id = generateId();
-        entity.setEntityURI(createURI(id + ""));
         entity.setId(id);
+        entity.setEntityURI(createURI(entity.getId()));
         entity.setTitle(label);
         return entity;
     }
@@ -142,7 +142,7 @@ public class ModelFactory {
     public URI createURI(String prefix, String id, AbstractEntity ... entities){
         String context = Stream.of(entities)
                 .map(e -> e.getEntityURI() == null
-                        ? e.getId() + "" :
+                        ? e.getId() :
                         e.getEntityURI().toString().replaceFirst("^.*/([^/]+)", "$1")
                 )
                 .collect(Collectors.joining("--"));

@@ -8,7 +8,7 @@ import java.net.URI;
 import java.util.Set;
 
 @MappedSuperclass
-public class AbstractEntity<ID> implements Serializable {
+public class AbstractEntity implements Serializable {
 
     // contains all types of the
     @Types
@@ -23,7 +23,7 @@ public class AbstractEntity<ID> implements Serializable {
     protected URI entityURI;
 
     @OWLDataProperty(iri = Vocabulary.s_p_id)
-    private Object id;
+    protected String id;
 
     @OWLDataProperty(iri = Vocabulary.s_p_label)
     protected String title;
@@ -52,11 +52,18 @@ public class AbstractEntity<ID> implements Serializable {
         this.entityURI = entityURI;
     }
 
-    public ID getId() {
-        return (ID)id;
+    public String getId(){
+        return id;
     }
 
-    public void setId(ID id) {
+    /**
+     * Utility method to convert id to string when it is passed as numeric value.
+     * @param id
+     */
+    public void setId(Object id){
+        this.id = id == null ? null : id.toString();
+    }
+    public void setId(String id){
         this.id = id;
     }
 
