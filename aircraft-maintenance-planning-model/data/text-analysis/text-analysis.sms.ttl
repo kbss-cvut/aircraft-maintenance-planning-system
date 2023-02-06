@@ -137,7 +137,7 @@ CONSTRUCT {
 
   OPTIONAL{
     ?mulComponents a skos:Concept;
-        skos:broader vocabulary:component .
+        skos:broader+ vocabulary:component .
     FILTER(?mulComponents = ?resourceIri)
   }
   
