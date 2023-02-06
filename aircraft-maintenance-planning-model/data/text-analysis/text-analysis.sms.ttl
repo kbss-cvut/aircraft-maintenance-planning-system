@@ -108,6 +108,7 @@ CONSTRUCT {
     :references-annotation ?annotation;
     :references-text ?text ;
     :whole-text ?wholeText ;
+    :resource ?resource;
 
     termit:je-výskytem-termu   ?term ;
     termit:má-koncovou-pozici  ?endIndex ;
@@ -123,9 +124,6 @@ CONSTRUCT {
     :WO_text       ?woText.
 
   FILTER(?woText = ?wholeText)
-  BIND(STRBEFORE(STRAFTER(STR(?annotation), "resource=\\""), "\\"") as ?resource)
-  BIND(STRBEFORE(STRAFTER(STR(?annotation), "property=\\""), "\\"") as ?property)
-  BIND(STRBEFORE(STRAFTER(STR(?annotation), "typeof=\\""  ), "\\"") as ?typeof)
   BIND(IRI(?resource) AS ?resourceIri)
 
   ?resourceIri a skos:Concept;
