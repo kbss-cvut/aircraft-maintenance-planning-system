@@ -21,15 +21,15 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/plans")
-public class PlanController {
+public class PlanController extends BaseController{
     private static final Logger LOG = LoggerFactory.getLogger(PlanController.class);
 
     private final AircraftRevisionPlannerService plannerService;
     private final IdentifierService identifierService;
 
     public PlanController(AircraftRevisionPlannerService plannerService, IdentifierService identifierService) {
+        super(identifierService, Vocabulary.s_c_event_plan);
         this.plannerService = plannerService;
-        this.identifierService = identifierService;
     }
 
     @PostMapping(path = "plan-tasks",consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -135,10 +135,4 @@ public class PlanController {
         URI planUri = expandFragment(planFragment, ns);
         plannerService.deletePlan(planUri);
     }
-
-    protected URI expandFragment(String planFragment, Optional<String> namespace){
-        String ns = namespace.orElse(Vocabulary.s_c_event_plan);
-        return identifierService.composeIdentifier(ns, planFragment);
-    }
-
 }
