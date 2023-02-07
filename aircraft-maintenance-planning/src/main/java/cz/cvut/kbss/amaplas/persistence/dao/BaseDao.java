@@ -2,10 +2,11 @@ package cz.cvut.kbss.amaplas.persistence.dao;
 
 import cz.cvut.kbss.amaplas.exceptions.PersistenceException;
 import cz.cvut.kbss.amaplas.model.AbstractEntity;
+import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.jopa.exceptions.NoResultException;
 import cz.cvut.kbss.jopa.model.EntityManager;
+import cz.cvut.kbss.jopa.model.metamodel.Metamodel;
 import cz.cvut.kbss.jopa.model.query.TypedQuery;
-import org.slf4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URI;
@@ -19,6 +20,8 @@ import java.util.stream.Stream;
  * Base implementation of the generic DAO API.
  */
 public abstract class BaseDao<T extends AbstractEntity> implements GenericDao<T> {
+
+    protected static final URI ID = URI.create(Vocabulary.s_p_id);
 
     private final Class<T> type;
     private final URI typeUri;
@@ -50,7 +53,6 @@ public abstract class BaseDao<T extends AbstractEntity> implements GenericDao<T>
 
     protected <E extends AbstractEntity> TypedQuery<E> selectAll(Class<E> type){
         return selectAll(type, URI.create(EntityToOwlClassMapper.getOwlClassForEntity(type)));
-
     }
 
     protected <E extends AbstractEntity> TypedQuery<E> selectAll(Class<E> type, URI typeUri){
@@ -148,7 +150,39 @@ public abstract class BaseDao<T extends AbstractEntity> implements GenericDao<T>
         }
     }
 
-    public abstract Logger getLogger();
+    @Transactional
+    public Optional<T> findById(Object id){
+        Objects.requireNonNull(id);
+        try {
+            T entity = em.createNativeQuery("SELECT ?t {?t ?p ?id}", type)
+                    .setParameter("p", ID)
+                    .setParameter("id",id)
+                    .getSingleResult();
+//            T e1 = em.find(type, entity.getEntityURI());
+            return Optional.of(entity);
+        } catch (RuntimeException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
+    @Transactional
+    public boolean exists(Object id){
+        try {
+            Objects.requireNonNull(id);
+            return em.createNativeQuery("ASK { ?x a ?type; ?p ?id. }", Boolean.class)
+                    .setParameter("type", typeUri)
+                    .setParameter("p", ID)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
+    public Metamodel getMetamodel(){
+        return em.getMetamodel();
+    }
+
 
     public Class<T> getType() {
         return type;
