@@ -1,11 +1,9 @@
 package cz.cvut.kbss.amaplas.planners;
 
-import cz.cvut.kbss.amaplas.model.PatternType;
-import cz.cvut.kbss.amaplas.model.SequencePattern;
-import cz.cvut.kbss.amaplas.utils.GraphmlUtils;
+import cz.cvut.kbss.amaplas.algs.SimilarityUtils;
 import cz.cvut.kbss.amaplas.model.Result;
 import cz.cvut.kbss.amaplas.model.TaskType;
-import cz.cvut.kbss.amaplas.algs.SimilarityUtils;
+import cz.cvut.kbss.amaplas.utils.GraphmlUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;

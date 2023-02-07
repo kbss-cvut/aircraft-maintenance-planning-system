@@ -7,9 +7,6 @@ import cz.cvut.kbss.amaplas.model.*;
 import cz.cvut.kbss.amaplas.utils.GraphmlUtils;
 import cz.cvut.kbss.amaplas.model.builders.ImplicitPlanBuilder;
 import cz.cvut.kbss.amaplas.model.ops.CopySimplePlanProperties;
-import cz.cvut.kbss.amaplas.planners.OriginalPlanner;
-import cz.cvut.kbss.amaplas.planners.ReuseBasedPlanner;
-import cz.cvut.kbss.amaplas.planners.TaskTypePlanValidator;
 import cz.cvut.kbss.amaplas.persistence.dao.GenericPlanDao;
 import cz.cvut.kbss.amaplas.persistence.dao.PlanTypeDao;
 import cz.cvut.kbss.amaplas.algs.SimilarityUtils;
@@ -19,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import cz.cvut.kbss.amaplas.planners.*;
 import java.net.URI;
 import java.util.*;
 import java.util.stream.Collectors;

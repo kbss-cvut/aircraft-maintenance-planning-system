@@ -1,4 +1,4 @@
-package cz.cvut.kbss.amaplas.model;
+package cz.cvut.kbss.amaplas.planners;
 
 public enum PatternType {
     STRICT_DIRECT_ORDER,

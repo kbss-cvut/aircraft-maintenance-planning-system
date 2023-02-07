@@ -1,10 +1,13 @@
 package cz.cvut.kbss.amaplas.algs.timesequences;
 
 import cz.cvut.kbss.amaplas.model.Result;
-import cz.cvut.kbss.amaplas.model.SequencePattern;
+import cz.cvut.kbss.amaplas.planners.SequencePattern;
 import cz.cvut.kbss.amaplas.model.TaskType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 
