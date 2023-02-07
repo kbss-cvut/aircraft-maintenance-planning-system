@@ -5,6 +5,7 @@ import cz.cvut.kbss.jopa.model.annotations.*;
 
 import java.io.Serializable;
 import java.net.URI;
+import java.util.Map;
 import java.util.Set;
 
 @MappedSuperclass
@@ -30,6 +31,17 @@ public class AbstractEntity implements Serializable {
 
     @OWLDataProperty(iri = Vocabulary.s_p_description)
     protected String description;
+
+    @Properties(fetchType = FetchType.EAGER)
+    protected Map<URI, Set<Object>> properties;
+
+    public Map<URI, Set<Object>> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Map<URI, Set<Object>> properties) {
+        this.properties = properties;
+    }
 
     public Set<URI> getTypes() {
         return types;
@@ -110,13 +122,13 @@ public class AbstractEntity implements Serializable {
 
     @Override
     public String toString() {
-
         return applicationType + "{" +
                 "types=" + types +
                 ", entityURI=" + entityURI +
                 ", id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", properties=" + properties +
                 '}';
     }
 }
