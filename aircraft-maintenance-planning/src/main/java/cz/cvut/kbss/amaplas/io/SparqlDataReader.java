@@ -25,6 +25,7 @@ public class SparqlDataReader {
     public static final String DA_TASK_SO_WITH_WP_SCOPE = "/queries/analysis/task-start-order-with-wp-and-scope.sparql";
     public static final String DA_TASK_SO_WITH_WP_SCOPE_OLD = "/queries/analysis/task-start-order-with-wp-and-scope-old.sparql";
     public static final String WP = "/queries/analysis/wp.sparql";
+    public static final String WP_HEADER = "/queries/analysis/wp-header.sparql";
     public static final String WP_IDS = "/queries/analysis/wp-ids.sparql";
     public static final String TASK_TYPES = "/queries/task-types.sparql";
     public static final String ALL_TASKS = "/queries/analysis/all-tasks-strat-order.sparql";
