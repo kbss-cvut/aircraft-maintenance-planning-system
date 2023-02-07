@@ -9,10 +9,10 @@ import java.time.OffsetDateTime;
 @OWLClass(iri = Vocabulary.s_c_workpackage)
 public class Workpackage extends AbstractEntity{
 
-    @OWLObjectProperty(iri = Vocabulary.s_c_aircraft, fetch = FetchType.EAGER)
+    @OWLObjectProperty(iri = Vocabulary.s_p_is_repair_of, fetch = FetchType.EAGER)
     protected Aircraft aircraft;
 
-    @OWLObjectProperty(iri = Vocabulary.s_c_client, fetch = FetchType.EAGER)
+    @OWLObjectProperty(iri = Vocabulary.s_p_has_client, fetch = FetchType.EAGER)
     protected Client client;
 //    OffsetDateTime
     @OWLDataProperty(iri = Vocabulary.s_p_workpackage_start_time)

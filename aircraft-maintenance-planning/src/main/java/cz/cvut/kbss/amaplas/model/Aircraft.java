@@ -8,6 +8,7 @@ import java.net.URI;
 
 @OWLClass(iri = Vocabulary.s_c_aircraft)
 public class Aircraft extends Resource{
+
     @OWLDataProperty(iri = Vocabulary.s_p_model)
     protected String model;
 
@@ -19,10 +20,18 @@ public class Aircraft extends Resource{
         this.model = model;
     }
 
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
     @Override
     public String toString() {
         return "Aircraft{" +
-                "model='" + model + '\'' +
+                "model='" + model +
                 ", types=" + types +
                 ", applicationType='" + applicationType + '\'' +
                 ", entityURI=" + entityURI +
