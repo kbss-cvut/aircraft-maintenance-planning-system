@@ -28,6 +28,9 @@ public class AbstractEntity implements Serializable {
     @OWLDataProperty(iri = Vocabulary.s_p_label)
     protected String title;
 
+    @OWLDataProperty(iri = Vocabulary.s_p_description)
+    protected String description;
+
     public Set<URI> getTypes() {
         return types;
     }
@@ -75,6 +78,14 @@ public class AbstractEntity implements Serializable {
         this.title = title;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public int hashCode() {
         if(getEntityURI() == null)
@@ -105,6 +116,7 @@ public class AbstractEntity implements Serializable {
                 ", entityURI=" + entityURI +
                 ", id=" + id +
                 ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
