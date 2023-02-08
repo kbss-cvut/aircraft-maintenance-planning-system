@@ -9,18 +9,19 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.*;
-import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class ImplicitPlanBuilder {
+public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result>> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ImplicitPlanBuilder.class);
+    private static final Logger LOG = LoggerFactory.getLogger(WorkSessionBasedPlanBuilder.class);
 
-    private final ModelFactory modelFactory = new ModelFactory();
-    protected Map<Object, Map<String, AbstractEntity>> entityMaps = new HashMap<>();
-    protected Defaults defaults = new Defaults();
+
+    public WorkSessionBasedPlanBuilder() {
+    }
+
+    public WorkSessionBasedPlanBuilder(AbstractPlanBuilder planBuilder) {
+        super(planBuilder);
+    }
 
     /**
      * Add implicit plan restrictions to the provided revisionPlan.
@@ -186,7 +187,8 @@ public class ImplicitPlanBuilder {
         }
     }
 
-    public PlanningResult createRevision(List<Result> results){
+    public RevisionPlan createRevision(PlanBuilderInput<List<Result>> input){
+        List<Result> results = input.getInput();
         Aircraft aircraft = results.stream().map(r -> getAircraft(r)).filter(a -> !defaults.isDefault(a)).findFirst().orElse(null);
         if(aircraft == null)
             aircraft = results.stream().map(r -> getAircraft(r)).findFirst().orElse(null);
@@ -204,8 +206,6 @@ public class ImplicitPlanBuilder {
 
         revisionPlan.setResource(aircraft);
 
-        PlanningResult result = new PlanningResult(revisionPlan);
-
         for(Result r : results) {
             PhasePlan phasePlan = getPhasePlan(r, aircraft);
             revisionPlan.getPlanParts().add(phasePlan);
@@ -222,7 +222,7 @@ public class ImplicitPlanBuilder {
             taskPlan.getPlanParts().add(sessionPlan);
 
         }
-        return result;
+        return revisionPlan;
     }
 
     public SessionPlan getSessionPlan(Result r, Resource groupInArea) {
@@ -234,7 +234,6 @@ public class ImplicitPlanBuilder {
 
     public Mechanic getMechanic(Result r, Resource groupInArea) {
         Mechanic m = r.getMechanic();
-//        LOG.debug("is mechanic null {}", m == null);
         return m == null ?
                 null :
                 getEntity(
@@ -244,100 +243,35 @@ public class ImplicitPlanBuilder {
                             Mechanic mech = new Mechanic();
                             mech.setId(m.getId());
                             mech.setEntityURI(modelFactory.createURI("mechanic", Objects.toString(m.getId()), groupInArea));
-                            mech.setTitle(Objects.toString(m.getId()));
+                            mech.setTitle(Objects.toString(m.getTitle() == null ? m.getId() : m.getTitle()));
                             return mech;
                         }
                 );
     }
 
-    public MaintenanceGroup getMaintenanceGroup(Result r){
+    public MaintenanceGroup getMaintenanceGroupInCtx(Result r, String area){
         String maintenanceGroupLabel = getMaintenanceGroupLabel(r);
-        return getEntity(maintenanceGroupLabel, "maintenance-group", () -> modelFactory.newMaintenanceGroup(maintenanceGroupLabel));
-    }
-
-    public MaintenanceGroup getMaintenanceGroupInCtx(Result r, AircraftArea area){
-        String maintenanceGroupLabel = getMaintenanceGroupLabel(r);
-        Pair pair = Pair.of("group", area);
-        MaintenanceGroup maintenanceGroup = getEntity(maintenanceGroupLabel, pair, () -> modelFactory.newMaintenanceGroup(maintenanceGroupLabel));
-        return maintenanceGroup;
-    }
-
-    public Mechanic getMechanicInCtx(Result r){
-        try {
-
-            String mechanicTitle = getMechanicLabel(r);
-            String area = getAreaLabel(r);
-            return getEntity(
-                    mechanicTitle,
-                    area,
-                    () -> modelFactory.newMechanic(mechanicTitle)
-            );
-        }catch (Exception e){
-            LOG.info("Error getting/creating mechanic", e);
-        }
-        return null;
+        return getMaintenanceGroupInCtx(maintenanceGroupLabel, area);
     }
 
     public AircraftArea getAircraftArea(Result r){
         String area = getAreaLabel(r);
-        return getEntity(area, "aircraft-area", () -> modelFactory.newAircraftArea(area));
-    }
-
-    public AircraftArea getAircraftAreaInCtx(Result r, PhasePlan phasePlan){
-        String area = getAreaLabel(r);
-        return getEntity(area, phasePlan, () -> modelFactory.newAircraftArea(area));
+        return getAircraftArea(area);
     }
 
     public Aircraft getAircraft(Result r){
         String aircraftModel = getAircraftModelLabel(r);
-        return getEntity(aircraftModel, "aircraft", () -> modelFactory.newEntity(() -> new Aircraft(), aircraftModel));
+        return getAircraft(aircraftModel);
     }
 
     public TaskPlan getTaskPlan(final Result r, GeneralTaskPlan gp){
         TaskType taskType = getTaskType(r).orElse(null);
-
-        final AircraftArea area = getAircraftArea(r);
-        TaskPlan taskPlan = null;
-        Object context = gp;
-        if (taskType != null){
-            String taskTypeCode = taskType.getCode();
-            taskPlan = getEntity(taskTypeCode, context, () -> {
-                TaskPlan p = modelFactory.newTaskPlan(taskType);
-                MaintenanceGroup group = getMaintenanceGroupInCtx(r, area);
-                p.setResource(group);
-                return p;
-            });
-        }else {
-            LOG.warn("TaskType is null!!!");
-        }
-        return  taskPlan;
-    }
-
-    public GeneralTaskPlan getGeneralTaskPlan(Result r){
-        String generalTaskType = getGeneralTaskTypeLabel(r);
-        GeneralTaskPlan generalTaskPlan = getEntity(
-                generalTaskType,
-                "general-task-type",
-                () -> createGeneralTasPlan(r, generalTaskType)
-        );
-        return generalTaskPlan;
+        return getTaskPlan(taskType, gp);
     }
 
     public GeneralTaskPlan getGeneralTaskPlanInCtx(Result r, Object context){
         // general task plan <=> different session.type.type per session.type.area
-        String generalTaskType = getGeneralTaskTypeLabel(r);
-        GeneralTaskPlan generalTaskPlan = getEntity(
-                generalTaskType,
-                context,
-                () -> createGeneralTasPlan(r, generalTaskType));
-        return generalTaskPlan;
-    }
-
-    private GeneralTaskPlan createGeneralTasPlan(Result r, String generalTaskType){
-        GeneralTaskPlan p = modelFactory.newGeneralTaskPlan(generalTaskType);
-        AircraftArea area = getAircraftArea(r);
-        p.setResource(area);
-        return p;
+        return getGeneralTaskPlanInCtx(getTaskTypeDefinition(r), context);
     }
 
     public PhasePlan getPhasePlan(Result r, final Aircraft aircraft){
@@ -351,37 +285,26 @@ public class ImplicitPlanBuilder {
         return phasePlan;
     }
 
-
-
-    // this is a simplification
-    public String getMechanicLabel(Result r){
-        return Optional.ofNullable(r.getMechanic()).map(Mechanic::getTitle)
-                .map(this::mapNull).orElse(modelFactory.generateId() + "");
-    }
-
     public String getAircraftModelLabel(Result r){
-        return getTaskTypeDefinition(r).map(TaskType::getAcmodel)
-                .map(this::mapNull).orElse(defaults.aircraftModelLabel);
+        return getAircraftModelLabel(getTaskTypeDefinition(r));
     }
 
     public String getAreaLabel(Result r){
-        return getTaskTypeDefinition(r).map(TaskType::getArea)
-                .map(this::mapNull).orElse(defaults.areaLabel);
+        return getAircraftAreaLabel(getTaskTypeDefinition(r));
     }
 
     public String getMaintenanceGroupLabel(Result r){
-        return getTaskTypeDefinition(r).map(TaskType::getScope)
-                .map(this::mapNull).orElse(defaults.maintenanceGroupLabel);
+        return (r.scope != null)
+                ? r.scope
+                : getMaintenanceGroupLabel(getTaskTypeDefinition(r));
     }
 
     public String getGeneralTaskTypeLabel(Result r){
-        return getTaskTypeDefinition(r).map(TaskType::getTaskType)
-                .map(this::mapNull).orElse(defaults.generalTaskTypeLabel);
+        return getGeneralTaskTypeLabel(getTaskTypeDefinition(r));
     }
 
     public String getPhaseLabel(Result r){
-        return getTaskTypeDefinition(r).map(TaskType::getPhase)
-                .map(this::mapNull).orElse(defaults.phaseLabel);
+        return getPhaseLabel(getTaskTypeDefinition(r));
     }
 
     public Optional<TaskType> getTaskType(Result r){
@@ -391,104 +314,5 @@ public class ImplicitPlanBuilder {
     public Optional<TaskType> getTaskTypeDefinition(Result r){
         return getTaskType(r).map(tt -> tt.getDefinition());
     }
-
-
-    /**
-     *
-     * @param id - the id of the object to be fetched
-     * @param context - equals and hash should be implemented to follow that two different instances with the same
-     *               attribute are interpreted as equal and have the same hash code
-     * @param generator
-     * @param <T>
-     * @return
-     */
-    public <T extends AbstractEntity> T getEntity(String id, Object context, Supplier<T> generator){
-        Map<String, AbstractEntity> entityMap = entityMaps.get(context);
-        if(entityMap == null) {
-            entityMap = new HashMap<>();
-            entityMaps.put(context, entityMap);
-        }
-        AbstractEntity r = entityMap.get(id);
-        if(r == null) {
-            r = generator.get();
-            entityMap.put(id, r);
-        }
-        return (T)r;
-    }
-
-    public static class PlanningResult{
-        protected RevisionPlan revisionPlan;
-        protected Map<Result, SessionPlan> sessionPlans = new HashMap<>();
-
-        public PlanningResult(RevisionPlan revisionPlan) {
-            this.revisionPlan = revisionPlan;
-        }
-
-        public RevisionPlan getRevisionPlan() {
-            return revisionPlan;
-        }
-
-        public void setRevisionPlan(RevisionPlan revisionPlan) {
-            this.revisionPlan = revisionPlan;
-        }
-
-        public Map<Result, SessionPlan> getSessionPlans() {
-            return sessionPlans;
-        }
-
-        public void setSessionPlans(Map<Result, SessionPlan> sessionPlans) {
-            this.sessionPlans = sessionPlans;
-        }
-    }
-
-    private String mapNull(String s){
-        return isEmpty(s) ? null : s;
-    }
-
-    private boolean isEmpty(String s){
-        return s == null || s.trim().isEmpty();
-    }
-
-    public static String DEFAULT = "unknown";
-    public static class Defaults{
-        public String aircraftModelLabel = DEFAULT;
-        public String phaseLabel = DEFAULT;
-        public String areaLabel = DEFAULT;
-        public String maintenanceGroupLabel = DEFAULT;
-        public String generalTaskTypeLabel = DEFAULT;
-        public String taskTypeCode = DEFAULT;
-        public String mechanicLabel = DEFAULT;
-        public boolean isDefault(Aircraft ac){
-            return aircraftModelLabel.equals(ac.getTitle());
-        }
-
-        public boolean isDefault(AircraftArea aa){
-            return areaLabel.equals(aa.getTitle());
-        }
-
-        public boolean isDefault(MaintenanceGroup mg){
-            return maintenanceGroupLabel.equals(mg.getTitle());
-        }
-    }
-
-//    public static void main(String[] args) {
-////        List<Pair<Integer, Integer>> l = Stream.of(
-////                Pair.of(2,4),
-////                Pair.of(2,3),
-////                Pair.of(1,2)
-////                ).collect(Collectors.toList());
-////
-////        l.sort(Comparator
-////                .comparing((Pair<Integer, Integer> p) -> p.getLeft())
-////                .thenComparing((Pair<Integer, Integer> p) -> p.getRight())
-////        );
-////        System.out.println(l);
-//
-//        for(int i = 0; i < 10; i++) {
-//            for (int j = i + 1; j < 10; j++) {
-//                System.out.println(String.format("%d, %d", i, j));
-//            }
-//            System.out.println(String.format("%d, %d", i, j));
-//        }
-//    }
 }
+
