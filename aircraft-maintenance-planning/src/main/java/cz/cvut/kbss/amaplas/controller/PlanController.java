@@ -2,7 +2,6 @@ package cz.cvut.kbss.amaplas.controller;
 
 import cz.cvut.kbss.amaplas.model.AbstractPlan;
 import cz.cvut.kbss.amaplas.model.RevisionPlan;
-import cz.cvut.kbss.amaplas.model.TaskPlan;
 import cz.cvut.kbss.amaplas.services.AircraftRevisionPlannerService;
 import cz.cvut.kbss.amaplas.services.IdentifierService;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
@@ -14,9 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,34 +22,19 @@ public class PlanController extends BaseController{
     private static final Logger LOG = LoggerFactory.getLogger(PlanController.class);
 
     private final AircraftRevisionPlannerService plannerService;
-    private final IdentifierService identifierService;
 
     public PlanController(AircraftRevisionPlannerService plannerService, IdentifierService identifierService) {
         super(identifierService, Vocabulary.s_c_event_plan);
         this.plannerService = plannerService;
     }
 
-    @PostMapping(path = "plan-tasks",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void planTasks(@RequestBody List<String> taskCardCodes){
-        LOG.info("planning tasks {}", taskCardCodes);
-        plannerService.planTaskTypeCodes(taskCardCodes);
-    }
-
-    @PostMapping(path = "plan-tasks",consumes = MediaType.TEXT_PLAIN_VALUE)
-    public void planTasks(@RequestBody String taskCardCodes){
-        planTasks(Arrays.asList(taskCardCodes.split(",")));
-    }
-
-
-    @GetMapping(path = "revision-plans", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
-    public List<TaskPlan> planRevision(@RequestParam String revisionId) {
-        List<TaskPlan> tts = plannerService.planRevision(revisionId);
-        return tts;
-    }
-
     @GetMapping(path = "revision-plans-induced-by-revision-execution", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE} )
     public RevisionPlan planRevision2(@RequestParam String revisionId){
         return plannerService.createRevisionPlanScheduleDeducedFromRevisionExecution(revisionId);
+    }
+    @GetMapping(path = "plan-from-similar-revisions", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE} )
+    public RevisionPlan planFromSimilarRevisions(@RequestParam String revisionId){
+        return plannerService.createRevisionPlanScheduleDeducedFromSimilarRevisions(revisionId);
     }
 
     /**
