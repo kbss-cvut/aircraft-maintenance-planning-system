@@ -4,6 +4,8 @@ import cz.cvut.kbss.amaplas.config.ConfigProperties;
 import cz.cvut.kbss.amaplas.io.SparqlDataReader;
 import cz.cvut.kbss.amaplas.io.SparqlDataReaderRDF4J;
 import cz.cvut.kbss.amaplas.model.Result;
+import cz.cvut.kbss.amaplas.model.Workpackage;
+import cz.cvut.kbss.amaplas.persistence.dao.WorkpackageDAO;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.ValueFactory;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class RevisionHistory {
@@ -22,18 +25,21 @@ public class RevisionHistory {
 
     protected final ConfigProperties config;
     protected final TaskTypeService taskTypeService;
+
+    protected final WorkpackageDAO workpackageDAO;
     protected ConfigProperties.Repository repoConfig;
 
     private Map<String, List<Result>> historyCache;
 
-    public RevisionHistory(ConfigProperties config, TaskTypeService taskTypeService) {
+    public RevisionHistory(ConfigProperties config, TaskTypeService taskTypeService, WorkpackageDAO workpackageDAO) {
         this.config = config;
         this.repoConfig = config.getRepository();
         this.taskTypeService = taskTypeService;
+        this.workpackageDAO = workpackageDAO;
     }
 
     public List<String> getAllRevisions(){
-        return new SparqlDataReaderRDF4J().readRowsAsStrings(SparqlDataReader.WP, repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword());
+        return new SparqlDataReaderRDF4J().readRowsAsStrings(SparqlDataReader.WP_HEADER, repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword());
     }
 
     public List<String> getRevisionIds(){
@@ -99,6 +105,23 @@ public class RevisionHistory {
         return historyCache.get(revisionId);
     }
 
+    /**
+     * Returns the sessions of main scopes ordered by their start time.
+     * @return
+     */
+    public Map<String, List<Result>> getMainScopeSessionsByRevisionId(){
+        Map<String, List<Result>> workLog =  getAllClosedRevisionsWorkLog(false);
+        Map<String, List<Result>> filteredPlans = new HashMap<>();
+        workLog.entrySet().forEach(e ->
+                filteredPlans.put(e.getKey(), e.getValue().stream()
+                        .filter(Result.isMainScopeSession)
+                        .collect(Collectors.toList()))
+        );
+
+        Map<String, List<Result>> taskStartPlans = toRevisionPlans(filteredPlans, Result.startTimeMilSec, null);
+        return taskStartPlans;
+    }
+
 
     /**
      * Returns the start sessions or main scopes ordered by their start time. A start session is a session that starts a specific task
@@ -132,15 +155,20 @@ public class RevisionHistory {
         return planHistory;
     }
 
-
     public List<Result> toRevisionPlan(Collection<Result> plan, Function<Result, Long> orderBy, Function<Result, Object> groupId){
         Comparator<Result> order = Comparator.comparing(orderBy);
-        return plan.stream()
-                .collect(Collectors.groupingBy(groupId))
-                .entrySet().stream()
-                .map(pe -> pe.getValue().stream()
-                        .collect(Collectors.minBy(order)).orElse(null))
-                .sorted(order)
-                .collect(Collectors.toList());
+        Stream<Result> sequence = plan.stream().filter(r -> r.start != null).sorted(order);
+        if(groupId != null)
+            sequence = sequence
+                    .collect(Collectors.groupingBy(groupId, LinkedHashMap::new, Collectors.toList()))
+                    .entrySet().stream()
+                    .map(pe -> pe.getValue().get(0));
+
+        return sequence.collect(Collectors.toList());
+    }
+
+    public Workpackage getWorkpackage(String workpackageId){
+        Workpackage wp = workpackageDAO.findById(workpackageId).orElse(null);
+        return wp;
     }
 }
