@@ -54,9 +54,6 @@
 :extract-term-occurrences
   a kbss-module:extract-term-occurrences;
   sm:next :construct-row-triples ;
-  km-terms:source-resource-uri [
-      sp:varName "datasetResource" ;
-    ] ;
   km-terms:data-prefix "http://onto.fel.cvut.cz/ontologies/csat/text-analysis-0.1/";
   sml:replace false;
 .
@@ -98,7 +95,7 @@ CONSTRUCT {
       termit:property ?property;
       termit:resource ?resource;
       termit:typeof ?typeof;
-      :score ?finalScore;
+      termit:má-skóre ?finalScore;
       :resourceIri ?resourceIri;
       termit:má-startovní-pozici ?startIndex.
 
@@ -114,7 +111,7 @@ CONSTRUCT {
     termit:má-koncovou-pozici  ?endIndex ;
     termit:má-startovní-pozici ?startIndex.
 
-  OPTIONAL {?occurrence :score ?score;}
+  OPTIONAL {?occurrence termit:má-skóre ?score;}
   BIND(IF(BOUND(?score), ?score, "10.0"^^xsd:float) AS ?finalScore) # this is workaround for better score comparing
 
   ?row 
@@ -176,7 +173,7 @@ CONSTRUCT{
 
   OPTIONAL{
     ?occurrence a cm:component;
-                :score ?componentScore;
+                termit:má-skóre ?componentScore;
                 termit:je-výskytem-termu ?t1.
 
     BIND(?occurrence AS ?finalComp)
@@ -186,7 +183,7 @@ CONSTRUCT{
   OPTIONAL{
     ?occurrence a cm:failure;
             termit:je-výskytem-termu ?t;
-            :score ?failScore.
+            termit:má-skóre ?failScore.
     BIND(?failScore AS ?failureScore)
     BIND(?occurrence AS ?finalFailure)
     BIND(?t AS ?failureLabel)
@@ -216,12 +213,12 @@ CONSTRUCT{
     ?row rdf:type :Row;
         :finalComp ?chosenComp .
 
-    ?chosenComp :score ?maxScore;
+    ?chosenComp termit:má-skóre ?maxScore;
         :resourceIri ?resource.
     
     FILTER NOT EXISTS {
        ?row :finalComp ?otherComp .
-       ?otherComp :score ?otherScore.
+       ?otherComp termit:má-skóre ?otherScore.
        FILTER(?chosenComp != ?otherComp)
        FILTER(?maxScore <= ?otherScore)
     }
@@ -249,12 +246,12 @@ CONSTRUCT{
    ?row rdf:type :Row;
         :finalFailure ?chosenFailure .
 
-    ?chosenFailure :score ?maxScore;
+    ?chosenFailure termit:má-skóre ?maxScore;
         :resourceIri ?resource.
     
   FILTER NOT EXISTS {
        ?row :finalFailure ?otherFailure .
-       ?otherFailure :score ?otherScore.
+       ?otherFailure termit:má-skóre ?otherScore.
        FILTER(?chosenFailure != ?otherFailure)
        FILTER(?maxScore <= ?otherScore)
     }
@@ -298,8 +295,7 @@ CONSTRUCT{
 
 :construct-multiple-components-and-failures
   a sml:ApplyConstruct ;
-  # sm:next :check-is-confirmed-and-labels ;
-  sm:next :convert-to-csv ;
+  sm:next :concatenate-multiple-components;
   sml:constructQuery [
       a sp:Construct ;
       sp:text """
@@ -315,10 +311,10 @@ CONSTRUCT{
           :ComponentUri ?componentUri;
           :ComponentLabel ?componentLabel;
           :ComponentScore ?finalComponentScore;
-          :MultipleComponents ?mulComponentsLabel;
-          :MultipleComponents ?otherComponentLabel;
-          :MultipleFailures ?tmpFailureLabel;
-          :MultipleFailures ?otherFailureLabel;
+          :multipleComponents ?mulComponentsLabel;
+          :multipleComponents ?otherComponentLabel;
+          :multipleFailures ?tmpFailureLabel;
+          :multipleFailures ?otherFailureLabel;
           :DocumentLineNumber ?lineNumber ;
           :WorkOrderId        ?woID ;
           :WO_text            ?woText;
@@ -347,7 +343,7 @@ CONSTRUCT{
     
     OPTIONAL{
       ?row :ruledComponent ?ruledComp.
-      ?ruledComp  :score ?ruledCompScore;
+      ?ruledComp  termit:má-skóre ?ruledCompScore;
                   :resourceIri ?componentResource.
       ?componentResource skos:prefLabel ?ruledComponentLabel.
     }
@@ -360,9 +356,9 @@ CONSTRUCT{
             :finalFailure ?otherFailure.
         
       ?failure :resourceIri/skos:prefLabel ?tmpFailureLabel;
-                      :score ?tmpFailureScore.
+                      termit:má-skóre ?tmpFailureScore.
       ?otherFailure :resourceIri/skos:prefLabel ?otherFailureLabel;
-                      :score ?otherFailureScore.
+                      termit:má-skóre ?otherFailureScore.
       FILTER(?failure != ?otherFailure)
     }
 
@@ -371,9 +367,9 @@ CONSTRUCT{
             :finalComp ?otherComponent.
         
       ?mulComponents :resourceIri/skos:prefLabel ?mulComponentsLabel;
-                      :score ?tmpCompScore.
+                      termit:má-skóre ?tmpCompScore.
       ?otherComponent :resourceIri/skos:prefLabel ?otherComponentLabel;
-                      :score ?otherCompScore.
+                      termit:má-skóre ?otherCompScore.
       FILTER(?mulComponents != ?otherComponent)
     }
     
@@ -392,6 +388,140 @@ CONSTRUCT{
 """ ;
     ] ;
   sml:replace true ;
+.
+
+:concatenate-multiple-components
+  a sml:ApplyConstruct ;
+  sm:next :concatenate-multiple-failures ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+  CONSTRUCT{
+    ?row  :MultipleComponents ?concatenatedComponents.
+
+   }WHERE{
+     ?row :multipleComponents ?components
+
+    {
+      SELECT ?row (GROUP_CONCAT(?components; separator=", ") as ?concatenatedComponents)
+      WHERE {
+        ?row :multipleComponents ?components.
+      }GROUP BY ?row ORDER BY ?components
+    }
+}""" ;
+    ] ;
+  sml:replace false;
+.
+
+:concatenate-multiple-failures
+  a sml:ApplyConstruct ;
+  sm:next :add-table-schema ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+  CONSTRUCT{
+    ?row  :MultipleFailures   ?concatenatedFailures .
+
+   }WHERE{
+    ?row :multipleFailures ?failures.
+    {
+      SELECT ?row (GROUP_CONCAT(?failures; separator=", ") as ?concatenatedFailures)
+      WHERE {
+        ?row :multipleFailures ?failures.
+      } GROUP BY ?row ORDER BY ?failures
+    }
+
+}""" ;
+    ] ;
+  sml:replace false;
+.
+
+:add-table-schema
+  a sml:ApplyConstruct ;
+  sm:next :convert-to-csv ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+  CONSTRUCT{
+    [ a       <http://www.w3.org/ns/csvw#TableGroup> ;
+  <http://www.w3.org/ns/csvw#table>
+          [ a       <http://www.w3.org/ns/csvw#Table> ;
+            <http://www.w3.org/ns/csvw#tableSchema>
+                    [ a       <http://www.w3.org/ns/csvw#TableSchema> ;
+                      <http://www.w3.org/ns/csvw#columns>
+                              ( _:b0
+                                _:b1
+                                _:b2
+                                _:b3
+                                _:b4
+                                _:b5
+                                _:b6
+                                _:b7
+                                _:b8
+                                _:b9
+                                _:b10
+                                _:b11
+                                _:b12
+                                _:b13
+                                _:b14
+                                _:b15
+                              )
+                    ] ;
+          ]
+] .
+
+_:b0    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "DocumentId" .
+_:b1    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "DocumentLineNumber" .
+_:b2    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "WorkOrderId" .
+_:b3    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "TaskCardId" .
+_:b4    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "ComponentUri" .
+_:b5    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "ComponentLabel" .
+_:b6    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "ComponentScore" .
+_:b7    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "MultipleComponents" .
+_:b8    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "FailureUri" .
+_:b9    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "FailureLabel" .
+_:b10    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "FailureScore" .
+_:b11    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "MultipleFailures" .
+_:b12    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "AggregateScore" .
+_:b13    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "IsConfirmed" .
+_:b14    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "OriginalText" .
+_:b15    a       <http://www.w3.org/ns/csvw#Column> ;
+        <http://www.w3.org/ns/csvw#name>
+                "AnnotatedText" .
+   }WHERE{
+}""" ;
+    ] ;
+  sml:replace false;
 .
 
 :convert-to-csv
