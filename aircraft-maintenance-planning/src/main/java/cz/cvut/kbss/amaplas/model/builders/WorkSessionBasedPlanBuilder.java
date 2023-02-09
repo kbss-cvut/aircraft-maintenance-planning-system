@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.net.URI;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result>> {
 
@@ -189,9 +190,11 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
 
     public RevisionPlan createRevision(PlanBuilderInput<List<Result>> input){
         List<Result> results = input.getInput();
-        Aircraft aircraft = results.stream().map(r -> getAircraft(r)).filter(a -> !defaults.isDefault(a)).findFirst().orElse(null);
+        Aircraft aircraft = input.workpackage.getAircraft();
         if(aircraft == null)
-            aircraft = results.stream().map(r -> getAircraft(r)).findFirst().orElse(null);
+            aircraft = results.stream().map(r -> getAircraft(r)).filter(a -> !defaults.isDefault(a)).findFirst().orElse(null);
+
+        setUpAircraft(aircraft);
         // create bottom part of hierarchical plan -  create to task plans
         RevisionPlan revisionPlan = new RevisionPlan();
         String revisionCode = results.stream()
@@ -223,6 +226,16 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
 
         }
         return revisionPlan;
+    }
+
+    public void setUpAircraft(Aircraft aircraft){
+        if(aircraft == null)
+            return;
+        String model = aircraft.getModel();
+        String registration = aircraft.getRegistration();
+        String age = aircraft.getAge();
+        String title =  Stream.of(model, registration, age).filter(s -> s != null).collect(Collectors.joining(" - "));
+        aircraft.setTitle(title);
     }
 
     public SessionPlan getSessionPlan(Result r, Resource groupInArea) {
@@ -278,7 +291,7 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
         String phaseLabel = getPhaseLabel(r);
         PhasePlan phasePlan = getEntity(phaseLabel, "phase", () -> {
             PhasePlan p = modelFactory.newPhasePlan(phaseLabel);
-            Aircraft ac = getAircraft(r);
+            Aircraft ac = aircraft == null ? getAircraft(r) : aircraft;
             p.setResource(defaults.isDefault(ac) ? aircraft : ac);
             return p;
         });

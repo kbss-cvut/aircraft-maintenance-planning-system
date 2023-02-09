@@ -12,6 +12,12 @@ public class Aircraft extends Resource{
     @OWLDataProperty(iri = Vocabulary.s_p_model)
     protected String model;
 
+    @OWLDataProperty(iri = Vocabulary.s_p_registration)
+    protected String registration;
+
+    @OWLDataProperty(iri = Vocabulary.s_p_age_A)
+    protected String age;
+
     public Aircraft() {
     }
 
@@ -28,11 +34,29 @@ public class Aircraft extends Resource{
         this.model = model;
     }
 
+    public String getRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(String registration) {
+        this.registration = registration;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
     @Override
     public String toString() {
         return "Aircraft{" +
-                "model='" + model +
                 ", types=" + types +
+                "model='" + model +
+                "registration='" + registration +
+                "age='" + age +
                 ", applicationType='" + applicationType + '\'' +
                 ", entityURI=" + entityURI +
                 ", title='" + title + '\'' +
