@@ -160,7 +160,9 @@ public class AircraftRevisionPlannerService extends BaseService{
                 Arrays.asList(revisionId)
         );
         SimilarPlanScheduler similarPlanScheduler = new SimilarPlanScheduler(
-                Date.from(wp.getPlannedStartTime().atStartOfDay(defaultZoneId).toInstant()),
+                wp.getPlannedStartTime() == null
+                        ? new Date()
+                        : Date.from(wp.getPlannedStartTime().atStartOfDay(defaultZoneId).toInstant()),
                 partialTaskOrderByScope
         );
         similarPlanScheduler.schedule(revisionPlan);
