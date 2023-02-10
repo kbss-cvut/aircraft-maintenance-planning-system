@@ -12,6 +12,7 @@
 @prefix dl: <http://onto.fel.cvut.cz/ontologies/csat/data-lib/> .
 @prefix doc: <http://onto.fel.cvut.cz/ontologies/documentation/> .
 @prefix kbss-module: <http://onto.fel.cvut.cz/ontologies/lib/module/> .
+@prefix kbss-csvw: <https://onto.fel.cvut.cz/ontologies/extension/csvw/> .
 @prefix km-rdf4j: <http://onto.fel.cvut.cz/ontologies/lib/module/rdf4j/> .
 @prefix km-sesame: <http://onto.fel.cvut.cz/ontologies/lib/module/sesame/> .
 @prefix km-tabular: <http://onto.fel.cvut.cz/ontologies/lib/module/tabular/> .
@@ -151,7 +152,7 @@ CONSTRUCT {
 
 CONSTRUCT{
 
-  ?row  rdf:type :Row;
+  ?row  rdf:type csvw:Row;
         :DocumentLineNumber           ?rowNumber ;
         :WorkOrderId      ?woTC ;
         :TaskCardId    ?TCref ; 
@@ -210,7 +211,7 @@ CONSTRUCT{
         :resource ?resource;
   
    }WHERE{
-    ?row rdf:type :Row;
+    ?row rdf:type csvw:Row;
         :finalComp ?chosenComp .
 
     ?chosenComp termit:má-skóre ?maxScore;
@@ -243,7 +244,7 @@ CONSTRUCT{
         :selectedFailureNode ?selectedFailure;
   
   }WHERE{
-   ?row rdf:type :Row;
+   ?row rdf:type csvw:Row;
         :finalFailure ?chosenFailure .
 
     ?chosenFailure termit:má-skóre ?maxScore;
@@ -271,7 +272,7 @@ CONSTRUCT{
     ?row  :ruledComponent ?compA;
 
   }WHERE{
-    ?row  a :Row;
+    ?row  a csvw:Row;
           :finalComp ?compA;
           :finalComp ?compB.
     
@@ -301,7 +302,7 @@ CONSTRUCT{
       sp:text """
 
   CONSTRUCT{
-    ?row  a :Row;
+    ?row  a csvw:Row;
           :AggregateScore ?aggregateScore;
           :IsConfirmed ?isConfirmed;
           :FailureScore ?finalFailureScore;
@@ -323,7 +324,7 @@ CONSTRUCT{
           :TaskCardId           ?taskCardId.
 
   }WHERE{
-    ?row  a :Row;
+    ?row  a csvw:Row;
           :DocumentLineNumber   ?lineNumber;
           :WorkOrderId          ?woID;
           :WO_text              ?woText;
@@ -470,54 +471,102 @@ CONSTRUCT{
           ]
 ] .
 
-_:b0    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "DocumentId" .
-_:b1    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "DocumentLineNumber" .
-_:b2    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "WorkOrderId" .
-_:b3    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "TaskCardId" .
-_:b4    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "ComponentUri" .
-_:b5    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "ComponentLabel" .
-_:b6    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "ComponentScore" .
-_:b7    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "MultipleComponents" .
-_:b8    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "FailureUri" .
-_:b9    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "FailureLabel" .
-_:b10    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "FailureScore" .
-_:b11    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "MultipleFailures" .
-_:b12    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "AggregateScore" .
-_:b13    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "IsConfirmed" .
-_:b14    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "OriginalText" .
-_:b15    a       <http://www.w3.org/ns/csvw#Column> ;
-        <http://www.w3.org/ns/csvw#name>
-                "AnnotatedText" .
+_:b0
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :DocumentId ;
+	csvw:title         "Document Id" ;
+	csvw:name          "DocumentId" .
+
+_:b1
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :DocumentLineNumber ;
+	csvw:title         "Document Line Number" ;
+	csvw:name          "DocumentLineNumber" .
+
+_:b2
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :WorkOrderId ;
+	csvw:title         "Word Order Id" ;
+	csvw:name          "WorkOrderId" .
+
+_:b3
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :TaskCardId ;
+	csvw:title         "Task Card Id" ;
+	csvw:name          "TaskCardId" .
+
+_:b4
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :ComponentUri ;
+	csvw:title         "Component Uri" ;
+	csvw:name          "ComponentUri" .
+
+_:b5
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :ComponentLabel ;
+	csvw:title         "Component Label" ;
+	csvw:name          "ComponentLabel" .
+
+_:b6
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :ComponentScore ;
+	csvw:title         "Component Score" ;
+	csvw:name          "ComponentScore" .
+
+_:b7
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :MultipleComponents ;
+	csvw:title         "Multiple Comonents" ;
+	csvw:name          "MultipleComponents" .
+
+_:b8
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :FailureUri ;
+	csvw:title         "Failure Uri" ;
+	csvw:name          "FailureUri" .
+
+_:b9
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :FailureLabel ;
+	csvw:title         "Failure Label" ;
+	csvw:name          "FailureLabel" .
+
+_:b10
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :FailureScore ;
+	csvw:title         "Failure Score" ;
+	csvw:name          "FailureScore" .
+
+_:b11
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :MultipleFailures ;
+	csvw:title         "Multiple Failures" ;
+	csvw:name          "MultipleFailures" .
+
+_:b12
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :AggregateScore ;
+	csvw:title         "Aggregate Score" ;
+	csvw:name          "AggregateScore" .
+
+_:b13
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :IsConfirmed ;
+	csvw:title         "Is Confirmed" ;
+	csvw:name          "IsConfirmed" .
+
+_:b14
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :OriginalText ;
+	csvw:title         "Original Text" ;
+	csvw:name          "OriginalText" .
+
+_:b15
+	a                  <http://www.w3.org/ns/csvw#Column> ;
+	kbss-csvw:property :AnnotatedText ;
+	csvw:title         "Annotated Text" ;
+	csvw:name          "AnnotatedText" .
+
    }WHERE{
 }""" ;
     ] ;
