@@ -35,20 +35,6 @@
   owl:imports <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1> ;
   owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
 .
-
-td:import-input-data-schema
-  sml:baseURI [
-      a sp:concat ;
-      sp:arg1 [
-          a sp:str ;
-          sp:arg1 : ;
-        ] ;
-      sp:arg2 "input-data-schema" ;
-    ] ;
-.
-td:bind-expected-table-schema
-  sm:next td:rdfize-input-data;
-.
 :append-next
   a sml:ApplyConstruct ;
   sm:next :construct-events ;
@@ -316,6 +302,32 @@ WHERE {
   sm:returnModule td:deploy-data_Return ;
   rdfs:subClassOf sm:Functions ;
 .
+:filter-last-rows
+  a sml:ApplyConstruct ;
+  sm:next :append-start-end-times ;
+  sm:nodeX 390 ;
+  sm:nodeY 442 ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# filter only last 5000 rows ordered by date
+CONSTRUCT {
+    ?lastRd ?column ?value .
+}
+WHERE {
+    {
+        SELECT   ?lastRd
+        WHERE {
+            ?lastRd :date ?date .
+        }
+        ORDER BY DESC(?date)
+        LIMIT 5000
+    }
+
+    ?lastRd ?column ?value .
+}""" ;
+    ] ;
+  sml:replace true ;
+.
 :identify-possible-two-days-events
   a sml:ApplyConstruct ;
   sm:next :append-next ;
@@ -384,12 +396,25 @@ CONSTRUCT {
   sm:returnModule td:transform-data_Return ;
   rdfs:subClassOf sm:Functions ;
 .
+td:bind-expected-table-schema
+  sm:next td:rdfize-input-data ;
+.
 td:construct-day-bound-event-duration
   sm:next :transform ;
   sml:replace false ;
 .
 td:deploy-data_Return
   rdfs:label "deploy-presence-data" ;
+.
+td:import-input-data-schema
+  sml:baseURI [
+      a sp:concat ;
+      sp:arg1 [
+          a sp:str ;
+          sp:arg1 : ;
+        ] ;
+      sp:arg2 "input-data-schema" ;
+    ] ;
 .
 td:rdfize-input-data
   kbss-module:has-output-graph-constraint [
@@ -452,9 +477,9 @@ WHERE {
       sp:arg1 : ;
     ] ;
   km-tabular:delimiter ";" ;
-  km-tabular:skip-header "true";
-  sm:next :append-start-end-times ;
+  km-tabular:skip-header "true" ;
   sm:next :construct-csat-maintenance-data ;
+  sm:next :filter-last-rows ;
 .
 td:transform-data_Return
   rdfs:label "transform-presence-data" ;
