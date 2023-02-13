@@ -516,7 +516,7 @@ _:b6
 _:b7
 	a                  <http://www.w3.org/ns/csvw#Column> ;
 	kbss-csvw:property :MultipleComponents ;
-	csvw:title         "Multiple Comonents" ;
+	csvw:title         "Multiple Components" ;
 	csvw:name          "MultipleComponents" .
 
 _:b8
