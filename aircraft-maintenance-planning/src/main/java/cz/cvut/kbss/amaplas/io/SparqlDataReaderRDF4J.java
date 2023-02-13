@@ -200,10 +200,10 @@ public class SparqlDataReaderRDF4J {
      */
     public static TaskType convertToTaskTypeDefinition(BindingSet bs){
         TaskType taskType = new TaskType(
-                manValue(bs,"taskCardCode"),
-                optValue(bs, "title"),
+                optValue(bs,"taskCardCode", null),
+                optValue(bs, "title", null),
                 "task_card",
-                optValue(bs,"aircraftModel")
+                optValue(bs,"aircraftModel", null)
         );
 
         mandatory(bs, "taskCard", s -> taskType.setEntityURI(URI.create(s)));

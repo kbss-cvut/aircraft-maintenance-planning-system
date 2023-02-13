@@ -10,9 +10,9 @@ PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
 
 SELECT ?taskCard ?taskCardCode ?MPDTASK ?title ?team ?phase ?taskType ?aircraftModel ?area ?elPower ?hydPower ?jacks {
         ?taskCard rdfs:subClassOf cm:task-card ;
-                  cm:id ?taskCardCode;
                   cm:task-for-model ?aircraftModel.
 
+        OPTIONAL {?taskCard cm:id ?taskCardCode.}
         OPTIONAL {?taskCard cm:has-general-task-type ?taskType}
         OPTIONAL {?taskCard cm:has-main-scope ?team}
         OPTIONAL {?taskCard cm:task-for-phase ?phase;}
