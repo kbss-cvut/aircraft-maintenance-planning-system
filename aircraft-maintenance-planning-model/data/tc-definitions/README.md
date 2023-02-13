@@ -18,7 +18,7 @@ For example:
     * in <code>MPD</code> sheet in file B737 had a column "E**L**. power" while MPD in A32F had column "E**l**. power"
 2. Normalization of data - some cells in the tables contain empty strings or strings only with spaces. Delete such
    values.
-3. Add a _step_ column that explicitly specifies the order of the task step in the overal task. This task is done for 
+3. Add a "step" column that explicitly specifies the order of the task step in the overal task. This task is done for 
 all sheets, but the <code>MPD</code> in file A32F needed some additional work.  
     * for sheet <code>MPD</code> in file A32F, **1.** Create a new column "code" and set the value to "TASKNUMBER" if 
    its value is not blank, otherwise, set it to "MPD NUMBER". Use formula <code>=IF(ISBLANK(P2),IF(ISBLANK(Q2),"",Q2),P2)</code> 
@@ -29,7 +29,9 @@ all sheets, but the <code>MPD</code> in file A32F needed some additional work.
     * after sheet <code>MPD</code>  in file A32F is processed as described above, continue with all the sheets. For each 
    sheet, add a new column "step" and use the formula <code>=IF(G2<>G1,1,B1+1)</code> to generate the step order, where
    "G" is new column "code" and B is new column "step".
-4. Export sheets into CSV files
+4. Add a "aircraft model" column and set it to <code>A32F</code> for sheets from MP_A32F_General_UPRAVENO and <code>B737</code> for
+sheets in MP_B737_GENERAL_UPRAVENO.
+5. Export sheets into CSV files
 
 
 ## Conversion into RDF
