@@ -1,6 +1,6 @@
 package cz.cvut.kbss.amaplas.environment.config;
 
-import cz.cvut.kbss.amaplas.config.ConfigProperties;
+import cz.cvut.kbss.amaplas.config.props.ConfigProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;

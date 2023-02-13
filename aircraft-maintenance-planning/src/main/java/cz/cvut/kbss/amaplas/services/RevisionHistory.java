@@ -1,6 +1,7 @@
 package cz.cvut.kbss.amaplas.services;
 
-import cz.cvut.kbss.amaplas.config.ConfigProperties;
+import cz.cvut.kbss.amaplas.config.props.ConfigProperties;
+import cz.cvut.kbss.amaplas.config.props.Repository;
 import cz.cvut.kbss.amaplas.io.SparqlDataReader;
 import cz.cvut.kbss.amaplas.io.SparqlDataReaderRDF4J;
 import cz.cvut.kbss.amaplas.model.Result;
@@ -27,7 +28,7 @@ public class RevisionHistory {
     protected final TaskTypeService taskTypeService;
 
     protected final WorkpackageDAO workpackageDAO;
-    protected ConfigProperties.Repository repoConfig;
+    protected Repository repoConfig;
 
     private Map<String, List<Result>> historyCache;
 

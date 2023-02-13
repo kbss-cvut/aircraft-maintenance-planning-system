@@ -1,6 +1,6 @@
 package cz.cvut.kbss.amaplas.controller;
 
-import cz.cvut.kbss.amaplas.config.ConfigProperties;
+import cz.cvut.kbss.amaplas.config.props.ConfigProperties;
 import cz.cvut.kbss.amaplas.model.Workpackage;
 import cz.cvut.kbss.amaplas.services.RevisionHistory;
 import cz.cvut.kbss.jsonld.JsonLd;
