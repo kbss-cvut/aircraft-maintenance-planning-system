@@ -36,7 +36,7 @@ sheets in MP_B737_GENERAL_UPRAVENO.
 
 ## Conversion into RDF
 **Input**
-- CSV files created by the **Preprocessing** step
+- CSV file [MP_A32F_B737_INPUT_FOR_RDF.csv.zip](https://drive.google.com/file/d/1rdxBL0Nt5audNQ6p3SdLmmYggehlr9dJ/view?usp=share_link) created by the **Preprocessing** step
 
 
 **Conversion**
