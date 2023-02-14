@@ -27,10 +27,11 @@
 @prefix td: <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1/> .
 @prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <http://purl.org/dc/terms/>
 
-td:construct-maintenance-group-abbreviations
-  sm:next td:rdfize-input-data ;
-.
+# td:construct-maintenance-group-abbreviations
+  # sm:next td:rdfize-input-data ;
+# .
 td:deploy-data_Return
   rdfs:label "deploy-tc-definitions-data" ;
 .
@@ -38,18 +39,18 @@ td:import-scheme
   sm:next td:rdfize-input-data ;
 .
 td:rdfize-input-data
-  kbss-module:has-output-graph-constraint [
-      a sp:Ask ;
-      sp:text """# 1.01 - column Task_Card has empty value
-ASK
-WHERE {
-    ?t csvw:row/csvw:describes ?rd .
-    FILTER NOT EXISTS {
-          ?rd :Task_Card ?notExistValue .
+  # kbss-module:has-output-graph-constraint [
+      # a sp:Ask ;
+      # sp:text """# 1.01 - column Task_Card has empty value
+# ASK
+# WHERE {
+    # ?t csvw:row/csvw:describes ?rd .
+    # FILTER NOT EXISTS {
+          # ?rd :Task_Card ?notExistValue .
 
-    }
-}""" ;
-    ] ;
+    # }
+# }""" ;
+    # ] ;
   kbss-module:has-output-graph-constraint [
       a sp:Ask ;
       sp:text """# 1.02 - column Aircraft model has empty value
@@ -58,28 +59,28 @@ ASK
 WHERE {
     ?t csvw:row/csvw:describes ?rd .
     FILTER NOT EXISTS {
-          ?rd :Aircraft_model ?notExistValue .
+          ?rd :aircraft_model ?notExistValue .
     }
 }""" ;
     ] ;
-  kbss-module:has-output-graph-constraint [
-      a sp:Ask ;
-      sp:text """# 3 - found scope that is not defined in schema ontology
-ASK
-WHERE {
-    ?t csvw:row/csvw:describes ?rd .
-    ?rd :Scope ?maintenanceGroupAbbr .
+  # kbss-module:has-output-graph-constraint [
+      # a sp:Ask ;
+      # sp:text """# 3 - found scope that is not defined in schema ontology
+# ASK
+# WHERE {
+    # ?t csvw:row/csvw:describes ?rd .
+    # ?rd :Scope ?maintenanceGroupAbbr .
 
-    FILTER NOT EXISTS {
-         ?maintenanceGroup  dl:has-simple-abbreviation ?maintenanceGroupAbbr .
-    }
-}""" ;
-    ] ;
+    # FILTER NOT EXISTS {
+         # ?maintenanceGroup  dl:has-simple-abbreviation ?maintenanceGroupAbbr .
+    # }
+# }""" ;
+    # ] ;
   km-tabular:data-prefix [
       a sp:str ;
       sp:arg1 : ;
     ] ;
-  km-tabular:delimiter "	" ;
+  km-tabular:delimiter "," ;
   sm:next :construct-csat-maintenance-data ;
 .
 td:transform-data_Return
@@ -102,13 +103,13 @@ CONSTRUCT {
         owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
     .
 	
-    ?taskCard  rdfs:subClassOf cm:task-type-definition ;
+    ?taskTypeDefinitionIRI  rdfs:subClassOf cm:task-type-definition ;
 		cm:has-general-task-type ?taskType;
 		cm:has-main-scope ?team;
 		cm:task-for-phase ?phase;
 		cm:has-mpdtask ?MPDTASK;
 		rdfs:label ?title;
-		dc_terms:description ?description;
+		dc:description ?description;
 		cm:notes ?notes;
 		cm:id ?taskCardCode;
 		cm:task-for-model ?aircraftModel;
@@ -179,16 +180,19 @@ CONSTRUCT {
   sml:replace true ;
   rdfs:label "construct-csat-maintenance-data" ;
 .
+
 :deploy-tc-definitions-data
   a sm:Function ;
   sm:returnModule td:deploy-data_Return ;
   rdfs:subClassOf sm:Functions ;
 .
+
 :transform
   a sml:ApplyConstruct ;
   sm:next td:merge ;
   sml:replace false ;
 .
+
 :transform-tc-definitions-data
   a sm:Function ;
   sm:returnModule td:transform-data_Return ;
