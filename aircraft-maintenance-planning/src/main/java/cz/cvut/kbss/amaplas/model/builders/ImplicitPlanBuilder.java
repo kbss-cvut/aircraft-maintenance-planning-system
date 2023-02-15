@@ -370,8 +370,13 @@ public class ImplicitPlanBuilder {
     }
 
     public String getMaintenanceGroupLabel(Result r){
-        return getTaskTypeDefinition(r).map(TaskType::getScope)
-                .map(this::mapNull).orElse(defaults.maintenanceGroupLabel);
+        String maintenanceGroupLabel = null;
+        if(r.scope != null)
+            maintenanceGroupLabel = r.scope;
+        else
+            maintenanceGroupLabel = getTaskTypeDefinition(r).map(TaskType::getScope)
+                    .map(this::mapNull).orElse(defaults.maintenanceGroupLabel);
+        return maintenanceGroupLabel;
     }
 
     public String getGeneralTaskTypeLabel(Result r){
