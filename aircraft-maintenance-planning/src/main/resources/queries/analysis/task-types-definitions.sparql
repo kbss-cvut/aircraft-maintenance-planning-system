@@ -8,19 +8,19 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX dc_terms: <http://purl.org/dc/terms/>
 PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
 
-SELECT ?taskCard ?taskCardCode ?MPDTASK ?title ?team ?phase ?taskType ?aircraftModel ?area ?elPower ?hydPower ?jacks {
-        ?taskCard rdfs:subClassOf cm:task-card ;
+SELECT ?taskTypeDefinition ?taskCardCode ?MPDTASK ?title ?team ?phase ?taskType ?aircraftModel ?area ?elPower ?hydPower ?jacks {
+        ?taskTypeDefinition rdfs:subClassOf cm:task-type-definition ;
                   cm:task-for-model ?aircraftModel.
 
-        OPTIONAL {?taskCard cm:id ?taskCardCode.}
-        OPTIONAL {?taskCard cm:has-general-task-type ?taskType}
-        OPTIONAL {?taskCard cm:has-main-scope ?team}
-        OPTIONAL {?taskCard cm:task-for-phase ?phase;}
-        OPTIONAL {?taskCard cm:has-mpdtask ?MPDTASK;}
-        OPTIONAL {?taskCard rdfs:label ?title;}
-        OPTIONAL {?taskCard dc_terms:description ?title;}
-        OPTIONAL {?taskCard cm:task-for-area ?area;}
-        OPTIONAL {?taskCard cm:required-el-power-restrictions ?elPower;}
-        OPTIONAL {?taskCard cm:required-hyd-power-restrictions ?hydPower;}
-        OPTIONAL {?taskCard cm:required-jack-restrictions ?jacks;}
+        OPTIONAL {?taskTypeDefinition cm:id ?taskCardCode.}
+        OPTIONAL {?taskTypeDefinition cm:has-general-task-type ?taskType}
+        OPTIONAL {?taskTypeDefinition cm:has-main-scope ?team}
+        OPTIONAL {?taskTypeDefinition cm:task-for-phase ?phase;}
+        OPTIONAL {?taskTypeDefinition cm:has-mpdtask ?MPDTASK;}
+        OPTIONAL {?taskTypeDefinition rdfs:label ?title;}
+        OPTIONAL {?taskTypeDefinition dc_terms:description ?title;}
+        OPTIONAL {?taskTypeDefinition cm:task-for-area ?area;}
+        OPTIONAL {?taskTypeDefinition cm:required-el-power-restrictions ?elPower;}
+        OPTIONAL {?taskTypeDefinition cm:required-hyd-power-restrictions ?hydPower;}
+        OPTIONAL {?taskTypeDefinition cm:required-jack-restrictions ?jacks;}
 }

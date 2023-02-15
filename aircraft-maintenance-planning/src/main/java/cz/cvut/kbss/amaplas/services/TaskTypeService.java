@@ -48,25 +48,26 @@ public class TaskTypeService {
      * Loads mappings from the repository into memory cache.
      */
     public void loadTaskMappings(){
+        analyzeTaskTypeDefinitionDuplicates();
+
+        Map<String, TaskType> defs = new HashMap<>();
+        TaskType.getTaskTypeDefinitions().stream()
+                .filter(t -> t.getTCOrMPDCode() != null)
+                .forEach(t -> defs.put(t.getEntityURI().toString(), t));
+
         ValueFactory f = SimpleValueFactory.getInstance();
         Map<String, Value> bindings = new HashMap();
         bindings.put("taskTypeDefinitionGraph", f.createIRI(repoConfig.getTaskDefinitionsGraph()));
         bindings.put("taskCardMappingGraph", f.createIRI(repoConfig.getTaskMappingGraph()));
+
         List<Pair<String, String>> taskTypeDefinitionMappings = SparqlDataReaderRDF4J.executeNamedQuery(
                 SparqlDataReader.TASK_CARD_MAPPINGS,
                 bindings,
                 repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword(), SparqlDataReaderRDF4J::convertToPair);
 
-        Map<String, List<TaskType>> map = new HashMap<>();
-        Map<String, List<TaskType>> defs = TaskType.getTaskTypeDefinitions().stream()
-                .filter(t -> t.getTCOrMPDCode() != null)
-                .collect(Collectors.groupingBy(t -> t.getTCOrMPDCode()));
-        analyzeTaskTypeDefinitionDuplicates();
-
-        // init the lists containing mapped task card definitions
-        taskTypeDefinitionMappings.stream().map(p -> p.getKey()).distinct().forEach(s -> map.put(s , new ArrayList<>()));
-        // add the task card definitions
-        taskTypeDefinitionMappings.forEach(p -> map.get(p.getKey()).addAll(defs.get(p.getValue())));
+        Map<String, List<TaskType>> map = taskTypeDefinitionMappings.stream()
+                .map(p -> Pair.of(p.getLeft(), defs.get(p.getRight())))
+                .collect(Collectors.groupingBy(p -> p.getLeft(), Collectors.mapping(p -> p.getRight(), Collectors.toList())));
 
         // normalize the list of mapped definitions, e.i. remove duplicates and sort them correctly using ad-hock approach
         // with the method TaskType.findMatchingTCDef
