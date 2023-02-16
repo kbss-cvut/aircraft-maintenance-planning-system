@@ -172,4 +172,16 @@ public class RevisionHistory {
         Workpackage wp = workpackageDAO.findById(workpackageId).orElse(null);
         return wp;
     }
+
+    public List<Workpackage> getWorkpackages(){
+        return workpackageDAO.findAll();
+    }
+
+    public List<Workpackage> getClosedWorkpackages(){
+        return workpackageDAO.findAllClosed();
+    }
+
+    public List<Workpackage> getOpenedWorkpackages(){
+        return workpackageDAO.findAllOpened();
+    }
 }
