@@ -26,7 +26,7 @@ public class BaseControllerImplementation<E extends AbstractEntity,D extends Bas
         return entityDao;
     }
 
-    @GetMapping(path = "/", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
+    @GetMapping(path = "", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
     public List<E> listEntities(){
         return entityDao.findAll();
     }
@@ -38,8 +38,8 @@ public class BaseControllerImplementation<E extends AbstractEntity,D extends Bas
         return (E)getEntityDao().find(entityUri).orElse(null);
     }
 
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
-    public E getAircraftById(@RequestParam String id){
+    @GetMapping(params = {"id"}, produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
+    public E getAircraftById(@RequestParam() String id){
         return (E)getEntityDao().findById(id).orElse(null);
     }
 }
