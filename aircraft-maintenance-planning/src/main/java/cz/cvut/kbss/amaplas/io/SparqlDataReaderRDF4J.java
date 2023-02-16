@@ -200,13 +200,13 @@ public class SparqlDataReaderRDF4J {
      */
     public static TaskType convertToTaskTypeDefinition(BindingSet bs){
         TaskType taskType = new TaskType(
-                manValue(bs,"taskCardCode"),
-                optValue(bs, "title"),
+                optValue(bs,"taskCardCode", null),
+                optValue(bs, "title", null),
                 "task_card",
-                optValue(bs,"aircraftModel")
+                optValue(bs,"aircraftModel", null)
         );
 
-        mandatory(bs, "taskCard", s -> taskType.setEntityURI(URI.create(s)));
+        mandatory(bs, "taskTypeDefinition", s -> taskType.setEntityURI(URI.create(s)));
         optional(bs, "MPDTASK", taskType::setMpdtask);
         optional(bs, "team", taskType::setScope);
         optional(bs, "phase", taskType::setPhase);
@@ -331,7 +331,7 @@ public class SparqlDataReaderRDF4J {
     }
 
     public static Pair<String, String> convertToPair(BindingSet bs) {
-        return Pair.of(manValue(bs, "tcId"), manValue(bs, "tcdId"));
+        return Pair.of(manValue(bs, "tcId"), manValue(bs, "tcd"));
     }
 
     public interface Converter<T>{
