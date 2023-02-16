@@ -5,10 +5,11 @@ import cz.cvut.kbss.jopa.model.annotations.*;
 
 import java.io.Serializable;
 import java.net.URI;
+import java.util.Map;
 import java.util.Set;
 
 @MappedSuperclass
-public class AbstractEntity<ID> implements Serializable {
+public class AbstractEntity implements Serializable {
 
     // contains all types of the
     @Types
@@ -23,10 +24,24 @@ public class AbstractEntity<ID> implements Serializable {
     protected URI entityURI;
 
     @OWLDataProperty(iri = Vocabulary.s_p_id)
-    private Object id;
+    protected String id;
 
     @OWLDataProperty(iri = Vocabulary.s_p_label)
     protected String title;
+
+    @OWLDataProperty(iri = Vocabulary.s_p_description)
+    protected String description;
+
+    @Properties(fetchType = FetchType.EAGER)
+    protected Map<URI, Set<Object>> properties;
+
+    public Map<URI, Set<Object>> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Map<URI, Set<Object>> properties) {
+        this.properties = properties;
+    }
 
     public Set<URI> getTypes() {
         return types;
@@ -52,11 +67,18 @@ public class AbstractEntity<ID> implements Serializable {
         this.entityURI = entityURI;
     }
 
-    public ID getId() {
-        return (ID)id;
+    public String getId(){
+        return id;
     }
 
-    public void setId(ID id) {
+    /**
+     * Utility method to convert id to string when it is passed as numeric value.
+     * @param id
+     */
+    public void setId(Object id){
+        this.id = id == null ? null : id.toString();
+    }
+    public void setId(String id){
         this.id = id;
     }
 
@@ -66,6 +88,14 @@ public class AbstractEntity<ID> implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -92,12 +122,13 @@ public class AbstractEntity<ID> implements Serializable {
 
     @Override
     public String toString() {
-
         return applicationType + "{" +
                 "types=" + types +
                 ", entityURI=" + entityURI +
                 ", id=" + id +
                 ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", properties=" + properties +
                 '}';
     }
 }

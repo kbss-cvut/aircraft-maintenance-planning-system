@@ -1,6 +1,7 @@
 package cz.cvut.kbss.amaplas.services;
 
-import cz.cvut.kbss.amaplas.config.ConfigProperties;
+import cz.cvut.kbss.amaplas.config.props.ConfigProperties;
+import cz.cvut.kbss.amaplas.config.props.Repository;
 import cz.cvut.kbss.amaplas.io.SparqlDataReader;
 import cz.cvut.kbss.amaplas.io.SparqlDataReaderRDF4J;
 import cz.cvut.kbss.amaplas.model.Result;
@@ -23,7 +24,7 @@ public class TaskTypeService {
     private static final Logger LOG = LoggerFactory.getLogger(TaskTypeService.class);
 
     private final ConfigProperties config;
-    private ConfigProperties.Repository repoConfig;
+    private final Repository repoConfig;
 
     public TaskTypeService(ConfigProperties config) {
         this.config = config;

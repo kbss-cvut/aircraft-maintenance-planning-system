@@ -1,6 +1,6 @@
 package cz.cvut.kbss.amaplas.persistence;
 
-import cz.cvut.kbss.amaplas.config.ConfigProperties;
+import cz.cvut.kbss.amaplas.config.props.ConfigProperties;
 import cz.cvut.kbss.amaplas.config.PersistenceConfigUtils;
 import cz.cvut.kbss.jopa.Persistence;
 import cz.cvut.kbss.jopa.model.EntityManagerFactory;

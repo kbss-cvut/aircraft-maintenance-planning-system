@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 
 @OWLClass(iri = Vocabulary.s_c_Maintenance_task)
-public class TaskType extends EventType<String> {
+public class TaskType extends EventType {
 //    public String type = TaskType.class.getSimpleName();
 
 //    @JsonProperty("id")

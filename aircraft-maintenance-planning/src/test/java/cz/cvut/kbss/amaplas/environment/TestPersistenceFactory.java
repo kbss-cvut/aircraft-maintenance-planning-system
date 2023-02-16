@@ -1,6 +1,7 @@
 package cz.cvut.kbss.amaplas.environment;
 
 import cz.cvut.kbss.amaplas.config.PersistenceConfigUtils;
+import cz.cvut.kbss.amaplas.config.props.ConfigProperties;
 import cz.cvut.kbss.jopa.Persistence;
 import cz.cvut.kbss.jopa.model.EntityManagerFactory;
 import cz.cvut.kbss.ontodriver.rdf4j.config.Rdf4jOntoDriverProperties;
@@ -19,16 +20,16 @@ import static cz.cvut.kbss.jopa.model.JOPAPersistenceProperties.LANG;
 import static cz.cvut.kbss.jopa.model.JOPAPersistenceProperties.PREFER_MULTILINGUAL_STRING;
 
 @Configuration
-@EnableConfigurationProperties(cz.cvut.kbss.amaplas.config.ConfigProperties.class)
+@EnableConfigurationProperties(ConfigProperties.class)
 @Profile("test")
 public class TestPersistenceFactory {
 
-    private final cz.cvut.kbss.amaplas.config.ConfigProperties config;
+    private final ConfigProperties config;
 
     private EntityManagerFactory emf;
 
     @Autowired
-    public TestPersistenceFactory(cz.cvut.kbss.amaplas.config.ConfigProperties config) {
+    public TestPersistenceFactory(ConfigProperties config) {
         this.config = config;
     }
 

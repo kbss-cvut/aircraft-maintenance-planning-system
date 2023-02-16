@@ -1,6 +1,6 @@
 package cz.cvut.kbss.amaplas.utils;
 
-import cz.cvut.kbss.amaplas.model.SequencePattern;
+import cz.cvut.kbss.amaplas.planners.SequencePattern;
 import cz.cvut.kbss.amaplas.model.TaskType;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;

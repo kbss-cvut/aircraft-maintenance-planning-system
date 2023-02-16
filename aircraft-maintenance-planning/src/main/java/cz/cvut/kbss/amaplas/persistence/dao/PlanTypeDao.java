@@ -18,8 +18,6 @@ import java.util.stream.Stream;
 @Repository
 public class PlanTypeDao {
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
-
     protected static Set<String> supportedPlanTypes;
 
     protected static Map<String, Class<? extends AbstractPlan>> entityClassMap;

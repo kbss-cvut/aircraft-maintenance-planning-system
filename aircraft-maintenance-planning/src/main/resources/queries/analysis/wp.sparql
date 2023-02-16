@@ -7,10 +7,16 @@ PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
 
 
 
-SELECT ?wp (COUNT (DISTINCT ?tType) as ?ttCount)   WHERE
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?wpuri ?wp ?ac ?acmodel ?client ?clientId ?wpStartTime ?wpEndTime ?wpScheduledStartTime ?wpScheduledEndTime WHERE
 {
     ?wpuri a cm:workpackage.
     ?wpuri cm:id ?wp.
+
+   OPTIONAL{
+        ?wpuri cm:has-client ?client.
+        OPTIONAL{ ?client cm:id ?clientId}
+   }
 
     # aircraft
     OPTIONAL{
@@ -20,22 +26,9 @@ SELECT ?wp (COUNT (DISTINCT ?tType) as ?ttCount)   WHERE
         }
     }
 
-    # tasks
-    OPTIONAL{
-        ?tt cm:is-part-of-workpackage ?wpuri.
-        OPTIONAL{
-            ?tt a ?tType.
-            FILTER(strstarts(str(?tType), str(cm:)) && !(?tType in (cm:task-card, cm:maintenance-work-order, cm:scheduled-work-order, cm:complex-execution)))
-            OPTIONAL{
-    #            BIND(cm:task-card as ?cls)
-                ?tType a owl:Class;
-                        cm:id ?type;
-                        rdfs:subClassOf ?cls.
-                FILTER(?cls  in (cm:task-card, cm:maintenance-work-order, cm:scheduled-work-order))
-            }
-        }
-    }
+    # temporal properties of WP
+    OPTIONAL{?wpuri cm:workpackage-start-time ?wpStartTime.}
+    OPTIONAL{?wpuri cm:workpackage-end-time ?wpEndTime.}
+    OPTIONAL{?wpuri cm:workpackage-scheduled-start-time ?wpScheduledStartTime.}
+    OPTIONAL{?wpuri cm:workpackage-scheduled-end-time ?wpScheduledEndTime.}
 }
-GROUP BY ?wp
-#HAVING (?ttCount > 10)
-ORDER BY DESC(?ttCount)

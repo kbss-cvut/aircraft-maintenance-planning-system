@@ -18,8 +18,6 @@ import java.util.stream.Stream;
 @Repository
 public class GenericPlanDao extends BaseDao<AbstractPlan>{
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
-
     public GenericPlanDao(EntityManager em) {
         super(AbstractPlan.class, em);
     }
@@ -65,10 +63,5 @@ public class GenericPlanDao extends BaseDao<AbstractPlan>{
         } catch (NoResultException e) {
             throw new PersistenceException(e);
         }
-    }
-
-    @Override
-    public Logger getLogger() {
-        return log;
     }
 }

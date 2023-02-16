@@ -1,0 +1,41 @@
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+
+
+
+SELECT ?wp (COUNT (DISTINCT ?tType) as ?ttCount)   WHERE
+{
+    ?wpuri a cm:workpackage.
+    ?wpuri cm:id ?wp.
+
+    # aircraft
+    OPTIONAL{
+        ?wpuri cm:is-repair-of ?ac.
+        OPTIONAL{
+            ?ac cm:model ?acmodel.
+        }
+    }
+
+    # tasks
+    OPTIONAL{
+        ?tt cm:is-part-of-workpackage ?wpuri.
+        OPTIONAL{
+            ?tt a ?tType.
+            FILTER(strstarts(str(?tType), str(cm:)) && !(?tType in (cm:task-card, cm:maintenance-work-order, cm:scheduled-work-order, cm:complex-execution)))
+            OPTIONAL{
+    #            BIND(cm:task-card as ?cls)
+                ?tType a owl:Class;
+                        cm:id ?type;
+                        rdfs:subClassOf ?cls.
+                FILTER(?cls  in (cm:task-card, cm:maintenance-work-order, cm:scheduled-work-order))
+            }
+        }
+    }
+}
+GROUP BY ?wp
+#HAVING (?ttCount > 10)
+ORDER BY DESC(?ttCount)
