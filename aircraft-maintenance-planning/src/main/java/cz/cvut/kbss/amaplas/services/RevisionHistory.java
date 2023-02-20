@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -52,9 +53,11 @@ public class RevisionHistory {
      * @return
      */
     public Map<String, List<Result>> getAllClosedRevisionsWorkLog(boolean refreshCash){
-        LOG.info("fetching revision work log from {}", repoConfig.getUrl());
+
         if(refreshCash || historyCache == null){
             historyCache = loadAllClosedRevisionsWorkLog();
+        }else{
+            LOG.info("retrieve revision log from cache loaded previously from {}", repoConfig.getUrl());
         }
         return historyCache;
     }
@@ -77,6 +80,7 @@ public class RevisionHistory {
             List<Result> results = new SparqlDataReaderRDF4J().readSessionLogsWithNamedQuery(SparqlDataReader.DA_TASK_SO_WITH_WP_SCOPE,
                     bindings,
                     repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword());
+            results = cleanInconsistentSessions(wpId, results);
             closedRevisions.put(wpId, results);
         }
 
@@ -99,6 +103,35 @@ public class RevisionHistory {
         // make sure the work sessions are ordered by start time
         closedRevisions.entrySet().forEach(e -> e.getValue().sort(Comparator.comparing(r -> r.start != null ? r.start.getTime() : -1L)));
         return closedRevisions;
+    }
+
+    protected List<Result> cleanInconsistentSessions(String wpId, List<Result> sessions ) {
+        Predicate<Result> consistentPredicate =  r -> r.sessionURI == null || ( r.start != null && r.end != null );
+        List<Result> consistentSessions = sessions.stream()
+                .filter(consistentPredicate)
+                .collect(Collectors.toList());
+
+        if(sessions.size() > consistentSessions.size()) {
+            Map<String, List<Result>> map = sessions.stream()
+                    .filter(consistentPredicate.negate())
+                    .collect(Collectors.groupingBy(r -> r.wp));
+
+            for(Map.Entry<String, List<Result>> e : map.entrySet()) {
+                if(e.getValue().size() == 1) {
+                    Result sessionToFix = e.getValue().get(0);
+                    sessionToFix.sessionURI = null;
+                    consistentSessions.add(sessionToFix);
+                }
+            }
+
+            String inconsistentSessionsReport = map.entrySet().stream()
+                    .map(e -> e.getKey() + " - " + e.getValue().size() )
+                    .collect(Collectors.joining(", "));
+            int numberOfInconsistentSessions = sessions.size() - consistentSessions.size();
+            LOG.warn("Workapckage \"{}\" has {} corrupt sessions. The sessions are distributed among these TCs",
+                    wpId, numberOfInconsistentSessions, inconsistentSessionsReport);
+        }
+        return consistentSessions;
     }
 
     public List<Result> getClosedRevisionWorkLog(String revisionId){
