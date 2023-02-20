@@ -309,7 +309,7 @@ public class SparqlDataReaderRDF4J {
 
         // create a work session record
         Result t = new Result();
-
+        t.sessionURI = optValue(bs, "t", null);
         t.wp = wp;
         t.acmodel = taskType.getAcmodel();
         t.acType = AircraftType.getTypeLabelForModel(t.acmodel);
