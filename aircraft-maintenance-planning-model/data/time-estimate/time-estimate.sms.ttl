@@ -109,17 +109,6 @@ WHERE {
     ] ;
   kbss-module:has-output-graph-constraint [
       a sp:Ask ;
-      sp:text """# 1.06 - column est-min has empty value
-ASK
-WHERE {
-    ?t csvw:row/csvw:describes ?rd .
-    FILTER NOT EXISTS {
-          ?rd :est_min ?notExistValue .
-    }
-}""" ;
-    ] ;
-  kbss-module:has-output-graph-constraint [
-      a sp:Ask ;
       sp:text """# 2 - found scope that is not defined in schema ontology
 ASK
 WHERE {
@@ -226,7 +215,9 @@ CONSTRUCT {
     OPTIONAL {
       ?rd :scope ?scope .
     }
-    ?rd :est_min ?est_min  .
+    OPTIONAL {
+      ?rd :est_min ?est_min  .
+    }
 
     ?maintenanceGroupIRI dl:has-simple-abbreviation ?scope .
     ?maintenanceGroupIRI dl:has-main-abbreviation ?mainMaintenanceGroupAbbr .
