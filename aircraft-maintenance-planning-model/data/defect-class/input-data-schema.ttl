@@ -28,8 +28,16 @@
                         [ a csvw:Column;
                             csvw:name "CapLimit" ;
                             kbss-csvw:property  :CapLimit ;
-                            csvw:title "CapLimit" ]
+                            csvw:title "CapLimit" ],
+                        [ a csvw:Column;
+                            csvw:name "Cumulative" ;
+                            kbss-csvw:property  :Cumulative ;
+                            csvw:title "Cumulative" ]
+
 .
+
+
+
 
 kbss-csvw:property  a rdf:Property .
 kbss-csvw:property  rdfs:range rdf:Property .
@@ -39,3 +47,4 @@ kbss-csvw:property  rdfs:range rdf:Property .
 :DefectClass a rdf:Property .
 :BillingGroup a rdf:Property .
 :CapLimit a rdf:Property .
+:Cumulative a rdf:Property .

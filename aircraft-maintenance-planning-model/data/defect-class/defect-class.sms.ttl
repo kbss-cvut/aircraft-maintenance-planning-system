@@ -74,6 +74,9 @@ CONSTRUCT {
      OPTIONAL {
        ?rd :CapLimit ?CapLimit .
      }
+     OPTIONAL {
+       ?rd :Cumulative ?Cumulative .
+     }
 
      BIND(dl:normalize(?MainProject) as ?mainProjectNormalizedId)
      BIND(dl:instance(cm:main-project, ?mainProjectNormalizedId) as ?mainProjectIRI)
