@@ -311,7 +311,10 @@ CONSTRUCT {
     ?taskExecutionIRI a cm:complex-execution, ?taskTypeIRI, owl:NamedIndividual ;
         cm:is-part-of-workpackage ?workpackageIRI ;
         cm:is-task-of-sub-project ?subProjectIRI ;
+		cm:references-task ?taskExecutionIRI ;
     .
+	
+	
 
 # TODO either add cm:task-type to csat-maintenance ontology or remove from here
     ?taskTypeIRI a owl:Class,  owl:NamedIndividual, cm:task-type  ;
@@ -329,6 +332,7 @@ CONSTRUCT {
         cm:task-description ?Description ;
         cm:has-scope ?maintenanceGroupIRI ;
     .
+	
 
     ?mechanicIRI a cm:mechanic ;
         cm:id ?Employee_No ;
@@ -429,6 +433,8 @@ CONSTRUCT {
 
      BIND(dl:instance(cm:workpackage, ?workpackageId) as ?workpackageIRI)
      BIND(dl:instance(cm:complex-execution, dl:id-2(?workpackageId, ?WO_TC)) as ?taskExecutionIRI)
+	 
+	 BIND(dl:instance(cm:complex-execution, dl:id-2(?workpackageId, ?TC_reference)) as ?taskExecutionIRI)
 
      BIND(dl:normalize(?project) as ?subProjectNormalizedId)
      BIND(dl:instance(cm:sub-project, ?subProjectNormalizedId) as ?subProjectIRI)
