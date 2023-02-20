@@ -1,5 +1,9 @@
-package cz.cvut.kbss.amaplas.model;
+package cz.cvut.kbss.amaplas.planners;
 
+
+import cz.cvut.kbss.amaplas.model.Diff;
+import cz.cvut.kbss.amaplas.model.Result;
+import cz.cvut.kbss.amaplas.model.TaskType;
 
 import java.util.*;
 import java.util.function.Function;
@@ -10,7 +14,7 @@ public class SequencePattern {
     public List<List<Result>> instances = new ArrayList<>();
     public Function<Result, TaskType> elMap;
     public List<TaskType> pattern;
-    public PatternType patternType = PatternType.STRICT_ORDER;
+    public PatternType patternType = PatternType.STRICT_DIRECT_ORDER;
     public int supportClassId;
     public String supportClass;
     public String supportLabel;

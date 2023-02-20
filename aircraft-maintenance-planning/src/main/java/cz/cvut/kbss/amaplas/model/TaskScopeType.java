@@ -2,7 +2,7 @@ package cz.cvut.kbss.amaplas.model;
 
 import java.util.Objects;
 
-public class TaskScopeType extends EventType<String> {
+public class TaskScopeType extends EventType {
     public TaskType taskType;
     public String scope;
     public String typeLabel;

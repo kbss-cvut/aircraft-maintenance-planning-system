@@ -1,6 +1,7 @@
 package cz.cvut.kbss.amaplas.services;
 
-import cz.cvut.kbss.amaplas.config.ConfigProperties;
+import cz.cvut.kbss.amaplas.config.props.ConfigProperties;
+import cz.cvut.kbss.amaplas.config.props.Repository;
 import cz.cvut.kbss.amaplas.io.SparqlDataReader;
 import cz.cvut.kbss.amaplas.io.SparqlDataReaderRDF4J;
 import cz.cvut.kbss.amaplas.model.Result;
@@ -23,7 +24,7 @@ public class TaskTypeService {
     private static final Logger LOG = LoggerFactory.getLogger(TaskTypeService.class);
 
     private final ConfigProperties config;
-    private ConfigProperties.Repository repoConfig;
+    private final Repository repoConfig;
 
     public TaskTypeService(ConfigProperties config) {
         this.config = config;
@@ -47,24 +48,26 @@ public class TaskTypeService {
      * Loads mappings from the repository into memory cache.
      */
     public void loadTaskMappings(){
+        analyzeTaskTypeDefinitionDuplicates();
+
+        Map<String, TaskType> defs = new HashMap<>();
+        TaskType.getTaskTypeDefinitions().stream()
+                .filter(t -> t.getTCOrMPDCode() != null)
+                .forEach(t -> defs.put(t.getEntityURI().toString(), t));
+
         ValueFactory f = SimpleValueFactory.getInstance();
         Map<String, Value> bindings = new HashMap();
         bindings.put("taskTypeDefinitionGraph", f.createIRI(repoConfig.getTaskDefinitionsGraph()));
         bindings.put("taskCardMappingGraph", f.createIRI(repoConfig.getTaskMappingGraph()));
-        List<Pair<String, String>> taskTypeDefinitions = SparqlDataReaderRDF4J.executeNamedQuery(
+
+        List<Pair<String, String>> taskTypeDefinitionMappings = SparqlDataReaderRDF4J.executeNamedQuery(
                 SparqlDataReader.TASK_CARD_MAPPINGS,
                 bindings,
                 repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword(), SparqlDataReaderRDF4J::convertToPair);
 
-        Map<String, List<TaskType>> map = new HashMap<>();
-        Map<String, List<TaskType>> defs = TaskType.getTaskTypeDefinitions().stream()
-                .collect(Collectors.groupingBy(t -> t.getCode()));
-        analyzeTaskTypeDefinitionDuplicates();
-
-        // init the lists containing mapped task card definitions
-        taskTypeDefinitions.stream().map(p -> p.getKey()).distinct().forEach(s -> map.put(s , new ArrayList<>()));
-        // add the task card definitions
-        taskTypeDefinitions.forEach(p -> map.get(p.getKey()).addAll(defs.get(p.getValue())));
+        Map<String, List<TaskType>> map = taskTypeDefinitionMappings.stream()
+                .map(p -> Pair.of(p.getLeft(), defs.get(p.getRight())))
+                .collect(Collectors.groupingBy(p -> p.getLeft(), Collectors.mapping(p -> p.getRight(), Collectors.toList())));
 
         // normalize the list of mapped definitions, e.i. remove duplicates and sort them correctly using ad-hock approach
         // with the method TaskType.findMatchingTCDef
@@ -85,7 +88,7 @@ public class TaskTypeService {
      */
     public void analyzeTaskTypeDefinitionDuplicates(){
         List<Map.Entry<String, List<TaskType>>> codeMap = TaskType.getTaskTypeDefinitions().stream()
-                .collect(Collectors.groupingBy(t -> t.getCode()))
+                .collect(Collectors.groupingBy(t -> t.getTCOrMPDCode()))
                 .entrySet().stream()
                 .sorted(Comparator.comparing(e -> e.getValue().size())).collect(Collectors.toList());
         for(Map.Entry<String, List<TaskType>> codeMappings : codeMap){

@@ -1,7 +1,6 @@
 package cz.cvut.kbss.amaplas.planners;
 
 import cz.cvut.kbss.amaplas.model.Result;
-import cz.cvut.kbss.amaplas.model.SequencePattern;
 
 import java.util.*;
 import java.util.stream.Collectors;

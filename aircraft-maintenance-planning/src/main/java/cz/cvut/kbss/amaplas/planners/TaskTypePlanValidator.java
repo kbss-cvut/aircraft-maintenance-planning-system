@@ -2,7 +2,6 @@ package cz.cvut.kbss.amaplas.planners;
 
 
 import cz.cvut.kbss.amaplas.model.Result;
-import cz.cvut.kbss.amaplas.model.SequencePattern;
 import cz.cvut.kbss.amaplas.model.TaskType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

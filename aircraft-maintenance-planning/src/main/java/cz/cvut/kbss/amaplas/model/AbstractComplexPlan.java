@@ -146,6 +146,33 @@ public abstract class AbstractComplexPlan<T extends AbstractPlan> extends Abstra
         op.accept(this);
     }
 
+    public List<List<AbstractPlan>> streamPlanPartPaths(){
+        List<List<AbstractPlan>> ret = new ArrayList<>();
+        Stack<AbstractPlan> stack = new Stack<>();
+        Stack<Iterator<AbstractPlan>> _stack = new Stack<>();
+        Function<AbstractPlan, Iterator<AbstractPlan>> partIterator = p ->
+                p instanceof AbstractComplexPlan && ((AbstractComplexPlan)p).getPlanParts() != null
+                ? ((AbstractComplexPlan)p).getPlanParts().iterator()
+                : Collections.emptyIterator();
+
+        stack.push(this);
+        _stack.push(this.planParts.iterator());
+        while(!stack.isEmpty()){
+            AbstractPlan plan = stack.peek();
+            Iterator<AbstractPlan> iter = _stack.peek();
+            if(plan instanceof AbstractComplexPlan && iter.hasNext()){
+                AbstractPlan planPart = iter.next();
+                stack.push(planPart);
+                _stack.push(partIterator.apply(planPart));
+            }else{
+                ret.add(new ArrayList<>(stack));
+
+                stack.pop();
+                _stack.pop();
+            }
+        }
+        return ret;
+    }
 
     public static Predicate<LongInterval> DEFINED_INTERVAL = i -> i.getStart() != null && i.getEnd() != null;
 }

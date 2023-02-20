@@ -1,14 +1,12 @@
 package cz.cvut.kbss.amaplas.io;
 
-import cz.cvut.kbss.amaplas.model.Mechanic;
+import cz.cvut.kbss.amaplas.model.*;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.amaplas.utils.ResourceUtils;
-import cz.cvut.kbss.amaplas.model.AircraftType;
-import cz.cvut.kbss.amaplas.model.Result;
-import cz.cvut.kbss.amaplas.model.TaskType;
 import cz.cvut.kbss.amaplas.utils.RepositoryUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.rdf4j.model.*;
+import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQuery;
@@ -20,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -201,13 +200,13 @@ public class SparqlDataReaderRDF4J {
      */
     public static TaskType convertToTaskTypeDefinition(BindingSet bs){
         TaskType taskType = new TaskType(
-                manValue(bs,"taskCardCode"),
-                optValue(bs, "title"),
+                optValue(bs,"taskCardCode", null),
+                optValue(bs, "title", null),
                 "task_card",
-                optValue(bs,"aircraftModel")
+                optValue(bs,"aircraftModel", null)
         );
 
-        mandatory(bs, "taskCard", s -> taskType.setEntityURI(URI.create(s)));
+        mandatory(bs, "taskTypeDefinition", s -> taskType.setEntityURI(URI.create(s)));
         optional(bs, "MPDTASK", taskType::setMpdtask);
         optional(bs, "team", taskType::setScope);
         optional(bs, "phase", taskType::setPhase);
@@ -241,7 +240,9 @@ public class SparqlDataReaderRDF4J {
         return Optional.ofNullable(bs.getValue(name)).map(Value::stringValue).orElse(def);
     }
 
-
+    public static <T> T optValue(BindingSet bs, String name, Function<String, T> converter, T def){
+        return Optional.ofNullable(bs.getValue(name)).map(Value::stringValue).map(converter).orElse(def);
+    }
 
     public List<Result> readSessionLogsWithNamedQuery(String queryName, Map<String, Value> bindings, String endpoint, String username, String password){
         LOG.info("executing query \"{}\" at endpoint <{}> with bindings {}", queryName, endpoint, bindings);
@@ -330,7 +331,7 @@ public class SparqlDataReaderRDF4J {
     }
 
     public static Pair<String, String> convertToPair(BindingSet bs) {
-        return Pair.of(manValue(bs, "tcId"), manValue(bs, "tcdId"));
+        return Pair.of(manValue(bs, "tcId"), manValue(bs, "tcd"));
     }
 
     public interface Converter<T>{
@@ -412,5 +413,37 @@ public class SparqlDataReaderRDF4J {
                 SparqlDataReaderRDF4J::convertToTaskTypeDefinition
         );
         return taskTypes;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  Workpackage ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static Workpackage convertWorkpackage(BindingSet bs) throws ParseException {
+        Workpackage wp = new Workpackage();
+        wp.setEntityURI(URI.create(manValue(bs, "wpuri")));
+        wp.setId(manValue(bs, "wp"));
+        URI clientURI = optValue(bs, "client", URI::create, null);
+        if(clientURI != null){
+            Client client = new Client();
+            client.setEntityURI(clientURI);
+            client.setId(optValue(bs, "clientId", null));
+            wp.setClient(client);
+        }
+
+        URI aircraftURI = optValue(bs, "ac", URI::create, null);
+        if(aircraftURI != null) {
+            String acmodel = optValue(bs, "acmodel", null);
+            wp.setAircraft(new Aircraft(aircraftURI, acmodel));
+            wp.getAircraft().setTitle(acmodel);
+        }
+        wp.setStartTime(optValue(bs, "wpStartTime", LocalDate::parse, null));
+        wp.setEndTime(optValue(bs, "wpEndTime", LocalDate::parse, null));
+        wp.setPlannedStartTime(optValue(bs, "wpScheduledStartTime", LocalDate::parse, null));
+        wp.setPlannedEndTime(optValue(bs, "wpScheduledEndTime", LocalDate::parse, null));
+//        wp.setStartTime(optValue(bs, "wpStartTime", s -> SparqlDataReader.parseDate(SparqlDataReader.day, s), null));
+//        wp.setEndTime(optValue(bs, "wpEndTime", s -> SparqlDataReader.parseDate(SparqlDataReader.day, s), null));
+//        wp.setPlannedStartTime(optValue(bs, "wpScheduledStartTime", s -> SparqlDataReader.parseDate(SparqlDataReader.day, s), null));
+//        wp.setPlannedEndTime(optValue(bs, "wpScheduledEndTime", s -> SparqlDataReader.parseDate(SparqlDataReader.day, s), null));
+        return wp;
     }
 }

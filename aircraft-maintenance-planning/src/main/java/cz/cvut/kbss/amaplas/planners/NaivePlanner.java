@@ -2,7 +2,6 @@ package cz.cvut.kbss.amaplas.planners;
 
 import cz.cvut.kbss.amaplas.algs.timesequences.TimeSequenceMatrix;
 import cz.cvut.kbss.amaplas.model.Result;
-import cz.cvut.kbss.amaplas.model.SequencePattern;
 import cz.cvut.kbss.amaplas.model.TaskType;
 
 import java.util.ArrayList;

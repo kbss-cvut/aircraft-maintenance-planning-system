@@ -1,6 +1,6 @@
 package cz.cvut.kbss.amaplas.persistence.dao;
 
-import cz.cvut.kbss.amaplas.config.ConfigProperties;
+import cz.cvut.kbss.amaplas.config.props.ConfigProperties;
 import cz.cvut.kbss.amaplas.environment.TransactionalTestRunner;
 import cz.cvut.kbss.amaplas.environment.config.TestPersistenceConfig;
 import org.junit.jupiter.api.extension.ExtendWith;

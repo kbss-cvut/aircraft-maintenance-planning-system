@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 
 @OWLClass(iri = Vocabulary.s_c_Maintenance_task)
-public class TaskType extends EventType<String> {
+public class TaskType extends EventType {
 //    public String type = TaskType.class.getSimpleName();
 
 //    @JsonProperty("id")
@@ -96,7 +96,9 @@ public class TaskType extends EventType<String> {
 //    public String getId() {
 //        return id;
 //    }
-
+    public String getTCOrMPDCode(){
+        return code != null ? code : mpdtask;
+    }
 
     public String getElPowerRestrictions() {
         return elPowerRestrictions;
@@ -247,7 +249,7 @@ public class TaskType extends EventType<String> {
 
     @Override
     public String toString() {
-        return getCode();
+        return getTCOrMPDCode();
     }
 
     @Transient
@@ -319,27 +321,31 @@ public class TaskType extends EventType<String> {
     }
 
     public static List<TaskType> findMatchingTCDef(String code, List<TaskType> taskTypeDefinitions){
-        List<TaskType> matches = findMatchingTCDef(code, TaskType::getCode, taskTypeDefinitions);
+        List<Pair<TaskType, Integer>> matchResults = findMatchingTCDef(code, TaskType::getCode, taskTypeDefinitions);
 
-        if(matches.isEmpty()) {
-            matches = findMatchingTCDef(code, TaskType::getMpdtask, taskTypeDefinitions);
-            matches.sort(Comparator.comparing(t -> t.getMpdtask().length()));
-        }else{
-            matches.sort(Comparator.comparing(t -> t.getCode().length()));
+        if(matchResults.isEmpty()) {
+            matchResults = findMatchingTCDef(code, TaskType::getMpdtask, taskTypeDefinitions);
         }
+        List<TaskType> matches = matchResults.stream()
+                .sorted(Comparator.comparing((Pair<TaskType, Integer> p) -> p.getRight()).reversed())
+                .map(p -> p.getKey())
+                .collect(Collectors.toList());
 
         return matches;
     }
 
-    protected static List<TaskType> findMatchingTCDef(String tcCode, Function<TaskType, String> idfunc, List<TaskType> taskTypeDefinitions){
+    protected static List<Pair<TaskType, Integer>> findMatchingTCDef(String tcCode, Function<TaskType, String> idfunc, List<TaskType> taskTypeDefinitions){
         return taskTypeDefinitions.stream()
-                .filter(t -> is_TCCode_Match_v3(idfunc.apply(t), tcCode))
+                .map(t -> Pair.of(t, is_TCCode_Match_v3(idfunc.apply(t), tcCode)))
+                .filter(p -> p.getRight() > 0)
                 .collect(Collectors.toList());
     }
 
-    protected static boolean is_TCCode_Match_v3(String sl, String sr){
+    protected static int is_TCCode_Match_v3(String sl, String sr){
+        if(sl == null)
+            return -1;
         String slFixed = prepareTCDef_Code(sl);
-        return isStrMatch_v3(slFixed, sr);
+        return isStrMatch_v3(slFixed, sr) ? slFixed.length() : -1;
     }
 
     public static String prepareTCDef_Code(String s){

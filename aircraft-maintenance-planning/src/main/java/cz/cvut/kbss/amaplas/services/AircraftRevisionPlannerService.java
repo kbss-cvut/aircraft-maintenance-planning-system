@@ -4,23 +4,23 @@ import cz.cvut.kbss.amaplas.exceptions.NotFoundException;
 import cz.cvut.kbss.amaplas.exceptions.UnsupportedOperationException;
 import cz.cvut.kbss.amaplas.exceptions.ValidationException;
 import cz.cvut.kbss.amaplas.model.*;
-import cz.cvut.kbss.amaplas.utils.GraphmlUtils;
-import cz.cvut.kbss.amaplas.model.builders.ImplicitPlanBuilder;
+import cz.cvut.kbss.amaplas.model.builders.PlanBuilderInput;
+import cz.cvut.kbss.amaplas.model.builders.TaskTypeBasedPlanBuilder;
+import cz.cvut.kbss.amaplas.model.scheduler.NaivePlanScheduler;
+import cz.cvut.kbss.amaplas.model.scheduler.PlanScheduler;
+import cz.cvut.kbss.amaplas.model.builders.WorkSessionBasedPlanBuilder;
 import cz.cvut.kbss.amaplas.model.ops.CopySimplePlanProperties;
-import cz.cvut.kbss.amaplas.planners.OriginalPlanner;
-import cz.cvut.kbss.amaplas.planners.ReuseBasedPlanner;
-import cz.cvut.kbss.amaplas.planners.TaskTypePlanValidator;
+import cz.cvut.kbss.amaplas.model.scheduler.SimilarPlanScheduler;
 import cz.cvut.kbss.amaplas.persistence.dao.GenericPlanDao;
 import cz.cvut.kbss.amaplas.persistence.dao.PlanTypeDao;
 import cz.cvut.kbss.amaplas.algs.SimilarityUtils;
-import org.jgrapht.graph.DefaultDirectedGraph;
-import org.jgrapht.traverse.BreadthFirstIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import cz.cvut.kbss.amaplas.planners.*;
 import java.net.URI;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,52 +41,31 @@ public class AircraftRevisionPlannerService extends BaseService{
         this.planDao = planDao;
     }
 
-    public List<SequencePattern> planTaskTypeCodes(List<String> toPlan){
-        List<TaskType> taskTypes = taskTypeService.getTaskTypes(toPlan);
-        return planTaskTypes(taskTypes, Collections.EMPTY_LIST);
+    public GenericPlanDao getPlanDao() {
+        return planDao;
     }
 
-    public List<TaskPlan> planRevision(String revisionId){
-        List<Result> workLog = revisionHistory.getClosedRevisionWorkLog(revisionId);
-        if(workLog == null || workLog.isEmpty())
-            return null;
+    public Map<String, PlanGraph> scopeGraphPlansFromSimilarRevisions(List<TaskType> toPlan, Collection<String> revisionsToIgnore){
 
-        TaskTypePlanValidator validator = new TaskTypePlanValidator();
+        // create a plan graph for each scope
+        Map<String, List<TaskType>> tasksByScope = toPlan.stream().collect(Collectors.groupingBy(t ->  t.getScope()));
 
-        List<SequencePattern> currentPlan = OriginalPlanner.planner.plan(workLog);
-        validator.validate(currentPlan, workLog);
+        Set<String> revsToIgnoreSet = new HashSet<>(revisionsToIgnore);
+        Map<String, List<Result>> historyPlans = revisionHistory.getMainScopeSessionsByRevisionId();
+        revisionsToIgnore.forEach(historyPlans::remove);
 
-        List<TaskType> toPlan = workLog.stream().map(r -> r.taskType).distinct().collect(Collectors.toList());
-        List<TaskType> orderedTasks = planTaskTypes(toPlan, Arrays.asList(revisionId));
-        validator.validate(workLog.stream().map(r -> r.taskType).collect(Collectors.toSet()), new HashSet<>(orderedTasks));
-        List<TaskPlan> plannedRevision = asPlan(orderedTasks);
-        calculateTimeEstimates(plannedRevision, workLog);
-        return plannedRevision;
-    }
+        Map<String, PlanGraph> scopePlans = new HashMap<>();
+        for(Map.Entry<String, List<TaskType>> scopeTasks : tasksByScope.entrySet()){
+            // the result does not contain information regarding instances of the TC execution
+            PlanGraph rawScopePlan = ReuseBasedPlanner.planner.planConnected(
+                    historyPlans,
+                    new HashSet<>(scopeTasks.getValue()),
+                    SimilarityUtils::calculateSetSimilarity,
+                    revisionId -> revsToIgnoreSet.contains(revisionId));
+            scopePlans.put(scopeTasks.getKey(), rawScopePlan);
+        }
 
-
-    public List<SequencePattern> sequencePatternsFromSimilarRevisions(List<TaskType> toPlan, Collection<String> revisionsToIgnore){
-        Set<String> revsToIgnoreSet = new HashSet<>(revisionsToIgnore
-        );
-        Map<String, List<Result>> historyPlans = revisionHistory.getStartSessionsOfMainScopeInClosedRevisions();
-//        // copy history
-//        historyPlans = new HashMap<>( historyPlans);
-//        // remove
-//        revisionsToIgnore.forEach(historyPlans::remove);
-        List<SequencePattern> rawPlan = ReuseBasedPlanner.planner.planConnected(historyPlans, new HashSet<>(toPlan),
-                SimilarityUtils::calculateSetSimilarity,
-                revisionId -> revsToIgnoreSet.contains(revisionId));
-        return rawPlan;
-    }
-
-    /**
-     * plans the task
-     * @param toPlan
-     */
-    public List<TaskType> planTaskTypes(List<TaskType> toPlan, List<String> revisionsToIgnore){
-        List<SequencePattern> rawPlan = sequencePatternsFromSimilarRevisions(toPlan, revisionsToIgnore);
-        List<TaskType> orderedTasks = ReuseBasedPlanner.planner.flattenPartialOrderBreadthFirst(rawPlan);
-        return orderedTasks;
+        return scopePlans;
     }
 
     public List<TaskPlan> asPlan(List<TaskType> orderedTasks){
@@ -143,109 +122,58 @@ public class AircraftRevisionPlannerService extends BaseService{
         LOG.info("creating plan \"createRevisionPlanScheduleDeducedFromRevisionExecution\" for revision with id \"{}\"", revisionId);
         // get all work sessions of the planned revision
         List<Result> results = revisionHistory.getClosedRevisionWorkLog(revisionId);
-
-        // find the start date-time of the first work session of the revision
-        OptionalLong startTimeStamp = results.stream().filter(r -> r.start != null).mapToLong(r -> r.getStart())
-                .min();
-        OptionalLong endTimeStamp = results.stream().filter(r -> r.end != null).mapToLong(r -> r.getEnd())
-                .max();
-        Date revisionStartDate = startTimeStamp.stream().mapToObj(t -> new Date(t)).findFirst().orElse(new Date());
-        Date revisionEndDate = endTimeStamp.stream().mapToObj(t -> new Date(t)).findFirst().orElse(new Date(revisionStartDate.getTime() + 7 * 24 * 60 * 60 * 1000));
-        long tmpDuration = 3*60*60*1000l;
-        Long defaultDuration = tmpDuration > revisionEndDate.getTime() - revisionStartDate.getTime() ?
-                (int)((revisionEndDate.getTime() - revisionStartDate.getTime()) * 0.1)  : tmpDuration;
-        Date defaultTaskPlanEnd = new Date(revisionStartDate.getTime() + defaultDuration);
+        Workpackage workpackage = revisionHistory.getWorkpackage(revisionId);
 
         // create and return revision plan
-        ImplicitPlanBuilder builder = new ImplicitPlanBuilder();
-        ImplicitPlanBuilder.PlanningResult planningResult = builder.createRevision(results);
-        RevisionPlan revisionPlan = planningResult.getRevisionPlan();
+        WorkSessionBasedPlanBuilder builder = new WorkSessionBasedPlanBuilder();
+        RevisionPlan revisionPlan = builder.createRevision(new PlanBuilderInput<>(results, workpackage));
+        PlanScheduler planScheduler = new NaivePlanScheduler();
+        planScheduler.schedule(revisionPlan);
 
-        // deduce schedule from revision work sessions
-        // 1.a Create session schedules - from session logs
-        revisionPlan.streamPlanParts()
-                .filter(p -> p instanceof SessionPlan)
-                .map(p -> (SessionPlan)p)
-                .forEach(sp -> {
-                    sp.setPlannedStartTime(sp.getStartTime());
-                    sp.setPlannedEndTime(sp.getEndTime());
-
-                    if(sp.getStartTime() != null && sp.getEndTime() != null){
-                        long duration = sp.getEndTime().getTime() - sp.getStartTime().getTime();
-                        sp.setDuration(duration);
-                        sp.setWorkTime(duration);
-                        sp.setPlannedDuration(duration);
-                        sp.setPlannedWorkTime(duration);
-                    }
-                });
-        // 2. update plan parts bottom up
-        revisionPlan.applyOperationBottomUp( p -> p.updateTemporalAttributes());
         builder.addRestrictionPlans(revisionPlan);
 
         return revisionPlan;
     }
 
-    public RevisionPlan createRevisionPlanScheduleDeducedFromSimilarRevisions(String revisionId, Date startDate){
+    /**
+     * Create a RevisionPlan from task types and work sessions of workpackage with revisionId.
+     * @param revisionId
+     * @return
+     */
+    public RevisionPlan createRevisionPlanScheduleDeducedFromSimilarRevisions(String revisionId){
         List<Result> results = revisionHistory.getClosedRevisionWorkLog(revisionId);
+        List<TaskType> taskTypes = results.stream().map(r -> r.taskType).distinct().collect(Collectors.toList());
+        Workpackage wp = revisionHistory.getWorkpackage(revisionId);
 
-        // create sessionPlans
-        ImplicitPlanBuilder builder = new ImplicitPlanBuilder();
-        ImplicitPlanBuilder.PlanningResult planningResult = builder.createRevision(results);
-        RevisionPlan revisionPlan = planningResult.getRevisionPlan();
+        WorkSessionBasedPlanBuilder workSessionBasedPlanBuilder = new WorkSessionBasedPlanBuilder();
+        RevisionPlan revisionPlan = workSessionBasedPlanBuilder.createRevision(new PlanBuilderInput<>(results, wp));
+        TaskTypeBasedPlanBuilder builder = new TaskTypeBasedPlanBuilder(workSessionBasedPlanBuilder);
 
-        Set<TaskPlan> taskPlans = revisionPlan.getPlanParts().stream().flatMap(
-                pp -> pp.getPlanParts().stream()
-                        .flatMap(gtp -> gtp.getPlanParts().stream()
-                        )).collect(Collectors.toSet());
+        builder.addMissingTaskPlansToRevision(new PlanBuilderInput<>(taskTypes, wp), revisionPlan);
 
-//        List<TaskType> taskTypes = planTaskTypes(results.stream().map(r -> r.taskType).distinct().collect(Collectors.toList()), Arrays.asList(revisionId));
+        // scheduling task plans
+        // first schedule according to similar plans starting at the planned start date of the workpackage
+        // scheduling is done per scope group using the partial order of task types extracted from similar plans
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        Map<String, PlanGraph> partialTaskOrderByScope = scopeGraphPlansFromSimilarRevisions(
+                taskTypes,
+                Arrays.asList(revisionId)
+        );
+        SimilarPlanScheduler similarPlanScheduler = new SimilarPlanScheduler(
+                wp.getPlannedStartTime() == null
+                        ? new Date()
+                        : Date.from(wp.getPlannedStartTime().atStartOfDay(defaultZoneId).toInstant()),
+                partialTaskOrderByScope
+        );
+        similarPlanScheduler.schedule(revisionPlan);
 
-        List<SequencePattern> sequencePatterns = sequencePatternsFromSimilarRevisions(results.stream().map(r -> r.taskType).distinct().collect(Collectors.toList()), Arrays.asList(revisionId));
-        // TODO - revise the instances supporting the SequencePatterns to create a temporal schedule of the task types.
-        // 1. split the list of sequence patterns into streaks of sequence patterns from individual revisions.
-        // -  session
-        // 1. create chains of work sessions of the planned TCs grouped by the WP from which they are being reused.
-        // 2. order work sessions based on sequence patterns.
-        // return the work session list so that we can use it calculate the temporal parameters of the plan.
-        // 1. starting with the first work session in the list translate the work interval from its original start date
-        // to the specified start date. Repeat until all task cards are
-
-
-        List<TaskType> taskTypes = ReuseBasedPlanner.planner.flattenPartialOrderBreadthFirst(sequencePatterns);
-
-        Map<String, List<Result>> historyPlans = revisionHistory.getStartSessionsOfMainScopeInClosedRevisions();
-//        // copy history
-//        historyPlans = new HashMap<>( historyPlans);
-//        // remove
-//        revisionsToIgnore.forEach(historyPlans::remove);
-        Set<String> revisionToIgnore = new HashSet<>();
-        revisionToIgnore.add(revisionId);
-        List<SequencePattern> rawPlan = ReuseBasedPlanner.planner.planConnected(historyPlans, new HashSet<>(taskTypes),
-                SimilarityUtils::calculateSetSimilarity,
-                rid -> revisionToIgnore.contains(rid));
-        // distance between task cards
-
-        DefaultDirectedGraph<TaskType, SequencePattern> dg = GraphmlUtils.toGraph(rawPlan);
-        Set<TaskType> roots = taskTypes.stream().filter(t -> dg.inDegreeOf(t) == 0).collect(Collectors.toSet());
-        BreadthFirstIterator<TaskType, SequencePattern> breadthFirstIterator = new BreadthFirstIterator(dg, roots);
-        while(breadthFirstIterator.hasNext()){
-
-        }
-        List<TaskType> orderedTasks = ReuseBasedPlanner.planner.flattenPartialOrderBreadthFirst(rawPlan);
-
-        // calculate temporal parameters of the plan
+        // second schedule work session plans and reschedule affected plans in the plan partonomy
+        NaivePlanScheduler scheduler = new NaivePlanScheduler();
+        scheduler.schedule(revisionPlan);
+        revisionPlan.applyOperationBottomUp( p -> p.updateTemporalAttributes());
+        workSessionBasedPlanBuilder.addRestrictionPlans(revisionPlan);
 
         return revisionPlan;
-    }
-
-    public void setTemporalParameters(RevisionPlan revisionPlan, List<SequencePattern> sequencePatterns){
-
-    }
-
-    public SessionPlan toImplicitSessionPlan(Mechanic m, Result result){
-
-//        modelFactory.newSessionPlan()
-        return null;
     }
 
     /**
