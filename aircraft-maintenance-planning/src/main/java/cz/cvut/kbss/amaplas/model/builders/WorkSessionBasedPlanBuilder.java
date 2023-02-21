@@ -300,7 +300,10 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
 
     public TaskPlan getTaskPlan(final Result r, Object context){
         TaskType taskType = getTaskType(r).orElse(null);
-        return getTaskPlan(taskType, context);
+        TaskPlan taskPlan = getTaskPlan(taskType, context);
+        if(r.estMin != null)
+            taskPlan.setEstMin(r.estMin);
+        return taskPlan;
     }
 
     public GeneralTaskPlan getGeneralTaskPlanInCtx(Result r, Object context){
