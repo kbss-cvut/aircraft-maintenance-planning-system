@@ -43,7 +43,6 @@ public class SimilarPlanScheduler implements PlanScheduler{
             ReuseBasedPlanner.planner.traverse(e.getValue(), (planGraph, node, edge, source) -> {
                 // schedule the time of the task plan
                 TaskPlan taskPlan = taskPlanMap.get(node.getTaskType());
-                Date startTime = null;
                 Date plannedStartTime = null;
 
                 if(node.getInstances() == null || node.getInstances().isEmpty())
@@ -53,9 +52,12 @@ public class SimilarPlanScheduler implements PlanScheduler{
 
                 List<Result> sessions = node.getInstance(r -> Objects.equals(edgeWP, r.wp));
 
-                long duration = sessions.stream().mapToLong(r -> r.end.getTime()).max().getAsLong() - sessions.get(0).getStart();
+                Long end = sessions.stream().filter(r -> r.end != null).mapToLong(r -> r.end.getTime()).max().orElse(-1);
+                if(end < 0)
+                    end = sessions.get(0).getStart() + 3600000;
+                long duration = end - sessions.get(0).getStart();
+
                 long workTime = sessions.stream().mapToLong(r -> r.dur).sum();
-                ZoneId defaultZoneId = ZoneId.systemDefault();
                 if(edge == null || edge.patternType == null){
                     plannedStartTime = planStartTime;
 
