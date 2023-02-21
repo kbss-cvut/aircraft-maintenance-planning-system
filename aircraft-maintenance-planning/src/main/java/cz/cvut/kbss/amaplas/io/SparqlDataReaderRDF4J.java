@@ -270,9 +270,11 @@ public class SparqlDataReaderRDF4J {
         String wp = bs.getValue("wp").stringValue();
         String tt = optValue(bs, "tt", null);
         String tType = optValue(bs, "tType", null);
+        URI taskTypeUri = null;
         String defaultTaskType = def;
         String defaultTaskCategory = def;
         if(tType != null){
+            taskTypeUri = URI.create(tType);
             Matcher m = taskTypeIRIPattern.matcher(tType);
             if(m.find()) {
                 defaultTaskCategory = taskCategories.getOrDefault(m.group(1), def);
@@ -285,6 +287,7 @@ public class SparqlDataReaderRDF4J {
                 optValue(bs, "taskcat", defaultTaskCategory),
                 optValue(bs,"acmodel", def)
         );
+        taskType.setEntityURI(taskTypeUri);
 
         // create mechanic
         String mechanicIRI = optValue(bs, "w", null);
