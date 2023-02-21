@@ -51,7 +51,13 @@ public class AircraftRevisionPlannerService extends BaseService{
         Map<String, List<TaskType>> tasksByScope = toPlan.stream().collect(Collectors.groupingBy(t ->  t.getScope()));
 
         Set<String> revsToIgnoreSet = new HashSet<>(revisionsToIgnore);
-        Map<String, List<Result>> historyPlans = revisionHistory.getMainScopeSessionsByRevisionId();
+        // retrieve historyPlans and remove Result without sessionURI task executions () from
+        Map<String, List<Result>> historyPlans = new HashMap<>();
+        revisionHistory.getMainScopeSessionsByRevisionId()
+                .entrySet().forEach( e ->
+                        historyPlans.put(e.getKey(), e.getValue().stream().filter(r -> r.sessionURI != null).collect(Collectors.toList()))
+                );
+
         revisionsToIgnore.forEach(historyPlans::remove);
 
         Map<String, PlanGraph> scopePlans = new HashMap<>();
@@ -142,6 +148,10 @@ public class AircraftRevisionPlannerService extends BaseService{
      */
     public RevisionPlan createRevisionPlanScheduleDeducedFromSimilarRevisions(String revisionId){
         List<Result> results = revisionHistory.getClosedRevisionWorkLog(revisionId);
+        if(results == null) {
+            LOG.warn("Could not find any sessions or TC executions for WP \"{}\" ", revisionId);
+            return null;
+        }
         List<TaskType> taskTypes = results.stream().map(r -> r.taskType).distinct().collect(Collectors.toList());
         Workpackage wp = revisionHistory.getWorkpackage(revisionId);
 
@@ -155,14 +165,28 @@ public class AircraftRevisionPlannerService extends BaseService{
         // first schedule according to similar plans starting at the planned start date of the workpackage
         // scheduling is done per scope group using the partial order of task types extracted from similar plans
         ZoneId defaultZoneId = ZoneId.systemDefault();
+        List<String> revisionsToIgnore = new ArrayList<>();
+        revisionsToIgnore.add(revisionId); // ignore the scheduled WP
+        revisionHistory.getOpenedWorkpackages().stream().map(w -> w.getId())
+                .forEach(revisionsToIgnore::add);// ignore open WPs
+
         Map<String, PlanGraph> partialTaskOrderByScope = scopeGraphPlansFromSimilarRevisions(
                 taskTypes,
-                Arrays.asList(revisionId)
+                revisionsToIgnore
         );
+
+        // calculate execution start
+        Date startDate = results.stream()
+                .filter(r -> r.sessionURI != null && r.start != null).map(r -> r.start)
+                .findFirst().orElse(null);
+
+        if(startDate == null)
+            startDate = wp.getPlannedStartTime() == null
+                    ? new Date()
+                    : Date.from(wp.getPlannedStartTime().atStartOfDay(defaultZoneId).toInstant());
+
         SimilarPlanScheduler similarPlanScheduler = new SimilarPlanScheduler(
-                wp.getPlannedStartTime() == null
-                        ? new Date()
-                        : Date.from(wp.getPlannedStartTime().atStartOfDay(defaultZoneId).toInstant()),
+                startDate,
                 partialTaskOrderByScope
         );
         similarPlanScheduler.schedule(revisionPlan);

@@ -15,6 +15,8 @@ import java.util.stream.Stream;
  */
 public class Result{
     /** The id of the work session log */
+
+    public String sessionURI;
     public String id;
     public String wp;
     public String acType = "NONE";

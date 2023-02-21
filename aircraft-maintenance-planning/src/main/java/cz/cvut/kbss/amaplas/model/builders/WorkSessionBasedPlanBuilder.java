@@ -218,14 +218,34 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
             GeneralTaskPlan generalTaskPlan = getGeneralTaskPlanInCtx(r, generalTaskPlanContext);
             phasePlan.getPlanParts().add(generalTaskPlan);
 
-            TaskPlan taskPlan = getTaskPlan(r, generalTaskPlan);
+            TaskPlan taskPlan = getTaskPlan(r, revisionPlan);
             generalTaskPlan.getPlanParts().add(taskPlan);
 
+            if(r.sessionURI == null)
+                continue;
             SessionPlan sessionPlan = getSessionPlan(r, taskPlan.getResource());
             taskPlan.getPlanParts().add(sessionPlan);
-
         }
+
+        // add scope from session mechanic title if it is not empty and is different from the scope of the task plan
+        addScopesInMechanicTitles(revisionPlan);
+
         return revisionPlan;
+    }
+
+    protected void addScopesInMechanicTitles (RevisionPlan revisionPlan){
+        revisionPlan.streamPlanParts()
+                .filter(p -> p instanceof TaskPlan)
+                .map(p -> (TaskPlan)p)
+                .filter(p -> p.getPlanParts().size() > 0)
+                .flatMap(p -> p.getPlanParts().stream().map(pp -> Pair.of(p.getResource(), pp.getResource())))
+                .filter(p -> p.getRight() != null && p.getRight() instanceof Mechanic)
+                .filter(p -> !Objects.equals(p.getLeft().getTitle(), ((Mechanic)p.getRight()).getBelongsToGroup()))
+                .distinct()
+                .forEach( p -> {
+                    Mechanic mechanic = (Mechanic) p.getRight();
+                    mechanic.setTitle(String.format("%s (%s)", mechanic.getTitle(), mechanic.getBelongsToGroup()));
+                });
     }
 
     public void setUpAircraft(Aircraft aircraft){
@@ -257,6 +277,7 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
                             mech.setId(m.getId());
                             mech.setEntityURI(modelFactory.createURI("mechanic", Objects.toString(m.getId()), groupInArea));
                             mech.setTitle(Objects.toString(m.getTitle() == null ? m.getId() : m.getTitle()));
+                            mech.setBelongsToGroup(r.scope);
                             return mech;
                         }
                 );
@@ -277,9 +298,9 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
         return getAircraft(aircraftModel);
     }
 
-    public TaskPlan getTaskPlan(final Result r, GeneralTaskPlan gp){
+    public TaskPlan getTaskPlan(final Result r, Object context){
         TaskType taskType = getTaskType(r).orElse(null);
-        return getTaskPlan(taskType, gp);
+        return getTaskPlan(taskType, context);
     }
 
     public GeneralTaskPlan getGeneralTaskPlanInCtx(Result r, Object context){

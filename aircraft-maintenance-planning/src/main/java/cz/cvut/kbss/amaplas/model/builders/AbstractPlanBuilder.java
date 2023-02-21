@@ -36,14 +36,12 @@ public abstract class AbstractPlanBuilder<T> {
 
     protected abstract RevisionPlan createRevision(PlanBuilderInput<T> input);
 
-
-    public TaskPlan getTaskPlan(final TaskType taskType, GeneralTaskPlan gp){
+    public TaskPlan getTaskPlan(final TaskType taskType, Object context){
         final String maintenanceGroupLabel = getMaintenanceGroupLabel(optionalTaskType(taskType));
         // CHECK - replace area with areaLabel
-        final String aircraftAreaLabel = getAircraftAreaLabel(optionalTaskType(taskType));//
+        final String aircraftAreaLabel = getAircraftAreaLabel(optionalTaskType(taskType));
 
         TaskPlan taskPlan = null;
-        Object context = gp;
         if (taskType != null){
             String taskTypeCode = taskType.getCode();
             taskPlan = getEntity(taskTypeCode, context, () -> {
@@ -154,7 +152,7 @@ public abstract class AbstractPlanBuilder<T> {
     }
 
     protected Optional<TaskType> optionalTaskType(TaskType tt){
-        return Optional.of(tt.getDefinition()!=null ? tt.getDefinition() : tt);
+        return Optional.of(tt.getDefinition() != null ? tt.getDefinition() : tt);
     }
 
     protected String mapNull(String s){
