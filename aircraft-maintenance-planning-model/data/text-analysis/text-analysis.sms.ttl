@@ -541,7 +541,7 @@ CONSTRUCT{
 :convert-to-csv
   a kbss-module:RDF2CSV;
   sm:next :transform-text-analysis-data_Return ;
-  km-rdf2csv:file-output-path ""; # FILL file output path
+  km-rdf2csv:file-output-path "output.csv";
 .
 
 :transform-text-analysis-data
