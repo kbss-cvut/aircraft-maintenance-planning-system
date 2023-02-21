@@ -1,0 +1,160 @@
+@prefix : <http://onto.fel.cvut.cz/ontologies/csat/text-analysis-0.1/> .
+@prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix kbss-csvw: <https://onto.fel.cvut.cz/ontologies/extension/csvw/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+:output-data-schema a owl:Ontology .
+
+:output-table a       csvw:Table ;
+  csvw:tableSchema :output-table-schema;
+.
+
+:output-table-schema
+  a            csvw:TableSchema ;
+  csvw:columns ( _:b0
+                 _:b1
+                 _:b2
+                 _:b3
+                 _:b4
+                 _:b5
+                 _:b6
+                 _:b7
+                 _:b8
+                 _:b9
+                 _:b10
+                 _:b11
+                 _:b12
+                 _:b13
+                 _:b14
+                 _:b15
+                 _:b16
+                 _:b17
+                 _:b18
+                 _:b19 )
+.
+
+
+_:b0
+  a                  csvw:Column ;
+  kbss-csvw:property :DocumentId ;
+  csvw:title         "Document Id" ;
+  csvw:name          "DocumentId" .
+
+_:b1
+  a                  csvw:Column ;
+  kbss-csvw:property :DocumentLineNumber ;
+  csvw:title         "Document Line Number" ;
+  csvw:name          "DocumentLineNumber" .
+
+_:b2
+  a                  csvw:Column ;
+  kbss-csvw:property :WorkOrderId ;
+  csvw:title         "Word Order Id" ;
+  csvw:name          "WorkOrderId" .
+
+_:b3
+  a                  csvw:Column ;
+  kbss-csvw:property :TaskCardId ;
+  csvw:title         "Task Card Id" ;
+  csvw:name          "TaskCardId" .
+
+_:b4
+  a                  csvw:Column ;
+  kbss-csvw:property :FinalComponentUri ;
+  csvw:title         "Component Uri" ;
+  csvw:name          "ComponentUri" .
+
+_:b5
+  a                  csvw:Column ;
+  kbss-csvw:property :SelectedComponentLabels ;
+  csvw:title         "Selected Component Labels" ;
+  csvw:name          "SelectedComponentLabels" .
+
+_:b6
+  a                  csvw:Column ;
+  kbss-csvw:property :SelectedComponentsCount ;
+  csvw:title         "Selected Components Count" ;
+  csvw:name          "SelectedComponentsCount" .
+
+_:b7
+  a                  csvw:Column ;
+  kbss-csvw:property :ComponentScore ;
+  csvw:title         "Selected Components Score" ;
+  csvw:name          "SelectedComponentsScore" .
+
+_:b8
+  a                  csvw:Column ;
+  kbss-csvw:property :MultipleComponents ;
+  csvw:title         "Found Component Labels" ;
+  csvw:name          "FoundComponentLabels" .
+
+_:b9
+  a                  csvw:Column ;
+  kbss-csvw:property :FoundComponentsCount ;
+  csvw:title         "Found Components Count" ;
+  csvw:name          "FoundComponentsCount" .
+
+_:b10
+  a                  csvw:Column ;
+  kbss-csvw:property :FinalFailureUri ;
+  csvw:title         "Failure Uri" ;
+  csvw:name          "FailureUri" .
+
+_:b11
+  a                  csvw:Column ;
+  kbss-csvw:property :SelectedFailureLabels ;
+  csvw:title         "Selected Failure Labels" ;
+  csvw:name          "SelectedFailureLabels" .
+
+_:b12
+  a                  csvw:Column ;
+  kbss-csvw:property :SelectedFailuresCount ;
+  csvw:title         "Selected Failures Count" ;
+  csvw:name          "SelectedFailuresCount" .
+
+_:b13
+  a                  csvw:Column ;
+  kbss-csvw:property :FailureScore ;
+  csvw:title         "Selected Failures Score" ;
+  csvw:name          "SelectedFailuresScore" .
+
+_:b14
+  a                  csvw:Column ;
+  kbss-csvw:property :MultipleFailures ;
+  csvw:title         "Found Failure Labels" ;
+  csvw:name          "FoundFailureLabels" .
+
+_:b15
+  a                  csvw:Column ;
+  kbss-csvw:property :FoundFailuresCount ;
+  csvw:title         "Found Failures Count" ;
+  csvw:name          "FoundFailuresCount" .
+
+_:b16
+  a                  csvw:Column ;
+  kbss-csvw:property :AggregateScore ;
+  csvw:title         "Aggregate Score" ;
+  csvw:name          "AggregateScore" .
+
+_:b17
+  a                  csvw:Column ;
+  kbss-csvw:property :IsConfirmed ;
+  csvw:title         "Is Confirmed" ;
+  csvw:name          "IsConfirmed" .
+
+_:b18
+  a                  csvw:Column ;
+  kbss-csvw:property :OriginalText ;
+  csvw:title         "Original Text" ;
+  csvw:name          "OriginalText" .
+
+_:b19
+  a                  csvw:Column ;
+  kbss-csvw:property :AnnotatedText ;
+  csvw:title         "Annotated Text" ;
+  csvw:name          "AnnotatedText" .
+
+csvw:property a rdf:Property .
+csvw:property rdfs:range rdf:Property .
