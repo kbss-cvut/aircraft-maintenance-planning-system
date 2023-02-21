@@ -273,6 +273,7 @@ public class SparqlDataReaderRDF4J {
         URI taskTypeUri = null;
         String defaultTaskType = def;
         String defaultTaskCategory = def;
+        Double averageTime = null;
         if(tType != null){
             taskTypeUri = URI.create(tType);
             Matcher m = taskTypeIRIPattern.matcher(tType);
@@ -280,6 +281,7 @@ public class SparqlDataReaderRDF4J {
                 defaultTaskCategory = taskCategories.getOrDefault(m.group(1), def);
                 defaultTaskType = m.group(2);
             }
+            averageTime = optValue(bs,"averageTime", Double::parseDouble, null);
         }
         TaskType taskType = new TaskType(
                 optValue(bs,"type", defaultTaskType),
@@ -288,6 +290,7 @@ public class SparqlDataReaderRDF4J {
                 optValue(bs,"acmodel", def)
         );
         taskType.setEntityURI(taskTypeUri);
+        taskType.setAverageTime(averageTime);
 
         // create mechanic
         String mechanicIRI = optValue(bs, "w", null);
@@ -330,6 +333,7 @@ public class SparqlDataReaderRDF4J {
             t.end = SparqlDataReader.parseDate(SparqlDataReader.df.get(), end + "+0200");
 
         t.dur = Optional.ofNullable(bs.getValue("dur")).map(v -> ((Literal)v).longValue()).orElse(null);
+        t.estMin = optValue(bs,"estMin", Double::parseDouble, null);
         return t;
     }
 
