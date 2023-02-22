@@ -8,7 +8,6 @@ import cz.cvut.kbss.amaplas.planners.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -83,12 +82,13 @@ public class SimilarPlanScheduler implements PlanScheduler{
 
                 taskPlan.setPlannedStartTime(plannedStartTime);
                 taskPlan.setPlannedEndTime(new Date(plannedStartTime.getTime() + duration));
-                taskPlan.setStartTime(taskPlan.getPlannedStartTime());
-                taskPlan.setEndTime(taskPlan.getPlannedEndTime());
 
                 taskPlan.setPlannedWorkTime(workTime);
-                taskPlan.updateTemporalAttributes();
 
+                revisionPlan.applyOperationBottomUp( p -> {
+                    if(!(p instanceof TaskPlan) )
+                        p.updatePlannedTemporalAttributesFromPlanParts();
+                });
             });
         }
     }
