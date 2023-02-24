@@ -29,6 +29,7 @@ public class Result{
     public Date end;
     public Long dur;
     public Mechanic mechanic;
+    public Double estMin;
 
     public Result() {
     }

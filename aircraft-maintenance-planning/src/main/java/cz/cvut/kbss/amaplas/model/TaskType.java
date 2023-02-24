@@ -70,6 +70,9 @@ public class TaskType extends EventType {
     @OWLDataProperty(iri = Vocabulary.s_p_required_jack_restrictions)
     protected String jackRestrictions;
 
+    @OWLDataProperty(iri = Vocabulary.s_p_time_estimate_in_hours)
+    protected Double averageTime;
+
     public TaskType() {
     }
 
@@ -232,6 +235,14 @@ public class TaskType extends EventType {
 
     public TaskType getDefinition() {
         return definition;
+    }
+
+    public Double getAverageTime() {
+        return averageTime;
+    }
+
+    public void setAverageTime(Double averageTime) {
+        this.averageTime = averageTime;
     }
 
     @Override
