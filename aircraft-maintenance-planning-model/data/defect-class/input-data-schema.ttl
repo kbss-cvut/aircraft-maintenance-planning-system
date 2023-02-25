@@ -8,32 +8,43 @@
 :input-data-schema a owl:Ontology .
 
 :input-table-schema a csvw:TableSchema ;
-                    csvw:column
-                        [ a csvw:Column;
-                            csvw:name "MainProject" ;
-                            kbss-csvw:property  :MainProject ;
-                            csvw:title "MainProject" ],
-                        [ a csvw:Column;
-                            csvw:name "DefectClassification" ;
-                            kbss-csvw:property  :DefectClassification ;
-                            csvw:title "DefectClassification" ],
-                        [ a csvw:Column;
-                            csvw:name "DefectClass" ;
-                            kbss-csvw:property  :DefectClass ;
-                            csvw:title "DefectClass" ],
-                        [ a csvw:Column;
-                            csvw:name "BillingGroup" ;
-                            kbss-csvw:property  :BillingGroup ;
-                            csvw:title "BillingGroup" ],
-                        [ a csvw:Column;
-                            csvw:name "CapLimit" ;
-                            kbss-csvw:property  :CapLimit ;
-                            csvw:title "CapLimit" ],
-                        [ a csvw:Column;
-                            csvw:name "Cumulative" ;
-                            kbss-csvw:property  :Cumulative ;
-                            csvw:title "Cumulative" ]
+	csvw:column :col_MainProject, :col_DefectClassification, :col_DefectClass, :col_BillingGroup, :col_CapLimit, :col_Cumulative
+.
 
+:col_MainProject a csvw:Column;
+	csvw:name "MainProject" ;
+	kbss-csvw:property  :MainProject ;
+	csvw:title "MainProject" ;
+.
+
+:col_DefectClassification a csvw:Column;
+	csvw:name "DefectClassification" ;
+	kbss-csvw:property  :DefectClassification ;
+	csvw:title "DefectClassification" ;
+.
+
+:col_DefectClass a csvw:Column;
+	csvw:name "DefectClass" ;
+	kbss-csvw:property  :DefectClass ;
+	csvw:title "DefectClass" ;
+.
+
+:col_BillingGroup a csvw:Column;
+	csvw:name "BillingGroup" ;
+	kbss-csvw:property  :BillingGroup ;
+	csvw:title "BillingGroup" ;
+.
+
+:col_CapLimit a csvw:Column;
+	csvw:name "CapLimit" ;
+	kbss-csvw:property  :CapLimit ;
+	csvw:title "CapLimit" ;
+.
+
+:col_Cumulative a csvw:Column;
+	csvw:name "Cumulative" ;
+	kbss-csvw:property  :Cumulative ;
+	csvw:title "Cumulative" ;
 .
 
 

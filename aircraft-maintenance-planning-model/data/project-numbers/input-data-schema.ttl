@@ -10,35 +10,49 @@
 
 
 :input-table-schema a csvw:TableSchema ;
-                    csvw:column
-                        [ a csvw:Column; 
-                            csvw:name "MainProject" ;
-                            kbss-csvw:property  :MainProject ;
-                            csvw:title "MainProject" ],
-                        [ a csvw:Column;
-                            csvw:name "Project" ;
-                            kbss-csvw:property  :Project ;
-                            csvw:title "Project" ],
-                        [ a csvw:Column;
-                            csvw:name "Description" ;
-                            kbss-csvw:property  :Description ;
-                            csvw:title "Description" ],
-                        [ a csvw:Column; 
-                            csvw:name "BillingGroup" ;
-                            kbss-csvw:property  :BillingGroup ;
-                            csvw:title "BillingGroup" ],
-                        [ a csvw:Column; 
-                            csvw:name "CapLimit" ;
-                            kbss-csvw:property  :CapLimit ;
-                            csvw:title "CapLimit" ],
-                        [ a csvw:Column; 
-                            csvw:name "LimitType" ;
-                            kbss-csvw:property  :LimitType ;
-                            csvw:title "LimitType" ],
-                        [ a csvw:Column; 
-                            csvw:name "JobGroup" ;
-                            kbss-csvw:property  :JobGroup ;
-                            csvw:title "JobGroup" ]
+	csvw:column :col_MainProject, :col_Project, :col_Description, :col_BillingGroup, :col_CapLimit, :col_LimitType, :col_JobGroup
+.
+
+:col_MainProject a csvw:Column;
+	csvw:name "MainProject" ;
+	kbss-csvw:property  :MainProject ;
+	csvw:title "MainProject" ;
+.
+
+:col_Project a csvw:Column;
+	csvw:name "Project" ;
+	kbss-csvw:property  :Project ;
+	csvw:title "Project" ;
+.
+
+:col_Description a csvw:Column;
+	csvw:name "Description" ;
+	kbss-csvw:property  :Description ;
+	csvw:title "Description" ;
+.
+
+:col_BillingGroup a csvw:Column;
+	csvw:name "BillingGroup" ;
+	kbss-csvw:property  :BillingGroup ;
+	csvw:title "BillingGroup" ;
+.
+
+:col_CapLimit a csvw:Column;
+	csvw:name "CapLimit" ;
+	kbss-csvw:property  :CapLimit ;
+	csvw:title "CapLimit" ;
+.
+
+:col_LimitType a csvw:Column;
+	csvw:name "LimitType" ;
+	kbss-csvw:property  :LimitType ;
+	csvw:title "LimitType" ;
+.
+
+:col_JobGroup a csvw:Column;
+	csvw:name "JobGroup" ;
+	kbss-csvw:property  :JobGroup ;
+	csvw:title "JobGroup" ;
 .
 
 kbss-csvw:property  a rdf:Property .
