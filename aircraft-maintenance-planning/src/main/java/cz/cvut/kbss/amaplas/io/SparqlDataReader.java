@@ -32,7 +32,7 @@ public class SparqlDataReader {
     public static final String TASK_CARDS_FROM_HISTORY = "/queries/analysis/task-cards-from-history.sparql";
     public static final String TASK_TYPES_DEFINITIONS = "/queries/analysis/task-types-definitions.sparql";
     public static final String dateFormatPattern = "yyyy-MM-dd'T'HH:mm:ss";
-    public static final String dateFormatPattern1 = "yyyy-MM-dd'T'HH:mm:ssZ";
+    public static final String dateFormatPattern1 = "yyyy-MM-dd'T'HH:mm:ssX";
     public static final String dateFormatPattern2 = "dd.MM.yyyy'T'HH:mm";
 
     public static final ThreadLocal<SimpleDateFormat> dateFormat = new ThreadLocal<SimpleDateFormat>(){
