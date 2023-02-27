@@ -13,144 +13,144 @@
 
 :output-table-schema
   a            csvw:TableSchema ;
-  csvw:columns ( _:b0
-                 _:b1
-                 _:b2
-                 _:b3
-                 _:b4
-                 _:b5
-                 _:b6
-                 _:b7
-                 _:b8
-                 _:b9
-                 _:b10
-                 _:b11
-                 _:b12
-                 _:b13
-                 _:b14
-                 _:b15
-                 _:b16
-                 _:b17
-                 _:b18
-                 _:b19 )
+  csvw:columns ( :col_DocumentId
+                 :col_DocumentLineNumber
+                 :col_WorkOrderId
+                 :col_TaskCardId
+                 :col_FinalComponentUri
+                 :col_SelectedComponentLabels
+                 :col_SelectedComponentsCount
+                 :col_ComponentScore
+                 :col_MultipleComponents
+                 :col_FoundComponentsCount
+                 :col_FinalFailureUri
+                 :col_SelectedFailureLabels
+                 :col_SelectedFailuresCount
+                 :col_FailureScore
+                 :col_MultipleFailures
+                 :col_FoundFailuresCount
+                 :col_AggregateScore
+                 :col_IsConfirmed
+                 :col_OriginalText
+                 :col_AnnotatedText )
 .
 
 
-_:b0
+:col_DocumentId
   a                  csvw:Column ;
   kbss-csvw:property :DocumentId ;
   csvw:title         "Document Id" ;
   csvw:name          "DocumentId" .
 
-_:b1
+:col_DocumentLineNumber
   a                  csvw:Column ;
   kbss-csvw:property :DocumentLineNumber ;
   csvw:title         "Document Line Number" ;
   csvw:name          "DocumentLineNumber" .
 
-_:b2
+:col_WorkOrderId
   a                  csvw:Column ;
   kbss-csvw:property :WorkOrderId ;
   csvw:title         "Word Order Id" ;
   csvw:name          "WorkOrderId" .
 
-_:b3
+:col_TaskCardId
   a                  csvw:Column ;
   kbss-csvw:property :TaskCardId ;
   csvw:title         "Task Card Id" ;
   csvw:name          "TaskCardId" .
 
-_:b4
+:col_FinalComponentUri
   a                  csvw:Column ;
   kbss-csvw:property :FinalComponentUri ;
   csvw:title         "Component Uri" ;
   csvw:name          "ComponentUri" .
 
-_:b5
+:col_SelectedComponentLabels
   a                  csvw:Column ;
   kbss-csvw:property :SelectedComponentLabels ;
   csvw:title         "Selected Component Labels" ;
   csvw:name          "SelectedComponentLabels" .
 
-_:b6
+:col_SelectedComponentsCount
   a                  csvw:Column ;
   kbss-csvw:property :SelectedComponentsCount ;
   csvw:title         "Selected Components Count" ;
   csvw:name          "SelectedComponentsCount" .
 
-_:b7
+:col_ComponentScore
   a                  csvw:Column ;
   kbss-csvw:property :ComponentScore ;
   csvw:title         "Selected Components Score" ;
   csvw:name          "SelectedComponentsScore" .
 
-_:b8
+:col_MultipleComponents
   a                  csvw:Column ;
   kbss-csvw:property :MultipleComponents ;
   csvw:title         "Found Component Labels" ;
   csvw:name          "FoundComponentLabels" .
 
-_:b9
+:col_FoundComponentsCount
   a                  csvw:Column ;
   kbss-csvw:property :FoundComponentsCount ;
   csvw:title         "Found Components Count" ;
   csvw:name          "FoundComponentsCount" .
 
-_:b10
+:col_FinalFailureUri
   a                  csvw:Column ;
   kbss-csvw:property :FinalFailureUri ;
   csvw:title         "Failure Uri" ;
   csvw:name          "FailureUri" .
 
-_:b11
+:col_SelectedFailureLabels
   a                  csvw:Column ;
   kbss-csvw:property :SelectedFailureLabels ;
   csvw:title         "Selected Failure Labels" ;
   csvw:name          "SelectedFailureLabels" .
 
-_:b12
+:col_SelectedFailuresCount
   a                  csvw:Column ;
   kbss-csvw:property :SelectedFailuresCount ;
   csvw:title         "Selected Failures Count" ;
   csvw:name          "SelectedFailuresCount" .
 
-_:b13
+:col_FailureScore
   a                  csvw:Column ;
   kbss-csvw:property :FailureScore ;
   csvw:title         "Selected Failures Score" ;
   csvw:name          "SelectedFailuresScore" .
 
-_:b14
+:col_MultipleFailures
   a                  csvw:Column ;
   kbss-csvw:property :MultipleFailures ;
   csvw:title         "Found Failure Labels" ;
   csvw:name          "FoundFailureLabels" .
 
-_:b15
+:col_FoundFailuresCount
   a                  csvw:Column ;
   kbss-csvw:property :FoundFailuresCount ;
   csvw:title         "Found Failures Count" ;
   csvw:name          "FoundFailuresCount" .
 
-_:b16
+:col_AggregateScore
   a                  csvw:Column ;
   kbss-csvw:property :AggregateScore ;
   csvw:title         "Aggregate Score" ;
   csvw:name          "AggregateScore" .
 
-_:b17
+:col_IsConfirmed
   a                  csvw:Column ;
   kbss-csvw:property :IsConfirmed ;
   csvw:title         "Is Confirmed" ;
   csvw:name          "IsConfirmed" .
 
-_:b18
+:col_OriginalText
   a                  csvw:Column ;
   kbss-csvw:property :OriginalText ;
   csvw:title         "Original Text" ;
   csvw:name          "OriginalText" .
 
-_:b19
+:col_AnnotatedText
   a                  csvw:Column ;
   kbss-csvw:property :AnnotatedText ;
   csvw:title         "Annotated Text" ;
