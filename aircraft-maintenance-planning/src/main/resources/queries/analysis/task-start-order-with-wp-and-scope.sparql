@@ -6,7 +6,7 @@ PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
 PREFIX spif: <http://spinrdf.org/spif#>
 PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
 
-SELECT ?wp ?acmodel ?tt ?estMin ?tType ?averageTime ?type ?t (?ttLabel as ?typeLabel) ?scope ?scopeLabel ?w ?wId ?wLabel ?taskcat (?sDate as ?date) ?sTime ?eDate ?eTime ?start ?end (str(ofn:asMillis(?et - ?st)) as ?dur)
+SELECT ?wp ?acmodel ?tt ?referencedTask ?estMin ?tType ?averageTime ?type ?t (?ttLabel as ?typeLabel) ?scope ?scopeLabel ?w ?wId ?wLabel ?taskcat (?sDate as ?date) ?sTime ?eDate ?eTime ?start ?end (str(ofn:asMillis(?et - ?st)) as ?dur)
 WHERE
 {
     ?wpuri a cm:workpackage.
@@ -25,6 +25,9 @@ WHERE
         ?tt cm:is-part-of-workpackage ?wpuri.
         OPTIONAL{
             ?tt cm:time-estimate-in-hours ?estMin .
+        }
+        OPTIONAL{
+            ?tt cm:references-task ?referencedTask
         }
         # task type
         OPTIONAL{

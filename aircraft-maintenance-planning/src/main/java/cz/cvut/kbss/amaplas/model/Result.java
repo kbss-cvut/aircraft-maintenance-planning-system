@@ -30,6 +30,8 @@ public class Result{
     public Long dur;
     public Mechanic mechanic;
     public Double estMin;
+    public String taskExecutionURI;
+    public List<String> referencedTasks;
 
     public Result() {
     }
