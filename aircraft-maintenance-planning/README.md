@@ -86,4 +86,4 @@ The argument `<GRAPHDB_REPOSITORY_URL>` points to the GraphDB repository.
 
 ## License
 
-Licensed under GPL v3.0.
+Licensed under LGPL v3.0.
