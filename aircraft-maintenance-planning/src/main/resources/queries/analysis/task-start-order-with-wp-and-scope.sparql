@@ -6,7 +6,7 @@ PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
 PREFIX spif: <http://spinrdf.org/spif#>
 PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
 
-SELECT ?wp ?acmodel ?tt ?estMin ?tType ?averageTime ?type ?t (?ttLabel as ?typeLabel) ?scope ?scopeLabel ?w ?wId ?wLabel ?taskcat (?sDate as ?date) ?sTime ?eDate ?eTime (str(?st) as ?start) (str(?et) as ?end) (str(ofn:asMillis(?et - ?st)) as ?dur)
+SELECT ?wp ?acmodel ?tt ?estMin ?tType ?averageTime ?type ?t (?ttLabel as ?typeLabel) ?scope ?scopeLabel ?w ?wId ?wLabel ?taskcat (?sDate as ?date) ?sTime ?eDate ?eTime ?start ?end (str(ofn:asMillis(?et - ?st)) as ?dur)
 WHERE
 {
     ?wpuri a cm:workpackage.
@@ -70,13 +70,15 @@ WHERE
             OPTIONAL{
                 ?t cm:start-date ?sDate.
                 ?t cm:start-time ?sTime.
-                BIND(spif:parseDate(CONCAT(str(?sDate),"T", str(?sTime)),"yyyy-MM-dd'T'hh:mm") as ?st)
+                BIND(CONCAT(str(?sDate),"T", str(?sTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?start)
+                BIND(spif:parseDate(?start, "yyyy-MM-dd'T'HH:mm") as ?st)
             }
 
             OPTIONAL{
                 ?t cm:end-date ?eDate.
                 ?t cm:end-time ?eTime.
-                BIND(spif:parseDate(CONCAT(str(?eDate),"T", str(?eTime)),"yyyy-MM-dd'T'hh:mm") as ?et)
+                BIND(CONCAT(str(?eDate),"T", str(?eTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?end)
+                BIND(spif:parseDate(?end, "yyyy-MM-dd'T'HH:mm") as ?et)
             }
 
             # task group

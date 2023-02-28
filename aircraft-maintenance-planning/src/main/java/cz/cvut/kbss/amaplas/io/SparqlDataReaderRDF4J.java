@@ -328,9 +328,9 @@ public class SparqlDataReaderRDF4J {
         String start = optValue(bs, "start", null);
         String end = optValue(bs, "end", null);
         if(start != null )
-            t.start = SparqlDataReader.parseDate(SparqlDataReader.df.get(), start + "+0200");
+            t.start = SparqlDataReader.parseDate(SparqlDataReader.df.get(), start);
         if(end != null)
-            t.end = SparqlDataReader.parseDate(SparqlDataReader.df.get(), end + "+0200");
+            t.end = SparqlDataReader.parseDate(SparqlDataReader.df.get(), end);
 
         t.dur = Optional.ofNullable(bs.getValue("dur")).map(v -> ((Literal)v).longValue()).orElse(null);
         t.estMin = optValue(bs,"estMin", Double::parseDouble, null);
