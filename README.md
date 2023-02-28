@@ -10,5 +10,4 @@ Aircraft Maintenance Planning Backend located in folder [aircraft-maintenance-pl
 
 ## Model
 
-Aircraft Maintenance Planning Model located in folder[aircraft-maintenance-planning-model](./aircraft-maintenance-planning-model) contains  conceptualization of related concepts that are used within Planning Backend. The conceptualization is implemented using Semantic Web ontologies. The folder contains also scripts to manage those ontologies and data compliant with those ontologies.
-
+Aircraft Maintenance Planning Model located in folder [aircraft-maintenance-planning-model](./aircraft-maintenance-planning-model) contains  conceptualization of related concepts that are used within Planning Backend. The conceptualization is implemented using Semantic Web ontologies. The folder contains also scripts to manage those ontologies and data compliant with those ontologies.
