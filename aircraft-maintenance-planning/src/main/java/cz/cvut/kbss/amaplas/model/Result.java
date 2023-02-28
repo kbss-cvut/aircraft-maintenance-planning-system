@@ -30,6 +30,8 @@ public class Result{
     public Long dur;
     public Mechanic mechanic;
     public Double estMin;
+    public String taskExecutionURI;
+    public List<String> referencedTasks;
 
     public Result() {
     }
@@ -170,6 +172,32 @@ public class Result{
     public static void normalizeTaskTypes(List<Result> results){
         normalizeTaskTypeLabels(results);
         normalizeScopes(results);
+    }
+
+    public static void setAreasInWOsFromReferenceTask(List<Result> results){
+        Map<String, List<Result>> map = results.stream().filter(r -> r.taskExecutionURI != null)
+                .collect(Collectors.groupingBy(r -> r.taskExecutionURI));
+        for(List<Result> sessions: map.values()) {
+            String taskCategory = sessions.stream().map(s -> s.taskType.taskcat).filter(c -> c != null).findFirst().orElse(null);
+            if(taskCategory != null && !taskCategory.contains("work-order"))
+                continue;
+
+            List<String> referencedTasks = sessions.stream()
+                    .map(s -> s.referencedTasks).filter(ts -> ts != null).flatMap(rt -> rt.stream())
+                    .distinct().collect(Collectors.toList());
+            if(referencedTasks.isEmpty())
+                continue;
+            List<Result> referencedTaskSessions = map.get(referencedTasks.get(0));
+            if(referencedTaskSessions == null || referencedTaskSessions.isEmpty())
+                continue;
+
+            String area = referencedTaskSessions.stream().map(r -> r.taskType)
+                    .filter(t -> t != null && t.getDefinition() != null && t.getDefinition().getArea() != null)
+                    .map(t -> t.getDefinition().getArea()).findFirst()
+                    .orElse(null);
+            if(area != null)
+                sessions.forEach(s -> s.taskType.setArea(area));
+        }
     }
 
     /**

@@ -71,11 +71,10 @@ public class TaskTypeBasedPlanBuilder extends AbstractPlanBuilder<List<TaskType>
         revisionPlan.getPlanParts().add(phasePlan);
 
         AircraftArea area = getAircraftArea(optionalTaskType(tt));
-        Pair generalTaskPlanContext = Pair.of(phasePlan, area);
-        GeneralTaskPlan generalTaskPlan = getGeneralTaskPlanInCtx(optionalTaskType(tt), generalTaskPlanContext);
+        GeneralTaskPlan generalTaskPlan = getGeneralTaskPlanInCtx(optionalTaskType(tt), phasePlan, area);
         phasePlan.getPlanParts().add(generalTaskPlan);
 
-        TaskPlan taskPlan = getTaskPlan(tt, generalTaskPlan);
+        TaskPlan taskPlan = getTaskPlan(tt, generalTaskPlan, area.getTitle());
         generalTaskPlan.getPlanParts().add(taskPlan);
     }
 

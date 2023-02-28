@@ -88,6 +88,7 @@ public class RevisionHistory {
         // normalize and fix referenced task types
         Result.normalizeTaskTypes(workSessions);
         workSessions.stream().filter(r -> r.taskType != null && "task-card".equals(r.taskType.getTaskcat())).forEach(r -> r.taskType.setDefinition(taskTypeService.getMatchingTaskTypeDefinition(r.taskType)));
+        Result.setAreasInWOsFromReferenceTask(workSessions);
         // add task labels if missing
         taskTypeService.getTaskTypes().stream()
                 .filter(t -> t.getCode() == t.getTitle()

@@ -214,11 +214,10 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
             revisionPlan.getPlanParts().add(phasePlan);
 
             AircraftArea area = getAircraftArea(r);
-            Pair generalTaskPlanContext = Pair.of(phasePlan, area);
-            GeneralTaskPlan generalTaskPlan = getGeneralTaskPlanInCtx(r, generalTaskPlanContext);
+            GeneralTaskPlan generalTaskPlan = getGeneralTaskPlanInCtx(r, phasePlan, area);
             phasePlan.getPlanParts().add(generalTaskPlan);
 
-            TaskPlan taskPlan = getTaskPlan(r, revisionPlan);
+            TaskPlan taskPlan = getTaskPlan(r, revisionPlan, area.getTitle());
             generalTaskPlan.getPlanParts().add(taskPlan);
 
             if(r.sessionURI == null)
@@ -298,17 +297,17 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
         return getAircraft(aircraftModel);
     }
 
-    public TaskPlan getTaskPlan(final Result r, Object context){
+    public TaskPlan getTaskPlan(final Result r, Object context, String areaLabel){
         TaskType taskType = getTaskType(r).orElse(null);
-        TaskPlan taskPlan = getTaskPlan(taskType, context);
+        TaskPlan taskPlan = getTaskPlan(taskType, context, areaLabel);
         if(r.estMin != null)
             taskPlan.setEstMin(r.estMin);
         return taskPlan;
     }
 
-    public GeneralTaskPlan getGeneralTaskPlanInCtx(Result r, Object context){
+    public GeneralTaskPlan getGeneralTaskPlanInCtx(Result r, PhasePlan phasePlan, AircraftArea aircraftArea){
         // general task plan <=> different session.type.type per session.type.area
-        return getGeneralTaskPlanInCtx(getTaskTypeDefinition(r), context);
+        return getGeneralTaskPlanInCtx(getTaskTypeDefinition(r), phasePlan, aircraftArea);
     }
 
     public PhasePlan getPhasePlan(Result r, final Aircraft aircraft){
@@ -327,7 +326,8 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
     }
 
     public String getAreaLabel(Result r){
-        return getAircraftAreaLabel(getTaskTypeDefinition(r));
+        return getTaskType(r).map(TaskType::getArea)
+                .map(this::mapNull).orElseGet(() -> getAircraftAreaLabel(getTaskTypeDefinition(r)));
     }
 
     public String getMaintenanceGroupLabel(Result r){

@@ -36,10 +36,8 @@ public abstract class AbstractPlanBuilder<T> {
 
     protected abstract RevisionPlan createRevision(PlanBuilderInput<T> input);
 
-    public TaskPlan getTaskPlan(final TaskType taskType, Object context){
+    public TaskPlan getTaskPlan(final TaskType taskType, Object context, String aircraftAreaLabel){
         final String maintenanceGroupLabel = getMaintenanceGroupLabel(optionalTaskType(taskType));
-        // CHECK - replace area with areaLabel
-        final String aircraftAreaLabel = getAircraftAreaLabel(optionalTaskType(taskType));
 
         TaskPlan taskPlan = null;
         if (taskType != null){
@@ -105,10 +103,10 @@ public abstract class AbstractPlanBuilder<T> {
         return (T)r;
     }
 
-    public GeneralTaskPlan getGeneralTaskPlanInCtx(Optional<TaskType> optionalTaskType, Object context){
+    public GeneralTaskPlan getGeneralTaskPlanInCtx(Optional<TaskType> optionalTaskType, PhasePlan phasePlan, AircraftArea aircraftArea){
         // general task plan <=> different session.type.type per session.type.area
         String generalTaskType = getGeneralTaskTypeLabel(optionalTaskType);
-        AircraftArea aircraftArea = getAircraftArea(optionalTaskType);
+        Pair<PhasePlan, AircraftArea> context = Pair.of(phasePlan, aircraftArea);
         GeneralTaskPlan generalTaskPlan = getEntity(
                 generalTaskType,
                 context,
