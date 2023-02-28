@@ -38,6 +38,13 @@ This project contains software modules produced by the Doprava 2020 CSAT project
 - object property should be named with "has-" and "is-" prefix
 - datatype property should be called without "has-" and "is-" prefix
 
+### Pipelines
+
+#### Text analysis
+The goal of the [text-analysis.sms.ttl](aircraft-maintenance-planning-model/data/text-analysis/text-analysis.sms.ttl)
+pipeline is to extract HTML files from TermIt and process them to produce statistics based on a specified vocabulary.
+This is done by converting the HTML table into an RDF format, extracting term occurrences pointing to literals from the cell values ,
+and selecting appropriate terms. The resulting RDF data is then transformed into CSV format.
 
 ### Transformation scripts
 
