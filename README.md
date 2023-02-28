@@ -6,9 +6,9 @@ The repository contains two main parts -- Planning Backend and Model.
 
 ## Planning Backend
 
-Aircraft Maintenance Planning Backend located in [aircraft-maintenance-planning folder](./aircraft-maintenance-planning) is dockerized Java based application providing REST API for different tasks related to aircraft maintenance. [Plan manager](https://github.com/kbss-cvut/csat-maintenance-planner) is frontend application build over this REST API.
+Aircraft Maintenance Planning Backend located in folder [aircraft-maintenance-planning](./aircraft-maintenance-planning) is dockerized Java based application providing REST API for different tasks related to aircraft maintenance. [Plan manager](https://github.com/kbss-cvut/csat-maintenance-planner) is frontend application build over this REST API.
 
 ## Model
 
-Aircraft Maintenance Planning Model located in [aircraft-maintenance-planning-model folder](./aircraft-maintenance-planning-model) contains  conceptualization of related concepts that are used within Planning Backend. The conceptualization is implemented using Semantic Web ontologies. The folder contains also scripts to manage those ontologies and data compliant with those ontologies.
+Aircraft Maintenance Planning Model located in folder[aircraft-maintenance-planning-model](./aircraft-maintenance-planning-model) contains  conceptualization of related concepts that are used within Planning Backend. The conceptualization is implemented using Semantic Web ontologies. The folder contains also scripts to manage those ontologies and data compliant with those ontologies.
 
