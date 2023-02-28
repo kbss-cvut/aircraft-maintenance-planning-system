@@ -1,7 +1,7 @@
 # Aircraft Maintenance Planning System                                                                                                                                                               
 This project contains software modules produced by the Doprava 2020 CSAT project. This includes the software for generating maintenance plans and the aircraft maintenance planning ontology model. We use `PROJECT_ROOT` to reference to the directory, where this README file is located.
 
-The repository contains two main parts -- Planning Backend and Model.
+The repository contains two main parts -- [Planning Backend](#planning-backend) and [Model](#model).
 
 
 ## Planning Backend
