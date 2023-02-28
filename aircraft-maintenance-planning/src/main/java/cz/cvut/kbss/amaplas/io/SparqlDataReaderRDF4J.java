@@ -247,7 +247,8 @@ public class SparqlDataReaderRDF4J {
     public List<Result> readSessionLogsWithNamedQuery(String queryName, Map<String, Value> bindings, String endpoint, String username, String password){
         LOG.info("executing query \"{}\" at endpoint <{}> with bindings {}", queryName, endpoint, bindings);
         String query = ResourceUtils.loadResource(queryName);
-        List<Result> results = executeQuery(query, bindings, endpoint, username, password, SparqlDataReaderRDF4J::convertToTimeLog);
+        EntityRegistry registry = new EntityRegistry();
+        List<Result> results = executeQuery(query, bindings, endpoint, username, password, bs -> SparqlDataReaderRDF4J.convertToTimeLog(bs, registry));
 
         return results.stream().collect(Collectors.groupingBy(Result::form0))
                 .entrySet().stream()
@@ -264,7 +265,7 @@ public class SparqlDataReaderRDF4J {
     };
     protected static Pattern taskTypeIRIPattern = Pattern.compile("task-type--([^-]+)--(.+)");
     protected static Pattern mechanicIRI_IDPattern = Pattern.compile("^.+/mechanic--(.+)$");
-    public static Result convertToTimeLog(BindingSet bs) throws ParseException {
+    public static Result convertToTimeLog(BindingSet bs, EntityRegistry registry) throws ParseException {
         // TODO - do not create task type with null type string.
         String def = "unknown";
         String wp = bs.getValue("wp").stringValue();
@@ -298,7 +299,7 @@ public class SparqlDataReaderRDF4J {
         String mechanicLabel = optValue(bs, "wLabel", null);
         Mechanic mechanic = null;
         if(mechanicIRI != null){
-            mechanic = new Mechanic();
+            mechanic = registry.getOrCreate(mechanicIRI, Mechanic::new, Mechanic.class);
             mechanic.setEntityURI(URI.create(mechanicIRI));
             if(mechanicID == null){
                 Matcher m = mechanicIRI_IDPattern.matcher(mechanicIRI);
@@ -307,15 +308,15 @@ public class SparqlDataReaderRDF4J {
                 }
             }
             mechanic.setId(mechanicID);
-            if(mechanicID != null){
-                mechanic.setTitle(mechanicID);
-            }
             mechanic.setTitle(mechanicLabel != null ? mechanicLabel : mechanicID);
         }
 
         // create a work session record
-        Result t = new Result();
-        t.sessionURI = optValue(bs, "t", null);
+        String sessionURI = optValue(bs, "t", null);
+
+        Result t = sessionURI == null ? new Result() : registry.getOrCreate(sessionURI, Result::new, Result.class);
+        t.taskExecutionURI = optValue(bs, "tt", null);
+        t.sessionURI = sessionURI;
         t.wp = wp;
         t.acmodel = taskType.getAcmodel();
         t.acType = AircraftType.getTypeLabelForModel(t.acmodel);
@@ -324,13 +325,19 @@ public class SparqlDataReaderRDF4J {
 
         t.scope = optValue(bs, "scope", def);
         t.date = optValue(bs, "date", def);
+        String referencedTask = optValue(bs, "referencedTask", null);
+        if(referencedTask != null) {
+            if(t.referencedTasks == null)
+                t.referencedTasks = new ArrayList<>();
+            t.referencedTasks.add(referencedTask);
+        }
 
         String start = optValue(bs, "start", null);
         String end = optValue(bs, "end", null);
         if(start != null )
-            t.start = SparqlDataReader.parseDate(SparqlDataReader.df.get(), start + "+0200");
+            t.start = SparqlDataReader.parseDate(SparqlDataReader.df.get(), start);
         if(end != null)
-            t.end = SparqlDataReader.parseDate(SparqlDataReader.df.get(), end + "+0200");
+            t.end = SparqlDataReader.parseDate(SparqlDataReader.df.get(), end);
 
         t.dur = Optional.ofNullable(bs.getValue("dur")).map(v -> ((Literal)v).longValue()).orElse(null);
         t.estMin = optValue(bs,"estMin", Double::parseDouble, null);
