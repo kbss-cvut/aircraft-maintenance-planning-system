@@ -546,6 +546,10 @@ CONSTRUCT{
 
 :transform-text-analysis-data
   a sm:Function ;
+  rdfs:comment """The goal of this pipeline is to extract HTML files from TermIt and process them to produce statistics
+  based on a specified vocabulary. This is done by converting the HTML table into an RDF format, extracting term
+  occurrences pointing to literals from the cell values, and selecting appropriate terms.
+  The resulting RDF data is then transformed into CSV format.""" ;
   sm:returnModule :transform-text-analysis-data_Return ;
   rdfs:subClassOf sm:Functions ;
 .
