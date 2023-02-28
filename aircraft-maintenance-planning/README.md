@@ -4,7 +4,7 @@ This software component is the backend service that manages revision planning.
 ## Description 
 
 ### Data model
-A revision plan is a hierarchical structure of plan parts organized in 5 layers listed from general to specific
+A revision plan is a hierarchical structure of plan parts organized in 5 layers listed from general to specific:
 - phase plan layer - this layer contains phases of the revision plan which may around 5 phases.
 - general task plan layer - this layer organizes specific tasks into general categories such as _Check_, _Repair_ and _Restoration_
 - task plan layer - this layer contains specific maintenance tasks, e.g. _INSPECT ENGINE 1_ 
