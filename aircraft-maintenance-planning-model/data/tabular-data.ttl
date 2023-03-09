@@ -115,7 +115,7 @@ WHERE {
     BIND(xsd:decimal(replace(str(?t2Normalized), \":.*\", \"\")) as ?t2Hours)
     BIND(xsd:decimal(replace(str(?t2Normalized), \"(^..:|:..$)\", \"\")) as ?t2Minutes)
     BIND(coalesce(xsd:decimal(replace(str(?t2Normalized), \".*:.*:\", \"\")),0) as ?t2Seconds)
-    BIND((?t2Hours-?t1Hours)+(?t2Minutes-?t1Minutes)/60+(?t2Seconds-?t1Seconds)/3600 as ?durationInHours)
+    BIND(xsd:decimal((?t2Hours-?t1Hours)+(?t2Minutes-?t1Minutes)/60+(?t2Seconds-?t1Seconds)/3600) as ?durationInHours)
 }""" ;
     ] ;
   rdfs:label "construct-day-bound-event-duration" ;
