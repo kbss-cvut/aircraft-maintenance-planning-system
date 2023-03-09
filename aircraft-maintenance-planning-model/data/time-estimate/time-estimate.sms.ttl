@@ -269,7 +269,7 @@ CONSTRUCT {
      ?scopedTaskStepExecutionIRI cm:time-estimate-in-hours ?sumOftimeEstimateInHours .
 
 } WHERE {
-    SELECT ?scopedTaskStepExecutionIRI (SUM(?timeEstimateInHours) as ?sumOftimeEstimateInHours)
+   SELECT ?scopedTaskStepExecutionIRI (xsd:decimal(SUM(?timeEstimateInHours)) as ?sumOftimeEstimateInHours)
     WHERE {
             ?addEstimationEventIRI a cm:add-task-estimation  ;
                 cm:time-estimate-in-hours ?timeEstimateInHours ;
