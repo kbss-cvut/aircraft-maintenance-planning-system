@@ -6,7 +6,7 @@ cd $DIR/..
 
 
 INPUT_EML_DATA_DIR=./private/input-eml-data
-OUTPUT_DATA_DIR=./private/output-eml-data
+OUTPUT_DATA_DIR=./private/eml-data-output
 
 # Input date and time values
 DATE_STR='2023-01-16'
