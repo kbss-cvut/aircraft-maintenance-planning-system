@@ -1,0 +1,252 @@
+@prefix :      <http://onto.fel.cvut.cz/ontologies/csat/wo-tc-ref-0.1/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix tops:  <http://www.topbraid.org/tops#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix fn:    <http://www.w3.org/2005/xpath-functions#> .
+@prefix dl:    <http://onto.fel.cvut.cz/ontologies/csat/data-lib/> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix annot: <http://onto.fel.cvut.cz/ontologies/ufo/annot/> .
+@prefix smf:   <http://topbraid.org/sparqlmotionfunctions#> .
+@prefix spif:  <http://spinrdf.org/spif#> .
+@prefix ata:   <http://onto.fel.cvut.cz/voc/ata-100/> .
+@prefix sml:   <http://topbraid.org/sparqlmotionlib#> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix km-rdf2csv: <http://onto.fel.cvut.cz/ontologies/lib/module/RDF2CSV/> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix arg:   <http://spinrdf.org/arg#> .
+@prefix sm:    <http://topbraid.org/sparqlmotion#> .
+@prefix km-rdf4j: <http://onto.fel.cvut.cz/ontologies/lib/module/rdf4j/> .
+@prefix vann:  <http://purl.org/vocab/vann/> .
+@prefix sp:    <http://spinrdf.org/sp#> .
+@prefix kbss-module: <http://onto.fel.cvut.cz/ontologies/lib/module/> .
+@prefix csvw:  <http://www.w3.org/ns/csvw#> .
+@prefix turtle: <http://www.semanticweb.org/owl/owlapi/turtle#> .
+@prefix km-param: <http://onto.fel.cvut.cz/ontologies/lib/module-param/> .
+@prefix ms:    <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
+@prefix kbss-csvw: <https://onto.fel.cvut.cz/ontologies/extension/csvw/> .
+@prefix swrl:  <http://www.w3.org/2003/11/swrl#> .
+@prefix afn:   <http://jena.hpl.hp.com/ARQ/function#> .
+@prefix km-form: <http://onto.fel.cvut.cz/ontologies/lib/module/form/> .
+@prefix cm:    <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
+@prefix km-tabular: <http://onto.fel.cvut.cz/ontologies/lib/module/tabular/> .
+@prefix spl:   <http://spinrdf.org/spl#> .
+@prefix td:    <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1/> .
+@prefix jfn:   <java:org.apache.jena.sparql.function.library.> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix pf:    <http://jena.hpl.hp.com/ARQ/property#> .
+@prefix km-sesame: <http://onto.fel.cvut.cz/ontologies/lib/module/sesame/> .
+@prefix spin:  <http://spinrdf.org/spin#> .
+@prefix kbss-spif: <http://onto.fel.cvut.cz/ontologies/lib/spin-function/> .
+@prefix doc:   <http://onto.fel.cvut.cz/ontologies/documentation/> .
+@prefix bibo:  <http://purl.org/ontology/bibo/> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix cmd:   <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/> .
+@prefix config: <http://onto.fel.cvut.cz/ontologies/csat/config/> .
+@prefix ufo:   <http://onto.fel.cvut.cz/ontologies/ufo/> .
+
+
+<http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1-data>
+  a owl:Ontology ;
+.
+
+cm:task-step-execution--OH-LZM-H-22-HMV1--M--5873939--1
+  a                          cm:task-step-execution-type--M--5873939--1 , owl:NamedIndividual ;
+  cm:step-index              1 ;
+  cm:work-order-action-text  "PERFORMED, NO CRACKS FOUND" ;
+  cm:work-order-text         "153 MM TO SKIN PANEL LWR EDGE. DO AN DETAILED VISUAL INSPECTION TO DETECT PRESENT OF CRACK REF. NTM 51-90-00 REV.124" .
+#
+cm:task-step-execution--M-ABOI-H-22-12Y--TC--53-874-00--1
+  a                          cm:task-step-execution-type--TC--53-874-00--1 , owl:NamedIndividual ;
+  cm:step-index              1 ;
+  cm:work-order-action-text  "PERFORMED WORK STEP `INSPECTION PERFORM AN EXTERNAL ZONAL INSPECTION (GV) OF THE FORWARD PASSENGER COMPARTMENT - ST...`" ;
+  cm:work-order-text         "INSPECTION   PERFORM AN EXTERNAL ZONAL INSPECTION (GV) OF THE FORWARD PASSENGER COMPARTMENT - STA 360 TO STA 663.75 - LEFT AND RIGHT - SECTION 43 AND 44 (PART)." .
+
+cm:task-step-execution--M-ABOK-H-22-12Y--TC--27-144-00--1
+  a                   cm:task-step-execution-type--TC--27-144-00--1 , owl:NamedIndividual ;
+  cm:step-index       1 ;
+  cm:work-order-text  "LUBRICATION   AREA: WINGS TE - LUBRICATE THE LEFT WING TRAILING EDGE FLAP BALLSCREW ASSEMBLIES AND FLAP TRANSMISSION UNIVERSAL JOINTS." .
+
+cm:task-step-execution--PH-XRY-H-22-HMV-10--TC--53-335-00-01--1
+  a                   cm:task-step-execution-type--TC--53-335-00-01--1 , owl:NamedIndividual ;
+  cm:step-index       1 ;
+  cm:work-order-text  "FLIGHT COMPARTMENT FROM STA 178 TO 270 GVI" .
+
+cm:complex-execution--OE-LXE-H-22-4Y-3Y-2Y--293400-01-1-27
+  a                          cm:complex-execution , cm:task-type--TC--293400-01-1-27 , owl:NamedIndividual , cm:task-card ;
+  cm:end-time                "2022-10-31"^^xsd:date ;
+  cm:has-work-order-step     cm:task-step-execution--OE-LXE-H-22-4Y-3Y-2Y--TC--293400-01-1-27--1 ;
+  cm:is-part-of-workpackage  cm:workpackage--OE-LXE-H-22-4Y-3Y-2Y ;
+  cm:issue-time              "2022-10-15"^^xsd:date .
+
+cm:task-step-execution--M-ABOI-H-22-12Y--S--5837907--3
+  a                          cm:task-step-execution-type--S--5837907--3 , owl:NamedIndividual ;
+  cm:step-index              3 ;
+  cm:work-order-action-text  "THE SLEEVE HAS BEEN INSTALLED IAW AMM 78-31-02-400-802 REV.77A TIL STEP H (14).    THE SLEEVE MOVES SMOOTHLY." ;
+  cm:work-order-text         "ENG1 RH TR SLEEVE R/I   SLEEVE REMOVED FOR ACCESS PER AMM TASK 78-31-02-000-802-F00 R77A." .
+
+cm:task-step-execution-type--S--5879727--1
+  a                owl:Class ;
+  rdfs:subClassOf  cm:work-order-step .
+
+cm:task-type--TC--27-166-00-01
+  a                       owl:Class ;
+  rdfs:subClassOf         cm:task-card ;
+  cm:id                   "27-166-00-01" ;
+  cm:references-ata-code  ata:ata-27-10 .
+
+cm:complex-execution--M-ABOI-H-22-12Y--24-010-02
+  a                          cm:complex-execution , cm:task-type--TC--24-010-02 , owl:NamedIndividual , cm:task-card ;
+  cm:end-time                "2022-06-06"^^xsd:date ;
+  cm:has-work-order-step     cm:task-step-execution--M-ABOI-H-22-12Y--TC--24-010-02--1 ;
+  cm:is-part-of-workpackage  cm:workpackage--M-ABOI-H-22-12Y ;
+  cm:issue-time              "2022-05-17"^^xsd:date .
+
+cm:task-step-execution--M-ABOI-H-22-12Y--M--5831911--13
+  a                          cm:task-step-execution-type--M--5831911--13 , owl:NamedIndividual ;
+  cm:step-index              13 ;
+  cm:work-order-action-text  "SHM: ALLPARTS HAVE BEEN REINSTALLED TO ORIGINAL POSITION  PER. SRM 51-40-02  REV. 76 JUL 10/2022  ASSEMBLED PER. DWG.146A1220_SH47TO48 / 146A1220-22 S" ;
+  cm:work-order-text         "SHM:    REINSTALL THE ITEMS THAT YOU REMOVED FOR ACCESS PER REF./A/, PARA. 4.Q." .
+
+cm:task-step-execution--OE-LXE-H-22-4Y-3Y-2Y--TC--353000-01-1-61--2
+  a                   cm:task-step-execution-type--TC--353000-01-1-61--2 , owl:NamedIndividual ;
+  cm:step-index       2 ;
+  cm:work-order-text  "INSPECTION   AREA: AFT CABIN - VISUAL CHECK OF THE PRESSURE GAGES OF THE PORTABLE OXYGEN CYLINDERS  DO A QUANTITY CHECK OF THE OXYGEN FOR EACH PORTABLE OXYGEN CYLI" .
+
+cm:task-type--M--5768083
+  a                       owl:Class ;
+  rdfs:subClassOf         cm:maintenance-work-order ;
+  cm:id                   "5768083" ;
+  cm:references-ata-code  ata:ata-23-10 .
+
+cm:task-step-execution--PH-HZL-H-22-HMV11--TC--57-210-02-01--1
+  a                   cm:task-step-execution-type--TC--57-210-02-01--1 , owl:NamedIndividual ;
+  cm:step-index       1 ;
+  cm:work-order-text  "RIGHT FLAP SUPPORT NO. 6" .
+
+cm:task-step-execution--M-ABOK-H-22-12Y--S--5842488--1
+  a                          cm:task-step-execution-type--S--5842488--1 , owl:NamedIndividual ;
+  cm:step-index              1 ;
+  cm:work-order-action-text  "INSPECTION WAS PERFORMED ACCORDING TO AMM 35-22-00-210-802 REV.77A 15-APR-22" ;
+  cm:work-order-text         "#1# CONSTANT DISPENSING SYSTEM (CDS) DISCHARGE INDICATOR TAPE   PERFORM MPD 35-065-00  VISUAL CHECK OF THE PASSENGER LAVATORY OXYGEN CONSTANT DISPENSING SYSTEM (CDS) DISCHARGE INDICATOR TAPE FOR EVIDENCE OF RUPTURE" .
+
+cm:task-step-execution--OH-LZM-H-22-HMV1--M--5873940--21
+  a                          cm:task-step-execution-type--M--5873940--21 , owl:NamedIndividual ;
+  cm:step-index              21 ;
+  cm:work-order-action-text  "DOUBLE INSPECTION HAS BEEN PERFORMED." ;
+  cm:work-order-text         "B1:  CARRY OUT DOUBLE INSPECTION OF PERFORMED REPAIR." .
+
+cm:task-type--M--5854665
+  a                       owl:Class ;
+  rdfs:subClassOf         cm:maintenance-work-order ;
+  cm:id                   "5854665" ;
+  cm:references-ata-code  ata:ata-53-00 .
+
+cm:complex-execution--OH-LZM-H-22-HMV1--ZL-131-02-2
+  a                          cm:complex-execution , cm:task-type--TC--ZL-131-02-2 , owl:NamedIndividual , cm:task-card ;
+  cm:has-work-order-step     cm:task-step-execution--OH-LZM-H-22-HMV1--TC--ZL-131-02-2--1 ;
+  cm:is-part-of-workpackage  cm:workpackage--OH-LZM-H-22-HMV1 ;
+  cm:issue-time              "2021-08-30"^^xsd:date .
+
+cm:task-step-execution--PH-HZL-H-22-HMV11--S--5881610--2
+  a                   cm:task-step-execution-type--S--5881610--2 , owl:NamedIndividual ;
+  cm:step-index       2 ;
+  cm:work-order-text  "#2# LH WINGLET INSTALLATION   PLS. PERFORM WINGLET INSTALLATION IAW AMM 57-21-21." .
+
+cm:complex-execution--M-ABOI-H-22-12Y--49-010-00
+  a                          cm:complex-execution , cm:task-type--TC--49-010-00 , owl:NamedIndividual , cm:task-card ;
+  cm:end-time                "2022-06-05"^^xsd:date ;
+  cm:has-work-order-step     cm:task-step-execution--M-ABOI-H-22-12Y--TC--49-010-00--1 ;
+  cm:is-part-of-workpackage  cm:workpackage--M-ABOI-H-22-12Y ;
+  cm:issue-time              "2022-05-17"^^xsd:date .
+
+cm:task-step-execution-type--M--5880929--46
+  a                owl:Class ;
+  rdfs:subClassOf  cm:work-order-step .
+
+cm:task-step-execution--M-ABOK-H-22-12Y--M--5852359--1
+  a                          cm:task-step-execution-type--M--5852359--1 , owl:NamedIndividual ;
+  cm:step-index              1 ;
+  cm:work-order-action-text  "ENG#1 THE HYDRAULIC TUBE P/N:272A3151-36 HAS BEEN REMOVED AND SENT WITH TUBE KIT P/N:654A0004-1046 TO SHOP FOR NEW TUBE SWAGGING. TUBES P/N:272A3151-1" ;
+  cm:work-order-text         "ENG#1 AFT FAIRING,LH WING LOWER SURFACE.THERE ARE LOOSE TWO JUM NUTS FITTED HYDRAULIC TUBE P/N:272A3151-36 TO SUPPORT BRACKET 272A9127-1. PRE REMOVAL" .
+
+cm:task-step-execution--PH-XRX-H-22-HMV10---EOL--TC--53-030-00-02--1
+  a                   cm:task-step-execution-type--TC--53-030-00-02--1 , owl:NamedIndividual ;
+  cm:step-index       1 ;
+  cm:work-order-text  "AFT CARGO DOOR SURROUND STRUCTURE  FITTINGS AND STOPS" .
+
+cm:task-step-execution--M-ABOK-H-22-12Y--M--5852477--7
+  a                          cm:task-step-execution-type--M--5852477--7 , owl:NamedIndividual ;
+  cm:step-index              7 ;
+  cm:work-order-action-text  "SHM REPAIR PARTS FABRICATED" ;
+  cm:work-order-text         "SHM:  MAKE, DRILL AND DEBURR THE REPAIR PARTS.    REF. /A/ PARA. 4. E. - I. AND FIGURE 203/REPAIR 1, DETAIL A." .
+
+cm:task-step-execution-type--M--5852450--2
+  a                owl:Class ;
+  rdfs:subClassOf  cm:work-order-step .
+
+cm:task-type--M--5879375
+  a                       owl:Class ;
+  rdfs:subClassOf         cm:maintenance-work-order ;
+  cm:id                   "5879375" ;
+  cm:references-ata-code  ata:ata-25-20 .
+
+cm:task-step-execution-type--M--5830272--3
+  a                owl:Class ;
+  rdfs:subClassOf  cm:work-order-step .
+
+cm:task-step-execution--M-ABOK-H-22-12Y--M--5837033--2
+  a                          cm:task-step-execution-type--M--5837033--2 , owl:NamedIndividual ;
+  cm:step-index              2 ;
+  cm:work-order-action-text  "THE BLEND-OUT HFEC INSPECTION HAS BEEN PERFORMED I.A.W. 737 NDT PART 6, 51-00-00, PROC. 4, REV.138.    NOTE: PROCEDURE 4 IS ALTERNATIVE TO PROCEDURE 2" ;
+  cm:work-order-text         "PERFORM HFEC INSPECTION" .
+
+cm:task-type--S--5808817
+  a                       owl:Class ;
+  rdfs:subClassOf         cm:scheduled-work-order ;
+  cm:id                   "5808817" ;
+  cm:references-ata-code  ata:ata-32-00 .
+
+cm:task-step-execution--PH-XRY-H-22-HMV-10--S--5876842--1
+  a                   cm:task-step-execution-type--S--5876842--1 , owl:NamedIndividual ;
+  cm:step-index       1 ;
+  cm:work-order-text  "#1# DAMAGES ON RH ENGINE INLET LIPSKINS   PERFORM TAV TC INSPEC-71TAV-02188 ASSESSMENT OF DENTS AND OTHER DAMAGES ON RH ENGINE INLET LIPSKINS TO IATA STANDARD" .
+
+cm:complex-execution--PH-XRX-H-22-HMV10---EOL--5882384
+  a                          cm:complex-execution , cm:task-type--M--5882384 , owl:NamedIndividual , cm:maintenance-work-order ;
+  cm:has-work-order-step     cm:task-step-execution--PH-XRX-H-22-HMV10---EOL--M--5882384--1 ;
+  cm:is-part-of-workpackage  cm:workpackage--PH-XRX-H-22-HMV10---EOL ;
+  cm:issue-time              "2022-11-02"^^xsd:date ;
+  cm:references-task         cm:complex-execution--PH-XRX-H-22-HMV10---EOL--INSPEC-12TAV-00179 .
+
+cm:task-step-execution-type--TC--20-360-00-01--1
+  a                owl:Class ;
+  rdfs:subClassOf  cm:work-order-step .
+
+cm:task-step-execution-type--TC--L-2523-010-2-00--2
+  a                owl:Class ;
+  rdfs:subClassOf  cm:work-order-step .
+
+cm:task-step-execution--OH-LZM-H-22-HMV1--TC--752100-I2-1--3
+  a                   cm:task-step-execution-type--TC--752100-I2-1--3 , owl:NamedIndividual ;
+  cm:step-index       3 ;
+  cm:work-order-text  "TEST   DO AN OPERATIONAL TEST OF THE THRUST REVERSER SYSTEM REF. AMM TASK 78-31-00-710-041." .
+
+cm:complex-execution--M-ABOK-H-22-12Y--52-410-00
+  a                          cm:complex-execution , cm:task-type--TC--52-410-00 , owl:NamedIndividual , cm:task-card ;
+  cm:has-work-order-step     cm:task-step-execution--M-ABOK-H-22-12Y--TC--52-410-00--1 ;
+  cm:is-part-of-workpackage  cm:workpackage--M-ABOK-H-22-12Y ;
+  cm:issue-time              "2022-07-19"^^xsd:date .
+
+cm:task-step-execution-type--M--5752693--2
+  a                owl:Class ;
+  rdfs:subClassOf  cm:work-order-step .
+
+cm:complex-execution--OH-LZM-H-22-HMV1--5879709
+  a                          cm:complex-execution , cm:maintenance-work-order , cm:task-type--M--5879709 , owl:NamedIndividual ;
+  cm:end-time                "2022-10-31"^^xsd:date ;
+  cm:has-work-order-step     cm:task-step-execution--OH-LZM-H-22-HMV1--M--5879709--1 , cm:task-step-execution--OH-LZM-H-22-HMV1--M--5879709--2 ;
+  cm:is-part-of-workpackage  cm:workpackage--OH-LZM-H-22-HMV1 ;
+  cm:issue-time              "2022-10-22"^^xsd:date ;
+  cm:references-task         cm:complex-execution--OH-LZM-H-22-HMV1--545000-05-1 .
