@@ -71,7 +71,7 @@
   km-text-analysis:service-url "https://kbss.felk.cvut.cz/czech-text-analysis/annotate";
   km-text-analysis:vocabulary-iri "http://onto.fel.cvut.cz/ontologies/slovnik/slovník-komponent-a-zádavd---markéta-dp-lower-case";
   km-text-analysis:vocabulary-repository "https://graphdb.onto.fel.cvut.cz/repositories/termit-csat";
-  km-text-analysis:literals-per-request 100;
+  km-text-analysis:literals-per-request 10000;
   sml:selectQuery [
       a sp:Select ;
       sp:text """
@@ -114,9 +114,11 @@
           termit:has-annotated-text ?annotatedText;
           termit:has-original-text ?woText.
 
+	?findingIndividual a :finding .
         ?findingIndividual cm:has-failure-occurrence ?failureOccurrence.
 
-        ?failureOccurrence termit:has-original-text ?woText;
+        ?failureOccurrence a cm:failure-occurrence;
+	      termit:has-original-text ?woText;
               termit:založeno-na-výskytu-termu ?termOccurrence;
               termit:je-přiřazením-relace ?failureInstanceUri.
 
