@@ -1,0 +1,50 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+PREFIX csat-text: <http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1/>
+PREFIX csvw: <http://www.w3.org/ns/csvw#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?wp ?task ?step ?stepIndex ?workOrderText ?workOrderActionText ?timeEstimateInHours ?annotatedText
+?componentUri ?componentLabel ?componentScore ?failureUri ?failureLabel ?failureScore ?aggregateScore ?isConfirmed
+WHERE
+{
+    ?wp a cm:workpackage .
+
+    # tasks
+    OPTIONAL{
+        ?task cm:is-part-of-workpackage ?wp .
+        ?task cm:has-work-order-step ?step .
+
+        OPTIONAL{?step cm:step-index ?stepIndex .}
+        ?step cm:work-order-text ?workOrderText .
+    	OPTIONAL{?step cm:work-order-action-text ?workOrderActionText . }
+#        OPTIONAL{?step cm:time-estimate-in-hours ?timeEstimateInHours . }
+
+
+        ?step a ?stepType .
+        ?stepType rdfs:subClassOf cm:work-order-step .
+
+        OPTIONAL{
+            ?step a csvw:Row .
+            ?step csat-text:AnnotatedText ?annotatedText .
+            OPTIONAL{
+                ?step csat-text:FinalComponentUri ?componentUri .
+                OPTIONAL{?componentUri skos:prefLabel ?componentLabel .}
+                OPTIONAL{?step csat-text:ComponentScore ?componentScore .}
+    		}
+            OPTIONAL{
+                ?step csat-text:FinalFailureUri ?failureUri .
+                OPTIONAL{?failureUri skos:prefLabel ?failureLabel .}
+                OPTIONAL{?step csat-text:FailureScore ?failureScore .}
+            }
+
+            OPTIONAL{?step csat-text:AggregateScore ?aggregateScore .}
+            OPTIONAL{?step csat-text:IsConfirmed ?isConfirmed .}
+    	}
+    }
+}

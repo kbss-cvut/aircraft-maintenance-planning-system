@@ -14,6 +14,7 @@ import cz.cvut.kbss.amaplas.model.scheduler.SimilarPlanScheduler;
 import cz.cvut.kbss.amaplas.persistence.dao.GenericPlanDao;
 import cz.cvut.kbss.amaplas.persistence.dao.PlanTypeDao;
 import cz.cvut.kbss.amaplas.algs.SimilarityUtils;
+import cz.cvut.kbss.amaplas.persistence.dao.TaskStepPlanDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -32,13 +33,15 @@ public class AircraftRevisionPlannerService extends BaseService{
     private final TaskTypeService taskTypeService;
     private final PlanTypeDao planTypeDao;
     private final GenericPlanDao planDao;
+    private final TaskStepPlanDao taskStepPlanDao;
     private final CopySimplePlanProperties copySimpleProperty = new CopySimplePlanProperties();
 
-    public AircraftRevisionPlannerService(RevisionHistory revisionHistory, TaskTypeService taskTypeService, PlanTypeDao planTypeDao, GenericPlanDao planDao) {
+    public AircraftRevisionPlannerService(RevisionHistory revisionHistory, TaskTypeService taskTypeService, PlanTypeDao planTypeDao, GenericPlanDao planDao, TaskStepPlanDao taskStepPlanDao) {
         this.revisionHistory = revisionHistory;
         this.taskTypeService = taskTypeService;
         this.planTypeDao = planTypeDao;
         this.planDao = planDao;
+        this.taskStepPlanDao = taskStepPlanDao;
     }
 
     public GenericPlanDao getPlanDao() {
@@ -160,6 +163,9 @@ public class AircraftRevisionPlannerService extends BaseService{
         TaskTypeBasedPlanBuilder builder = new TaskTypeBasedPlanBuilder(workSessionBasedPlanBuilder);
 
         builder.addMissingTaskPlansToRevision(new PlanBuilderInput<>(taskTypes, wp), revisionPlan);
+
+        List<TaskStepPlan> steps = taskStepPlanDao.listInWorkpackageURI(wp.getEntityURI());
+        workSessionBasedPlanBuilder.addTaskSteps(revisionPlan, steps);
 
         // scheduling task plans
         // first schedule according to similar plans starting at the planned start date of the workpackage

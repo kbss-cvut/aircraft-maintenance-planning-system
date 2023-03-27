@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @OWLClass(iri = Vocabulary.s_c_event_plan)
-public abstract class AbstractPlan extends AbstractEntity {
+public abstract class AbstractPlan extends AbstractEntityWithDescription {
     @OWLObjectProperty(iri=Vocabulary.s_p_has_participant)
     protected Resource resource;
 

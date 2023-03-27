@@ -1,5 +1,6 @@
 package cz.cvut.kbss.amaplas.persistence.dao;
 
+import com.github.ledsoft.jopa.spring.transaction.DelegatingEntityManager;
 import cz.cvut.kbss.amaplas.exceptions.PersistenceException;
 import cz.cvut.kbss.amaplas.model.AbstractEntity;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
@@ -7,6 +8,7 @@ import cz.cvut.kbss.jopa.exceptions.NoResultException;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.metamodel.Metamodel;
 import cz.cvut.kbss.jopa.model.query.TypedQuery;
+import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URI;
@@ -194,5 +196,17 @@ public abstract class BaseDao<T extends AbstractEntity> implements GenericDao<T>
 
     public EntityManager getEm() {
         return em;
+    }
+
+    public RepositoryConnection getConnection(){
+        EntityManager em = getEm();
+        if(em instanceof DelegatingEntityManager){
+            em = ((EntityManager)em.getDelegate());
+        }
+
+        org.eclipse.rdf4j.repository.Repository repo = em.unwrap(org.eclipse.rdf4j.repository.Repository.class);
+
+        return Optional.ofNullable(repo)
+                .map(r -> r.getConnection()).orElse(null);
     }
 }

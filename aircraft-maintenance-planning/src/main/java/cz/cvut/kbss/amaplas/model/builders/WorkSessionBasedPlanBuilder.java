@@ -17,6 +17,7 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
     private static final Logger LOG = LoggerFactory.getLogger(WorkSessionBasedPlanBuilder.class);
 
 
+    private Map<String, TaskPlan> taskPlanMap = new HashMap<>(); // mapping URI of task-execution to taskPlan entities
     public WorkSessionBasedPlanBuilder() {
     }
 
@@ -188,6 +189,23 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
         }
     }
 
+
+
+    public void addTaskSteps(RevisionPlan revisionPlan, List<TaskStepPlan> steps){
+        steps.stream().collect(Collectors.groupingBy(s -> s.getParentTask().toString())).entrySet()
+                .forEach(e -> {
+                    TaskPlan p = taskPlanMap.get(e.getKey());
+                    p.getTaskStepPlans().addAll(e.getValue());
+                });
+    }
+
+    public TaskStepPlan getStep(){
+        TaskStepPlan step = new TaskStepPlan();
+        step.setStepIndex("1");
+        step.setDescription("some example text");
+        return step;
+    }
+
     public RevisionPlan createRevision(PlanBuilderInput<List<Result>> input){
         List<Result> results = input.getInput();
         Aircraft aircraft = input.workpackage.getAircraft();
@@ -253,7 +271,7 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
         String model = aircraft.getModel();
         String registration = aircraft.getRegistration();
         String age = aircraft.getAge();
-        String title =  Stream.of(model, registration, age).filter(s -> s != null).collect(Collectors.joining(" - "));
+        String title = Stream.of(model, registration, age).filter(s -> s != null).collect(Collectors.joining(" - "));
         aircraft.setTitle(title);
     }
 
@@ -302,6 +320,10 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
         TaskPlan taskPlan = getTaskPlan(taskType, context, areaLabel);
         if(r.estMin != null)
             taskPlan.setEstMin(r.estMin);
+
+        if(r.taskExecutionURI != null)
+            taskPlanMap.put(r.taskExecutionURI, taskPlan);
+
         return taskPlan;
     }
 

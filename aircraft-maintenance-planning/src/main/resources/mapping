@@ -1,2 +1,3 @@
 http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning > aircraft-maintenance-planning.ttl
 http://onto.fel.cvut.cz/ontologies/csat-maintenance > ../../../../aircraft-maintenance-planning-model/vocabularies/csat-maintenance/csat-maintenance.ttl
+http://onto.fel.cvut.cz/ontologies/maintenance-schema > ../../../../aircraft-maintenance-planning-model/vocabularies/csat-maintenance/maintenance-schema.ttl

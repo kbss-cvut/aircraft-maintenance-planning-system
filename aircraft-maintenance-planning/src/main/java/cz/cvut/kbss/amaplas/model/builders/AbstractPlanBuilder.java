@@ -5,7 +5,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public abstract class AbstractPlanBuilder<T> {
@@ -13,7 +15,7 @@ public abstract class AbstractPlanBuilder<T> {
 
 
     protected final ModelFactory modelFactory;
-    protected Map<Object, Map<String, AbstractEntity>> entityMaps = new HashMap<>();
+    protected Map<Object, Map<String, AbstractEntityWithDescription>> entityMaps = new HashMap<>();
     protected Defaults defaults = new Defaults();
     protected Map<String, String> messages = new HashMap<>();
 
@@ -89,13 +91,13 @@ public abstract class AbstractPlanBuilder<T> {
      * @param <T>
      * @return
      */
-    public <T extends AbstractEntity> T getEntity(String id, Object context, Supplier<T> generator){
-        Map<String, AbstractEntity> entityMap = entityMaps.get(context);
+    public <T extends AbstractEntityWithDescription> T getEntity(String id, Object context, Supplier<T> generator){
+        Map<String, AbstractEntityWithDescription> entityMap = entityMaps.get(context);
         if(entityMap == null) {
             entityMap = new HashMap<>();
             entityMaps.put(context, entityMap);
         }
-        AbstractEntity r = entityMap.get(id);
+        AbstractEntityWithDescription r = entityMap.get(id);
         if(r == null) {
             r = generator.get();
             entityMap.put(id, r);
