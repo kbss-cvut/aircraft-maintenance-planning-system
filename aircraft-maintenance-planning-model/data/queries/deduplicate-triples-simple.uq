@@ -1,0 +1,17 @@
+DELETE {
+    GRAPH ?olderG {
+        ?s ?p ?o .
+    }
+} INSERT {} WHERE {
+    {
+        SELECT DISTINCT ?olderG ?s ?p ?o {
+            GRAPH ?newerG {
+                ?s ?p ?o .
+            }
+            GRAPH ?olderG {
+                ?s ?p ?o .
+            }
+            FILTER(str(?olderG) < str(?newerG))
+        } LIMIT 100000
+    }
+}
