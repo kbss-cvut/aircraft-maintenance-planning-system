@@ -52,6 +52,7 @@
 :construct-row-triples
   a sml:ApplyConstruct ;
   sm:next :annotate-literals ;
+  sm:next :connect-terms-with-wo-text ;
   sml:constructQuery [
       a sp:Construct ;
       sp:text """
@@ -61,7 +62,7 @@
           ?s ?p ?o.
         }""" ;
     ] ;
-  sml:replace false ;
+  sml:replace true ;
 .
 
 :annotate-literals
@@ -75,9 +76,10 @@
   sml:selectQuery [
       a sp:Select ;
       sp:text """
-      SELECT *
+      SELECT ?o
       WHERE {
         ?s ?p ?o.
+        FILTER(isLiteral(?o) && datatype(?o) = xsd:string)
       }""" ;
   ] ;
   sml:replace false;
@@ -85,91 +87,17 @@
 
 :extract-term-occurrences
   a kbss-module:extract-term-occurrences ;
-  sm:next :connect-terms-with-wo-text ;
+  sm:next :construct-row-triples-for-analysis ;
   sml:replace false;
 .
 
 :import-vocabulary
   a sml:ImportRDFFromWorkspace ;
-  sm:next :connect-terms-with-wo-text;
+  sm:next :construct-row-triples-for-analysis;
   sm:next :apply-part-of-rule;
   sml:baseURI "http://onto.fel.cvut.cz/ontologies/slovnik/slovník-komponent-a-zádavd---markéta-dp-lower-case/glosář123";
   sml:ignoreImports true ;
   sml:replace false;
-.
-
-:connect-terms-with-wo-text
-  a sml:ApplyConstruct ;
-  sm:next :construct-row-triples-for-analysis ;
-  sml:constructQuery [
-      a sp:Construct ;
-      sp:text """
-        CONSTRUCT {
-          ?stepExecution ?p ?o;
-            :WO_text       ?annotatedText;
-            cm:work-order-text ?woText;
-            cm:described-finding ?findingIndividual.
-
-        ?annotation a termit:annotation;
-          termit:has-annotated-text ?annotatedText;
-          termit:has-original-text ?woText.
-
-	?findingIndividual a :finding .
-        ?findingIndividual cm:has-failure-occurrence ?failureOccurrence.
-
-        ?failureOccurrence a cm:failure-occurrence;
-	      termit:has-original-text ?woText;
-              termit:založeno-na-výskytu-termu ?termOccurrence;
-              termit:je-přiřazením-relace ?failureInstanceUri.
-
-        ?failureInstanceUri
-              :has-argument1 ?componentTerm;
-              :has-argument2 ?failureTerm.
-
-        ?termOccurrence a termit:výskyt-termu ;
-                termit:je-přiřazením-termu ?assignedTerm ;
-                termit:odkazuje-na-anotovaný-text ?annotatedText ;
-                termit:má-skóre ?score .
-
-        } WHERE {
-          ?stepExecution ?p ?o ;
-             cm:work-order-text ?woText.
-
-          ?annotation a termit:annotation;
-            termit:has-annotated-text ?annotatedText;
-            termit:has-original-text ?woText.
-
-          ?termOccurrence a termit:výskyt-termu ;
-                termit:je-přiřazením-termu ?assignedTerm ;
-                termit:odkazuje-na-anotovaný-text ?annotatedText ;
-                termit:má-skóre ?score .
-
-          { # Select tuples  <failureTerm, componentTerm>
-            SELECT ?failureTerm ?componentTerm ?annotatedText WHERE{
-                ?failureTerm  termit:je-přiřazením-termu ?assignedFailureTerm;
-                              termit:odkazuje-na-anotovaný-text ?annotatedText.
-                ?assignedFailureTerm skos:broader+ vocabulary-prefix:failure. # TODO:change this
-
-                ?componentTerm  termit:je-přiřazením-termu ?assignedComponentTerm;
-                              termit:odkazuje-na-anotovaný-text ?annotatedText.
-                ?assignedComponentTerm skos:broader+ vocabulary-prefix:component. # TODO:change this
-            }
-          }
-
-#          BIND(dl:instance(cm:has-failure, dl:id-2(?componentTerm, ?failureTerm)) as ?failureInstanceUri)
-#          BIND(dl:instance(termit:vyskyt-relace, dl:id-2(?woText, ?failureInstanceUri)) as ?vyskytRelace)
-#          BIND(dl:instance(cm:failure-occurrence, dl:id-2(?woText, ?failureInstanceUri)) as ?failureOccurrence)
-#          BIND(dl:instance(cm:finding-individual, dl:id-2(?stepExecution, ?failureOccurrence)) AS ?findingIndividual)
-
-          BIND(dl:instance(cm:has-failure, MD5(dl:id-2(?componentTerm, ?failureTerm))) as ?failureInstanceUri)
-          BIND(dl:instance(termit:vyskyt-relace, MD5(dl:id-2(?woText, ?failureInstanceUri))) as ?vyskytRelace)
-          BIND(dl:instance(cm:failure-occurrence, MD5(dl:id-2(?woText, ?failureInstanceUri))) as ?failureOccurrence)
-          BIND(dl:instance(cm:finding-individual, MD5(dl:id-2(?stepExecution, ?failureOccurrence))) AS ?findingIndividual)
-
-
-        }""" ;
-    ] ;
-  sml:replace false ;
 .
 
 ## TEXT ANALYSIS PART -> SELECT FINAL COMP AND FAILURE TERMS  (The most of this code is taken from text-analysis.sms.ttl)
@@ -221,8 +149,7 @@ CONSTRUCT {
 
   BIND(IF(BOUND(?score), ?score, "10.0"^^xsd:float) AS ?finalScore) # this is workaround for better score comparing
 
-  ?row
-    :WO_text       ?woText.
+  ?row termit:has-annotated-text ?woText;
 
 }""" ;
     ] ;
@@ -300,7 +227,7 @@ CONSTRUCT{
        ?row :finalComp ?otherComp .
        ?otherComp termit:má-skóre ?otherScore.
        FILTER(?chosenComp != ?otherComp)
-       FILTER(?maxScore < ?otherScore)
+       FILTER(?maxScore <= ?otherScore)
     }
 
 }""" ;
@@ -320,6 +247,7 @@ CONSTRUCT{
         :FailureUri ?failureTerm;
         :FailureLabel ?chosenFailureLabel;
         :failureScore ?maxScore;
+        :chosenFailure ?chosenFailure;
         :selectedFailureNode ?selectedFailure;
 
   }WHERE{
@@ -333,7 +261,7 @@ CONSTRUCT{
        ?row :finalFailure ?otherFailure .
        ?otherFailure termit:má-skóre ?otherScore.
        FILTER(?chosenFailure != ?otherFailure)
-       FILTER(?maxScore < ?otherScore)
+       FILTER(?maxScore <= ?otherScore)
     }
 }""" ;
     ] ;
@@ -528,7 +456,7 @@ CONSTRUCT{
 
 :process-selected-failures
   a sml:ApplyConstruct ;
-  sm:next :transform-enhance-wo-text-data_Return ;
+  sm:next :connect-terms-with-wo-text ; 
   sml:constructQuery [
       a sp:Construct ;
       sp:text """
@@ -558,6 +486,78 @@ CONSTRUCT{
 .
 
 #### TEXT ANALYSIS
+
+:connect-terms-with-wo-text
+  a sml:ApplyConstruct ;
+  sm:next :transform-enhance-wo-text-data_Return ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+        CONSTRUCT {
+          ?row ?o ?p.
+          
+          ?stepExecution
+              a cm:task-step-execution ;
+              cm:described-finding ?findingIndividual ;
+              cm:work-order-text ?woText.
+
+          ?findingIndividual a cm:finding-individual;
+            :WO_text       ?annotatedText;
+            cm:has-failure-occurrence ?failureOccurrence.
+
+        ?failureOccurrence a cm:failure-occurrence;
+	            termit:has-original-text ?woText;
+              termit:založeno-na-výskytu-termu ?chosenFailureOccurrence;
+              termit:založeno-na-výskytu-termu ?chosenComponentOccurrence;
+              termit:má-skóre ?aggregateScore ;
+              termit:je-přiřazením-relace ?failureInstanceUri.
+
+        ?failureInstanceUri a termit:relation-instance;
+              :has-relation cm:has-failure;
+              :has-argument1 ?componentUri;
+              :has-argument2 ?failureUri.
+
+        } WHERE {
+
+          ?row a csvw:Row ;
+            ?o ?p;
+            :WO_text ?annotatedText ;
+            :OriginalText ?originalText ; 
+            :FailureUri ?failureUri ;
+            :ComponentUri ?componentUri ;
+            :FinalFailureUri ?failureTerm ;
+            :FinalComponentUri ?componentTerm ;
+            :compUri ?chosenComponentOccurrence ;
+            :chosenFailure ?chosenFailureOccurrence ;
+            :SelectedFailuresCount ?selectedFailuresCount ;
+            :SelectedComponentsCount ?selectedComponentsCount .
+
+          ?annotation a termit:annotation;
+            termit:has-annotated-text ?annotatedText;
+            termit:has-original-text ?woText.
+
+          ?stepExecution
+            cm:work-order-text ?woText.
+
+          OPTIONAL{ ?chosenFailureOccurrence termit:má-skóre ?failureOccurrenceScore }
+          OPTIONAL{ ?chosenComponentOccurrence termit:má-skóre ?componentOccurrenceScore }
+
+          BIND(
+            (IF(BOUND(?finalComponentScore), ?finalComponentScore, "1.0"^^xsd:float)
+              * IF(BOUND(?finalFailureScore), ?finalFailureScore, "1.0"^^xsd:float)
+            ) AS ?aggregateScore)
+
+          BIND(dl:instance(cm:has-failure, MD5(dl:id-2(?componentTerm, ?failureTerm))) as ?failureInstanceUri)
+          BIND(dl:instance(termit:vyskyt-relace, MD5(dl:id-2(?woText, ?failureInstanceUri))) as ?vyskytRelace)
+          BIND(dl:instance(cm:failure-occurrence, MD5(dl:id-2(?woText, ?failureInstanceUri))) as ?failureOccurrence)
+          BIND(dl:instance(cm:finding-individual, MD5(dl:id-2(?stepExecution, ?failureOccurrence))) AS ?findingIndividual)
+          
+          FILTER(?selectedFailuresCount = 1 && ?selectedComponentsCount = 1)
+
+        }""" ;
+    ] ;
+  sml:replace false ;
+.
 
 
 :transform-enhance-wo-text-data
