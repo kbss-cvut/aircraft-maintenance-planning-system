@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.net.URI;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -31,6 +32,7 @@ public class RevisionHistory {
     protected final WorkpackageDAO workpackageDAO;
     protected Repository repoConfig;
 
+    private Map<URI, List<URI>> workPackageSimilarityIndex;
     private Map<String, List<Result>> historyCache;
 
     public RevisionHistory(ConfigProperties config, TaskTypeService taskTypeService, WorkpackageDAO workpackageDAO) {
@@ -38,6 +40,10 @@ public class RevisionHistory {
         this.repoConfig = config.getRepository();
         this.taskTypeService = taskTypeService;
         this.workpackageDAO = workpackageDAO;
+    }
+
+    public void resetCache(){
+        workPackageSimilarityIndex = workpackageDAO.readTaskTypeUsage();
     }
 
     public List<String> getAllRevisions(){
@@ -52,6 +58,7 @@ public class RevisionHistory {
      * @param refreshCash - if true cache is refreshed
      * @return
      */
+    // TODO - replaced usage of method
     public Map<String, List<Result>> getAllClosedRevisionsWorkLog(boolean refreshCash){
 
         if(refreshCash || historyCache == null){
@@ -62,13 +69,20 @@ public class RevisionHistory {
         return historyCache;
     }
 
+
+
+//    public String
+
     /**
      * Loads closed revisions in map.
      * - The key is the id of the revision and
      * - the value is the list of work sessions of the revision ordered by the work session start timestamp.
      * @return
      */
+    // TODO - replaced usage of method
     private Map<String, List<Result>> loadAllClosedRevisionsWorkLog(){
+
+        // TODO refactoring - move code to load work sessions of a single WP into getClosedRevisionWorkLog
         // load task card definitions
         LOG.info("fetching revision work log from {}", repoConfig.getUrl());
         List<String> revisionIds = getRevisionIds();
@@ -135,7 +149,9 @@ public class RevisionHistory {
         return consistentSessions;
     }
 
+    @Deprecated // TODO - replacing usage
     public List<Result> getClosedRevisionWorkLog(String revisionId){
+        // TODO - move code to load a work sessions of a revision and normalize its task types.
         Map<String, List<Result>> historyCache = getAllClosedRevisionsWorkLog(false);
         return historyCache.get(revisionId);
     }
@@ -144,6 +160,7 @@ public class RevisionHistory {
      * Returns the sessions of main scopes ordered by their start time.
      * @return
      */
+    @Deprecated // TODO - replacing usage
     public Map<String, List<Result>> getMainScopeSessionsByRevisionId(){
         Map<String, List<Result>> workLog =  getAllClosedRevisionsWorkLog(false);
         Map<String, List<Result>> filteredPlans = new HashMap<>();
@@ -163,6 +180,7 @@ public class RevisionHistory {
      * execution. The result contains only work sessions of closed revisions.
      * @return
      */
+    @Deprecated // TODO - replacing usage
     public Map<String, List<Result>> getStartSessionsOfMainScopeInClosedRevisions(){
         Map<String, List<Result>> workLog =  getAllClosedRevisionsWorkLog(false);
         Map<String, List<Result>> filteredPlans = new HashMap<>();
@@ -202,7 +220,7 @@ public class RevisionHistory {
         return sequence.collect(Collectors.toList());
     }
 
-    public Workpackage getWorkpackage(String workpackageId){
+    public Workpackage getWorkpackage(String workpackageId) {
         Workpackage wp = workpackageDAO.findById(workpackageId).orElse(null);
         return wp;
     }

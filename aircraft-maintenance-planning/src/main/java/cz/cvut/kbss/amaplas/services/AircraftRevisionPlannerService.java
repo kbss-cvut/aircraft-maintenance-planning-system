@@ -51,7 +51,7 @@ public class AircraftRevisionPlannerService extends BaseService{
     public Map<String, PlanGraph> scopeGraphPlansFromSimilarRevisions(List<TaskType> toPlan, Collection<String> revisionsToIgnore){
 
         // create a plan graph for each scope
-        Map<String, List<TaskType>> tasksByScope = toPlan.stream().collect(Collectors.groupingBy(t ->  t.getScope()));
+        Map<MaintenanceGroup, List<TaskType>> tasksByScope = toPlan.stream().collect(Collectors.groupingBy(t ->  t.getScope()));
 
         Set<String> revsToIgnoreSet = new HashSet<>(revisionsToIgnore);
         // retrieve historyPlans and remove Result without sessionURI task executions () from
@@ -64,14 +64,14 @@ public class AircraftRevisionPlannerService extends BaseService{
         revisionsToIgnore.forEach(historyPlans::remove);
 
         Map<String, PlanGraph> scopePlans = new HashMap<>();
-        for(Map.Entry<String, List<TaskType>> scopeTasks : tasksByScope.entrySet()){
+        for(Map.Entry<MaintenanceGroup, List<TaskType>> scopeTasks : tasksByScope.entrySet()){
             // the result does not contain information regarding instances of the TC execution
             PlanGraph rawScopePlan = ReuseBasedPlanner.planner.planConnected(
                     historyPlans,
                     new HashSet<>(scopeTasks.getValue()),
                     SimilarityUtils::calculateSetSimilarity,
                     revisionId -> revsToIgnoreSet.contains(revisionId));
-            scopePlans.put(scopeTasks.getKey(), rawScopePlan);
+            scopePlans.put(scopeTasks.getKey().getAbbreviation(), rawScopePlan);
         }
 
         return scopePlans;

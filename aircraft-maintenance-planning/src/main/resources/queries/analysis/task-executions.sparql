@@ -1,0 +1,99 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+
+SELECT ?wp ?tt ?referencedTask ?estMin ?tType ?averageTime ?type ?t (?ttLabel as ?typeLabel) ?scopeGroup ?scope ?scopeLabel ?w ?wId ?wLabel ?taskcat (?sDate as ?date) ?sTime ?eDate ?eTime ?start ?end (str(ofn:asMillis(?et - ?st)) as ?dur)
+WHERE
+{
+    ?wpuri a cm:workpackage.
+    ?wpuri cm:id ?wp.
+
+    # tasks
+    OPTIONAL{
+        ?tt cm:is-part-of-workpackage ?wpuri.
+        OPTIONAL{
+            ?tt cm:time-estimate-in-hours ?estMin .
+        }
+        OPTIONAL{
+            ?tt cm:references-task ?referencedTask
+        }
+        # task type
+        OPTIONAL{
+            ?tt a ?tType.
+            OPTIONAL{
+               BIND(cm:task-card as ?cls)
+               ?tt a ?cls.
+            }
+            OPTIONAL{
+               BIND(cm:maintenance-work-order as ?cls)
+               ?tt a ?cls.
+            }
+            OPTIONAL{
+               BIND(cm:scheduled-work-order as ?cls)
+               ?tt a ?cls.
+            }
+
+            FILTER(strstarts(str(?tType), str(cm:)) && !(?tType in (cm:task-card, cm:maintenance-work-order, cm:scheduled-work-order, cm:complex-execution)))
+#            FILTER(?cls in (cm:task-card, cm:maintenance-work-order, cm:scheduled-work-order))
+            BIND(replace(str(?cls), "^.*/([^/]+)$", "$1") as ?taskcat)
+
+#            BIND(cm:task-card as ?cls)
+            OPTIONAL{
+                ?tType a owl:Class;
+                        cm:id ?type;
+                        rdfs:subClassOf ?cls.
+            }
+
+            OPTIONAL {
+                ?tType cm:time-estimate-in-hours ?averageTime .
+            }
+        }
+
+        # session
+        OPTIONAL{
+            ?t cm:is-part-of-maintenance-task ?tt.
+            OPTIONAL{
+                ?t cm:task-description ?ttLabel.
+            }
+    #        OPTIONAL{
+    #            ?t cm:time-estimate-in-hours ?tDurH
+    #        }
+            OPTIONAL{
+                ?t cm:start-date ?sDate.
+                ?t cm:start-time ?sTime.
+                BIND(CONCAT(str(?sDate),"T", str(?sTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?start)
+                BIND(spif:parseDate(?start, "yyyy-MM-dd'T'HH:mm") as ?st)
+            }
+
+            OPTIONAL{
+                ?t cm:end-date ?eDate.
+                ?t cm:end-time ?eTime.
+                BIND(CONCAT(str(?eDate),"T", str(?eTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?end)
+                BIND(spif:parseDate(?end, "yyyy-MM-dd'T'HH:mm") as ?et)
+            }
+
+            # task group
+            OPTIONAL{
+                ?t cm:has-scope ?scopeGroup.
+                ?scopeGroup cm:has-abbreviation ?scope.
+                BIND(replace(str(?scopeGroup), "^.*/([^/]+)$", "$1") as ?scopeLabel)
+            #    ?scopeGroup rdfs:label ?scope.
+            }
+            # mechanic
+            OPTIONAL{
+              ?w cm:performs ?t.
+              OPTIONAL{
+                ?w cm:id ?wId.
+              }
+              OPTIONAL{
+                ?w cm:user-sign ?wLabel.
+              }
+            }
+        }
+    }
+#    FILTER(!bound(?st))
+}

@@ -8,13 +8,17 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX dc_terms: <http://purl.org/dc/terms/>
 PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
 
-SELECT ?taskTypeDefinition ?taskCardCode ?MPDTASK ?title ?team ?phase ?taskType ?aircraftModel ?area ?elPower ?hydPower ?jacks {
+SELECT ?taskTypeDefinition ?taskCardCode ?MPDTASK ?title ?teamUri ?team ?phase ?taskType ?aircraftModel ?area ?elPower ?hydPower ?jacks {
         ?taskTypeDefinition rdfs:subClassOf cm:task-type-definition ;
                   cm:task-for-model ?aircraftModel.
 
         OPTIONAL {?taskTypeDefinition cm:id ?taskCardCode.}
         OPTIONAL {?taskTypeDefinition cm:has-general-task-type ?taskType}
-        OPTIONAL {?taskTypeDefinition cm:has-main-scope ?team}
+        OPTIONAL {
+            ?taskTypeDefinition cm:has-main-scope ?team .
+            OPTIONAL{ ?teamUri cm:has-abbreviation ?team. }
+        }
+        OPTIONAL {?taskTypeDefinition cm:has-main-scope-abbreviation ?teamAbbreviation}
         OPTIONAL {?taskTypeDefinition cm:task-for-phase ?phase;}
         OPTIONAL {?taskTypeDefinition cm:has-mpdtask ?MPDTASK;}
         OPTIONAL {?taskTypeDefinition rdfs:label ?title;}

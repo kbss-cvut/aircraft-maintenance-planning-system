@@ -1,0 +1,38 @@
+# Similarity measure between WPs
+# parameter 1 - wpA
+# output ?wpA ?wpB ?similarity
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+SELECT ?wpA ?wpB (COUNT(DISTINCT ?taskType) as ?wpAtaskCount) ?wpBtaskCount  (2*?commonTaskCount/(?wpAtaskCount + ?wpBtaskCount) as ?similarity) {
+
+    BIND(cm:workpackage--OE-LBN-H-23-B4Y-B2Y-ECAP as ?wpA)
+    ?task cm:is-part-of-workpackage ?wpA .
+    ?task a ?taskType .
+    ?taskType a cm:task-type .
+
+    {
+        SELECT ?wpB (COUNT(DISTINCT ?taskTypeB) as ?wpBtaskCount) (SUM(IF(bound(?commonTask), 1, 0)) as ?commonTaskCount) {# count number of tasks in wpB
+            {
+                SELECT DISTINCT ?wpB {# find packages with at least one task common with ?wpA
+                    BIND(cm:workpackage--OE-LBN-H-23-B4Y-B2Y-ECAP as ?wpA)
+                    ?task cm:is-part-of-workpackage ?wpA .
+                    ?task a ?taskType.
+
+                    ?taskB cm:is-part-of-workpackage ?wpB .
+                    ?taskB a ?taskType.
+
+                    ?taskType a cm:task-type .
+                    FILTER(?wpA != ?wpB)
+                }
+            }
+            ?taskB cm:is-part-of-workpackage ?wpB .
+            ?taskB a ?taskTypeB.
+            ?taskTypeB a cm:task-type .
+            OPTIONAL{
+                ?task cm:is-part-of-workpackage ?wpA .
+                ?task a ?taskTypeB.
+                BIND(TRUE as ?commonTask)
+            }
+        } GROUP BY ?wpB
+    }
+} GROUP BY ?wpA ?wpB ?commonTaskCount ?wpBtaskCount 
+ORDER BY DESC(?similarity)

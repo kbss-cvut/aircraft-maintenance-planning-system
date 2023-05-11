@@ -1,0 +1,6 @@
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+
+SELECT ?group ?abbreviation {
+    ?group a cm:maintenance-group.
+    ?group cm:has-abbreviation ?abbreviation.
+}

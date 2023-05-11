@@ -17,7 +17,7 @@ public class ModelFactory {
     protected Long lastIdSlot = -1l;
     protected String uriNamespace = "http://onto.fel.cvut.cz/ontologies/csat-maintenance/";
 
-    public TaskType newTaskType(String code, String label, String area, String taskType, String scope, String phase, String taskCat){
+    public TaskType newTaskType(String code, String label, String area, String taskType, MaintenanceGroup scope, String phase, String taskCat){
         TaskType tt = new TaskType(code, label);
         tt.setArea(area);
         tt.setTaskType(taskType);

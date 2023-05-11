@@ -1,0 +1,69 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+
+SELECT ?wp ?acmodel ?tt ?type (?ttLabel as ?typeLabel) ?scope ?scopeLabel ?taskcat (?sDate as ?date) ?sTime ?eDate ?eTime (str(?st) as ?start) (str(?et) as ?end) (str(ofn:asMillis(?et - ?st)) as ?dur)
+WHERE
+{
+    ?wpuri a cm:workpackage.
+    ?wpuri cm:id ?wp.
+
+
+    # tasks
+    OPTIONAL{
+        ?tt cm:is-part-of-workpackage ?wpuri.
+        OPTIONAL{
+            ?wpuri cm:is-repair-of ?ac.
+            OPTIONAL{
+                ?ac cm:model ?acmodel.
+            }
+        }
+        # task type
+        OPTIONAL{
+            ?tt a ?tType.
+            OPTIONAL{
+               BIND(cm:task-card as ?cls)
+               ?tt a ?cls.
+            }
+            OPTIONAL{
+               BIND(cm:maintenance-work-order as ?cls)
+               ?tt a ?cls.
+            }
+            OPTIONAL{
+               BIND(cm:scheduled-work-order as ?cls)
+               ?tt a ?cls.
+            }
+
+            FILTER(strstarts(str(?tType), str(cm:)) && !(?tType in (cm:task-card, cm:maintenance-work-order, cm:scheduled-work-order, cm:complex-execution)))
+#            FILTER(?cls in (cm:task-card, cm:maintenance-work-order, cm:scheduled-work-order))
+            BIND(replace(str(?cls), "^.*/([^/]+)$", "$1") as ?taskcat)
+
+#            BIND(cm:task-card as ?cls)
+            OPTIONAL{
+                ?tType a owl:Class;
+                        cm:id ?type;
+                        rdfs:subClassOf ?cls.
+            }
+        }
+    }
+
+
+    # session
+    OPTIONAL{
+        ?t cm:is-part-of-maintenance-task ?tt.
+        OPTIONAL{
+            ?t cm:task-description ?ttLabel.
+        }
+
+        # task group
+        OPTIONAL{
+            ?t cm:has-scope ?scopeGroup.
+            ?scopeGroup cm:has-abbreviation ?scope.
+            BIND(replace(str(?scopeGroup), "^.*/([^/]+)$", "$1") as ?scopeLabel)
+        }
+    }
+}

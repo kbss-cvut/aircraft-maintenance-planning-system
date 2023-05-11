@@ -26,8 +26,6 @@ public class TaskTypeController {
 
     @GetMapping(path="update-definition-mappings")
     public void updateTaskTypeMapping(){
-        Map<String, List<Result>> revisions = revisionHistory.getAllClosedRevisionsWorkLog(true);
-        List<Result> sessions = revisions.values().stream().flatMap(l -> l.stream()).collect(Collectors.toList());
-        taskTypeService.updateTaskTypeMapping(sessions);
+        taskTypeService.updateTaskTypeMapping();
     }
 }

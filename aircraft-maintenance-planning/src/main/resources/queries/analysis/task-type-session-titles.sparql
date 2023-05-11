@@ -1,0 +1,10 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+
+# execution time under 20s
+select DISTINCT ?taskType ?sessionLabel {
+    ?task a ?taskType.
+    ?taskType a cm:task-type .
+    ?session cm:is-part-of-maintenance-task ?task.
+    ?session cm:task-description ?sessionLabel.
+}

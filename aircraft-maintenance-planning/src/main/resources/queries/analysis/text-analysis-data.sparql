@@ -1,0 +1,46 @@
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
+PREFIX : <http://onto.fel.cvut.cz/ontologies/csat/time-analysis-0.1/>
+
+PREFIX vocabulary-prefix: <http://onto.fel.cvut.cz/ontologies/slovnik/slovník-komponent-a-zádavd---markéta-dp-lower-case/pojem/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX csat-text: <http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1/>
+
+
+SELECT ?workpackageIRI ?taskExecutionIRI ?taskStepExecutionIRI
+    ?stepIndex ?woText ?annotatedText
+    ?componentURI ?componentLabel ?componentScore
+    ?failureURI ?failureLabel ?failureScore ?aggregateScore ?isConfirmed {
+
+# query csat-data to get all annotated steps for a particular workpackage
+    ?taskExecutionIRI a cm:complex-execution, ?taskTypeIRI;
+                      cm:is-part-of-workpackage ?workpackageIRI ;
+                      cm:has-work-order-step ?taskStepExecutionIRI .
+
+    OPTIONAL{
+        ?taskTypeIRI rdfs:subClassOf ?taskTypeCategory.
+        FILTER(?taskTypeCategory in (cm:task-card, cm:maintenance-work-order, cm:scheduled-work-order))
+    }
+
+    # step
+    ?taskStepExecutionIRI csat-text:AnnotatedText ?annotatedText.
+    OPTIONAL{?taskStepExecutionIRI cm:step-index ?stepIndex.}
+    OPTIONAL{?taskStepExecutionIRI cm:work-order-text ?woText.}
+
+    OPTIONAL{
+        ?taskStepExecutionIRI csat-text:FinalComponentUri ?componentURI.
+    	OPTIONAL{?componentURI skos:prefLabel ?componentLabel.}
+    }
+    OPTIONAL{?taskStepExecutionIRI csat-text:componentScore ?componentScore.}
+
+    OPTIONAL{
+        ?taskStepExecutionIRI csat-text:FinalFailureUri ?failureURI.
+    	OPTIONAL{?failureURI skos:prefLabel ?failureLabel.}
+    }
+    OPTIONAL{?taskStepExecutionIRI csat-text:failureScore ?failureScore.}
+
+    OPTIONAL{?taskStepExecutionIRI csat-text:AggregateScore ?aggregateScore.}
+
+    OPTIONAL{?taskStepExecutionIRI csat-text:IsConfirmed ?isConfirmed.}
+}

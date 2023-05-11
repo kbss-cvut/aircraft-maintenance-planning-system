@@ -1,0 +1,9 @@
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+
+SELECT DISTINCT ?taskType ?scopeGroup ?scopeAbbreviation (COUNT(?session) as ?participationCount) {
+    ?task a ?taskType.
+    ?taskType a cm:task-type .
+    ?session cm:is-part-of-maintenance-task ?task.
+    ?session cm:has-scope ?scopeGroup.
+    ?scopeGroup cm:has-abbreviation ?scopeAbbreviation.
+} GROUP BY ?taskType ?scopeGroup ?scopeAbbreviation

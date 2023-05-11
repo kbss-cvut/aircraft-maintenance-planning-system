@@ -1,6 +1,7 @@
 package cz.cvut.kbss.amaplas.io;
 
 import cz.cvut.kbss.amaplas.model.*;
+import cz.cvut.kbss.amaplas.persistence.dao.mapper.Bindings;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.amaplas.utils.ResourceUtils;
 import cz.cvut.kbss.amaplas.utils.RepositoryUtils;
@@ -31,11 +32,11 @@ public class SparqlDataReaderRDF4J {
 
     private static final Logger LOG = LoggerFactory.getLogger(SparqlDataReaderRDF4J.class);
 
-    public static <T> List<T> readData(String queryName, RepositoryConnection c, Map<String, Value> bindings, Function<BindingSet, T> converter){
+    public static <T> List<T> readData(String queryName, RepositoryConnection c, Bindings bindings, Function<BindingSet, T> converter){
         String query = ResourceUtils.loadResource(queryName);
         TupleQuery tupleQuery = c.prepareTupleQuery(query);
         if(bindings != null)
-            bindings.entrySet().stream().forEach(b -> tupleQuery.setBinding(b.getKey(), b.getValue()));
+            bindings.stream().forEach(b -> tupleQuery.setBinding(b.getKey(), b.getValue()));
         TupleQueryResult rawResults = tupleQuery.evaluate();
 
         List<T> results = new ArrayList<>();
@@ -122,6 +123,8 @@ public class SparqlDataReaderRDF4J {
         LOG.info("statements persisted in {} seconds", ((double)(System.currentTimeMillis() - time)/1000.0));
     }
 
+
+    // TODO - refactoring DAO layer - move
     public static List<Statement> convertTaskCardAsStatement(Map<String, List<TaskType>> map){
         ValueFactory f = SimpleValueFactory.getInstance();
         IRI hasSpecificTaskWithId = f.createIRI(Vocabulary.s_p_has_specific_task_with_id);
@@ -194,210 +197,186 @@ public class SparqlDataReaderRDF4J {
         return results;
     }
 
-    public static TaskType convertToTaskType(BindingSet bs) throws ParseException {
-        // ?acmodel ?type ?description ?wpuri
-        TaskType taskType = new TaskType(
-                manValue(bs,"type"),
-                optValue(bs, "typeLabel"),
-                manValue(bs, "taskcat"),
-                manValue(bs, "acmodel")
-        );
+//    public static TaskType convertToTaskType(BindingSet bs) throws ParseException {
+//        // ?acmodel ?type ?description ?wpuri
+//        TaskType taskType = new TaskType(
+//                manValue(bs,"type"),
+//                optValue(bs, "typeLabel"),
+//                manValue(bs, "taskcat"),
+//                manValue(bs, "acmodel")
+//        );
+//
+//        taskType.setCode(taskType.getCode().replaceFirst("[A-Z]+-]", ""));
+//        taskType.setCode(taskType.getCode().replaceFirst("[A-Z]+-]", ""));
+//        taskType.setAcmodel(taskType.getCode().replaceFirst("[A-Z]+-]", ""));
+//
+//        return taskType;
+//    }
 
-        taskType.setCode(taskType.getCode().replaceFirst("[A-Z]+-]", ""));
-        taskType.setCode(taskType.getCode().replaceFirst("[A-Z]+-]", ""));
-        taskType.setAcmodel(taskType.getCode().replaceFirst("[A-Z]+-]", ""));
+//    /**
+//     * For Query SparqlDataReader.TASK_TYPES_DEFINITIONS
+//     * @param bs
+//     * @return
+//     */
+//    public static TaskType convertToTaskTypeDefinition(BindingSet bs){
+//        TaskType taskType = new TaskType(
+//                optValue(bs,"taskCardCode", null),
+//                optValue(bs, "title", null),
+//                "task_card",
+//                optValue(bs,"aircraftModel", null)
+//        );
+//
+//        mandatory(bs, "taskTypeDefinition", s -> taskType.setEntityURI(URI.create(s)));
+//        optional(bs, "MPDTASK", taskType::setMpdtask);
+//        optional(bs, "team", taskType::setScope);
+//        optional(bs, "phase", taskType::setPhase);
+//        optional(bs, "taskType", taskType::setTaskType);
+//        optional(bs, "area", taskType::setArea);
+//        optional(bs, "elPower", taskType::setElPowerRestrictions);//?elPower ?hydPower ?jacks
+//        optional(bs, "hydPower", taskType::setHydPowerRestrictions);
+//        optional(bs, "jacks", taskType::setJackRestrictions);
+//        return taskType;
+//    }
+//
+//    public static <T> void optional(BindingSet bs, String name, Consumer<String> s){
+//        Optional.ofNullable(bs.getValue(name))
+//                .map(Value::stringValue)
+//                .ifPresent(s);
+//    }
+//    public static <T> void optional(BindingSet bs, String name, Function<String, T> converter, Consumer<T> s){
+//        Optional.ofNullable(bs.getValue(name))
+//                .map(Value::stringValue)
+//                .map(converter)
+//                .ifPresent(s);
+//    }
+//
+//    public static void mandatory(BindingSet bs, String name, Consumer<String> s){
+//        s.accept(bs.getValue(name).stringValue());
+//    }
+//    public static <T> void mandatory(BindingSet bs, String name, Function<String, T> converter,  Consumer<T> s){
+//        s.accept(converter.apply(bs.getValue(name).stringValue()));
+//    }
+//
+//    public static String manValue(BindingSet bs, String name){
+//        return bs.getValue(name).stringValue();
+//    }
+//
+//    public static String optValue(BindingSet bs, String name){
+//        return optValue(bs, name, "");
+//    }
+//
+//    public static String optValue(BindingSet bs, String name, String def){
+//        return Optional.ofNullable(bs.getValue(name)).map(Value::stringValue).orElse(def);
+//    }
+//
+//    public static <T> T optValue(BindingSet bs, String name, Function<String, T> converter, T def){
+//        return Optional.ofNullable(bs.getValue(name)).map(Value::stringValue).map(converter).orElse(def);
+//    }
 
-        return taskType;
-    }
-
-    /**
-     * For Query SparqlDataReader.TASK_TYPES_DEFINITIONS
-     * @param bs
-     * @return
-     */
-    public static TaskType convertToTaskTypeDefinition(BindingSet bs){
-        TaskType taskType = new TaskType(
-                optValue(bs,"taskCardCode", null),
-                optValue(bs, "title", null),
-                "task_card",
-                optValue(bs,"aircraftModel", null)
-        );
-
-        mandatory(bs, "taskTypeDefinition", s -> taskType.setEntityURI(URI.create(s)));
-        optional(bs, "MPDTASK", taskType::setMpdtask);
-        optional(bs, "team", taskType::setScope);
-        optional(bs, "phase", taskType::setPhase);
-        optional(bs, "taskType", taskType::setTaskType);
-        optional(bs, "area", taskType::setArea);
-        optional(bs, "elPower", taskType::setElPowerRestrictions);//?elPower ?hydPower ?jacks
-        optional(bs, "hydPower", taskType::setHydPowerRestrictions);
-        optional(bs, "jacks", taskType::setJackRestrictions);
-        return taskType;
-    }
-
-    public static <T> void optional(BindingSet bs, String name, Consumer<String> s){
-        Optional.ofNullable(bs.getValue(name))
-                .map(Value::stringValue)
-                .ifPresent(s);
-    }
-    public static <T> void optional(BindingSet bs, String name, Function<String, T> converter, Consumer<T> s){
-        Optional.ofNullable(bs.getValue(name))
-                .map(Value::stringValue)
-                .map(converter)
-                .ifPresent(s);
-    }
-
-    public static void mandatory(BindingSet bs, String name, Consumer<String> s){
-        s.accept(bs.getValue(name).stringValue());
-    }
-    public static <T> void mandatory(BindingSet bs, String name, Function<String, T> converter,  Consumer<T> s){
-        s.accept(converter.apply(bs.getValue(name).stringValue()));
-    }
-
-    public static String manValue(BindingSet bs, String name){
-        return bs.getValue(name).stringValue();
-    }
-
-    public static String optValue(BindingSet bs, String name){
-        return optValue(bs, name, "");
-    }
-
-    public static String optValue(BindingSet bs, String name, String def){
-        return Optional.ofNullable(bs.getValue(name)).map(Value::stringValue).orElse(def);
-    }
-
-    public static <T> T optValue(BindingSet bs, String name, Function<String, T> converter, T def){
-        return Optional.ofNullable(bs.getValue(name)).map(Value::stringValue).map(converter).orElse(def);
-    }
-
-    public List<Result> readSessionLogsWithNamedQuery(String queryName, Map<String, Value> bindings, String endpoint, String username, String password){
-        LOG.info("executing query \"{}\" at endpoint <{}> with bindings {}", queryName, endpoint, bindings);
-        String query = ResourceUtils.loadResource(queryName);
-        EntityRegistry registry = new EntityRegistry();
-        List<Result> results = executeQuery(query, bindings, endpoint, username, password, bs -> SparqlDataReaderRDF4J.convertToTimeLog(bs, registry));
-
-        return results.stream().collect(Collectors.groupingBy(Result::form0))
-                .entrySet().stream()
-                .map(e -> e.getValue().get(0))
-                .collect(Collectors.toList());
-    }
-
-    protected static HashMap<String, String > taskCategories = new HashMap<>(){
-        {
-            put("TC", "task-card");
-            put("M", "maintenance-work-order");
-            put("S", "scheduled-work-order");
-        }
-    };
+//    public List<Result> readSessionLogsWithNamedQuery(String queryName, Map<String, Value> bindings, String endpoint, String username, String password){
+//        LOG.info("executing query \"{}\" at endpoint <{}> with bindings {}", queryName, endpoint, bindings);
+//        String query = ResourceUtils.loadResource(queryName);
+//        EntityRegistry registry = new EntityRegistry();
+//        List<Result> results = executeQuery(query, bindings, endpoint, username, password, bs -> SparqlDataReaderRDF4J.convertToTimeLog(bs, registry));
+//
+//        return results.stream().collect(Collectors.groupingBy(Result::form0))
+//                .entrySet().stream()
+//                .map(e -> e.getValue().get(0))
+//                .collect(Collectors.toList());
+//    }
+//
+//    protected static HashMap<String, String > taskCategories = new HashMap<>(){
+//        {
+//            put("TC", "task-card");
+//            put("M", "maintenance-work-order");
+//            put("S", "scheduled-work-order");
+//        }
+//    };
     protected static Pattern taskTypeIRIPattern = Pattern.compile("task-type--([^-]+)--(.+)");
     protected static Pattern mechanicIRI_IDPattern = Pattern.compile("^.+/mechanic--(.+)$");
-    public static Result convertToTimeLog(BindingSet bs, EntityRegistry registry) throws ParseException {
-        // TODO - do not create task type with null type string.
-        String def = "unknown";
-        String wp = bs.getValue("wp").stringValue();
-        String tt = optValue(bs, "tt", null);
-        String tType = optValue(bs, "tType", null);
-        URI taskTypeUri = null;
-        String defaultTaskType = def;
-        String defaultTaskCategory = def;
-        Double averageTime = null;
-        if(tType != null){
-            taskTypeUri = URI.create(tType);
-            Matcher m = taskTypeIRIPattern.matcher(tType);
-            if(m.find()) {
-                defaultTaskCategory = taskCategories.getOrDefault(m.group(1), def);
-                defaultTaskType = m.group(2);
-            }
-            averageTime = optValue(bs,"averageTime", Double::parseDouble, null);
-        }
-        TaskType taskType = new TaskType(
-                optValue(bs,"type", defaultTaskType),
-                optValue(bs, "typeLabel", defaultTaskType),
-                optValue(bs, "taskcat", defaultTaskCategory),
-                optValue(bs,"acmodel", def)
-        );
-        taskType.setEntityURI(taskTypeUri);
-        taskType.setAverageTime(averageTime);
+//    public static Result convertToTimeLog(BindingSet bs, EntityRegistry registry) throws ParseException {
+//        // TODO - do not create task type with null type string.
+//        String def = "unknown";
+//        String wp = bs.getValue("wp").stringValue();
+//        String tt = optValue(bs, "tt", null);
+//        String tType = optValue(bs, "tType", null);
+//        URI taskTypeUri = null;
+//        String defaultTaskType = def;
+//        String defaultTaskCategory = def;
+//        Double averageTime = null;
+//        if(tType != null){
+//            taskTypeUri = URI.create(tType);
+//            Matcher m = taskTypeIRIPattern.matcher(tType);
+//            if(m.find()) {
+//                defaultTaskCategory = taskCategories.getOrDefault(m.group(1), def);
+//                defaultTaskType = m.group(2);
+//            }
+//            averageTime = optValue(bs,"averageTime", Double::parseDouble, null);
+//        }
+//        TaskType taskType = new TaskType(
+//                optValue(bs,"type", defaultTaskType),
+//                optValue(bs, "typeLabel", defaultTaskType),
+//                optValue(bs, "taskcat", defaultTaskCategory),
+//                optValue(bs,"acmodel", def)
+//        );
+//        taskType.setEntityURI(taskTypeUri);
+//        taskType.setAverageTime(averageTime);
+//
+//        // create mechanic
+//        String mechanicIRI = optValue(bs, "w", null);
+//        String mechanicID = optValue(bs, "wId", null);
+//        String mechanicLabel = optValue(bs, "wLabel", null);
+//        Mechanic mechanic = null;
+//        if(mechanicIRI != null){
+//            mechanic = registry.getOrCreate(mechanicIRI, Mechanic::new, Mechanic.class);
+//            mechanic.setEntityURI(URI.create(mechanicIRI));
+//            if(mechanicID == null){
+//                Matcher m = mechanicIRI_IDPattern.matcher(mechanicIRI);
+//                if(m.matches()){
+//                    mechanicID = m.group(1);
+//                }
+//            }
+//            mechanic.setId(mechanicID);
+//            mechanic.setTitle(mechanicLabel != null ? mechanicLabel : mechanicID);
+//        }
+//
+//        // create a work session record
+//        String sessionURI = optValue(bs, "t", null);
+//
+//        Result t = sessionURI == null ? new Result() : registry.getOrCreate(sessionURI, Result::new, Result.class);
+//        t.taskExecutionURI = optValue(bs, "tt", null);
+//        t.sessionURI = sessionURI;
+//        t.wp = wp;
+//        t.acmodel = taskType.getAcmodel();
+//        t.acType = AircraftType.getTypeLabelForModel(t.acmodel);
+//        t.taskType = taskType;
+//        t.setMechanic(mechanic);
+//
+//        t.scope = optValue(bs, "scope", def);
+//        t.date = optValue(bs, "date", def);
+//        String referencedTask = optValue(bs, "referencedTask", null);
+//        if(referencedTask != null) {
+//            if(t.referencedTasks == null)
+//                t.referencedTasks = new ArrayList<>();
+//            t.referencedTasks.add(referencedTask);
+//        }
+//
+//        String start = optValue(bs, "start", null);
+//        String end = optValue(bs, "end", null);
+//        if(start != null )
+//            t.start = SparqlDataReader.parseDate(SparqlDataReader.df.get(), start);
+//        if(end != null)
+//            t.end = SparqlDataReader.parseDate(SparqlDataReader.df.get(), end);
+//
+//        t.dur = Optional.ofNullable(bs.getValue("dur")).map(v -> ((Literal)v).longValue()).orElse(null);
+//        t.estMin = optValue(bs,"estMin", Double::parseDouble, null);
+//        return t;
+//    }
 
-        // create mechanic
-        String mechanicIRI = optValue(bs, "w", null);
-        String mechanicID = optValue(bs, "wId", null);
-        String mechanicLabel = optValue(bs, "wLabel", null);
-        Mechanic mechanic = null;
-        if(mechanicIRI != null){
-            mechanic = registry.getOrCreate(mechanicIRI, Mechanic::new, Mechanic.class);
-            mechanic.setEntityURI(URI.create(mechanicIRI));
-            if(mechanicID == null){
-                Matcher m = mechanicIRI_IDPattern.matcher(mechanicIRI);
-                if(m.matches()){
-                    mechanicID = m.group(1);
-                }
-            }
-            mechanic.setId(mechanicID);
-            mechanic.setTitle(mechanicLabel != null ? mechanicLabel : mechanicID);
-        }
 
-        // create a work session record
-        String sessionURI = optValue(bs, "t", null);
-
-        Result t = sessionURI == null ? new Result() : registry.getOrCreate(sessionURI, Result::new, Result.class);
-        t.taskExecutionURI = optValue(bs, "tt", null);
-        t.sessionURI = sessionURI;
-        t.wp = wp;
-        t.acmodel = taskType.getAcmodel();
-        t.acType = AircraftType.getTypeLabelForModel(t.acmodel);
-        t.taskType = taskType;
-        t.setMechanic(mechanic);
-
-        t.scope = optValue(bs, "scope", def);
-        t.date = optValue(bs, "date", def);
-        String referencedTask = optValue(bs, "referencedTask", null);
-        if(referencedTask != null) {
-            if(t.referencedTasks == null)
-                t.referencedTasks = new ArrayList<>();
-            t.referencedTasks.add(referencedTask);
-        }
-
-        String start = optValue(bs, "start", null);
-        String end = optValue(bs, "end", null);
-        if(start != null )
-            t.start = SparqlDataReader.parseDate(SparqlDataReader.df.get(), start);
-        if(end != null)
-            t.end = SparqlDataReader.parseDate(SparqlDataReader.df.get(), end);
-
-        t.dur = Optional.ofNullable(bs.getValue("dur")).map(v -> ((Literal)v).longValue()).orElse(null);
-        t.estMin = optValue(bs,"estMin", Double::parseDouble, null);
-        return t;
-    }
-
-
-    public static TaskStepPlan convertToTaskStepPlan(BindingSet bs){
-        TaskStepPlan taskStepPlan = new TaskStepPlan();
-        mandatory(bs, "step", URI::create,  taskStepPlan::setEntityURI);
-        mandatory(bs, "task", URI::create,  taskStepPlan::setParentTask);
-        optional(bs, "stepIndex", taskStepPlan::setStepIndex);
-        optional(bs, "workOrderText", taskStepPlan::setDescription);
-        optional(bs, "workOrderActionText", taskStepPlan::setActionDescription);
-
-        if(bs.hasBinding("annotatedText")){
-            FailureAnnotation failureAnnotation = new FailureAnnotation();
-            taskStepPlan.setFailureAnnotation(failureAnnotation);
-            optional(bs, "annotatedText", failureAnnotation::setAnnotatedText);
-            optional(bs, "componentUri", URI::create, failureAnnotation::setComponentUri);
-            optional(bs, "componentLabel", failureAnnotation::setComponentLabel);
-            optional(bs, "componentScore", Double::parseDouble, failureAnnotation::setComponentScore);
-            optional(bs, "failureUri", URI::create, failureAnnotation::setFailureUri);
-            optional(bs, "failureLabel", failureAnnotation::setFailureLabel);
-            optional(bs, "failureScore", Double::parseDouble, failureAnnotation::setFailureScore);
-            optional(bs, "aggregateScore", Double::parseDouble, failureAnnotation::setAggregateScore);
-            optional(bs, "isConfirmed", failureAnnotation::setConfirmed);
-        }
-        return taskStepPlan;
-    }
-
-    public static Pair<String, String> convertToPair(BindingSet bs) {
-        return Pair.of(manValue(bs, "tcId"), manValue(bs, "tcd"));
-    }
+//    public static Pair<String, String> convertToPair(BindingSet bs) {
+//        return Pair.of(manValue(bs, "tcId"), manValue(bs, "tcd"));
+//    }
 
     public interface Converter<T>{
         T convert(BindingSet bs) throws Exception;
@@ -467,48 +446,16 @@ public class SparqlDataReaderRDF4J {
         }
     }
 
-    public static List<TaskType> __loadTCDefinitions(String url, String graph, String username, String password){
-        SparqlDataReaderRDF4J reader = new SparqlDataReaderRDF4J();
-        List<TaskType> taskTypes = reader.readTaskDefinitions(
-                SparqlDataReader.TASK_TYPES_DEFINITIONS,
-                null,
-                url,
-                graph,
-                username, password,
-                SparqlDataReaderRDF4J::convertToTaskTypeDefinition
-        );
-        return taskTypes;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //  Workpackage ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static Workpackage convertWorkpackage(BindingSet bs) throws ParseException {
-        Workpackage wp = new Workpackage();
-        wp.setEntityURI(URI.create(manValue(bs, "wpuri")));
-        wp.setId(manValue(bs, "wp"));
-        URI clientURI = optValue(bs, "client", URI::create, null);
-        if(clientURI != null){
-            Client client = new Client();
-            client.setEntityURI(clientURI);
-            client.setId(optValue(bs, "clientId", null));
-            wp.setClient(client);
-        }
-
-        URI aircraftURI = optValue(bs, "ac", URI::create, null);
-        if(aircraftURI != null) {
-            String acmodel = optValue(bs, "acmodel", null);
-            wp.setAircraft(new Aircraft(aircraftURI, acmodel));
-            wp.getAircraft().setTitle(acmodel);
-        }
-        wp.setStartTime(optValue(bs, "wpStartTime", LocalDate::parse, null));
-        wp.setEndTime(optValue(bs, "wpEndTime", LocalDate::parse, null));
-        wp.setPlannedStartTime(optValue(bs, "wpScheduledStartTime", LocalDate::parse, null));
-        wp.setPlannedEndTime(optValue(bs, "wpScheduledEndTime", LocalDate::parse, null));
-//        wp.setStartTime(optValue(bs, "wpStartTime", s -> SparqlDataReader.parseDate(SparqlDataReader.day, s), null));
-//        wp.setEndTime(optValue(bs, "wpEndTime", s -> SparqlDataReader.parseDate(SparqlDataReader.day, s), null));
-//        wp.setPlannedStartTime(optValue(bs, "wpScheduledStartTime", s -> SparqlDataReader.parseDate(SparqlDataReader.day, s), null));
-//        wp.setPlannedEndTime(optValue(bs, "wpScheduledEndTime", s -> SparqlDataReader.parseDate(SparqlDataReader.day, s), null));
-        return wp;
-    }
+//    public static List<TaskType> __loadTCDefinitions(String url, String graph, String username, String password){
+//        SparqlDataReaderRDF4J reader = new SparqlDataReaderRDF4J();
+//        List<TaskType> taskTypes = reader.readTaskDefinitions(
+//                SparqlDataReader.TASK_TYPES_DEFINITIONS,
+//                null,
+//                url,
+//                graph,
+//                username, password,
+//                SparqlDataReaderRDF4J::convertToTaskTypeDefinition
+//        );
+//        return taskTypes;
+//    }
 }

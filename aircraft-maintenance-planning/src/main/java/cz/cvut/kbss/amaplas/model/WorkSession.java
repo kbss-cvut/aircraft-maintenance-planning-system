@@ -2,6 +2,10 @@ package cz.cvut.kbss.amaplas.model;
 
 import cz.cvut.kbss.amaplas.model.base.LongIntervalImpl;
 import cz.cvut.kbss.amaplas.model.values.DateParserSerializer;
+import cz.cvut.kbss.amaplas.util.Vocabulary;
+import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
+import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.Transient;
 
 import java.util.*;
 import java.util.function.Function;
@@ -10,59 +14,55 @@ import java.util.function.ToLongFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * Task based
- */
-public class Result{
+//@OWLClass(iri = Vocabulary.s_c_work_session)
+public class WorkSession extends Event {
     /** The id of the work session log */
 
-    public String sessionURI;
-    public String id;
-    public String wp; // TODO - remove
-    public String acType = "NONE"; // TODO - remove
-    public String acmodel; // TODO - remove
-    public TaskType taskType;
-    public String shiftGroup;
-    public String scope;
-    public String date;
-    public Date start;
-    public Date end;
-    public Long dur;
-    public Mechanic mechanic;
-    public Double estMin;
-    public String taskExecutionURI;
-    public List<String> referencedTasks;
+    @OWLDataProperty(iri = Vocabulary.s_p_id)
+    protected String id;
 
-    public Result() {
+//    protected String sessionURI; // TODO - refactor to entityURI
+
+//    @OWLDataProperty(iri = Vocabulary.s_p_task_description)
+    protected String description;
+
+
+//    @OWLDataProperty(iri = Vocabulary.s_p_has_shift)
+    protected String shiftGroup;
+
+    @OWLObjectProperty(iri = Vocabulary.s_p_has_scope)
+    protected MaintenanceGroup scope;
+
+
+
+//    @OWLObjectProperty(iri = Vocabulary.s_p_performed_by)
+    protected Mechanic mechanic;
+//    protected Double estMin;
+
+    @OWLObjectProperty(iri = Vocabulary.s_p_is_part_of_maintenance_task)
+    protected TaskExecution taskExecution;
+
+    public WorkSession() {
     }
-    
-    public Result(Result r) {
-        this.wp = r.wp;
-        this.acmodel = r.acmodel;
-        this.taskType = r.taskType;
+
+    public WorkSession(WorkSession r) {
         this.scope = r.scope;
         this.date = r.date;
         this.start = r.start;
         this.end = r.end;
         this.dur = r.dur;
-        AircraftType at = AircraftType.modelMap.get(this.acmodel);
-        this.acType = at != null ? at.getType() : "NONE";
     }
 
-    public Result getWrapped(){
+    public WorkSession getWrapped(){
         return this;
     }
 
-    public long getStart() {
-        return start.getTime();
+    public String getDescription() {
+        return description;
     }
 
-    public long getEnd(){
-        return end.getTime();
-    }
-
-    public long getLength(){
-        return getEnd() - getStart();
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Mechanic getMechanic() {
@@ -73,12 +73,12 @@ public class Result{
         this.mechanic = mechanic;
     }
 
-    public String taskType(){
-        return taskType.getCode();
+    public TaskExecution getTaskExecution() {
+        return taskExecution;
     }
 
-    public boolean isMainScopeSession(){
-        return scope.equals(taskType.getScope());
+    public void setTaskExecution(TaskExecution taskExecution) {
+        this.taskExecution = taskExecution;
     }
 
     public static List<String> cols() {
@@ -93,26 +93,57 @@ public class Result{
         return cols().stream().collect(Collectors.joining(sep));
     }
 
+
+
     @Override
     public String toString() {
         return toString(",");
     }
 
     public String toString(String sep) {
-        return Stream.of(wp, acmodel, taskType.getCode(), taskType.getTitle(), taskType.getTaskcat(), scope, date, start.toString(), end.toString(), dur.toString()).collect(Collectors.joining(sep));
+        return Stream.of(entityURI.toString(), description, scope.applicationType,
+                        date, start.toString(), end.toString(), dur.toString())
+                .collect(Collectors.joining(sep));
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Result)) return false;
-        Result result = (Result) o;
-        return wp.equals(result.wp) && taskType.equals(result.taskType) && start.equals(result.start) && end.equals(result.end);
+        WorkSession workSession = (WorkSession) o;
+        return Objects.equals(entityURI, workSession.entityURI) &&
+                taskExecution.equals(workSession.taskExecution) &&
+                start.equals(workSession.start) &&
+                end.equals(workSession.end);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getShiftGroup() {
+        return shiftGroup;
+    }
+
+    public void setShiftGroup(String shiftGroup) {
+        this.shiftGroup = shiftGroup;
+    }
+
+    public MaintenanceGroup getScope() {
+        return scope;
+    }
+
+    public void setScope(MaintenanceGroup scope) {
+        this.scope = scope;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(wp, taskType, start, end);
+        return Objects.hash(entityURI, taskExecution, start, end);
     }
 
     /**
@@ -120,7 +151,7 @@ public class Result{
      * @return id from wp, scope, shiftGroup, taskType.type, start and end
      */
     public String form0(){
-        return String.join(",", wp, scope, shiftGroup, taskType.getCode(), DateParserSerializer.formatDate(start), DateParserSerializer.formatDate(end));
+        return String.join(",", scope.getAbbreviation(), shiftGroup, taskExecution.entityURI.toString(), DateParserSerializer.formatDate(start), DateParserSerializer.formatDate(end));
     }
 
     /**
@@ -128,7 +159,7 @@ public class Result{
      * @return id from wp, scope, taskType.type, start and end
      */
     public String form1(){
-        return String.join(",", wp, scope, taskType.getCode(), DateParserSerializer.formatDate(start), DateParserSerializer.formatDate(end));
+        return String.join(",", scope.getAbbreviation(), taskExecution.entityURI.toString(), DateParserSerializer.formatDate(start), DateParserSerializer.formatDate(end));
     }
 
     /**
@@ -136,7 +167,7 @@ public class Result{
      * @return id from wp, scope, taskType.type and start
      */
     public String form2(){
-        return String.join(",", wp, scope, taskType.getCode(), DateParserSerializer.formatDate(start));
+        return String.join(",", scope.getAbbreviation(), taskExecution.entityURI.toString(), DateParserSerializer.formatDate(start));
     }
 
     private LongIntervalImpl asDateInterval(){
@@ -160,9 +191,9 @@ public class Result{
      * @param sessions assumes the sessions are ordered by start
      * @return
      */
-    public static List<LongIntervalImpl> mergeOverlaps(List<Result> sessions){
+    public static List<LongIntervalImpl> mergeOverlaps(List<WorkSession> sessions){
         List<LongIntervalImpl> intervals = new ArrayList<>(sessions.size());
-        for(Result s: sessions){
+        for(WorkSession s: sessions){
             intervals.add(s.asDateInterval());
         }
         return LongIntervalImpl.mergeOverlaps(intervals);
@@ -173,33 +204,6 @@ public class Result{
 //        normalizeTaskTypeLabels(results);
 //        normalizeScopes(results);
 //    }
-
-    // TODO - set aircraft area of WO execution based on referenced task execution.
-    public static void setAreasInWOsFromReferenceTask(List<Result> results){
-        Map<String, List<Result>> map = results.stream().filter(r -> r.taskExecutionURI != null)
-                .collect(Collectors.groupingBy(r -> r.taskExecutionURI));
-        for(List<Result> sessions: map.values()) {
-            String taskCategory = sessions.stream().map(s -> s.taskType.taskcat).filter(c -> c != null).findFirst().orElse(null);
-            if(taskCategory != null && !taskCategory.contains("work-order"))
-                continue;
-
-            List<String> referencedTasks = sessions.stream()
-                    .map(s -> s.referencedTasks).filter(ts -> ts != null).flatMap(rt -> rt.stream())
-                    .distinct().collect(Collectors.toList());
-            if(referencedTasks.isEmpty())
-                continue;
-            List<Result> referencedTaskSessions = map.get(referencedTasks.get(0));
-            if(referencedTaskSessions == null || referencedTaskSessions.isEmpty())
-                continue;
-
-            String area = referencedTaskSessions.stream().map(r -> r.taskType)
-                    .filter(t -> t != null && t.getDefinition() != null && t.getDefinition().getArea() != null)
-                    .map(t -> t.getDefinition().getArea()).findFirst()
-                    .orElse(null);
-            if(area != null)
-                sessions.forEach(s -> s.taskType.setArea(area));
-        }
-    }
 
 //    /**
 //     * Set the scope of  each Result (work session) to the main scope of the task card using the heuristic that the main

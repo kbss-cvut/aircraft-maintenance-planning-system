@@ -1,0 +1,21 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+
+SELECT ?taskType ?taskTypeId ?ataCode ?superTaskType ?superTaskTypeLabel
+WHERE
+{
+    ?taskType a cm:task-type .
+
+    OPTIONAL{?taskType cm:id ?taskTypeId . }
+#    OPTIONAL{?taskType cm:references-ata-code ?ataCode . }
+
+    OPTIONAL{
+        ?taskType rdfs:subClassOf ?superTaskType .
+        BIND(replace(str(?cls), "^.*/([^/]+)$", "$1") as ?superTaskTypeLabel)
+    }
+}

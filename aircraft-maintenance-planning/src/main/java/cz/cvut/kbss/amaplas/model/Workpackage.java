@@ -5,6 +5,8 @@ import cz.cvut.kbss.jopa.model.annotations.*;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Set;
 
 @OWLClass(iri = Vocabulary.s_c_workpackage)
 public class Workpackage extends AbstractEntityWithDescription {
@@ -23,6 +25,12 @@ public class Workpackage extends AbstractEntityWithDescription {
     protected LocalDate plannedStartTime;
     @OWLDataProperty(iri = Vocabulary.s_p_workpackage_scheduled_end_time)
     protected LocalDate plannedEndTime;
+
+    @Transient
+    protected List<TaskExecutionStatistics> taskExecutionStatistics;
+
+    @OWLObjectProperty(iri = Vocabulary.s_p_has_part)
+    protected Set<TaskExecution> taskExecutions;
 
     public Workpackage() {
     }
@@ -81,6 +89,22 @@ public class Workpackage extends AbstractEntityWithDescription {
         this.plannedEndTime = plannedEndTime;
     }
 
+    public List<TaskExecutionStatistics> getTaskExecutionStatistics() {
+        return taskExecutionStatistics;
+    }
+
+    public void setTaskExecutionStatistics(List<TaskExecutionStatistics> taskExecutionStatistics) {
+        this.taskExecutionStatistics = taskExecutionStatistics;
+    }
+
+    public Set<TaskExecution> getTaskExecutions() {
+        return taskExecutions;
+    }
+
+    public void setTaskExecutions(Set<TaskExecution> taskExecutions) {
+        this.taskExecutions = taskExecutions;
+    }
+
     @Override
     public String toString() {
         return "WorkPackage{" +
@@ -96,7 +120,5 @@ public class Workpackage extends AbstractEntityWithDescription {
 
     public static void main(String[] args) {
         OffsetDateTime d;
-
-
     }
 }
