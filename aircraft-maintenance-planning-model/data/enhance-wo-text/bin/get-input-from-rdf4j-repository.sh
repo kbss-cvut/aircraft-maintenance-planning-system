@@ -7,7 +7,14 @@ cd $DATASET_TYPE_DIR
 REPOSITORY_ID="csat-data"
 SERVER_URL="https://graphdb.onto.fel.cvut.cz"
 RDF4J_REPOSITORY_URL="${SERVER_URL}/repositories/${REPOSITORY_ID}"
-SPARQL_CONSTRUCT_FILE="./queries/retrieve-mwo-with-wo-texts.rq"
+
+# if the parameter --non-annotated is present, then the query will retrieve only the work orders that do not have any annotation yet
+if [[ "$1" == "--non-annotated" ]]; then
+  SPARQL_CONSTRUCT_FILE="./queries/retrieve-non-annotated-mwo-with-wo-texts.rq"
+else
+  SPARQL_CONSTRUCT_FILE="./queries/retrieve-mwo-with-wo-texts.rq"
+fi
+
 NETRC_FILE=../../private/netrc
 
 

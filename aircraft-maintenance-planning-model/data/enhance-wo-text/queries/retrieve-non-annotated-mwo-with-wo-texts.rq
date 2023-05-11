@@ -1,0 +1,10 @@
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+
+
+CONSTRUCT {
+    <http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1-data> a owl:Ontology .
+    ?taskStepExecution cm:work-order-text  ?woText .
+} WHERE {
+    ?taskStepExecution cm:work-order-text  ?woText .
+	FILTER NOT EXISTS{ ?taskStepExecution cm:described-finding ?finding}
+}
