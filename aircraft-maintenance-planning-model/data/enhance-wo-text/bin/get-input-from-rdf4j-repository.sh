@@ -7,7 +7,14 @@ cd $DATASET_TYPE_DIR
 REPOSITORY_ID="csat-data"
 SERVER_URL="https://graphdb.onto.fel.cvut.cz"
 RDF4J_REPOSITORY_URL="${SERVER_URL}/repositories/${REPOSITORY_ID}"
-SPARQL_CONSTRUCT_FILE="./queries/retrieve-mwo-with-wo-texts.rq"
+
+# if the parameter --all is present, then the query will retrieve all the WO texts
+if [[ "$1" == "--all" ]]; then
+  SPARQL_CONSTRUCT_FILE="./queries/retrieve-mwo-with-wo-texts.rq"
+else
+  SPARQL_CONSTRUCT_FILE="./queries/retrieve-non-annotated-mwo-with-wo-texts.rq"
+fi
+
 NETRC_FILE=../../private/netrc
 
 
