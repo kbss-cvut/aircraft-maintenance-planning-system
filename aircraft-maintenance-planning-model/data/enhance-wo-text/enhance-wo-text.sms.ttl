@@ -76,10 +76,10 @@
   sml:selectQuery [
       a sp:Select ;
       sp:text """
-      SELECT ?o
+      SELECT ?literal
       WHERE {
-        ?s ?p ?o.
-        FILTER(isLiteral(?o) && datatype(?o) = xsd:string)
+        ?s ?p ?literal.
+        FILTER(isLiteral(?literal) && datatype(?literal) = xsd:string)
       }""" ;
   ] ;
   sml:replace false;
@@ -159,7 +159,7 @@ CONSTRUCT {
 :transform-to-output-format
   a sml:ApplyConstruct ;
   sm:next :select-final-component;
-  sm:next :transform-enhance-wo-text-data_Return ;
+  sm:next :connect-terms-with-wo-text ;
   sml:constructQuery [
       a sp:Construct ;
       sp:text """
@@ -489,11 +489,14 @@ CONSTRUCT{
 
 :connect-terms-with-wo-text
   a sml:ApplyConstruct ;
-  sm:next :transform-enhance-wo-text-data_Return ;
+  sm:next :replace-ontology ;
   sml:constructQuery [
       a sp:Construct ;
       sp:text """
         CONSTRUCT {
+          <http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1-annotated-data>
+            a owl:Ontology .
+
           ?row ?o ?p.
           
           ?stepExecution
@@ -559,7 +562,24 @@ CONSTRUCT{
   sml:replace false ;
 .
 
-
+:replace-ontology
+  a sml:ApplyConstruct ;
+  sm:next :transform-enhance-wo-text-data_Return ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+        CONSTRUCT {
+          <http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1-annotated-data>
+            a owl:Ontology .
+          ?s ?p ?o.
+        } WHERE {
+          ?s ?p ?o .
+          FILTER NOT EXISTS { ?s a owl:Ontology }
+          FILTER NOT EXISTS { ?s a skos:Concept }
+        }""" ;
+    ] ;
+  sml:replace true ;
+.
 :transform-enhance-wo-text-data
   a sm:Function ;
   sm:returnModule :transform-enhance-wo-text-data_Return ;

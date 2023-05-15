@@ -3,8 +3,8 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 
-<http://onto.fel.cvut.cz/ontologies/slovnik/slovník-komponent-a-zádavd---markéta-dp-lower-case/glosář123>
-  a owl:Ontology, skos:ConceptScheme, <http://onto.fel.cvut.cz/ontologies/slovník/agendový/popis-dat/pojem/glosář>;
+<http://onto.fel.cvut.cz/ontologies/slovnik/slovník-komponent-a-zádavd---markéta-dp-lower-case/glosář123> a owl:Ontology,
+  skos:ConceptScheme, <http://onto.fel.cvut.cz/ontologies/slovník/agendový/popis-dat/pojem/glosář>;
   dcterms:title "slovník komponent a zádavd - Markéta DP lower case"@en;
   dcterms:creator "Markéta Adamcová";
   dcterms:created "2022-08-22T15:43:21.865Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
