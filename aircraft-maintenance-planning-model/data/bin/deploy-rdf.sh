@@ -3,14 +3,14 @@
 SERVER=https://graphdb.onto.fel.cvut.cz
 REPOSITORY_NAME=csat-data
 
-#FILE=stamp-manager.ttl
-FILE="$1"
-REPLACE_FLAG="$2"
+REPLACE_FLAG="$1"
 REPLACE_PARAMETER="-R"
 
 if [ "$REPLACE_FLAG" = "--append-context" ]; then
   REPLACE_PARAMETER=""
+  shift
 fi
+FILE="$1"
 
 ls "$FILE" | while read -r ONTOLOGY_FILE; do
   ONTOLOGY_IRI=$(awk '/(rdf:type|a).*owl:Ontology/{print prev1; print $0; getline; print; exit} {prev1 = $0}' "$ONTOLOGY_FILE" | awk -F'[<>]' '/^<http:/{print $2; exit}')
