@@ -194,8 +194,11 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
     public void addTaskSteps(RevisionPlan revisionPlan, List<TaskStepPlan> steps){
         steps.stream().collect(Collectors.groupingBy(s -> s.getParentTask().toString())).entrySet()
                 .forEach(e -> {
-                    TaskPlan p = taskPlanMap.get(e.getKey());
-                    p.getTaskStepPlans().addAll(e.getValue());
+                    Optional<TaskPlan> op = Optional.ofNullable(taskPlanMap.get(e.getKey()));
+                    op.ifPresent(
+                            p -> p.getTaskStepPlans().addAll(e.getValue())
+                    );
+
                 });
     }
 

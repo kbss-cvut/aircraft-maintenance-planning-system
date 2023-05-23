@@ -140,7 +140,7 @@ public class Generator {
     }
 
 
-    protected static <T extends AbstractEntity> T generateEntity(Class<T> entityClass) {
+    protected static <T extends AbstractEntityWithDescription> T generateEntity(Class<T> entityClass) {
         try {
             return entityClass.getConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {

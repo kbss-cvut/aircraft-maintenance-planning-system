@@ -8,43 +8,42 @@ PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
 PREFIX csat-text: <http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1/>
 PREFIX csvw: <http://www.w3.org/ns/csvw#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
+PREFIX : <http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1/>
 
-SELECT ?wp ?task ?step ?stepIndex ?workOrderText ?workOrderActionText ?timeEstimateInHours ?annotatedText
+SELECT ?wp ?task ?avgWorkTime ?step ?stepIndex ?workOrderText ?workOrderActionText ?timeEstimateInHours ?annotatedText
 ?componentUri ?componentLabel ?componentScore ?failureUri ?failureLabel ?failureScore ?aggregateScore ?isConfirmed
 WHERE
 {
     ?wp a cm:workpackage .
+    ?task cm:is-part-of-workpackage ?wp .
 
-    # tasks
-    OPTIONAL{
-        ?task cm:is-part-of-workpackage ?wp .
-        ?task cm:has-work-order-step ?step .
+    ?task rdf:type/rdfs:subClassOf  cm:maintenance-work-order .
 
-        OPTIONAL{?step cm:step-index ?stepIndex .}
-        ?step cm:work-order-text ?workOrderText .
-    	OPTIONAL{?step cm:work-order-action-text ?workOrderActionText . }
-#        OPTIONAL{?step cm:time-estimate-in-hours ?timeEstimateInHours . }
+#    OPTIONAL{?task rdf:type/cm:avg-work-time ?avgWorkTime .}
 
+    ?task cm:has-work-order-step ?step .
+    OPTIONAL{?step cm:step-index ?stepIndex .} # 148 steps are without index
+    ?step cm:work-order-text ?workOrderText .
+    OPTIONAL{?step cm:work-order-action-text ?workOrderActionText . }
+    ?step a ?stepType .
+    ?stepType rdfs:subClassOf cm:work-order-step .
 
-        ?step a ?stepType .
-        ?stepType rdfs:subClassOf cm:work-order-step .
+    ?step cm:described-finding ?finding.
+    ?finding :WO_text ?annotatedText .
+    ?finding cm:has-failure-occurrence ?failureOccurrence .
+    ?failureOccurrence termit:má-skóre ?aggregateScore .
+    ?failureOccurrence termit:je-přiřazením-relace ?failureInstance.
 
-        OPTIONAL{
-            ?step a csvw:Row .
-            ?step csat-text:AnnotatedText ?annotatedText .
-            OPTIONAL{
-                ?step csat-text:FinalComponentUri ?componentUri .
-                OPTIONAL{?componentUri skos:prefLabel ?componentLabel .}
-                OPTIONAL{?step csat-text:ComponentScore ?componentScore .}
-    		}
-            OPTIONAL{
-                ?step csat-text:FinalFailureUri ?failureUri .
-                OPTIONAL{?failureUri skos:prefLabel ?failureLabel .}
-                OPTIONAL{?step csat-text:FailureScore ?failureScore .}
-            }
+    ?failureInstance :has-argument1 ?componentUri.
+    ?failureInstance :has-argument2 ?failureUri.
+    ?componentUri skos:prefLabel ?componentLabel.
+    ?failureUri skos:prefLabel ?failureLabel.
 
-            OPTIONAL{?step csat-text:AggregateScore ?aggregateScore .}
-            OPTIONAL{?step csat-text:IsConfirmed ?isConfirmed .}
-    	}
-    }
+#    ?failureOccurrence termit:založeno-na-výskytu-termu ?componentModeOccurrence.
+#    ?componentModeOccurrence termit:je-přiřazením-termu ?componentUri.
+#    ?componentModeOccurrence termit:má-skóre ?componentScore_.
+#    ?failureOccurrence termit:založeno-na-výskytu-termu ?failureModeOccurrence.
+#    ?failureModeOccurrence termit:je-přiřazením-termu ?failureUri.
+#    ?failureModeOccurrence termit:má-skóre ?failureScore_.
 }
