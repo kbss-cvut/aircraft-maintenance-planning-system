@@ -39,11 +39,4 @@ WHERE
     ?failureInstance :has-argument2 ?failureUri.
     ?componentUri skos:prefLabel ?componentLabel.
     ?failureUri skos:prefLabel ?failureLabel.
-
-#    ?failureOccurrence termit:založeno-na-výskytu-termu ?componentModeOccurrence.
-#    ?componentModeOccurrence termit:je-přiřazením-termu ?componentUri.
-#    ?componentModeOccurrence termit:má-skóre ?componentScore_.
-#    ?failureOccurrence termit:založeno-na-výskytu-termu ?failureModeOccurrence.
-#    ?failureModeOccurrence termit:je-přiřazením-termu ?failureUri.
-#    ?failureModeOccurrence termit:má-skóre ?failureScore_.
 }
