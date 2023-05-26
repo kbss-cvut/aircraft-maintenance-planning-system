@@ -90,7 +90,7 @@ do
    QUERY_PARAMS="context=$GRAPH"
    if [ ! "$GRAPH" ]; then QUERY_PARAMS= ;  fi
   
-   curl --netrc-file $NETRC_FILE -X POST -H "Content-Type: $CONTENT_TYPE" --data-binary "@$FILE" -o - -v "$REPOSITORY_URL/statements?$QUERY_PARAMS" 2> $TEMP_FILE
+   curl --netrc-file $NETRC_FILE -X POST -H "Content-Type: $CONTENT_TYPE" -T "$FILE" -o - -v "$REPOSITORY_URL/statements?$QUERY_PARAMS" 2> $TEMP_FILE
    cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null && echo 'INFO:  sending data was sucessfull'  
    cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null || ( echo 'ERROR:  sending data failed. Output of the process : '; cat $TEMP_FILE )
 done;
