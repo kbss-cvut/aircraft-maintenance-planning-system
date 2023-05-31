@@ -1,0 +1,48 @@
+# execution statistics of component failure classes extracted using text analysis
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ofn:  <http://www.ontotext.com/sparql/functions/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+DELETE{}
+INSERT{
+    GRAPH cm:text-analysis-work-order-classes {
+    	?componentFailureClass cm:min-work-time ?minWorkTime .
+        ?componentFailureClass cm:max-work-time ?maxWorkTime .
+        ?componentFailureClass cm:avg-work-time ?avgWorkTime .
+        ?componentFailureClass cm:min-duration ?minDuration .
+        ?componentFailureClass cm:max-duration ?maxDuration .
+        ?componentFailureClass cm:avg-duration ?avgDuration .
+    }
+}WHERE{
+    SELECT ?componentFailureClass (COUNT(*) as ?executionCount)
+        (MIN(?derivedWorkTime) as ?minWorkTime) (MAX(?derivedWorkTime) as ?maxWorkTime) (AVG(?derivedWorkTime) as ?avgWorkTime)
+        (MIN(?derivedDuration) as ?minDuration) (MAX(?derivedDuration) as ?maxDuration) (AVG(?derivedDuration) as ?avgDuration)
+        {
+
+    # query csat-data to get all annotated steps for a particular workpackage
+        {
+            SELECT ?taskExecutionIRI ?componentFailureClass 
+            (MIN(?st) as ?derivedStart) (MAX(?et) as ?derivedEnd) (SUM(ofn:asMillis(?et - ?st))/1000.0/60.0/60.0 as ?derivedWorkTime) (ofn:asMillis(?derivedEnd - ?derivedStart)/1000.0/60.0/60.0 as ?derivedDuration) 
+            {
+                ?taskExecutionIRI a ?componentFailureClass.
+                ?componentFailureClass rdfs:subClassOf cm:component-failure--task.
+
+                ?session cm:is-part-of-maintenance-task ?taskExecutionIRI .
+
+                ?session cm:start-date ?sDate.
+                ?session cm:start-time ?sTime.
+                BIND(CONCAT(str(?sDate),"T", str(?sTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?start)
+
+                BIND(spif:parseDate(?start, "yyyy-MM-dd'T'HH:mm") as ?st)
+
+                ?session cm:end-date ?eDate.
+                ?session cm:end-time ?eTime.
+                BIND(CONCAT(str(?eDate),"T", str(?eTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?end)
+                BIND(spif:parseDate(?end, "yyyy-MM-dd'T'HH:mm") as ?et)
+
+            } GROUP BY ?taskExecutionIRI ?componentFailureClass
+        }
+    } GROUP BY ?componentFailureClass
+}
+

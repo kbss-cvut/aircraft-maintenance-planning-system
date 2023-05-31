@@ -32,6 +32,7 @@ WHERE
         # task type
         OPTIONAL{
             ?tt a ?tType.
+            ?tType a cm:task-type .
             OPTIONAL{
                BIND(cm:task-card as ?cls)
                ?tt a ?cls.
@@ -57,9 +58,15 @@ WHERE
             }
 
             OPTIONAL {
-                ?tType cm:time-estimate-in-hours ?averageTime .
+                ?tType cm:time-estimate-in-hours ?averageTime1 .
             }
         }
+
+         OPTIONAL {
+            ?tt rdf:type/cm:avg-work-time ?avgWorkTime .
+         }
+
+         BIND(COALESCE(?averageTime1, ?avgWorkTime)  as ?averageTime)
 
         # session
         OPTIONAL{

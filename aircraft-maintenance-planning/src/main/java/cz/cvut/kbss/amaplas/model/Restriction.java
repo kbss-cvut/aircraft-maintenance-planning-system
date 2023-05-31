@@ -9,7 +9,7 @@ import java.net.URI;
 import java.util.Set;
 
 @OWLClass(iri = Vocabulary.s_c_restriction)
-public class Restriction extends AbstractEntity{
+public class Restriction extends AbstractEntityWithDescription {
 
     @OWLObjectProperty(iri = Vocabulary.s_p_requirement_on)
     protected URI subject;

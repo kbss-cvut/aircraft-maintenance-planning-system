@@ -1,0 +1,46 @@
+# create component failure classes from ordered steps and associate them with task executions
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
+PREFIX : <http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1/>
+
+DELETE{}
+INSERT {
+	GRAPH cm:text-analysis-work-order-classes {
+        ?taskExecutionIRI a ?componentFailureClass.
+    	?componentFailureClass rdfs:subClassOf cm:component-failure--task .
+    }
+} WHERE {
+#SELECT ?taskExecutionIRI ?componentFailureClass {
+    {
+        SELECT ?taskExecutionIRI (GROUP_CONCAT(?componentFailureStep; separator=";") as ?componentFailureClassDiscrimitaor) {
+            {
+                SELECT  ?taskExecutionIRI ?index ?componentFailureStep {
+                    ?taskExecutionIRI a cm:complex-execution;
+                                      rdf:type/rdfs:subClassOf  cm:maintenance-work-order ;
+                                      # cm:is-part-of-workpackage ?workpackageIRI ;
+                                      cm:has-work-order-step ?taskStepExecutionIRI .
+                    
+                    ?taskStepExecutionIRI cm:described-finding ?finding .
+                    ?finding cm:has-failure-occurrence ?failureOccurrence .
+                    ?failureOccurrence termit:je-přiřazením-relace ?failureInstance.
+					
+                    ?failureInstance :has-argument1 ?componentURI .
+                    ?failureInstance :has-argument2 ?failureURI .
+
+                    FILTER (str(?componentURI) != "" && str(?failureURI) != "")
+
+                    OPTIONAL{ ?taskStepExecutionIRI cm:step-index ?i . }
+                    BIND(COALESCE(?i, "NO_INDEX") as ?index)
+                    BIND(concat(str(?index), "-", str(?componentURI), str(?failureURI)) as ?componentFailureStep) 
+                } ORDER BY ?taskExecutionIRI ?index
+            }
+        } GROUP BY ?taskExecutionIRI
+    }
+    BIND(IRI(concat(
+                "http://onto.fel.cvut.cz/ontologies/csat-maintenance/component-failure-class--", 
+                MD5(?componentFailureClassDiscrimitaor)
+            )) as ?componentFailureClass
+    )
+}

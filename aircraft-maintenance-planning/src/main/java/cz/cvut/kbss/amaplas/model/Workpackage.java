@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 @OWLClass(iri = Vocabulary.s_c_workpackage)
-public class Workpackage extends AbstractEntity{
+public class Workpackage extends AbstractEntityWithDescription {
 
     @OWLObjectProperty(iri = Vocabulary.s_p_is_repair_of, fetch = FetchType.EAGER)
     protected Aircraft aircraft;

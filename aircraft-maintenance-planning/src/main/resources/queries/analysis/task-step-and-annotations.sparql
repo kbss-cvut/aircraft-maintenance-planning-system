@@ -1,0 +1,42 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+PREFIX csat-text: <http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1/>
+PREFIX csvw: <http://www.w3.org/ns/csvw#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
+PREFIX : <http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1/>
+
+SELECT ?wp ?task ?avgWorkTime ?step ?stepIndex ?workOrderText ?workOrderActionText ?timeEstimateInHours ?annotatedText
+?componentUri ?componentLabel ?componentScore ?failureUri ?failureLabel ?failureScore ?aggregateScore ?isConfirmed
+WHERE
+{
+    ?wp a cm:workpackage .
+    ?task cm:is-part-of-workpackage ?wp .
+
+    ?task rdf:type/rdfs:subClassOf  cm:maintenance-work-order .
+
+#    OPTIONAL{?task rdf:type/cm:avg-work-time ?avgWorkTime .}
+
+    ?task cm:has-work-order-step ?step .
+    OPTIONAL{?step cm:step-index ?stepIndex .} # 148 steps are without index
+    ?step cm:work-order-text ?workOrderText .
+    OPTIONAL{?step cm:work-order-action-text ?workOrderActionText . }
+    ?step a ?stepType .
+    ?stepType rdfs:subClassOf cm:work-order-step .
+
+    ?step cm:described-finding ?finding.
+    ?finding :WO_text ?annotatedText .
+    ?finding cm:has-failure-occurrence ?failureOccurrence .
+    ?failureOccurrence termit:má-skóre ?aggregateScore .
+    ?failureOccurrence termit:je-přiřazením-relace ?failureInstance.
+
+    ?failureInstance :has-argument1 ?componentUri.
+    ?failureInstance :has-argument2 ?failureUri.
+    ?componentUri skos:prefLabel ?componentLabel.
+    ?failureUri skos:prefLabel ?failureLabel.
+}

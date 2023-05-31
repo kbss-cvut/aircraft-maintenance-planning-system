@@ -31,6 +31,8 @@ public class SparqlDataReader {
     public static final String ALL_TASKS = "/queries/analysis/all-tasks-strat-order.sparql";
     public static final String TASK_CARDS_FROM_HISTORY = "/queries/analysis/task-cards-from-history.sparql";
     public static final String TASK_TYPES_DEFINITIONS = "/queries/analysis/task-types-definitions.sparql";
+
+    public static final String TASK_STEP_AND_ANNOTATIONS = "/queries/analysis/task-step-and-annotations.sparql";
     public static final String dateFormatPattern = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String dateFormatPattern1 = "yyyy-MM-dd'T'HH:mm:ssX";
     public static final String dateFormatPattern2 = "dd.MM.yyyy'T'HH:mm";

@@ -31,6 +31,23 @@ public class SparqlDataReaderRDF4J {
 
     private static final Logger LOG = LoggerFactory.getLogger(SparqlDataReaderRDF4J.class);
 
+    public static <T> List<T> readData(String queryName, RepositoryConnection c, Map<String, Value> bindings, Function<BindingSet, T> converter){
+        String query = ResourceUtils.loadResource(queryName);
+        TupleQuery tupleQuery = c.prepareTupleQuery(query);
+        if(bindings != null)
+            bindings.entrySet().stream().forEach(b -> tupleQuery.setBinding(b.getKey(), b.getValue()));
+        TupleQueryResult rawResults = tupleQuery.evaluate();
+
+        List<T> results = new ArrayList<>();
+        while(rawResults.hasNext()){
+            BindingSet binding = rawResults.next();
+            T result = converter.apply(binding);
+            if(result != null)
+                results.add(result);
+        }
+        return results;
+    }
+
     public List<String> readRowsAsStrings(String queryName, String endpoint, String username, String password) {
         Repository r = RepositoryUtils.createRepo(endpoint, username, password);
 
@@ -223,9 +240,18 @@ public class SparqlDataReaderRDF4J {
                 .map(Value::stringValue)
                 .ifPresent(s);
     }
+    public static <T> void optional(BindingSet bs, String name, Function<String, T> converter, Consumer<T> s){
+        Optional.ofNullable(bs.getValue(name))
+                .map(Value::stringValue)
+                .map(converter)
+                .ifPresent(s);
+    }
 
     public static void mandatory(BindingSet bs, String name, Consumer<String> s){
         s.accept(bs.getValue(name).stringValue());
+    }
+    public static <T> void mandatory(BindingSet bs, String name, Function<String, T> converter,  Consumer<T> s){
+        s.accept(converter.apply(bs.getValue(name).stringValue()));
     }
 
     public static String manValue(BindingSet bs, String name){
@@ -342,6 +368,31 @@ public class SparqlDataReaderRDF4J {
         t.dur = Optional.ofNullable(bs.getValue("dur")).map(v -> ((Literal)v).longValue()).orElse(null);
         t.estMin = optValue(bs,"estMin", Double::parseDouble, null);
         return t;
+    }
+
+
+    public static TaskStepPlan convertToTaskStepPlan(BindingSet bs){
+        TaskStepPlan taskStepPlan = new TaskStepPlan();
+        mandatory(bs, "step", URI::create,  taskStepPlan::setEntityURI);
+        mandatory(bs, "task", URI::create,  taskStepPlan::setParentTask);
+        optional(bs, "stepIndex", taskStepPlan::setStepIndex);
+        optional(bs, "workOrderText", taskStepPlan::setDescription);
+        optional(bs, "workOrderActionText", taskStepPlan::setActionDescription);
+
+        if(bs.hasBinding("annotatedText")){
+            FailureAnnotation failureAnnotation = new FailureAnnotation();
+            taskStepPlan.setFailureAnnotation(failureAnnotation);
+            optional(bs, "annotatedText", failureAnnotation::setAnnotatedText);
+            optional(bs, "componentUri", URI::create, failureAnnotation::setComponentUri);
+            optional(bs, "componentLabel", failureAnnotation::setComponentLabel);
+            optional(bs, "componentScore", Double::parseDouble, failureAnnotation::setComponentScore);
+            optional(bs, "failureUri", URI::create, failureAnnotation::setFailureUri);
+            optional(bs, "failureLabel", failureAnnotation::setFailureLabel);
+            optional(bs, "failureScore", Double::parseDouble, failureAnnotation::setFailureScore);
+            optional(bs, "aggregateScore", Double::parseDouble, failureAnnotation::setAggregateScore);
+            optional(bs, "isConfirmed", failureAnnotation::setConfirmed);
+        }
+        return taskStepPlan;
     }
 
     public static Pair<String, String> convertToPair(BindingSet bs) {
