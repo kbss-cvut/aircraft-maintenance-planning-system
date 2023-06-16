@@ -7,6 +7,7 @@ import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
 import cz.cvut.kbss.jopa.model.annotations.Transient;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,9 +20,16 @@ public class TaskExecution extends Event{
     @Transient
     protected TaskType taskType;
 
+    public TaskExecution() {
+    }
+
+    public TaskExecution(URI entityURI) {
+        this.entityURI = entityURI;
+    }
+
 
     @OWLDataProperty(iri = Vocabulary.s_p_time_estimate_in_hours)
-    protected long estMin;
+    protected Double estMin;
 
     @OWLDataProperty(iri = Vocabulary.s_p_end_time)
     protected LocalDate endTime;
@@ -59,11 +67,11 @@ public class TaskExecution extends Event{
         this.issueTime = issueTime;
     }
 
-    public long getEstMin() {
+    public Double getEstMin() {
         return estMin;
     }
 
-    public void setEstMin(long estMin) {
+    public void setEstMin(Double estMin) {
         this.estMin = estMin;
     }
 

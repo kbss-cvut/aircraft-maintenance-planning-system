@@ -2,33 +2,26 @@ PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
 PREFIX spif: <http://spinrdf.org/spif#>
 PREFIX ofn:  <http://www.ontotext.com/sparql/functions/>
 
-SELECT DISTINCT ?wp ?task ?referencedTask ?issueTime ?endTime (MIN(?st) as ?derivedStart) (MAX(?et) as ?derivedEnd) (SUM(ofn:asMillis(?et - ?st)) as ?derivedWorkTime) (ofn:asMillis(?derivedEnd - ?derivedStart) as ?derivedDuration) where {
-    OPTIONAL{
-        ?wp cm:is-repair-of ?aircraft.
-        OPTIONAL{
-            ?aircraft cm:model ?aircraftModel.
-        }
-    }
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+
+SELECT DISTINCT ?wp ?task ?taskType ?issueTime ?endTime (MIN(?st) as ?derivedStart) (MAX(?et) as ?derivedEnd) (SUM(ofn:asMillis(?et - ?st)) as ?derivedWorkTime) (ofn:asMillis(?derivedEnd - ?derivedStart) as ?derivedDuration) where {
+#    BIND(cm:workpackage--OE-LBN-H-23-B4Y-B2Y-ECAP as ?wp)
 
     ?task cm:is-part-of-workpackage ?wp .
     ?task a ?taskType .
     ?taskType a cm:task-type .
 
-    OPTIONAL{?taskType cm:id ?taskTypeId . }
-    OPTIONAL{?taskType cm:references-ata-code ?ataCode . }
+    ?taskA cm:is-part-of-workpackage ?wpA .
+    ?taskA a ?taskType .
+    ?taskType a cm:task-type .
 
     OPTIONAL{
-        ?taskType rdfs:subClassOf ?superTaskType .
-        FILTER(?superTaskType in (cm:task-card, cm:maintenance-work-order, cm:scheduled-work-order))
-        BIND(replace(str(?superTaskType), "^.*/([^/]+)$", "$1") as ?taskCategory)
+        ?task cm:issue-time ?issueTime.
     }
-
     OPTIONAL{
-        ?task cm:references-task ?referencedTask
+        ?task cm:end-time ?endTime.
     }
-
-    ?task cm:issue-time ?issueTime.
-    ?task cm:end-time ?endTime.
     ?session cm:is-part-of-maintenance-task ?task .
 
     ?session cm:start-date ?sDate.
@@ -42,4 +35,4 @@ SELECT DISTINCT ?wp ?task ?referencedTask ?issueTime ?endTime (MIN(?st) as ?deri
     BIND(CONCAT(str(?eDate),"T", str(?eTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?end)
     BIND(spif:parseDate(?end, "yyyy-MM-dd'T'HH:mm") as ?et)
 
-} GROUP BY ?task ?issueTime ?endTime
+} GROUP BY ?wp ?task ?taskType ?issueTime ?endTime

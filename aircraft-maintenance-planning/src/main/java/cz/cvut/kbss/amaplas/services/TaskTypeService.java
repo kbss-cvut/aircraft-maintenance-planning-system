@@ -2,12 +2,18 @@ package cz.cvut.kbss.amaplas.services;
 
 import cz.cvut.kbss.amaplas.config.props.ConfigProperties;
 import cz.cvut.kbss.amaplas.config.props.Repository;
+import cz.cvut.kbss.amaplas.model.TaskExecution;
 import cz.cvut.kbss.amaplas.model.TaskType;
+import cz.cvut.kbss.amaplas.model.Workpackage;
 import cz.cvut.kbss.amaplas.persistence.dao.TaskTypeDao;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.annotation.PostConstruct;
 import java.net.URI;
@@ -26,6 +32,8 @@ public class TaskTypeService {
 
     protected List<TaskType> taskTypesCache;
     protected List<TaskType> taskTypeDefinitionCache;
+    protected Map<URI,TaskType> taskTypeMap;
+    protected Map<URI,TaskType> taskTypeDefinitionMap;
 
     public TaskTypeService(ConfigProperties config, TaskTypeDao taskTypeDao) {
         this.config = config;
@@ -35,7 +43,7 @@ public class TaskTypeService {
 
 
     // TODO - refactoring DAO layer - check which methods replace the init and loadTaskMappings methods and check if the result looks ok
-    @PostConstruct
+    @EventListener(ApplicationReadyEvent.class)
     public void init(){
 //        loadTaskTypes();
         resetCache();
@@ -52,11 +60,38 @@ public class TaskTypeService {
     }
 
     public void resetCache(){
+        LOG.info("reset caches - task type and task type definition caches");
         taskTypesCache = taskTypeDao.listTaskTypes();
+        taskTypeMap = new HashMap<>();
+        taskTypesCache.forEach(tt -> taskTypeMap.put(tt.getEntityURI(), tt));
+
         taskTypeDefinitionCache = taskTypeDao.listTaskTypeDefinitions();
+        taskTypeDefinitionMap = new HashMap<>();
+        taskTypeDefinitionCache.forEach(tt -> taskTypeDefinitionMap.put(tt.getEntityURI(), tt));
+
         setupDefinitionFieldOfTaskCards(taskTypesCache, taskTypeDefinitionCache);
+        LOG.info("finished reset caches");
 //        loadTaskTypes();
     }
+
+//    /**
+//     * Reads the task types their details and task definitions for task executions of the input workpackage.
+//     * @return
+//     */
+//    public List<Pair<URI, TaskType>> readTaskExecutionTaskTypes(Workpackage workpackage){
+//        LOG.info("reset caches - task type and task type definition caches");
+//        Map<URI, TaskExecution> taskExecutionMap = new HashMap<>();
+//        workpackage.getTaskExecutions().forEach(te -> taskExecutionMap.put(te.getEntityURI(),te));
+//
+//        taskTypeDao.readTaskTypes(workpackage).stream().forEach(
+//                taskExecutionMap.
+//        );
+//
+//        taskTypeDefinitionCache = taskTypeDao.listTaskTypeDefinitions();
+//
+//        setupDefinitionFieldOfTaskCards(taskTypesCache, taskTypeDefinitionCache);
+//        LOG.info("finished reset caches");
+//    }
 
     // TODO - move to service layer
 //    public List<TaskType> loadTaskTypes(){
@@ -105,10 +140,16 @@ public class TaskTypeService {
     /**
      * Updates the value of the <code>TaskType.definition</code> property by finding matches between task card and
      * definition codes.
-     * @param taskTypes
-     * @param taskTypeDefinitions
+     *
+     * @param taskTypes required fields:<br>
+     * - {@link TaskType#getCode()}<br>
+     * - {@link TaskType#getEntityURI()}
+     * @param taskTypeDefinitions required fields:<br>
+     * - {@link TaskType#getCode()}<br>
+     * - {@link TaskType#getMpdtask()}<br>
+     * - {@link TaskType#getEntityURI()}
      */
-    public void calculateTaskCards2DefinitionsMap(Collection<TaskType> taskTypes, List<TaskType> taskTypeDefinitions) {
+    public void calculateTaskCards2DefinitionsMap(Collection<TaskType> taskTypes, Collection<TaskType> taskTypeDefinitions) {
         // clear definition field of task cards and group them by code
         taskTypes.forEach(t -> t.setDefinition(null));
         Map<String, List<TaskType>> taskTypeCodeMap = taskTypes.stream()
@@ -117,16 +158,13 @@ public class TaskTypeService {
         // for each task card code find a task definition with a matching code
         // and set it as the definition field of the task card.
         taskTypeCodeMap.entrySet().stream()
-                .forEach(p -> p.getValue()
-                        .forEach(
-                                t -> findTaskCardDefinitionWithMatchingCode(p.getKey(), taskTypeDefinitions).stream()
-                                        .limit(1)
-                                        .forEach(t::setDefinition)
-                        )
+                .forEach(p -> findTaskCardDefinitionWithMatchingCode(p.getKey(), taskTypeDefinitions).stream()
+                        .limit(1)
+                        .forEach(td -> p.getValue().forEach(t -> t.setDefinition(td)))
                 );
     }
 
-    protected List<TaskType> findTaskCardDefinitionWithMatchingCode(String code, List<TaskType> taskTypeDefinitions){
+    protected List<TaskType> findTaskCardDefinitionWithMatchingCode(String code, Collection<TaskType> taskTypeDefinitions){
         List<Pair<TaskType, Integer>> matchResults = findTaskCardDefinitionWithMatchingCode(code, TaskType::getCode, taskTypeDefinitions);
 
         if(matchResults.isEmpty()) {
@@ -140,7 +178,7 @@ public class TaskTypeService {
         return matches;
     }
 
-    protected List<Pair<TaskType, Integer>> findTaskCardDefinitionWithMatchingCode(String tcCode, Function<TaskType, String> idfunc, List<TaskType> taskTypeDefinitions){
+    protected List<Pair<TaskType, Integer>> findTaskCardDefinitionWithMatchingCode(String tcCode, Function<TaskType, String> idfunc, Collection<TaskType> taskTypeDefinitions){
         return taskTypeDefinitions.stream()
                 .map(t -> Pair.of(t, TaskType.is_TCCode_Match_v3(idfunc.apply(t), tcCode)))
                 .filter(p -> p.getRight() > 0)
@@ -215,10 +253,12 @@ public class TaskTypeService {
      * refreshes the mapping memory cache.
      */
     public void updateTaskTypeMapping(){
-        resetCache();
+        List<TaskType> taskTypes = taskTypeDao.listTaskTypeBasicDescriptions();
+        List<TaskType> taskTypeDefinitions = taskTypeDao.listTaskTypeDefinitionIds();
         // TODO - move persistStatements method to DAO, get rid of references to SparqlDataReaderRDF4J and config
-        calculateTaskCards2DefinitionsMap(taskTypesCache, taskTypeDefinitionCache);
-        taskTypeDao.persistTaskCardCode2DefinitionMap(taskTypesCache, repoConfig.getTaskMappingGraph());
+        calculateTaskCards2DefinitionsMap(taskTypes, taskTypeDefinitions);
+        taskTypeDao.persistTaskCardCode2DefinitionMap(taskTypes, repoConfig.getTaskMappingGraph());
+        resetCache();
     }
 
     public List<TaskType> getAllTaskTypeDefinitions(){
@@ -230,14 +270,22 @@ public class TaskTypeService {
 //        return TaskType.getTaskTypeDefinition(taskType); // TODO - use DAO layer instead
 //    }
 
-    public List<TaskType> getTaskTypes(Collection<String> taskTypeCodes){
-        return taskTypeCodes.stream().map(this::getTaskType).collect(Collectors.toList());
+//    public List<TaskType> getTaskTypes(Collection<String> taskTypeCodes){
+//        return taskTypeCodes.stream().map(this::getTaskType).collect(Collectors.toList());
+//    }
+
+//    public TaskType getTaskType(String taskTypeCode){
+//        if(TaskType.taskTypeMap == null)
+//            return null;
+//        return TaskType.taskTypeMap.get(taskTypeCode);
+//    }
+
+    public TaskType getCahcedTaskType(URI taskTypeUri){
+        return taskTypeMap.get(taskTypeUri);
     }
 
-    public TaskType getTaskType(String taskTypeCode){
-        if(TaskType.taskTypeMap == null)
-            return null;
-        return TaskType.taskTypeMap.get(taskTypeCode);
+    public TaskType getCachedTaskTypeDefinition(URI taskTypeUri){
+        return taskTypeDefinitionMap.get(taskTypeUri);
     }
 
     public List<TaskType> getTaskTypes(){

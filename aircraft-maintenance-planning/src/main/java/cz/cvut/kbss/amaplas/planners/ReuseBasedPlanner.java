@@ -2,7 +2,9 @@ package cz.cvut.kbss.amaplas.planners;
 
 import cz.cvut.kbss.amaplas.algs.SimilarityUtils;
 import cz.cvut.kbss.amaplas.model.Result;
+import cz.cvut.kbss.amaplas.model.TaskExecution;
 import cz.cvut.kbss.amaplas.model.TaskType;
+import cz.cvut.kbss.amaplas.model.Workpackage;
 import cz.cvut.kbss.amaplas.utils.GraphmlUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -12,6 +14,7 @@ import org.jgrapht.traverse.BreadthFirstIterator;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -143,28 +146,18 @@ public class ReuseBasedPlanner {
         return g;
     }
 
-    public PlanGraph planDisconnected(Map<String, List<Result>> history, Set<TaskType> taskTypes, SimilarityMeasure similarityMeasure, Predicate<String> ignoreHistoryEntry) {
-        return plan(history, taskTypes, DISCONNECTED_ORDER, similarityMeasure, ignoreHistoryEntry);
+    public PlanGraph planDisconnected(List<Pair<Supplier<Workpackage>, Double>> similarWPs, Set<TaskType> taskTypes, Predicate<String> ignoreHistoryEntry) {
+        return plan(similarWPs, taskTypes, DISCONNECTED_ORDER);
     }
-    public PlanGraph planConnected(Map<String, List<Result>> history, Set<TaskType> taskTypes, SimilarityMeasure similarityMeasure, Predicate<String> ignoreHistoryEntry){
-        return plan(history, taskTypes, CONNECTED_ORDER, similarityMeasure, ignoreHistoryEntry);
+    public PlanGraph planConnected(List<Pair<Supplier<Workpackage>, Double>> similarWPs, Set<TaskType> taskTypes){
+        return plan(similarWPs, taskTypes, CONNECTED_ORDER);
     }
 
-    public PlanGraph plan(Map<String, List<Result>> history, Set<TaskType> taskTypes,
-                                                  UnacceptableOrder isUnacceptableOrder, // TODO currently not used, revise use-case of parametrized order, interface and implementation
-                                                  SimilarityMeasure similarityMeasure,
-                                                  Predicate<String> ignoreHistoryEntry
+    public PlanGraph plan(List<Pair<Supplier<Workpackage>, Double>> similarWPs, Set<TaskType> taskTypes,
+                          UnacceptableOrder isUnacceptableOrder // TODO currently not used, revise use-case of parametrized order, interface and implementation
+
                                       ){
         PlanGraph planGraph = new PlanGraph();
-        // order history wps according to similarity with taskTypes
-        List<Pair<String, Set<TaskType>>> similarPlans = history.entrySet().stream().map(e -> Pair.of(
-                e.getKey(),
-                e.getValue().stream().map(r -> r.taskType).collect(Collectors.toSet()))
-        ).sorted(Comparator.comparing(
-                (Pair<String, Set<TaskType>> p) -> similarityMeasure.similarity(p.getValue(), taskTypes)
-                ).reversed()// biggest number at the beginning
-        ).collect(Collectors.toList());
-
         // add nodes to graph
         Map<TaskType, TaskPattern> taskPatternMap = new HashMap<>();
         for(TaskType taskType : taskTypes){
@@ -178,63 +171,67 @@ public class ReuseBasedPlanner {
         Set<TaskType> remainder = new HashSet<>(taskTypes);
         Set<TaskType> plannedByThisWP = new HashSet<>();
         Set<TaskType> plannedByOtherWP = new HashSet<>();
-
-        while(!remainder.isEmpty() && k < similarPlans.size()){ // revise condition
-            Pair<String,Set<TaskType>> similarPlan = similarPlans.get(k);
+        similarWPs.sort(Comparator.comparing((Pair<Supplier<Workpackage>, Double> p) -> p.getRight()).reversed());
+        while(!remainder.isEmpty() && k < similarWPs.size()){ // revise condition
+            Pair<Supplier<Workpackage>, Double> pair = similarWPs.get(k);
             k ++;
+            Workpackage similarWP = pair.getKey().get();
+//            if(ignoreHistoryEntry != null && ignoreHistoryEntry.test(similarPlan.getKey().getId()))
+//                continue;
 
-            if(ignoreHistoryEntry != null && ignoreHistoryEntry.test(similarPlan.getKey()))
+//            String key = similarPlan.getKey().getId();
+
+            List<TaskExecution> taskExecutions = new ArrayList<>(similarWP.getTaskExecutions());
+
+            if(taskExecutions.isEmpty())
                 continue;
 
-            String key = similarPlan.getKey();
-
-            List<Result> sessions = history.get(key);
-            List<Pair<TaskType, List<Result>>> sessionsByTC = groupAsTaskPlans(sessions);
-            if(sessionsByTC.isEmpty())
-                continue;
+            taskExecutions.sort(Comparator.comparing(te -> te.getStart()));
 
             int i = 0; // index of the source node (taskType)
             TaskType source = null;
-            List<Result> sourceHistory = null;
+            TaskExecution sourceHistory = null;
 
             // find first reused TaskType
-            for(; i < sessionsByTC.size(); i ++){
-                source = sessionsByTC.get(i).getLeft();
-                sourceHistory = sessionsByTC.get(i).getRight();
+            for(; i < taskExecutions.size(); i ++){
+                sourceHistory = taskExecutions.get(i);
+                source = sourceHistory.getTaskType();
                 if(taskTypes.contains(source)) {
                     break;
                 }
             }
 
             // find the target node, add edge, repeat until all TCs from current history plan are reused
-            for(int j = i + 1; j < sessionsByTC.size(); j ++){ // j is the index of the target node (taskType)
-                TaskType target = sessionsByTC.get(j).getLeft();
+            for(int j = i + 1; j < taskExecutions.size(); j ++){ // j is the index of the target node (taskType)
+                TaskType target = taskExecutions.get(j).getTaskType();
                 if(!taskTypes.contains(target))
                     continue;
                 // one of the task types should be from the reminder, i.e., do not plan edges that are already planned
                 if(!(remainder.contains(source) || remainder.contains(target)))
                     continue;
 
-                List<Result> targetHistory = sessionsByTC.get(j).getRight();
+                TaskExecution targetHistory = taskExecutions.get(j);
 
                 // create edge
                 SequencePattern seqpat = new SequencePattern();
 
                 seqpat.pattern = Arrays.asList(source, target);
 
-                List<Result> instances = Arrays.asList(sourceHistory.get(0), targetHistory.get(0));
-                seqpat.instances.add(instances);
+                List<TaskExecution> sequenceInstances = Arrays.asList(sourceHistory, targetHistory);
+                seqpat.instances.add(sequenceInstances);
 
                 TaskPattern sourceNode = taskPatternMap.get(source);
                 TaskPattern targetNode = taskPatternMap.get(target);
 
-                BiFunction<TaskPattern, Result, String> getReusedWorkPackage = (p, r) ->
-                        p.getInstances() != null && !p.getInstances().isEmpty() ? p.getInstances().get(0).get(0).wp : r.wp;
+                BiFunction<TaskPattern, TaskExecution, String> getReusedWorkPackage = (p, te) ->
+                        p.getInstances() != null && !p.getInstances().isEmpty() ?
+                                p.getInstances().get(0).getWorkpackage().getId() :
+                                te.getWorkpackage().getId();
 
                 if(Objects.equals(
-                        getReusedWorkPackage.apply(sourceNode, instances.get(0)),
-                        getReusedWorkPackage.apply(targetNode, instances.get(1))) &&
-                   instances.get(0).start.getTime() == instances.get(1).start.getTime()){
+                        getReusedWorkPackage.apply(sourceNode, sequenceInstances.get(0)),
+                        getReusedWorkPackage.apply(targetNode, sequenceInstances.get(1))) &&
+                   sequenceInstances.get(0).getStart().getTime() == sequenceInstances.get(1).getStart().getTime()){
 
                     seqpat.patternType = PatternType.EQUALITY;
                 }else {
@@ -247,14 +244,14 @@ public class ReuseBasedPlanner {
                 planGraph.addEdge(sourceNode, targetNode, seqpat);
 
                 // add instances to graph nodes
-                for(Pair<TaskType, List<Result>> p: Stream.of(i, j).map(sessionsByTC::get).collect(Collectors.toList())){
-                    if(plannedByThisWP.contains(p.getKey())) // add support instances from each work package only once
+                for(TaskExecution te: Stream.of(i, j).map(taskExecutions::get).collect(Collectors.toList())){
+                    if(plannedByThisWP.contains(te.getTaskType())) // add support instances from each work package only once
                         continue;
-                    TaskPattern node = taskPatternMap.get(p.getKey());
+                    TaskPattern node = taskPatternMap.get(te.getTaskType());
                     if(node.getInstances() == null){
                         node.setInstances(new ArrayList<>());
                     }
-                    node.getInstances().add(p.getValue());
+                    node.getInstances().add(te);
                 }
 
                 // finish iteration

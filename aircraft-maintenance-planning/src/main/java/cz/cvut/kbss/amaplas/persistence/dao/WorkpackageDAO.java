@@ -28,6 +28,10 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
 
     public static final String WP_TASK_EXECUTIONS = "/queries/analysis/task-executions.sparql";
 
+    public static final String TASK_EXECUTION_STATISTICS_FROM_PARTS = "/queries/analysis/task-execution-statistics-from-parts.sparql";
+    public static final String WP_SIMILAR_WPS = "/queries/analysis/similar-wps.sparql";
+
+
 
     protected QueryResultMapper<Pair<URI, URI>> wpTaskTypes = new QueryResultMapper<>(WP_TASK_TYPES) {
         @Override
@@ -36,9 +40,19 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
         }
     };
 
-    protected QueryResultMapper<TaskExecution> taskExecutionMapper = new QueryResultMapper<>(WP_TASK_EXECUTIONS) {
+    protected QueryResultMapper<Pair<Workpackage, Double>> similarWPsMapper = new QueryResultMapper<>(WP_SIMILAR_WPS) {
+        @Override
+        public Pair<Workpackage, Double> convert() {
+            return Pair.of(manValue("wpB", s -> {
+                Workpackage wp = new Workpackage();
+                wp.setEntityURI(URI.create(s));
+                return wp;
+            }), manValue("similarity", Double::parseDouble));
+        }
+    };
+
+    protected QueryResultMapper<TaskExecution> taskExecutionAndSessionMapper = new QueryResultMapper<>(WP_TASK_EXECUTIONS) {
         protected Pattern taskTypeIRIPattern = Pattern.compile("task-type--([^-]+)--(.+)");
-        protected Pattern mechanicIRI_IDPattern = Pattern.compile("^.+/mechanic--(.+)$");
         protected HashMap<String, String > taskCategories = new HashMap<>(){
             {
                 put("TC", "task-card");
@@ -98,61 +112,46 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
                     }
                     referencedTasks.add(referencedTask);
                 }
-                taskExecution.setEstMin(optValueNonString("estMin", v -> ((Literal)v).longValue(), null));
+                taskExecution.setIssueTime(optValue("issueTime", s -> parseLocalDate(s), null));
+                taskExecution.setEndTime(optValue("endTime", s -> parseLocalDate(s), null));
+                taskExecution.setStart(manValue("start", s -> parseDate(s)));
+                taskExecution.setEnd(manValue("end", s -> parseDate(s)));
+                taskExecution.setWorkTime(manValue("workTime", Long::parseLong));
+                taskExecution.setDur(manValue("dur", Long::parseLong));
             }
-            // create mechanic
-            String mechanicIRI = optValue( "w", null);
-            String mechanicID = optValue( "wId", null);
-            String mechanicLabel = optValue( "wLabel", null);
-            Mechanic mechanic = null;
-            if(mechanicIRI != null){
-                mechanic = registry.getOrCreate(mechanicIRI, Mechanic::new, Mechanic.class);
-                mechanic.setEntityURI(URI.create(mechanicIRI));
-                if(mechanicID == null){
-                    Matcher m = mechanicIRI_IDPattern.matcher(mechanicIRI);
-                    if(m.matches()){
-                        mechanicID = m.group(1);
-                    }
-                }
-                mechanic.setId(mechanicID);
-                mechanic.setTitle(mechanicLabel != null ? mechanicLabel : mechanicID);
-            }
-
-            // create a work session record
-            String sessionURI = optValue("t", null);
-
-            WorkSession workSession = sessionURI == null ? new WorkSession() : registry.getOrCreate(sessionURI, WorkSession::new, WorkSession.class);
-            workSession.setEntityURI(URI.create(sessionURI));
-            workSession.setTaskExecution(taskExecution);
-            workSession.setMechanic(mechanic);
-
-            String scopeAbbreviation = optValue("scope", def);
-            MaintenanceGroup scope = scopeAbbreviation == null ? null : registry.getOrCreate(scopeAbbreviation, MaintenanceGroup::new, MaintenanceGroup.class);
-            if(scope != null) {
-                scope.setEntityURI(optValue("scopeGroup", URI::create, null));
-                scope.setAbbreviation(scopeAbbreviation);
-                scope.setTitle(optValue("scopeLabel", null));
-
-            }
-
-            workSession.setScope(scope);
-//            workSession.sedate = optValue( "date", def);
-
-            String start = optValue( "start", null);
-            String end = optValue( "end", null);
-            if(start != null )
-                workSession.setStart(DateParserSerializer.parseDate(DateParserSerializer.df.get(), start));
-            if(end != null)
-                workSession.setEnd(DateParserSerializer.parseDate(DateParserSerializer.df.get(), end));
-
-            workSession.setDur(optValueNonString("dur", v -> ((Literal)v).longValue(), null));
             return taskExecution;
         }
     };
 
+    protected QueryResultMapper<TaskExecution> taskExecutionMapper = new QueryResultMapper<>(TASK_EXECUTION_STATISTICS_FROM_PARTS) {
+        @Override
+        public TaskExecution convert() {
+            TaskType taskType = manValue("taskType", s -> new TaskType(URI.create(s)));
+            TaskExecution taskExecution = manValue("task", s -> new TaskExecution(URI.create(s)));
+            taskExecution.setTaskType(taskType);
 
-    public WorkpackageDAO(EntityManager em) {
-        super(Workpackage.class, em);
+            taskExecution.setIssueTime(optValue("issueTime", s -> parseLocalDate(s), null));
+            taskExecution.setEndTime(optValue("endTime", s -> parseLocalDate(s), null));
+            taskExecution.setStart(manValue("derivedStart", s -> parseDate(s)));
+            taskExecution.setEnd(manValue("derivedEnd", s -> parseDate(s)));
+            taskExecution.setWorkTime(manValue("derivedWorkTime", Long::parseLong));
+            taskExecution.setDur(manValue("derivedDuration", Long::parseLong));
+
+            return taskExecution;
+        }
+    };
+    protected Date parseDate(String dateString){
+        return DateParserSerializer.parseDate(DateParserSerializer.df.get(), dateString);
+    }
+
+    protected LocalDate parseLocalDate(String lacalDateString){
+        return LocalDate.parse(lacalDateString);
+    }
+
+
+
+    public WorkpackageDAO(EntityManager em, Rdf4JDao rdf4JDao) {
+        super(Workpackage.class, em, rdf4JDao);
     }
 
     public List<Workpackage> findAllClosed() {
@@ -160,27 +159,38 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
               "SELECT ?w WHERE {\n" +
                             "?w a ?type; \n" +
                             "?endTimeProperty ?closeDate. \n" +
-                            "FILTER(?closeDate < ?now)\n" +
+                            "FILTER(xsd:dateTime(?closeDate) < ?now)\n" +
                         "}" ,
-                        Workpackage.class
+                        URI.class
                 )
                 .setParameter("type", getTypeUri())
                 .setParameter("endTimeProperty", p_workpackage_end_time)
-                .setParameter("now", LocalDate.now()).getResultList();
+                .setParameter("now", LocalDate.now())
+                .getResultList().stream()
+                .map(u -> new Workpackage(u))
+                .collect(Collectors.toList());
     }
 
+
+    //TODO - optimize, create a QueryResultMapper, use it with load() to read WPs with uri and id
     public List<Workpackage> findAllOpened() {
-        return getEm().createNativeQuery(
-                        "SELECT ?w WHERE {\n" +
+        return getEm().createNativeQuery("PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>" +
+                                "SELECT ?w WHERE { \n" +
                                 "?w a ?type; \n" +
-                                "?endTimeProperty ?closeDate. \n" +
-                                "FILTER(?closeDate > ?now)\n" +
+                                "OPTIONAL { \n" +
+                                "   ?w ?endTimeProperty ?_closeDate. \n" +
+                                "BIND(xsd:dateTime(?_closeDate) as ?closeDate) \n" +
+                                "} \n" +
+                                "FILTER(!BOUND(?closeDate) || ?closeDate > ?now) \n" +
                                 "}" ,
-                        Workpackage.class
+                        URI.class
                 )
                 .setParameter("type", getTypeUri())
                 .setParameter("endTimeProperty", p_workpackage_end_time)
-                .setParameter("now", LocalDate.now()).getResultList();
+                .setParameter("now", LocalDate.now())
+                .getResultList().stream()
+                .map(u -> new Workpackage(u))
+                .collect(Collectors.toList());
     }
 
     public Map<URI, List<URI>> readTaskTypeUsage(){
@@ -190,11 +200,51 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
         );
     }
 
-    public void readWorkparckageTasks(Workpackage workpackage){
+    /**
+     * Low level method, reads task executions and their work sessions and sets it in the Workpackage.taskExecutions field.
+     * This method:
+     * - does not set up start and end times of task executions and workpackage start and end time from work sessions
+     * - only loads task types of task executions without reference to their task definitions
+     * - set aircraft area of WO task executions based on referenced task executions.
+     *
+     * Use WorkpackageService.readTaskExecutions
+     * @param workpackage
+     * @see
+     */
+    public void readWorkparckageTasks(final Workpackage workpackage){
         Bindings bindings = new Bindings();
         bindings.add("wp", workpackage.getEntityURI());
-        List<TaskExecution> taskExecutions = load(taskExecutionMapper, bindings);
+        List<TaskExecution> taskExecutions = load(taskExecutionAndSessionMapper, bindings);
+        workpackage.setTaskExecutions(new HashSet<>(taskExecutions));
+        taskExecutions.forEach(te -> te.setWorkpackage(workpackage));
+    }
 
+    /**
+     * Reads temporal properties of task executions in the input workpackage. Temporal properties derived from the task's parts
+     * (work sessions) are start, end, workTime and duration.
+     *
+     * Limitations - this method does not read other relevant properties of task cards.
+     * @param workpackage
+     */
+    public void readTimePropertiesOfWorkparckageTasks(final Workpackage workpackage, final Workpackage workpackageA){
+        Bindings bindings = new Bindings();
+        bindings.add("wp", workpackage.getEntityURI());
+        bindings.add("wpA", workpackageA.getEntityURI());
+        List<TaskExecution> taskExecutions = load(taskExecutionMapper, bindings);
+        workpackage.setTaskExecutions(new HashSet<>(taskExecutions));
+        taskExecutions.forEach(te -> te.setWorkpackage(workpackage));
+    }
+
+    public void readTimePropertiesOfWorkparckageTasks(final Collection<Workpackage> workpackages, Workpackage workpackageA) {
+        for(Workpackage wp : workpackages){
+            readTimePropertiesOfWorkparckageTasks(wp, workpackageA);
+        }
+    }
+
+    public List<Pair<Workpackage, Double>> findSimilarWorkpackages(Workpackage workpackage){
+        Bindings bindings = new Bindings();
+        bindings.add("wpA", workpackage.getEntityURI());
+        return load(similarWPsMapper, bindings);
     }
 
     //  TODO - delete

@@ -6,16 +6,15 @@ PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
 PREFIX spif: <http://spinrdf.org/spif#>
 PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
 
-SELECT ?taskType ?taskTypeId ?ataCode ?superTaskType ?superTaskTypeLabel
+SELECT ?taskType ?taskTypeId ?superTaskType ?superTaskTypeLabel
 WHERE
 {
     ?taskType a cm:task-type .
-
+    FILTER(strstarts(str(?taskType), str(cm:)) && !(?taskType in (cm:task-card, cm:maintenance-work-order, cm:scheduled-work-order, cm:complex-execution)))
     OPTIONAL{?taskType cm:id ?taskTypeId . }
-#    OPTIONAL{?taskType cm:references-ata-code ?ataCode . }
 
     OPTIONAL{
         ?taskType rdfs:subClassOf ?superTaskType .
-        BIND(replace(str(?cls), "^.*/([^/]+)$", "$1") as ?superTaskTypeLabel)
+        BIND(replace(str(?superTaskType), "^.*/([^/]+)$", "$1") as ?superTaskTypeLabel)
     }
 }

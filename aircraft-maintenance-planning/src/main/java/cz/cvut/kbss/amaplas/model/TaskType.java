@@ -80,6 +80,10 @@ public class TaskType extends EventType {
     public TaskType() {
     }
 
+    public TaskType(URI entityURI) {
+        this.entityURI = entityURI;
+    }
+
     public TaskType(TaskType t){
         this(t.getCode(), t.getTitle(), t.getTaskcat(), t.getAcmodel());
     }

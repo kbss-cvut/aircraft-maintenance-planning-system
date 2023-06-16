@@ -1,6 +1,5 @@
 package cz.cvut.kbss.amaplas.persistence.dao;
 
-import com.github.ledsoft.jopa.spring.transaction.DelegatingEntityManager;
 import cz.cvut.kbss.amaplas.exceptions.PersistenceException;
 import cz.cvut.kbss.amaplas.model.AbstractEntity;
 import cz.cvut.kbss.amaplas.persistence.dao.mapper.Bindings;
@@ -12,7 +11,6 @@ import cz.cvut.kbss.jopa.model.metamodel.Metamodel;
 import cz.cvut.kbss.jopa.model.query.TypedQuery;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.Statement;
-import org.eclipse.rdf4j.query.TupleQuery;
 import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,11 +34,11 @@ public abstract class BaseDao<T extends AbstractEntity> implements GenericDao<T>
     private final EntityManager em;
     protected final Rdf4JDao rdf4JDao;
 
-    protected BaseDao(Class<T> type, EntityManager em) {
+    protected BaseDao(Class<T> type, EntityManager em, Rdf4JDao rdf4JDao) {
         this.type = type;
         this.typeUri = URI.create(EntityToOwlClassMapper.getOwlClassForEntity(type));
         this.em = em;
-        this.rdf4JDao = new Rdf4JDao(em);
+        this.rdf4JDao = rdf4JDao;
     }
 
     @Override

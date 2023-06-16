@@ -25,7 +25,7 @@ public class DateParserSerializer {
     public static final ThreadLocal<SimpleDateFormat> df = new ThreadLocal<SimpleDateFormat>(){
         @Override
         protected SimpleDateFormat initialValue() {
-            return new SimpleDateFormat(dateFormatPattern1);
+            return new SimpleDateFormat(dateFormatPattern);
         }
     };
     public static final String dateFormatPattern2 = "dd.MM.yyyy'T'HH:mm";

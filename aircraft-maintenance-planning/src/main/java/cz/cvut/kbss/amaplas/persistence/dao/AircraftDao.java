@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AircraftDao extends BaseDao<Aircraft> {
 
-    public AircraftDao(EntityManager em) {
-        super(Aircraft.class, em);
+    public AircraftDao(EntityManager em, Rdf4JDao rdf4JDao) {
+        super(Aircraft.class, em, rdf4JDao);
     }
 }

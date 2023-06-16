@@ -3,10 +3,13 @@ package cz.cvut.kbss.amaplas.model;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.jopa.model.annotations.*;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @OWLClass(iri = Vocabulary.s_c_workpackage)
 public class Workpackage extends AbstractEntityWithDescription {
@@ -27,13 +30,23 @@ public class Workpackage extends AbstractEntityWithDescription {
     protected LocalDate plannedEndTime;
 
     @Transient
-    protected List<TaskExecutionStatistics> taskExecutionStatistics;
+    protected Date start;
+    @Transient
+    protected Date end;
+
+    @Transient
+    protected List<TaskExecutionStatistics> taskExecutionStatistics;// TODO remove if not used?
 
     @OWLObjectProperty(iri = Vocabulary.s_p_has_part)
     protected Set<TaskExecution> taskExecutions;
 
     public Workpackage() {
     }
+
+    public Workpackage(URI entityUri) {
+        this.entityURI = entityUri;
+    }
+
 
     public Workpackage(String id) {
         setId(id);
@@ -103,6 +116,26 @@ public class Workpackage extends AbstractEntityWithDescription {
 
     public void setTaskExecutions(Set<TaskExecution> taskExecutions) {
         this.taskExecutions = taskExecutions;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
+    public Set<TaskType> getTaskTypes(){
+        return getTaskExecutions().stream().map(e -> e.getTaskType()).collect(Collectors.toSet());
     }
 
     @Override

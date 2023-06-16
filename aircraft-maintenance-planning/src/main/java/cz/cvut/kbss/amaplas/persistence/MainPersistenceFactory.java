@@ -21,26 +21,27 @@ public class MainPersistenceFactory {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final ConfigProperties config;
-    private EntityManagerFactory emf;
+//    private EntityManagerFactory emf;
 
     public MainPersistenceFactory(ConfigProperties config) {
         this.config = config;
     }
 
-    @PostConstruct
-    public void init(){
+//    @PostConstruct
+    public EntityManagerFactory createEntityManagerFactory(){
         String repositoryUrl = config.getRepository().getUrl();
         String repositoryUsername = config.getRepository().getUsername();
         String repositoryPassword = config.getRepository().getPassword();
         String driver = config.getPersistence().getDriver();
-        emf = createEntityManagerFactory(repositoryUrl, repositoryUsername, repositoryPassword, driver);
+        EntityManagerFactory emf = createEntityManagerFactory(repositoryUrl, repositoryUsername, repositoryPassword, driver);
         log.info("EntityManagerFactory created with repository url <{}> .", repositoryUrl);
+        return emf;
     }
 
     @Bean(destroyMethod = "close")
     @Primary
     public EntityManagerFactory entityManagerFactory() {
-        return emf;
+        return createEntityManagerFactory();
     }
 
 

@@ -8,9 +8,15 @@ PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
 
 
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
-SELECT DISTINCT ?wp ?taskType WHERE
+SELECT DISTINCT ?wp ?task ?taskType ?taskTypeId ?superTaskType ?superTaskTypeLabel WHERE
 {
     ?wp a cm:workpackage. 
     ?task a ?taskType.
     ?taskType a cm:task-type .
+    FILTER(strstarts(str(?taskType), str(cm:)) && !(?taskType in (cm:task-card, cm:maintenance-work-order, cm:scheduled-work-order, cm:complex-execution)))
+    OPTIONAL{?taskType cm:id ?taskTypeId . }
+    OPTIONAL{
+        ?taskType rdfs:subClassOf ?superTaskType .
+        BIND(replace(str(?superTaskType), "^.*/([^/]+)$", "$1") as ?superTaskTypeLabel)
+    }
 }

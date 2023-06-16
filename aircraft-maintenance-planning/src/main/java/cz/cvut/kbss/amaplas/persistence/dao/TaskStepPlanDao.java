@@ -54,8 +54,8 @@ public class TaskStepPlanDao extends BaseDao<TaskStepPlan> {
         }
     };
 
-    public TaskStepPlanDao(EntityManager em) {
-        super(TaskStepPlan.class, em);
+    public TaskStepPlanDao(EntityManager em, Rdf4JDao rdf4JDao) {
+        super(TaskStepPlan.class, em, rdf4JDao);
     }
 
 
@@ -66,8 +66,12 @@ public class TaskStepPlanDao extends BaseDao<TaskStepPlan> {
                 .setParameter("typePrefix", TYPE_PREFIX);
     }
 
-    public List<TaskStepPlan> listInWorkpackageURI(URI workpackageURI){
+    public List<TaskStepPlan> listInWorkpackage(URI workpackageURI){
         return load(mapper, new Bindings().add("wp", workpackageURI));
+    }
+
+    public List<TaskStepPlan> listInWorkpackage(String workpackageId){
+        return load(mapper, new Bindings().add("wpId", workpackageId));
     }
 
 //    public List<TaskStepPlan> listInWorkpackageId(String wpId){

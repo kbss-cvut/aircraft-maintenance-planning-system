@@ -59,13 +59,13 @@ public class RevisionHistory {
      * @return
      */
     // TODO - replaced usage of method
+    @Deprecated
     public Map<String, List<Result>> getAllClosedRevisionsWorkLog(boolean refreshCash){
-
-        if(refreshCash || historyCache == null){
-            historyCache = loadAllClosedRevisionsWorkLog();
-        }else{
-            LOG.info("retrieve revision log from cache loaded previously from {}", repoConfig.getUrl());
-        }
+//        if(refreshCash || historyCache == null){
+//            historyCache = loadAllClosedRevisionsWorkLog();
+//        }else{
+//            LOG.info("retrieve revision log from cache loaded previously from {}", repoConfig.getUrl());
+//        }
         return historyCache;
     }
 
@@ -73,52 +73,52 @@ public class RevisionHistory {
 
 //    public String
 
-    /**
-     * Loads closed revisions in map.
-     * - The key is the id of the revision and
-     * - the value is the list of work sessions of the revision ordered by the work session start timestamp.
-     * @return
-     */
-    // TODO - replaced usage of method
-    private Map<String, List<Result>> loadAllClosedRevisionsWorkLog(){
-
-        // TODO refactoring - move code to load work sessions of a single WP into getClosedRevisionWorkLog
-        // load task card definitions
-        LOG.info("fetching revision work log from {}", repoConfig.getUrl());
-        List<String> revisionIds = getRevisionIds();
-        ValueFactory vf = SimpleValueFactory.getInstance();
-        Map<String, List<Result>> closedRevisions = new HashMap<>();
-        for(String wpId : revisionIds) {
-            Map<String, Value> bindings = new HashMap<>();
-            bindings.put("wp", vf.createLiteral(wpId));
-            List<Result> results = new SparqlDataReaderRDF4J().readSessionLogsWithNamedQuery(SparqlDataReader.DA_TASK_SO_WITH_WP_SCOPE,
-                    bindings,
-                    repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword());
-            results = cleanInconsistentSessions(wpId, results);
-            closedRevisions.put(wpId, results);
-        }
-
-        List<Result> workSessions = closedRevisions.values().stream().flatMap(l -> l.stream()).collect(Collectors.toList());
-        // normalize and fix referenced task types
-        Result.normalizeTaskTypes(workSessions);
-        workSessions.stream().filter(r -> r.taskType != null && "task-card".equals(r.taskType.getTaskcat())).forEach(r -> r.taskType.setDefinition(taskTypeService.getMatchingTaskTypeDefinition(r.taskType)));
-        Result.setAreasInWOsFromReferenceTask(workSessions);
-        // add task labels if missing
-        taskTypeService.getTaskTypes().stream()
-                .filter(t -> t.getCode() == t.getTitle()
-                        && t.getDefinition() != null
-                        && t.getDefinition().getTitle() != null
-                        && !t.getDefinition().getTitle().trim().isEmpty())
-                .forEach(t -> {
-                    t.setTitle(t.getDefinition().getTitle());
-                    t.setViewLabel(t.getCode() + "\n" + t.getTitle());
-                });
-
-        LOG.debug("sorting fetched revisions");
-        // make sure the work sessions are ordered by start time
-        closedRevisions.entrySet().forEach(e -> e.getValue().sort(Comparator.comparing(r -> r.start != null ? r.start.getTime() : -1L)));
-        return closedRevisions;
-    }
+//    /**
+//     * Loads closed revisions in map.
+//     * - The key is the id of the revision and
+//     * - the value is the list of work sessions of the revision ordered by the work session start timestamp.
+//     * @return
+//     */
+//    // TODO - replaced usage of method
+//    private Map<String, List<Result>> loadAllClosedRevisionsWorkLog(){
+//
+//        // TODO refactoring - move code to load work sessions of a single WP into getClosedRevisionWorkLog
+//        // load task card definitions
+//        LOG.info("fetching revision work log from {}", repoConfig.getUrl());
+//        List<String> revisionIds = getRevisionIds();
+//        ValueFactory vf = SimpleValueFactory.getInstance();
+//        Map<String, List<Result>> closedRevisions = new HashMap<>();
+//        for(String wpId : revisionIds) {
+//            Map<String, Value> bindings = new HashMap<>();
+//            bindings.put("wp", vf.createLiteral(wpId));
+//            List<Result> results = new SparqlDataReaderRDF4J().readSessionLogsWithNamedQuery(SparqlDataReader.DA_TASK_SO_WITH_WP_SCOPE,
+//                    bindings,
+//                    repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword());
+//            results = cleanInconsistentSessions(wpId, results);
+//            closedRevisions.put(wpId, results);
+//        }
+//
+//        List<Result> workSessions = closedRevisions.values().stream().flatMap(l -> l.stream()).collect(Collectors.toList());
+//        // normalize and fix referenced task types
+//        Result.normalizeTaskTypes(workSessions);
+//        workSessions.stream().filter(r -> r.taskType != null && "task-card".equals(r.taskType.getTaskcat())).forEach(r -> r.taskType.setDefinition(taskTypeService.getMatchingTaskTypeDefinition(r.taskType)));
+//        Result.setAreasInWOsFromReferenceTask(workSessions);
+//        // add task labels if missing
+//        taskTypeService.getTaskTypes().stream()
+//                .filter(t -> t.getCode() == t.getTitle()
+//                        && t.getDefinition() != null
+//                        && t.getDefinition().getTitle() != null
+//                        && !t.getDefinition().getTitle().trim().isEmpty())
+//                .forEach(t -> {
+//                    t.setTitle(t.getDefinition().getTitle());
+//                    t.setViewLabel(t.getCode() + "\n" + t.getTitle());
+//                });
+//
+//        LOG.debug("sorting fetched revisions");
+//        // make sure the work sessions are ordered by start time
+//        closedRevisions.entrySet().forEach(e -> e.getValue().sort(Comparator.comparing(r -> r.start != null ? r.start.getTime() : -1L)));
+//        return closedRevisions;
+//    }
 
     protected List<Result> cleanInconsistentSessions(String wpId, List<Result> sessions ) {
         Predicate<Result> consistentPredicate =  r -> r.sessionURI == null || ( r.start != null && r.end != null );

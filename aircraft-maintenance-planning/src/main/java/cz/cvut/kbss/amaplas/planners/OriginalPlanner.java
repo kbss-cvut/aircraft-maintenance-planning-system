@@ -1,6 +1,7 @@
 package cz.cvut.kbss.amaplas.planners;
 
 import cz.cvut.kbss.amaplas.model.Result;
+import cz.cvut.kbss.amaplas.model.TaskExecution;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -9,7 +10,7 @@ public class OriginalPlanner {
 
     public static final OriginalPlanner planner = new OriginalPlanner();
 
-    public List<SequencePattern> plan(List<Result> wp){
+    public List<SequencePattern> plan(List<TaskExecution> wp){
 //        List<Result> sequence = new ArrayList<>();
 //        wp.sort(Comparator.comparing(r -> r.start.getTime()));
 //        Set<TaskType> usedTaskTypes = new HashSet<>();
@@ -20,15 +21,15 @@ public class OriginalPlanner {
 //            usedTaskTypes.add(r.taskType);
 //        }
 
-        List<Result> sequence = wp;
+        List<TaskExecution> sequence = wp;
         if(sequence.isEmpty())
             return Collections.emptyList();
 
         List<SequencePattern> plan = new ArrayList<>();
-        Iterator<Result> i = sequence.iterator();
-        Result last = i.next();
+        Iterator<TaskExecution> i = sequence.iterator();
+        TaskExecution last = i.next();
         while (i.hasNext()) {
-            Result next = i.next();
+            TaskExecution next = i.next();
             SequencePattern pat = createPattern(last,next);
             plan.add(pat);
             last = next;
@@ -46,25 +47,25 @@ public class OriginalPlanner {
      * @param wp
      * @return
      */
-    public List<SequencePattern> planSameTime(List<Result> wp){
+    public List<SequencePattern> planSameTime(List<TaskExecution> wp){
 
-        List<List<Result>> sequence = wp.stream()
-                .collect(Collectors.groupingBy(r -> r.start.getTime()))
-                .values().stream().sorted(Comparator.comparing(l -> l.get(0).start.getTime()))
+        List<List<TaskExecution>> sequence = wp.stream()
+                .collect(Collectors.groupingBy(r -> r.getStart().getTime()))
+                .values().stream().sorted(Comparator.comparing(l -> l.get(0).getStart().getTime()))
                 .collect(Collectors.toList());
 
         if(sequence.isEmpty())
             return Collections.emptyList();
 
         List<SequencePattern> plan = new ArrayList<>();
-        Iterator<List<Result>> i = sequence.iterator();
-        List<Result> lastl = i.next();
+        Iterator<List<TaskExecution>> i = sequence.iterator();
+        List<TaskExecution> lastl = i.next();
 
 
         while (i.hasNext()) {
-            List<Result> nextl = i.next();
-            for(Result last : lastl) {
-                for (Result next : nextl){
+            List<TaskExecution> nextl = i.next();
+            for(TaskExecution last : lastl) {
+                for (TaskExecution next : nextl){
                     SequencePattern pat = createPattern(last,next);
                     plan.add(pat);
                 }
@@ -76,9 +77,9 @@ public class OriginalPlanner {
         return plan;
     }
 
-    protected SequencePattern createPattern(Result r1, Result r2){
+    protected SequencePattern createPattern(TaskExecution r1, TaskExecution r2){
         SequencePattern pat = new SequencePattern();
-        pat.pattern = Arrays.asList(r1.taskType, r2.taskType);
+        pat.pattern = Arrays.asList(r1.getTaskType(), r2.getTaskType());
         pat.instances.add(Arrays.asList(r1, r2));
         return pat;
     }

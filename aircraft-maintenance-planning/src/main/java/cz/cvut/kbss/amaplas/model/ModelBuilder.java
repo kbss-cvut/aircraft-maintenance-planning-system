@@ -27,9 +27,9 @@ public class ModelBuilder {
         this.factory = factory;
     }
 
-    public TaskType getTaskType(String code, String label, String area, String taskType, String scope, String phase, String taskCat) {
-        return getEntity(code, "task-type", () -> factory.newTaskType(code, label, area, taskType, scope, phase, taskCat));
-    }
+//    public TaskType getTaskType(String code, String label, String area, String taskType, String scope, String phase, String taskCat) {
+//        return getEntity(code, "task-type", () -> factory.newTaskType(code, label, area, taskType, scope, phase, taskCat));
+//    }
 
     public GeneralTaskPlan getGeneralTaskPlan(String phase, String label) {
         return getEntity(phase, label, () -> factory.newGeneralTaskPlan(label));

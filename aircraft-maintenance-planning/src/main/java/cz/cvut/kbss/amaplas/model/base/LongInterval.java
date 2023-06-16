@@ -15,24 +15,24 @@ public interface LongInterval<T> {
         return getEnd() - getStart();
     }
 
-    static LongInterval asInterval(final Result r){
-        return new LongIntervalWrapper<Result>() {
-            @Override
-            public Result getWrapped() {
-                return r;
-            }
-
-            @Override
-            public Long getStart() {
-                return r.getStart();
-            }
-
-            @Override
-            public Long getEnd() {
-                return r.getEnd();
-            }
-        };
-    }
+//    static LongInterval asInterval(final Result r){
+//        return new LongIntervalWrapper<Result>() {
+//            @Override
+//            public Result getWrapped() {
+//                return r;
+//            }
+//
+//            @Override
+//            public Long getStart() {
+//                return r.getStart();
+//            }
+//
+//            @Override
+//            public Long getEnd() {
+//                return r.getEnd();
+//            }
+//        };
+//    }
 
     static LongInterval asInterval(final AbstractPlan p){
         return new LongIntervalWrapper<AbstractPlan> (){

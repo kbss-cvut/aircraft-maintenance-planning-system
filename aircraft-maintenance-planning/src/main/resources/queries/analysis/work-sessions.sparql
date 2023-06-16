@@ -1,0 +1,56 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+
+SELECT ?wp ?wpId ?tt ?t ?sessionLabel ?scopeGroup ?scope ?scopeLabel ?w ?wId ?wLabel ?sDate ?sTime ?eDate ?eTime ?start ?end (str(ofn:asMillis(?et - ?st)) as ?dur)
+WHERE
+{
+    ?wp a cm:workpackage.
+    ?wp cm:id ?wpId.
+
+    # tasks
+    ?tt cm:is-part-of-workpackage ?wp.
+
+    # session
+    ?t cm:is-part-of-maintenance-task ?tt.
+    OPTIONAL{
+        ?t cm:task-description ?sessionLabel.
+    }
+
+    OPTIONAL{
+        ?t cm:start-date ?sDate.
+        ?t cm:start-time ?sTime.
+        BIND(CONCAT(str(?sDate),"T", str(?sTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?start)
+        BIND(spif:parseDate(?start, "yyyy-MM-dd'T'HH:mm") as ?st)
+    }
+
+    OPTIONAL{
+        ?t cm:end-date ?eDate.
+        ?t cm:end-time ?eTime.
+        BIND(CONCAT(str(?eDate),"T", str(?eTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?end)
+        BIND(spif:parseDate(?end, "yyyy-MM-dd'T'HH:mm") as ?et)
+    }
+
+    # task group
+    OPTIONAL{
+        ?t cm:has-scope ?scopeGroup.
+        ?scopeGroup cm:has-abbreviation ?scope.
+        BIND(replace(str(?scopeGroup), "^.*/([^/]+)$", "$1") as ?scopeLabel)
+    #    ?scopeGroup rdfs:label ?scope.
+    }
+
+    # mechanic
+    OPTIONAL{
+      ?w cm:performs ?t.
+      OPTIONAL{
+        ?w cm:id ?wId.
+      }
+      OPTIONAL{
+        ?w cm:user-sign ?wLabel.
+      }
+    }
+}

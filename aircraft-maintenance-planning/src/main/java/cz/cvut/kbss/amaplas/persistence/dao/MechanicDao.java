@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class MechanicDao extends BaseDao<Mechanic> {
-    public MechanicDao(EntityManager em) {
-        super(Mechanic.class, em);
+    public MechanicDao(EntityManager em, Rdf4JDao rdf4JDao) {
+        super(Mechanic.class, em, rdf4JDao);
     }
 }

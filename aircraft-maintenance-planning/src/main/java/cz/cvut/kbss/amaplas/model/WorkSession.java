@@ -3,6 +3,7 @@ package cz.cvut.kbss.amaplas.model;
 import cz.cvut.kbss.amaplas.model.base.LongIntervalImpl;
 import cz.cvut.kbss.amaplas.model.values.DateParserSerializer;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
+import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
 import cz.cvut.kbss.jopa.model.annotations.Transient;
@@ -14,7 +15,7 @@ import java.util.function.ToLongFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-//@OWLClass(iri = Vocabulary.s_c_work_session)
+@OWLClass(iri = Vocabulary.s_c_work_session)
 public class WorkSession extends Event {
     /** The id of the work session log */
 
@@ -23,11 +24,11 @@ public class WorkSession extends Event {
 
 //    protected String sessionURI; // TODO - refactor to entityURI
 
-//    @OWLDataProperty(iri = Vocabulary.s_p_task_description)
+    @OWLDataProperty(iri = Vocabulary.s_p_task_description)
     protected String description;
 
 
-//    @OWLDataProperty(iri = Vocabulary.s_p_has_shift)
+    @OWLDataProperty(iri = Vocabulary.s_p_has_shift)
     protected String shiftGroup;
 
     @OWLObjectProperty(iri = Vocabulary.s_p_has_scope)
@@ -35,7 +36,7 @@ public class WorkSession extends Event {
 
 
 
-//    @OWLObjectProperty(iri = Vocabulary.s_p_performed_by)
+    @OWLObjectProperty(iri = Vocabulary.s_p_performed_by)
     protected Mechanic mechanic;
 //    protected Double estMin;
 

@@ -12,7 +12,9 @@ public class Index<T> {
     protected Map<T, Integer> index;
 
     public <I> void prepareIndex(List<List<I>> sequences, Function<I, T> typeFunction, Comparator<T> comp) {
-        types = sequences.stream().flatMap(s -> s.stream().map(r -> typeFunction.apply(r)))
+        types = sequences.stream()
+                .flatMap(s -> s.stream())
+                .map(r -> typeFunction.apply(r))
                 .distinct()
                 .sorted(comp)
                 .collect(Collectors.toList());

@@ -19,8 +19,8 @@ public class FailureAnnotationDao extends BaseDao<FailureAnnotation>{
     protected static final URI HAS_STEP_PART = URI.create(Vocabulary.s_p_has_work_order_step);
 
 
-    public FailureAnnotationDao(EntityManager em) {
-        super(FailureAnnotation.class, em);
+    public FailureAnnotationDao(EntityManager em, Rdf4JDao rdf4JDao) {
+        super(FailureAnnotation.class, em, rdf4JDao);
     }
 
     public List<FailureAnnotation> listInWorkpackageId(String wpId){

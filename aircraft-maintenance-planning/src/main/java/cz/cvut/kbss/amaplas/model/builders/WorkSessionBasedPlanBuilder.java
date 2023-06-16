@@ -206,19 +206,13 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
         return step;
     }
 
-    public RevisionPlan createRevision(PlanBuilderInput<List<Result>> input){
-        List<Result> results = input.getInput();
-        Aircraft aircraft = input.workpackage.getAircraft();
-        if(aircraft == null)
-            aircraft = results.stream().map(r -> getAircraft(r)).filter(a -> !defaults.isDefault(a)).findFirst().orElse(null);
+    public RevisionPlan createRevision(Workpackage wp){
+        Aircraft aircraft = wp.getAircraft();
 
         setUpAircraft(aircraft);
         // create bottom part of hierarchical plan -  create to task plans
         RevisionPlan revisionPlan = new RevisionPlan();
-        String revisionCode = results.stream()
-                .map(r -> r.wp)
-                .filter(s -> s != null && !s.isEmpty())
-                .findFirst().orElse(null);
+        String revisionCode = wp.getId();
 
         Long revisionId = revisionCode != null ? (long)revisionCode.hashCode() : null;
         revisionPlan.setTitle(revisionCode);
@@ -226,22 +220,24 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
         revisionPlan.setEntityURI(modelFactory.createURI(revisionId + ""));
 
         revisionPlan.setResource(aircraft);
+        for(TaskExecution taskExecution : wp.getTaskExecutions()) {
 
-        for(Result r : results) {
-            PhasePlan phasePlan = getPhasePlan(r, aircraft);
+            PhasePlan phasePlan = getPhasePlan(taskExecution, aircraft);
             revisionPlan.getPlanParts().add(phasePlan);
 
-            AircraftArea area = getAircraftArea(r);
-            GeneralTaskPlan generalTaskPlan = getGeneralTaskPlanInCtx(r, phasePlan, area);
+            AircraftArea area = getAircraftArea(taskExecution);
+            GeneralTaskPlan generalTaskPlan = getGeneralTaskPlanInCtx(taskExecution, phasePlan, area);
             phasePlan.getPlanParts().add(generalTaskPlan);
 
-            TaskPlan taskPlan = getTaskPlan(r, revisionPlan, area.getTitle());
+            TaskPlan taskPlan = getTaskPlan(taskExecution, revisionPlan, area.getTitle());
             generalTaskPlan.getPlanParts().add(taskPlan);
+            for(WorkSession ws : taskExecution.getWorkSessions()){
+                if(ws.getEntityURI() == null)
+                    continue;
+                SessionPlan sessionPlan = getSessionPlan(ws, taskPlan.getResource());
+                taskPlan.getPlanParts().add(sessionPlan);
+            }
 
-            if(r.sessionURI == null)
-                continue;
-            SessionPlan sessionPlan = getSessionPlan(r, taskPlan.getResource());
-            taskPlan.getPlanParts().add(sessionPlan);
         }
 
         // add scope from session mechanic title if it is not empty and is different from the scope of the task plan
@@ -275,15 +271,15 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
         aircraft.setTitle(title);
     }
 
-    public SessionPlan getSessionPlan(Result r, Resource groupInArea) {
-        SessionPlan sessionPlan = modelFactory.newSessionPlan(r.start, r.end);
-        Mechanic mechanic = getMechanic(r, groupInArea);
+    public SessionPlan getSessionPlan(WorkSession ws, Resource groupInArea) {
+        SessionPlan sessionPlan = modelFactory.newSessionPlan(ws.getStart(), ws.getEnd());
+        Mechanic mechanic = getMechanic(ws, groupInArea);
         sessionPlan.setResource(mechanic);
         return sessionPlan;
     }
 
-    public Mechanic getMechanic(Result r, Resource groupInArea) {
-        Mechanic m = r.getMechanic();
+    public Mechanic getMechanic(WorkSession ws, Resource groupInArea) {
+        Mechanic m = ws.getMechanic();
         return m == null ?
                 null :
                 getEntity(
@@ -294,84 +290,84 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
                             mech.setId(m.getId());
                             mech.setEntityURI(modelFactory.createURI("mechanic", Objects.toString(m.getId()), groupInArea));
                             mech.setTitle(Objects.toString(m.getTitle() == null ? m.getId() : m.getTitle()));
-                            mech.setBelongsToGroup(r.scope);
+                            mech.setBelongsToGroup(Optional.ofNullable(ws.getScope()).map(s -> s.getAbbreviation()).orElse(null));
                             return mech;
                         }
                 );
     }
 
-    public MaintenanceGroup getMaintenanceGroupInCtx(Result r, String area){
-        String maintenanceGroupLabel = getMaintenanceGroupLabel(r);
-        return getMaintenanceGroupInCtx(maintenanceGroupLabel, area);
-    }
+//    public MaintenanceGroup getMaintenanceGroupInCtx(Result r, String area){
+//        String maintenanceGroupLabel = getMaintenanceGroupLabel(r);
+//        return getMaintenanceGroupInCtx(maintenanceGroupLabel, area);
+//    }
 
-    public AircraftArea getAircraftArea(Result r){
-        String area = getAreaLabel(r);
+    public AircraftArea getAircraftArea(TaskExecution te){
+        String area = getAreaLabel(te);
         return getAircraftArea(area);
     }
 
-    public Aircraft getAircraft(Result r){
-        String aircraftModel = getAircraftModelLabel(r);
+    public Aircraft getAircraft(TaskExecution te){
+        String aircraftModel = getAircraftModelLabel(te);
         return getAircraft(aircraftModel);
     }
 
-    public TaskPlan getTaskPlan(final Result r, Object context, String areaLabel){
-        TaskType taskType = getTaskType(r).orElse(null);
+    public TaskPlan getTaskPlan(final TaskExecution te, Object context, String areaLabel){
+        TaskType taskType = getTaskType(te).orElse(null);
         TaskPlan taskPlan = getTaskPlan(taskType, context, areaLabel);
-        if(r.estMin != null)
-            taskPlan.setEstMin(r.estMin);
+        if(te.getEstMin() != null)
+            taskPlan.setEstMin(te.getEstMin());
 
-        if(r.taskExecutionURI != null)
-            taskPlanMap.put(r.taskExecutionURI, taskPlan);
+        if(te.getEntityURI() != null)
+            taskPlanMap.put(te.getEntityURI().toString(), taskPlan);
 
         return taskPlan;
     }
 
-    public GeneralTaskPlan getGeneralTaskPlanInCtx(Result r, PhasePlan phasePlan, AircraftArea aircraftArea){
+    public GeneralTaskPlan getGeneralTaskPlanInCtx(TaskExecution te, PhasePlan phasePlan, AircraftArea aircraftArea){
         // general task plan <=> different session.type.type per session.type.area
-        return getGeneralTaskPlanInCtx(getTaskTypeDefinition(r), phasePlan, aircraftArea);
+        return getGeneralTaskPlanInCtx(getTaskTypeDefinition(te), phasePlan, aircraftArea);
     }
 
-    public PhasePlan getPhasePlan(Result r, final Aircraft aircraft){
-        String phaseLabel = getPhaseLabel(r);
+    public PhasePlan getPhasePlan(TaskExecution te, final Aircraft aircraft){
+        String phaseLabel = getPhaseLabel(te);
         PhasePlan phasePlan = getEntity(phaseLabel, "phase", () -> {
             PhasePlan p = modelFactory.newPhasePlan(phaseLabel);
-            Aircraft ac = aircraft == null ? getAircraft(r) : aircraft;
+            Aircraft ac = aircraft == null ? getAircraft(te) : aircraft;
             p.setResource(defaults.isDefault(ac) ? aircraft : ac);
             return p;
         });
         return phasePlan;
     }
 
-    public String getAircraftModelLabel(Result r){
-        return getAircraftModelLabel(getTaskTypeDefinition(r));
+    public String getAircraftModelLabel(TaskExecution te){
+        return getAircraftModelLabel(getTaskTypeDefinition(te));
     }
 
-    public String getAreaLabel(Result r){
+    public String getAreaLabel(TaskExecution r){
         return getTaskType(r).map(TaskType::getArea)
                 .map(this::mapNull).orElseGet(() -> getAircraftAreaLabel(getTaskTypeDefinition(r)));
     }
 
-    public String getMaintenanceGroupLabel(Result r){
-        return (r.scope != null)
-                ? r.scope
-                : getMaintenanceGroupLabel(getTaskTypeDefinition(r));
+//    public String getMaintenanceGroupLabel(Result r){
+//        return (r.scope != null)
+//                ? r.scope
+//                : getMaintenanceGroupLabel(getTaskTypeDefinition(r));
+//    }
+
+//    public String getGeneralTaskTypeLabel(Result r){
+//        return getGeneralTaskTypeLabel(getTaskTypeDefinition(r));
+//    }
+
+    public String getPhaseLabel(TaskExecution te){
+        return getPhaseLabel(getTaskTypeDefinition(te));
     }
 
-    public String getGeneralTaskTypeLabel(Result r){
-        return getGeneralTaskTypeLabel(getTaskTypeDefinition(r));
+    public Optional<TaskType> getTaskType(TaskExecution te){
+        return Optional.ofNullable(te.getTaskType());
     }
 
-    public String getPhaseLabel(Result r){
-        return getPhaseLabel(getTaskTypeDefinition(r));
-    }
-
-    public Optional<TaskType> getTaskType(Result r){
-        return Optional.ofNullable(r.taskType);
-    }
-
-    public Optional<TaskType> getTaskTypeDefinition(Result r){
-        return getTaskType(r).map(tt -> tt.getDefinition());
+    public Optional<TaskType> getTaskTypeDefinition(TaskExecution te){
+        return getTaskType(te).map(tt -> tt.getDefinition());
     }
 }
 

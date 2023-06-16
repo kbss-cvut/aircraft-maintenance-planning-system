@@ -168,11 +168,11 @@ public class Result{
         return LongIntervalImpl.mergeOverlaps(intervals);
     }
 
-
-//    public static void normalizeTaskTypes(List<Result> results){
-//        normalizeTaskTypeLabels(results);
+    @Deprecated
+    public static void normalizeTaskTypes(List<Result> results){
+        normalizeTaskTypeLabels(results);
 //        normalizeScopes(results);
-//    }
+    }
 
     // TODO - set aircraft area of WO execution based on referenced task execution.
     public static void setAreasInWOsFromReferenceTask(List<Result> results){

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ClientDao extends BaseDao<Client> {
-    public ClientDao(EntityManager em) {
-        super(Client.class, em);
+    public ClientDao(EntityManager em, Rdf4JDao rdf4JDao) {
+        super(Client.class, em, rdf4JDao);
     }
 }

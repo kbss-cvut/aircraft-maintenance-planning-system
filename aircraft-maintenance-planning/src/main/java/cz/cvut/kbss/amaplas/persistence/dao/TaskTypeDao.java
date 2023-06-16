@@ -1,8 +1,11 @@
 package cz.cvut.kbss.amaplas.persistence.dao;
 
 
+import cz.cvut.kbss.amaplas.io.EntityRegistry;
 import cz.cvut.kbss.amaplas.model.MaintenanceGroup;
 import cz.cvut.kbss.amaplas.model.TaskType;
+import cz.cvut.kbss.amaplas.model.Workpackage;
+import cz.cvut.kbss.amaplas.persistence.dao.mapper.Bindings;
 import cz.cvut.kbss.amaplas.persistence.dao.mapper.QueryResultMapper;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.jopa.model.EntityManager;
@@ -12,6 +15,8 @@ import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
+import org.eclipse.rdf4j.query.TupleQueryResult;
+import org.eclipse.rdf4j.query.algebra.Str;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -34,9 +39,11 @@ public class TaskTypeDao extends BaseDao<TaskType>{
 
 
     public static final String TASK_TYPES = "/queries/analysis/task-type.sparql";
+    public static final String WP_TASK_TYPES = "/queries/analysis/wp-task-types.sparql";
     public static final String TASK_TYPES_SESSION_TITLES = "/queries/analysis/task-type-session-titles.sparql";
     public static final String TASK_TYPES_SESSION_SCOPES = "/queries/analysis/task-type-session-scopes.sparql";
     public static final String TASK_TYPES_DEFINITIONS = "/queries/analysis/task-types-definitions.sparql";
+    public static final String TASK_TYPE_DEFINITION_IDS = "/queries/analysis/task-type-definition-ids.sparql";
     public static final String TASK_TYPES_DEFINITIONS_MAP = "/queries/analysis/task-card-mappings.sparql";
 
 
@@ -73,24 +80,89 @@ public class TaskTypeDao extends BaseDao<TaskType>{
         }
     };
 
-    protected QueryResultMapper<Pair<URI, String>> taskTypeLabelsMapper = new QueryResultMapper<>(TASK_TYPES_SESSION_TITLES) {
+    protected QueryResultMapper<Pair<URI,TaskType>> wpsTaskTypeBasicDescriptionMapper = new QueryResultMapper<>(WP_TASK_TYPES) {
         @Override
-        public Pair<URI, String> convert() { // ?taskType ?sessionLabel
-            return Pair.of(manValue("taskType", URI::create), manValue("sessionLabel"));
+        public Pair<URI, TaskType> convert() {
+            TaskType taskType = new TaskType(
+                    optValue("taskTypeId", null),
+                    null,
+                    optValue("superTaskTypeLabel", null),
+                    null
+            );
+            mandatory("taskType", URI::create, taskType::setEntityURI);
+            return Pair.of(manValue("task", URI::create), taskType);
+        }
+    };
+
+
+    protected QueryResultMapper<Pair<String, String>> taskTypeLabelsMapper = new QueryResultMapper<>(TASK_TYPES_SESSION_TITLES) {
+        @Override
+        public Pair<String, String> convert() { // ?taskType ?sessionLabel
+            return Pair.of(manValue("taskType"), manValue("sessionLabel"));
         }
     };
 
     protected QueryResultMapper<Triple<URI, MaintenanceGroup, Integer>> taskTypeSessionScopes = new QueryResultMapper<>(TASK_TYPES_SESSION_SCOPES) {
+
+        protected EntityRegistry taskTypeURIRegistry;
+        protected EntityRegistry maintenanceGroupRegistry;
+        @Override
+        public List<Triple<URI, MaintenanceGroup, Integer>> convert(TupleQueryResult tupleQueryResult) {
+            taskTypeURIRegistry = new EntityRegistry();
+            maintenanceGroupRegistry = new EntityRegistry();
+
+            return super.convert(tupleQueryResult);
+        }
+
         @Override
         public Triple<URI, MaintenanceGroup, Integer> convert() { // ?taskType ?scopeGroup ?scopeAbbreviation (COUNT(?session) as ?participationCount) {
-            MaintenanceGroup scope = new MaintenanceGroup();
-            mandatory("scopeGroup", URI::create, scope::setEntityURI);
-            mandatory("scopeAbbreviation", scope::setAbbreviation);
+            MaintenanceGroup scope = getMaintenanceGroup(
+                    manValue("scopeGroup"),
+                    manValue("scopeAbbreviation")
+            );
+            URI taskTypeURI = getTaskTypeURI(manValue("taskType"));
             return Triple.of(
-                    manValue("taskType", URI::create),
+                    taskTypeURI,
                     scope,
                     manValue("participationCount", Integer::parseInt)
             );
+//            mandatory("scopeGroup", URI::create, scope::setEntityURI);
+//            mandatory("scopeAbbreviation", scope::setAbbreviation);
+//            return Triple.of(
+//                    manValue("taskType", URI::create),
+//                    scope,
+//                    manValue("participationCount", Integer::parseInt)
+//            );
+        }
+
+        private MaintenanceGroup getMaintenanceGroup(String scopeGroupUri, String scopeAbbreviation){
+            return maintenanceGroupRegistry.getOrCreate(scopeGroupUri,() -> {
+                        MaintenanceGroup mg = new MaintenanceGroup();
+                        mg.setEntityURI(URI.create(scopeGroupUri));
+                        mg.setAbbreviation(scopeAbbreviation);
+                        return mg;
+                }
+                ,MaintenanceGroup.class);
+        }
+
+        private URI getTaskTypeURI(String taskTypeUri){
+            return taskTypeURIRegistry.getOrCreate(taskTypeUri,() -> URI.create(taskTypeUri)
+                    ,URI.class);
+        }
+    };
+
+    protected QueryResultMapper<TaskType> taskTypeDefinitionIdsMapper = new QueryResultMapper<>(TASK_TYPE_DEFINITION_IDS) {
+        @Override
+        public TaskType convert() {
+            TaskType taskType = new TaskType(
+                    optValue("taskCardCode", null),
+                    optValue( "title", null),
+                    "task_card",
+                    optValue("aircraftModel", null)
+            );
+            mandatory("taskTypeDefinition", URI::create, taskType::setEntityURI);
+            optional("MPDTASK", taskType::setMpdtask);
+            return taskType;
         }
     };
 
@@ -130,8 +202,9 @@ public class TaskTypeDao extends BaseDao<TaskType>{
         }
     };
 
-    public TaskTypeDao(EntityManager em) {
-        super(TaskType.class, em);
+
+    public TaskTypeDao(EntityManager em, Rdf4JDao rdf4JDao) {
+        super(TaskType.class, em, rdf4JDao);
     }
 
 
@@ -164,16 +237,29 @@ public class TaskTypeDao extends BaseDao<TaskType>{
         return taskTypes;
     }
 
+    /**
+     * Reads the task types their details and task definitions for task executions of the input workpackage.
+     * @param workpackage
+     * @return
+     */
+    public List<Pair<URI, TaskType>> readTaskTypes(Workpackage workpackage){
+        Bindings bindings = new Bindings();
+        bindings.add("wp", workpackage.getEntityURI());
+        return load(wpsTaskTypeBasicDescriptionMapper, bindings);
+    }
+
     protected void setupTaskTypeTitles(Map<URI, TaskType> taskTypeMap){
 
         Function<Collection<String>, String> selectLabel = c ->
                 c.stream().max(Comparator.comparing((String s) -> s.length())).orElse(null);
-        listTaskTypeLabels().stream()
+        List<Pair<String,String>> uriLabelPairs = listTaskTypeLabels();
+
+        uriLabelPairs.stream()
                 .collect(Collectors.groupingBy(
                         p -> p.getLeft(),
                         Collectors.mapping(p -> p.getRight(), Collectors.toSet()))
                 ).entrySet()
-                .forEach(e -> Optional.ofNullable(taskTypeMap.get(e.getKey()))
+                .forEach(e -> Optional.ofNullable(taskTypeMap.get(URI.create(e.getKey())))
                         .ifPresent(t -> t.setTitle(selectLabel.apply(e.getValue()))));
     }
 
@@ -216,7 +302,7 @@ public class TaskTypeDao extends BaseDao<TaskType>{
      *
      * @return list a map of task type uri and scopes
      */
-    public List<Pair<URI, String>> listTaskTypeLabels(){
+    public List<Pair<String, String>> listTaskTypeLabels(){
         return load(taskTypeLabelsMapper, null);
     }
 
@@ -233,6 +319,10 @@ public class TaskTypeDao extends BaseDao<TaskType>{
         return load(taskTypeDefinitionsMapper, null);
     }
 
+    public List<TaskType> listTaskTypeDefinitionIds(){
+        return load(taskTypeDefinitionIdsMapper, null);
+    }
+
     public List<Pair<URI, URI>> readTaskTypeDefinitionsMap(){
         return load(taskTypeDefinitionsMapMapper, null);
     }
@@ -246,9 +336,9 @@ public class TaskTypeDao extends BaseDao<TaskType>{
 
 
     //
-    protected List<Pair<URI, String>> findSessionTitlesPerTask(){
-        return rdf4JDao.load(taskTypeLabelsMapper, null);
-    }
+//    protected List<Pair<URI, String>> findSessionTitlesPerTask(){
+//        return rdf4JDao.load(taskTypeLabelsMapper, null);
+//    }
 
 
 
@@ -275,10 +365,10 @@ public class TaskTypeDao extends BaseDao<TaskType>{
     public void persistTaskCardCode2DefinitionMap(List<TaskType> taskTypes, String graphIRI) {
         ValueFactory f = SimpleValueFactory.getInstance();
         persistStatements(
-                taskTypes.stream().map(t -> f.createStatement(
+                taskTypes.stream().filter(t -> t.getDefinition() != null).map(t -> f.createStatement(
                         f.createIRI(t.getEntityURI().toString()),
                         HAS_TASK_TYPE_DEFINITION,
-                        f.createLiteral(t.getDefinition().getEntityURI().toString())
+                        f.createIRI(t.getDefinition().getEntityURI().toString())
                 )).collect(Collectors.toList()),
                 graphIRI);
     }

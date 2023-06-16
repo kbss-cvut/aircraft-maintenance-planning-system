@@ -5,6 +5,7 @@ import cz.cvut.kbss.amaplas.model.RevisionPlan;
 import cz.cvut.kbss.amaplas.services.AircraftRevisionPlannerService;
 import cz.cvut.kbss.amaplas.services.IdentifierService;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
+import cz.cvut.kbss.amaplas.utils.ResourceUtils;
 import cz.cvut.kbss.jsonld.JsonLd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,7 @@ public class PlanController extends BaseController{
     @GetMapping(path = "plan-from-similar-revisions", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE} )
     public RevisionPlan planFromSimilarRevisions(@RequestParam String revisionId){
         return plannerService.createRevisionPlanScheduleDeducedFromSimilarRevisions(revisionId);
+//        return ResourceUtils.loadResource("/tmp-example-plan.json");
     }
 
     /**

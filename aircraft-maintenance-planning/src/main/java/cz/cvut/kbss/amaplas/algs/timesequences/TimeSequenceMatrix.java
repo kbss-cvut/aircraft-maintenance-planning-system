@@ -1,6 +1,8 @@
 package cz.cvut.kbss.amaplas.algs.timesequences;
 
 import cz.cvut.kbss.amaplas.model.Result;
+import cz.cvut.kbss.amaplas.model.TaskExecution;
+import cz.cvut.kbss.amaplas.model.Workpackage;
 import cz.cvut.kbss.amaplas.planners.SequencePattern;
 import cz.cvut.kbss.amaplas.model.TaskType;
 
@@ -10,6 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
+import java.util.stream.Collectors;
 
 public class TimeSequenceMatrix extends Index<TaskType> {
 
@@ -25,10 +28,11 @@ public class TimeSequenceMatrix extends Index<TaskType> {
      *               start in the same day.
      * @return
      */
-    public List<SequencePattern> execute(List<List<Result>> sequences, float minSupport,
+    public List<SequencePattern> execute(List<List<TaskExecution>> sequences, float minSupport,
                                          boolean adjacent,
                                          BiConsumer<Integer, Integer> filterEdges,
-                                         BiPredicate<Result, Result> filter){
+                                         BiPredicate<TaskExecution, TaskExecution> filter){
+
         prepareIndex(sequences);
 
         //translate the sequences of elements to sequences of element type codes (types are translated to integers)
@@ -95,12 +99,12 @@ public class TimeSequenceMatrix extends Index<TaskType> {
         return patterns;
     }
 
-    protected SequencePattern create(int i, int j, List<List<Result>> sequences){
+    protected SequencePattern create(int i, int j, List<List<TaskExecution>> sequences){
         SequencePattern p = new SequencePattern();
         p.pattern = Arrays.asList(types.get(i), types.get(j));
         p.direct = Math.abs(i - j) == 1;
         for(int[] e: m[i][j]){
-            List<Result> s = sequences.get(e[0]);
+            List<TaskExecution> s = sequences.get(e[0]);
             p.instances.add(Arrays.asList(s.get(e[1]), s.get(e[2])));
         }
         return p;
@@ -122,16 +126,16 @@ public class TimeSequenceMatrix extends Index<TaskType> {
         }
     }
 
-    protected void initSupportMatrix(int[][] ss, List<int[]>[][] m, List<List<Result>> sequences,
+    protected void initSupportMatrix(int[][] ss, List<int[]>[][] m, List<List<TaskExecution>> sequences,
                                      boolean adjacent,
-                                     BiPredicate<Result, Result> filter){
+                                     BiPredicate<TaskExecution, TaskExecution> filter){
 
 
         for(int i = 0; i < ss.length; i ++) {
             int[] s = ss[i];
-            List<Result> seq = sequences.get(i);
+            List<TaskExecution> seq = sequences.get(i);
             for (int j1 = 0; j1 < s.length - 1; j1++) {
-                Result r1 = seq.get(j1);
+                TaskExecution r1 = seq.get(j1);
                 int to = adjacent ? j1 + 2 : s.length;
                 for (int j2 = j1 + 1; j2 < to; j2++) {
 //                    SequencePattern sp = new SequencePattern();
@@ -144,14 +148,14 @@ public class TimeSequenceMatrix extends Index<TaskType> {
     }
 
 
-    protected void calculateSupportMatrix(int[][] ss, List<int[]>[][] m, List<List<Result>> sequences,
+    protected void calculateSupportMatrix(int[][] ss, List<int[]>[][] m, List<List<TaskExecution>> sequences,
                                           boolean adjacent,
-                                          BiPredicate<Result, Result> filter){
+                                          BiPredicate<TaskExecution, TaskExecution> filter){
         for(int i = 0; i < ss.length; i ++) {
             int[] s = ss[i];
-            List<Result> seq = sequences.get(i);
+            List<TaskExecution> seq = sequences.get(i);
             for (int j1 = 0; j1 < s.length - 1; j1++) {
-                Result r1 = seq.get(j1);
+                TaskExecution r1 = seq.get(j1);
                 for (int j2 = j1 + 1; j2 < s.length; j2++) {
                     List<int[]> edges = m[s[j1]][s[j2]];
                     int to = adjacent ? j1 + 2 : s.length;
@@ -164,19 +168,19 @@ public class TimeSequenceMatrix extends Index<TaskType> {
         }
     }
 
-    protected int[][] translate(List<List<Result>> sequences){
+    protected int[][] translate(List<List<TaskExecution>> sequences){
         int[][] ss = new int[sequences.size()][];
         for(int i = 0; i < sequences.size(); i ++){
-            List<Result> seq = sequences.get(i);
+            List<TaskExecution> seq = sequences.get(i);
             ss[i] = new int[seq.size()];
             for(int j = 0; j < seq.size(); j ++) {
-                ss[i][j] = index.get(seq.get(j).taskType);
+                ss[i][j] = index.get(seq.get(j).getTaskType().getId());
             }
         }
         return ss;
     }
 
-    protected void prepareIndex(List<List<Result>> sequences){
-        prepareIndex(sequences, r -> r.taskType, Comparator.comparing(t -> t.getCode()));
+    protected void prepareIndex(List<List<TaskExecution>> sequences){
+        prepareIndex(sequences, r -> r.getTaskType(), Comparator.comparing(t -> t.getId()));
     }
 }

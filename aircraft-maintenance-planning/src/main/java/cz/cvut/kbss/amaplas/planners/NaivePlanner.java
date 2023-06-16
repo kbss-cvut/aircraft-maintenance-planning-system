@@ -2,22 +2,24 @@ package cz.cvut.kbss.amaplas.planners;
 
 import cz.cvut.kbss.amaplas.algs.timesequences.TimeSequenceMatrix;
 import cz.cvut.kbss.amaplas.model.Result;
+import cz.cvut.kbss.amaplas.model.TaskExecution;
 import cz.cvut.kbss.amaplas.model.TaskType;
+import cz.cvut.kbss.amaplas.model.Workpackage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class NaivePlanner {
     public static final NaivePlanner planner = new NaivePlanner();
 
-    public List<SequencePattern> plan(Map<String, List<Result>> history, Set<TaskType> taskTypes ){
+    public List<SequencePattern> plan(List<Workpackage> history, Set<TaskType> taskTypes ){
         // construct history DB
         // construct direct order patterns
         TimeSequenceMatrix patternExtractor = new TimeSequenceMatrix();
-        List<SequencePattern> supportedPatterns = patternExtractor.execute(new ArrayList<>(history.values()), 1,
+        List<List<TaskExecution>> sequences = history.stream().map(w -> new ArrayList<>(w.getTaskExecutions()))
+                .collect(Collectors.toList());
+        sequences.forEach(tel -> tel.sort(Comparator.comparing(te -> te.getStart())));
+        List<SequencePattern> supportedPatterns = patternExtractor.execute(sequences, 1,
 //                // adjacent sequence patterns
 //                true,
 //                patternExtractor::preferBiEdgeWithBiggerSupport,

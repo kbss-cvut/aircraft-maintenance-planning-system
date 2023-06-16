@@ -18,6 +18,10 @@ public class Event extends AbstractEntity {
     @Transient
     protected Long dur;
 
+    @Transient
+    protected Long workTime;
+
+
     public String getDate() {
         return date;
     }
@@ -48,5 +52,13 @@ public class Event extends AbstractEntity {
 
     public void setDur(Long dur) {
         this.dur = dur;
+    }
+
+    public Long getWorkTime() {
+        return workTime;
+    }
+
+    public void setWorkTime(Long workTime) {
+        this.workTime = workTime;
     }
 }
