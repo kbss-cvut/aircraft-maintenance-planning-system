@@ -15,6 +15,7 @@ import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
+import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.eclipse.rdf4j.query.algebra.Str;
 import org.slf4j.Logger;
@@ -107,11 +108,11 @@ public class TaskTypeDao extends BaseDao<TaskType>{
         protected EntityRegistry taskTypeURIRegistry;
         protected EntityRegistry maintenanceGroupRegistry;
         @Override
-        public List<Triple<URI, MaintenanceGroup, Integer>> convert(TupleQueryResult tupleQueryResult) {
+        public List<Triple<URI, MaintenanceGroup, Integer>> convert(Iterable<BindingSet> bindingSets) {
             taskTypeURIRegistry = new EntityRegistry();
             maintenanceGroupRegistry = new EntityRegistry();
 
-            return super.convert(tupleQueryResult);
+            return super.convert(bindingSets);
         }
 
         @Override

@@ -8,7 +8,7 @@ import cz.cvut.kbss.amaplas.persistence.dao.mapper.QueryResultMapper;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.rdf4j.model.Literal;
-import org.eclipse.rdf4j.query.TupleQueryResult;
+import org.eclipse.rdf4j.query.BindingSet;
 import org.springframework.stereotype.Repository;
 
 import java.net.URI;
@@ -29,9 +29,9 @@ public class WorkSessionDao extends BaseDao<WorkSession> {
 
 
         @Override
-        public List<Pair<URI, WorkSession> > convert(TupleQueryResult tupleQueryResult) {
+        public List<Pair<URI, WorkSession> > convert(Iterable<BindingSet> bindingSets) {
             registry = new EntityRegistry();
-            return super.convert(tupleQueryResult);
+            return super.convert(bindingSets);
         }
         @Override
         public Pair<URI, WorkSession> convert() {

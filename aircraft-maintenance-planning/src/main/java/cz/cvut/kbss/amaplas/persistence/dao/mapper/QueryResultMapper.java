@@ -2,12 +2,11 @@ package cz.cvut.kbss.amaplas.persistence.dao.mapper;
 
 import cz.cvut.kbss.amaplas.persistence.dao.BaseDao;
 import cz.cvut.kbss.amaplas.utils.ResourceUtils;
-import org.eclipse.rdf4j.model.Literal;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.query.BindingSet;
-import org.eclipse.rdf4j.query.TupleQueryResult;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -84,7 +83,11 @@ public abstract class QueryResultMapper<T> {
         return Optional.ofNullable(bs.getValue(name)).map(converter).orElse(def);
     }
 
-    public List<T> convert(TupleQueryResult tupleQueryResult){
+    public List<T> convert(Iterable<BindingSet> bindingSets){
+        return convert(bindingSets.iterator());
+    }
+
+    public List<T> convert(Iterator<BindingSet> tupleQueryResult){
         List<T> results = new ArrayList<>();
         while(tupleQueryResult.hasNext()){
             bs = tupleQueryResult.next();
