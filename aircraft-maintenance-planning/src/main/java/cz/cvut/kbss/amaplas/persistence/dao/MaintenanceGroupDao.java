@@ -7,13 +7,14 @@ import org.springframework.cache.annotation.Cacheable;
 
 import java.net.URI;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class MaintenanceGroupDao extends BaseDao<MaintenanceGroup> {
 
     public static final String MAINTENANCE_GROUP = "queries/analysis/maintenance-group.sparql";
 
-    protected QueryResultMapper<MaintenanceGroup> groupQueryResultMapper =
-            new QueryResultMapper<>(MAINTENANCE_GROUP) {
+    protected Supplier<QueryResultMapper<MaintenanceGroup>> groupQueryResultMapper =
+            () -> new QueryResultMapper<>(MAINTENANCE_GROUP) {
         @Override
         public MaintenanceGroup convert() {
             MaintenanceGroup maintenanceGroup = new MaintenanceGroup();
@@ -29,7 +30,7 @@ public class MaintenanceGroupDao extends BaseDao<MaintenanceGroup> {
 
     @Cacheable
     public List<MaintenanceGroup> findAll(){
-        return load(groupQueryResultMapper, null);
+        return load(groupQueryResultMapper.get(), null);
     }
 
 

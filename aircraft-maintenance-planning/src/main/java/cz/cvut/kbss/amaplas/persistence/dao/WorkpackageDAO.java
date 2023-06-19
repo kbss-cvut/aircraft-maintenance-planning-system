@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -31,15 +32,14 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
     public static final String WP_SIMILAR_WPS = "/queries/analysis/similar-wps.sparql";
 
 
-
-    protected QueryResultMapper<Pair<URI, URI>> wpTaskTypes = new QueryResultMapper<>(WP_TASK_TYPES) {
+    protected Supplier<QueryResultMapper<Pair<URI, URI>>> wpTaskTypes = () -> new QueryResultMapper<>(WP_TASK_TYPES) {
         @Override
         public Pair<URI, URI> convert() {
             return Pair.of(manValue("wp", URI::create),manValue("taskType", URI::create));
         }
     };
 
-    protected QueryResultMapper<Pair<Workpackage, Double>> similarWPsMapper = new QueryResultMapper<>(WP_SIMILAR_WPS) {
+    protected Supplier<QueryResultMapper<Pair<Workpackage, Double>>> similarWPsMapper = () -> new QueryResultMapper<>(WP_SIMILAR_WPS) {
         @Override
         public Pair<Workpackage, Double> convert() {
             return Pair.of(manValue("wpB", s -> {
@@ -50,7 +50,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
         }
     };
 
-    protected QueryResultMapper<TaskExecution> taskExecutionAndSessionMapper = new QueryResultMapper<>(WP_TASK_EXECUTIONS) {
+    protected Supplier<QueryResultMapper<TaskExecution>> taskExecutionAndSessionMapper = () -> new QueryResultMapper<>(WP_TASK_EXECUTIONS) {
         protected Pattern taskTypeIRIPattern = Pattern.compile("task-type--([^-]+)--(.+)");
         protected HashMap<String, String > taskCategories = new HashMap<>(){
             {
@@ -122,7 +122,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
         }
     };
 
-    protected QueryResultMapper<TaskExecution> taskExecutionMapper = new QueryResultMapper<>(TASK_EXECUTION_STATISTICS_FROM_PARTS) {
+    protected Supplier<QueryResultMapper<TaskExecution>> taskExecutionMapper = () -> new QueryResultMapper<>(TASK_EXECUTION_STATISTICS_FROM_PARTS) {
         @Override
         public TaskExecution convert() {
             TaskType taskType = manValue("taskType", s -> new TaskType(URI.create(s)));
@@ -193,7 +193,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
     }
 
     public Map<URI, List<URI>> readTaskTypeUsage(){
-        return load(wpTaskTypes, null).stream().collect(Collectors.groupingBy(
+        return load(wpTaskTypes.get(), null).stream().collect(Collectors.groupingBy(
                 p -> p.getLeft(),
                 Collectors.mapping(p -> p.getRight(),Collectors.toList()))
         );
@@ -213,7 +213,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
     public void readWorkparckageTasks(final Workpackage workpackage){
         Bindings bindings = new Bindings();
         bindings.add("wp", workpackage.getEntityURI());
-        List<TaskExecution> taskExecutions = load(taskExecutionAndSessionMapper, bindings);
+        List<TaskExecution> taskExecutions = load(taskExecutionAndSessionMapper.get(), bindings);
         workpackage.setTaskExecutions(new HashSet<>(taskExecutions));
         taskExecutions.forEach(te -> te.setWorkpackage(workpackage));
     }
@@ -228,8 +228,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
     public void readTimePropertiesOfWorkparckageTasks(final Workpackage workpackage, final Workpackage workpackageA){
         Bindings bindings = new Bindings();
         bindings.add("wp", workpackage.getEntityURI());
-        bindings.add("wpA", workpackageA.getEntityURI());
-        List<TaskExecution> taskExecutions = load(taskExecutionMapper, bindings);
+        List<TaskExecution> taskExecutions = load(taskExecutionMapper.get(), bindings);
         workpackage.setTaskExecutions(new HashSet<>(taskExecutions));
         taskExecutions.forEach(te -> te.setWorkpackage(workpackage));
     }
@@ -243,7 +242,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
     public List<Pair<Workpackage, Double>> findSimilarWorkpackages(Workpackage workpackage){
         Bindings bindings = new Bindings();
         bindings.add("wpA", workpackage.getEntityURI());
-        return load(similarWPsMapper, bindings);
+        return load(similarWPsMapper.get(), bindings);
     }
 
     //  TODO - delete

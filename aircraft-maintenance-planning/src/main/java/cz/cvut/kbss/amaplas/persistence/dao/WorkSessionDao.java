@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.net.URI;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -23,7 +24,7 @@ public class WorkSessionDao extends BaseDao<WorkSession> {
     public static final String WP_WORK_SESSIONS = "/queries/analysis/work-sessions.sparql";
 
 
-    protected QueryResultMapper<Pair<URI, WorkSession>> workSessions = new QueryResultMapper<>(WP_WORK_SESSIONS) {
+    protected Supplier<QueryResultMapper<Pair<URI, WorkSession>>> workSessions = () -> new QueryResultMapper<>(WP_WORK_SESSIONS) {
         protected Pattern mechanicIRI_IDPattern = Pattern.compile("^.+/mechanic--(.+)$");
         protected EntityRegistry registry;
 
@@ -96,7 +97,7 @@ public class WorkSessionDao extends BaseDao<WorkSession> {
     public void loadWorkSessions(Workpackage wp){
         Bindings bindings = new Bindings();
         bindings.add("wp", wp.getEntityURI());
-        List<Pair<URI, WorkSession>> workSessionsByTask = load(workSessions, bindings);
+        List<Pair<URI, WorkSession>> workSessionsByTask = load(workSessions.get(), bindings);
 
         Map<URI, TaskExecution> taskExecutionMap = new HashMap<>();
         wp.getTaskExecutions().forEach(t -> taskExecutionMap.put(t.getEntityURI(), t));

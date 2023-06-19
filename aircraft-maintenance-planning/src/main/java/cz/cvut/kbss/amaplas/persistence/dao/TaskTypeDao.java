@@ -25,6 +25,7 @@ import org.springframework.stereotype.Repository;
 import java.net.URI;
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 
@@ -67,7 +68,7 @@ public class TaskTypeDao extends BaseDao<TaskType>{
                 ).collect(Collectors.toList());
     }
 
-    protected QueryResultMapper<TaskType> taskTypeBasicDescriptionMapper = new QueryResultMapper<>(TASK_TYPES) {
+    protected Supplier<QueryResultMapper<TaskType>> taskTypeBasicDescriptionMapper = () -> new QueryResultMapper<>(TASK_TYPES) {
         @Override
         public TaskType convert() {
             TaskType taskType = new TaskType(
@@ -81,7 +82,7 @@ public class TaskTypeDao extends BaseDao<TaskType>{
         }
     };
 
-    protected QueryResultMapper<Pair<URI,TaskType>> wpsTaskTypeBasicDescriptionMapper = new QueryResultMapper<>(WP_TASK_TYPES) {
+    protected Supplier<QueryResultMapper<Pair<URI,TaskType>>> wpsTaskTypeBasicDescriptionMapper = () -> new QueryResultMapper<>(WP_TASK_TYPES) {
         @Override
         public Pair<URI, TaskType> convert() {
             TaskType taskType = new TaskType(
@@ -96,14 +97,14 @@ public class TaskTypeDao extends BaseDao<TaskType>{
     };
 
 
-    protected QueryResultMapper<Pair<String, String>> taskTypeLabelsMapper = new QueryResultMapper<>(TASK_TYPES_SESSION_TITLES) {
+    protected Supplier<QueryResultMapper<Pair<String, String>>> taskTypeLabelsMapper = () -> new QueryResultMapper<>(TASK_TYPES_SESSION_TITLES) {
         @Override
         public Pair<String, String> convert() { // ?taskType ?sessionLabel
             return Pair.of(manValue("taskType"), manValue("sessionLabel"));
         }
     };
 
-    protected QueryResultMapper<Triple<URI, MaintenanceGroup, Integer>> taskTypeSessionScopes = new QueryResultMapper<>(TASK_TYPES_SESSION_SCOPES) {
+    protected Supplier<QueryResultMapper<Triple<URI, MaintenanceGroup, Integer>>> taskTypeSessionScopes = () -> new QueryResultMapper<>(TASK_TYPES_SESSION_SCOPES) {
 
         protected EntityRegistry taskTypeURIRegistry;
         protected EntityRegistry maintenanceGroupRegistry;
@@ -152,7 +153,7 @@ public class TaskTypeDao extends BaseDao<TaskType>{
         }
     };
 
-    protected QueryResultMapper<TaskType> taskTypeDefinitionIdsMapper = new QueryResultMapper<>(TASK_TYPE_DEFINITION_IDS) {
+    protected Supplier<QueryResultMapper<TaskType>> taskTypeDefinitionIdsMapper = () -> new QueryResultMapper<>(TASK_TYPE_DEFINITION_IDS) {
         @Override
         public TaskType convert() {
             TaskType taskType = new TaskType(
@@ -167,7 +168,7 @@ public class TaskTypeDao extends BaseDao<TaskType>{
         }
     };
 
-    protected QueryResultMapper<TaskType> taskTypeDefinitionsMapper = new QueryResultMapper<>(TASK_TYPES_DEFINITIONS) {
+    protected Supplier<QueryResultMapper<TaskType>> taskTypeDefinitionsMapper = () -> new QueryResultMapper<>(TASK_TYPES_DEFINITIONS) {
         @Override
         public TaskType convert() {
             TaskType taskType = new TaskType(
@@ -196,7 +197,7 @@ public class TaskTypeDao extends BaseDao<TaskType>{
         }
     };
 
-    protected QueryResultMapper<Pair<URI, URI>> taskTypeDefinitionsMapMapper = new QueryResultMapper<>(TASK_TYPES_DEFINITIONS_MAP) {
+    protected Supplier<QueryResultMapper<Pair<URI, URI>>> taskTypeDefinitionsMapMapper = () -> new QueryResultMapper<>(TASK_TYPES_DEFINITIONS_MAP) {
         @Override
         public Pair<URI, URI> convert() { // ?taskCard ?definition
             return Pair.of(manValue("taskCard", URI::create), manValue("definition", URI::create));
@@ -246,7 +247,7 @@ public class TaskTypeDao extends BaseDao<TaskType>{
     public List<Pair<URI, TaskType>> readTaskTypes(Workpackage workpackage){
         Bindings bindings = new Bindings();
         bindings.add("wp", workpackage.getEntityURI());
-        return load(wpsTaskTypeBasicDescriptionMapper, bindings);
+        return load(wpsTaskTypeBasicDescriptionMapper.get(), bindings);
     }
 
     protected void setupTaskTypeTitles(Map<URI, TaskType> taskTypeMap){
@@ -296,7 +297,7 @@ public class TaskTypeDao extends BaseDao<TaskType>{
      * @return list of all task types with uri, code and category. The rest of the properties have to be loaded separately
      */
     public List<TaskType> listTaskTypeBasicDescriptions(){
-        return load(taskTypeBasicDescriptionMapper, null);
+        return load(taskTypeBasicDescriptionMapper.get(), null);
     }
 
     /**
@@ -304,7 +305,7 @@ public class TaskTypeDao extends BaseDao<TaskType>{
      * @return list a map of task type uri and scopes
      */
     public List<Pair<String, String>> listTaskTypeLabels(){
-        return load(taskTypeLabelsMapper, null);
+        return load(taskTypeLabelsMapper.get(), null);
     }
 
     /**
@@ -312,20 +313,20 @@ public class TaskTypeDao extends BaseDao<TaskType>{
      * @return list a map of task type uri and scopes
      */
     public List<Triple<URI, MaintenanceGroup, Integer>> listTaskTypeScopes(){
-        return load(taskTypeSessionScopes, null);
+        return load(taskTypeSessionScopes.get(), null);
     }
 
 
     public List<TaskType> listTaskTypeDefinitions(){
-        return load(taskTypeDefinitionsMapper, null);
+        return load(taskTypeDefinitionsMapper.get(), null);
     }
 
     public List<TaskType> listTaskTypeDefinitionIds(){
-        return load(taskTypeDefinitionIdsMapper, null);
+        return load(taskTypeDefinitionIdsMapper.get(), null);
     }
 
     public List<Pair<URI, URI>> readTaskTypeDefinitionsMap(){
-        return load(taskTypeDefinitionsMapMapper, null);
+        return load(taskTypeDefinitionsMapMapper.get(), null);
     }
 
 

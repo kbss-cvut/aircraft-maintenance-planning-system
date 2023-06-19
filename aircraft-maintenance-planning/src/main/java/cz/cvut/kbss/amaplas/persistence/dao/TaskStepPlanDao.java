@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.net.URI;
 import java.util.List;
+import java.util.function.Supplier;
 
 @Repository
 public class TaskStepPlanDao extends BaseDao<TaskStepPlan> {
@@ -26,7 +27,7 @@ public class TaskStepPlanDao extends BaseDao<TaskStepPlan> {
     protected static final URI FILTER_TYPE = URI.create("http://www.w3.org/ns/csvw#Row");
 
 
-    protected QueryResultMapper<TaskStepPlan> mapper = new QueryResultMapper<>(TASK_STEP_AND_ANNOTATIONS) {
+    protected Supplier<QueryResultMapper<TaskStepPlan>> mapper = () -> new QueryResultMapper<>(TASK_STEP_AND_ANNOTATIONS) {
         @Override
         public TaskStepPlan convert() {
             TaskStepPlan taskStepPlan = new TaskStepPlan();
@@ -67,11 +68,11 @@ public class TaskStepPlanDao extends BaseDao<TaskStepPlan> {
     }
 
     public List<TaskStepPlan> listInWorkpackage(URI workpackageURI){
-        return load(mapper, new Bindings().add("wp", workpackageURI));
+        return load(mapper.get(), new Bindings().add("wp", workpackageURI));
     }
 
     public List<TaskStepPlan> listInWorkpackage(String workpackageId){
-        return load(mapper, new Bindings().add("wpId", workpackageId));
+        return load(mapper.get(), new Bindings().add("wpId", workpackageId));
     }
 
 //    public List<TaskStepPlan> listInWorkpackageId(String wpId){
