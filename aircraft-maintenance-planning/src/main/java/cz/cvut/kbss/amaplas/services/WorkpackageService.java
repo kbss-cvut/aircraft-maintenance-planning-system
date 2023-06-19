@@ -7,6 +7,10 @@ import cz.cvut.kbss.amaplas.model.Workpackage;
 import cz.cvut.kbss.amaplas.persistence.dao.WorkSessionDao;
 import cz.cvut.kbss.amaplas.persistence.dao.WorkpackageDAO;
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -15,6 +19,8 @@ import java.util.stream.Stream;
 
 @Service
 public class WorkpackageService extends BaseService {
+    private static final Logger LOG = LoggerFactory.getLogger(WorkpackageService.class);
+
     protected final WorkpackageDAO workpackageDAO;
     protected final TaskTypeService taskTypeService;
     protected final WorkSessionDao workSessionDao;
@@ -27,11 +33,20 @@ public class WorkpackageService extends BaseService {
         this.workSessionDao = workSessionDao;
     }
 
+    @EventListener(ApplicationReadyEvent.class)
     public void init(){
-
+        resetCache();
     }
 
-    public void resetCache(){}
+    public void resetCache(){
+        LOG.info("reset caches");
+        taskTypeService.resetCache();
+        LOG.info("reset caches - reset workpackages with task with time properties caches");
+        workpackageDAO.resetCache();
+        workpackageTaskTimePropertiesCache = new HashMap<>();
+
+        LOG.info("finished reset caches");
+    }
 
     /**
      * Reads task executions and their sessions for the provided workpackage. Replaces referenced task types so that they
@@ -80,8 +95,8 @@ public class WorkpackageService extends BaseService {
      * taskExections field.
      * @param workpackage
      */
-    public void setTaskExecutionsWithPropertiesTimeProperties(Workpackage workpackage, Workpackage workpackageA){
-        workpackageDAO.readTimePropertiesOfWorkparckageTasks(workpackage, workpackageA);
+    public void setTaskExecutionsWithTimeProperties(Workpackage workpackage){
+        workpackageDAO.readTimePropertiesOfWorkparckageTasks(workpackage);
         setTaskTypesOfTaskExecutions(workpackage);
     }
 
@@ -104,6 +119,16 @@ public class WorkpackageService extends BaseService {
         Date end = max(taskExecution.getWorkSessions().stream().map(w -> w.getEnd()).filter(d -> d != null));
         taskExecution.setStart(start);
         taskExecution.setEnd(end);
+    }
+
+    public Workpackage getWorkpackageWithTemporalProperties(URI uri){
+        Workpackage workpackage = workpackageTaskTimePropertiesCache.get(uri);
+        if(workpackage == null){
+            workpackage = workpackageDAO.getTimePropertiesOfWorkparckageTasks(uri);
+            workpackageTaskTimePropertiesCache.put(uri, workpackage);
+        }
+
+        return workpackage;
     }
 
     public Date min(Stream<Date> dateStream){

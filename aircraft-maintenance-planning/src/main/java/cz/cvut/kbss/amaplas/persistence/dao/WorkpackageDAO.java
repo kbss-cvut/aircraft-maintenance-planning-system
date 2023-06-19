@@ -32,6 +32,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
     public static final String TASK_EXECUTION_STATISTICS_FROM_PARTS = "/queries/analysis/task-execution-statistics-from-parts.sparql";
     public static final String WP_SIMILAR_WPS = "/queries/analysis/similar-wps.sparql";
 
+    protected Map<String,List<BindingSet>> rawWorkpackageTaskTimePropertiesCache = new HashMap<>();
 
     protected Supplier<QueryResultMapper<Pair<URI, URI>>> wpTaskTypes = () -> new QueryResultMapper<>(WP_TASK_TYPES) {
         @Override
@@ -122,6 +123,12 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
             return taskExecution;
         }
     };
+    protected Supplier<QueryResultMapper<BindingSet>> workpackagesWithTaskExecutionsWithTimeProperties = () -> new QueryResultMapper<>(TASK_EXECUTION_STATISTICS_FROM_PARTS) {
+        @Override
+        public BindingSet convert() {
+            return bs;
+        }
+    };
 
     protected Supplier<QueryResultMapper<TaskExecution>> taskExecutionMapper = () -> new QueryResultMapper<>(TASK_EXECUTION_STATISTICS_FROM_PARTS) {
         @Override
@@ -140,6 +147,15 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
             return taskExecution;
         }
     };
+
+    public void resetCache(){
+        rawWorkpackageTaskTimePropertiesCache = getTimePropertiesOfWorkparckageTasks();
+    }
+
+    public List<TaskExecution> convertToTaskExecution(Iterable<BindingSet> bindingSets){
+        return taskExecutionMapper.get().convert(bindingSets);
+    }
+
     protected Date parseDate(String dateString){
         return DateParserSerializer.parseDate(DateParserSerializer.df.get(), dateString);
     }
@@ -218,6 +234,17 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
         workpackage.setTaskExecutions(new HashSet<>(taskExecutions));
         taskExecutions.forEach(te -> te.setWorkpackage(workpackage));
     }
+    /**
+     * Reads temporal properties of task executions in all workpackages. Temporal properties derived from the task's parts
+     * (work sessions) are start, end, workTime and duration. Data are represented as binding sets and are grouped by wp
+     * uri string. No conversion to model entities is performed.
+     *
+     * Limitations - this method does not read other relevant properties of task cards.
+     */
+    protected Map<String, List<BindingSet>> getTimePropertiesOfWorkparckageTasks(){
+        List<BindingSet> bindingSets = load(workpackagesWithTaskExecutionsWithTimeProperties.get(), null);
+        return bindingSets.stream().collect(Collectors.groupingBy(b -> b.getValue("wp").stringValue()));
+    }
 
     /**
      * Reads temporal properties of task executions in the input workpackage. Temporal properties derived from the task's parts
@@ -226,7 +253,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
      * Limitations - this method does not read other relevant properties of task cards.
      * @param workpackage
      */
-    public void readTimePropertiesOfWorkparckageTasks(final Workpackage workpackage, final Workpackage workpackageA){
+    public void readTimePropertiesOfWorkparckageTasks(final Workpackage workpackage){
         Bindings bindings = new Bindings();
         bindings.add("wp", workpackage.getEntityURI());
         List<TaskExecution> taskExecutions = load(taskExecutionMapper.get(), bindings);
@@ -234,10 +261,32 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
         taskExecutions.forEach(te -> te.setWorkpackage(workpackage));
     }
 
-    public void readTimePropertiesOfWorkparckageTasks(final Collection<Workpackage> workpackages, Workpackage workpackageA) {
+    public void readTimePropertiesOfWorkparckageTasks(final Collection<Workpackage> workpackages) {
         for(Workpackage wp : workpackages){
-            readTimePropertiesOfWorkparckageTasks(wp, workpackageA);
+            readTimePropertiesOfWorkparckageTasks(wp);
         }
+    }
+
+    /**
+     * Creates a Workpackage and populates it with task executions and theri temporal properties. The task executions
+     * are constructed from binding set cache.
+     *
+     * Limitations - this method does not read other relevant properties of task cards.
+     * @param uri
+     */
+    public Workpackage getTimePropertiesOfWorkparckageTasks(final URI uri){
+        List<BindingSet> taskExecutionBindings = rawWorkpackageTaskTimePropertiesCache.remove(uri.toString());
+
+        if(taskExecutionBindings == null)
+            return null;
+
+        Workpackage workpackage = new Workpackage(uri);
+        List<TaskExecution> taskExecutions = convertToTaskExecution(taskExecutionBindings);
+
+        workpackage.setTaskExecutions(new HashSet<>(taskExecutions));
+        taskExecutions.forEach(te -> te.setWorkpackage(workpackage));
+
+        return workpackage;
     }
 
     public List<Pair<Workpackage, Double>> findSimilarWorkpackages(Workpackage workpackage){
@@ -245,33 +294,4 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
         bindings.add("wpA", workpackage.getEntityURI());
         return load(similarWPsMapper.get(), bindings);
     }
-
-    //  TODO - delete
-//    // DONE TODO - set aircraft area of WO execution based on referenced task execution.
-//    public static void setAreasInWOsFromReferenceTask(List<WorkSession> workSessions){
-//        Map<URI, List<WorkSession>> map = workSessions.stream().filter(s -> s.getTaskExecution() != null)
-//                .collect(Collectors.groupingBy(s -> s.getTaskExecution().getEntityURI()));
-//        for(List<WorkSession> sessions: map.values()) {
-//            String taskCategory = sessions.stream().map(s -> s.getTaskExecution().getTaskType().getTaskcat()).filter(c -> c != null).findFirst().orElse(null);
-//            if(taskCategory != null && !taskCategory.contains("work-order"))
-//                continue;
-//
-//            List<String> referencedTasks = sessions.stream()
-//                    .map(s -> s.referencedTasks).filter(ts -> ts != null).flatMap(rt -> rt.stream())
-//                    .distinct().collect(Collectors.toList());
-//            if(referencedTasks.isEmpty())
-//                continue;
-//            List<Result> referencedTaskSessions = map.get(referencedTasks.get(0));
-//            if(referencedTaskSessions == null || referencedTaskSessions.isEmpty())
-//                continue;
-//
-//            String area = referencedTaskSessions.stream().map(r -> r.taskType)
-//                    .filter(t -> t != null && t.getDefinition() != null && t.getDefinition().getArea() != null)
-//                    .map(t -> t.getDefinition().getArea()).findFirst()
-//                    .orElse(null);
-//            if(area != null)
-//                sessions.forEach(s -> s.taskType.setArea(area));
-//        }
-//    }
-
 }

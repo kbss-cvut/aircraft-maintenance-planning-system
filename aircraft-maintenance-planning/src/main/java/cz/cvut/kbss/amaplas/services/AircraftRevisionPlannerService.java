@@ -65,15 +65,9 @@ public class AircraftRevisionPlannerService extends BaseService{
                 .stream()
                 .filter(p -> !revisionsToIgnore.contains(p.getKey().getEntityURI().toString()))
                 .map(p -> Pair.of(
-                        (Supplier<Workpackage>)() -> {
-                            Workpackage wp = p.getKey();
-                            if(!loadedWPs.contains(wp)) {
-                                workpackageService.setTaskExecutionsWithPropertiesTimeProperties(p.getKey(), toPlan);
-                                loadedWPs.add(wp);
-                            }
-                            return p.getKey();
-                        },
-                        p.getRight()))
+                        (Supplier<Workpackage>)() -> workpackageService.getWorkpackageWithTemporalProperties(p.getKey().getEntityURI()),
+                        p.getRight())
+                )
                 .collect(Collectors.toList());
 
         Map<String, PlanGraph> scopePlans = new HashMap<>();

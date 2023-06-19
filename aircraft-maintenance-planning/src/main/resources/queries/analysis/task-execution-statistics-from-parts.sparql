@@ -12,10 +12,6 @@ SELECT DISTINCT ?wp ?task ?taskType ?issueTime ?endTime (MIN(?st) as ?derivedSta
     ?task a ?taskType .
     ?taskType a cm:task-type .
 
-    ?taskA cm:is-part-of-workpackage ?wpA .
-    ?taskA a ?taskType .
-    ?taskType a cm:task-type .
-
     OPTIONAL{
         ?task cm:issue-time ?issueTime.
     }
