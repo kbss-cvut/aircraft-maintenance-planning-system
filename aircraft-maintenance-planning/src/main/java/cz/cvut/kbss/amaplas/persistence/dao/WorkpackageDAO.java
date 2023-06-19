@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
@@ -154,17 +155,17 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
     }
 
     public List<Workpackage> findAllClosed() {
-        return getEm().createNativeQuery(
-              "SELECT ?w WHERE {\n" +
-                            "?w a ?type; \n" +
-                            "?endTimeProperty ?closeDate. \n" +
-                            "FILTER(xsd:dateTime(?closeDate) < ?now)\n" +
-                        "}" ,
+        return getEm().createNativeQuery("PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n" +
+                                "SELECT ?w WHERE {\n" +
+                                    "?w a ?type; \n" +
+                                    "?endTimeProperty ?closeDate. \n" +
+                                    "FILTER(xsd:dateTime(?closeDate) < ?now)\n" +
+                                "}" ,
                         URI.class
                 )
                 .setParameter("type", getTypeUri())
                 .setParameter("endTimeProperty", p_workpackage_end_time)
-                .setParameter("now", LocalDate.now())
+                .setParameter("now", LocalDateTime.now())
                 .getResultList().stream()
                 .map(u -> new Workpackage(u))
                 .collect(Collectors.toList());
@@ -173,7 +174,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
 
     //TODO - optimize, create a QueryResultMapper, use it with load() to read WPs with uri and id
     public List<Workpackage> findAllOpened() {
-        return getEm().createNativeQuery("PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>" +
+        return getEm().createNativeQuery("PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n" +
                                 "SELECT ?w WHERE { \n" +
                                 "?w a ?type; \n" +
                                 "OPTIONAL { \n" +
