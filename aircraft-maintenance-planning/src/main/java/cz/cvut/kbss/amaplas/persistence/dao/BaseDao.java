@@ -2,11 +2,17 @@ package cz.cvut.kbss.amaplas.persistence.dao;
 
 import cz.cvut.kbss.amaplas.exceptions.PersistenceException;
 import cz.cvut.kbss.amaplas.model.AbstractEntity;
+import cz.cvut.kbss.amaplas.persistence.dao.mapper.Bindings;
+import cz.cvut.kbss.amaplas.persistence.dao.mapper.QueryResultMapper;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.jopa.exceptions.NoResultException;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.metamodel.Metamodel;
 import cz.cvut.kbss.jopa.model.query.TypedQuery;
+import org.eclipse.rdf4j.model.Resource;
+import org.eclipse.rdf4j.model.Statement;
+import org.eclipse.rdf4j.query.TupleQueryResult;
+import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URI;
@@ -26,11 +32,13 @@ public abstract class BaseDao<T extends AbstractEntity> implements GenericDao<T>
     private final Class<T> type;
     private final URI typeUri;
     private final EntityManager em;
+    protected final Rdf4JDao rdf4JDao;
 
-    protected BaseDao(Class<T> type, EntityManager em) {
+    protected BaseDao(Class<T> type, EntityManager em, Rdf4JDao rdf4JDao) {
         this.type = type;
         this.typeUri = URI.create(EntityToOwlClassMapper.getOwlClassForEntity(type));
         this.em = em;
+        this.rdf4JDao = rdf4JDao;
     }
 
     @Override
@@ -194,5 +202,26 @@ public abstract class BaseDao<T extends AbstractEntity> implements GenericDao<T>
 
     public EntityManager getEm() {
         return em;
+    }
+
+    protected <R> List<R> load(QueryResultMapper<R> mapper, Bindings bindings){
+        return rdf4JDao.load(mapper, bindings);
+    }
+
+    protected TupleQueryResult executeSelect(String query, Bindings bindings){
+        return rdf4JDao.executeSelect(query, bindings);
+    }
+
+    protected void persistStatements(Collection<Statement> statements, String graphURL){
+        RepositoryConnection c = getRepositoryConnection();
+        if (graphURL != null) {
+            Resource graph = c.getValueFactory().createIRI(graphURL);
+            c.add(statements, graph);
+        } else {
+            c.add(statements);
+        }
+    }
+    protected RepositoryConnection getRepositoryConnection(){
+        return rdf4JDao.getRepositoryConnection();
     }
 }

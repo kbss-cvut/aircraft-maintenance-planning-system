@@ -39,7 +39,7 @@ public class BaseControllerImplementation<E extends AbstractEntity,D extends Bas
     }
 
     @GetMapping(params = {"id"}, produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE})
-    public E getAircraftById(@RequestParam() String id){
+    public E getEntityById(@RequestParam String id){
         return (E)getEntityDao().findById(id).orElse(null);
     }
 }

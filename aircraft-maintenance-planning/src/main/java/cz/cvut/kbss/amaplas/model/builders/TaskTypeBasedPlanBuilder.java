@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TaskTypeBasedPlanBuilder extends AbstractPlanBuilder<List<TaskType>>{
+public class TaskTypeBasedPlanBuilder extends AbstractPlanBuilder {
 
     private static final Logger LOG = LoggerFactory.getLogger(TaskTypeBasedPlanBuilder.class);
     protected Aircraft aircraft;
@@ -20,13 +20,13 @@ public class TaskTypeBasedPlanBuilder extends AbstractPlanBuilder<List<TaskType>
         super(planBuilder);
     }
 
-    public RevisionPlan addMissingTaskPlansToRevision(PlanBuilderInput<List<TaskType>> input, RevisionPlan revisionPlan){
+    public RevisionPlan addMissingTaskPlansToRevision(Workpackage wp, RevisionPlan revisionPlan) {
         Set<TaskType> plannedTaskTypes = revisionPlan.streamPlanParts()
                 .filter(p -> p instanceof TaskPlan)
                 .map(p -> ((TaskPlan)p).getTaskType())
                 .collect(Collectors.toSet());
 
-        Set<TaskType> taskTypes = new HashSet<>(input.getInput());
+        Set<TaskType> taskTypes = wp.getTaskTypes();
         taskTypes.removeAll(plannedTaskTypes);
 
         for(TaskType tt : taskTypes) {
@@ -35,12 +35,12 @@ public class TaskTypeBasedPlanBuilder extends AbstractPlanBuilder<List<TaskType>
         return revisionPlan;
     }
 
-    public RevisionPlan createRevision(PlanBuilderInput<List<TaskType>> input){
-        List<TaskType> taskTypes = input.getInput();
+    public RevisionPlan createRevision(Workpackage wp){
+        Set<TaskType> taskTypes = wp.getTaskTypes();
 
-        String revisionIdString = input.workpackage.getId();
+        String revisionIdString = wp.getId();
 
-        aircraft = input.getWorkpackage().getAircraft();
+        aircraft = wp.getAircraft();
         if(aircraft == null)
             aircraft = deriveAircraft(taskTypes, revisionIdString);
 
@@ -88,7 +88,7 @@ public class TaskTypeBasedPlanBuilder extends AbstractPlanBuilder<List<TaskType>
         return phasePlan;
     }
 
-    protected Aircraft deriveAircraft(List<TaskType> taskTypes, String revisionId){
+    protected Aircraft deriveAircraft(Collection<TaskType> taskTypes, String revisionId){
         List<Aircraft> aircraftList = taskTypes.stream()
                 .filter(tt -> tt != null)
                 .map(tt -> getAircraft(optionalTaskType(tt)))

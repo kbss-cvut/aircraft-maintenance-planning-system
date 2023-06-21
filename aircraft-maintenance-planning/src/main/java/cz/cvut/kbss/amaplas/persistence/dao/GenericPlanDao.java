@@ -4,8 +4,6 @@ import cz.cvut.kbss.amaplas.exceptions.PersistenceException;
 import cz.cvut.kbss.amaplas.model.AbstractPlan;
 import cz.cvut.kbss.jopa.exceptions.NoResultException;
 import cz.cvut.kbss.jopa.model.EntityManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +16,8 @@ import java.util.stream.Stream;
 @Repository
 public class GenericPlanDao extends BaseDao<AbstractPlan>{
 
-    public GenericPlanDao(EntityManager em) {
-        super(AbstractPlan.class, em);
+    public GenericPlanDao(EntityManager em, Rdf4JDao rdf4JDao) {
+        super(AbstractPlan.class, em, rdf4JDao);
     }
 
     public <P extends AbstractPlan> Stream<P> stream(Class<P> type) {

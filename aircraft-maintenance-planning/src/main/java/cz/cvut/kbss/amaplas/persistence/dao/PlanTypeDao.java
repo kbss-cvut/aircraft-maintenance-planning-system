@@ -2,8 +2,6 @@ package cz.cvut.kbss.amaplas.persistence.dao;
 
 import cz.cvut.kbss.amaplas.exceptions.PersistenceException;
 import cz.cvut.kbss.amaplas.model.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -69,7 +67,7 @@ public class PlanTypeDao {
         return getNewPlanTypeInstance(planType.toString());
     }
 
-    public URI getType(AbstractEntity e){
+    public URI getType(AbstractEntityWithDescription e){
         Class cls = e.getClass();
         while(cls != null) {
             String uri = EntityToOwlClassMapper.getOwlClassForEntity(cls);
@@ -80,7 +78,7 @@ public class PlanTypeDao {
         return null;
     }
 
-    public Set<String> getTypes(AbstractEntity e){
+    public Set<String> getTypes(AbstractEntityWithDescription e){
         Set<String> types = new HashSet<>();
         Class cls = e.getClass();
 

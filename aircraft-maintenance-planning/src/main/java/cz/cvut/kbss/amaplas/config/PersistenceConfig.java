@@ -26,7 +26,7 @@ public class PersistenceConfig {
         return new DelegatingEntityManager();
     }
 
-    @Bean
+    @Bean(name = "platformTransactionManager")
     @Primary
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf,
                                                          DelegatingEntityManager emProxy) {

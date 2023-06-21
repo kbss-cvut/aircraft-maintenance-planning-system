@@ -4,12 +4,14 @@ import cz.cvut.kbss.amaplas.model.AbstractPlan;
 import cz.cvut.kbss.amaplas.model.RevisionPlan;
 import cz.cvut.kbss.amaplas.services.AircraftRevisionPlannerService;
 import cz.cvut.kbss.amaplas.services.IdentifierService;
+import cz.cvut.kbss.amaplas.services.WorkpackageService;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.jsonld.JsonLd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -22,10 +24,13 @@ public class PlanController extends BaseController{
     private static final Logger LOG = LoggerFactory.getLogger(PlanController.class);
 
     private final AircraftRevisionPlannerService plannerService;
+    private final WorkpackageService workpackageService;
 
-    public PlanController(AircraftRevisionPlannerService plannerService, IdentifierService identifierService) {
+
+    public PlanController(AircraftRevisionPlannerService plannerService, IdentifierService identifierService, WorkpackageService workpackageService) {
         super(identifierService, Vocabulary.s_c_event_plan);
         this.plannerService = plannerService;
+        this.workpackageService = workpackageService;
     }
 
     @GetMapping(path = "revision-plans-induced-by-revision-execution", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE} )
@@ -33,8 +38,12 @@ public class PlanController extends BaseController{
         return plannerService.createRevisionPlanScheduleDeducedFromRevisionExecution(revisionId);
     }
     @GetMapping(path = "plan-from-similar-revisions", produces = {MediaType.APPLICATION_JSON_VALUE, JsonLd.MEDIA_TYPE} )
-    public RevisionPlan planFromSimilarRevisions(@RequestParam String revisionId){
-        return plannerService.createRevisionPlanScheduleDeducedFromSimilarRevisions(revisionId);
+    public ResponseEntity<RevisionPlan> planFromSimilarRevisions(@RequestParam String revisionId){
+        if(workpackageService.isRefreshingCache())
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(null);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                plannerService.createRevisionPlanScheduleDeducedFromSimilarRevisions(revisionId)
+        );
     }
 
     /**

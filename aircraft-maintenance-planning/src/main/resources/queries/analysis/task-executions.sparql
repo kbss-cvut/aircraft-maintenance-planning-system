@@ -1,0 +1,70 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
+
+SELECT ?wp ?wpId ?tt ?referencedTask ?tType ?averageTime ?type ?taskcat ?start ?end ?workTime ?dur
+WHERE
+{
+    {
+        SELECT ?wp ?wpId ?tt ?tType ?averageTime ?type ?taskcat
+        (MIN(?st) as ?start) (MAX(?et) as ?end) (SUM(ofn:asMillis(?et - ?st)) as ?workTime) (ofn:asMillis(?end - ?start) as ?dur) {
+            ?wp a cm:workpackage.
+            ?wp cm:id ?wpId.
+
+            # tasks
+            OPTIONAL{
+                ?tt cm:is-part-of-workpackage ?wp.
+                OPTIONAL{
+                    ?tt cm:issue-time ?issueTime.
+                }
+                OPTIONAL{
+                    ?tt cm:end-time ?endTime.
+                }
+                # task type
+                OPTIONAL{
+                    ?tt a ?tType.
+
+                    FILTER(strstarts(str(?tType), str(cm:)) && !(?tType in (cm:task-card, cm:maintenance-work-order, cm:scheduled-work-order, cm:complex-execution)))
+        #            FILTER(?cls in (cm:task-card, cm:maintenance-work-order, cm:scheduled-work-order))
+
+        #            BIND(cm:task-card as ?cls)
+                    OPTIONAL{
+                        ?tType a owl:Class;
+                                cm:id ?type;
+                                rdfs:subClassOf ?cls.
+                        BIND(replace(str(?cls), "^.*/([^/]+)$", "$1") as ?taskcat)
+                    }
+
+                    OPTIONAL {
+                        ?tType cm:time-estimate-in-hours ?averageTime .
+                    }
+                }
+
+                # session
+                OPTIONAL{
+                    ?t cm:is-part-of-maintenance-task ?tt.
+                    OPTIONAL{
+                        ?t cm:start-date ?sDate.
+                        ?t cm:start-time ?sTime.
+                        BIND(CONCAT(str(?sDate),"T", str(?sTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?start)
+                        BIND(spif:parseDate(?start, "yyyy-MM-dd'T'HH:mm") as ?st)
+                    }
+
+                    OPTIONAL{
+                        ?t cm:end-date ?eDate.
+                        ?t cm:end-time ?eTime.
+                        BIND(CONCAT(str(?eDate),"T", str(?eTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?end)
+                        BIND(spif:parseDate(?end, "yyyy-MM-dd'T'HH:mm") as ?et)
+                    }
+                }
+            }
+        } GROUP BY ?wp ?wpId ?tt ?issueTime ?endTime ?tType ?averageTime ?type ?taskcat
+    }
+    OPTIONAL {
+        ?tt cm:references-task ?referencedTask
+    }
+}

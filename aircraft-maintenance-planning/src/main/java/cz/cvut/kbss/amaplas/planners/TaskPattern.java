@@ -1,6 +1,6 @@
 package cz.cvut.kbss.amaplas.planners;
 
-import cz.cvut.kbss.amaplas.model.Result;
+import cz.cvut.kbss.amaplas.model.TaskExecution;
 import cz.cvut.kbss.amaplas.model.TaskType;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class TaskPattern {
-    public List<List<Result>> instances = new ArrayList<>();
+    public List<TaskExecution> instances = new ArrayList<>();
     protected TaskType taskType;
     protected boolean planned;
 
@@ -42,30 +42,30 @@ public class TaskPattern {
         this.planned = planned;
     }
 
-    public List<List<Result>> getInstances() {
+    public List<TaskExecution> getInstances() {
         return instances;
     }
 
-    public void setInstances(List<List<Result>> instances) {
+    public void setInstances(List<TaskExecution> instances) {
         this.instances = instances;
     }
 
-    public List<Result> getInstance(Predicate<Result> predicate){
+    public TaskExecution getInstance(Predicate<TaskExecution> predicate){
         return instances.stream()
-            .filter(i -> !i.stream().filter(predicate).findFirst().isEmpty())
+            .filter(predicate)
             .findFirst().orElse(null);
     }
 
-    public <T> List<Result> getInstance(List<Result> sessions, Function<Result, T> function){
-        T val = getValue(sessions, function);
+    public <T> TaskExecution getInstance(TaskExecution taskExecution, Function<TaskExecution, T> function){
+        T val = getValue(taskExecution, function);
         return instances.stream()
-                .filter(l -> Objects.equals(getValue(l, function), val))
+                .filter(te -> Objects.equals(getValue(te, function), val))
                 .findFirst()
                 .orElse(null);
     }
 
-    public static <T> T getValue(List<Result> r, Function<Result, T> function){
-        return r.stream().map(function).filter(v -> v != null).findFirst().orElse(null);
+    public static <T> T getValue(TaskExecution taskExecution, Function<TaskExecution, T> function){
+        return function.apply(new TaskExecution());
     }
 
 }

@@ -51,7 +51,7 @@ public class JacksonConfig {
      */
     public static ObjectMapper createJsonObjectMapper() {
         final ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         // JSR 310 (Java 8 DateTime API)
         objectMapper.registerModule(new JavaTimeModule());

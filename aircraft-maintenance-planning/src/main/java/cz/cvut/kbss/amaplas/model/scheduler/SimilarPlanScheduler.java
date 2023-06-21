@@ -1,9 +1,6 @@
 package cz.cvut.kbss.amaplas.model.scheduler;
 
-import cz.cvut.kbss.amaplas.model.Result;
-import cz.cvut.kbss.amaplas.model.RevisionPlan;
-import cz.cvut.kbss.amaplas.model.TaskPlan;
-import cz.cvut.kbss.amaplas.model.TaskType;
+import cz.cvut.kbss.amaplas.model.*;
 import cz.cvut.kbss.amaplas.planners.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,14 +46,14 @@ public class SimilarPlanScheduler implements PlanScheduler{
 
                 String edgeWP = getEdgeWP(node, edge, source);
 
-                List<Result> sessions = node.getInstance(r -> Objects.equals(edgeWP, r.wp));
+                TaskExecution taskExecution = node.getInstance(te -> Objects.equals(edgeWP, te.getWorkpackage().getId()));
 
-                Long end = sessions.stream().filter(r -> r.end != null).mapToLong(r -> r.end.getTime()).max().orElse(-1);
+                Long end = Optional.ofNullable(taskExecution.getEnd()).map(Date::getTime).orElse(-1L);
                 if(end < 0)
-                    end = sessions.get(0).getStart() + 3600000;
-                long duration = end - sessions.get(0).getStart();
+                    end = taskExecution.getStart().getTime() + 3600000;
+                long duration = end - taskExecution.getStart().getTime();
 
-                long workTime = sessions.stream().mapToLong(r -> r.dur).sum();
+                long workTime = taskExecution.getWorkTime();
                 if(edge == null || edge.patternType == null){
                     plannedStartTime = planStartTime;
 
@@ -65,15 +62,15 @@ public class SimilarPlanScheduler implements PlanScheduler{
                     plannedStartTime = previousTaskPlan.getPlannedStartTime();
                 }else if(edge.patternType == PatternType.STRICT_DIRECT_ORDER){
                     TaskPlan previousTaskPlan = taskPlanMap.get(source.getTaskType());
-                    List<Result> previousSessions = source.getInstance(sessions, r -> r.wp); //source.instances.stream()
+                    TaskExecution previousTaskExecution = source.getInstance(taskExecution, te -> te.getWorkpackage().getId()); //source.instances.stream()
 
-                    long startTimeDistance = sessions.get(0).getStart() - previousSessions.get(0).getStart();
+                    long startTimeDistance = taskExecution.getStart().getTime() - previousTaskExecution.getStart().getTime();
                     plannedStartTime = new Date(previousTaskPlan.getStartTime().getTime() + startTimeDistance);
                 } else if(edge.patternType == PatternType.STRICT_INDIRECT_ORDER){
                     TaskPlan previousTaskPlan = taskPlanMap.get(source.getTaskType());
-                    List<Result> previousSessions = source.getInstance(r -> Objects.equals(edgeWP, r.wp)); //source.getInstance(sessions, r -> r.wp); //source.instances.stream()
+                    TaskExecution previousTaskExecution = source.getInstance(te -> Objects.equals(edgeWP, te.getWorkpackage().getId())); //source.getInstance(sessions, r -> r.wp); //source.instances.stream()
 
-                    long endToStart = sessions.get(0).getStart() - previousSessions.stream().mapToLong(r -> r.end.getTime()).max().getAsLong();
+                    long endToStart = taskExecution.getStart().getTime() - previousTaskExecution.getEnd().getTime();
                     if(endToStart > 0)
                         endToStart = 0;
 
@@ -96,16 +93,15 @@ public class SimilarPlanScheduler implements PlanScheduler{
     protected String getEdgeWP(TaskPattern node, SequencePattern edge, TaskPattern source){
         if(edge == null ) {
             if(node.getInstances() != null && !node.getInstances().isEmpty()) {
-                return node.getInstances().get(0).stream()
-                        .map(r -> r.wp)
-                        .filter(s -> s != null)
-                        .findFirst().orElse(null);
+                return node.getInstances().get(0).getWorkpackage().getId();
             }
         }else{
-            if(!Objects.equals(edge.instances.get(0).get(0).wp,  edge.instances.get(0).get(1).wp)) { // DEBUG
+            if(!Objects.equals(
+                    edge.instances.get(0).get(0).getWorkpackage().getId(),
+                    edge.instances.get(0).get(1).getWorkpackage().getId())) { // DEBUG
                 LOG.warn("Support instance {} of edge has two different is from two different workpackages", edge.instances.get(0));
             }
-            return edge.instances.get(0).get(0).wp;
+            return edge.instances.get(0).get(0).getWorkpackage().getId();
         }
         return null;
     }

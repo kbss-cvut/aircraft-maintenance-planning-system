@@ -1,0 +1,38 @@
+# execution statistics of task cards
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ofn:  <http://www.ontotext.com/sparql/functions/>
+
+SELECT ?taskType (COUNT(*) as ?executionCount)
+	(MIN(?derivedWorkTime) as ?minWorkTime) (MAX(?derivedWorkTime) as ?maxWorkTime) (AVG(?derivedWorkTime) as ?avgWorkTime)
+	(MIN(?derivedDuration) as ?minDuration) (MAX(?derivedDuration) as ?maxDuration) (AVG(?derivedDuration) as ?avgDuration)
+	WHERE  {
+    {
+		SELECT ?task ?taskType (MIN(?st) as ?derivedStart) (MAX(?et) as ?derivedEnd) (SUM(ofn:asMillis(?et - ?st))/1000.0/60.0/60.0 as ?derivedWorkTime) (ofn:asMillis(?derivedEnd - ?derivedStart)/1000.0/60.0/60.0 as ?derivedDuration) {
+    		BIND(cm:workpackage--OE-LBN-H-23-B4Y-B2Y-ECAP as ?plannedWP)
+    		?task cm:is-part-of-workpackage ?wp .
+    		?plannedTask cm:is-part-of-workpackage ?plannedWP .
+
+            FILTER(?plannedWP != ?wp)
+    		?plannedTask a ?taskType .
+            ?task a ?taskType .
+    		?taskType rdfs:subClassOf cm:task-card .
+    		?taskType a cm:task-type .
+			?session cm:is-part-of-maintenance-task ?task .
+
+			?session cm:start-date ?sDate.
+			?session cm:start-time ?sTime.
+			BIND(CONCAT(str(?sDate),"T", str(?sTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?start)
+
+			BIND(spif:parseDate(?start, "yyyy-MM-dd'T'HH:mm") as ?st)
+
+			?session cm:end-date ?eDate.
+			?session cm:end-time ?eTime.
+			BIND(CONCAT(str(?eDate),"T", str(?eTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?end)
+			BIND(spif:parseDate(?end, "yyyy-MM-dd'T'HH:mm") as ?et)
+        } GROUP BY ?task ?taskType
+	}
+
+} GROUP BY ?taskType
+ORDER BY DESC (?maxWorkTime)  DESC(?executionCount)

@@ -22,6 +22,14 @@ cm:has-abbreviation rdf:type owl:AnnotationProperty ;
                     rdfs:label "has abbreviation" .
 
 
+###  http://www.w3.org/2002/07/owl#maxQualifiedCardinality
+owl:maxQualifiedCardinality rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#qualifiedCardinality
+owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
+
+
 #################################################################
 #    Datatypes
 #################################################################
@@ -37,6 +45,15 @@ xsd:time rdf:type rdfs:Datatype .
 #################################################################
 #    Object Properties
 #################################################################
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/damage-of
+cm:damage-of rdf:type owl:ObjectProperty .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/finding-of
+cm:finding-of rdf:type owl:ObjectProperty ;
+              rdfs:range cm:damage .
+
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-billing-contract-defect-class
 cm:has-billing-contract-defect-class rdf:type owl:ObjectProperty ;
@@ -140,6 +157,10 @@ cm:is-day-bound-part-of rdf:type owl:ObjectProperty ;
                         rdfs:comment "Temporal part of relation that splits event to parts bound by days respecting a local time ." .
 
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/is-part-of
+cm:is-part-of rdf:type owl:ObjectProperty .
+
+
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/is-part-of-maintenance-line
 cm:is-part-of-maintenance-line rdf:type owl:ObjectProperty ;
                                rdfs:domain cm:mechanic ;
@@ -186,6 +207,13 @@ cm:member-of-group rdf:type owl:ObjectProperty ;
 cm:performs rdf:type owl:ObjectProperty ;
             rdfs:domain cm:mechanic .
 
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/performed-by
+cm:performed-by rdf:type owl:ObjectProperty ;
+            rdfs:domain cm:work-session .
+			
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/has-shift
+cm:has-shift rdf:type owl:ObjectProperty ;
+            rdfs:domain cm:work-session .
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/references-ata-code
 cm:references-ata-code rdf:type owl:ObjectProperty ;
@@ -478,6 +506,11 @@ cm:worksession-start-time rdf:type owl:DatatypeProperty ;
 cm:اhas-number rdf:type owl:DatatypeProperty ;
                rdfs:range xsd:integer ;
                rdfs:label "number" .
+	
+### http://onto.fel.cvut.cz/ontologies/csat-maintenance/task-description
+cm:task-description rdf:type owl:DatatypeProperty ;
+				rdfs:range xsd:string ;
+				rdfs:label "task description" .
 
 
 #################################################################
@@ -648,6 +681,11 @@ cm:composite-workshop-support-group rdf:type owl:Class ;
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/damage
 cm:damage rdf:type owl:Class ;
           rdfs:subClassOf ms:Failure_Event .
+
+
+###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/damage-type
+cm:damage-type rdf:type owl:Class ;
+               rdfs:subClassOf <http://onto.fel.cvut.cz/ontologies/ufo/event-type> .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/day-bound-event
@@ -1191,17 +1229,14 @@ cm:scheduled-work-order rdf:type owl:Class ;
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/scoped-task-step
 cm:scoped-task-step rdf:type owl:Class ;
-                    rdfs:subClassOf [ rdf:type owl:Restriction ;
+                    rdfs:subClassOf <http://org.semanticweb.owlapi/error#Error3> ,
+                                    [ rdf:type owl:Restriction ;
                                       owl:onProperty cm:has-scope ;
                                       owl:someValuesFrom cm:maintenance-group
                                     ] ,
                                     [ rdf:type owl:Restriction ;
                                       owl:onProperty cm:is-part-of ;
                                       owl:allValuesFrom cm:work-order-step
-                                    ] ,
-                                    [ rdf:type owl:Restriction ;
-                                      owl:onProperty cm:time-estimate-in-hours ;
-                                      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
                                     ] .
 
 
@@ -1429,31 +1464,24 @@ cm:work-session rdf:type owl:Class ;
                                   owl:onClass cm:maintenance-task
                                 ] ,
                                 [ rdf:type owl:Restriction ;
+                                  owl:onProperty cm:has-day-bound-part ;
+                                  owl:maxCardinality "2"^^xsd:nonNegativeInteger
+                                ] ,
+                                [ rdf:type owl:Restriction ;
                                   owl:onProperty cm:duration-in-hours ;
                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                   owl:onDataRange xsd:float
-                                ] ,
-                                [ rdf:type owl:Restriction ;
-                                  owl:onProperty cm:has-day-bound-part ;
-                                  owl:maxCardinality "2"^^xsd:nonNegativeInteger
                                 ] .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage
 cm:workpackage rdf:type owl:Class ;
-               rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                 owl:onProperty cm:has-client ;
-                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                               ] ,
+               rdfs:subClassOf <http://org.semanticweb.owlapi/error#Error1> ,
+                               <http://org.semanticweb.owlapi/error#Error2> ,
                                [ rdf:type owl:Restriction ;
                                  owl:onProperty cm:id ;
                                  owl:cardinality "1"^^xsd:nonNegativeInteger
-                               ], 
-                               [ rdf:type owl:Restriction ;
-                                 owl:onProperty cm:is-repair-of ;
-                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                               ] 
-.
+                               ] .
 
 
 ###  http://onto.fel.cvut.cz/ontologies/csat-maintenance/workpackage-information-content
@@ -1521,6 +1549,18 @@ cm:zone rdf:type owl:Class ;
                                                                             rdfs:label "Discard/one Time Used" .
 
 
+###  http://org.semanticweb.owlapi/error#Error1
+<http://org.semanticweb.owlapi/error#Error1> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error2
+<http://org.semanticweb.owlapi/error#Error2> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error3
+<http://org.semanticweb.owlapi/error#Error3> rdf:type owl:Class .
+
+
 #################################################################
 #    Individuals
 #################################################################
@@ -1530,6 +1570,15 @@ cm:zone rdf:type owl:Class ;
                                                                   rdfs:comment "PLS PERFORM LUBRICATION OF LEADING EDGE IAW AMM 12-22-27-640-006-A AFTER TECHNICAL CLEANING" ;
                                                                   rdfs:label "4800160-wo-text" .
 
+
+[ owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+[ owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+ ] .
+
+[ owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+ ] .
 
 #################################################################
 #    Annotations

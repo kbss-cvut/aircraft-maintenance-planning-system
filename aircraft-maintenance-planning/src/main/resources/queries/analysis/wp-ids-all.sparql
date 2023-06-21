@@ -6,8 +6,8 @@ PREFIX spif: <http://spinrdf.org/spif#>
 PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
 
 
-SELECT ?wp WHERE
+SELECT ?wp ?wpId WHERE
 {
-    ?wpuri a cm:workpackage.
-    ?wpuri cm:id ?wp.
+    ?wp a cm:workpackage.
+    ?wp cm:id ?wpId.
 }

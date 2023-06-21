@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
+import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
 import cz.cvut.kbss.jopa.model.annotations.Transient;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -25,12 +26,12 @@ public class TaskType extends EventType {
     protected String code; // the code of the task
 
     // TODO - there should be a scopes collection because each task type can have work sessions performed by mechanics from different scope groups.
-    @OWLDataProperty(iri = Vocabulary.s_p_has_scope)
-    protected Set<URI> scopes;
+    @OWLObjectProperty(iri = Vocabulary.s_p_has_scope)
+    protected Set<MaintenanceGroup> scopes;
     // TODO - the type should be URI and it should point to maintenance group
     // This is the main scope of the task type
-    @OWLDataProperty(iri = Vocabulary.s_p_has_main_scope)
-    protected String scope;
+    @OWLObjectProperty(iri = Vocabulary.s_p_has_main_scope)
+    protected MaintenanceGroup scope;
 
 
     // TODO - this is a category (type) of the task. One way to fix this is to use different jopa classes to represent
@@ -73,7 +74,14 @@ public class TaskType extends EventType {
     @OWLDataProperty(iri = Vocabulary.s_p_time_estimate_in_hours)
     protected Double averageTime;
 
+    @Transient
+    protected List<TaskExecutionStatistics> executionStatistics;
+
     public TaskType() {
+    }
+
+    public TaskType(URI entityURI) {
+        this.entityURI = entityURI;
     }
 
     public TaskType(TaskType t){
@@ -87,7 +95,7 @@ public class TaskType extends EventType {
         this.code = code;
         this.setId(code);
         this.title = title;
-        this.viewLabel = code + "\n" + title;
+        this.viewLabel = code + title != null ? "\n" + title : "";
     }
 
     public TaskType(String code, String title, String taskcat, String acmodel) {
@@ -137,11 +145,11 @@ public class TaskType extends EventType {
                 .collect(Collectors.toList());
     }
 
-    public Set<URI> getScopes() {
+    public Set<MaintenanceGroup> getScopes() {
         return scopes;
     }
 
-    public void setScopes(Set<URI> scopes) {
+    public void setScopes(Set<MaintenanceGroup> scopes) {
         this.scopes = scopes;
     }
 
@@ -149,11 +157,11 @@ public class TaskType extends EventType {
         this.code = code;
     }
 
-    public String getScope() {
+    public MaintenanceGroup getScope() {
         return scope;
     }
 
-    public void setScope(String scope) {
+    public void setScope(MaintenanceGroup scope) {
         this.scope = scope;
     }
 
@@ -245,6 +253,14 @@ public class TaskType extends EventType {
         this.averageTime = averageTime;
     }
 
+    public List<TaskExecutionStatistics> getExecutionStatistics() {
+        return executionStatistics;
+    }
+
+    public void setExecutionStatistics(List<TaskExecutionStatistics> executionStatistics) {
+        this.executionStatistics = executionStatistics;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -295,64 +311,7 @@ public class TaskType extends EventType {
         return  taskTypeMap;
     }
 
-    @Transient
-    public static List<TaskType> taskTypeDefinitions;
-    @Transient
-    public static Map<String, List<TaskType>> taskTCCode2TCDefinitionMap;
-
-
-    public static void setTaskTypeDefinitions(List<TaskType> taskTypeDefinitions){
-        TaskType.taskTypeDefinitions = taskTypeDefinitions;
-    }
-
-    public static List<TaskType> getTaskTypeDefinitions() {
-        return taskTypeDefinitions;
-    }
-
-    public static Map<String, List<TaskType>> getTaskTCCode2TCDefinitionMap() {
-        return taskTCCode2TCDefinitionMap;
-    }
-
-    public static void setTaskTCCode2TCDefinitionMap(Map<String, List<TaskType>> taskTCCode2TCDefinitionMap) {
-        TaskType.taskTCCode2TCDefinitionMap = taskTCCode2TCDefinitionMap;
-    }
-
-    /**
-     * taskTypeDefinitions should be set first
-     * @param results
-     */
-    public static void initTC2TCDefMap(List<Result> results){
-        taskTCCode2TCDefinitionMap = new HashMap<>();
-        results.stream()
-                .map(r -> r.taskType)
-                .filter(t -> t != null && t.getCode() != null && "task-card".equals(t.getTaskcat()))
-                .map(t -> t.getCode())
-                .distinct()
-                .forEach(code -> taskTCCode2TCDefinitionMap.put(code, findMatchingTCDef(code, taskTypeDefinitions)));
-    }
-
-    public static List<TaskType> findMatchingTCDef(String code, List<TaskType> taskTypeDefinitions){
-        List<Pair<TaskType, Integer>> matchResults = findMatchingTCDef(code, TaskType::getCode, taskTypeDefinitions);
-
-        if(matchResults.isEmpty()) {
-            matchResults = findMatchingTCDef(code, TaskType::getMpdtask, taskTypeDefinitions);
-        }
-        List<TaskType> matches = matchResults.stream()
-                .sorted(Comparator.comparing((Pair<TaskType, Integer> p) -> p.getRight()).reversed())
-                .map(p -> p.getKey())
-                .collect(Collectors.toList());
-
-        return matches;
-    }
-
-    protected static List<Pair<TaskType, Integer>> findMatchingTCDef(String tcCode, Function<TaskType, String> idfunc, List<TaskType> taskTypeDefinitions){
-        return taskTypeDefinitions.stream()
-                .map(t -> Pair.of(t, is_TCCode_Match_v3(idfunc.apply(t), tcCode)))
-                .filter(p -> p.getRight() > 0)
-                .collect(Collectors.toList());
-    }
-
-    protected static int is_TCCode_Match_v3(String sl, String sr){
+    public static int is_TCCode_Match_v3(String sl, String sr){
         if(sl == null)
             return -1;
         String slFixed = prepareTCDef_Code(sl);
@@ -378,18 +337,20 @@ public class TaskType extends EventType {
         );
     }
 
-    public static TaskType getTaskTypeDefinition(Result r){
-        if(r == null)
-            return null;
+//    public static TaskType getTaskTypeDefinition(Result r){
+//        if(r == null)
+//            return null;
+//
+//        return getTaskTypeDefinition(r.taskType);
+//    }
 
-        return getTaskTypeDefinition(r.taskType);
-    }
+//    public static TaskType getTaskTypeDefinition(TaskType tt){
+//        if(tt == null || tt.getCode() == null)
+//            return null;
+//
+//        List<TaskType> res = taskTCCode2TCDefinitionMap.get(tt.getCode());
+//        return Optional.ofNullable(res).map(l -> l.isEmpty() ? null : l.get(0)).orElse(null);
+//    }
 
-    public static TaskType getTaskTypeDefinition(TaskType tt){
-        if(tt == null || tt.getCode() == null)
-            return null;
 
-        List<TaskType> res = taskTCCode2TCDefinitionMap.get(tt.getCode());
-        return Optional.ofNullable(res).map(l -> l.isEmpty() ? null : l.get(0)).orElse(null);
-    }
 }

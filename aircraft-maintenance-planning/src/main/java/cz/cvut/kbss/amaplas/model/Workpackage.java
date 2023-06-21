@@ -1,13 +1,20 @@
 package cz.cvut.kbss.amaplas.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.jopa.model.annotations.*;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @OWLClass(iri = Vocabulary.s_c_workpackage)
-public class Workpackage extends AbstractEntity{
+public class Workpackage extends AbstractEntityWithDescription {
 
     @OWLObjectProperty(iri = Vocabulary.s_p_is_repair_of, fetch = FetchType.EAGER)
     protected Aircraft aircraft;
@@ -24,15 +31,30 @@ public class Workpackage extends AbstractEntity{
     @OWLDataProperty(iri = Vocabulary.s_p_workpackage_scheduled_end_time)
     protected LocalDate plannedEndTime;
 
+    @Transient
+    protected Date start;
+    @Transient
+    protected Date end;
+
+    @OWLObjectProperty(iri = Vocabulary.s_p_has_part)
+    protected Set<TaskExecution> taskExecutions;
+
     public Workpackage() {
     }
+
+    public Workpackage(URI entityUri) {
+        this.entityURI = entityUri;
+    }
+    public Workpackage(URI entityUri, String id) {
+        this.entityURI = entityUri;
+        this.id = id;
+    }
+
 
     public Workpackage(String id) {
         setId(id);
     }
 
-
-    //
     public Aircraft getAircraft() {
         return aircraft;
     }
@@ -81,6 +103,36 @@ public class Workpackage extends AbstractEntity{
         this.plannedEndTime = plannedEndTime;
     }
 
+
+    public Set<TaskExecution> getTaskExecutions() {
+        return taskExecutions;
+    }
+
+    public void setTaskExecutions(Set<TaskExecution> taskExecutions) {
+        this.taskExecutions = taskExecutions;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
+    @JsonIgnore
+    public Set<TaskType> getTaskTypes(){
+        return Optional.ofNullable(getTaskExecutions()).map(taskExecutions -> taskExecutions.stream().map(e -> e.getTaskType()).collect(Collectors.toSet())).orElse(null);
+    }
+
     @Override
     public String toString() {
         return "WorkPackage{" +
@@ -96,7 +148,5 @@ public class Workpackage extends AbstractEntity{
 
     public static void main(String[] args) {
         OffsetDateTime d;
-
-
     }
 }

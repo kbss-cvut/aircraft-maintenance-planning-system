@@ -1,0 +1,34 @@
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+PREFIX spif: <http://spinrdf.org/spif#>
+PREFIX ofn:  <http://www.ontotext.com/sparql/functions/>
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+
+SELECT DISTINCT ?wp ?task ?taskType ?issueTime ?endTime (MIN(?st) as ?derivedStart) (MAX(?et) as ?derivedEnd) (SUM(ofn:asMillis(?et - ?st)) as ?derivedWorkTime) (ofn:asMillis(?derivedEnd - ?derivedStart) as ?derivedDuration) where {
+#    BIND(cm:workpackage--OE-LBN-H-23-B4Y-B2Y-ECAP as ?wp)
+
+    ?task cm:is-part-of-workpackage ?wp .
+    ?task a ?taskType .
+    ?taskType a cm:task-type .
+
+    OPTIONAL{
+        ?task cm:issue-time ?issueTime.
+    }
+    OPTIONAL{
+        ?task cm:end-time ?endTime.
+    }
+    ?session cm:is-part-of-maintenance-task ?task .
+
+    ?session cm:start-date ?sDate.
+    ?session cm:start-time ?sTime.
+    BIND(CONCAT(str(?sDate),"T", str(?sTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?start)
+
+    BIND(spif:parseDate(?start, "yyyy-MM-dd'T'HH:mm") as ?st)
+
+    ?session cm:end-date ?eDate.
+    ?session cm:end-time ?eTime.
+    BIND(CONCAT(str(?eDate),"T", str(?eTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?end)
+    BIND(spif:parseDate(?end, "yyyy-MM-dd'T'HH:mm") as ?et)
+
+} GROUP BY ?wp ?task ?taskType ?issueTime ?endTime

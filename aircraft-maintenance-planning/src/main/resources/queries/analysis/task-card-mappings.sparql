@@ -7,11 +7,11 @@ PREFIX spif: <http://spinrdf.org/spif#>
 PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
 PREFIX amp: <http://onto.fel.cvut.cz/ontologies/aircraft-maintenance-planning/>
 
-SELECT ?tcd ?tcId {
+SELECT ?taskCard ?definition {
     GRAPH ?taskTypeDefinitionGraph{
-        ?tcd rdfs:subClassOf cm:task-type-definition.
+        ?definition rdfs:subClassOf cm:task-type-definition.
     }
     GRAPH ?taskCardMappingGraph{
-        ?tcd amp:has-specific-task-with-id ?tcId.
+        ?taskCard amp:has-task-type-definition ?definition.
     }
 }

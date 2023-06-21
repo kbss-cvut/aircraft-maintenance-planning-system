@@ -1,6 +1,6 @@
 package cz.cvut.kbss.amaplas.planners;
 
-import cz.cvut.kbss.amaplas.model.Result;
+import cz.cvut.kbss.amaplas.model.TaskExecution;
 import cz.cvut.kbss.amaplas.model.TaskType;
 import org.jgrapht.graph.DefaultDirectedGraph;
 
@@ -20,7 +20,7 @@ public class PlanGraph extends DefaultDirectedGraph<TaskPattern, SequencePattern
         super(vertexSupplier, edgeSupplier, weighted);
     }
 
-    public TaskPattern addVertex(TaskType taskType, List<List<Result>> instances, boolean planned){
+    public TaskPattern addVertex(TaskType taskType, List<TaskExecution> instances, boolean planned){
         TaskPattern taskPattern = new TaskPattern(taskType, planned);
         taskPattern.setInstances(instances);
         super.addVertex(taskPattern);

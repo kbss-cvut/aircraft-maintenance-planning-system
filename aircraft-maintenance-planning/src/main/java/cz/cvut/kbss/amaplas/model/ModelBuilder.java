@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 public class ModelBuilder {
     protected ModelFactory factory;
 
-    protected Map<Object, Map<String, AbstractEntity>> entityMaps = new HashMap<>();
+    protected Map<Object, Map<String, AbstractEntityWithDescription>> entityMaps = new HashMap<>();
 
     public ModelBuilder() {
     }
@@ -27,9 +27,9 @@ public class ModelBuilder {
         this.factory = factory;
     }
 
-    public TaskType getTaskType(String code, String label, String area, String taskType, String scope, String phase, String taskCat) {
-        return getEntity(code, "task-type", () -> factory.newTaskType(code, label, area, taskType, scope, phase, taskCat));
-    }
+//    public TaskType getTaskType(String code, String label, String area, String taskType, String scope, String phase, String taskCat) {
+//        return getEntity(code, "task-type", () -> factory.newTaskType(code, label, area, taskType, scope, phase, taskCat));
+//    }
 
     public GeneralTaskPlan getGeneralTaskPlan(String phase, String label) {
         return getEntity(phase, label, () -> factory.newGeneralTaskPlan(label));
@@ -67,7 +67,7 @@ public class ModelBuilder {
         return factory.newSessionPlan(mechanic, taskPlan, startTime, endTime);
     }
 
-    public <T extends AbstractEntity> T newEntity(Supplier<T> entityFactory, String label) {
+    public <T extends AbstractEntityWithDescription> T newEntity(Supplier<T> entityFactory, String label) {
         return factory.newEntity(entityFactory, label);
     }
 
@@ -79,13 +79,13 @@ public class ModelBuilder {
         return factory.duration(from, to);
     }
 
-    public <T extends AbstractEntity> T getEntity(String id, Object context, Supplier<T> generator){
-        Map<String, AbstractEntity> entityMap = entityMaps.get(context);
+    public <T extends AbstractEntityWithDescription> T getEntity(String id, Object context, Supplier<T> generator){
+        Map<String, AbstractEntityWithDescription> entityMap = entityMaps.get(context);
         if(entityMap == null) {
             entityMap = new HashMap<>();
             entityMaps.put(context, entityMap);
         }
-        AbstractEntity r = entityMap.get(id);
+        AbstractEntityWithDescription r = entityMap.get(id);
         if(r == null) {
             r = generator.get();
             entityMap.put(id, r);
