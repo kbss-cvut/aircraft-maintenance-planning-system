@@ -1,0 +1,593 @@
+# baseURI: http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/csat-maintenance
+# imports: http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1
+# imports: http://onto.fel.cvut.cz/ontologies/s-pipes-lib
+
+@prefix : <http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1/> .
+@prefix ata: <http://onto.fel.cvut.cz/voc/ata-100/> .
+@prefix cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
+@prefix cmd: <http://onto.fel.cvut.cz/ontologies/csat-maintenance-data/> .
+@prefix config: <http://onto.fel.cvut.cz/ontologies/csat/config/> .
+@prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix dl: <http://onto.fel.cvut.cz/ontologies/csat/data-lib/> .
+@prefix doc: <http://onto.fel.cvut.cz/ontologies/documentation/> .
+@prefix kbss-module: <http://onto.fel.cvut.cz/ontologies/lib/module/> .
+@prefix kbss-csvw: <https://onto.fel.cvut.cz/ontologies/extension/csvw/> .
+@prefix km-rdf4j: <http://onto.fel.cvut.cz/ontologies/lib/module/rdf4j/> .
+@prefix km-sesame: <http://onto.fel.cvut.cz/ontologies/lib/module/sesame/> .
+@prefix km-tabular: <http://onto.fel.cvut.cz/ontologies/lib/module/tabular/> .
+@prefix km-text-analysis: <http://onto.fel.cvut.cz/ontologies/lib/module/text-analysis/> .
+@prefix km-rdf2csv: <http://onto.fel.cvut.cz/ontologies/lib/module/RDF2CSV/> .
+@prefix km-terms: <http://onto.fel.cvut.cz/ontologies/lib/module/extract-term-occurrences/> .
+@prefix ms: <http://onto.fel.cvut.cz/ontologies/maintenance-schema/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sm: <http://topbraid.org/sparqlmotion#> .
+@prefix sml: <http://topbraid.org/sparqlmotionlib#> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+@prefix spl: <http://spinrdf.org/spl#> .
+@prefix td: <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1/> .
+@prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/> .
+@prefix vocabulary-prefix: <http://onto.fel.cvut.cz/ontologies/slovnik/slovník-komponent-a-zádavd---markéta-dp-lower-case/pojem/> . # TODO: change this
+
+<http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1>
+  a owl:Ontology ;
+  owl:imports <http://onto.fel.cvut.cz/ontologies/s-pipes-lib> ;
+.
+
+:import-data
+  a sml:ImportRDFFromWorkspace ;
+  sm:next :construct-row-triples;
+  sml:baseURI "http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1-data";
+  sml:ignoreImports true ;
+.
+
+:construct-row-triples
+  a sml:ApplyConstruct ;
+  sm:next :annotate-literals ;
+  sm:next :connect-terms-with-wo-text ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+        CONSTRUCT {
+          ?s ?p ?o.
+        } WHERE {
+          ?s ?p ?o.
+        }""" ;
+    ] ;
+  sml:replace true ;
+.
+
+:annotate-literals
+  a kbss-module:text-analysis ;
+  sm:next :extract-term-occurrences ;
+  km-text-analysis:language "en";
+  km-text-analysis:service-url "https://kbss.felk.cvut.cz/czech-text-analysis/annotate";
+  km-text-analysis:vocabulary-iri "http://onto.fel.cvut.cz/ontologies/slovnik/slovník-komponent-a-zádavd---markéta-dp-lower-case";
+  km-text-analysis:vocabulary-repository "https://graphdb.onto.fel.cvut.cz/repositories/termit-csat";
+  km-text-analysis:literals-per-request 10000;
+  sml:selectQuery [
+      a sp:Select ;
+      sp:text """
+      SELECT ?literal
+      WHERE {
+        ?s ?p ?literal.
+        FILTER(isLiteral(?literal) && datatype(?literal) = xsd:string)
+      }""" ;
+  ] ;
+  sml:replace false;
+.
+
+:extract-term-occurrences
+  a kbss-module:extract-term-occurrences ;
+  sm:next :construct-row-triples-for-analysis ;
+  sml:replace false;
+.
+
+:import-vocabulary
+  a sml:ImportRDFFromWorkspace ;
+  sm:next :construct-row-triples-for-analysis;
+  sm:next :apply-part-of-rule;
+  sml:baseURI "http://onto.fel.cvut.cz/ontologies/slovnik/slovník-komponent-a-zádavd---markéta-dp-lower-case/glosář123";
+  sml:ignoreImports true ;
+  sml:replace false;
+.
+
+## TEXT ANALYSIS PART -> SELECT FINAL COMP AND FAILURE TERMS  (The most of this code is taken from text-analysis.sms.ttl)
+
+:construct-row-triples-for-analysis
+  a sml:ApplyConstruct ;
+  sm:next :transform-to-output-format ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """# 1 - Apply algorithm
+
+CONSTRUCT {
+  ?row
+    :WO_text        ?woText;
+    :failureMode    ?failMode;
+    :mulFailures    ?mulFailures;
+    :component      ?component;
+    :mulComponents  ?mulComponents;
+    :OriginalText   ?originalText;
+    :occurrences    ?termOccurrence.
+
+  ?termOccurrence a termit:výskyt-termu ;
+    termit:odkazuje-na-anotaci ?annotation;
+    termit:odkazuje-na-anotovaný-text ?annotatedText;
+    termit:má-skóre ?finalScore;
+    termit:je-přiřazením-termu ?term.
+
+} WHERE {
+
+  ?termOccurrence
+    a termit:výskyt-termu ;
+    termit:odkazuje-na-anotaci ?annotation;
+    termit:odkazuje-na-anotovaný-text ?woText;
+    termit:je-přiřazením-termu ?term;
+    termit:má-cíl ?target.
+
+  ?target a termit:cíl-výskytu ;
+    termit:má-selektor ?textSelector;
+  .
+
+  ?textSelector a termit:selektor-text-quote ;
+    termit:má-prefix-text-quote  ?prefix ;
+    termit:má-přesný-text-quote  ?exactTextQuote ;
+    termit:má-suffix-text-quote  ?suffix.
+
+  BIND(CONCAT(?prefix, ?exactTextQuote, ?suffix) AS ?originalText )
+
+  OPTIONAL {?termOccurrence termit:má-skóre ?score}
+
+  BIND(IF(BOUND(?score), ?score, "10.0"^^xsd:float) AS ?finalScore) # this is workaround for better score comparing
+
+  ?row termit:has-annotated-text ?woText;
+
+}""" ;
+    ] ;
+  sml:replace false ;
+.
+
+:transform-to-output-format
+  a sml:ApplyConstruct ;
+  sm:next :select-final-component;
+  sm:next :connect-terms-with-wo-text ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+
+CONSTRUCT{
+
+  ?row  rdf:type csvw:Row;
+        :OriginalText ?originalText;
+        :AnnotatedText ?annotatedText;
+        :finalComp ?finalComp;
+        :mulFailures ?failure;
+        :mulComponents ?component;
+        :finalFailure ?finalFailure.
+
+}WHERE{
+  ?row
+      :OriginalText     ?originalText;
+      :WO_text          ?annotatedText;
+      :occurrences      ?occurrence.
+
+  OPTIONAL{
+    ?occurrence a termit:výskyt-termu ;
+      termit:je-přiřazením-termu ?component.
+    ?component a skos:Concept;
+        skos:broader+ vocabulary-prefix:component ; # TODO: cm:component
+    BIND(?occurrence AS ?finalComp)
+  }
+
+  OPTIONAL{
+    ?occurrence
+            termit:je-přiřazením-termu ?failure;
+            termit:má-skóre ?failScore.
+    ?failure a skos:Concept;
+        skos:broader+ vocabulary-prefix:failure. # TODO: cm:failure
+    BIND(?occurrence AS ?finalFailure)
+  }
+}""" ;
+    ] ;
+  sml:replace false ;
+.
+
+:select-final-component
+  a sml:ApplyConstruct ;
+  sm:next :select-final-failure;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+
+  CONSTRUCT{
+    ?row
+        :ComponentUri ?componentTerm;
+        :selectedComponentNode ?selectedComponent;
+        :componentScore ?maxScore;
+        :compUri ?chosenComp;
+        :compLabel ?chosenCompLabel.
+
+   }WHERE{
+    ?row rdf:type csvw:Row;
+        :finalComp ?chosenComp .
+
+    ?chosenComp termit:má-skóre ?maxScore;
+        termit:je-přiřazením-termu ?componentTerm.
+
+    FILTER NOT EXISTS {
+       ?row :finalComp ?otherComp .
+       ?otherComp termit:má-skóre ?otherScore.
+       FILTER(?chosenComp != ?otherComp)
+       FILTER(?maxScore <= ?otherScore)
+    }
+
+}""" ;
+    ] ;
+  sml:replace false ;
+.
+
+:select-final-failure
+  a sml:ApplyConstruct ;
+  sm:next :apply-part-of-rule ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+
+  CONSTRUCT{
+    ?row
+        :FailureUri ?failureTerm;
+        :FailureLabel ?chosenFailureLabel;
+        :failureScore ?maxScore;
+        :chosenFailure ?chosenFailure;
+        :selectedFailureNode ?selectedFailure;
+
+  }WHERE{
+   ?row rdf:type csvw:Row;
+        :finalFailure ?chosenFailure .
+
+    ?chosenFailure termit:má-skóre ?maxScore;
+        termit:je-přiřazením-termu ?failureTerm.
+
+  FILTER NOT EXISTS {
+       ?row :finalFailure ?otherFailure .
+       ?otherFailure termit:má-skóre ?otherScore.
+       FILTER(?chosenFailure != ?otherFailure)
+       FILTER(?maxScore <= ?otherScore)
+    }
+}""" ;
+    ] ;
+  sml:replace false ;
+.
+
+:apply-part-of-rule
+  a sml:ApplyConstruct ;
+  sm:next :construct-multiple-components-and-failures ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+
+  CONSTRUCT{
+    ?row  :ruledComponent ?compA;
+
+  }WHERE{
+    ?row  a csvw:Row;
+          :finalComp ?compA;
+          :finalComp ?compB.
+
+    OPTIONAL { ?row :ComponentUri ?componentUri }
+
+    ?compA  :termType vocabulary-prefix:component;  # TODO: change
+            termit:je-přiřazením-termu/termit:part-of ?componentResourceB;
+            termit:je-přiřazením-termu/skos:prefLabel ?label.
+
+    ?compB  :termType vocabulary-prefix:component;  # TODO: change
+            termit:je-přiřazením-termu ?componentResourceB.
+
+    FILTER( ?compA != ?compB )
+  }
+""" ;
+    ] ;
+  sml:replace false ;
+.
+
+
+:construct-multiple-components-and-failures
+  a sml:ApplyConstruct ;
+  sm:next :concatenate-multiple-components-and-failures;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+
+  CONSTRUCT{
+    ?row  a csvw:Row;
+          :AggregateScore ?aggregateScore;
+          :IsConfirmed ?isConfirmed;
+          :FailureScore ?finalFailureScore;
+          :selectedFailures ?failureLabel;
+          :FailureUri   ?failureUri;
+          :ComponentUri ?componentUri;
+          :selectedComponents ?componentLabel;
+          :ComponentScore ?finalComponentScore;
+          :multipleComponents ?allComponentsLabel;
+          :multipleFailures ?allFailuresLabel;
+          :WO_text            ?woText;
+          :AnnotatedText      ?annotatedText;
+          :OriginalText       ?originalText.
+
+  }WHERE{
+    ?row  a csvw:Row;
+          :WO_text              ?woText;
+          :AnnotatedText        ?annotatedText;
+          :OriginalText         ?originalText.
+
+    OPTIONAL { ?row :componentScore ?compScore   }
+    OPTIONAL { ?row :failureScore ?failureScore  }
+    OPTIONAL { ?row :FailureUri ?failureUri      }
+    OPTIONAL { ?row :FailureUri/skos:prefLabel ?failureLabel}
+
+    OPTIONAL{
+      ?row :ComponentUri ?compUri.
+      ?compUri skos:prefLabel ?chosenComponentLabel.
+    }
+
+    OPTIONAL{
+      ?row :ruledComponent ?ruledComp.
+      ?ruledComp  termit:má-skóre ?ruledCompScore;
+                  termit:je-přiřazením-termu ?componentResource.
+      ?componentResource skos:prefLabel ?ruledComponentLabel.
+    }
+
+    BIND(IF(BOUND(?ruledComponentLabel), ?ruledComponentLabel, ?chosenComponentLabel) AS ?componentLabel)
+    BIND(IF(BOUND(?componentResource), ?componentResource, ?compUri) AS ?componentUri)
+
+    OPTIONAL{ ?row :finalFailure/termit:je-přiřazením-termu/skos:prefLabel ?allFailuresLabel}
+    OPTIONAL{ ?row :finalComp/termit:je-přiřazením-termu/skos:prefLabel ?allComponentsLabel}
+
+    BIND((?compScore * ?failureScore) AS ?tmpScore)
+    BIND(IF(?compScore = "10.0"^^xsd:float || ?failureScore = "10.0"^^xsd:float, "TRUE", "FALSE") AS ?tmpIsConfirmed)
+    BIND(IF(!BOUND(?tmpIsConfirmed), "FALSE", ?tmpIsConfirmed) AS ?isConfirmed)
+    BIND(IF(BOUND(?ruledCompScore), ?ruledCompScore, ?compScore) AS ?tmpComponentScore)
+    BIND(IF(?tmpComponentScore = "10"^^xsd:float, "1.0"^^xsd:float, ?tmpComponentScore) AS ?finalComponentScore)
+    BIND(IF(?failureScore = "10"^^xsd:float, "1.0"^^xsd:float, ?failureScore) AS ?finalFailureScore)
+
+    BIND(
+      (IF(BOUND(?finalComponentScore), ?finalComponentScore, "1.0"^^xsd:float)
+        * IF(BOUND(?finalFailureScore), ?finalFailureScore, "1.0"^^xsd:float)
+      ) AS ?aggregateScore)
+  }
+""" ;
+    ] ;
+  sml:replace false ;
+.
+
+:concatenate-multiple-components-and-failures
+  a sml:ApplyConstruct ;
+  sm:next :process-multiple-components;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+  CONSTRUCT{
+    ?row
+          :MultipleFailures   ?concatenatedFailures ;
+          :FoundFailuresCount ?foundFailuresCount.
+
+   }WHERE{
+    ?row a csvw:Row;
+         :multipleFailures ?failures.
+
+    {
+      SELECT ?row (GROUP_CONCAT(?failures; separator=", ") as ?concatenatedFailures)
+      (COUNT(?failures) AS ?foundFailuresCount)
+      WHERE {
+        ?row :multipleFailures ?failures.
+      } GROUP BY ?row ORDER BY ?failures
+    }
+
+}""" ;
+    ] ;
+  sml:replace false;
+.
+
+:process-multiple-components
+  a sml:ApplyConstruct ;
+  sm:next :process-selected-components;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+  CONSTRUCT{
+    ?row  :MultipleComponents ?concatenatedComponents;
+          :FoundComponentsCount ?foundComponentsCount.
+
+   }WHERE{
+    ?row a csvw:Row;
+         :multipleComponents ?components.
+
+    {
+      SELECT ?row (GROUP_CONCAT(?components; separator=", ") as ?concatenatedComponents)
+      (COUNT(?components) AS ?foundComponentsCount)
+      WHERE {
+        ?row :multipleComponents ?components.
+      }GROUP BY ?row ORDER BY ?components
+    }
+
+}""" ;
+    ] ;
+  sml:replace false;
+.
+
+:process-selected-components
+  a sml:ApplyConstruct ;
+  sm:next :process-selected-failures;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+  CONSTRUCT{
+    ?row  :SelectedComponentLabels ?concatenatedSelectedComponents;
+          :FinalComponentUri ?finalComponentUri;
+          :SelectedComponentsCount ?selectedComponentsCount.
+
+   }WHERE{
+    ?row a csvw:Row;
+     :selectedComponents ?selectedComponents.
+
+     OPTIONAL{?row  :ComponentUri ?componentUri }
+    {
+      SELECT ?row (GROUP_CONCAT(?selectedComponents; separator=", ") as ?concatenatedSelectedComponents)
+      (COUNT(?selectedComponents) AS ?selectedComponentsCount)
+      WHERE {
+        ?row :selectedComponents ?selectedComponents.
+      }GROUP BY ?row ORDER BY ?selectedComponents
+    }
+    BIND(IF(?selectedComponentsCount = 1, ?componentUri, "") AS ?finalComponentUri)
+
+}""" ;
+    ] ;
+  sml:replace false;
+.
+
+:process-selected-failures
+  a sml:ApplyConstruct ;
+  sm:next :connect-terms-with-wo-text ; 
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+  CONSTRUCT{
+   ?row
+          :SelectedFailureLabels ?concatenatedSelectedFailures;
+          :FinalFailureUri ?finalFailureUri;
+          :SelectedFailuresCount ?selectedFailuresCount.
+
+   }WHERE{
+    ?row a csvw:Row;
+      :selectedFailures ?selectedFailures.
+    OPTIONAL{?row  :FailureUri ?failureUri }
+
+    {
+      SELECT ?row (GROUP_CONCAT(?selectedFailures; separator=", ") as ?concatenatedSelectedFailures)
+      (COUNT(?selectedFailures) AS ?selectedFailuresCount)
+      WHERE {
+        ?row :selectedFailures ?selectedFailures.
+      }GROUP BY ?row ORDER BY ?selectedFailures
+    }
+    BIND(IF(?selectedFailuresCount = 1, ?failureUri, "") AS ?finalFailureUri)
+
+}""" ;
+    ] ;
+  sml:replace false;
+.
+
+#### TEXT ANALYSIS
+
+:connect-terms-with-wo-text
+  a sml:ApplyConstruct ;
+  sm:next :replace-ontology ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+        CONSTRUCT {
+          <http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1-annotated-data>
+            a owl:Ontology .
+
+          ?row ?o ?p.
+          
+          ?stepExecution
+              a cm:task-step-execution ;
+              cm:described-finding ?findingIndividual ;
+              cm:work-order-text ?woText.
+
+          ?findingIndividual a cm:finding-individual;
+            :WO_text       ?annotatedText;
+            cm:has-failure-occurrence ?failureOccurrence.
+
+        ?failureOccurrence a cm:failure-occurrence;
+	            termit:has-original-text ?woText;
+              termit:založeno-na-výskytu-termu ?chosenFailureOccurrence;
+              termit:založeno-na-výskytu-termu ?chosenComponentOccurrence;
+              termit:má-skóre ?aggregateScore ;
+              termit:je-přiřazením-relace ?failureInstanceUri.
+
+        ?failureInstanceUri a termit:relation-instance;
+              :has-relation cm:has-failure;
+              :has-argument1 ?componentUri;
+              :has-argument2 ?failureUri.
+
+        } WHERE {
+
+          ?row a csvw:Row ;
+            ?o ?p;
+            :WO_text ?annotatedText ;
+            :OriginalText ?originalText ; 
+            :FailureUri ?failureUri ;
+            :ComponentUri ?componentUri ;
+            :FinalFailureUri ?failureTerm ;
+            :FinalComponentUri ?componentTerm ;
+            :compUri ?chosenComponentOccurrence ;
+            :chosenFailure ?chosenFailureOccurrence ;
+            :SelectedFailuresCount ?selectedFailuresCount ;
+            :SelectedComponentsCount ?selectedComponentsCount .
+
+          ?annotation a termit:annotation;
+            termit:has-annotated-text ?annotatedText;
+            termit:has-original-text ?woText.
+
+          ?stepExecution
+            cm:work-order-text ?woText.
+
+          OPTIONAL{ ?chosenFailureOccurrence termit:má-skóre ?failureOccurrenceScore }
+          OPTIONAL{ ?chosenComponentOccurrence termit:má-skóre ?componentOccurrenceScore }
+
+          BIND(
+            (IF(BOUND(?finalComponentScore), ?finalComponentScore, "1.0"^^xsd:float)
+              * IF(BOUND(?finalFailureScore), ?finalFailureScore, "1.0"^^xsd:float)
+            ) AS ?aggregateScore)
+
+          BIND(dl:instance(cm:has-failure, MD5(dl:id-2(?componentTerm, ?failureTerm))) as ?failureInstanceUri)
+          BIND(dl:instance(termit:vyskyt-relace, MD5(dl:id-2(?woText, ?failureInstanceUri))) as ?vyskytRelace)
+          BIND(dl:instance(cm:failure-occurrence, MD5(dl:id-2(?woText, ?failureInstanceUri))) as ?failureOccurrence)
+          BIND(dl:instance(cm:finding-individual, MD5(dl:id-2(?stepExecution, ?failureOccurrence))) AS ?findingIndividual)
+          
+          FILTER(?selectedFailuresCount = 1 && ?selectedComponentsCount = 1)
+
+        }""" ;
+    ] ;
+  sml:replace false ;
+.
+
+:replace-ontology
+  a sml:ApplyConstruct ;
+  sm:next :transform-enhance-wo-text-data_Return ;
+  sml:constructQuery [
+      a sp:Construct ;
+      sp:text """
+        CONSTRUCT {
+          <http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1-annotated-data>
+            a owl:Ontology .
+          ?s ?p ?o.
+        } WHERE {
+          ?s ?p ?o .
+          FILTER NOT EXISTS { ?s a owl:Ontology }
+          FILTER NOT EXISTS { ?s a skos:Concept }
+        }""" ;
+    ] ;
+  sml:replace true ;
+.
+:transform-enhance-wo-text-data
+  a sm:Function ;
+  sm:returnModule :transform-enhance-wo-text-data_Return ;
+  rdfs:subClassOf sm:Functions ;
+.
+
+
+:transform-enhance-wo-text-data_Return
+  a sml:ReturnRDF ;
+  sml:serialization sml:Turtle ;
+.

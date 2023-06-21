@@ -1,0 +1,33 @@
+# query to compute what is coverage of all datasets per one day. Note that variable ?lastDate should be set before executing this query.
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+SELECT ?date (SUM(?isTimeAnalysis) as ?timeAnalysisCount) (SUM(?isTimeEstimate) as ?timeEstimateCount) (SUM(?isWoTcRef) as ?woTcRefCount) (SUM(?isWpCatalog) as ?wpCatalogCount) (SUM(?isProjectNumbers) as ?projectNumbersCount) (SUM(?isDefectClass) as ?defectClassCount) (SUM(?isPresence) as ?presenceCount)
+WHERE {
+  {
+    SELECT ?date
+    WHERE {      
+      BIND("20213-04-04" as ?lastDate)
+         
+      VALUES (?year) { ("2021") ("2022") ("2023") }
+      VALUES (?month) { ("01") ("02") ("03") ("04") ("05") ("06") ("07") ("08") ("09") ("10") ("11") ("12") }
+      VALUES (?day) { ("01") ("02") ("03") ("04") ("05") ("06") ("07") ("08") ("09") ("10") ("11") ("12") ("13") ("14")  ("15") ("16")  ("17") ("18")  ("19") ("20") ("21") ("22") ("23") ("24") ("25") ("26") ("27") ("28") ("29") ("30") ("31")  }
+      FILTER (! (?year in ( "2021", "2022", "2023" ) && ?month = "02" && ?day = "29"))
+      FILTER (! (?month in ( "02", "04", "06", "09", "11" )  && ?day = "31"))
+      FILTER (! (?month = "02" && ?day = "30"))
+      BIND(concat(?year,"-",?month,"-",?day) as ?date)
+      FILTER(?date <= ?lastDate)
+    }
+  }
+  ?dataset cm:dataset-timestamp	?datasetTimestamp .
+  ?dataset cm:dataset-id ?datasetId . 
+  BIND(replace(str(?datasetTimestamp), "T.*", "") as ?datasetDate)
+  FILTER(?datasetDate = str(?date))
+  BIND(IF(?datasetId = "time-analysis", 1, 0) as ?isTimeAnalysis)
+  BIND(IF(?datasetId = "time-estimate", 1, 0) as ?isTimeEstimate)
+  BIND(IF(?datasetId = "wo-tc-ref", 1, 0) as ?isWoTcRef)
+  BIND(IF(?datasetId = "wp-catalog", 1, 0) as ?isWpCatalog)
+  BIND(IF(?datasetId = "project-numbers", 1, 0) as ?isProjectNumbers)
+  BIND(IF(?datasetId = "defect-class", 1, 0) as ?isDefectClass)
+  BIND(IF(?datasetId = "presence", 1, 0) as ?isPresence)
+} 
+GROUP BY ?date
+ORDER BY ?date
