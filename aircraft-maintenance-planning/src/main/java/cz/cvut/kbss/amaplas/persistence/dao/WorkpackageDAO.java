@@ -1,6 +1,6 @@
 package cz.cvut.kbss.amaplas.persistence.dao;
 
-import cz.cvut.kbss.amaplas.io.EntityRegistry;
+import cz.cvut.kbss.amaplas.persistence.dao.mapper.EntityRegistry;
 import cz.cvut.kbss.amaplas.model.*;
 import cz.cvut.kbss.amaplas.model.values.DateParserSerializer;
 import cz.cvut.kbss.amaplas.persistence.dao.mapper.Bindings;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import java.net.URI;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,8 +23,6 @@ import java.util.stream.Collectors;
 @Repository
 public class WorkpackageDAO extends BaseDao<Workpackage>{
 
-    protected static final URI p_workpackage_end_time = URI.create(Vocabulary.s_p_workpackage_end_time);
-
     public static final String WP_TASK_TYPES = "/queries/analysis/wp-task-types.sparql";
 
     public static final String WP_TASK_EXECUTIONS = "/queries/analysis/task-executions.sparql";
@@ -32,7 +30,26 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
     public static final String TASK_EXECUTION_STATISTICS_FROM_PARTS = "/queries/analysis/task-execution-statistics-from-parts.sparql";
     public static final String WP_SIMILAR_WPS = "/queries/analysis/similar-wps.sparql";
 
+    public static final String WP_HEADER = "/queries/analysis/wp-header.sparql";
+    public static final String WP_IDS_ALL = "/queries/analysis/wp-ids-all.sparql";
+    public static final String WP_IDS_OPENED = "/queries/analysis/wp-ids-opened.sparql";
+    public static final String WP_IDS_CLOSED = "/queries/analysis/wp-ids-closed.sparql";
+
     protected Map<String,List<BindingSet>> rawWorkpackageTaskTimePropertiesCache = new HashMap<>();
+
+    protected Supplier<QueryResultMapper<Pair<Workpackage, Integer>>> wpHeader = () -> new QueryResultMapper<>(WP_HEADER) {
+        @Override
+        public Pair<Workpackage, Integer> convert() {
+            return Pair.of(new Workpackage(URI.create(manValue("wp")), manValue("wpId")), manValue("ttCount", Integer::parseInt));
+        }
+    };
+
+    protected Function<String, QueryResultMapper<Workpackage>> wpIds = (queryName) -> new QueryResultMapper<>(queryName) {
+        @Override
+        public Workpackage convert() {
+            return new Workpackage(URI.create(manValue("wp")), manValue("wpId"));
+        }
+    };
 
     protected Supplier<QueryResultMapper<Pair<URI, URI>>> wpTaskTypes = () -> new QueryResultMapper<>(WP_TASK_TYPES) {
         @Override
@@ -171,42 +188,15 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
     }
 
     public List<Workpackage> findAllClosed() {
-        return getEm().createNativeQuery("PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n" +
-                                "SELECT ?w WHERE {\n" +
-                                    "?w a ?type; \n" +
-                                    "?endTimeProperty ?closeDate. \n" +
-                                    "FILTER(xsd:dateTime(?closeDate) < ?now)\n" +
-                                "}" ,
-                        URI.class
-                )
-                .setParameter("type", getTypeUri())
-                .setParameter("endTimeProperty", p_workpackage_end_time)
-                .setParameter("now", LocalDateTime.now())
-                .getResultList().stream()
-                .map(u -> new Workpackage(u))
-                .collect(Collectors.toList());
+        return load(wpIds.apply(WP_IDS_CLOSED), null);
     }
 
-
-    //TODO - optimize, create a QueryResultMapper, use it with load() to read WPs with uri and id
     public List<Workpackage> findAllOpened() {
-        return getEm().createNativeQuery("PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n" +
-                                "SELECT ?w WHERE { \n" +
-                                "?w a ?type; \n" +
-                                "OPTIONAL { \n" +
-                                "   ?w ?endTimeProperty ?_closeDate. \n" +
-                                "BIND(xsd:dateTime(?_closeDate) as ?closeDate) \n" +
-                                "} \n" +
-                                "FILTER(!BOUND(?closeDate) || ?closeDate > ?now) \n" +
-                                "}" ,
-                        URI.class
-                )
-                .setParameter("type", getTypeUri())
-                .setParameter("endTimeProperty", p_workpackage_end_time)
-                .setParameter("now", LocalDate.now())
-                .getResultList().stream()
-                .map(u -> new Workpackage(u))
-                .collect(Collectors.toList());
+        return load(wpIds.apply(WP_IDS_OPENED), null);
+    }
+
+    public List<Workpackage> findAll() {
+        return load(wpIds.apply(WP_IDS_ALL), null);
     }
 
     public Map<URI, List<URI>> readTaskTypeUsage(){
@@ -214,6 +204,10 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
                 p -> p.getLeft(),
                 Collectors.mapping(p -> p.getRight(),Collectors.toList()))
         );
+    }
+
+    public List<Pair<Workpackage, Integer>> findAllWorkpackageHeaders(){
+        return load(wpHeader.get(), null);
     }
 
     /**

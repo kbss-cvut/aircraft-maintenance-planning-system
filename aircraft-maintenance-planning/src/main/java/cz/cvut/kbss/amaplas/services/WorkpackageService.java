@@ -24,6 +24,7 @@ public class WorkpackageService extends BaseService {
     protected final WorkpackageDAO workpackageDAO;
     protected final TaskTypeService taskTypeService;
     protected final WorkSessionDao workSessionDao;
+    protected boolean refreshingCache = false;
 
     protected Map<URI,Workpackage> workpackageTaskTimePropertiesCache;
 
@@ -39,13 +40,42 @@ public class WorkpackageService extends BaseService {
     }
 
     public void resetCache(){
+        setRefreshingCache(true);
         LOG.info("reset caches");
         taskTypeService.resetCache();
         LOG.info("reset caches - reset workpackages with task with time properties caches");
         workpackageDAO.resetCache();
         workpackageTaskTimePropertiesCache = new HashMap<>();
-
         LOG.info("finished reset caches");
+        setRefreshingCache(false);
+    }
+    public synchronized boolean isRefreshingCache() {
+        return refreshingCache;
+    }
+
+    public synchronized void setRefreshingCache(boolean refreshingCache) {
+        this.refreshingCache = refreshingCache;
+    }
+
+    public List<Pair<Workpackage, Integer>> getHeaders(){
+        return workpackageDAO.findAllWorkpackageHeaders();
+    }
+
+    public List<Workpackage> getAllWorkpackages(){
+        return workpackageDAO.findAll();
+    }
+
+    public List<Workpackage> getClosedWorkpackages(){
+        return workpackageDAO.findAllClosed();
+    }
+
+    public List<Workpackage> getOpenedWorkpackages(){
+        return workpackageDAO.findAllOpened();
+    }
+
+    public Workpackage getWorkpackage(String workpackageId) {
+        Workpackage wp = workpackageDAO.findById(workpackageId).orElse(null);
+        return wp;
     }
 
     /**
@@ -88,6 +118,14 @@ public class WorkpackageService extends BaseService {
      */
     public List<Pair<Workpackage, Double>> findSimilarWorkpackages(Workpackage workpackage){
         return workpackageDAO.findSimilarWorkpackages(workpackage);
+    }
+
+    public Workpackage findById(String id){
+        Workpackage workpackage = workpackageDAO.findById(id).orElse(null);
+        if(workpackage != null){
+            readTaskExecutions(workpackage);
+        }
+        return workpackage;
     }
 
     /**
