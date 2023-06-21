@@ -41,24 +41,6 @@ public class TaskTypeService {
         this.taskTypeDao = taskTypeDao;
     }
 
-
-    // TODO - refactoring DAO layer - check which methods replace the init and loadTaskMappings methods and check if the result looks ok
-    @EventListener(ApplicationReadyEvent.class)
-    public void init(){
-//        loadTaskTypes();
-        resetCache();
-
-//        // Load taskTypeDefinitions
-//        List<TaskType> taskTypeDefinitions = taskTypeDao.listTaskTypeDefinitions();
-////                repoConfig.getUrl(), repoConfig.getTaskDefinitionsGraph(),
-////                repoConfig.getUsername(), repoConfig.getPassword());
-//        TaskType.setTaskTypeDefinitions(taskTypeDefinitions);
-//        // TODO - load task card types from data repository
-//        LOG.debug("Initializing the TaskTypeService done.");
-//        // load taskType to TaskType definition mappings
-//        loadTaskMappings();
-    }
-
     public void resetCache(){
         LOG.info("reset caches - task type and task type definition caches");
         taskTypesCache = taskTypeDao.listTaskTypes();
@@ -71,51 +53,7 @@ public class TaskTypeService {
 
         setupDefinitionFieldOfTaskCards(taskTypesCache, taskTypeDefinitionCache);
         LOG.info("finished reset caches");
-//        loadTaskTypes();
     }
-
-//    /**
-//     * Reads the task types their details and task definitions for task executions of the input workpackage.
-//     * @return
-//     */
-//    public List<Pair<URI, TaskType>> readTaskExecutionTaskTypes(Workpackage workpackage){
-//        LOG.info("reset caches - task type and task type definition caches");
-//        Map<URI, TaskExecution> taskExecutionMap = new HashMap<>();
-//        workpackage.getTaskExecutions().forEach(te -> taskExecutionMap.put(te.getEntityURI(),te));
-//
-//        taskTypeDao.readTaskTypes(workpackage).stream().forEach(
-//                taskExecutionMap.
-//        );
-//
-//        taskTypeDefinitionCache = taskTypeDao.listTaskTypeDefinitions();
-//
-//        setupDefinitionFieldOfTaskCards(taskTypesCache, taskTypeDefinitionCache);
-//        LOG.info("finished reset caches");
-//    }
-
-    // TODO - move to service layer
-//    public List<TaskType> loadTaskTypes(){
-//        LOG.info("loadAndReconstructTaskTypeCache ...");
-//        long time = System.currentTimeMillis();
-//        // load task types
-//        // for each task type pick one session title as the label of task type
-//        // for each task type load its scopes and select the main scope
-//        // load task type to task definition map
-//
-//        // create task type map
-////        Map<URI, TaskType> taskTypeMap = new HashMap<>();
-////        for(TaskType taskType : taskTypesCache) {
-////            if(taskTypeMap.containsKey(taskType.getEntityURI()))
-////                LOG.warn("There are multiple task types with the same IRI <{}> .", taskType.getEntityURI());
-////            taskTypeMap.put(taskType.getEntityURI(), taskType);
-////        }
-//
-//        // setup mapping between task types and task type definitions
-//        setupDefinitionsOfTaskCards(taskTypesCache, taskTypeDefinitionCache);
-//        LOG.info("loadAndReconstructTaskTypeCache DONE in {}", (System.currentTimeMillis() - time)/1000.);
-//
-//        return taskTypesCache;
-//    }
 
     /**
      * Set the definition field of task types in the taskTypes list to a task definition with a matching code.
@@ -185,46 +123,6 @@ public class TaskTypeService {
                 .collect(Collectors.toList());
     }
 
-
-//    /**
-//     * Loads mappings from the repository into memory cache.
-//     */
-//    public void loadTaskMappings(){
-//        analyzeTaskTypeDefinitionDuplicates();
-//
-//        Map<String, TaskType> defs = new HashMap<>();
-//        TaskType.getTaskTypeDefinitions().stream()
-//                .filter(t -> t.getTCOrMPDCode() != null)
-//                .forEach(t -> defs.put(t.getEntityURI().toString(), t));
-//
-//        ValueFactory f = SimpleValueFactory.getInstance();
-//        Map<String, Value> bindings = new HashMap();
-//        bindings.put("taskTypeDefinitionGraph", f.createIRI(repoConfig.getTaskDefinitionsGraph()));
-//        bindings.put("taskCardMappingGraph", f.createIRI(repoConfig.getTaskMappingGraph()));
-//
-//        List<Pair<String, String>> taskTypeDefinitionMappings = SparqlDataReaderRDF4J.executeNamedQuery(
-//                SparqlDataReader.TASK_CARD_MAPPINGS,
-//                bindings,
-//                repoConfig.getUrl(), repoConfig.getUsername(), repoConfig.getPassword(), SparqlDataReaderRDF4J::convertToPair);
-//
-//        Map<String, List<TaskType>> map = taskTypeDefinitionMappings.stream()
-//                .map(p -> Pair.of(p.getLeft(), defs.get(p.getRight())))
-//                .collect(Collectors.groupingBy(p -> p.getLeft(), Collectors.mapping(p -> p.getRight(), Collectors.toList())));
-//
-//        // normalize the list of mapped definitions, e.i. remove duplicates and sort them correctly using ad-hock approach
-//        // with the method TaskType.findMatchingTCDef
-//        map.entrySet().forEach(e ->
-//                e.setValue(
-//                        // NOTE - the method searches for duplicates in the second argument which is redundant as the
-//                        // mapping is already calculated. Calling to correctly sort the list of definitions.
-//                        TaskType.findMatchingTCDef(e.getKey(),
-//                            e.getValue().stream().distinct().collect(Collectors.toList())
-//                        )
-//                )
-//        );
-//        TaskType.setTaskTCCode2TCDefinitionMap(map);
-//    }
-
     /**
      * Check if different task type definitions use the same code
      */
@@ -255,7 +153,6 @@ public class TaskTypeService {
     public void updateTaskTypeMapping(){
         List<TaskType> taskTypes = taskTypeDao.listTaskTypeBasicDescriptions();
         List<TaskType> taskTypeDefinitions = taskTypeDao.listTaskTypeDefinitionIds();
-        // TODO - move persistStatements method to DAO, get rid of references to SparqlDataReaderRDF4J and config
         calculateTaskCards2DefinitionsMap(taskTypes, taskTypeDefinitions);
         taskTypeDao.persistTaskCardCode2DefinitionMap(taskTypes, repoConfig.getTaskMappingGraph());
         resetCache();
@@ -264,21 +161,6 @@ public class TaskTypeService {
     public List<TaskType> getAllTaskTypeDefinitions(){
         return taskTypeDao.listTaskTypeDefinitions();
     }
-//
-//    public TaskType getMatchingTaskTypeDefinition(TaskType taskType){
-////        return taskTypeDao.
-//        return TaskType.getTaskTypeDefinition(taskType); // TODO - use DAO layer instead
-//    }
-
-//    public List<TaskType> getTaskTypes(Collection<String> taskTypeCodes){
-//        return taskTypeCodes.stream().map(this::getTaskType).collect(Collectors.toList());
-//    }
-
-//    public TaskType getTaskType(String taskTypeCode){
-//        if(TaskType.taskTypeMap == null)
-//            return null;
-//        return TaskType.taskTypeMap.get(taskTypeCode);
-//    }
 
     public TaskType getCahcedTaskType(URI taskTypeUri){
         return taskTypeMap.get(taskTypeUri);

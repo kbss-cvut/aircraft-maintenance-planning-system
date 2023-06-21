@@ -1,4 +1,4 @@
-package cz.cvut.kbss.amaplas.io;
+package cz.cvut.kbss.amaplas.persistence.dao.mapper;
 
 import java.util.HashMap;
 import java.util.Map;

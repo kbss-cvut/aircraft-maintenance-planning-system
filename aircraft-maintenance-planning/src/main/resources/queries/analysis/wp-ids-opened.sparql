@@ -1,0 +1,11 @@
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
+SELECT ?wp ?wpId WHERE {
+    ?wp a cm:workpackage;
+        cm:id ?wpId.
+    OPTIONAL{
+        ?wp cm:workpackage-end-time ?_closeDate.
+        BIND(xsd:dateTime(?_closeDate) as ?closeDate)
+    }
+    FILTER(!BOUND(?closeDate) || xsd:dateTime(?closeDate) > NOW())
+}

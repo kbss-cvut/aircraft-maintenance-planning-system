@@ -1,10 +1,8 @@
 package cz.cvut.kbss.amaplas.algs.timesequences;
 
-import cz.cvut.kbss.amaplas.model.Result;
 import cz.cvut.kbss.amaplas.model.TaskExecution;
-import cz.cvut.kbss.amaplas.model.Workpackage;
-import cz.cvut.kbss.amaplas.planners.SequencePattern;
 import cz.cvut.kbss.amaplas.model.TaskType;
+import cz.cvut.kbss.amaplas.planners.SequencePattern;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +10,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
-import java.util.stream.Collectors;
 
 public class TimeSequenceMatrix extends Index<TaskType> {
 

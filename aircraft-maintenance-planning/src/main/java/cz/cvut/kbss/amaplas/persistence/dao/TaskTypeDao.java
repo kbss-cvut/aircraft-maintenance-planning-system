@@ -1,7 +1,7 @@
 package cz.cvut.kbss.amaplas.persistence.dao;
 
 
-import cz.cvut.kbss.amaplas.io.EntityRegistry;
+import cz.cvut.kbss.amaplas.persistence.dao.mapper.EntityRegistry;
 import cz.cvut.kbss.amaplas.model.MaintenanceGroup;
 import cz.cvut.kbss.amaplas.model.TaskType;
 import cz.cvut.kbss.amaplas.model.Workpackage;
@@ -16,8 +16,6 @@ import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.query.BindingSet;
-import org.eclipse.rdf4j.query.TupleQueryResult;
-import org.eclipse.rdf4j.query.algebra.Str;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -28,9 +26,6 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-
-// TODO - this class should only handle reading and persisting data regarding taskTypes. Identify and move all non data
-//  access methods containing business logic into service layer
 @Repository
 public class TaskTypeDao extends BaseDao<TaskType>{
     private static final Logger LOG = LoggerFactory.getLogger(TaskTypeDao.class);
@@ -128,13 +123,6 @@ public class TaskTypeDao extends BaseDao<TaskType>{
                     scope,
                     manValue("participationCount", Integer::parseInt)
             );
-//            mandatory("scopeGroup", URI::create, scope::setEntityURI);
-//            mandatory("scopeAbbreviation", scope::setAbbreviation);
-//            return Triple.of(
-//                    manValue("taskType", URI::create),
-//                    scope,
-//                    manValue("participationCount", Integer::parseInt)
-//            );
         }
 
         private MaintenanceGroup getMaintenanceGroup(String scopeGroupUri, String scopeAbbreviation){
@@ -207,18 +195,6 @@ public class TaskTypeDao extends BaseDao<TaskType>{
 
     public TaskTypeDao(EntityManager em, Rdf4JDao rdf4JDao) {
         super(TaskType.class, em, rdf4JDao);
-    }
-
-
-    // TODO - move to service layer
-    /** Updates labels, scopes, duration statistic, work time statistic  and mapping of task cards to their definitions
-     *
-     */
-    public void updateTaskTypeData(){
-        // calculate and persist task type values and relations
-//        List<TaskType> taskTypes = loadAndReconstructTaskTypes();
-        // delete old precalculated task type data
-        // persist new precalculated task type data
     }
 
     /**
@@ -328,37 +304,6 @@ public class TaskTypeDao extends BaseDao<TaskType>{
     public List<Pair<URI, URI>> readTaskTypeDefinitionsMap(){
         return load(taskTypeDefinitionsMapMapper.get(), null);
     }
-
-
-
-
-    // TODO - move to service layer - caching logic should not be part of the dao layer
-    public static List<TaskType> taskTypeDefinitions;
-    public static Map<String, List<TaskType>> taskTCCode2TCDefinitionMap;
-
-
-    //
-//    protected List<Pair<URI, String>> findSessionTitlesPerTask(){
-//        return rdf4JDao.load(taskTypeLabelsMapper, null);
-//    }
-
-
-
-//    public static void setTaskTypeDefinitions(List<TaskType> taskTypeDefinitions){
-//        TaskTypeDao.taskTypeDefinitions = taskTypeDefinitions;
-//    }
-//
-//    public static List<TaskType> getTaskTypeDefinitions() {
-//        return taskTypeDefinitions;
-//    }
-
-//    public static Map<String, List<TaskType>> getTaskTCCode2TCDefinitionMap() {
-//        return taskTCCode2TCDefinitionMap;
-//    }
-//
-//    public static void setTaskTCCode2TCDefinitionMap(Map<String, List<TaskType>> taskTCCode2TCDefinitionMap) {
-//        TaskTypeDao.taskTCCode2TCDefinitionMap = taskTCCode2TCDefinitionMap;
-//    }
 
     public void persistTaskCardCode2DefinitionMap(Map<String, List<TaskType>> map, String graphIRI) {
         persistStatements(taskCardCode2DefinitionAsStatements(map),graphIRI);

@@ -1,6 +1,5 @@
 package cz.cvut.kbss.amaplas.planners;
 
-import cz.cvut.kbss.amaplas.model.Result;
 import cz.cvut.kbss.amaplas.model.TaskExecution;
 import cz.cvut.kbss.amaplas.model.TaskType;
 import org.jgrapht.graph.DefaultDirectedGraph;

@@ -1,6 +1,5 @@
 package cz.cvut.kbss.amaplas.model.values;
 
-import cz.cvut.kbss.amaplas.io.SparqlDataReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +12,6 @@ public class DateParserSerializer {
     private static final Logger LOG = LoggerFactory.getLogger(DateParserSerializer.class);
 
 
-    // TODO - refactoring in progress - move date parsing code elsewhere
     public static final String dateFormatPattern = "yyyy-MM-dd'T'HH:mm:ss";
     public static final ThreadLocal<SimpleDateFormat> dateFormat = new ThreadLocal<SimpleDateFormat>(){
         @Override
@@ -29,15 +27,14 @@ public class DateParserSerializer {
         }
     };
     public static final String dateFormatPattern2 = "dd.MM.yyyy'T'HH:mm";
-    // TODO - refactoring in progress - move date parsing code elsewhere
+
     public static final SimpleDateFormat day = new SimpleDateFormat("yyyy-MM-dd");
 
-    // TODO - refactoring in progress - move date parsing code elsewhere
+
     public static String formatDate(Date d){
         return formatDate(dateFormat.get(), d);
     }
 
-    // TODO - refactoring in progress - move date parsing code elsewhere
     public static String formatDate(SimpleDateFormat sdf, Date d){
         try {
             return d != null ? sdf.format(d) : "";
@@ -47,7 +44,6 @@ public class DateParserSerializer {
         return "";
     }
 
-    // TODO - refactoring in progress - move date parsing code elsewhere
     public static Date parseDate(SimpleDateFormat df, String dateTimeString){
         if(dateTimeString.isBlank())
             return null;

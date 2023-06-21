@@ -2,7 +2,6 @@ package cz.cvut.kbss.amaplas.planners;
 
 
 import cz.cvut.kbss.amaplas.model.Diff;
-import cz.cvut.kbss.amaplas.model.Result;
 import cz.cvut.kbss.amaplas.model.TaskExecution;
 import cz.cvut.kbss.amaplas.model.TaskType;
 
@@ -13,7 +12,6 @@ import java.util.stream.Stream;
 
 public class SequencePattern {
     public List<List<TaskExecution>> instances = new ArrayList<>();
-    public Function<Result, TaskType> elMap;
     public List<TaskType> pattern;
     public PatternType patternType = PatternType.STRICT_DIRECT_ORDER;
     public int supportClassId;
@@ -30,10 +28,8 @@ public class SequencePattern {
 
     }
 
-
     public SequencePattern(SequencePattern sp) {
         this.instances = sp.instances;
-        this.elMap = sp.elMap;
         this.pattern = sp.pattern;
         this.patternType = sp.patternType;
         this.supportClassId = sp.supportClassId;
@@ -45,129 +41,15 @@ public class SequencePattern {
         this.diff = sp.diff;
     }
 
-//    public SequencePattern(Function<Result, TaskType> elMap, Stream<Result> sequence) {
-//        this.elMap = elMap;
-//        // construct patter
-//        pattern = calculatePattern(sequence);
-//        add(sequence.collect(Collectors.toList()));
-//    }
-
-//    public SequencePattern(Function<Result, TaskType> elMap, Result ... sequence) {
-//        this.elMap = elMap;
-//        // construct patter
-//        pattern = calculatePattern(sequence);
-//        add(sequence);
-//    }
-
-//    public SequencePattern(Function<Result, TaskType> elMap, List<Result> sequence) {
-//        this.elMap = elMap;
-//        // construct patter
-//        pattern = calculatePattern(sequence);
-//        add(sequence);
-//    }
-
-//    protected void addFirst(Stream<Result> sequence){
-//        pattern = calculatePattern(sequence);
-//        instances.add(sequence.collect(Collectors.toList()));
-//    }
-
-//    protected void addFirst(Result ... sequence){
-//        addFirst(Stream.of(sequence));
-//    }
-
-//    protected void addFirst(List<Result> sequence){
-//        pattern = calculatePattern(sequence);
-//        instances.add(sequence);
-//    }
-
-
-    protected Stream<TaskType> calculatePatternImpl(Stream<Result> sequence){
-        return sequence.map(r -> elMap.apply(r));
-    }
-
-    public List<TaskType> calculatePattern(Stream<Result> sequence){
-        return calculatePatternImpl(sequence).collect(Collectors.toList());
-    }
-
-    public List<TaskType> calculatePattern(Result ... sequence){
-        return calculatePattern(Stream.of(sequence));
-    }
-
-    public List<TaskType> calculatePattern(List<Result> sequence){
-        return calculatePattern(sequence.stream());
-    }
-
-//    public boolean addIfInstance(Stream<Result>  sequence){
-//        if(pattern == null) {
-//            addFirst(sequence);
-//            return true;
-//        }
-//        boolean ret = isInstance(sequence);
-//        if(ret)
-//            instances.add(sequence.collect(Collectors.toList()));
-//        return ret;
-//    }
-
-//    public boolean addIfInstance(Result ... sequence){
-//        return addIfInstance(Arrays.asList(sequence));
-//    }
-
-//    public boolean addIfInstance(List<Result> sequence){
-//        if(pattern == null) {
-//            addFirst(sequence);
-//            return true;
-//        }
-//
-//        boolean ret = isInstance(sequence);
-//        if(ret)
-//            instances.add(sequence);
-//        return ret;
-//    }
-
     public Set<String> extensionClass(){
         return instances.stream()
                 .flatMap(i -> i.stream().map(e -> e.getWorkpackage().getId()))
                 .collect(Collectors.toSet());
     }
 
-    public boolean startsWith(Stream<Result> sequence ){
-        return compare(sequence, true);
-    }
-
-    public boolean startsWith(Result ... sequence ){
-        return startsWith(Stream.of(sequence));
-    }
-
-    public boolean startsWith(List<Result> sequence ){
-        return startsWith(sequence.stream());
-    }
-
-    protected boolean compare(Stream<Result> sequence, boolean ignoreLength ){
-        Iterator<TaskType> iter =  pattern.iterator();
-        Stream<TaskType> p = calculatePatternImpl(sequence);
-        return p.allMatch(s -> iter.hasNext() && iter.next().equals(s)) && (ignoreLength || !iter.hasNext());
-    }
-
-    public boolean isInstance(Stream<Result> sequence){
-        return pattern == null || compare(sequence, false);
-    }
-
-    public boolean isInstance(Result ... sequence){
-        return isInstance(Stream.of(sequence));
-    }
-
-    public boolean isInstance(List<Result> sequence){
-        return isInstance(sequence.stream());
-    }
-
     public void add(List<TaskExecution> instance){
         instances.add(instance);
     }
-
-//    public void add(Result ... sequence){
-//        List<Result> instance = Stream.of(sequence).collect(Collectors.toList());
-//        add(instance);
-//    }
 
     public String patternId(){
         return pattern.stream().map(tt -> tt.getCode()).collect(Collectors.joining(";"));
@@ -200,23 +82,6 @@ public class SequencePattern {
                         .collect(Collectors.groupingBy(p -> p.supportClassId, Collectors.toSet()))
                         .values()
         );
-////        Map<SequencePattern, Set<String>> patternSupExt = new HashMap<>();
-//        patterns.forEach(p -> p.supportClass = p.extensionClass());
-////        patterns.forEach(p -> {
-////            Set<String> supExt = new HashSet<>(p.extensionClass());
-////            patternSupExt.put(p, supExt);
-////        });
-//        Map<Integer, Set<SequencePattern>> extensionToClass = new HashMap<>();
-//        patterns.forEach(p -> {
-//            Set<String> supExt = p.supportClass;
-//            Set<SequencePattern> eqClass = extensionToClass.get(supExt);
-//            if(eqClass == null){
-//                eqClass = new HashSet<>();
-//                extensionToClass.put(supExt, eqClass);
-//            }
-//            eqClass.add(p.getKey());
-//        });
-//        return new ArrayList<>(extensionToClass.values());
     }
 
 
@@ -239,7 +104,4 @@ public class SequencePattern {
         }
 
     }
-
-
-
 }

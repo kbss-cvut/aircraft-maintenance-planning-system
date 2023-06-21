@@ -1,7 +1,6 @@
 package cz.cvut.kbss.amaplas.planners;
 
 import cz.cvut.kbss.amaplas.algs.SimilarityUtils;
-import cz.cvut.kbss.amaplas.model.Result;
 import cz.cvut.kbss.amaplas.model.TaskExecution;
 import cz.cvut.kbss.amaplas.model.TaskType;
 import cz.cvut.kbss.amaplas.model.Workpackage;
@@ -274,20 +273,6 @@ public class ReuseBasedPlanner {
         return planGraph;
     }
 
-    /**
-     * Groups sessions by TaskTypes. The returned list preserves start order of the input argument {@code sessions}
-     * @param sessions
-     * @return
-     */
-    protected List<Pair<TaskType, List<Result>>> groupAsTaskPlans(List<Result> sessions){
-
-        LinkedHashMap<TaskType, List<Result>> sessionsByTC = sessions.stream().collect(Collectors.groupingBy(r -> r.taskType, LinkedHashMap::new, Collectors.toList()));
-
-        List<Pair<TaskType, List<Result>>> tcPlans = new ArrayList<>();
-        sessionsByTC.entrySet().forEach(e -> tcPlans.add(Pair.of(e.getKey(), e.getValue())));
-        return tcPlans;
-    }
-
     public interface SimilarityOrder{
         double[] similarity(List<Pair<String, Set<TaskType>>> pkgs, Set<TaskType> taskTypes);
     }
@@ -306,9 +291,8 @@ public class ReuseBasedPlanner {
         return ret;
     }
 
-    // TODO - revise interface, usage and implementation
     public interface UnacceptableOrder {
-        boolean isOrderAcceptable(List<Result> pat, Set<TaskType> orderedTasks, DefaultDirectedGraph<TaskPattern, SequencePattern> planGraph);
+        boolean isOrderAcceptable(List<TaskExecution> pat, Set<TaskType> orderedTasks, DefaultDirectedGraph<TaskPattern, SequencePattern> planGraph);
     }
 
     public static interface NodeVisitor{
@@ -323,7 +307,7 @@ public class ReuseBasedPlanner {
 
     }
 
-    public static final UnacceptableOrder DISCONNECTED_ORDER = (pat, orderedTasks, planGraph) -> pat.stream().map(r -> r.taskType).allMatch(tt -> !orderedTasks.contains(tt));
-    public static final UnacceptableOrder CONNECTED_ORDER = (pat, orderedTasks, planGraph) -> pat.stream().map(r -> r.taskType).anyMatch(tt -> !orderedTasks.contains(tt));
+    public static final UnacceptableOrder DISCONNECTED_ORDER = (pat, orderedTasks, planGraph) -> pat.stream().map(r -> r.getTaskType()).allMatch(tt -> !orderedTasks.contains(tt));
+    public static final UnacceptableOrder CONNECTED_ORDER = (pat, orderedTasks, planGraph) -> pat.stream().map(r -> r.getTaskType()).anyMatch(tt -> !orderedTasks.contains(tt));
 
 }

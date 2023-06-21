@@ -1,5 +1,6 @@
 package cz.cvut.kbss.amaplas.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.jopa.model.annotations.*;
 
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,9 +36,6 @@ public class Workpackage extends AbstractEntityWithDescription {
     @Transient
     protected Date end;
 
-    @Transient
-    protected List<TaskExecutionStatistics> taskExecutionStatistics;// TODO remove if not used?
-
     @OWLObjectProperty(iri = Vocabulary.s_p_has_part)
     protected Set<TaskExecution> taskExecutions;
 
@@ -46,14 +45,16 @@ public class Workpackage extends AbstractEntityWithDescription {
     public Workpackage(URI entityUri) {
         this.entityURI = entityUri;
     }
+    public Workpackage(URI entityUri, String id) {
+        this.entityURI = entityUri;
+        this.id = id;
+    }
 
 
     public Workpackage(String id) {
         setId(id);
     }
 
-
-    //
     public Aircraft getAircraft() {
         return aircraft;
     }
@@ -102,13 +103,6 @@ public class Workpackage extends AbstractEntityWithDescription {
         this.plannedEndTime = plannedEndTime;
     }
 
-    public List<TaskExecutionStatistics> getTaskExecutionStatistics() {
-        return taskExecutionStatistics;
-    }
-
-    public void setTaskExecutionStatistics(List<TaskExecutionStatistics> taskExecutionStatistics) {
-        this.taskExecutionStatistics = taskExecutionStatistics;
-    }
 
     public Set<TaskExecution> getTaskExecutions() {
         return taskExecutions;
@@ -134,8 +128,9 @@ public class Workpackage extends AbstractEntityWithDescription {
         this.end = end;
     }
 
+    @JsonIgnore
     public Set<TaskType> getTaskTypes(){
-        return getTaskExecutions().stream().map(e -> e.getTaskType()).collect(Collectors.toSet());
+        return Optional.ofNullable(getTaskExecutions()).map(taskExecutions -> taskExecutions.stream().map(e -> e.getTaskType()).collect(Collectors.toSet())).orElse(null);
     }
 
     @Override

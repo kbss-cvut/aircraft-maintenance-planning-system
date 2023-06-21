@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TaskTypeBasedPlanBuilder extends AbstractPlanBuilder<List<TaskType>>{
+public class TaskTypeBasedPlanBuilder extends AbstractPlanBuilder {
 
     private static final Logger LOG = LoggerFactory.getLogger(TaskTypeBasedPlanBuilder.class);
     protected Aircraft aircraft;

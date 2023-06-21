@@ -7,14 +7,14 @@ PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
 
 
 
-SELECT ?wp (COUNT (DISTINCT ?tType) as ?ttCount)   WHERE
+SELECT ?wp ?wpId (COUNT (DISTINCT ?tType) as ?ttCount)   WHERE
 {
-    ?wpuri a cm:workpackage.
-    ?wpuri cm:id ?wp.
+    ?wp a cm:workpackage.
+    ?wp cm:id ?wpId.
 
     # aircraft
     OPTIONAL{
-        ?wpuri cm:is-repair-of ?ac.
+        ?wp cm:is-repair-of ?ac.
         OPTIONAL{
             ?ac cm:model ?acmodel.
         }
@@ -22,7 +22,7 @@ SELECT ?wp (COUNT (DISTINCT ?tType) as ?ttCount)   WHERE
 
     # tasks
     OPTIONAL{
-        ?tt cm:is-part-of-workpackage ?wpuri.
+        ?tt cm:is-part-of-workpackage ?wp.
         OPTIONAL{
             ?tt a ?tType.
             FILTER(strstarts(str(?tType), str(cm:)) && !(?tType in (cm:task-card, cm:maintenance-work-order, cm:scheduled-work-order, cm:complex-execution)))
@@ -36,6 +36,6 @@ SELECT ?wp (COUNT (DISTINCT ?tType) as ?ttCount)   WHERE
         }
     }
 }
-GROUP BY ?wp
+GROUP BY ?wp ?wpId
 #HAVING (?ttCount > 10)
 ORDER BY DESC(?ttCount)

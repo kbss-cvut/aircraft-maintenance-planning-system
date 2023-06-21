@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result>> {
+public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder {
 
     private static final Logger LOG = LoggerFactory.getLogger(WorkSessionBasedPlanBuilder.class);
 
@@ -296,10 +296,6 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
                 );
     }
 
-//    public MaintenanceGroup getMaintenanceGroupInCtx(Result r, String area){
-//        String maintenanceGroupLabel = getMaintenanceGroupLabel(r);
-//        return getMaintenanceGroupInCtx(maintenanceGroupLabel, area);
-//    }
 
     public AircraftArea getAircraftArea(TaskExecution te){
         String area = getAreaLabel(te);
@@ -347,16 +343,6 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder<List<Result
         return getTaskType(r).map(TaskType::getArea)
                 .map(this::mapNull).orElseGet(() -> getAircraftAreaLabel(getTaskTypeDefinition(r)));
     }
-
-//    public String getMaintenanceGroupLabel(Result r){
-//        return (r.scope != null)
-//                ? r.scope
-//                : getMaintenanceGroupLabel(getTaskTypeDefinition(r));
-//    }
-
-//    public String getGeneralTaskTypeLabel(Result r){
-//        return getGeneralTaskTypeLabel(getTaskTypeDefinition(r));
-//    }
 
     public String getPhaseLabel(TaskExecution te){
         return getPhaseLabel(getTaskTypeDefinition(te));

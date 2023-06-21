@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public abstract class AbstractPlanBuilder<T> {
+public abstract class AbstractPlanBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractPlanBuilder.class);
 
 

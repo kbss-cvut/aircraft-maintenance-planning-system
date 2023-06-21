@@ -5,22 +5,23 @@ import cz.cvut.kbss.amaplas.exceptions.UnsupportedOperationException;
 import cz.cvut.kbss.amaplas.exceptions.ValidationException;
 import cz.cvut.kbss.amaplas.model.*;
 import cz.cvut.kbss.amaplas.model.builders.TaskTypeBasedPlanBuilder;
-import cz.cvut.kbss.amaplas.model.scheduler.NaivePlanScheduler;
-import cz.cvut.kbss.amaplas.model.scheduler.PlanScheduler;
 import cz.cvut.kbss.amaplas.model.builders.WorkSessionBasedPlanBuilder;
 import cz.cvut.kbss.amaplas.model.ops.CopySimplePlanProperties;
+import cz.cvut.kbss.amaplas.model.scheduler.NaivePlanScheduler;
+import cz.cvut.kbss.amaplas.model.scheduler.PlanScheduler;
 import cz.cvut.kbss.amaplas.model.scheduler.SimilarPlanScheduler;
 import cz.cvut.kbss.amaplas.persistence.dao.GenericPlanDao;
 import cz.cvut.kbss.amaplas.persistence.dao.PlanTypeDao;
-import cz.cvut.kbss.amaplas.algs.SimilarityUtils;
 import cz.cvut.kbss.amaplas.persistence.dao.TaskStepPlanDao;
 import cz.cvut.kbss.amaplas.persistence.dao.WorkpackageDAO;
+import cz.cvut.kbss.amaplas.planners.PlanGraph;
+import cz.cvut.kbss.amaplas.planners.ReuseBasedPlanner;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import cz.cvut.kbss.amaplas.planners.*;
+
 import java.net.URI;
 import java.time.ZoneId;
 import java.util.*;
@@ -31,20 +32,14 @@ import java.util.stream.Collectors;
 public class AircraftRevisionPlannerService extends BaseService{
     private static final Logger LOG = LoggerFactory.getLogger(AircraftRevisionPlannerService.class);
 
-    private final WorkpackageDAO workpackageDAO;
     private final WorkpackageService workpackageService;
-    private final RevisionHistory revisionHistory;
-    private final TaskTypeService taskTypeService;
     private final PlanTypeDao planTypeDao;
     private final GenericPlanDao planDao;
     private final TaskStepPlanDao taskStepPlanDao;
     private final CopySimplePlanProperties copySimpleProperty = new CopySimplePlanProperties();
 
-    public AircraftRevisionPlannerService(WorkpackageDAO workpackageDAO, WorkpackageService workpackageService, RevisionHistory revisionHistory, TaskTypeService taskTypeService, PlanTypeDao planTypeDao, GenericPlanDao planDao, TaskStepPlanDao taskStepPlanDao) {
-        this.workpackageDAO = workpackageDAO;
+    public AircraftRevisionPlannerService(WorkpackageService workpackageService, PlanTypeDao planTypeDao, GenericPlanDao planDao, TaskStepPlanDao taskStepPlanDao) {
         this.workpackageService = workpackageService;
-        this.revisionHistory = revisionHistory;
-        this.taskTypeService = taskTypeService;
         this.planTypeDao = planTypeDao;
         this.planDao = planDao;
         this.taskStepPlanDao = taskStepPlanDao;
@@ -91,53 +86,16 @@ public class AircraftRevisionPlannerService extends BaseService{
         return plan;
     }
 
-
-    public void calculateTimeEstimates(List<TaskPlan> plan, List<Result> workLog){
-        // TODO
-        Map<TaskType, List<Result>> tes = workLog.stream().collect(Collectors.groupingBy(r -> r.taskType));
-
-        List<Date> startTimes = tes.values().stream()
-                .map(l -> l.stream().min(Comparator.comparing(r -> r.start)).map(r -> r.start).orElse(null))
-                .sorted()
-                .collect(Collectors.toList());
-
-        Map<TaskType, Long> durations = new HashMap<>();
-        Map<TaskType, Long> workTime = new HashMap<>();
-        tes.entrySet().forEach(e ->
-                durations.put(
-                        e.getKey(),
-                        Result.mergeOverlaps(e.getValue().stream().sorted(Comparator.comparing(r -> r.start)).collect(Collectors.toList()))
-                                .stream().mapToLong(i -> i.getLength()).sum()) // in milli seconds
-        );
-
-        tes.entrySet().forEach(e ->
-                workTime.put(
-                        e.getKey(),
-                        e.getValue().stream().mapToLong(r -> r.dur).sum()) // in milli seconds
-        );
-
-        int c = 0;
-        for(TaskPlan tp : plan){
-            List<Result> te = tes.get(tp.getTaskType());
-            if(te == null)
-                continue;
-            tp.setStartTime(startTimes.get(c));
-            tp.setDuration(durations.get(tp.getTaskType()));
-            tp.setWorkTime(workTime.get(tp.getTaskType()));
-        }
-    }
-
     /**
      * Create a revision plan from an existing revision execution. Each plan part is defined based on the existing work
      * log of the revision with revisionId.
      * @param revisionId
      * @return
      */
-    // TODO - refactor code to use Workpackage model instead of Result class
     public RevisionPlan createRevisionPlanScheduleDeducedFromRevisionExecution(String revisionId){
         LOG.info("creating plan \"createRevisionPlanScheduleDeducedFromRevisionExecution\" for revision with id \"{}\"", revisionId);
         // get all work sessions of the planned revision
-        Workpackage workpackage = revisionHistory.getWorkpackage(revisionId);
+        Workpackage workpackage = workpackageService.getWorkpackage(revisionId);
         workpackageService.readTaskExecutions(workpackage);
         // create and return revision plan
         WorkSessionBasedPlanBuilder builder = new WorkSessionBasedPlanBuilder();
@@ -156,7 +114,7 @@ public class AircraftRevisionPlannerService extends BaseService{
      * @return
      */
     public RevisionPlan createRevisionPlanScheduleDeducedFromSimilarRevisions(String revisionId){
-        Workpackage wp = revisionHistory.getWorkpackage(revisionId);
+        Workpackage wp = workpackageService.getWorkpackage(revisionId);
         if(wp == null){
             LOG.warn("Could not find WP with id \"{}\" ", revisionId);
             return null;
@@ -184,7 +142,7 @@ public class AircraftRevisionPlannerService extends BaseService{
         ZoneId defaultZoneId = ZoneId.systemDefault();
         List<String> revisionsToIgnore = new ArrayList<>();
         revisionsToIgnore.add(wp.getEntityURI().toString()); // ignore the scheduled WP
-        revisionHistory.getOpenedWorkpackages().stream().map(w -> w.getEntityURI().toString())
+        workpackageService.getOpenedWorkpackages().stream().map(w -> w.getEntityURI().toString())
                 .forEach(revisionsToIgnore::add);// ignore open WPs
 
         Map<String, PlanGraph> partialTaskOrderByScope = scopeGraphPlansFromSimilarRevisions(

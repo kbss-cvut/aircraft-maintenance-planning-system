@@ -1,7 +1,6 @@
 package cz.cvut.kbss.amaplas.planners;
 
-
-import cz.cvut.kbss.amaplas.model.Result;
+import cz.cvut.kbss.amaplas.model.TaskExecution;
 import cz.cvut.kbss.amaplas.model.TaskType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +12,9 @@ import java.util.stream.Collectors;
 public class TaskTypePlanValidator {
     private static final Logger LOG = LoggerFactory.getLogger(TaskTypePlanValidator.class);
 
-    public void validate(List<SequencePattern> plan, List<Result> revisionHistory){
-        Set<TaskType> expectedTaskTypes = revisionHistory.stream().map(r -> r.taskType).collect(Collectors.toSet());
+    public void validate(List<SequencePattern> plan, List<TaskExecution> taskExecutions){
+        Set<TaskType> expectedTaskTypes = taskExecutions.stream().map(te -> te.getTaskType()).collect(Collectors.toSet());
         Set<TaskType> plannedTaskTypes = plan.stream().flatMap(p -> p.pattern.stream()).collect(Collectors.toSet());
-
         validate(expectedTaskTypes, plannedTaskTypes);
     }
     

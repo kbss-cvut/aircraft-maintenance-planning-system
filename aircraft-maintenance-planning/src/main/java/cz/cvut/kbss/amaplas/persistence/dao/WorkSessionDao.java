@@ -1,6 +1,6 @@
 package cz.cvut.kbss.amaplas.persistence.dao;
 
-import cz.cvut.kbss.amaplas.io.EntityRegistry;
+import cz.cvut.kbss.amaplas.persistence.dao.mapper.EntityRegistry;
 import cz.cvut.kbss.amaplas.model.*;
 import cz.cvut.kbss.amaplas.model.values.DateParserSerializer;
 import cz.cvut.kbss.amaplas.persistence.dao.mapper.Bindings;

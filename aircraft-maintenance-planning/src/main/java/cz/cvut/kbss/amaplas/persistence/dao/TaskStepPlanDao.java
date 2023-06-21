@@ -19,10 +19,6 @@ public class TaskStepPlanDao extends BaseDao<TaskStepPlan> {
     public static final String TASK_STEP_AND_ANNOTATIONS = "/queries/analysis/task-step-and-annotations.sparql";
 
     protected static final URI ID = URI.create(Vocabulary.s_p_id);
-//    protected static final URI PART_OF_WORKPACKAGE = URI.create(Vocabulary.s_p_is_part_of_workpackage);
-//    protected static final URI HAS_STEP_PART = URI.create(Vocabulary.s_p_has_work_order_step);
-//    protected static final URI SUB_CLASS_OF = URI.create(RDFS.SUB_CLASS_OF);
-//    protected static final URI SUPER_TYPE = URI.create(Vocabulary.s_c_work_order_step);
     protected static final String TYPE_PREFIX = Vocabulary.ONTOLOGY_IRI_csat_maintenance + "/task-step-execution-type--";
     protected static final URI FILTER_TYPE = URI.create("http://www.w3.org/ns/csvw#Row");
 
@@ -74,36 +70,4 @@ public class TaskStepPlanDao extends BaseDao<TaskStepPlan> {
     public List<TaskStepPlan> listInWorkpackage(String workpackageId){
         return load(mapper.get(), new Bindings().add("wpId", workpackageId));
     }
-
-//    public List<TaskStepPlan> listInWorkpackageId(String wpId){
-//        return getFindQuery("?wp ?id ?wpId .")
-//                .setParameter("wpId", wpId)
-//                .getResultList();
-//    }
-//
-//    public List<TaskStepPlan> listURIsInWorkpackageURI(URI workpackageURI){
-//        return getFindQuery()
-//                .setParameter("wp", workpackageURI)
-//                .getResultList();
-//    }
-
-//    protected TypedQuery<TaskStepPlan> getFindQuery(String ... triples){
-//        return getEm().createNativeQuery("SELECT DISTINCT ?taskStep ?task WHERE { \n" +
-//                        Arrays.stream(triples).collect(Collectors.joining("/n")) +
-//                        "?task ?partOfWp ?wp . \n" +
-//                        "?task ?hasStepPart ?taskStep . \n" +
-//                        "?taskStep a ?type, ?filteredType, ?type2 . \n" +
-//                        "?filteredType ?subClassOf ?superType \n" +
-////                        "?taskStep a ?type, ?filteredType . \n" +
-////                        "FILTER(strstarts(str(?type),?typePrefix)) \n" +
-//                        "}", getType())
-//                .setParameter("partOfWp", PART_OF_WORKPACKAGE)
-//                .setParameter("hasStepPart", HAS_STEP_PART)
-//                .setParameter("type", getTypeUri())
-//                .setParameter("type2", FILTER_TYPE)
-//                .setParameter("subClassOf", SUB_CLASS_OF)
-//                .setParameter("superType", SUPER_TYPE);
-////                .setParameter("typePrefix", TYPE_PREFIX);
-//    }
-
 }

@@ -1,12 +1,14 @@
 package cz.cvut.kbss.amaplas.planners;
 
 import cz.cvut.kbss.amaplas.algs.timesequences.TimeSequenceMatrix;
-import cz.cvut.kbss.amaplas.model.Result;
 import cz.cvut.kbss.amaplas.model.TaskExecution;
 import cz.cvut.kbss.amaplas.model.TaskType;
 import cz.cvut.kbss.amaplas.model.Workpackage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class NaivePlanner {
@@ -20,16 +22,10 @@ public class NaivePlanner {
                 .collect(Collectors.toList());
         sequences.forEach(tel -> tel.sort(Comparator.comparing(te -> te.getStart())));
         List<SequencePattern> supportedPatterns = patternExtractor.execute(sequences, 1,
-//                // adjacent sequence patterns
-//                true,
-//                patternExtractor::preferBiEdgeWithBiggerSupport,
-//                (r1, r2) -> true
-                // sequence patterns within a time interval
+                // not only adjacent sequence patterns
                 false,
                 null,
                 (r1, r2) -> true
-//                        Math.abs(r2.start.getTime() - r1.start.getTime()) < minDistance &&
-//                                r1.scope.equals(r2.scope)
         );
 
 

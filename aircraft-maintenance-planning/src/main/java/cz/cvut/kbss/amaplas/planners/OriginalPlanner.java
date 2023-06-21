@@ -1,6 +1,5 @@
 package cz.cvut.kbss.amaplas.planners;
 
-import cz.cvut.kbss.amaplas.model.Result;
 import cz.cvut.kbss.amaplas.model.TaskExecution;
 
 import java.util.*;
@@ -11,16 +10,6 @@ public class OriginalPlanner {
     public static final OriginalPlanner planner = new OriginalPlanner();
 
     public List<SequencePattern> plan(List<TaskExecution> wp){
-//        List<Result> sequence = new ArrayList<>();
-//        wp.sort(Comparator.comparing(r -> r.start.getTime()));
-//        Set<TaskType> usedTaskTypes = new HashSet<>();
-//        for(Result r : wp){
-//            if(usedTaskTypes.contains(r.taskType))
-//                continue;
-//            sequence.add(r);
-//            usedTaskTypes.add(r.taskType);
-//        }
-
         List<TaskExecution> sequence = wp;
         if(sequence.isEmpty())
             return Collections.emptyList();
