@@ -40,12 +40,9 @@ public class TaskStepPlanDao extends BaseDao<TaskStepPlan> {
                 optional("annotatedText", failureAnnotation::setAnnotatedText);
                 optional("componentUri", URI::create, failureAnnotation::setComponentUri);
                 optional("componentLabel", failureAnnotation::setComponentLabel);
-                optional("componentScore", Double::parseDouble, failureAnnotation::setComponentScore);
                 optional("failureUri", URI::create, failureAnnotation::setFailureUri);
                 optional("failureLabel", failureAnnotation::setFailureLabel);
-                optional("failureScore", Double::parseDouble, failureAnnotation::setFailureScore);
                 optional("aggregateScore", Double::parseDouble, failureAnnotation::setAggregateScore);
-                optional("isConfirmed", failureAnnotation::setConfirmed);
             }
             return taskStepPlan;
         }

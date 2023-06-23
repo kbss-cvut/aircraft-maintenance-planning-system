@@ -9,8 +9,10 @@ PREFIX csat-text: <http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1/>
 PREFIX csvw: <http://www.w3.org/ns/csvw#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
+PREFIX termit: <http://onto.fel.cvut.cz/ontologies/application/termit/pojem/>
+
 SELECT ?wp ?task ?step ?stepIndex ?workOrderText ?workOrderActionText ?timeEstimateInHours ?annotatedText
-?componentUri ?componentLabel ?componentScore ?failureUri ?failureLabel ?failureScore ?aggregateScore ?isConfirmed
+?componentUri ?componentLabel ?failureUri ?failureLabel ?aggregateScore
 WHERE
 {
     ?wp a cm:workpackage .
@@ -29,20 +31,19 @@ WHERE
     ?stepType rdfs:subClassOf cm:work-order-step .
 
     OPTIONAL{
-        ?step a csvw:Row .
-        ?step csat-text:AnnotatedText ?annotatedText .
-        OPTIONAL{
-            ?step csat-text:FinalComponentUri ?componentUri .
-            OPTIONAL{?componentUri skos:prefLabel ?componentLabel .}
-            OPTIONAL{?step csat-text:ComponentScore ?componentScore .}
-        }
-        OPTIONAL{
-            ?step csat-text:FinalFailureUri ?failureUri .
-            OPTIONAL{?failureUri skos:prefLabel ?failureLabel .}
-            OPTIONAL{?step csat-text:FailureScore ?failureScore .}
-        }
+        ?step cm:described-finding ?finding .
+        ?finding cm:has-failure-occurrence ?failureOccurrence .
+        OPTIONAL{?finding csat-text:WO_text ?annotatedText}
+        ?failureOccurrence termit:je-přiřazením-relace ?failureInstance.
 
-        OPTIONAL{?step csat-text:AggregateScore ?aggregateScore .}
-        OPTIONAL{?step csat-text:IsConfirmed ?isConfirmed .}
+        OPTIONAL{
+            ?failureInstance csat-text:has-argument1 ?componentUri .
+            OPTIONAL{?componentUri skos:prefLabel ?componentLabel .}
+        }
+        OPTIONAL{
+            ?failureInstance csat-text:has-argument2 ?failureUri .
+            OPTIONAL{?failureUri skos:prefLabel ?failureLabel .}
+        }
+        OPTIONAL{?failureOccurrence termit:má-skóre ?aggregateScore.}
     }
 }
