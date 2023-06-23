@@ -88,7 +88,7 @@ public class WorkpackageService extends BaseService {
 
         Set<TaskExecution> taskExecutions = workpackage.getTaskExecutions();
 
-        taskExecutions.forEach(this::setStartAndEndFromParts);
+        taskExecutions.stream().forEach(this::setStartAndEndFromParts);
         Date start = min(taskExecutions.stream().map(e -> e.getStart()).filter(d -> d != null));
         Date end = max(taskExecutions.stream().map(e -> e.getEnd()).filter(d -> d != null));
         workpackage.setStart(start);
@@ -129,16 +129,6 @@ public class WorkpackageService extends BaseService {
     }
 
     /**
-     * Replaces reads task executions and their time properties of the input workpackage and stores them in its
-     * taskExections field.
-     * @param workpackage
-     */
-    public void setTaskExecutionsWithTimeProperties(Workpackage workpackage){
-        workpackageDAO.readTimePropertiesOfWorkparckageTasks(workpackage);
-        setTaskTypesOfTaskExecutions(workpackage);
-    }
-
-    /**
      * Replaces task types instances in task executions with task types from cache.
      * @param workpackage
      */
@@ -152,11 +142,20 @@ public class WorkpackageService extends BaseService {
 
 
 
-    public void setStartAndEndFromParts(TaskExecution taskExecution){
+    public void setStartAndEndFromParts(TaskExecution taskExecution) {
+        if (taskExecution.getWorkSessions() == null)
+            return;
         Date start = min(taskExecution.getWorkSessions().stream().map(w -> w.getStart()).filter(d -> d != null));
         Date end = max(taskExecution.getWorkSessions().stream().map(w -> w.getEnd()).filter(d -> d != null));
-        taskExecution.setStart(start);
-        taskExecution.setEnd(end);
+
+        if (start != null && end != null) {
+            taskExecution.setStart(start);
+            taskExecution.setEnd(end);
+            taskExecution.setDur(end.getTime() - start.getTime());
+            Long workTime = taskExecution.getWorkSessions().stream().filter(s -> s.getDur() != null)
+                    .mapToLong(s -> s.getDur()).sum();
+            taskExecution.setWorkTime(workTime);
+        }
     }
 
     public Workpackage getWorkpackageWithTemporalProperties(URI uri){
