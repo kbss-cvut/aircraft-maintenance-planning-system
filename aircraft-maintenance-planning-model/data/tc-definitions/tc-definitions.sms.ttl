@@ -27,10 +27,11 @@
 @prefix td: <http://onto.fel.cvut.cz/ontologies/csat/tabular-data-0.1/> .
 @prefix ufo: <http://onto.fel.cvut.cz/ontologies/ufo/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <http://purl.org/dc/terms/>
 
-td:construct-maintenance-group-abbreviations
-  sm:next td:rdfize-input-data ;
-.
+# td:construct-maintenance-group-abbreviations
+  # sm:next td:rdfize-input-data ;
+# .
 td:deploy-data_Return
   rdfs:label "deploy-tc-definitions-data" ;
 .
@@ -38,18 +39,18 @@ td:import-scheme
   sm:next td:rdfize-input-data ;
 .
 td:rdfize-input-data
-  kbss-module:has-output-graph-constraint [
-      a sp:Ask ;
-      sp:text """# 1.01 - column Task_Card has empty value
-ASK
-WHERE {
-    ?t csvw:row/csvw:describes ?rd .
-    FILTER NOT EXISTS {
-          ?rd :Task_Card ?notExistValue .
+  # kbss-module:has-output-graph-constraint [
+      # a sp:Ask ;
+      # sp:text """# 1.01 - column Task_Card has empty value
+# ASK
+# WHERE {
+    # ?t csvw:row/csvw:describes ?rd .
+    # FILTER NOT EXISTS {
+          # ?rd :Task_Card ?notExistValue .
 
-    }
-}""" ;
-    ] ;
+    # }
+# }""" ;
+    # ] ;
   kbss-module:has-output-graph-constraint [
       a sp:Ask ;
       sp:text """# 1.02 - column Aircraft model has empty value
@@ -58,28 +59,28 @@ ASK
 WHERE {
     ?t csvw:row/csvw:describes ?rd .
     FILTER NOT EXISTS {
-          ?rd :Aircraft_model ?notExistValue .
+          ?rd :aircraft_model ?notExistValue .
     }
 }""" ;
     ] ;
-  kbss-module:has-output-graph-constraint [
-      a sp:Ask ;
-      sp:text """# 3 - found scope that is not defined in schema ontology
-ASK
-WHERE {
-    ?t csvw:row/csvw:describes ?rd .
-    ?rd :Scope ?maintenanceGroupAbbr .
+  # kbss-module:has-output-graph-constraint [
+      # a sp:Ask ;
+      # sp:text """# 3 - found scope that is not defined in schema ontology
+# ASK
+# WHERE {
+    # ?t csvw:row/csvw:describes ?rd .
+    # ?rd :Scope ?maintenanceGroupAbbr .
 
-    FILTER NOT EXISTS {
-         ?maintenanceGroup  dl:has-simple-abbreviation ?maintenanceGroupAbbr .
-    }
-}""" ;
-    ] ;
+    # FILTER NOT EXISTS {
+         # ?maintenanceGroup  dl:has-simple-abbreviation ?maintenanceGroupAbbr .
+    # }
+# }""" ;
+    # ] ;
   km-tabular:data-prefix [
       a sp:str ;
       sp:arg1 : ;
     ] ;
-  km-tabular:delimiter "	" ;
+  km-tabular:delimiter "," ;
   sm:next :construct-csat-maintenance-data ;
 .
 td:transform-data_Return
@@ -101,184 +102,97 @@ CONSTRUCT {
     <http://onto.fel.cvut.cz/ontologies/csat-maintenance/tc-definitions-12345> a owl:Ontology ;
         owl:imports <http://onto.fel.cvut.cz/ontologies/csat-maintenance> ;
     .
-
-    ?taskTypeDefinitionIRI a cm:task-type-definition ;
-        cm:id ?Task_Card ;
-        cm:references-ata-code ?ataIRI; 
-    .
- 
-#    ?taskCard a cm:task-card ;
-#              cm:has-type ?taskType;
-#              cm:has-scope ?team;
-#              cm:has-phase ?phase;
-#              cm:mpdtask ?MPDTASK;
-#              cm:description ?description;
-#              cm:id ?taskCardCode;
-#              cm:model ?aircraftModel;
-#              cm:area ?area;
-
-
-#    ?aircraftIRI a cm:aircraft, owl:NamedIndividual;
-#        cm:registration ?acRegistration ;
-#        cm:model ?acModel ;
-#        cm:age ?acAge ;
-#   .
+	
+    ?taskTypeDefinitionIRI  rdfs:subClassOf cm:task-type-definition ;
+		cm:has-general-task-type ?taskType;
+		cm:has-main-scope ?team;
+		cm:task-for-phase ?phase;
+		cm:has-mpdtask ?MPDTASK;
+		rdfs:label ?title;
+		dc:description ?description;
+		cm:notes ?notes;
+		cm:id ?taskCardCode;
+		cm:task-for-model ?aircraftModel;
+		cm:task-for-area ?area;
+		cm:required-el-power-restrictions ?elPower;
+		cm:required-hyd-power-restrictions ?hydPower;
+		cm:required-jack-restrictions ?jacks
+	.
+	
 } WHERE {
-    ?rd :Aircraft_model ?Aircraft_model . 
-    ?rd :Task_Card ?Task_Card . 
-
-    OPTIONAL {
-        ?rd :TC ?TC . 
-    }
-    OPTIONAL {
-        ?rd :MPDTASK ?MPDTASK . 
-    }
-    OPTIONAL {
-        ?rd :Description ?Description . 
-    }
-    OPTIONAL {
-        ?rd :ATA ?ATA . 
-    }
-    OPTIONAL {
-        ?rd :Zone ?Zone . 
-    }
-    OPTIONAL {
-        ?rd :Section ?Section . 
-    }
-    OPTIONAL {
-        ?rd :Area ?Area . 
-    }
-    OPTIONAL {
-        ?rd :area_1 ?area_1 . 
-    }
-    OPTIONAL {
-        ?rd :area_2 ?area_2 . 
-    }
-    OPTIONAL {
-        ?rd :area_3 ?area_3 . 
-    }
-    OPTIONAL {
-        ?rd :Type ?Type . 
-    }
-    OPTIONAL {
-        ?rd :type_1 ?type_1 . 
-    }
-    OPTIONAL {
-        ?rd :type_2 ?type_2 . 
-    }
-    OPTIONAL {
-        ?rd :Main_Step ?Main_Step . 
-    }
-    OPTIONAL {
-        ?rd :Team ?Team . 
-    }
-    OPTIONAL {
-        ?rd :team_1_1 ?team_1_1 . 
-    }
-    OPTIONAL {
-        ?rd :team_1_2 ?team_1_2 . 
-    }
-    OPTIONAL {
-        ?rd :team_1_3 ?team_1_3 . 
-    }
-    OPTIONAL {
-        ?rd :team_1_4 ?team_1_4 . 
-    }
-    OPTIONAL {
-        ?rd :team_1_5 ?team_1_5 . 
-    }
-    OPTIONAL {
-        ?rd :Phase ?Phase . 
-    }
-    OPTIONAL {
-        ?rd :phase_1 ?phase_1 . 
-    }
-    OPTIONAL {
-        ?rd :phase_2 ?phase_2 . 
-    }
-    OPTIONAL {
-        ?rd :MHrs ?MHrs . 
-    }
-    OPTIONAL {
-        ?rd :Access_Step ?Access_Step . 
-    }
-    OPTIONAL {
-        ?rd :Team2 ?Team2 . 
-    }
-    OPTIONAL {
-        ?rd :MHrs2 ?MHrs2 . 
-    }
-    OPTIONAL {
-        ?rd :Final_Test_Step ?Final_Test_Step . 
-    }
-    OPTIONAL {
-        ?rd :Team3 ?Team3 . 
-    }
-    OPTIONAL {
-        ?rd :Phase2 ?Phase2 . 
-    }
-    OPTIONAL {
-        ?rd :MHrs3 ?MHrs3 . 
-    }
-    OPTIONAL {
-        ?rd :Min__MECH ?Min__MECH . 
-    }
-    OPTIONAL {
-        ?rd :El__Power ?El__Power . 
-    }
-    OPTIONAL {
-        ?rd :Hyd__Power ?Hyd__Power . 
-    }
-    OPTIONAL {
-        ?rd :Jacks ?Jacks . 
-    }
-    OPTIONAL {
-        ?rd :Max__MECH ?Max__MECH . 
-    }
-    OPTIONAL {
-        ?rd :Skill ?Skill . 
-    }
-    OPTIONAL {
-        ?rd :Note ?Note . 
-    }
-
-#     BIND(\"TC\" as ?taskSuperTypeId)
-#     BIND(dl:id-2(?taskSuperTypeId, ?Task_Card) as ?taskTypeNormalizedId)
-#     BIND(dl:instance(cm:task-type, ?taskTypeNormalizedId) as ?taskTypeIRI)
-
-     BIND(\"TC\" as ?taskSuperTypeId)
-     BIND(dl:id-3(?taskSuperTypeId, \"definition\", ?Task_Card) as ?taskTypeDefinitionNormalizedId)
-     BIND(dl:instance(cm:task-type-definition, ?taskTypeDefinitionNormalizedId) as ?taskTypeDefinitionIRI)
-
-
-    BIND(IRI(concat(str(ata:), \"ata-\", ?ATA)) as ?ataIRI)
-
-
-#      BIND(?c_Task_Card  as ?taskCardCode)
-#       BIND(iri(CONCAT(str(cm:), MD5(CONCAT(?record_id, ?c_Task_Card, ?c_MPDTASK))))  as ?taskCard)
-#        BIND(?c_MPDTASK as ?MPDTASK)
-#        BIND(?c_Description as ?description)
-#        BIND(?c_area1 as ?area)
-#        BIND(?c_aircraft_model as ?aircraftModel)
-#        BIND(?c_type1 as ?taskType)
-#        BIND(?c_team1 as ?team)
-#        BIND(?c_phase1 as ?phase)
-
+		
+	OPTIONAL {
+		?rd :TASKNUMBER ?taskCardCode .
+	}
+	OPTIONAL {
+		?rd :MPD_NUMBER ?MPDTASK .
+	}
+	OPTIONAL {
+		?rd :TITLE ?title .
+	}
+	OPTIONAL {
+		?rd :TEXT ?description .
+	}
+	OPTIONAL {
+		?rd :NOTES ?notes .
+	}
+	OPTIONAL {
+		?rd :TYPE_CODE ?taskType .
+	} 
+	OPTIONAL {
+		?rd :HEADER ?general_task_type .
+	}
+	OPTIONAL {
+		?rd :AREA_CODE ?area .
+	}
+	OPTIONAL {
+		?rd :aircraft_model ?aircraftModel .
+	}
+	OPTIONAL {
+		?rd :QUALIFICATION ?team .
+	}
+	OPTIONAL {
+		?rd :PHASE ?phase .
+	}
+	OPTIONAL {
+		?rd :El__Power ?elPower .
+	}
+	OPTIONAL {
+		?rd :Hyd__Power ?hydPower .
+	}
+	OPTIONAL {
+		?rd :Jacks ?jacks .
+	}
+	OPTIONAL {
+		?rd :step ?step .
+	}
+	OPTIONAL {
+		?rd :ignore ?ignore . # If value is bound to ignore, record should be ignored.
+	}
+	
+	FILTER(?step = \"1\" && !BOUND(?ignore)) 
+	
+    BIND(dl:id-3(?aircraftModel, COALESCE(?taskCardCode, ?MPDTASK), ?step) as ?taskTypeDefinitionNormalizedId)
+    
+	BIND(dl:instance(cm:task-type-definition, ?taskTypeDefinitionNormalizedId) as ?taskTypeDefinitionIRI)
 }""" ;
     ] ;
   sml:replace true ;
   rdfs:label "construct-csat-maintenance-data" ;
 .
+
 :deploy-tc-definitions-data
   a sm:Function ;
   sm:returnModule td:deploy-data_Return ;
   rdfs:subClassOf sm:Functions ;
 .
+
 :transform
   a sml:ApplyConstruct ;
   sm:next td:merge ;
   sml:replace false ;
 .
+
 :transform-tc-definitions-data
   a sm:Function ;
   sm:returnModule td:transform-data_Return ;
