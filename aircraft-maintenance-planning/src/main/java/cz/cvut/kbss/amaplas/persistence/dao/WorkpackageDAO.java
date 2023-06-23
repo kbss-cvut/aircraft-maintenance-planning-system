@@ -1,14 +1,17 @@
 package cz.cvut.kbss.amaplas.persistence.dao;
 
-import cz.cvut.kbss.amaplas.persistence.dao.mapper.EntityRegistry;
-import cz.cvut.kbss.amaplas.model.*;
+import cz.cvut.kbss.amaplas.model.TaskExecution;
+import cz.cvut.kbss.amaplas.model.TaskType;
+import cz.cvut.kbss.amaplas.model.Workpackage;
 import cz.cvut.kbss.amaplas.model.values.DateParserSerializer;
 import cz.cvut.kbss.amaplas.persistence.dao.mapper.Bindings;
+import cz.cvut.kbss.amaplas.persistence.dao.mapper.EntityRegistry;
 import cz.cvut.kbss.amaplas.persistence.dao.mapper.QueryResultMapper;
-import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.rdf4j.query.BindingSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.net.URI;
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class WorkpackageDAO extends BaseDao<Workpackage>{
+    private static final Logger LOG = LoggerFactory.getLogger(WorkpackageDAO.class);
 
     public static final String WP_TASK_TYPES = "/queries/analysis/wp-task-types.sparql";
 
@@ -69,7 +73,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
         }
     };
 
-    protected Supplier<QueryResultMapper<TaskExecution>> taskExecutionAndSessionMapper = () -> new QueryResultMapper<>(WP_TASK_EXECUTIONS) {
+    protected Supplier<QueryResultMapper<TaskExecution>> taskExecutionMapper = () -> new QueryResultMapper<>(WP_TASK_EXECUTIONS) {
         protected Pattern taskTypeIRIPattern = Pattern.compile("task-type--([^-]+)--(.+)");
         protected HashMap<String, String > taskCategories = new HashMap<>(){
             {
@@ -90,21 +94,18 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
         public TaskExecution convert() {
             String def = "unknown";
             String wp = manValue("wp");
-            String tType = optValue("tType", null);
-            URI taskTypeUri = null;
             String defaultTaskType = def;
             String defaultTaskCategory = def;
-            Double averageTime = null;
 
-            if(tType != null){
-                taskTypeUri = URI.create(tType);
-                Matcher m = taskTypeIRIPattern.matcher(tType);
-                if(m.find()) {
-                    defaultTaskCategory = taskCategories.getOrDefault(m.group(1), def);
-                    defaultTaskType = m.group(2);
-                }
-                averageTime = optValue("averageTime", Double::parseDouble, null);
+            // task type
+            String tType = manValue("tType");
+            URI taskTypeUri = URI.create(tType);
+            Matcher m = taskTypeIRIPattern.matcher(tType);
+            if(m.find()) {
+                defaultTaskCategory = taskCategories.getOrDefault(m.group(1), def);
+                defaultTaskType = m.group(2);
             }
+
             TaskType taskType = new TaskType(
                     optValue("type", defaultTaskType),
                     optValue( "typeLabel", defaultTaskType),
@@ -112,31 +113,31 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
                     optValue("acmodel", def)
             );
             taskType.setEntityURI(taskTypeUri);
-            taskType.setAverageTime(averageTime);
+            taskType.setAverageTime(optValue("averageTime", Double::parseDouble, null));
 
-            TaskExecution taskExecution = null;
-            String taskExecutionURI = optValue("tt", null);
-            if(taskExecutionURI != null) {
-                taskExecution = registry.getOrCreate(taskExecutionURI, TaskExecution::new, TaskExecution.class);
+            String taskExecutionURI = manValue("tt");
+            TaskExecution taskExecution = registry.getOrCreate(taskExecutionURI, () -> new TaskExecution(URI.create(taskExecutionURI)), TaskExecution.class);
+
+            if(taskExecution.getTaskType() == null) // task type will be null only if taskExecution was loaded as referencedTask
                 taskExecution.setTaskType(taskType);
-                taskExecution.setEntityURI(URI.create(taskExecutionURI));
-                String referencedTaskURI = optValue( "referencedTask", null);
-                TaskExecution referencedTask = referencedTaskURI == null ? null : registry.getOrCreate(referencedTaskURI, TaskExecution::new, TaskExecution.class);
-                if(referencedTask != null) {
-                    Set<TaskExecution> referencedTasks = taskExecution.getReferencedTasks();
-                    if(referencedTasks == null) {
-                        referencedTasks = new HashSet<>();
-                        taskExecution.setReferencedTasks(referencedTasks);
-                    }
-                    referencedTasks.add(referencedTask);
+
+            String referencedTaskURI = optValue( "referencedTask", null);
+            TaskExecution referencedTask = referencedTaskURI == null ?
+                    null :
+                    registry.getOrCreate(referencedTaskURI, () -> new TaskExecution(URI.create(referencedTaskURI)), TaskExecution.class);
+
+            if(referencedTask != null) {
+                Set<TaskExecution> referencedTasks = taskExecution.getReferencedTasks();
+                if(referencedTasks == null) {
+                    referencedTasks = new HashSet<>();
+                    taskExecution.setReferencedTasks(referencedTasks);
                 }
-                taskExecution.setIssueTime(optValue("issueTime", s -> parseLocalDate(s), null));
-                taskExecution.setEndTime(optValue("endTime", s -> parseLocalDate(s), null));
-                taskExecution.setStart(manValue("start", s -> parseDate(s)));
-                taskExecution.setEnd(manValue("end", s -> parseDate(s)));
-                taskExecution.setWorkTime(manValue("workTime", Long::parseLong));
-                taskExecution.setDur(manValue("dur", Long::parseLong));
+                referencedTasks.add(referencedTask);
             }
+            taskExecution.setIssueTime(optValue("issueTime", s -> parseLocalDate(s), null));
+            taskExecution.setEndTime(optValue("endTime", s -> parseLocalDate(s), null));
+            taskExecution.setEstMin(optValue("estMin", Double::parseDouble, null));
+
             return taskExecution;
         }
     };
@@ -147,7 +148,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
         }
     };
 
-    protected Supplier<QueryResultMapper<TaskExecution>> taskExecutionMapper = () -> new QueryResultMapper<>(TASK_EXECUTION_STATISTICS_FROM_PARTS) {
+    protected Supplier<QueryResultMapper<TaskExecution>> taskExecutionStatisticsFromPartsMapper = () -> new QueryResultMapper<>(TASK_EXECUTION_STATISTICS_FROM_PARTS) {
         @Override
         public TaskExecution convert() {
             TaskType taskType = manValue("taskType", s -> new TaskType(URI.create(s)));
@@ -170,7 +171,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
     }
 
     public List<TaskExecution> convertToTaskExecution(Iterable<BindingSet> bindingSets){
-        return taskExecutionMapper.get().convert(bindingSets);
+        return taskExecutionStatisticsFromPartsMapper.get().convert(bindingSets);
     }
 
     protected Date parseDate(String dateString){
@@ -224,7 +225,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
     public void readWorkparckageTasks(final Workpackage workpackage){
         Bindings bindings = new Bindings();
         bindings.add("wp", workpackage.getEntityURI());
-        List<TaskExecution> taskExecutions = load(taskExecutionAndSessionMapper.get(), bindings);
+        List<TaskExecution> taskExecutions = load(taskExecutionMapper.get(), bindings);
         workpackage.setTaskExecutions(new HashSet<>(taskExecutions));
         taskExecutions.forEach(te -> te.setWorkpackage(workpackage));
     }
@@ -238,27 +239,6 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
     protected Map<String, List<BindingSet>> getTimePropertiesOfWorkparckageTasks(){
         List<BindingSet> bindingSets = load(workpackagesWithTaskExecutionsWithTimeProperties.get(), null);
         return bindingSets.stream().collect(Collectors.groupingBy(b -> b.getValue("wp").stringValue()));
-    }
-
-    /**
-     * Reads temporal properties of task executions in the input workpackage. Temporal properties derived from the task's parts
-     * (work sessions) are start, end, workTime and duration.
-     *
-     * Limitations - this method does not read other relevant properties of task cards.
-     * @param workpackage
-     */
-    public void readTimePropertiesOfWorkparckageTasks(final Workpackage workpackage){
-        Bindings bindings = new Bindings();
-        bindings.add("wp", workpackage.getEntityURI());
-        List<TaskExecution> taskExecutions = load(taskExecutionMapper.get(), bindings);
-        workpackage.setTaskExecutions(new HashSet<>(taskExecutions));
-        taskExecutions.forEach(te -> te.setWorkpackage(workpackage));
-    }
-
-    public void readTimePropertiesOfWorkparckageTasks(final Collection<Workpackage> workpackages) {
-        for(Workpackage wp : workpackages){
-            readTimePropertiesOfWorkparckageTasks(wp);
-        }
     }
 
     /**

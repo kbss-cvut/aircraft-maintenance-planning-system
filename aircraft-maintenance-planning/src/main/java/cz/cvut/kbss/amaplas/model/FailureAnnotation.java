@@ -8,7 +8,7 @@ import cz.cvut.kbss.jopa.model.annotations.Sparql;
 
 import java.net.URI;
 
-@OWLClass(iri = "http://www.w3.org/ns/csvw#Row")
+@OWLClass(iri = "http://onto.fel.cvut.cz/ontologies/csat-maintenancefailure-occurrence")
 public class FailureAnnotation extends AbstractEntity {
 
     @OWLDataProperty(iri = "http://onto.fel.cvut.cz/ontologies/csat/enhance-wo-text-0.1/AnnotatedText")

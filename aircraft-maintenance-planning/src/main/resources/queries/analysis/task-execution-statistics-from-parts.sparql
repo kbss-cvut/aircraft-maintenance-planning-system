@@ -9,6 +9,11 @@ SELECT DISTINCT ?wp ?task ?taskType ?issueTime ?endTime (MIN(?st) as ?derivedSta
 #    BIND(cm:workpackage--OE-LBN-H-23-B4Y-B2Y-ECAP as ?wp)
 
     ?task cm:is-part-of-workpackage ?wp .
+
+    # only process closed workpackages
+    ?wp cm:workpackage-end-time ?closeDate.
+    FILTER(xsd:dateTime(?closeDate) <= NOW())
+
     ?task a ?taskType .
     ?taskType a cm:task-type .
 

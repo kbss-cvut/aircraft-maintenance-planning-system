@@ -195,7 +195,8 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder {
         steps.stream().collect(Collectors.groupingBy(s -> s.getParentTask().toString())).entrySet()
                 .forEach(e -> {
                     TaskPlan p = taskPlanMap.get(e.getKey());
-                    p.getTaskStepPlans().addAll(e.getValue());
+                    if(p != null)
+                        p.getTaskStepPlans().addAll(e.getValue());
                 });
     }
 
@@ -231,6 +232,9 @@ public class WorkSessionBasedPlanBuilder extends AbstractPlanBuilder {
 
             TaskPlan taskPlan = getTaskPlan(taskExecution, revisionPlan, area.getTitle());
             generalTaskPlan.getPlanParts().add(taskPlan);
+            if(taskExecution.getWorkSessions() == null)
+                continue;
+
             for(WorkSession ws : taskExecution.getWorkSessions()){
                 if(ws.getEntityURI() == null)
                     continue;
