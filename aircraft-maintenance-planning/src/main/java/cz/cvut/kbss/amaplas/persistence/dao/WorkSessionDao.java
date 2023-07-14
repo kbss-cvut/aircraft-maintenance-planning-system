@@ -2,7 +2,7 @@ package cz.cvut.kbss.amaplas.persistence.dao;
 
 import cz.cvut.kbss.amaplas.persistence.dao.mapper.EntityRegistry;
 import cz.cvut.kbss.amaplas.model.*;
-import cz.cvut.kbss.amaplas.model.values.DateParserSerializer;
+import cz.cvut.kbss.amaplas.model.values.DateUtils;
 import cz.cvut.kbss.amaplas.persistence.dao.mapper.Bindings;
 import cz.cvut.kbss.amaplas.persistence.dao.mapper.QueryResultMapper;
 import cz.cvut.kbss.jopa.model.EntityManager;
@@ -77,9 +77,9 @@ public class WorkSessionDao extends BaseDao<WorkSession> {
             String start = optValue( "start", null);
             String end = optValue( "end", null);
             if(start != null )
-                workSession.setStart(DateParserSerializer.parseDate(DateParserSerializer.df.get(), start));
+                workSession.setStart(DateUtils.parseDate(DateUtils.df.get(), start));
             if(end != null)
-                workSession.setEnd(DateParserSerializer.parseDate(DateParserSerializer.df.get(), end));
+                workSession.setEnd(DateUtils.parseDate(DateUtils.df.get(), end));
 
             workSession.setDur(optValueNonString("dur", v -> ((Literal)v).longValue(), null));
             return Pair.of(manValue("tt", URI::create), workSession);

@@ -3,7 +3,7 @@ package cz.cvut.kbss.amaplas.persistence.dao;
 import cz.cvut.kbss.amaplas.model.TaskExecution;
 import cz.cvut.kbss.amaplas.model.TaskType;
 import cz.cvut.kbss.amaplas.model.Workpackage;
-import cz.cvut.kbss.amaplas.model.values.DateParserSerializer;
+import cz.cvut.kbss.amaplas.model.values.DateUtils;
 import cz.cvut.kbss.amaplas.persistence.dao.mapper.Bindings;
 import cz.cvut.kbss.amaplas.persistence.dao.mapper.EntityRegistry;
 import cz.cvut.kbss.amaplas.persistence.dao.mapper.QueryResultMapper;
@@ -176,7 +176,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
     }
 
     protected Date parseDate(String dateString){
-        return DateParserSerializer.parseDate(DateParserSerializer.df.get(), dateString);
+        return DateUtils.parseDate(DateUtils.df.get(), dateString);
     }
 
     protected LocalDate parseLocalDate(String lacalDateString){
