@@ -1,17 +1,11 @@
 package cz.cvut.kbss.amaplas.model;
 
-import cz.cvut.kbss.amaplas.model.base.LongIntervalImpl;
-import cz.cvut.kbss.amaplas.model.values.DateParserSerializer;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
-import cz.cvut.kbss.jopa.model.annotations.Transient;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.ToLongFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
