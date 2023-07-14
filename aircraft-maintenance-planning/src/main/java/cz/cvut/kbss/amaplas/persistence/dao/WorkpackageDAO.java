@@ -152,6 +152,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
         @Override
         public TaskExecution convert() {
             TaskType taskType = manValue("taskType", s -> new TaskType(URI.create(s)));
+            taskType.setCode(optValue("taskTypeId", null));
             TaskExecution taskExecution = manValue("task", s -> new TaskExecution(URI.create(s)));
             taskExecution.setTaskType(taskType);
 
