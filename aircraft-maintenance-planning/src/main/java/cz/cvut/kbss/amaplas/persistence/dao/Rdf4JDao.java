@@ -9,6 +9,7 @@ import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,15 @@ public class Rdf4JDao {
         return mapper.convert(rawResults);
     }
 
+    protected <T> List<T> load(QueryResultMapper<T> mapper, Collection<Bindings> values, Bindings bindings){
+        TupleQueryResult rawResults = executeSelect(mapper.getQuery(), values, bindings);
+        return mapper.convert(rawResults);
+    }
+
+    protected TupleQueryResult executeSelect(String query, Collection<Bindings> values, Bindings bindings){
+        String queryWithValues =  String.format("%s\n%s", query, Bindings.constructValuesClause(values));
+        return executeSelect(queryWithValues, bindings);
+    }
     protected TupleQueryResult executeSelect(String query, Bindings bindings){
         RepositoryConnection c = getRepositoryConnection();
         TupleQuery tupleQuery = c.prepareTupleQuery(query);
