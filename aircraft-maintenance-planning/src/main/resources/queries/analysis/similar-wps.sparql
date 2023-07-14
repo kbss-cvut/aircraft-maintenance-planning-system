@@ -5,7 +5,7 @@ PREFIX cm: <http://onto.fel.cvut.cz/ontologies/csat-maintenance/>
 
 SELECT ?wpA ?wpB ?wpAtaskCount (COUNT(DISTINCT ?taskTypeB) as ?wpBtaskCount)
         (SUM(IF(bound(?commonTask), 1, 0)) as ?commonTaskCount)
-        (?commonTaskCount/(?wpAtaskCount + ?wpBtaskCount - ?commonTaskCount) as ?similarity) {
+        (?commonTaskCount/(?wpAtaskCount + ?wpBtaskCount - ?commonTaskCount) as ?similarity) { # similarity measure for wpA
 
     {SELECT DISTINCT ?wpA ?wpB ?wpAtaskCount {# find packages with at least one task common with ?wpA
         ?task cm:is-part-of-workpackage ?wpA .

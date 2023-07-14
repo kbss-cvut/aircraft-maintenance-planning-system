@@ -120,6 +120,10 @@ public class WorkpackageService extends BaseService {
         return workpackageDAO.findSimilarWorkpackages(workpackage);
     }
 
+    public List<Pair<Workpackage, Double>> findWorkpackagesWithSimilarScopes(Workpackage workpackage, Set<TaskType> taskTypes){
+        return workpackageDAO.findWorkpackagesWithSimilarScopes(workpackage, taskTypes);
+    }
+
     public Workpackage findById(String id){
         Workpackage workpackage = workpackageDAO.findById(id).orElse(null);
         if(workpackage != null){
