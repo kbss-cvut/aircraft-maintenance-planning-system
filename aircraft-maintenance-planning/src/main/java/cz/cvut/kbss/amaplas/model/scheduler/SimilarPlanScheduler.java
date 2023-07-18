@@ -45,12 +45,6 @@ public class SimilarPlanScheduler implements PlanScheduler{
                 if(node.getInstances() == null || node.getInstances().isEmpty())
                     return;
 
-
-
-//                Long end = Optional.ofNullable(taskExecution.getEnd()).map(Date::getTime).orElse(-1L);
-//                if(end < 0)
-//                    end = taskExecution.getStart().getTime() + 3600000;
-
                 long duration = (long)(node.getTaskType().getAverageTime() * 3600000); //end - taskExecution.getStart().getTime();
 
                 Long workTime = null; // TODO - replace with node.getTaskType().getAverageWorkTime()
@@ -65,23 +59,18 @@ public class SimilarPlanScheduler implements PlanScheduler{
                     TaskPlan sourceTaskPlan = taskPlanMap.get(source.getTaskType());
                     if(edge.patternType == PatternType.EQUALITY){
                         plannedStartTime = sourceTaskPlan.getPlannedStartTime().getTime();
-                    }else if(edge.patternType == PatternType.STRICT_DIRECT_ORDER){
-                        long startTimeDistance = (targetHistory.getStart().getTime() - sourceHistory.getStart().getTime()) *
-                                (duration/targetHistory.getDur());
-                        plannedStartTime = sourceTaskPlan.getPlannedStartTime().getTime() + startTimeDistance;
-                    } else if(edge.patternType == PatternType.STRICT_INDIRECT_ORDER){
-                        if(sourceHistory.getEnd().getTime() > targetHistory.getStart().getTime()) {
-//                            plannedStartTime = sourceHistory.getEnd().getTime() + defaultBufferBetweenSchedules;
-                            long startTimeDistance = (targetHistory.getStart().getTime() - sourceHistory.getStart().getTime()) *
-                                    (duration/targetHistory.getDur());
-                            plannedStartTime = sourceTaskPlan.getPlannedStartTime().getTime() + startTimeDistance;
-                        } else if(sourceHistory.getEnd().getTime() == targetHistory.getStart().getTime()) {
-                            plannedStartTime = sourceTaskPlan.getPlannedEndTime().getTime();
-                        }else {
-                            long startTimeDistance = (targetHistory.getStart().getTime() - sourceHistory.getStart().getTime()) *
-                                    (duration/targetHistory.getDur());
-                            plannedStartTime = sourceTaskPlan.getPlannedStartTime().getTime() + startTimeDistance;
-                        }
+                    } else if(edge.patternType == PatternType.STRICT_DIRECT_ORDER || edge.patternType == PatternType.STRICT_INDIRECT_ORDER){
+                        long sourceStart = sourceHistory.getStart().getTime();
+                        long sourceEnd = sourceHistory.getEnd().getTime();
+                        long targetStart = targetHistory.getStart().getTime();
+
+                        if(targetStart < sourceEnd)
+                            plannedStartTime = sourceTaskPlan.getPlannedStartTime().getTime() + (long)(
+                                    (sourceTaskPlan.getPlannedEndTime().getTime() - sourceTaskPlan.getPlannedStartTime().getTime())*( targetStart - sourceStart)*1./(sourceEnd - sourceStart)
+                            );
+                        else
+                            plannedStartTime = sourceTaskPlan.getPlannedEndTime().getTime() + defaultBufferBetweenSchedules;
+
                     }
                 }
 
