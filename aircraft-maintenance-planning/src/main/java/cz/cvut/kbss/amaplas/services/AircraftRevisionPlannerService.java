@@ -17,17 +17,20 @@ import cz.cvut.kbss.amaplas.persistence.dao.PlanTypeDao;
 import cz.cvut.kbss.amaplas.persistence.dao.TaskStepPlanDao;
 import cz.cvut.kbss.amaplas.planners.PlanGraph;
 import cz.cvut.kbss.amaplas.planners.ReuseBasedPlanner;
-import cz.cvut.kbss.amaplas.utils.GraphmlUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Service
 public class AircraftRevisionPlannerService extends BaseService{
@@ -150,12 +153,10 @@ public class AircraftRevisionPlannerService extends BaseService{
         Workpackage wp = workpackageService.getWorkpackageWithExecutionsAndSessions(revisionId);
         if(wp == null)
             return null;
-        return createRevisionPlanScheduleDeducedFromSimilarRevisions(wp, mixedSchedule);
+        return createRevisionPlanScheduleDeducedFromSimilarRevisions(wp, mixedSchedule).outputPlan;
     }
 
-    public RevisionPlan createRevisionPlanScheduleDeducedFromSimilarRevisions(Workpackage wp, boolean mixedSchedule) {
-
-//        Set<TaskType> taskTypes = wp.getTaskTypes();
+    public PlanResult createRevisionPlanScheduleDeducedFromSimilarRevisions(Workpackage wp, boolean mixedSchedule) {
 
         WorkSessionBasedPlanBuilder workSessionBasedPlanBuilder = new WorkSessionBasedPlanBuilder();
         RevisionPlan revisionPlan = workSessionBasedPlanBuilder.createRevision(wp);
@@ -178,15 +179,6 @@ public class AircraftRevisionPlannerService extends BaseService{
                 wp,
                 revisionsToIgnore
         );
-        // debug - print plan graphs in files
-        for(Map.Entry<String, PlanGraph> e : partialTaskOrderByScope.entrySet()){
-            String fileName = String.format("%s--%s--%s.gml",
-                    wp.getId().replaceAll("[^\\w\\d]", "-"),
-                    e.getKey(),
-                    DateUtils.formatDate(new Date()).replace(":", "-")
-                    );
-            GraphmlUtils.write(e.getValue(), PlanGraph.exporter, fileName);
-        }
 
         // calculate execution start
         Date startDate = wp.getPlannedStartTime() != null ?
@@ -210,17 +202,52 @@ public class AircraftRevisionPlannerService extends BaseService{
         revisionPlan.applyOperationBottomUp(p -> p.updateTemporalAttributes());
         workSessionBasedPlanBuilder.addRestrictionPlans(revisionPlan);
 
-        return revisionPlan;
+        return new PlanResult(revisionPlan, partialTaskOrderByScope);
     }
 
-    public String compareCSATPlanAutomatedPlanAndExecutions(String revisionId){
+    public byte[] compareCSATPlanAutomatedPlanAndExecutions(String revisionId){
         Workpackage wp = workpackageService.getWorkpackageWithExecutionsAndSessions(revisionId);
 
         if(wp == null)
             return null;
-        RevisionPlan revisionPlan = createRevisionPlanScheduleDeducedFromSimilarRevisions(wp, false);
+        PlanResult planResult = createRevisionPlanScheduleDeducedFromSimilarRevisions(wp, false);
+        Map<String, PlanGraph> partialTaskOrderByScope = planResult.partialTaskOrderByScope;
+
         RevisionPlanCSVConverter c = new RevisionPlanCSVConverter();
-        return c.convert(wp, revisionPlan);
+
+        RevisionPlan revisionPlan = planResult.outputPlan;
+
+        ByteArrayOutputStream b = new ByteArrayOutputStream();
+        ZipOutputStream z = new ZipOutputStream(b);
+        try {
+            // add plan in csv
+            String fileName = "plan.csv";
+            ZipEntry ze = new ZipEntry(fileName);
+            z.putNextEntry(ze);
+            z.write(c.convert(wp, revisionPlan).getBytes());
+            z.closeEntry();
+
+            // add gml files for the scope sequences
+
+            for(Map.Entry<String, PlanGraph> e : partialTaskOrderByScope.entrySet()){
+                fileName = String.format("%s.gml", e.getKey());
+                ze = new ZipEntry(fileName);
+                z.putNextEntry(ze);
+                PlanGraph.exporter.exportGraph(e.getValue(), z);
+                z.closeEntry();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                z.flush();
+                z.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        return b.toByteArray();
     }
 
     /**
@@ -332,5 +359,15 @@ public class AircraftRevisionPlannerService extends BaseService{
                     "Invalid plan types, non of the plan types is supported,\n %s",
                     planTypes)
             );
+    }
+
+    class PlanResult{
+        public RevisionPlan outputPlan;
+        public Map<String, PlanGraph> partialTaskOrderByScope;
+
+        public PlanResult(RevisionPlan outputPlan, Map<String, PlanGraph> partialTaskOrderByScope) {
+            this.outputPlan = outputPlan;
+            this.partialTaskOrderByScope = partialTaskOrderByScope;
+        }
     }
 }
