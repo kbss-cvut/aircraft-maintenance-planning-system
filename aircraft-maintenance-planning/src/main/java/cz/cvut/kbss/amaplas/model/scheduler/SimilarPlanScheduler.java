@@ -18,15 +18,18 @@ public class SimilarPlanScheduler implements PlanScheduler{
     private static final Logger LOG = LoggerFactory.getLogger(SimilarPlanScheduler.class);
 
     protected Map<String, PlanGraph> groupedPartialTaskOrder;
-    protected Date planStartTime;
+    protected PlanGraph findingOrder;
+    protected long planStartTime;
 
-    public SimilarPlanScheduler(Date planStartTime, Map<String, PlanGraph> groupedPartialTaskOrder) {
-        this.planStartTime = planStartTime;
+    public SimilarPlanScheduler(Date planStartTime, Map<String, PlanGraph> groupedPartialTaskOrder, PlanGraph findingOrder) {
+        this.planStartTime = planStartTime.getTime();
         this.groupedPartialTaskOrder = groupedPartialTaskOrder;
+        this.findingOrder = findingOrder;
     }
 
     @Override
     public void schedule(RevisionPlan revisionPlan) {
+        long defaultBufferBetweenSchedules = 15*60*1000;
         Map<TaskType, TaskPlan> taskPlanMap = new HashMap<>();
         revisionPlan.streamPlanParts()
                 .filter(p -> p instanceof TaskPlan)
@@ -39,55 +42,69 @@ public class SimilarPlanScheduler implements PlanScheduler{
             ReuseBasedPlanner.planner.traverse(e.getValue(), (planGraph, node, edge, source) -> {
                 // schedule the time of the task plan
                 TaskPlan taskPlan = taskPlanMap.get(node.getTaskType());
-                Date plannedStartTime = null;
+                Long plannedStartTime = null;
 
                 if(node.getInstances() == null || node.getInstances().isEmpty())
                     return;
+                // Do not schedule tasks (e.g. maintenance wo) which reference other tasks.
+                if(edge == null && source == null && findingOrder.containsVertex(node) && !findingOrder.incomingEdgesOf(node).isEmpty())
+                    return;
 
-                String edgeWP = getEdgeWP(node, edge, source);
+                long duration = (long)(node.getTaskType().getAverageTime() * 3600000); //end - taskExecution.getStart().getTime();
 
-                TaskExecution taskExecution = node.getInstance(te -> Objects.equals(edgeWP, te.getWorkpackage().getId()));
-
-                Long end = Optional.ofNullable(taskExecution.getEnd()).map(Date::getTime).orElse(-1L);
-                if(end < 0)
-                    end = taskExecution.getStart().getTime() + 3600000;
-                long duration = end - taskExecution.getStart().getTime();
-
-                long workTime = taskExecution.getWorkTime();
+                Long workTime = null; // TODO - replace with node.getTaskType().getAverageWorkTime()
                 if(edge == null || edge.patternType == null){
                     plannedStartTime = planStartTime;
+                    workTime = node.getInstances().get(0).getWorkTime(); // TODO - replace with node.getTaskType().getAverageWorkTime()
+                }else {
+                    TaskExecution sourceHistory = edge.instances.get(0).get(0);
+                    TaskExecution targetHistory = edge.instances.get(0).get(1);
+                    workTime = targetHistory.getWorkTime(); // TODO - replace with node.getTaskType().getAverageWorkTime()
 
-                }else if(edge.patternType == PatternType.EQUALITY){
-                    TaskPlan previousTaskPlan = taskPlanMap.get(source.getTaskType());
-                    plannedStartTime = previousTaskPlan.getPlannedStartTime();
-                }else if(edge.patternType == PatternType.STRICT_DIRECT_ORDER){
-                    TaskPlan previousTaskPlan = taskPlanMap.get(source.getTaskType());
-                    TaskExecution previousTaskExecution = source.getInstance(taskExecution, te -> te.getWorkpackage().getId()); //source.instances.stream()
+                    TaskPlan sourceTaskPlan = taskPlanMap.get(source.getTaskType());
+                    if(edge.patternType == PatternType.EQUALITY){
+                        plannedStartTime = sourceTaskPlan.getPlannedStartTime().getTime();
+                    } else if(edge.patternType == PatternType.STRICT_DIRECT_ORDER || edge.patternType == PatternType.STRICT_INDIRECT_ORDER){
+                        long sourceStart = sourceHistory.getStart().getTime();
+                        long sourceEnd = sourceHistory.getEnd().getTime();
+                        long targetStart = targetHistory.getStart().getTime();
 
-                    long startTimeDistance = taskExecution.getStart().getTime() - previousTaskExecution.getStart().getTime();
-                    plannedStartTime = new Date(previousTaskPlan.getStartTime().getTime() + startTimeDistance);
-                } else if(edge.patternType == PatternType.STRICT_INDIRECT_ORDER){
-                    TaskPlan previousTaskPlan = taskPlanMap.get(source.getTaskType());
-                    TaskExecution previousTaskExecution = source.getInstance(te -> Objects.equals(edgeWP, te.getWorkpackage().getId())); //source.getInstance(sessions, r -> r.wp); //source.instances.stream()
+                        if(targetStart < sourceEnd)
+                            plannedStartTime = sourceTaskPlan.getPlannedStartTime().getTime() + (long)(
+                                    (sourceTaskPlan.getPlannedEndTime().getTime() - sourceTaskPlan.getPlannedStartTime().getTime())*( targetStart - sourceStart)*1./(sourceEnd - sourceStart)
+                            );
+                        else
+                            plannedStartTime = sourceTaskPlan.getPlannedEndTime().getTime() + defaultBufferBetweenSchedules;
 
-                    long endToStart = taskExecution.getStart().getTime() - previousTaskExecution.getEnd().getTime();
-                    if(endToStart > 0)
-                        endToStart = 0;
-
-                    plannedStartTime =  new Date(previousTaskPlan.getPlannedEndTime().getTime() + endToStart);
+                    }
                 }
 
-                taskPlan.setPlannedStartTime(plannedStartTime);
-                taskPlan.setPlannedEndTime(new Date(plannedStartTime.getTime() + duration));
+                taskPlan.setPlannedStartTime(new Date(plannedStartTime));
+                taskPlan.setPlannedEndTime(new Date(plannedStartTime + duration));
 
                 taskPlan.setPlannedWorkTime(workTime);
-
-                revisionPlan.applyOperationBottomUp( p -> {
-                    if(!(p instanceof TaskPlan) )
-                        p.updatePlannedTemporalAttributesFromPlanParts();
-                });
             });
         }
+        // schedule WOs
+        ReuseBasedPlanner.planner.traverse(findingOrder, (planGraph, node, edge, source) -> {
+            if(source == null || edge == null || node == null) // do not schedule the root nodes, they should be scheduled in the first scheduling phase
+                return;
+            TaskPlan sourcePlan = taskPlanMap.get(source.getTaskType());
+            TaskPlan targetPlan = taskPlanMap.get(node.getTaskType());
+            if(sourcePlan == null || targetPlan == null || sourcePlan.getPlannedStartTime() == null || sourcePlan.getPlannedEndTime() == null)
+                return;
+            Double duration = targetPlan.getTaskType().getAverageTime();
+            if(duration == null)
+                duration = 4.;
+
+            targetPlan.setPlannedStartTime(new Date(sourcePlan.getPlannedEndTime().getTime() + defaultBufferBetweenSchedules));
+            targetPlan.setPlannedEndTime(new Date(targetPlan.getPlannedStartTime().getTime() + (long)(duration*1000*3600)));
+        });
+
+        revisionPlan.applyOperationBottomUp( p -> {
+            if(!(p instanceof TaskPlan) )
+                p.updatePlannedTemporalAttributesFromPlanParts();
+        });
     }
 
     protected String getEdgeWP(TaskPattern node, SequencePattern edge, TaskPattern source){

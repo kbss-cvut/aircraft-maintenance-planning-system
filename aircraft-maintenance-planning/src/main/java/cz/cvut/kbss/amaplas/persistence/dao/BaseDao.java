@@ -208,6 +208,10 @@ public abstract class BaseDao<T extends AbstractEntity> implements GenericDao<T>
         return rdf4JDao.load(mapper, bindings);
     }
 
+    protected <R> List<R> load(QueryResultMapper<R> mapper, Collection<Bindings> values, Bindings bindings){
+        return rdf4JDao.load(mapper, values, bindings);
+    }
+
     protected TupleQueryResult executeSelect(String query, Bindings bindings){
         return rdf4JDao.executeSelect(query, bindings);
     }

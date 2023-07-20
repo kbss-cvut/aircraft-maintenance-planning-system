@@ -1,5 +1,6 @@
 package cz.cvut.kbss.amaplas.services;
 
+import cz.cvut.kbss.amaplas.controller.dto.RevisionPlanCSVConverter;
 import cz.cvut.kbss.amaplas.exceptions.NotFoundException;
 import cz.cvut.kbss.amaplas.exceptions.UnsupportedOperationException;
 import cz.cvut.kbss.amaplas.exceptions.ValidationException;
@@ -10,23 +11,25 @@ import cz.cvut.kbss.amaplas.model.ops.CopySimplePlanProperties;
 import cz.cvut.kbss.amaplas.model.scheduler.NaivePlanScheduler;
 import cz.cvut.kbss.amaplas.model.scheduler.PlanScheduler;
 import cz.cvut.kbss.amaplas.model.scheduler.SimilarPlanScheduler;
+import cz.cvut.kbss.amaplas.model.values.DateUtils;
 import cz.cvut.kbss.amaplas.persistence.dao.GenericPlanDao;
 import cz.cvut.kbss.amaplas.persistence.dao.PlanTypeDao;
 import cz.cvut.kbss.amaplas.persistence.dao.TaskStepPlanDao;
-import cz.cvut.kbss.amaplas.persistence.dao.WorkpackageDAO;
-import cz.cvut.kbss.amaplas.planners.PlanGraph;
-import cz.cvut.kbss.amaplas.planners.ReuseBasedPlanner;
+import cz.cvut.kbss.amaplas.planners.*;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.URI;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Service
 public class AircraftRevisionPlannerService extends BaseService{
@@ -54,9 +57,9 @@ public class AircraftRevisionPlannerService extends BaseService{
         // create a plan graph for each scope
         Map<MaintenanceGroup, List<TaskType>> tasksByScope = toPlan.getTaskTypes().stream().collect(Collectors.groupingBy(t ->  t.getScope() != null ? t.getScope() : nullGroup));
 
-        Set<Workpackage> loadedWPs = new HashSet<>();
+        List<Pair<Workpackage, Double>> _similarWPs = workpackageService.findSimilarWorkpackages(toPlan);
         // get Similar WPs
-        List<Pair<Supplier<Workpackage>, Double>> similarWPs = workpackageService.findSimilarWorkpackages(toPlan)
+        List<Pair<Supplier<Workpackage>, Double>> similarWPs = _similarWPs
                 .stream()
                 .filter(p -> !revisionsToIgnore.contains(p.getKey().getEntityURI().toString()))
                 .map(p -> Pair.of(
@@ -75,6 +78,71 @@ public class AircraftRevisionPlannerService extends BaseService{
             scopePlans.put(scopeTasks.getKey().getAbbreviation(), rawScopePlan);
         }
 
+        return scopePlans;
+    }
+
+    public PlanGraph maintenanceOrderGraphPlan(Workpackage toPlan, Map<String, PlanGraph> partialTaskOrderByScope){
+        PlanGraph planGraph = new PlanGraph();
+    // add WOs to the sequences
+        Map<String, TaskPattern> map = new HashMap<>();
+        partialTaskOrderByScope.values().stream().flatMap(g -> g.vertexSet().stream()).forEach(t -> map.put(t.getTaskType().getId(), t));
+        toPlan.getTaskExecutions().stream()
+                .filter(te -> te.getReferencedTasks() != null && !te.getReferencedTasks().isEmpty())
+                .forEach(te -> {
+                    Set<TaskPattern> sourceNodes = te.getReferencedTasks().stream()
+                            .map(tr -> map.get(tr.getTaskType().getId()))
+                            .filter(tp -> tp != null)
+                            .collect(Collectors.toSet());
+
+                    TaskPattern targetNode = map.get(te.getTaskType().getId());
+                    if(sourceNodes.isEmpty() || targetNode == null)
+                        return;
+
+                    // add nodes to graph
+                    sourceNodes.stream()
+                            .filter(n -> !planGraph.vertexSet().contains(n))
+                            .forEach(n -> planGraph.addVertex(n));
+                    if(!planGraph.vertexSet().contains(targetNode))
+                        planGraph.addVertex(targetNode);
+                    // add edges to graph
+                    for(TaskPattern sourceNode : sourceNodes) {
+                        SequencePattern seqpat = new SequencePattern();
+                        seqpat.pattern = Arrays.asList(sourceNode.getTaskType(), targetNode.getTaskType());
+                        seqpat.patternType = PatternType.STRICT_INDIRECT_ORDER;
+                        planGraph.addEdge(sourceNode, targetNode, seqpat);
+                    }
+                });
+        return planGraph;
+    }
+
+    public Map<String, PlanGraph> scopeGraphPlansFromSimilarScopes(Workpackage toPlan, Collection<String> revisionsToIgnore) {
+        // find similar wps for each scope group
+        MaintenanceGroup nullGroup = new MaintenanceGroup();
+        // create a plan graph for each scope
+        Map<MaintenanceGroup, List<TaskType>> tasksByScope = toPlan.getTaskTypes().stream()
+//                .filter(t -> (t.getTaskcat() != null && t.getTaskcat().contains("task-card")) )
+                .collect(Collectors.groupingBy(t ->  t.getScope() != null ? t.getScope() : nullGroup));
+
+        Map<String, PlanGraph> scopePlans = new HashMap<>();
+        for(Map.Entry<MaintenanceGroup, List<TaskType>> scopeTasks : tasksByScope.entrySet()){
+            List<Pair<Workpackage, Double>> _similarWPs = workpackageService
+                    .findWorkpackagesWithSimilarScopes(toPlan, new HashSet<>(scopeTasks.getValue()));
+            List<Pair<Supplier<Workpackage>, Double>> similarWPs = _similarWPs
+                    .stream()
+                    .filter(p -> !revisionsToIgnore.contains(p.getKey().getEntityURI().toString()))
+                    .map(p -> Pair.of(
+                            (Supplier<Workpackage>)() -> workpackageService.getWorkpackageWithTemporalProperties(p.getKey().getEntityURI()),
+                            p.getRight())
+                    )
+                    .collect(Collectors.toList());
+
+            // the result does not contain information regarding instances of the TC execution
+            PlanGraph rawScopePlan = ReuseBasedPlanner.planner.planConnected(
+                    similarWPs,
+                    new HashSet<>(scopeTasks.getValue())
+            );
+            scopePlans.put(scopeTasks.getKey().getAbbreviation(), rawScopePlan);
+        }
         return scopePlans;
     }
 
@@ -108,24 +176,20 @@ public class AircraftRevisionPlannerService extends BaseService{
         return revisionPlan;
     }
 
+
     /**
      * Create a RevisionPlan from task types and work sessions of workpackage with revisionId.
      * @param revisionId
      * @return
      */
-    public RevisionPlan createRevisionPlanScheduleDeducedFromSimilarRevisions(String revisionId){
-        Workpackage wp = workpackageService.getWorkpackage(revisionId);
-        if(wp == null){
-            LOG.warn("Could not find WP with id \"{}\" ", revisionId);
+    public RevisionPlan createRevisionPlanScheduleDeducedFromSimilarRevisions(String revisionId, boolean mixedSchedule) {
+        Workpackage wp = workpackageService.getWorkpackageWithExecutionsAndSessions(revisionId);
+        if(wp == null)
             return null;
-        }
-        workpackageService.readTaskExecutions(wp);
-        if(wp.getTaskExecutions() == null || wp.getTaskExecutions().isEmpty()) {
-            LOG.warn("Could not find any sessions or TC executions for WP \"{}\" ", revisionId);
-            return null;
-        }
+        return createRevisionPlanScheduleDeducedFromSimilarRevisions(wp, mixedSchedule).outputPlan;
+    }
 
-//        Set<TaskType> taskTypes = wp.getTaskTypes();
+    public PlanResult createRevisionPlanScheduleDeducedFromSimilarRevisions(Workpackage wp, boolean mixedSchedule) {
 
         WorkSessionBasedPlanBuilder workSessionBasedPlanBuilder = new WorkSessionBasedPlanBuilder();
         RevisionPlan revisionPlan = workSessionBasedPlanBuilder.createRevision(wp);
@@ -139,7 +203,6 @@ public class AircraftRevisionPlannerService extends BaseService{
         // scheduling task plans
         // first schedule according to similar plans starting at the planned start date of the workpackage
         // scheduling is done per scope group using the partial order of task types extracted from similar plans
-        ZoneId defaultZoneId = ZoneId.systemDefault();
         List<String> revisionsToIgnore = new ArrayList<>();
         revisionsToIgnore.add(wp.getEntityURI().toString()); // ignore the scheduled WP
         workpackageService.getOpenedWorkpackages().stream().map(w -> w.getEntityURI().toString())
@@ -150,27 +213,84 @@ public class AircraftRevisionPlannerService extends BaseService{
                 revisionsToIgnore
         );
 
-        // calculate execution start
-        Date startDate = wp.getStart();
+        PlanGraph findingGraph = maintenanceOrderGraphPlan(wp, partialTaskOrderByScope);
 
-        if(startDate == null)
-            startDate = wp.getPlannedStartTime() == null
-                    ? new Date()
-                    : Date.from(wp.getPlannedStartTime().atStartOfDay(defaultZoneId).toInstant());
+        // calculate execution start
+        Date startDate = wp.getPlannedStartTime() != null ?
+                DateUtils.toDateAtTime(wp.getPlannedStartTime(), 7, 0) :
+                wp.getStart() != null ?
+                        wp.getStart() :
+                        new Date();
+
 
         SimilarPlanScheduler similarPlanScheduler = new SimilarPlanScheduler(
                 startDate,
-                partialTaskOrderByScope
+                partialTaskOrderByScope,
+                findingGraph
         );
         similarPlanScheduler.schedule(revisionPlan);
 
-        // second schedule work session plans and reschedule affected plans in the plan partonomy
-        NaivePlanScheduler scheduler = new NaivePlanScheduler();
-        scheduler.schedule(revisionPlan);
-        revisionPlan.applyOperationBottomUp( p -> p.updateTemporalAttributes());
+        if (mixedSchedule){
+            // second schedule work session plans and reschedule affected plans in the plan partonomy
+            NaivePlanScheduler scheduler = new NaivePlanScheduler();
+            scheduler.schedule(revisionPlan);
+        }
+        revisionPlan.applyOperationBottomUp(p -> p.updateTemporalAttributes());
         workSessionBasedPlanBuilder.addRestrictionPlans(revisionPlan);
 
-        return revisionPlan;
+        return new PlanResult(revisionPlan, partialTaskOrderByScope, findingGraph);
+    }
+
+    public byte[] exportPlan(String revisionId){
+        Workpackage wp = workpackageService.getWorkpackageWithExecutionsAndSessions(revisionId);
+
+        if(wp == null)
+            return null;
+        PlanResult planResult = createRevisionPlanScheduleDeducedFromSimilarRevisions(wp, false);
+        Map<String, PlanGraph> partialTaskOrderByScope = planResult.partialTaskOrderByScope;
+        PlanGraph findingOrder = planResult.findingOrder;
+
+        RevisionPlanCSVConverter c = new RevisionPlanCSVConverter();
+
+        RevisionPlan revisionPlan = planResult.outputPlan;
+
+        ByteArrayOutputStream b = new ByteArrayOutputStream();
+        ZipOutputStream z = new ZipOutputStream(b);
+        try {
+            // add plan in csv
+            String fileName = "plan.csv";
+            ZipEntry ze = new ZipEntry(fileName);
+            z.putNextEntry(ze);
+            z.write(c.convert(wp, revisionPlan).getBytes());
+            z.closeEntry();
+
+            // add gml files for the scope sequences
+
+            for(Map.Entry<String, PlanGraph> e : partialTaskOrderByScope.entrySet()){
+                fileName = String.format("%s.gml", e.getKey());
+                ze = new ZipEntry(fileName);
+                z.putNextEntry(ze);
+                PlanGraph.exporter.exportGraph(e.getValue(), z);
+                z.closeEntry();
+            }
+
+            fileName = "findings.gml";
+            ze = new ZipEntry(fileName);
+            z.putNextEntry(ze);
+            PlanGraph.exporter.exportGraph(findingOrder, z);
+            z.closeEntry();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                z.flush();
+                z.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        return b.toByteArray();
     }
 
     /**
@@ -282,5 +402,17 @@ public class AircraftRevisionPlannerService extends BaseService{
                     "Invalid plan types, non of the plan types is supported,\n %s",
                     planTypes)
             );
+    }
+
+    class PlanResult{
+        public RevisionPlan outputPlan;
+        public Map<String, PlanGraph> partialTaskOrderByScope;
+        public PlanGraph findingOrder;
+
+        public PlanResult(RevisionPlan outputPlan, Map<String, PlanGraph> partialTaskOrderByScope, PlanGraph findingOrder) {
+            this.outputPlan = outputPlan;
+            this.partialTaskOrderByScope = partialTaskOrderByScope;
+            this.findingOrder = findingOrder;
+        }
     }
 }

@@ -5,7 +5,7 @@ PREFIX ofn:  <http://www.ontotext.com/sparql/functions/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 
-SELECT DISTINCT ?wp ?task ?taskType ?issueTime ?endTime (MIN(?st) as ?derivedStart) (MAX(?et) as ?derivedEnd) (SUM(ofn:asMillis(?et - ?st)) as ?derivedWorkTime) (ofn:asMillis(?derivedEnd - ?derivedStart) as ?derivedDuration) where {
+SELECT DISTINCT ?wp ?task ?taskType ?taskTypeId ?issueTime ?endTime (MIN(?st) as ?derivedStart) (MAX(?et) as ?derivedEnd) (SUM(ofn:asMillis(?et - ?st)) as ?derivedWorkTime) (ofn:asMillis(?derivedEnd - ?derivedStart) as ?derivedDuration) where {
 #    BIND(cm:workpackage--OE-LBN-H-23-B4Y-B2Y-ECAP as ?wp)
 
     ?task cm:is-part-of-workpackage ?wp .
@@ -16,6 +16,9 @@ SELECT DISTINCT ?wp ?task ?taskType ?issueTime ?endTime (MIN(?st) as ?derivedSta
 
     ?task a ?taskType .
     ?taskType a cm:task-type .
+    OPTIONAL {
+        ?taskType cm:id ?taskTypeId .
+    }
 
     OPTIONAL{
         ?task cm:issue-time ?issueTime.
@@ -36,4 +39,4 @@ SELECT DISTINCT ?wp ?task ?taskType ?issueTime ?endTime (MIN(?st) as ?derivedSta
     BIND(CONCAT(str(?eDate),"T", str(?eTime), IF(!contains(str(?sTime), "+"), "+02:00", "")) as ?end)
     BIND(spif:parseDate(?end, "yyyy-MM-dd'T'HH:mm") as ?et)
 
-} GROUP BY ?wp ?task ?taskType ?issueTime ?endTime
+} GROUP BY ?wp ?task ?taskType ?taskTypeId ?issueTime ?endTime

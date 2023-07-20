@@ -5,34 +5,45 @@ import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class DateParserSerializer {
+public class DateUtils {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DateParserSerializer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DateUtils.class);
 
 
-    public static final String dateFormatPattern = "yyyy-MM-dd'T'HH:mm:ss";
+    public static final String dateTimeFormatPattern = "yyyy-MM-dd'T'HH:mm:ss";
+    public static final String dateFormatPattern = "yyyy-MM-dd";
+
+
+    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormatPattern);
     public static final ThreadLocal<SimpleDateFormat> dateFormat = new ThreadLocal<SimpleDateFormat>(){
         @Override
         protected SimpleDateFormat initialValue() {
-            return new SimpleDateFormat(dateFormatPattern);
+            return new SimpleDateFormat(dateTimeFormatPattern);
         }
     };
-    public static final String dateFormatPattern1 = "yyyy-MM-dd'T'HH:mm:ssX";
+    public static final String dateTimeFormatPattern1 = "yyyy-MM-dd'T'HH:mm:ssX";
     public static final ThreadLocal<SimpleDateFormat> df = new ThreadLocal<SimpleDateFormat>(){
         @Override
         protected SimpleDateFormat initialValue() {
-            return new SimpleDateFormat(dateFormatPattern);
+            return new SimpleDateFormat(dateTimeFormatPattern);
         }
     };
-    public static final String dateFormatPattern2 = "dd.MM.yyyy'T'HH:mm";
+    public static final String dateTimeFormatPattern2 = "dd.MM.yyyy'T'HH:mm";
 
-    public static final SimpleDateFormat day = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat day = new SimpleDateFormat(dateFormatPattern);
 
 
     public static String formatDate(Date d){
         return formatDate(dateFormat.get(), d);
+    }
+
+    public static String formatDate(LocalDate d){
+        return dateTimeFormatter.format(d);
     }
 
     public static String formatDate(SimpleDateFormat sdf, Date d){
@@ -54,5 +65,11 @@ public class DateParserSerializer {
             LOG.warn("Could not parse date time string \"{}\"", dateTimeString, e);
         }
         return null;
+    }
+
+    public static Date toDateAtTime(LocalDate lDate, int hours, int minutes){
+        Date d = Date.from(lDate.atStartOfDay( ZoneId.systemDefault()).toInstant());
+        d.setTime(d.getTime() + hours * 3600*1000 + minutes*60*1000);
+        return d;
     }
 }

@@ -78,6 +78,20 @@ public class WorkpackageService extends BaseService {
         return wp;
     }
 
+    public Workpackage getWorkpackageWithExecutionsAndSessions(String workpackageId){
+        Workpackage wp = getWorkpackage(workpackageId);
+        if (wp == null) {
+            LOG.warn("Could not find WP with id \"{}\" ", workpackageId);
+            return null;
+        }
+        readTaskExecutions(wp);
+        if (wp.getTaskExecutions() == null || wp.getTaskExecutions().isEmpty()) {
+            LOG.warn("Could not find any sessions or TC executions for WP \"{}\" ", workpackageId);
+            return null;
+        }
+        return wp;
+    }
+
     /**
      * Reads task executions and their sessions for the provided workpackage. Replaces referenced task types so that they
      * contain transient fields.
@@ -106,7 +120,9 @@ public class WorkpackageService extends BaseService {
                 continue;
             te.getReferencedTasks().stream().limit(1)// select one
                     .forEach(rt -> te.getTaskType().setArea(
-                            Optional.ofNullable(rt.getTaskType()).map(t -> t.getArea()).orElse(null))
+                            Optional.ofNullable(rt.getTaskType())
+                                    .map(t -> t.getDefinition() != null ? t.getDefinition() : t)
+                                    .map(t -> t.getArea()).orElse(null))
                     );
         }
     }
@@ -118,6 +134,10 @@ public class WorkpackageService extends BaseService {
      */
     public List<Pair<Workpackage, Double>> findSimilarWorkpackages(Workpackage workpackage){
         return workpackageDAO.findSimilarWorkpackages(workpackage);
+    }
+
+    public List<Pair<Workpackage, Double>> findWorkpackagesWithSimilarScopes(Workpackage workpackage, Set<TaskType> taskTypes){
+        return workpackageDAO.findWorkpackagesWithSimilarScopes(workpackage, taskTypes);
     }
 
     public Workpackage findById(String id){
@@ -137,7 +157,10 @@ public class WorkpackageService extends BaseService {
                 .filter(te -> te.getTaskType() != null && te.getTaskType().getEntityURI() != null)
                 .forEach(te -> Optional
                         .ofNullable(taskTypeService.getCahcedTaskType(te.getTaskType().getEntityURI()))
-                        .ifPresent(te::setTaskType));
+                        .ifPresent(cachedType -> {
+                            cachedType.setAverageTime(te.getTaskType().getAverageTime());
+                            te.setTaskType(cachedType);
+                        }));
     }
 
 

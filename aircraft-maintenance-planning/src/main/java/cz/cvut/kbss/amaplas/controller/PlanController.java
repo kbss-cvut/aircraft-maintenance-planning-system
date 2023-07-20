@@ -2,20 +2,25 @@ package cz.cvut.kbss.amaplas.controller;
 
 import cz.cvut.kbss.amaplas.model.AbstractPlan;
 import cz.cvut.kbss.amaplas.model.RevisionPlan;
+import cz.cvut.kbss.amaplas.model.values.DateUtils;
 import cz.cvut.kbss.amaplas.services.AircraftRevisionPlannerService;
 import cz.cvut.kbss.amaplas.services.IdentifierService;
 import cz.cvut.kbss.amaplas.services.WorkpackageService;
 import cz.cvut.kbss.amaplas.util.Vocabulary;
 import cz.cvut.kbss.jsonld.JsonLd;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -42,9 +47,32 @@ public class PlanController extends BaseController{
         if(workpackageService.isRefreshingCache())
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(null);
         return ResponseEntity.status(HttpStatus.OK).body(
-                plannerService.createRevisionPlanScheduleDeducedFromSimilarRevisions(revisionId)
+                plannerService.createRevisionPlanScheduleDeducedFromSimilarRevisions(revisionId, true)
         );
     }
+
+    @GetMapping(path = "export-plan")
+    public void exportPlan(@RequestParam String revisionId, HttpServletRequest request, HttpServletResponse response){
+        byte[] output = plannerService.exportPlan(revisionId);
+        try {
+            response.setContentType("application/zip");
+            response.setContentLength(output.length);
+
+            String fileName = String.format("%s--planned-on-%s.zip",
+                    revisionId.replaceAll("[^\\w\\d-_ ]", "--"),
+                    DateUtils.formatDate(new Date()).replace(":","-")
+            );
+
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
+                    .filename(fileName, StandardCharsets.UTF_8)
+                    .build()
+                    .toString());
+            IOUtils.write(output, response.getOutputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     /**
      * Create a new plan based on plan type fragment, no other information is required. Accepted plan type fragments are :

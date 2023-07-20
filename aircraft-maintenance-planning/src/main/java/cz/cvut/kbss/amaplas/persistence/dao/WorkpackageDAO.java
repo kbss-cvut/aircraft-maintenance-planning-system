@@ -3,7 +3,7 @@ package cz.cvut.kbss.amaplas.persistence.dao;
 import cz.cvut.kbss.amaplas.model.TaskExecution;
 import cz.cvut.kbss.amaplas.model.TaskType;
 import cz.cvut.kbss.amaplas.model.Workpackage;
-import cz.cvut.kbss.amaplas.model.values.DateParserSerializer;
+import cz.cvut.kbss.amaplas.model.values.DateUtils;
 import cz.cvut.kbss.amaplas.persistence.dao.mapper.Bindings;
 import cz.cvut.kbss.amaplas.persistence.dao.mapper.EntityRegistry;
 import cz.cvut.kbss.amaplas.persistence.dao.mapper.QueryResultMapper;
@@ -33,6 +33,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
 
     public static final String TASK_EXECUTION_STATISTICS_FROM_PARTS = "/queries/analysis/task-execution-statistics-from-parts.sparql";
     public static final String WP_SIMILAR_WPS = "/queries/analysis/similar-wps.sparql";
+    public static final String WP_SIMILAR_WP_SCOPES = "/queries/analysis/similar-wp-scopes.sparql";
 
     public static final String WP_HEADER = "/queries/analysis/wp-header.sparql";
     public static final String WP_IDS_ALL = "/queries/analysis/wp-ids-all.sparql";
@@ -63,6 +64,17 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
     };
 
     protected Supplier<QueryResultMapper<Pair<Workpackage, Double>>> similarWPsMapper = () -> new QueryResultMapper<>(WP_SIMILAR_WPS) {
+        @Override
+        public Pair<Workpackage, Double> convert() {
+            return Pair.of(manValue("wpB", s -> {
+                Workpackage wp = new Workpackage();
+                wp.setEntityURI(URI.create(s));
+                return wp;
+            }), manValue("similarity", Double::parseDouble));
+        }
+    };
+
+    protected Supplier<QueryResultMapper<Pair<Workpackage, Double>>> similarWPScopesMapper = () -> new QueryResultMapper<>(WP_SIMILAR_WP_SCOPES) {
         @Override
         public Pair<Workpackage, Double> convert() {
             return Pair.of(manValue("wpB", s -> {
@@ -113,7 +125,9 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
                     optValue("acmodel", def)
             );
             taskType.setEntityURI(taskTypeUri);
-            taskType.setAverageTime(optValue("averageTime", Double::parseDouble, null));
+            taskType.setAverageTime(optValue("findingAverageTime", Double::parseDouble, null));
+            if(taskType.getAverageTime() == null)
+                taskType.setAverageTime(optValue("averageTime", Double::parseDouble, null));
 
             String taskExecutionURI = manValue("tt");
             TaskExecution taskExecution = registry.getOrCreate(taskExecutionURI, () -> new TaskExecution(URI.create(taskExecutionURI)), TaskExecution.class);
@@ -152,6 +166,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
         @Override
         public TaskExecution convert() {
             TaskType taskType = manValue("taskType", s -> new TaskType(URI.create(s)));
+            taskType.setCode(optValue("taskTypeId", null));
             TaskExecution taskExecution = manValue("task", s -> new TaskExecution(URI.create(s)));
             taskExecution.setTaskType(taskType);
 
@@ -175,7 +190,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
     }
 
     protected Date parseDate(String dateString){
-        return DateParserSerializer.parseDate(DateParserSerializer.df.get(), dateString);
+        return DateUtils.parseDate(DateUtils.df.get(), dateString);
     }
 
     protected LocalDate parseLocalDate(String lacalDateString){
@@ -267,5 +282,14 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
         Bindings bindings = new Bindings();
         bindings.add("wpA", workpackage.getEntityURI());
         return load(similarWPsMapper.get(), bindings);
+    }
+
+    public List<Pair<Workpackage, Double>> findWorkpackagesWithSimilarScopes(Workpackage workpackage, Set<TaskType> taskTypes){
+        Bindings bindings = new Bindings();
+        bindings.add("wpA", workpackage.getEntityURI());
+        List<Bindings> values = taskTypes.stream()
+                .map(t -> Bindings.newBindings().add("taskType", t.getEntityURI()))
+                .collect(Collectors.toList());
+        return load(similarWPScopesMapper.get(), values, bindings);
     }
 }

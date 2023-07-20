@@ -11,7 +11,6 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.traverse.BreadthFirstIterator;
 
 import java.util.*;
-import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -199,6 +198,7 @@ public class ReuseBasedPlanner {
                     break;
                 }
             }
+            TaskPattern sourceNode = taskPatternMap.get(source);
 
             // find the target node, add edge, repeat until all TCs from current history plan are reused
             for(int j = i + 1; j < taskExecutions.size(); j ++){ // j is the index of the target node (taskType)
@@ -211,47 +211,16 @@ public class ReuseBasedPlanner {
 
                 TaskExecution targetHistory = taskExecutions.get(j);
 
-                // create edge
-                SequencePattern seqpat = new SequencePattern();
-
-                seqpat.pattern = Arrays.asList(source, target);
-
-                List<TaskExecution> sequenceInstances = Arrays.asList(sourceHistory, targetHistory);
-                seqpat.instances.add(sequenceInstances);
-
-                TaskPattern sourceNode = taskPatternMap.get(source);
                 TaskPattern targetNode = taskPatternMap.get(target);
 
-                BiFunction<TaskPattern, TaskExecution, String> getReusedWorkPackage = (p, te) ->
-                        p.getInstances() != null && !p.getInstances().isEmpty() ?
-                                p.getInstances().get(0).getWorkpackage().getId() :
-                                te.getWorkpackage().getId();
-
-                if(Objects.equals(
-                        getReusedWorkPackage.apply(sourceNode, sequenceInstances.get(0)),
-                        getReusedWorkPackage.apply(targetNode, sequenceInstances.get(1))) &&
-                   sequenceInstances.get(0).getStart().getTime() == sequenceInstances.get(1).getStart().getTime()){
-
-                    seqpat.patternType = PatternType.EQUALITY;
-                }else {
-                    seqpat.patternType = (i - j == 1)?
-                            PatternType.STRICT_DIRECT_ORDER :
-                            PatternType.STRICT_INDIRECT_ORDER
-                    ;
-                }
+                // create edge
+                SequencePattern seqpat = createEdge(
+                        sourceNode, sourceHistory,
+                        targetNode, targetHistory,
+                        i - j == 1, plannedByThisWP
+                );
 
                 planGraph.addEdge(sourceNode, targetNode, seqpat);
-
-                // add instances to graph nodes
-                for(TaskExecution te: Stream.of(i, j).map(taskExecutions::get).collect(Collectors.toList())){
-                    if(plannedByThisWP.contains(te.getTaskType())) // add support instances from each work package only once
-                        continue;
-                    TaskPattern node = taskPatternMap.get(te.getTaskType());
-                    if(node.getInstances() == null){
-                        node.setInstances(new ArrayList<>());
-                    }
-                    node.getInstances().add(te);
-                }
 
                 // finish iteration
                 plannedByThisWP.add(source);
@@ -271,6 +240,57 @@ public class ReuseBasedPlanner {
 
         SequencePattern.calculateSupportClasses(planGraph.edgeSet());
         return planGraph;
+    }
+
+    /**
+     * Creates an edge and sets instances to target
+     * @param sourcePattern
+     * @param sourceHistory
+     * @param targetPattern
+     * @param targetHistory
+     * @param isDirectOrder true if there are no other executions between sourceHistory and targetHistory and their start times are not equal, false otherwise
+     * @param plannedByThisWP a set containing all taskTypes planned by the current workpackage
+     * @return
+     */
+    protected SequencePattern createEdge(TaskPattern sourcePattern, TaskExecution sourceHistory, TaskPattern targetPattern, TaskExecution targetHistory, boolean isDirectOrder, Set<TaskType> plannedByThisWP){
+        SequencePattern seqpat = new SequencePattern();
+        seqpat.pattern = Arrays.asList(sourceHistory.getTaskType(), targetPattern.getTaskType());
+        seqpat.instances.add(Arrays.asList(sourceHistory, targetHistory));
+
+//        BiFunction<TaskPattern, TaskExecution, String> getReusedWorkPackage = (p, te) ->
+//                p.getInstances() != null && !p.getInstances().isEmpty() ?
+//                        p.getInstances().get(0).getWorkpackage().getId() :
+//                        te.getWorkpackage().getId();
+        // set edge type
+        if(
+//                        Objects.equals( // not sure why we need to compare the wpIds of the first instance of the two nodes for the sequence pattern to be considered EQUALITY
+//                        getReusedWorkPackage.apply(sourceNode, sequenceInstances.get(0)),
+//                        getReusedWorkPackage.apply(targetNode, sequenceInstances.get(1))) &&
+                sourceHistory.getStart().getTime() == targetHistory.getStart().getTime()){
+
+            seqpat.patternType = PatternType.EQUALITY;
+        }else {
+            seqpat.patternType = isDirectOrder ?
+                    PatternType.STRICT_DIRECT_ORDER :
+                    PatternType.STRICT_INDIRECT_ORDER
+            ;
+        }
+
+        // set instances of taskPatters
+        for(Pair<TaskPattern, TaskExecution> p : Arrays.asList(Pair.of(sourcePattern,sourceHistory), Pair.of(targetPattern,targetHistory))) {
+            TaskPattern taskPattern = p.getKey();
+            TaskExecution history = p.getValue();
+            TaskType taskType = taskPattern.getTaskType();
+
+            if (plannedByThisWP.contains(taskType))
+                continue;
+
+            if(taskPattern.getInstances() == null){
+                taskPattern.setInstances(new ArrayList<>());
+            }
+            taskPattern.getInstances().add(history);
+        }
+        return seqpat;
     }
 
     public interface SimilarityOrder{
