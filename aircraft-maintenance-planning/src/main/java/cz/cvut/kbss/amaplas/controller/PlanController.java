@@ -53,7 +53,7 @@ public class PlanController extends BaseController{
 
     @GetMapping(path = "export-plan")
     public void exportPlan(@RequestParam String revisionId, HttpServletRequest request, HttpServletResponse response){
-        byte[] output = plannerService.compareCSATPlanAutomatedPlanAndExecutions(revisionId);
+        byte[] output = plannerService.exportPlan(revisionId);
         try {
             response.setContentType("application/zip");
             response.setContentLength(output.length);

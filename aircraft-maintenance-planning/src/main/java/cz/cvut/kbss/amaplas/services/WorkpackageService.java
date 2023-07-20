@@ -120,7 +120,9 @@ public class WorkpackageService extends BaseService {
                 continue;
             te.getReferencedTasks().stream().limit(1)// select one
                     .forEach(rt -> te.getTaskType().setArea(
-                            Optional.ofNullable(rt.getTaskType()).map(t -> t.getArea()).orElse(null))
+                            Optional.ofNullable(rt.getTaskType())
+                                    .map(t -> t.getDefinition() != null ? t.getDefinition() : t)
+                                    .map(t -> t.getArea()).orElse(null))
                     );
         }
     }

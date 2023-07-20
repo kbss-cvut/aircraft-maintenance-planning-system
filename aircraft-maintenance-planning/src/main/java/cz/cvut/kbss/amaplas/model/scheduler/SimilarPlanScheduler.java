@@ -18,11 +18,13 @@ public class SimilarPlanScheduler implements PlanScheduler{
     private static final Logger LOG = LoggerFactory.getLogger(SimilarPlanScheduler.class);
 
     protected Map<String, PlanGraph> groupedPartialTaskOrder;
+    protected PlanGraph findingOrder;
     protected long planStartTime;
 
-    public SimilarPlanScheduler(Date planStartTime, Map<String, PlanGraph> groupedPartialTaskOrder) {
+    public SimilarPlanScheduler(Date planStartTime, Map<String, PlanGraph> groupedPartialTaskOrder, PlanGraph findingOrder) {
         this.planStartTime = planStartTime.getTime();
         this.groupedPartialTaskOrder = groupedPartialTaskOrder;
+        this.findingOrder = findingOrder;
     }
 
     @Override
@@ -43,6 +45,9 @@ public class SimilarPlanScheduler implements PlanScheduler{
                 Long plannedStartTime = null;
 
                 if(node.getInstances() == null || node.getInstances().isEmpty())
+                    return;
+                // Do not schedule tasks (e.g. maintenance wo) which reference other tasks.
+                if(edge == null && source == null && findingOrder.containsVertex(node) && !findingOrder.incomingEdgesOf(node).isEmpty())
                     return;
 
                 long duration = (long)(node.getTaskType().getAverageTime() * 3600000); //end - taskExecution.getStart().getTime();
@@ -80,6 +85,22 @@ public class SimilarPlanScheduler implements PlanScheduler{
                 taskPlan.setPlannedWorkTime(workTime);
             });
         }
+        // schedule WOs
+        ReuseBasedPlanner.planner.traverse(findingOrder, (planGraph, node, edge, source) -> {
+            if(source == null || edge == null || node == null) // do not schedule the root nodes, they should be scheduled in the first scheduling phase
+                return;
+            TaskPlan sourcePlan = taskPlanMap.get(source.getTaskType());
+            TaskPlan targetPlan = taskPlanMap.get(node.getTaskType());
+            if(sourcePlan == null || targetPlan == null || sourcePlan.getPlannedStartTime() == null || sourcePlan.getPlannedEndTime() == null)
+                return;
+            Double duration = targetPlan.getTaskType().getAverageTime();
+            if(duration == null)
+                duration = 4.;
+
+            targetPlan.setPlannedStartTime(new Date(sourcePlan.getPlannedEndTime().getTime() + defaultBufferBetweenSchedules));
+            targetPlan.setPlannedEndTime(new Date(targetPlan.getPlannedStartTime().getTime() + (long)(duration*1000*3600)));
+        });
+
         revisionPlan.applyOperationBottomUp( p -> {
             if(!(p instanceof TaskPlan) )
                 p.updatePlannedTemporalAttributesFromPlanParts();

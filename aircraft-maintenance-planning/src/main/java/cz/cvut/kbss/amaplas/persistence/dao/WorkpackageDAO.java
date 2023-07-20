@@ -125,7 +125,9 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
                     optValue("acmodel", def)
             );
             taskType.setEntityURI(taskTypeUri);
-            taskType.setAverageTime(optValue("averageTime", Double::parseDouble, null));
+            taskType.setAverageTime(optValue("findingAverageTime", Double::parseDouble, null));
+            if(taskType.getAverageTime() == null)
+                taskType.setAverageTime(optValue("averageTime", Double::parseDouble, null));
 
             String taskExecutionURI = manValue("tt");
             TaskExecution taskExecution = registry.getOrCreate(taskExecutionURI, () -> new TaskExecution(URI.create(taskExecutionURI)), TaskExecution.class);

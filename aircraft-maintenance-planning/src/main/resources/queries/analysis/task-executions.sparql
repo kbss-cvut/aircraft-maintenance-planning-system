@@ -6,7 +6,7 @@ PREFIX ofn: <http://www.ontotext.com/sparql/functions/>
 PREFIX spif: <http://spinrdf.org/spif#>
 PREFIX ufo: <http://onto.fel.cvut.cz/ontologies/ufo/>
 
-SELECT ?wp ?wpId ?tt ?referencedTask ?issueTime ?endTime ?estMin ?tType ?averageTime ?type ?taskcat
+SELECT ?wp ?wpId ?tt ?referencedTask ?issueTime ?endTime ?estMin ?tType ?averageTime ?findingAverageTime ?type ?taskcat
 WHERE
 {
     ?wp a cm:workpackage.
@@ -45,5 +45,10 @@ WHERE
     FILTER(bound(?_tType) || bound(?type))
     OPTIONAL {
         ?tType cm:time-estimate-in-hours ?averageTime .
+    }
+    OPTIONAL {
+        ?tt a ?componentFailureClass.
+        ?componentFailureClass rdfs:subClassOf cm:component-failure--task .
+        ?componentFailureClass cm:avg-duration ?findingAverageTime .
     }
 }
