@@ -264,6 +264,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
      * @param uri
      */
     public Workpackage getTimePropertiesOfWorkparckageTasks(final URI uri){
+        LOG.info("reading WP <{}>", uri.toString());
         List<BindingSet> taskExecutionBindings = rawWorkpackageTaskTimePropertiesCache.remove(uri.toString());
 
         if(taskExecutionBindings == null)

@@ -49,7 +49,7 @@ public class SimilarPlanScheduler implements PlanScheduler{
                 // Do not schedule tasks (e.g. maintenance wo) which reference other tasks.
                 if(edge == null && source == null && findingOrder.containsVertex(node) && !findingOrder.incomingEdgesOf(node).isEmpty())
                     return;
-
+                // TODO - there should be a default duration or duration should or task should not be planned
                 long duration = (long)(node.getTaskType().getAverageTime() * 3600000); //end - taskExecution.getStart().getTime();
 
                 Long workTime = null; // TODO - replace with node.getTaskType().getAverageWorkTime()
