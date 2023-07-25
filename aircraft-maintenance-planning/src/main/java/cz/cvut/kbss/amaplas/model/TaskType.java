@@ -197,14 +197,6 @@ public class TaskType extends EventType {
         this.mpdtask = mpdtask;
     }
 
-    public static Map<String, TaskType> getTaskTypeMap() {
-        return taskTypeMap;
-    }
-
-    public static void setTaskTypeMap(Map<String, TaskType> taskTypeMap) {
-        TaskType.taskTypeMap = taskTypeMap;
-    }
-
     public String getPhase() {
         return phase;
     }
@@ -277,38 +269,6 @@ public class TaskType extends EventType {
     @Override
     public String toString() {
         return getTCOrMPDCode();
-    }
-
-    @Transient
-    public static Map<String, TaskType> taskTypeMap;
-
-    /**
-     * Normalize the codes (ids), labels/titles of TaskTypes. Creates a TaskType.code -> TaskType map and stores it in
-     * TaskType.taskTypeMap static variable to be used by other t
-     * - for codes "%20" is replaced with " "
-     * - for labels the longest label is used for all task cards using the same code
-     * @param taskTypes
-     * @return
-     */
-    public static Map<String, TaskType> normalizeTaskTypes(List<TaskType> taskTypes){
-        // normalize type codes
-        taskTypes.forEach(t ->
-                t.code = Optional
-                        .of(t.getCode())
-                        .map(l -> l.replace("%20", " "))
-                        .orElse(null)
-        );
-
-        Map<String, TaskType> taskTypeMap = new HashMap<>();
-        taskTypes.stream()
-                .collect(Collectors.groupingBy(t -> t.getCode())).entrySet().stream()
-                .forEach(e -> taskTypeMap.put(
-                        e.getKey(),
-                        // FIX bug - selecting longest task type title
-                        e.getValue().stream().sorted(Comparator.comparing((TaskType t) -> t.getTitle().length()).reversed()).findFirst().get()
-                ));
-        TaskType.taskTypeMap = taskTypeMap;
-        return  taskTypeMap;
     }
 
     public static int is_TCCode_Match_v3(String sl, String sr){
