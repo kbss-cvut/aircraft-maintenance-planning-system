@@ -86,32 +86,56 @@ public class AircraftRevisionPlannerService extends BaseService{
     // add WOs to the sequences
         Map<String, TaskPattern> map = new HashMap<>();
         partialTaskOrderByScope.values().stream().flatMap(g -> g.vertexSet().stream()).forEach(t -> map.put(t.getTaskType().getId(), t));
-        toPlan.getTaskExecutions().stream()
-                .filter(te -> te.getReferencedTasks() != null && !te.getReferencedTasks().isEmpty())
-                .forEach(te -> {
-                    Set<TaskPattern> sourceNodes = te.getReferencedTasks().stream()
-                            .map(tr -> map.get(tr.getTaskType().getId()))
-                            .filter(tp -> tp != null)
-                            .collect(Collectors.toSet());
+        Set<TaskExecution> executionsWithReferences = toPlan.getTaskExecutions().stream()
+                .filter(
+                        te -> te.getReferencedTasks() != null &&
+                        !te.getReferencedTasks().isEmpty() &&
+                        te.getReferencedTasks().stream().anyMatch(tr -> tr.getTaskType() != null)
+                ).collect(Collectors.toSet());
 
-                    TaskPattern targetNode = map.get(te.getTaskType().getId());
-                    if(sourceNodes.isEmpty() || targetNode == null)
-                        return;
+        executionsWithReferences.forEach(te -> {
+            Set<TaskPattern> sourceNodes = te.getReferencedTasks().stream()
+                    .filter(tr -> tr.getTaskType() != null)
+                    .map(tr -> map.get(tr.getTaskType().getId()))
+                    .filter(tp -> tp != null)
+                    .collect(Collectors.toSet());
 
-                    // add nodes to graph
-                    sourceNodes.stream()
-                            .filter(n -> !planGraph.vertexSet().contains(n))
-                            .forEach(n -> planGraph.addVertex(n));
-                    if(!planGraph.vertexSet().contains(targetNode))
-                        planGraph.addVertex(targetNode);
-                    // add edges to graph
-                    for(TaskPattern sourceNode : sourceNodes) {
-                        SequencePattern seqpat = new SequencePattern();
-                        seqpat.pattern = Arrays.asList(sourceNode.getTaskType(), targetNode.getTaskType());
-                        seqpat.patternType = PatternType.STRICT_INDIRECT_ORDER;
-                        planGraph.addEdge(sourceNode, targetNode, seqpat);
-                    }
-                });
+            TaskPattern targetNode = map.get(te.getTaskType().getId());
+            if(sourceNodes.isEmpty() || targetNode == null)
+                return;
+
+            // add nodes to graph
+            sourceNodes.stream()
+                    .filter(n -> !planGraph.vertexSet().contains(n))
+                    .forEach(n -> planGraph.addVertex(n));
+            if(!planGraph.vertexSet().contains(targetNode))
+                planGraph.addVertex(targetNode);
+            // add edges to graph
+            for(TaskPattern sourceNode : sourceNodes) {
+                SequencePattern seqpat = new SequencePattern();
+                seqpat.pattern = Arrays.asList(sourceNode.getTaskType(), targetNode.getTaskType());
+                seqpat.patternType = PatternType.STRICT_INDIRECT_ORDER;
+                planGraph.addEdge(sourceNode, targetNode, seqpat);
+            }
+        });
+
+        // include edges from partialTaskOrderByScope in planGraph
+        Set<TaskPattern> nodesWithReferences = executionsWithReferences.stream().map(e -> map.get(e.getTaskType().getId())).collect(Collectors.toSet());
+        partialTaskOrderByScope.values().stream().forEach( g ->
+                g.edgeSet().stream()
+                        .filter(e ->
+                                planGraph.vertexSet().contains(g.getEdgeSource(e)) &&
+                                planGraph.vertexSet().contains(g.getEdgeTarget(e))
+                        ).forEach(e -> {
+                            SequencePattern seqpat = new SequencePattern();
+                            TaskPattern source = g.getEdgeSource(e);
+                            TaskPattern target = g.getEdgeTarget(e);
+                            if(source == null || target == null || !nodesWithReferences.contains(target))
+                                return;
+                            seqpat.pattern = Arrays.asList(source.getTaskType(), target.getTaskType());
+                            planGraph.addEdge(source, target, seqpat);
+                        })
+        );
         return planGraph;
     }
 
@@ -190,7 +214,7 @@ public class AircraftRevisionPlannerService extends BaseService{
     }
 
     public PlanResult createRevisionPlanScheduleDeducedFromSimilarRevisions(Workpackage wp, boolean mixedSchedule) {
-
+        LOG.info("plan WP {} with Id {}", wp.getEntityURI(), wp.getEntityURI());
         WorkSessionBasedPlanBuilder workSessionBasedPlanBuilder = new WorkSessionBasedPlanBuilder();
         RevisionPlan revisionPlan = workSessionBasedPlanBuilder.createRevision(wp);
         TaskTypeBasedPlanBuilder builder = new TaskTypeBasedPlanBuilder(workSessionBasedPlanBuilder);

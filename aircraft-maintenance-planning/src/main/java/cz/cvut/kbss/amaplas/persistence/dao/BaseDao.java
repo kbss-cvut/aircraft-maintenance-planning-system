@@ -158,22 +158,25 @@ public abstract class BaseDao<T extends AbstractEntity> implements GenericDao<T>
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<T> findById(Object id){
         Objects.requireNonNull(id);
         try {
-            T entity = em.createNativeQuery("SELECT ?t {?t ?p ?id}", type)
+            T entity = em.createNativeQuery("SELECT ?t {\n" +
+                            "?t a ?type.\n" +
+                            "?t ?p ?id.\n" +
+                            "}", type)
+                    .setParameter("type", typeUri)
                     .setParameter("p", ID)
                     .setParameter("id",id)
                     .getSingleResult();
-//            T e1 = em.find(type, entity.getEntityURI());
             return Optional.of(entity);
         } catch (RuntimeException e) {
             throw new PersistenceException(e);
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public boolean exists(Object id){
         try {
             Objects.requireNonNull(id);

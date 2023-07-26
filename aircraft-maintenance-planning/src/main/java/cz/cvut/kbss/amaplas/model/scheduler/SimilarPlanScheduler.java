@@ -49,8 +49,9 @@ public class SimilarPlanScheduler implements PlanScheduler{
                 // Do not schedule tasks (e.g. maintenance wo) which reference other tasks.
                 if(edge == null && source == null && findingOrder.containsVertex(node) && !findingOrder.incomingEdgesOf(node).isEmpty())
                     return;
-
-                long duration = (long)(node.getTaskType().getAverageTime() * 3600000); //end - taskExecution.getStart().getTime();
+                // TODO - there should be a default duration or task should not be scheduled?
+                Double dDuration = node.getTaskType().getAverageTime();
+                long duration = (long)( (dDuration != null ? dDuration : 4.) * 3600000); //end - taskExecution.getStart().getTime();
 
                 Long workTime = null; // TODO - replace with node.getTaskType().getAverageWorkTime()
                 if(edge == null || edge.patternType == null){
@@ -62,6 +63,9 @@ public class SimilarPlanScheduler implements PlanScheduler{
                     workTime = targetHistory.getWorkTime(); // TODO - replace with node.getTaskType().getAverageWorkTime()
 
                     TaskPlan sourceTaskPlan = taskPlanMap.get(source.getTaskType());
+                    if(sourceTaskPlan.getPlannedStartTime() == null) // do not schedule if the source plan is not scheduled
+                        return;
+
                     if(edge.patternType == PatternType.EQUALITY){
                         plannedStartTime = sourceTaskPlan.getPlannedStartTime().getTime();
                     } else if(edge.patternType == PatternType.STRICT_DIRECT_ORDER || edge.patternType == PatternType.STRICT_INDIRECT_ORDER){
@@ -74,15 +78,15 @@ public class SimilarPlanScheduler implements PlanScheduler{
                                     (sourceTaskPlan.getPlannedEndTime().getTime() - sourceTaskPlan.getPlannedStartTime().getTime())*( targetStart - sourceStart)*1./(sourceEnd - sourceStart)
                             );
                         else
-                            plannedStartTime = sourceTaskPlan.getPlannedEndTime().getTime() + defaultBufferBetweenSchedules;
+                            plannedStartTime = sourceTaskPlan.getPlannedEndTime().getTime() + defaultBufferBetweenSchedules;// TODO sourceTaskPlan.getPlannedEndTime() == null ????
 
                     }
                 }
-
-                taskPlan.setPlannedStartTime(new Date(plannedStartTime));
-                taskPlan.setPlannedEndTime(new Date(plannedStartTime + duration));
-
-                taskPlan.setPlannedWorkTime(workTime);
+                if(taskPlan.getPlannedStartTime() == null || taskPlan.getPlannedStartTime().getTime() < plannedStartTime) {
+                    taskPlan.setPlannedStartTime(new Date(plannedStartTime));
+                    taskPlan.setPlannedEndTime(new Date(plannedStartTime + duration));
+                    taskPlan.setPlannedWorkTime(workTime);
+                }
             });
         }
         // schedule WOs

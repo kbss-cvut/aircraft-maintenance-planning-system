@@ -88,7 +88,7 @@ public class ReuseBasedPlanner {
 
 
         Set<TaskPattern> visitedTaskTypes = new HashSet<>();
-
+        Set<SequencePattern> visitedEdges = new HashSet<>();
         while(taskPatterns.size() > visitedTaskTypes.size() && taskTypesByDegree.hasNext()){
             LinkedList<Pair<SequencePattern, TaskPattern>> queue = new LinkedList<>();
             taskTypesByDegree.next().getValue().forEach(n -> queue.add(Pair.of(null, n)));
@@ -96,6 +96,11 @@ public class ReuseBasedPlanner {
             while(!queue.isEmpty()){
                 Pair<SequencePattern, TaskPattern> visitation = queue.poll();
                 SequencePattern edge = visitation.getLeft();
+                if(edge != null && visitedEdges.contains(edge))
+                    continue;
+
+                visitedEdges.add(edge);
+
                 TaskPattern target = visitation.getRight();
                 if(visitedTaskTypes.add(target)) {
                     nodeVisitor.visit(

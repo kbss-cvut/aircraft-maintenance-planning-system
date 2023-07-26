@@ -79,6 +79,7 @@ public class WorkpackageService extends BaseService {
     }
 
     public Workpackage getWorkpackageWithExecutionsAndSessions(String workpackageId){
+        LOG.info("load WP with Id {}", workpackageId);
         Workpackage wp = getWorkpackage(workpackageId);
         if (wp == null) {
             LOG.warn("Could not find WP with id \"{}\" ", workpackageId);

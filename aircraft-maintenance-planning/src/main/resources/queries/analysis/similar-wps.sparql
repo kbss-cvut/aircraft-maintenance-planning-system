@@ -35,4 +35,5 @@ SELECT ?wpA ?wpB ?wpAtaskCount (COUNT(DISTINCT ?taskTypeB) as ?wpBtaskCount)
         BIND(TRUE as ?commonTask)
     }
 } GROUP BY ?wpA ?wpB ?wpAtaskCount
+HAVING (BOUND(?wpB))
 ORDER BY DESC(?similarity)

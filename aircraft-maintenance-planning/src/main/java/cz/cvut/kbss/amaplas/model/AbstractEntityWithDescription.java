@@ -21,16 +21,17 @@ public class AbstractEntityWithDescription extends AbstractEntity {
 
     @OWLDataProperty(iri = Vocabulary.s_p_description)
     protected String description;
-    @Properties(fetchType = FetchType.EAGER)
-    protected Map<URI, Set<Object>> properties;
+//    // TODO - check if deleting/setting-lazy will make reading objects faster
+//    @Properties(fetchType = FetchType.LAZY)
+//    protected Map<URI, Set<Object>> properties;
 
-    public Map<URI, Set<Object>> getProperties() {
-        return properties;
-    }
-
-    public void setProperties(Map<URI, Set<Object>> properties) {
-        this.properties = properties;
-    }
+//    public Map<URI, Set<Object>> getProperties() {
+//        return properties;
+//    }
+//
+//    public void setProperties(Map<URI, Set<Object>> properties) {
+//        this.properties = properties;
+//    }
 
 
     public String getId(){
@@ -72,7 +73,7 @@ public class AbstractEntityWithDescription extends AbstractEntity {
                 ", id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", properties=" + properties +
+//                ", properties=" + properties +
                 '}';
     }
 }
