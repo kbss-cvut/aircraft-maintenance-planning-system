@@ -17,36 +17,49 @@ public class DateUtils {
 
     public static final String dateTimeFormatPattern = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String dateFormatPattern = "yyyy-MM-dd";
+    public static final String timeFormatPattern = "HH:mm:ss";
 
 
-    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormatPattern);
-    public static final ThreadLocal<SimpleDateFormat> dateFormat = new ThreadLocal<SimpleDateFormat>(){
+    public static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(dateFormatPattern);
+
+    public static final ThreadLocal<SimpleDateFormat> ltDateTimeFormatter = new ThreadLocal<SimpleDateFormat>(){
         @Override
         protected SimpleDateFormat initialValue() {
             return new SimpleDateFormat(dateTimeFormatPattern);
         }
     };
-    public static final String dateTimeFormatPattern1 = "yyyy-MM-dd'T'HH:mm:ssX";
-    public static final ThreadLocal<SimpleDateFormat> df = new ThreadLocal<SimpleDateFormat>(){
+
+    public static final ThreadLocal<SimpleDateFormat> ltDateFormatter = new ThreadLocal<SimpleDateFormat>(){
         @Override
         protected SimpleDateFormat initialValue() {
-            return new SimpleDateFormat(dateTimeFormatPattern);
+            return new SimpleDateFormat(dateFormatPattern);
         }
     };
-    public static final String dateTimeFormatPattern2 = "dd.MM.yyyy'T'HH:mm";
 
-    public static final SimpleDateFormat day = new SimpleDateFormat(dateFormatPattern);
+    public static final ThreadLocal<SimpleDateFormat> ltTimeFormatter = new ThreadLocal<SimpleDateFormat>(){
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat(timeFormatPattern);
+        }
+    };
 
+    public static String formatDateTime(Date d){
+        return formatDateTime(ltDateTimeFormatter.get(), d);
+    }
 
     public static String formatDate(Date d){
-        return formatDate(dateFormat.get(), d);
+        return formatDateTime(ltDateFormatter.get(), d);
+    }
+
+    public static String formatTime(Date d){
+        return formatDateTime(ltTimeFormatter.get(), d);
     }
 
     public static String formatDate(LocalDate d){
-        return dateTimeFormatter.format(d);
+        return dateFormatter.format(d);
     }
 
-    public static String formatDate(SimpleDateFormat sdf, Date d){
+    public static String formatDateTime(SimpleDateFormat sdf, Date d){
         try {
             return d != null ? sdf.format(d) : "";
         }catch (Exception e){

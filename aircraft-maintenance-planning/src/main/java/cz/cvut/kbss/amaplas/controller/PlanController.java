@@ -60,7 +60,7 @@ public class PlanController extends BaseController{
 
             String fileName = String.format("%s--planned-on-%s.zip",
                     revisionId.replaceAll("[^\\w\\d-_ ]", "--"),
-                    DateUtils.formatDate(new Date()).replace(":","-")
+                    DateUtils.formatDateTime(new Date()).replace(":","-")
             );
 
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
@@ -72,7 +72,6 @@ public class PlanController extends BaseController{
             throw new RuntimeException(e);
         }
     }
-
 
     /**
      * Create a new plan based on plan type fragment, no other information is required. Accepted plan type fragments are :

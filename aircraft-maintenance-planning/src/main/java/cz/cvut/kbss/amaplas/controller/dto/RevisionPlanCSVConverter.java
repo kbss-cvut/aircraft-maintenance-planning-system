@@ -201,7 +201,7 @@ public class RevisionPlanCSVConverter {
 
 
         public void setValue(Date date){
-            setValue(date == null ? "" : DateUtils.formatDate(date));
+            setValue(date == null ? "" : DateUtils.formatDateTime(date));
         }
 
         public void setValue(LocalDate date){

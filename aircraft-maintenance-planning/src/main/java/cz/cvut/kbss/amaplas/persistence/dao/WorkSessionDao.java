@@ -77,9 +77,9 @@ public class WorkSessionDao extends BaseDao<WorkSession> {
             String start = optValue( "start", null);
             String end = optValue( "end", null);
             if(start != null )
-                workSession.setStart(DateUtils.parseDate(DateUtils.df.get(), start));
+                workSession.setStart(DateUtils.parseDate(DateUtils.ltDateTimeFormatter.get(), start));
             if(end != null)
-                workSession.setEnd(DateUtils.parseDate(DateUtils.df.get(), end));
+                workSession.setEnd(DateUtils.parseDate(DateUtils.ltDateTimeFormatter.get(), end));
 
             workSession.setDur(optValueNonString("dur", v -> ((Literal)v).longValue(), null));
             return Pair.of(manValue("tt", URI::create), workSession);
