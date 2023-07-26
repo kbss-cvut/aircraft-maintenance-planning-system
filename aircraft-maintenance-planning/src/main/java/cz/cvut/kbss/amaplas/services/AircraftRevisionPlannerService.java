@@ -190,7 +190,7 @@ public class AircraftRevisionPlannerService extends BaseService{
     }
 
     public PlanResult createRevisionPlanScheduleDeducedFromSimilarRevisions(Workpackage wp, boolean mixedSchedule) {
-
+        LOG.info("plan WP {} with Id {}", wp.getEntityURI(), wp.getEntityURI());
         WorkSessionBasedPlanBuilder workSessionBasedPlanBuilder = new WorkSessionBasedPlanBuilder();
         RevisionPlan revisionPlan = workSessionBasedPlanBuilder.createRevision(wp);
         TaskTypeBasedPlanBuilder builder = new TaskTypeBasedPlanBuilder(workSessionBasedPlanBuilder);
