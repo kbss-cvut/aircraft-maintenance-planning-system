@@ -269,7 +269,7 @@ public class WorkpackageDAO extends BaseDao<Workpackage>{
         if(taskExecutionBindings == null)
             return null;
 
-        Workpackage workpackage = new Workpackage(uri);
+        Workpackage workpackage = find(uri).orElse(null);
         List<TaskExecution> taskExecutions = convertToTaskExecution(taskExecutionBindings);
 
         workpackage.setTaskExecutions(new HashSet<>(taskExecutions));
