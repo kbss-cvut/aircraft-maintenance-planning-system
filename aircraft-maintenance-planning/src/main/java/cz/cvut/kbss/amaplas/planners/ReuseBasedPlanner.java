@@ -237,6 +237,7 @@ public class ReuseBasedPlanner {
                 i = j;
                 source = target;
                 sourceHistory = targetHistory;
+                sourceNode = targetNode;
             }
 
             // prepare to plan for the next wp
