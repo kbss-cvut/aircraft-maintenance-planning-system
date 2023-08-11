@@ -2,10 +2,11 @@ package cz.cvut.kbss.amaplas.model.scheduler;
 
 import cz.cvut.kbss.amaplas.model.RevisionPlan;
 import cz.cvut.kbss.amaplas.model.SessionPlan;
+import cz.cvut.kbss.amaplas.model.Workpackage;
 
 public class NaivePlanScheduler implements PlanScheduler {
 
-    public void schedule(RevisionPlan revisionPlan){
+    public void schedule(RevisionPlan revisionPlan, Workpackage wp){
         // deduce schedule from revision work sessions
         // 1.a Creat session schedules - from session logs
         revisionPlan.streamPlanParts()

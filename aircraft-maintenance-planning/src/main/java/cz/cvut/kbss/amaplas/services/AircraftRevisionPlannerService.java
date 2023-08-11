@@ -198,7 +198,7 @@ public class AircraftRevisionPlannerService extends BaseService{
         WorkSessionBasedPlanBuilder builder = new WorkSessionBasedPlanBuilder();
         RevisionPlan revisionPlan = builder.createRevision(workpackage);
         PlanScheduler planScheduler = new NaivePlanScheduler();
-        planScheduler.schedule(revisionPlan);
+        planScheduler.schedule(revisionPlan, workpackage);
 
         builder.addRestrictionPlans(revisionPlan);
 
@@ -219,7 +219,7 @@ public class AircraftRevisionPlannerService extends BaseService{
     }
 
     public PlanResult createRevisionPlanScheduleDeducedFromSimilarRevisions(Workpackage wp, boolean mixedSchedule) {
-        LOG.info("plan WP {} with Id {}", wp.getEntityURI(), wp.getEntityURI());
+        LOG.info("plan WP {} with Id {}", wp.getEntityURI(), wp.getId());
         WorkSessionBasedPlanBuilder workSessionBasedPlanBuilder = new WorkSessionBasedPlanBuilder();
         RevisionPlan revisionPlan = workSessionBasedPlanBuilder.createRevision(wp);
         TaskTypeBasedPlanBuilder builder = new TaskTypeBasedPlanBuilder(workSessionBasedPlanBuilder);
@@ -257,12 +257,12 @@ public class AircraftRevisionPlannerService extends BaseService{
                 partialTaskOrderByScope,
                 findingGraph
         );
-        similarPlanScheduler.schedule(revisionPlan);
+        similarPlanScheduler.schedule(revisionPlan, wp);
 
         if (mixedSchedule){
             // second schedule work session plans and reschedule affected plans in the plan partonomy
             NaivePlanScheduler scheduler = new NaivePlanScheduler();
-            scheduler.schedule(revisionPlan);
+            scheduler.schedule(revisionPlan, wp);
         }
         revisionPlan.applyOperationBottomUp(p -> p.updateTemporalAttributes());
         workSessionBasedPlanBuilder.addRestrictionPlans(revisionPlan);

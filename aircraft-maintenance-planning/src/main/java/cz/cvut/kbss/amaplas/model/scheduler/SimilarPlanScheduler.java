@@ -28,7 +28,7 @@ public class SimilarPlanScheduler implements PlanScheduler{
     }
 
     @Override
-    public void schedule(RevisionPlan revisionPlan) {
+    public void schedule(RevisionPlan revisionPlan, Workpackage wp) {
         long defaultBufferBetweenSchedules = 15*60*1000;
         Map<TaskType, TaskPlan> taskPlanMap = new HashMap<>();
         revisionPlan.streamPlanParts()
