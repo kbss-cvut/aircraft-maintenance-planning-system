@@ -1,11 +1,16 @@
 package cz.cvut.kbss.amaplas.model.scheduler;
 
 import cz.cvut.kbss.amaplas.model.*;
+import cz.cvut.kbss.amaplas.model.values.DateUtils;
 import cz.cvut.kbss.amaplas.planners.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
 import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * Schedules a revision plan using a set of partial orders of task types found in the revision. The schedule sets the
@@ -28,7 +33,7 @@ public class SimilarPlanScheduler implements PlanScheduler{
     }
 
     @Override
-    public void schedule(RevisionPlan revisionPlan) {
+    public void schedule(RevisionPlan revisionPlan, Workpackage wp) {
         long defaultBufferBetweenSchedules = 15*60*1000;
         Map<TaskType, TaskPlan> taskPlanMap = new HashMap<>();
         revisionPlan.streamPlanParts()
@@ -36,7 +41,28 @@ public class SimilarPlanScheduler implements PlanScheduler{
                 .map(p -> (TaskPlan)p)
                 .forEach(p -> taskPlanMap.put(p.getTaskType(), p));
 
+        BiFunction<Optional<LocalDate>, Function<LocalDate, Date>, Long> toMillis = (oLD, toDate) -> oLD
+                .map(toDate)
+                .map(Date::getTime)
+                .orElse(null);
 
+        Function<Optional<LocalDate>, Long> startTime = oLD -> toMillis.apply(
+                oLD,
+                ld -> DateUtils.toDateAtTime(ld, 7, 0)
+        );
+
+        Function<Optional<LocalDate>, Long> endTime = oLD -> toMillis.apply(
+                oLD,
+                ld -> DateUtils.toDateAtTime(ld, 19, 0)
+        );
+
+        Long wpStart = Optional.ofNullable(startTime.apply(Optional.ofNullable(wp)
+                .map(p -> p.getPlannedStartTime() != null ? p.getPlannedStartTime() : p.getStartTime())
+        )).orElse(wp.getStart() != null ? wp.getStart().getTime() : new Date().getTime() );
+
+        Long wpEnd = Optional.ofNullable(endTime.apply(Optional.ofNullable(wp)
+                .map(p -> p.getPlannedEndTime() != null ? p.getPlannedEndTime() : p.getEndTime())
+        )).orElse(wp.getEnd() != null ? wp.getEnd().getTime() : wpStart + 7 * 3600 * 24);
 
         for(Map.Entry<String, PlanGraph> e : groupedPartialTaskOrder.entrySet()){
             ReuseBasedPlanner.planner.traverse(e.getValue(), (planGraph, node, edge, source) -> {
@@ -68,7 +94,7 @@ public class SimilarPlanScheduler implements PlanScheduler{
 
                     if(edge.patternType == PatternType.EQUALITY){
                         plannedStartTime = sourceTaskPlan.getPlannedStartTime().getTime();
-                    } else if(edge.patternType == PatternType.STRICT_DIRECT_ORDER || edge.patternType == PatternType.STRICT_INDIRECT_ORDER){
+                    } else if(edge.patternType == PatternType.STRICT_DIRECT_ORDER){
                         long sourceStart = sourceHistory.getStart().getTime();
                         long sourceEnd = sourceHistory.getEnd().getTime();
                         long targetStart = targetHistory.getStart().getTime();
@@ -78,8 +104,37 @@ public class SimilarPlanScheduler implements PlanScheduler{
                                     (sourceTaskPlan.getPlannedEndTime().getTime() - sourceTaskPlan.getPlannedStartTime().getTime())*( targetStart - sourceStart)*1./(sourceEnd - sourceStart)
                             );
                         else
-                            plannedStartTime = sourceTaskPlan.getPlannedEndTime().getTime() + defaultBufferBetweenSchedules;// TODO sourceTaskPlan.getPlannedEndTime() == null ????
+                            plannedStartTime = sourceTaskPlan.getPlannedStartTime().getTime() + targetStart - sourceStart;
+//                            plannedStartTime = sourceTaskPlan.getPlannedEndTime().getTime() + defaultBufferBetweenSchedules;// TODO sourceTaskPlan.getPlannedEndTime() == null ????
 
+                    } else if(edge.patternType == PatternType.STRICT_INDIRECT_ORDER) {
+                        long sourceStart = sourceHistory.getStart().getTime();
+                        long sourceEnd = sourceHistory.getEnd().getTime();
+                        long targetStart = targetHistory.getStart().getTime();
+
+                        if (targetStart < sourceEnd) {
+                            plannedStartTime = sourceTaskPlan.getPlannedStartTime().getTime() + (long) (
+                                    (sourceTaskPlan.getPlannedEndTime().getTime() - sourceTaskPlan.getPlannedStartTime().getTime()) * (targetStart - sourceStart) * 1. / (sourceEnd - sourceStart)
+                            );
+                        } else {
+
+                            Workpackage reusedWP = sourceHistory.getWorkpackage();
+
+
+                            Long reusedWPStart = startTime.apply(Optional.ofNullable(reusedWP)
+                                        .map(p -> p.getStartTime() != null ? p.getStartTime() : p.getPlannedStartTime())
+                            );
+
+                            Long reusedWPEnd = endTime.apply(Optional.ofNullable(reusedWP)
+                                    .map(p -> p.getEndTime() != null ? p.getEndTime() : p.getPlannedEndTime())
+                            );
+
+                            if(Stream.of(reusedWPStart, reusedWPEnd).anyMatch(l -> l == null))
+                                return;
+
+                            plannedStartTime = sourceTaskPlan.getPlannedStartTime().getTime() +
+                                    (long) ((wpEnd - wpStart) * ((targetStart - sourceStart) * (2./3.) / (reusedWPEnd - reusedWPStart)));
+                        }
                     }
                 }
                 if(taskPlan.getPlannedStartTime() == null || taskPlan.getPlannedStartTime().getTime() < plannedStartTime) {

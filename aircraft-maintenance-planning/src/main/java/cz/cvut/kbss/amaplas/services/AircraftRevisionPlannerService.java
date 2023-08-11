@@ -57,16 +57,8 @@ public class AircraftRevisionPlannerService extends BaseService{
         // create a plan graph for each scope
         Map<MaintenanceGroup, List<TaskType>> tasksByScope = toPlan.getTaskTypes().stream().collect(Collectors.groupingBy(t ->  t.getScope() != null ? t.getScope() : nullGroup));
 
-        List<Pair<Workpackage, Double>> _similarWPs = workpackageService.findSimilarWorkpackages(toPlan);
         // get Similar WPs
-        List<Pair<Supplier<Workpackage>, Double>> similarWPs = _similarWPs
-                .stream()
-                .filter(p -> !revisionsToIgnore.contains(p.getKey().getEntityURI().toString()))
-                .map(p -> Pair.of(
-                        (Supplier<Workpackage>)() -> workpackageService.getWorkpackageWithTemporalProperties(p.getKey().getEntityURI()),
-                        p.getRight())
-                )
-                .collect(Collectors.toList());
+        List<Pair<Supplier<Workpackage>, Double>> similarWPs = similarWorkpackages(toPlan, revisionsToIgnore);
 
         Map<String, PlanGraph> scopePlans = new HashMap<>();
         for(Map.Entry<MaintenanceGroup, List<TaskType>> scopeTasks : tasksByScope.entrySet()){
@@ -79,6 +71,19 @@ public class AircraftRevisionPlannerService extends BaseService{
         }
 
         return scopePlans;
+    }
+
+    protected List<Pair<Supplier<Workpackage>, Double>> similarWorkpackages(Workpackage toPlan, Collection<String> revisionsToIgnore){
+        List<Pair<Workpackage, Double>> _similarWPs = workpackageService.findSimilarWorkpackages(toPlan);
+        // get Similar WPs
+        return _similarWPs
+                .stream()
+                .filter(p -> !revisionsToIgnore.contains(p.getKey().getEntityURI().toString()))
+                .map(p -> Pair.of(
+                        (Supplier<Workpackage>)() -> workpackageService.getWorkpackageWithTemporalProperties(p.getKey().getEntityURI()),
+                        p.getRight())
+                )
+                .collect(Collectors.toList());
     }
 
     public PlanGraph maintenanceOrderGraphPlan(Workpackage toPlan, Map<String, PlanGraph> partialTaskOrderByScope){
@@ -193,7 +198,7 @@ public class AircraftRevisionPlannerService extends BaseService{
         WorkSessionBasedPlanBuilder builder = new WorkSessionBasedPlanBuilder();
         RevisionPlan revisionPlan = builder.createRevision(workpackage);
         PlanScheduler planScheduler = new NaivePlanScheduler();
-        planScheduler.schedule(revisionPlan);
+        planScheduler.schedule(revisionPlan, workpackage);
 
         builder.addRestrictionPlans(revisionPlan);
 
@@ -214,7 +219,7 @@ public class AircraftRevisionPlannerService extends BaseService{
     }
 
     public PlanResult createRevisionPlanScheduleDeducedFromSimilarRevisions(Workpackage wp, boolean mixedSchedule) {
-        LOG.info("plan WP {} with Id {}", wp.getEntityURI(), wp.getEntityURI());
+        LOG.info("plan WP {} with Id {}", wp.getEntityURI(), wp.getId());
         WorkSessionBasedPlanBuilder workSessionBasedPlanBuilder = new WorkSessionBasedPlanBuilder();
         RevisionPlan revisionPlan = workSessionBasedPlanBuilder.createRevision(wp);
         TaskTypeBasedPlanBuilder builder = new TaskTypeBasedPlanBuilder(workSessionBasedPlanBuilder);
@@ -252,12 +257,12 @@ public class AircraftRevisionPlannerService extends BaseService{
                 partialTaskOrderByScope,
                 findingGraph
         );
-        similarPlanScheduler.schedule(revisionPlan);
+        similarPlanScheduler.schedule(revisionPlan, wp);
 
         if (mixedSchedule){
             // second schedule work session plans and reschedule affected plans in the plan partonomy
             NaivePlanScheduler scheduler = new NaivePlanScheduler();
-            scheduler.schedule(revisionPlan);
+            scheduler.schedule(revisionPlan, wp);
         }
         revisionPlan.applyOperationBottomUp(p -> p.updateTemporalAttributes());
         workSessionBasedPlanBuilder.addRestrictionPlans(revisionPlan);

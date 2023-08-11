@@ -14,7 +14,6 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ReuseBasedPlanner {
 
@@ -179,6 +178,8 @@ public class ReuseBasedPlanner {
             Pair<Supplier<Workpackage>, Double> pair = similarWPs.get(k);
             k ++;
             Workpackage similarWP = pair.getKey().get();
+            if(similarWP == null) // value could be null b/c similar package is not closed yet
+                continue;
 //            if(ignoreHistoryEntry != null && ignoreHistoryEntry.test(similarPlan.getKey().getId()))
 //                continue;
 
@@ -236,6 +237,7 @@ public class ReuseBasedPlanner {
                 i = j;
                 source = target;
                 sourceHistory = targetHistory;
+                sourceNode = targetNode;
             }
 
             // prepare to plan for the next wp

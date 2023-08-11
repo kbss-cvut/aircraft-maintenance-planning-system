@@ -40,7 +40,11 @@ public class PlanGraph extends DefaultDirectedGraph<TaskPattern, SequencePattern
                     TaskPattern.class,
                     (TaskPattern tp) -> Optional.ofNullable(tp.getTaskType()).map(tt ->
                             tt.getCode() + " -- " +
-                            (tt.getDefinition() != null ? tt.getDefinition() : tt).getArea() + " -- " +
+                            Optional.ofNullable(tt.getDefinition() != null ? tt.getDefinition() : tt)
+                            .map(t ->
+                                    Optional.ofNullable(t.getScope()).map(s -> s.getAbbreviation()).orElse(null) + " -- " +
+                                    t.getArea()
+                            ).orElse(" null -- null")  + " -- " +
                             escape(tt.getTitle())
                     ).orElse(""));
 

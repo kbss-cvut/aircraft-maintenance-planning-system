@@ -186,7 +186,8 @@ public class WorkpackageService extends BaseService {
         Workpackage workpackage = workpackageTaskTimePropertiesCache.get(uri);
         if(workpackage == null){
             workpackage = workpackageDAO.getTimePropertiesOfWorkparckageTasks(uri);
-            workpackageTaskTimePropertiesCache.put(uri, workpackage);
+            if(workpackage != null)
+                workpackageTaskTimePropertiesCache.put(uri, workpackage);
         }
 
         return workpackage;
