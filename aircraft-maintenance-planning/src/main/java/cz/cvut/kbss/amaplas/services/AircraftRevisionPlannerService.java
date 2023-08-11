@@ -57,16 +57,8 @@ public class AircraftRevisionPlannerService extends BaseService{
         // create a plan graph for each scope
         Map<MaintenanceGroup, List<TaskType>> tasksByScope = toPlan.getTaskTypes().stream().collect(Collectors.groupingBy(t ->  t.getScope() != null ? t.getScope() : nullGroup));
 
-        List<Pair<Workpackage, Double>> _similarWPs = workpackageService.findSimilarWorkpackages(toPlan);
         // get Similar WPs
-        List<Pair<Supplier<Workpackage>, Double>> similarWPs = _similarWPs
-                .stream()
-                .filter(p -> !revisionsToIgnore.contains(p.getKey().getEntityURI().toString()))
-                .map(p -> Pair.of(
-                        (Supplier<Workpackage>)() -> workpackageService.getWorkpackageWithTemporalProperties(p.getKey().getEntityURI()),
-                        p.getRight())
-                )
-                .collect(Collectors.toList());
+        List<Pair<Supplier<Workpackage>, Double>> similarWPs = similarWorkpackages(toPlan, revisionsToIgnore);
 
         Map<String, PlanGraph> scopePlans = new HashMap<>();
         for(Map.Entry<MaintenanceGroup, List<TaskType>> scopeTasks : tasksByScope.entrySet()){
@@ -79,6 +71,19 @@ public class AircraftRevisionPlannerService extends BaseService{
         }
 
         return scopePlans;
+    }
+
+    protected List<Pair<Supplier<Workpackage>, Double>> similarWorkpackages(Workpackage toPlan, Collection<String> revisionsToIgnore){
+        List<Pair<Workpackage, Double>> _similarWPs = workpackageService.findSimilarWorkpackages(toPlan);
+        // get Similar WPs
+        return _similarWPs
+                .stream()
+                .filter(p -> !revisionsToIgnore.contains(p.getKey().getEntityURI().toString()))
+                .map(p -> Pair.of(
+                        (Supplier<Workpackage>)() -> workpackageService.getWorkpackageWithTemporalProperties(p.getKey().getEntityURI()),
+                        p.getRight())
+                )
+                .collect(Collectors.toList());
     }
 
     public PlanGraph maintenanceOrderGraphPlan(Workpackage toPlan, Map<String, PlanGraph> partialTaskOrderByScope){
