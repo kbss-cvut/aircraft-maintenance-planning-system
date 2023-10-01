@@ -147,6 +147,7 @@ WHERE {
       sp:arg1 : ;
     ] ;
   km-tabular:delimiter "	" ;
+  km-tabular:quote-character "\"" ;
   sm:next :construct-csat-maintenance-data ;
 .
 td:transform-data_Return
