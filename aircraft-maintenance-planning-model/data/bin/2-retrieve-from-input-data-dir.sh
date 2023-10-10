@@ -17,7 +17,7 @@ DATA_DIRS=(
 )
 
 
-WARN_ON_FAIL_AND_SLEEP=1000
+WARN_ON_FAIL_AND_SLEEP=10
 
 for index in ${!DATA_DIRS[*]}; do
         DATA_DIR_NAME=${DATA_DIRS[$index]}
@@ -64,7 +64,7 @@ for index in ${!DATA_DIRS[*]}; do
        			echo "WARN: extraction failed."
 			if [ "$WARN_ON_FAIL_AND_SLEEP" ]; then  
 				echo "WARN: waiting $WARN_ON_FAIL_AND_SLEEP seconds until resuming. Hit Ctrl-C to quit processing."
-				./bin/2-remove-empty-files-in-output-data.sh
+				./bin/2.1-remove-empty-files-in-output-data.sh
 				sleep $WARN_ON_FAIL_AND_SLEEP	
 				echo "Continuing ..."
 			fi
