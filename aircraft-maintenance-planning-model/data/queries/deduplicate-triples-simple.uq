@@ -11,6 +11,7 @@ DELETE {
             GRAPH ?olderG {
                 ?s ?p ?o .
             }
+            FILTER(strstarts(str(?olderG),"http://onto.fel.cvut.cz/dataset--20"))
             FILTER(str(?olderG) < str(?newerG))
         } LIMIT 100000
     }

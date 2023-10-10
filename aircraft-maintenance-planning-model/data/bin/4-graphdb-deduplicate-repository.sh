@@ -12,7 +12,7 @@ NETRC_FILE=../private/netrc
 SERVER_URL="https://graphdb.onto.fel.cvut.cz"
 GRAPHDB_REPOSITORY_URL="${SERVER_URL}/repositories/${REPOSITORY_ID}"
 
-curl --netrc-file "$NETRC_FILE" $GRAPHDB_REPOSITORY_URL/contexts 2>/dev/null | tail +2 | sed -e "s/\r//g" | sort -r > private/graphs.csv
+curl --netrc-file "$NETRC_FILE" $GRAPHDB_REPOSITORY_URL/contexts 2>/dev/null | grep dataset--20 | tail +2 | sed -e "s/\r//g" | sort -r > private/graphs.csv
 
 cat private/graphs.csv | while read GRAPH; do
 	rm ./queries/deduplicate-triples.uq
