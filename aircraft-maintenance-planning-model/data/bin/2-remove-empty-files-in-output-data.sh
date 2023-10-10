@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INPUT_ROOT_DIR=./private/3-ttl-data
+INPUT_ROOT_DIR=./private/3-ttl-data/
 
 
 find $INPUT_ROOT_DIR -name '*.ttl' | while read FILE; do

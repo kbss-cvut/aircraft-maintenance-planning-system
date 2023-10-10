@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ###
-### Fixes badly quoted TSV file taken from FTP (i.e. quote (") occurs in the middle of TSV field but is not escaped (by ""))
+### Fixes all files marked as badly quoted TSV files (i.e. quote (") occurs in the middle of TSV field but is not escaped (by ""))
 ###
 
 
