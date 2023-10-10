@@ -74,7 +74,7 @@ echo "INFO:    - files $FILES"
 
 if [ "$APPEND" = false ] ; then
    echo "INFO: *** CLEARING THE GRAPH ***"
-   TEMP_FILE=`tempfile`
+   TEMP_FILE=`mktemp --suffix -rdf4j-deploy-context-clear.rdf`
    QUERY_PARAMS="context=$GRAPH"
    if [ ! "$GRAPH" ]; then QUERY_PARAMS= ;  fi
    curl --netrc-file $NETRC_FILE $REPOSITORY_URL/statements?$QUERY_PARAMS -v -X DELETE &> $TEMP_FILE
@@ -86,7 +86,7 @@ echo "INFO: *** SENDING DATA ***"
 for FILE in $FILES
 do
    echo INFO: " -- sending $FILE";
-   TEMP_FILE=`tempfile`
+   TEMP_FILE=`mktemp --suffix -rdf4j-deploy-context-send.rdf`
    QUERY_PARAMS="context=$GRAPH"
    if [ ! "$GRAPH" ]; then QUERY_PARAMS= ;  fi
   
@@ -96,7 +96,7 @@ do
 done;
 
 echo "INFO: *** CHECKING ***"
-TEMP_FILE=`tempfile`
+TEMP_FILE=`mktemp --suffix -rdf4j-deploy-context-check.rdf`
 GRAPH_SIZE=`curl --netrc-file $NETRC_FILE  $REPOSITORY_URL/size 2> $TEMP_FILE`
 echo "INFO:  size of the new graph is $GRAPH_SIZE"
 
