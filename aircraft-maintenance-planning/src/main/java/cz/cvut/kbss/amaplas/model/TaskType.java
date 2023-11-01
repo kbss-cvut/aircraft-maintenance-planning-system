@@ -259,21 +259,18 @@ public class TaskType extends EventType {
         if (!(o instanceof TaskType)) return false;
         TaskType taskType = (TaskType) o;
 
-        if(getEntityURI() != null)
-            return getEntityURI().equals(taskType.getEntityURI());
-        if(taskType.getEntityURI() != null)
-            return taskType.getEntityURI().equals(getEntityURI());
         if(getCode() != null)
             return getCode().equals(taskType.getCode());
-        if(taskType.getCode() != null)
-            return taskType.getCode().equals(getCode());
+        if(getEntityURI() != null)
+            return getEntityURI().equals(taskType.getEntityURI());
 
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCode());
+        Object id = Optional.<Object>ofNullable(getCode()).orElse(getEntityURI());
+        return Objects.hash(id);
     }
 
     @Override
