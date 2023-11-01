@@ -68,6 +68,8 @@ public class SimilarPlanScheduler implements PlanScheduler{
             ReuseBasedPlanner.planner.traverse(e.getValue(), (planGraph, node, edge, source) -> {
                 // schedule the time of the task plan
                 TaskPlan taskPlan = taskPlanMap.get(node.getTaskType());
+                if(taskPlan == null)
+                    return;
                 Long plannedStartTime = null;
 
                 if(node.getInstances() == null || node.getInstances().isEmpty())
