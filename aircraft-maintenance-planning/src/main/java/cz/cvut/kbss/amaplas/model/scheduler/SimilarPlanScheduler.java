@@ -62,7 +62,7 @@ public class SimilarPlanScheduler implements PlanScheduler{
 
         Long wpEnd = Optional.ofNullable(endTime.apply(Optional.ofNullable(wp)
                 .map(p -> p.getPlannedEndTime() != null ? p.getPlannedEndTime() : p.getEndTime())
-        )).orElse(wp.getEnd() != null ? wp.getEnd().getTime() : wpStart + 7 * 3600 * 24);
+        )).orElse(wp.getEnd() != null ? wp.getEnd().getTime() : wpStart + 7 * 3600 * 24 * 1000);
 
         for(Map.Entry<String, PlanGraph> e : groupedPartialTaskOrder.entrySet()){
             ReuseBasedPlanner.planner.traverse(e.getValue(), (planGraph, node, edge, source) -> {
