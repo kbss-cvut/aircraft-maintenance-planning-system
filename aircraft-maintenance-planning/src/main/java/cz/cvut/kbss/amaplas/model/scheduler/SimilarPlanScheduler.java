@@ -137,7 +137,7 @@ public class SimilarPlanScheduler implements PlanScheduler{
                         }
                     }
                 }
-                if(taskPlan.getPlannedStartTime() == null || taskPlan.getPlannedStartTime().getTime() < plannedStartTime) {
+                if(taskPlan.getPlannedStartTime() == null || (plannedStartTime != null && taskPlan.getPlannedStartTime().getTime() < plannedStartTime)) {
                     taskPlan.setPlannedStartTime(new Date(plannedStartTime));
                     taskPlan.setPlannedEndTime(new Date(plannedStartTime + duration));
                     taskPlan.setPlannedWorkTime(workTime);
