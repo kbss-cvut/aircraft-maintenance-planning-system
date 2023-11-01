@@ -133,7 +133,7 @@ public class SimilarPlanScheduler implements PlanScheduler{
                                 return;
 
                             plannedStartTime = sourceTaskPlan.getPlannedStartTime().getTime() +
-                                    (long) ((wpEnd - wpStart) * ((targetStart - sourceStart) * (2./3.) / (reusedWPEnd - reusedWPStart)));
+                                    (long) ((wpEnd - wpStart) * ((targetStart - sourceStart) * (2./5.) / (reusedWPEnd - reusedWPStart)));
                         }
                     }
                 }
