@@ -212,10 +212,15 @@ public class AircraftRevisionPlannerService extends BaseService{
      * @return
      */
     public RevisionPlan createRevisionPlanScheduleDeducedFromSimilarRevisions(String revisionId, boolean mixedSchedule) {
-        Workpackage wp = workpackageService.getWorkpackageWithExecutionsAndSessions(revisionId);
-        if(wp == null)
-            return null;
-        return createRevisionPlanScheduleDeducedFromSimilarRevisions(wp, mixedSchedule).outputPlan;
+        try {
+            Workpackage wp = workpackageService.getWorkpackageWithExecutionsAndSessions(revisionId);
+            if (wp == null)
+                return null;
+            return createRevisionPlanScheduleDeducedFromSimilarRevisions(wp, mixedSchedule).outputPlan;
+        }catch (Exception e){
+            LOG.error("Error occurred while constructing plan for workpackage with revision id \"{}\".", revisionId, e);
+            throw e;
+        }
     }
 
     public PlanResult createRevisionPlanScheduleDeducedFromSimilarRevisions(Workpackage wp, boolean mixedSchedule) {
