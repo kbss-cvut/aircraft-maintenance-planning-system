@@ -91,7 +91,7 @@ public class SimilarPlanScheduler implements PlanScheduler{
                     workTime = targetHistory.getWorkTime(); // TODO - replace with node.getTaskType().getAverageWorkTime()
 
                     TaskPlan sourceTaskPlan = taskPlanMap.get(source.getTaskType());
-                    if(sourceTaskPlan.getPlannedStartTime() == null) // do not schedule if the source plan is not scheduled
+                    if(sourceTaskPlan == null || sourceTaskPlan.getPlannedStartTime() == null) // do not schedule if the source plan is not scheduled
                         return;
 
                     if(edge.patternType == PatternType.EQUALITY){
